@@ -1,0 +1,10 @@
+// RESPONSIBILITY: Owns membership plan catalog and the minor-unit currency contract for PublicLanding.
+export const LANDING_CURRENCY_CODE = 'INR' as const;
+
+export const LANDING_PLANS = [
+  { key: 'oneMonth', nameKey: 'plans.items.oneMonth.name', priceMinor: 150000, oldPriceMinor: 200000, durationKey: 'plans.items.oneMonth.duration', featureKeys: ['plans.items.oneMonth.features.access', 'plans.items.oneMonth.features.locker', 'plans.items.oneMonth.features.cardio'], badgeKey: null, featured: false, includeEmiNote: false },
+  { key: 'threeMonths', nameKey: 'plans.items.threeMonths.name', priceMinor: 400000, oldPriceMinor: 450000, durationKey: 'plans.items.threeMonths.duration', featureKeys: ['plans.items.threeMonths.features.everything', 'plans.items.threeMonths.features.diet', 'plans.items.threeMonths.features.classes'], badgeKey: 'plans.badges.popular', featured: true, includeEmiNote: false },
+  { key: 'sixMonths', nameKey: 'plans.items.sixMonths.name', priceMinor: 750000, oldPriceMinor: 900000, durationKey: 'plans.items.sixMonths.duration', featureKeys: ['plans.items.sixMonths.features.everything', 'plans.items.sixMonths.features.pt', 'plans.items.sixMonths.features.bodyComp'], badgeKey: null, featured: false, includeEmiNote: false },
+  { key: 'twelveMonths', nameKey: 'plans.items.twelveMonths.name', priceMinor: 1200000, oldPriceMinor: 1800000, durationKey: 'plans.items.twelveMonths.duration', featureKeys: ['plans.items.twelveMonths.features.everything', 'plans.items.twelveMonths.features.free', 'plans.items.twelveMonths.features.meal'], badgeKey: 'plans.badges.bestValue', featured: true, includeEmiNote: true },
+  { key: 'personalTraining', nameKey: 'plans.items.personalTraining.name', priceMinor: 800000, oldPriceMinor: 1000000, durationKey: 'plans.items.personalTraining.duration', featureKeys: ['plans.items.personalTraining.features.trainer', 'plans.items.personalTraining.features.diet', 'plans.items.personalTraining.features.priority'], badgeKey: null, featured: false, includeEmiNote: false },
+] as const;

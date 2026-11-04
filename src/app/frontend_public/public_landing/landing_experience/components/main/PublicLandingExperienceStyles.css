@@ -1,0 +1,54 @@
+/*
+ * RESPONSIBILITY: PublicLanding-only visual adaptations consuming the global Smart Gym 360 semantic token contract.
+ * Justified local tokens: native social-brand colors and landing hero image overlays.
+ */
+
+.landing-module {
+  --landing-hero-overlay: linear-gradient(135deg, color-mix(in srgb, var(--bg-page) 88%, transparent), color-mix(in srgb, var(--bg-page) 62%, transparent), color-mix(in srgb, var(--bg-page) 92%, var(--primary) 8%));
+  --landing-cta-shadow: 0 0 40px color-mix(in srgb, var(--primary) 32%, transparent);
+  --landing-brand-facebook: #1877F2;
+  --landing-brand-instagram: #E4405F;
+  --landing-brand-x: #000000;
+  --landing-brand-youtube: #FF0000;
+}
+
+.landing-hero-overlay { background: var(--landing-hero-overlay); }
+.landing-hero-bottom-fade { background: linear-gradient(to top, var(--bg-page), transparent); }
+.landing-hero-primary-cta { box-shadow: var(--landing-cta-shadow); }
+.landing-service-icon--primary, .landing-trainer-avatar--primary { background: var(--primary); color: var(--text-on-primary); }
+.landing-service-icon--danger, .landing-trainer-avatar--danger { background: var(--danger-bg); color: var(--danger-text); }
+.landing-service-icon--purple { background: var(--purple-bg); color: var(--purple-text); }
+.landing-service-icon--success, .landing-trainer-avatar--success { background: var(--success-bg); color: var(--success-text); }
+.landing-service-icon--warning { background: var(--warning-bg); color: var(--warning-text); }
+.landing-service-icon--info, .landing-trainer-avatar--info { background: var(--info-bg); color: var(--info-text); }
+.bmi-result--underweight { color: var(--info-text); }
+.bmi-result--normal { color: var(--success-text); }
+.bmi-result--overweight { color: var(--warning-text); }
+.bmi-result--obese { color: var(--danger-text); }
+.landing-social-facebook { color: var(--landing-brand-facebook); }
+.landing-social-instagram { color: var(--landing-brand-instagram); }
+.landing-social-x { color: var(--landing-brand-x); background: var(--primary); }
+.landing-social-youtube { color: var(--landing-brand-youtube); }
+.landing-mobile-menu-backdrop { background: var(--overlay-backdrop); }
+
+.landing-module ::-webkit-scrollbar { width: 6px; height: 6px; }
+.landing-module ::-webkit-scrollbar-track { background: transparent; }
+.landing-module ::-webkit-scrollbar-thumb { background: var(--border); border-radius: var(--radius-full); }
+
+@media print {
+  .landing-print-header { display: none !important; }
+  .landing-print-footer { break-inside: avoid; }
+  .landing-mobile-menu-backdrop, #landing-mobile-navigation { display: none !important; }
+  .landing-module { background: #FFFFFF !important; color: #000000 !important; }
+  .landing-module, .landing-module * { color: #000000 !important; box-shadow: none !important; }
+  .landing-module * { background-color: #FFFFFF !important; border-color: #000000 !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-module *, .landing-module *::before, .landing-module *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

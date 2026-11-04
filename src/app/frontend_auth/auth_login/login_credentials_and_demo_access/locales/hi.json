@@ -1,0 +1,66 @@
+{
+  "AUTH_LOGIN": {
+    "LOADING_SCREEN": "लॉगिन लोड हो रहा है",
+    "BACK_TO_HOME": "होम पर वापस जाएँ",
+    "BACK_TO_HOME_ARIA": "लैंडिंग पेज पर वापस जाएँ",
+    "BRAND": "GymSmart",
+    "BRAND_TAGLINE": "जिम मैनेजमेंट आसान बनाएँ",
+    "TITLE": "अपना जिम चलाएँ।",
+    "SUBTITLE": "स्प्रेडशीट नहीं।",
+    "HERO_DESCRIPTION": "भारत के फिटनेस व्यवसायों के लिए एक ऑल-इन-वन जिम मैनेजमेंट प्लेटफ़ॉर्म।",
+    "SECURE_BADGE": "सिस्टम ऑनलाइन और सुरक्षित",
+    "FORM_TITLE": "वापसी पर स्वागत है",
+    "FORM_SUBTITLE": "अपने एडमिन डैशबोर्ड में साइन इन करें",
+    "FORM_EMAIL_LABEL": "ईमेल पता",
+    "FORM_EMAIL_PLACEHOLDER": "admin@gymsmart.com",
+    "FORM_PASSWORD_LABEL": "पासवर्ड",
+    "FORM_PASSWORD_PLACEHOLDER": "••••••••",
+    "FORM_SUBMIT": "साइन इन करें",
+    "FORM_SUBMITTING": "साइन इन हो रहा है…",
+    "FOOTER": "256-बिट एन्क्रिप्शन से सुरक्षित · GymSmart ERP",
+    "QUICK_DEMOS": "डेवलपमेंट डेमो लॉगिन",
+    "SHOW_PASSWORD": "पासवर्ड दिखाएँ",
+    "HIDE_PASSWORD": "पासवर्ड छिपाएँ",
+    "HERO_STATS": {
+      "GYMS_MANAGED": "प्रबंधित जिम",
+      "ACTIVE_MEMBERS": "सक्रिय सदस्य",
+      "UPTIME_SLA": "अपटाइम SLA"
+    },
+    "HERO_FEATURES": {
+      "MEMBERS_PLANS": "सदस्य और सदस्यता प्लान",
+      "ATTENDANCE_BIOMETRIC": "अटेंडेंस और बायोमेट्रिक सपोर्ट",
+      "FINANCE_HR_PAYROLL": "फाइनेंस, HR और पेरोल वर्कफ़्लो",
+      "WHATSAPP_EMAIL": "WhatsApp और ईमेल कम्युनिकेशन"
+    },
+    "DEMO": {
+      "SUPERADMIN": "सुपरएडमिन",
+      "ADMIN": "एडमिन",
+      "MANAGER": "मैनेजर",
+      "TRAINER": "ट्रेनर"
+    },
+    "VALIDATION": {
+      "EMAIL_INVALID": "कृपया मान्य ईमेल पता दर्ज करें",
+      "PASSWORD_MIN_LENGTH": "पासवर्ड कम से कम 6 अक्षरों का होना चाहिए"
+    },
+    "ERRORS": {
+      "UNAVAILABLE": "हम आपको साइन इन नहीं कर सके। कृपया फिर प्रयास करें।"
+    },
+    "CLIENT_ERROR": {
+      "TITLE": "लॉगिन घटक लोड नहीं हो सका",
+      "DESCRIPTION": "लॉगिन स्क्रीन सुरक्षित रूप से रेंडर नहीं हो सकी। इसे फिर से लोड करने के लिए दोबारा प्रयास करें।",
+      "RETRY": "फिर प्रयास करें"
+    },
+    "ROUTE_ERROR": {
+      "TITLE": "लॉगिन अस्थायी रूप से उपलब्ध नहीं है",
+      "DESCRIPTION": "लॉगिन रूट में अनपेक्षित त्रुटि आई है। जारी रखने के लिए फिर प्रयास करें।",
+      "RETRY": "फिर प्रयास करें"
+    },
+    "DEMO_LOADING": "डेमो लोड हो रहा है…",
+    "OFFLINE": "इंटरनेट कनेक्शन उपलब्ध नहीं है। जारी रखने के लिए कनेक्शन फिर से स्थापित करें.",
+    "NOT_FOUND": {
+      "TITLE": "लॉगिन पेज नहीं मिला",
+      "DESCRIPTION": "अनुरोधित लॉगिन पेज उपलब्ध नहीं है। जारी रखने के लिए होम पेज पर लौटें।",
+      "BACK_TO_HOME": "होम पर वापस जाएँ"
+    }
+  }
+}

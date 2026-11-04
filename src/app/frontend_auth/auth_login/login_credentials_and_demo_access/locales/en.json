@@ -1,0 +1,66 @@
+{
+  "AUTH_LOGIN": {
+    "LOADING_SCREEN": "Loading Login",
+    "BACK_TO_HOME": "Back to Home",
+    "BACK_TO_HOME_ARIA": "Back to landing page",
+    "BRAND": "GymSmart",
+    "BRAND_TAGLINE": "Gym Management Made Simple",
+    "TITLE": "Run Your Gym.",
+    "SUBTITLE": "Not Spreadsheets.",
+    "HERO_DESCRIPTION": "The all-in-one gym management platform trusted by fitness businesses across India.",
+    "SECURE_BADGE": "System Online & Secure",
+    "FORM_TITLE": "Welcome Back",
+    "FORM_SUBTITLE": "Sign in to your admin dashboard",
+    "FORM_EMAIL_LABEL": "Email Address",
+    "FORM_EMAIL_PLACEHOLDER": "admin@gymsmart.com",
+    "FORM_PASSWORD_LABEL": "Password",
+    "FORM_PASSWORD_PLACEHOLDER": "••••••••",
+    "FORM_SUBMIT": "Sign In",
+    "FORM_SUBMITTING": "Signing in…",
+    "FOOTER": "Secured with 256-bit encryption · GymSmart ERP",
+    "OFFLINE": "Connection unavailable. Check your internet connection and try again.",
+    "QUICK_DEMOS": "Development Demo Logins",
+    "SHOW_PASSWORD": "Show password",
+    "HIDE_PASSWORD": "Hide password",
+    "HERO_STATS": {
+      "GYMS_MANAGED": "Gyms Managed",
+      "ACTIVE_MEMBERS": "Active Members",
+      "UPTIME_SLA": "Uptime SLA"
+    },
+    "HERO_FEATURES": {
+      "MEMBERS_PLANS": "Members & membership plans",
+      "ATTENDANCE_BIOMETRIC": "Attendance & biometric readiness",
+      "FINANCE_HR_PAYROLL": "Finance, HR & payroll workflows",
+      "WHATSAPP_EMAIL": "WhatsApp & email communication"
+    },
+    "DEMO": {
+      "SUPERADMIN": "Superadmin",
+      "ADMIN": "Admin",
+      "MANAGER": "Manager",
+      "TRAINER": "Trainer"
+    },
+    "VALIDATION": {
+      "EMAIL_INVALID": "Please enter a valid email address",
+      "PASSWORD_MIN_LENGTH": "Password must be at least 6 characters"
+    },
+    "ERRORS": {
+      "UNAVAILABLE": "We could not sign you in. Please try again."
+    },
+    "CLIENT_ERROR": {
+      "TITLE": "Login Component Failed",
+      "DESCRIPTION": "The login screen could not be rendered safely. Retry to load it again.",
+      "RETRY": "Try Again"
+    },
+    "ROUTE_ERROR": {
+      "TITLE": "Login Is Temporarily Unavailable",
+      "DESCRIPTION": "The login route encountered an unexpected error. Retry to continue.",
+      "RETRY": "Try Again"
+    },
+    "DEMO_LOADING": "Loading demo…",
+    "NOT_FOUND": {
+      "TITLE": "Login Page Not Found",
+      "DESCRIPTION": "The requested Login page is not available. Return to the home page to continue.",
+      "BACK_TO_HOME": "Back to Home"
+    }
+  }
+}

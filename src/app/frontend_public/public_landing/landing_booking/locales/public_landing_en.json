@@ -1,0 +1,448 @@
+{
+  "LANDING": {
+    "brand": {
+      "name": "GymSmart",
+      "tagline": "Fitness ERP",
+      "welcome": "Welcome to GymSmart",
+      "socialLinks": "GymSmart social links",
+      "footerDescription": "Empowering individuals to reach their peak physical and mental potential through world-class facilities and expert guidance.",
+      "copyright": "© {year} GymSmart. All rights reserved."
+    },
+    "navigation": {
+      "about": "About",
+      "plans": "Plans",
+      "trainers": "Trainers",
+      "services": "Services",
+      "schedule": "Schedule",
+      "booking": "Booking",
+      "gallery": "Gallery",
+      "contact": "Contact",
+      "openMenu": "Open navigation menu",
+      "closeMenu": "Close navigation menu",
+      "menuLabel": "Landing navigation",
+      "scrollToAbout": "Scroll to About section"
+    },
+    "hero": {
+      "transformBody": "Transform Your Body,",
+      "buildConfidence": "Build Your Confidence",
+      "description": "Join our premium fitness center with expert trainers, personalized workout plans, diet guidance, and modern equipment. Your fitness journey starts today.",
+      "startJourney": "Start Journey",
+      "bookTrial": "Book Trial",
+      "contactUs": "Contact Us",
+      "stats": {
+        "members": "Happy Members",
+        "trainers": "Expert Trainers",
+        "alwaysOpen": "Always Open",
+        "experience": "Years Experience"
+      },
+      "statsValues": {
+        "members": "5000+",
+        "trainers": "10+",
+        "alwaysOpen": "24/7",
+        "experience": "15+"
+      }
+    },
+    "about": {
+      "eyebrow": "About GymSmart",
+      "title": "Building Stronger",
+      "titleHighlight": "Communities since 2010",
+      "missionTitle": "Our Mission & Vision",
+      "mission": "To inspire and empower our community to lead healthier, happier lives through premium fitness facilities, expert guidance, and a supportive environment.",
+      "stats": {
+        "members": "Happy Members",
+        "trainers": "Expert Trainers",
+        "hoursOpen": "Hours Open",
+        "transformations": "Transformations"
+      },
+      "features": {
+        "certifiedTrainers": "10+ Certified Trainers",
+        "alwaysOpen": "24/7 Open",
+        "foodDatabase": "5M+ Food Database",
+        "ladiesOnly": "Ladies Only Sections",
+        "steamLockers": "Steam & Locker Rooms",
+        "dietConsultation": "Free Diet Consultation"
+      },
+      "statsValues": {
+        "members": "5000+",
+        "trainers": "10+",
+        "hoursOpen": "24/7",
+        "transformations": "2000+"
+      }
+    },
+    "bmi": {
+      "eyebrow": "Fitness Tools",
+      "title": "Calculate Your",
+      "titleHighlight": "BMI",
+      "description": "Body Mass Index (BMI) is a simple calculation using a person's height and weight. The formula is BMI = kg/m² where kg is weight in kilograms and m² is height in metres squared.",
+      "heightLabel": "Height (cm)",
+      "heightPlaceholder": "e.g. 175",
+      "heightHelp": "Enter your height in centimetres.",
+      "weightLabel": "Weight (kg)",
+      "weightPlaceholder": "e.g. 70",
+      "weightHelp": "Enter your weight in kilograms.",
+      "calculate": "Calculate BMI",
+      "resultTitle": "Your BMI is",
+      "empty": "Enter your height and weight to see your BMI result here.",
+      "positiveValues": "Please enter positive height and weight values.",
+      "statuses": {
+        "Underweight": "Underweight",
+        "Normal Weight": "Normal Weight",
+        "Overweight": "Overweight",
+        "Obese": "Obese"
+      },
+      "statusDescriptions": {
+        "Underweight": "You should aim to build muscle mass. Check out our Weight Gain programs.",
+        "Normal Weight": "Great job! Maintain your physique with our General Fitness plans.",
+        "Overweight": "Time to burn some calories! Our Weight Loss and Cardio programs are perfect for you.",
+        "Obese": "Let our Personal Trainers guide you safely towards a healthier lifestyle."
+      }
+    },
+    "plans": {
+      "eyebrow": "Membership Plans",
+      "title": "Choose Your",
+      "titleHighlight": "Plan",
+      "description": "Special discounts and No Cost EMI available on long-term plans!",
+      "buyMembership": "Buy Membership",
+      "emi": "Includes EMI Options",
+      "badges": {
+        "popular": "Popular",
+        "bestValue": "Best Value"
+      },
+      "items": {
+        "oneMonth": {
+          "name": "1 Month",
+          "duration": "1 month",
+          "features": {
+            "access": "General Gym Access",
+            "locker": "Locker facility",
+            "cardio": "Cardio equipment"
+          }
+        },
+        "threeMonths": {
+          "name": "3 Months",
+          "duration": "3 months",
+          "features": {
+            "everything": "Everything in 1 Month",
+            "diet": "Basic Diet Guidance",
+            "classes": "Group Classes"
+          }
+        },
+        "sixMonths": {
+          "name": "6 Months",
+          "duration": "6 months",
+          "features": {
+            "everything": "Everything in 3 Months",
+            "pt": "1 PT Session/month",
+            "bodyComp": "Body comp analysis"
+          }
+        },
+        "twelveMonths": {
+          "name": "12 Months",
+          "duration": "Annual",
+          "features": {
+            "everything": "Everything in 6 Months",
+            "free": "2 months FREE",
+            "meal": "Advanced Meal Planning"
+          }
+        },
+        "personalTraining": {
+          "name": "Personal Training",
+          "duration": "/month",
+          "features": {
+            "trainer": "1-on-1 Dedicated Trainer",
+            "diet": "Custom Daily Diet",
+            "priority": "Priority Access"
+          }
+        }
+      }
+    },
+    "trainers": {
+      "eyebrow": "Expert Team",
+      "title": "Meet Your",
+      "titleHighlight": "Trainers",
+      "experience": "Experience: {value} years",
+      "specialization": "Spec: {value}",
+      "items": {
+        "rajesh": {
+          "name": "Rajesh Kumar",
+          "role": "Head Trainer & Nutritionist",
+          "specialization": "Bodybuilding, Strength",
+          "certification": "ACE Certified"
+        },
+        "pooja": {
+          "name": "Pooja Sharma",
+          "role": "Yoga & Wellness Coach",
+          "specialization": "Yoga, Mindfulness",
+          "certification": "RYT 500"
+        },
+        "arjun": {
+          "name": "Arjun Mehta",
+          "role": "CrossFit Specialist",
+          "specialization": "HIIT, CrossFit",
+          "certification": "CrossFit L2"
+        },
+        "sunita": {
+          "name": "Sunita Rao",
+          "role": "Cardio & Zumba Expert",
+          "specialization": "Cardio, Dance Fitness",
+          "certification": "Zumba Pro"
+        }
+      }
+    },
+    "services": {
+      "eyebrow": "Our Programs",
+      "title": "Services",
+      "titleHighlight": "& Programs",
+      "items": {
+        "bodybuilding": {
+          "title": "Bodybuilding",
+          "description": "State-of-the-art equipment for strength & muscle building with expert guidance"
+        },
+        "weightLoss": {
+          "title": "Weight Loss",
+          "description": "Effective fat loss programs combining cardio, diet, and strength training"
+        },
+        "weightGain": {
+          "title": "Weight Gain",
+          "description": "Specialized programs and nutrition for healthy weight and muscle mass gain"
+        },
+        "cardio": {
+          "title": "Cardio",
+          "description": "Modern treadmills, cycles and ellipticals for endurance training"
+        },
+        "crossfit": {
+          "title": "Crossfit",
+          "description": "High-intensity functional training for maximum calorie burn and performance"
+        },
+        "yoga": {
+          "title": "Yoga",
+          "description": "Improve flexibility, mental focus, and core strength in peaceful sessions"
+        },
+        "zumba": {
+          "title": "Zumba",
+          "description": "Fun and energetic dance fitness classes to burn calories with joy"
+        },
+        "personalTraining": {
+          "title": "Personal Training",
+          "description": "One-on-one certified trainer sessions with custom diet & workout plans"
+        },
+        "dietPlan": {
+          "title": "Diet Plan",
+          "description": "5M+ food database with custom meal plans designed for your fitness goals"
+        }
+      }
+    },
+    "schedule": {
+      "eyebrow": "Timetable",
+      "title": "Class",
+      "titleHighlight": "Schedule",
+      "description": "Published class batches designed for morning and evening flexibility.",
+      "caption": "Weekly GymSmart class schedule",
+      "time": "Time",
+      "days": {
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday"
+      },
+      "entries": {
+        "Cardio (Sunita)": "Cardio (Sunita)",
+        "CrossFit (Arjun)": "CrossFit (Arjun)",
+        "Yoga (Pooja)": "Yoga (Pooja)",
+        "Strength (Rajesh)": "Strength (Rajesh)",
+        "Zumba (Sunita)": "Zumba (Sunita)",
+        "Rest": "Rest",
+        "Open Gym": "Open Gym",
+        "Closed": "Closed"
+      }
+    },
+    "gallery": {
+      "eyebrow": "Our Facility",
+      "title": "World-Class",
+      "titleHighlight": "Equipment",
+      "description": "Train in an environment designed for champions.",
+      "items": {
+        "cardio": {
+          "alt": "Cardio Section",
+          "label": "Advanced Cardio"
+        },
+        "weights": {
+          "alt": "Free Weights",
+          "label": "Free Weights Area"
+        },
+        "studio": {
+          "alt": "Yoga & Group Studio",
+          "label": "Yoga & Group Studio"
+        }
+      }
+    },
+    "booking": {
+      "eyebrow": "Quick Action",
+      "title": "Online",
+      "titleHighlight": "Booking",
+      "description": "Book your trial, buy membership, or reserve a slot online in seconds.",
+      "typeLegend": "Booking type",
+      "typeHelp": "Choose the type of booking you want to request.",
+      "options": {
+        "trial": "Book Trial",
+        "membership": "Buy Membership",
+        "class": "Reserve Class Slot"
+      },
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone / WhatsApp",
+      "phonePlaceholder": "9876543210",
+      "date": "Preferred Date",
+      "confirmed": "Booking Confirmed!",
+      "bookAnother": "Book another slot",
+      "errorTitle": "Booking could not be submitted.",
+      "retry": "Try again",
+      "processing": "Processing…",
+      "submit": "Proceed to Book"
+    },
+    "transformations": {
+      "eyebrow": "Real Results",
+      "title": "Transformation",
+      "titleHighlight": "Gallery",
+      "before": "Before",
+      "after": "After",
+      "achievedIn": "Achieved in {value} months",
+      "items": {
+        "rahul": {
+          "name": "Rahul Sharma",
+          "type": "Fat Loss",
+          "review": "Lost 26kg! GymSmart trainers are the best. Life changing experience!"
+        },
+        "priya": {
+          "name": "Priya Patel",
+          "type": "Muscle Gain",
+          "review": "Gained lean muscle, feel so confident now. Best gym in the city!"
+        },
+        "amit": {
+          "name": "Amit Verma",
+          "type": "Body Transformation",
+          "review": "From XL to M size! The diet plans and training were perfectly tailored."
+        }
+      },
+      "weightValue": "{value} kg"
+    },
+    "testimonials": {
+      "title": "What Members",
+      "titleHighlight": "Say",
+      "ratingLabel": "{value} out of {max} stars",
+      "reviewSummary": "Based on 1,500+ reviews on Google & JustDial",
+      "items": {
+        "sneha": {
+          "name": "Sneha Mehta",
+          "text": "GymSmart has completely transformed my lifestyle. The trainers are professional and the facilities are world-class. 100% recommended!",
+          "member": "Premium Member – 2 years"
+        },
+        "vijay": {
+          "name": "Vijay Singh",
+          "text": "Best gym in Mumbai! The 24/7 access is super convenient for my work schedule. Diet plans actually work!",
+          "member": "Gold Member – 1 year"
+        },
+        "anita": {
+          "name": "Anita Gupta",
+          "text": "Lost 15kg in 4 months with the personalized program. The team is super supportive and motivating!",
+          "member": "Annual Member – 3 years"
+        },
+        "rohit": {
+          "name": "Rohit Yadav",
+          "text": "Amazing equipment, clean facilities, and expert trainers. The GymSmart app makes tracking progress so easy!",
+          "member": "Premium Member – 18 months"
+        }
+      }
+    },
+    "contact": {
+      "eyebrow": "Get in Touch",
+      "title": "Contact",
+      "titleHighlight": "Us",
+      "introTitle": "We're here to help you!",
+      "description": "Have questions about our memberships, facilities, or personal training? Fill out the form or reach out directly.",
+      "details": {
+        "location": "Location",
+        "phone": "Phone",
+        "email": "Email",
+        "unavailable": "Not available yet — please use the contact form"
+      },
+      "name": "Your Name",
+      "message": "Message",
+      "confirmed": "Message Sent!",
+      "sendAnother": "Send another message",
+      "errorTitle": "Message could not be sent.",
+      "retry": "Try again",
+      "sending": "Sending…",
+      "submit": "Send Message",
+      "email": "Email Address"
+    },
+    "footer": {
+      "quickLinksTitle": "Quick Links",
+      "programsTitle": "Programs",
+      "newsletterTitle": "Newsletter",
+      "newsletterDescription": "Request newsletter updates through your email client. No subscription is claimed until you send the email request.",
+      "newsletterPlaceholder": "Your email",
+      "newsletterRequest": "Request",
+      "newsletterError": "Please enter a valid email address.",
+      "socialLinks": "GymSmart social links",
+      "social": {
+        "facebook": "Facebook",
+        "instagram": "Instagram",
+        "x": "X",
+        "youtube": "YouTube"
+      },
+      "quickLinks": {
+        "about": "About Us",
+        "plans": "Membership Plans",
+        "trainers": "Trainers",
+        "schedule": "Classes Schedule",
+        "gallery": "Gallery",
+        "contact": "Contact Us"
+      },
+      "contactUs": "Contact Us",
+      "erpPortal": "ERP Login",
+      "superadminLogin": "Superadmin Login",
+      "joinNow": "Join Now",
+      "newsletter": {
+        "subject": "GymSmart Newsletter Subscription Request",
+        "mailtoBody": "Please subscribe this email address: {email}",
+        "destinationUnavailable": "Newsletter email is not configured yet. Please use the contact form."
+      },
+      "socialUnavailable": "Official profile not yet configured"
+    },
+    "errors": {
+      "routeTitle": "We could not load this page.",
+      "routeDescription": "Please try the page again. No internal error details are shown here.",
+      "retry": "Try Again",
+      "bookingRequestFailed": "We could not submit the booking right now. Please try again.",
+      "contactRequestFailed": "We could not send your message right now. Please try again.",
+      "invalidResponse": "We received an unexpected response. Please try again."
+    },
+    "loading": "Loading GymSmart landing page",
+    "shared": {
+      "required": "*",
+      "navigationMenu": "Navigation menu",
+      "unsavedChanges": "You have unsaved changes. Are you sure you want to leave? Your changes will be lost.",
+      "offlineNotice": "You appear to be offline. Reconnect to submit this form.",
+      "unsavedTitle": "Leave this page?",
+      "stayHere": "Stay on page",
+      "leavePage": "Leave page"
+    },
+    "validation": {
+      "name": "Please enter your name.",
+      "email": "Please enter a valid email address.",
+      "phone": "Please enter a valid 10-digit phone number.",
+      "date": "Please select a valid date.",
+      "message": "Please enter your message."
+    },
+    "notFound": {
+      "eyebrow": "Page not found",
+      "title": "This public page is unavailable",
+      "description": "The requested landing route could not be found. Return to the GymSmart landing page to continue.",
+      "back": "Back to GymSmart"
+    }
+  }
+}
