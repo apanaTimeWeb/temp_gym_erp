@@ -1,0 +1,245 @@
+/* globals.css — Smart Gym 360 Design System
+ * SINGLE SOURCE OF TRUTH for all semantic theme tokens.
+ * DO NOT hardcode any of these values in component files.
+ * Structure: :root (light) → .dark (dark) → @theme inline (Tailwind mapping)
+ * ─────────────────────────────────────────────────────────── */
+
+@import "tailwindcss";
+
+/* ── 1. LIGHT MODE (default) ──────────────────────────────── */
+:root {
+  /* Core Surface */
+  --primary: #EAB308;
+  --primary-hover: #CA8A04;
+  --primary-subtle: #FEF9C3;
+  --bg-page: #F4F4F5;
+  --bg-card: #FFFFFF;
+  --bg-sidebar: #FAFAFA;
+  --bg-header: #FFFFFF;
+  --bg-header-translucent: rgba(255, 255, 255, 0.8);
+  --bg-input: #FFFFFF;
+  --bg-floating: #FFFFFF;
+  --bg-overlay: #FAFAFA;
+  --bg-popover: #F4F4F5;
+  --surface-hover: rgba(234, 179, 8, 0.08);
+  --surface-highlight: rgba(234, 179, 8, 0.05);
+  --surface-zebra: #FAFAFA;
+  --overlay-backdrop: rgba(0, 0, 0, 0.6);
+  --focus-ring: #A16207;
+  --border: #E4E4E7;
+  --border-focus: #A16207;
+  /* Text */
+  --text-primary: #000000;
+  --text-secondary: #52525B;
+  --text-disabled: #A1A1AA;
+  --text-on-primary: #111111;
+  --text-on-danger: #FFFFFF;
+  --text-on-warning: #111111;
+  --text-on-success: #FFFFFF;
+  --text-on-info: #FFFFFF;
+  /* Skeleton */
+  --skeleton-base: #E4E4E7;
+  --skeleton-highlight: #F4F4F5;
+  /* Status */
+  --success: #047857;
+  --warning: #F59E0B;
+  --danger: #B91C1C;
+  --info: #1D4ED8;
+  --success-text: #065F46;
+  --success-bg: #D1FAE5;
+  --warning-text: #92400E;
+  --warning-bg: #FEF3C7;
+  --danger-text: #991B1B;
+  --danger-bg: #FEE2E2;
+  --info-text: #1E40AF;
+  --info-bg: #DBEAFE;
+  --purple-text: #7E22CE;
+  --purple-bg: #EDE9FE;
+  /* Pay */
+  --pay-cash-text: #0F766E;
+  --pay-cash-bg: #CCFBF1;
+  --pay-upi-text: #0E7490;
+  --pay-upi-bg: #CFFAFE;
+  --pay-card-text: #334155;
+  --pay-card-bg: #F1F5F9;
+  --pay-bank-text: #0369A1;
+  --pay-bank-bg: #E0F2FE;
+  /* Chart */
+  --chart-primary: #EAB308;
+  --chart-success: #16A34A;
+  --chart-danger: #DC2626;
+  --chart-warning: #F59E0B;
+  --chart-info: #2563EB;
+  --chart-secondary: #7C3AED;
+  --chart-grid: rgba(0, 0, 0, 0.06);
+  --chart-tooltip-bg: #FFFFFF;
+  /* Shadows */
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-popover: 0 4px 16px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.06);
+  --shadow-dialog: 0 20px 60px rgba(0,0,0,0.16), 0 8px 16px rgba(0,0,0,0.08);
+  --shadow-toast: 0 8px 24px rgba(0,0,0,0.12);
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 999px;
+  /* Layout */
+  --layout-header-height: 64px;
+  --layout-sidebar-width: 240px;
+  --layout-sidebar-width-collapsed: 60px;
+  --layout-content-padding: 24px;
+  --control-height: 40px;
+  --touch-target-min: 44px;
+  --table-row-height: 48px;
+  --table-row-height-compact: 32px;
+  --modal-width: 480px;
+  --drawer-width: 480px;
+}
+
+/* ── 2. DARK MODE (Smart Gym 360 Default) ─────────────────── */
+.dark {
+  --primary: #FACC15;
+  --primary-hover: #EAB308;
+  --primary-subtle: rgba(250, 204, 21, 0.15);
+  --bg-page: #050505;
+  --bg-card: #111111;
+  --bg-sidebar: #050505;
+  --bg-header: #111111;
+  --bg-header-translucent: rgba(17, 17, 17, 0.8);
+  --bg-input: #1A1A1A;
+  --bg-floating: #1A1A1A;
+  --bg-overlay: #242424;
+  --bg-popover: #2E2E2E;
+  --surface-hover: rgba(250, 204, 21, 0.08);
+  --surface-highlight: rgba(250, 204, 21, 0.05);
+  --surface-zebra: #141414;
+  --focus-ring: #FACC15;
+  --border: #27272A;
+  --border-focus: #FACC15;
+  --text-primary: #FFFFFF;
+  --text-secondary: #A1A1AA;
+  --text-disabled: #52525B;
+  --text-on-primary: #111111;
+  --skeleton-base: #111111;
+  --skeleton-highlight: #1A1A1A;
+  --success: #15803D;
+  --success-text: #4ADE80;
+  --success-bg: #064E3B;
+  --warning-text: #FBBF24;
+  --warning-bg: #451A03;
+  --danger: #B91C1C;
+  --danger-text: #F87171;
+  --danger-bg: #450A0A;
+  --info-text: #60A5FA;
+  --info-bg: #172554;
+  --purple-text: #D8B4FE;
+  --purple-bg: #3B0764;
+  --pay-cash-text: #5EEAD4;
+  --pay-cash-bg: #134E4A;
+  --pay-upi-text: #67E8F9;
+  --pay-upi-bg: #164E63;
+  --pay-card-text: #CBD5E1;
+  --pay-card-bg: #1E293B;
+  --pay-bank-text: #7DD3FC;
+  --pay-bank-bg: #0C4A6E;
+  --chart-primary: #FACC15;
+  --chart-grid: rgba(255, 255, 255, 0.05);
+  --chart-tooltip-bg: #111111;
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.4);
+  --shadow-popover: 0 4px 16px rgba(0,0,0,0.5);
+  --shadow-dialog: 0 20px 60px rgba(0,0,0,0.6);
+  --shadow-toast: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+/* ── 3. TAILWIND TOKEN MAPPING (@theme inline) ─────────────── */
+/* Maps all CSS variables to Tailwind utility class names      */
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-subtle: var(--primary-subtle);
+  --color-page: var(--bg-page);
+  --color-card: var(--bg-card);
+  --color-sidebar: var(--bg-sidebar);
+  --color-header: var(--bg-header);
+  --color-header-translucent: var(--bg-header-translucent);
+  --color-input: var(--bg-input);
+  --color-floating: var(--bg-floating);
+  --color-overlay: var(--bg-overlay);
+  --color-popover: var(--bg-popover);
+  --color-surface-hover: var(--surface-hover);
+  --color-surface-highlight: var(--surface-highlight);
+  --color-surface-zebra: var(--surface-zebra);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-disabled: var(--text-disabled);
+  --color-on-primary: var(--text-on-primary);
+  --color-on-danger: var(--text-on-danger);
+  --color-on-warning: var(--text-on-warning);
+  --color-on-success: var(--text-on-success);
+  --color-on-info: var(--text-on-info);
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+  --color-success-text: var(--success-text);
+  --color-warning: var(--warning);
+  --color-warning-bg: var(--warning-bg);
+  --color-warning-text: var(--warning-text);
+  --color-danger: var(--danger);
+  --color-danger-bg: var(--danger-bg);
+  --color-danger-text: var(--danger-text);
+  --color-info: var(--info);
+  --color-info-bg: var(--info-bg);
+  --color-info-text: var(--info-text);
+  --color-purple-text: var(--purple-text);
+  --color-purple-bg: var(--purple-bg);
+  --color-pay-cash-text: var(--pay-cash-text);
+  --color-pay-cash-bg: var(--pay-cash-bg);
+  --color-pay-upi-text: var(--pay-upi-text);
+  --color-pay-upi-bg: var(--pay-upi-bg);
+  --color-pay-card-text: var(--pay-card-text);
+  --color-pay-card-bg: var(--pay-card-bg);
+  --color-pay-bank-text: var(--pay-bank-text);
+  --color-pay-bank-bg: var(--pay-bank-bg);
+  --color-skeleton-base: var(--skeleton-base);
+  --color-skeleton-highlight: var(--skeleton-highlight);
+  --color-border: var(--border);
+  --color-border-focus: var(--border-focus);
+  --color-focus-ring: var(--focus-ring);
+  --color-chart-primary: var(--chart-primary);
+  --color-chart-success: var(--chart-success);
+  --color-chart-danger: var(--chart-danger);
+  --color-chart-warning: var(--chart-warning);
+  --color-chart-info: var(--chart-info);
+  --color-chart-secondary: var(--chart-secondary);
+  --color-chart-grid: var(--chart-grid);
+  --color-chart-tooltip-bg: var(--chart-tooltip-bg);
+  --shadow-card: var(--shadow-card);
+  --shadow-popover: var(--shadow-popover);
+  --shadow-dialog: var(--shadow-dialog);
+  --shadow-toast: var(--shadow-toast);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-full: var(--radius-full);
+  --animate-duration-fast: 150ms;
+  --animate-duration-base: 200ms;
+  --animate-duration-slow: 300ms;
+  --animate-duration-xslow: 500ms;
+}
+
+/* ── 4. REDUCED MOTION GLOBAL OVERRIDE ────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── 5. PREMIUM SCROLLBAR ──────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background-color: var(--border); border-radius: var(--radius-full); }
+::-webkit-scrollbar-thumb:hover { background-color: var(--text-disabled); }
