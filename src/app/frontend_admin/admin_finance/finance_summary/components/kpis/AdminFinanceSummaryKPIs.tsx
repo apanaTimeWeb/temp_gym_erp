@@ -3,8 +3,6 @@
 // DATA FLOW: feature data/state and user input → AdminFinanceOverviewKPIs → accessible UI/events routed to owning hooks (admin_finance/finance_summary/components/kpis/AdminFinanceOverviewKPIs.tsx)
 
 import { FINANCE_PAYMENT_STATUSES } from '@/app/frontend_admin/admin_finance/finance_summary/constants/AdminFinanceSummaryConstants';
-import { useTranslations } from 'next-intl';
-
 import { useLocale, useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useAdminFinanceLogic } from '@/app/frontend_admin/admin_finance/finance_summary/hooks/useAdminFinanceSummaryLogic';
