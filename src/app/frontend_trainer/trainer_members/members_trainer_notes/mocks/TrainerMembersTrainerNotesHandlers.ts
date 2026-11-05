@@ -20,7 +20,7 @@ const trainerMockJson = (body: unknown, init?: Parameters<typeof HttpResponse.js
 };
 
 
-const entries = new Map<string, Note[]>([['MEM-001', []]]);
+const entries = new Map<string, any[]>([['MEM-001', []]]);
 const idempotentResponses = new Map<string, unknown>();
 export const trainerNotesMockHandlers = [
   http.get(`${env.NEXT_PUBLIC_API_URL}${TRAINER_NOTES_API.MOCK_MEMBER}`, ({ params }) => {

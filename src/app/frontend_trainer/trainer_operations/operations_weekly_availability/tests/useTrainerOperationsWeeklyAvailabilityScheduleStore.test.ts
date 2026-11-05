@@ -13,7 +13,7 @@ describe('useTrainerScheduleStore', () => {
     const { result } = renderHook(() => useTrainerScheduleStore());
     expect(result.current.activeTab).toBe('availability');
 
-    act(() => result.current.setActiveTab('leaves'));
+    act(() => (result.current.setActiveTab as any)('leaves'));
     expect(result.current.activeTab).toBe('leaves');
   });
 

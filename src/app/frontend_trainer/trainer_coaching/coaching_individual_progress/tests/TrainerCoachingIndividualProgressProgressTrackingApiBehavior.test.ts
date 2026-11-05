@@ -20,7 +20,7 @@ describe('Trainer progress API behavior', () => {
   });
   it('runs create and delete through the module API paths', async () => {
     apiFetch.mockResolvedValueOnce({ success: true, requestId: 'progress-create-1', message: 'Created', data: TRAINER_PROGRESS_TRACKING_MOCK_PROGRESS_ENTRIES[0] });
-    await createTrainerProgressTrackingProgressEntry('1', { date: '2026-09-17', weightKg: 83.5, heightCm: 175 }, 'progress-create-test-key');
+    await createTrainerProgressTrackingProgressEntry('1', { date: '2026-09-17', weightKg: 83.5, heightCm: 175 } as any, 'progress-create-test-key');
     expect(apiFetch.mock.calls[0][1]).toMatchObject({ method: 'POST' });
     apiFetch.mockResolvedValueOnce({ success: true, requestId: 'progress-delete-1', message: 'Deleted', data: null });
     await deleteTrainerProgressTrackingProgressEntry('1', 'prog_1', 'progress-delete-test-key');

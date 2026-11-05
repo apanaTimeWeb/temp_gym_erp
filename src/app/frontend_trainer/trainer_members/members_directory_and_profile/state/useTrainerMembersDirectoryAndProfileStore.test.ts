@@ -24,7 +24,7 @@ describe('useTrainerMembersStore', () => {
   it('opens and clears the message modal payload', () => {
     const { result } = renderHook(() => useTrainerMembersStore());
 
-    act(() => result.current.openMsg('Member 42', 'whatsapp', 'Hello'));
+    act(() => (result.current.openMsg as any)('Member 42', 'whatsapp', 'Hello'));
     expect(result.current.msgModal).toMatchObject({
       open: true,
       recipient: 'Member 42',

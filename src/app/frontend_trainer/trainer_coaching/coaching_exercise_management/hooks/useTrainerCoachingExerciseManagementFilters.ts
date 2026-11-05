@@ -25,7 +25,7 @@ export function useTrainerWorkoutFilters(options: { canonicalizeUrl?: boolean } 
 
   const currentParams = new URLSearchParams(serializedParams);
   const isExerciseRoute = pathname.includes('/coaching_exercise_management');
-  const tab = 'exercises' as const;
+  const tab: string = 'exercises';
   const search = currentParams.get('search') ?? '';
   const categoryValues = new Set((tab === 'plans' ? TRAINER_WORKOUT_CATEGORY_OPTIONS.WORKOUT : TRAINER_WORKOUT_CATEGORY_OPTIONS.EXERCISE).map((option) => option.value));
   const rawCategory = currentParams.get('category') ?? 'All';

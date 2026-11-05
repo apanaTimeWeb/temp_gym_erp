@@ -18,7 +18,7 @@ describe('useTrainerDashboardQuery', () => {
     useSearchParams.mockReturnValue(new URLSearchParams(''));
     const { useTrainerDashboardQuery } = await import('@/app/frontend_trainer/trainer_dashboard/dashboard_overview/hooks/useTrainerDashboardOverviewQuery');
 
-    const result = useTrainerDashboardQuery();
+    const result = useTrainerDashboardQuery() as any;
 
     expect(JSON.stringify(result.queryKey)).toContain('this_month');
     expect(result.enabled).toBe(true);
@@ -28,7 +28,7 @@ describe('useTrainerDashboardQuery', () => {
     useSearchParams.mockReturnValue(new URLSearchParams(`range=${range}`));
     const { useTrainerDashboardQuery } = await import('@/app/frontend_trainer/trainer_dashboard/dashboard_overview/hooks/useTrainerDashboardOverviewQuery');
 
-    const result = useTrainerDashboardQuery();
+    const result = useTrainerDashboardQuery() as any;
 
     expect(JSON.stringify(result.queryKey)).toContain(range);
     expect(result.enabled).toBe(true);
@@ -38,7 +38,7 @@ describe('useTrainerDashboardQuery', () => {
     useSearchParams.mockReturnValue(new URLSearchParams('range=last_30_days&startDate=2026-09-01&endDate=2026-09-30'));
     const { useTrainerDashboardQuery } = await import('@/app/frontend_trainer/trainer_dashboard/dashboard_overview/hooks/useTrainerDashboardOverviewQuery');
 
-    const result = useTrainerDashboardQuery();
+    const result = useTrainerDashboardQuery() as any;
     const serializedKey = JSON.stringify(result.queryKey);
 
     expect(serializedKey).toContain('this_month');
@@ -51,7 +51,7 @@ describe('useTrainerDashboardQuery', () => {
     useSearchParams.mockReturnValue(new URLSearchParams('range=custom&startDate=2026-09-01'));
     const { useTrainerDashboardQuery } = await import('@/app/frontend_trainer/trainer_dashboard/dashboard_overview/hooks/useTrainerDashboardOverviewQuery');
 
-    const result = useTrainerDashboardQuery();
+    const result = useTrainerDashboardQuery() as any;
 
     expect(result.queryKey).toEqual(['trainer_dashboard', 'stats', { range: 'custom', startDate: '2026-09-01', endDate: '' }]);
     expect(result.enabled).toBe(false);
@@ -61,7 +61,7 @@ describe('useTrainerDashboardQuery', () => {
     useSearchParams.mockReturnValue(new URLSearchParams('range=custom&startDate=2026-10-01&endDate=2026-09-30'));
     const { useTrainerDashboardQuery } = await import('@/app/frontend_trainer/trainer_dashboard/dashboard_overview/hooks/useTrainerDashboardOverviewQuery');
 
-    const result = useTrainerDashboardQuery();
+    const result = useTrainerDashboardQuery() as any;
 
     expect(result.enabled).toBe(false);
   });
@@ -70,7 +70,7 @@ describe('useTrainerDashboardQuery', () => {
     useSearchParams.mockReturnValue(new URLSearchParams('range=custom&startDate=2026-09-01&endDate=2026-09-30'));
     const { useTrainerDashboardQuery } = await import('@/app/frontend_trainer/trainer_dashboard/dashboard_overview/hooks/useTrainerDashboardOverviewQuery');
 
-    const result = useTrainerDashboardQuery();
+    const result = useTrainerDashboardQuery() as any;
 
     expect(result.enabled).toBe(true);
     expect(JSON.stringify(result.queryKey)).toContain('2026-09-01');
@@ -86,7 +86,7 @@ describe('useTrainerDashboardQuery', () => {
     useSearchParams.mockReturnValue(new URLSearchParams(query));
     const { useTrainerDashboardQuery } = await import('@/app/frontend_trainer/trainer_dashboard/dashboard_overview/hooks/useTrainerDashboardOverviewQuery');
 
-    const result = useTrainerDashboardQuery();
+    const result = useTrainerDashboardQuery() as any;
 
     expect(result.enabled).toBe(false);
   });

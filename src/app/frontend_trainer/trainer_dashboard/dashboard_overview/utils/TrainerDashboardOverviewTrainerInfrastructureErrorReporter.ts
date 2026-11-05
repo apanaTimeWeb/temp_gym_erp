@@ -1,6 +1,6 @@
+"use client";
 import type { TrainerInfrastructureErrorReport } from '../types/TrainerDashboardDashboardOverviewAuxiliaryTypes';
 // AUTONOMOUS COPY: Module-local, WET-isolated copy of original trainer-infrastructure primitive.
-"use client";
 // RESPONSIBILITY: Sends sanitized Trainer error telemetry to the parent application's approved monitoring adapter without exposing diagnostics in UI.
 
 /**

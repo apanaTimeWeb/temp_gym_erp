@@ -19,5 +19,6 @@ export const TRAINER_SCHEDULE_URLS = {
   API: {
     SCHEDULE: TRAINER_SCHEDULE_API_SCHEDULE,
     AVAILABILITY: TRAINER_SCHEDULE_API_AVAILABILITY,
+    LEAVES: '/trainer/trainer_schedule/leaves' as const,
   } as const,
 } as const;

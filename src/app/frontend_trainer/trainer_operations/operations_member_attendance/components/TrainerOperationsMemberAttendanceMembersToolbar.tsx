@@ -9,7 +9,7 @@ import { TRAINER_ATTENDANCE_DATE_FILTER_OPTIONS } from '../utils/TrainerOperatio
 import type { useTrainerAttendanceMain } from '../hooks/useTrainerOperationsMemberAttendanceAttendanceMain';
 
 
-export default function TrainerOperationsMemberAttendanceMembersToolbar({ model }: { model: Model }) {
+export default function TrainerOperationsMemberAttendanceMembersToolbar({ model }: { model: TrainerOperationsMemberAttendanceToolbarModel }) {
   const t = useTranslations('TRAINER_ATTENDANCE');
   const [search, setSearch] = useState(model.search);
   // Keep the URL filter stable during rapid keyboard input (minimum 300ms debounce).

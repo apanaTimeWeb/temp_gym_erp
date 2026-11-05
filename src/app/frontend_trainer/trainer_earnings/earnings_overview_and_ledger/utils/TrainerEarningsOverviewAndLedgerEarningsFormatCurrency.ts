@@ -7,7 +7,7 @@
  */
 export const TrainerEarningsFormatCurrency = (amount: number, currency: string, locale: string): string => {
   const formatter = new Intl.NumberFormat(locale, { style: 'currency', currency });
-  const fractionDigits = formatter.resolvedOptions().maximumFractionDigits;
+  const fractionDigits = formatter.resolvedOptions().maximumFractionDigits ?? 2;
   const divisor = 10 ** fractionDigits;
   return formatter.format(amount / divisor);
 };

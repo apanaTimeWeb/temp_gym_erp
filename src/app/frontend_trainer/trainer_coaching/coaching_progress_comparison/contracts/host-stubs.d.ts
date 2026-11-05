@@ -39,6 +39,8 @@ declare module '@/lib/api' {
 
   export type ApiResponse<T> = ApiSuccess<T> | ApiFailure;
   export function apiFetch<T>(endpoint: string, options?: RequestInit): Promise<ApiResponse<T>>;
+  export function getUser(): any;
+  export function logout(): void;
 }
 
 declare module '@/lib/logger' {

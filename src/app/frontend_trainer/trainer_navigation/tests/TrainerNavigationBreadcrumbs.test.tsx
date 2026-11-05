@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const routeState = vi.hoisted(() => ({ pathname: '/frontend_trainer/trainer_account/account_personal_profile' }));
 vi.mock('next-intl', () => ({ useTranslations: () => (key: string) => ({
-  TEXT_BREADCRUMBS: 'Breadcrumb', TEXT_NAV_DASHBOARD: 'Dashboard', TEXT_PROFILE_TITLE: 'My Profile',
+  TEXT_BREADCRUMBS: 'Breadcrumb', TEXT_NAV_DASHBOARD: 'Dashboard', TEXT_DASHBOARD_TITLE: 'Dashboard', TEXT_PROFILE_TITLE: 'My Profile',
   TEXT_DEFAULT_SHELL_TITLE: 'Trainer workspace',
 }[key] ?? key) }));
 vi.mock('next/navigation', () => ({ usePathname: () => routeState.pathname }));

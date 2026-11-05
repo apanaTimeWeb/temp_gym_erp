@@ -25,7 +25,7 @@ describe('useTrainerEarningsQuery', () => {
     useSearchParams.mockReturnValue(new URLSearchParams('search=Rahul&range=custom&startDate=2026-09-01&endDate=2026-09-30&page=3&sortBy=date&sortDirection=asc'));
     useQuery.mockImplementation((options) => options);
     const { useTrainerEarningsQuery } = await import('@/app/frontend_trainer/trainer_earnings/earnings_overview_and_ledger/hooks/useTrainerEarningsOverviewAndLedgerEarningsQuery');
-    const result = useTrainerEarningsQuery();
+    const result = useTrainerEarningsQuery() as any;
     expect(JSON.stringify(result.queryKey)).toContain('Rahul');
     expect(JSON.stringify(result.queryKey)).toContain('2026-09-30');
     expect(result.enabled).toBe(true);

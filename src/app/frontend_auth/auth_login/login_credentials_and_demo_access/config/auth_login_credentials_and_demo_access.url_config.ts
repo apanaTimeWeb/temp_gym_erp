@@ -14,7 +14,7 @@ export const AuthUrlConfig = {
     LANDING: '/frontend_public/public_landing',
     ADMIN_DASHBOARD: '/frontend_admin/admin_dashboard',
     MANAGER_DASHBOARD: '/frontend_manager/manager_dashboard',
-    TRAINER_DASHBOARD: '/frontend_trainer/trainer_dashboard',
+    TRAINER_DASHBOARD: '/frontend_trainer/trainer_dashboard/dashboard_overview',
     SUPERADMIN_DASHBOARD: '/frontend_superadmin/superadmin_dashboard',
   },
   PROXY_API: {

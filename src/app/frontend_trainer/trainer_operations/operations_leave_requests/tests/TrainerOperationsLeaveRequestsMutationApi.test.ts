@@ -14,7 +14,7 @@ describe('Leave Request owned mutation API', () => {
   expect(apiFetch).toHaveBeenCalledWith(TRAINER_SCHEDULE_URLS.API.LEAVES,expect.objectContaining({method:'POST',headers:expect.objectContaining({'Idempotency-Key':'a550b8aa-87a4-42d2-90a8-26602f28f2ec'})}));
  });
  it('rejects incomplete canonical failure envelope', async () => {
-  vi.mocked(apiFetch).mockResolvedValue({success:false,requestId:'req-leave',message:'invalid',data:null,statusCode:422});
+  vi.mocked(apiFetch).mockResolvedValue({success:false,requestId:'req-leave',message:'invalid',data:null,statusCode:422} as any);
   await expect(TrainerScheduleApi.requestLeave(dto,'a550b8aa-87a4-42d2-90a8-26602f28f2ec')).rejects.toThrow();
  });
 });

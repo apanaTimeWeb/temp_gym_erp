@@ -19,7 +19,7 @@ describe('Trainer workout API behavior', () => {
     const result = await TrainerWorkoutApi.createWorkout({ name: 'Full Body Fundamentals', level: 'Beginner', days: 3, exercises: 8, focus: 'General Fitness', duration: '45 mins' }, 'workout-create-test-key');
     expect(apiFetch.mock.calls[0][1]?.headers).toMatchObject({ 'Idempotency-Key': 'workout-create-test-key' });
     expect(result.message).toBe('Workout created');
-    expect(result.data.id).toBe('wk-1');
+    expect(result.data?.id).toBe('wk-1');
   });
 
   it('covers workout PATCH and DELETE contracts', async () => {

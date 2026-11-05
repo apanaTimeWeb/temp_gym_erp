@@ -47,7 +47,7 @@ export default function TrainerAccountAccountSecurityHarness<TData>({
     queryClient.clear();
   };
 
-  const moduleContent = {children};
+  const moduleContent = <>{children}</>;
   const themedContent = themeProvider ? themeProvider(moduleContent) : moduleContent;
   const sessionContent = sessionProvider ? sessionProvider(themedContent) : themedContent;
 

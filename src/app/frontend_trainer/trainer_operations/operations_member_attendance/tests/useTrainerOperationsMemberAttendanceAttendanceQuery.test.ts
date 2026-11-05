@@ -31,7 +31,7 @@ describe('useTrainerAttendanceQuery', () => {
 
   it('propagates attendance tab, search, date, pagination, sorting, and trainer identity into the query contract', async () => {
     const { useTrainerAttendanceRecordsQuery } = await import('@/app/frontend_trainer/trainer_operations/operations_member_attendance/hooks/useTrainerOperationsMemberAttendanceAttendanceQuery');
-    const result = useTrainerAttendanceRecordsQuery({ tab: 'MY_ATTENDANCE', search: 'Rahul', filterDate: '2026-09-30', currentPage: 2, sortBy: 'date', sortDirection: 'asc' });
+    const result = useTrainerAttendanceRecordsQuery({ tab: 'MY_ATTENDANCE', search: 'Rahul', filterDate: '2026-09-30', currentPage: 2, sortBy: 'date', sortDirection: 'asc' }) as any;
     expect(result.queryFn).toBeTypeOf('function');
     expect(result.queryKey[0]).toBe('trainer_attendance');
     expect(result.queryKey[1]).toBe('records');
@@ -43,13 +43,13 @@ describe('useTrainerAttendanceQuery', () => {
 
   it('selects the correct stats and member query contracts', async () => {
     const { useTrainerAttendanceStatsQuery, useTrainerAttendanceMembersQuery } = await import('@/app/frontend_trainer/trainer_operations/operations_member_attendance/hooks/useTrainerOperationsMemberAttendanceAttendanceQuery');
-    expect(useTrainerAttendanceStatsQuery().queryKey).toEqual(['trainer_attendance', 'stats']);
-    expect(useTrainerAttendanceMembersQuery().queryKey).toEqual(['trainer_attendance', 'members']);
+    expect((useTrainerAttendanceStatsQuery() as any).queryKey).toEqual(['trainer_attendance', 'stats']);
+    expect((useTrainerAttendanceMembersQuery() as any).queryKey).toEqual(['trainer_attendance', 'members']);
   });
 
   it('keys complete My Attendance history by trainer identity', async () => {
     const { useTrainerAttendanceMyHistoryQuery } = await import('@/app/frontend_trainer/trainer_operations/operations_member_attendance/hooks/useTrainerOperationsMemberAttendanceAttendanceQuery');
-    const result = useTrainerAttendanceMyHistoryQuery(true);
+    const result = useTrainerAttendanceMyHistoryQuery(true) as any;
 
     expect(result.queryKey).toEqual(['trainer_attendance', 'my-history', 'trainer-1']);
     expect(result.enabled).toBe(true);
@@ -60,7 +60,7 @@ describe('useTrainerAttendanceQuery', () => {
   it('refuses an unscoped My Attendance request when trainer identity is unavailable', async () => {
     getUser.mockReturnValueOnce(null);
     const { useTrainerAttendanceRecordsQuery } = await import('@/app/frontend_trainer/trainer_operations/operations_member_attendance/hooks/useTrainerOperationsMemberAttendanceAttendanceQuery');
-    const result = useTrainerAttendanceRecordsQuery({ tab: 'MY_ATTENDANCE', search: '', filterDate: 'ALL_TIME', currentPage: 1, sortBy: 'date', sortDirection: 'asc' });
+    const result = useTrainerAttendanceRecordsQuery({ tab: 'MY_ATTENDANCE', search: '', filterDate: 'ALL_TIME', currentPage: 1, sortBy: 'date', sortDirection: 'asc' }) as any;
 
     await expect(result.queryFn()).rejects.toThrow(/authenticated trainer identity/i);
     expect(fetchTrainerAttendanceRecords).not.toHaveBeenCalled();

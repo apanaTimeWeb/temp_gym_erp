@@ -62,7 +62,7 @@ describe('useTrainerAttendanceMain', () => {
 
   it('executes attendance mutations with idempotency keys and closes the modal on success', async () => {
     const { result } = renderHook(() => useTrainerAttendanceMain());
-    const dto = { type: 'MEMBER', memberId: 'member-1', date: '2026-10-04', checkIn: '06:00' };
+    const dto = { type: 'MEMBER' as const, memberId: 'member-1', date: '2026-10-04', checkIn: '06:00' };
 
     await act(async () => {
       await result.current.handleMarkAttendance(dto);
@@ -78,7 +78,7 @@ describe('useTrainerAttendanceMain', () => {
   it('keeps the modal open and reports the backend error when attendance recording fails', async () => {
     markAttendance.mockRejectedValueOnce(new Error('Duplicate record'));
     const { result } = renderHook(() => useTrainerAttendanceMain());
-    const dto = { type: 'MEMBER', memberId: 'member-2', date: '2026-10-04', checkIn: '06:00' };
+    const dto = { type: 'MEMBER' as const, memberId: 'member-2', date: '2026-10-04', checkIn: '06:00' };
 
     await act(async () => {
       await result.current.handleMarkAttendance(dto);

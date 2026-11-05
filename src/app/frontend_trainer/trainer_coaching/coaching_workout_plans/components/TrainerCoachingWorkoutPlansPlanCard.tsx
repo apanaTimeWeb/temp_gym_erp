@@ -40,10 +40,11 @@ export default function TrainerWorkoutPlanCard({
 }: TrainerWorkoutPlanCardProps) {
   const locale = useLocale();
   const t = useTranslations('TRAINER_WORKOUT');
-  const tags: string[] = Array.isArray(plan.tags)
-    ? plan.tags
-    : typeof plan.tags === 'string'
-      ? plan.tags.split(',').map((tag) => tag.trim()).filter(Boolean)
+  const rawTags = plan.tags as unknown;
+  const tags: string[] = Array.isArray(rawTags)
+    ? (rawTags as string[])
+    : typeof rawTags === 'string'
+      ? rawTags.split(',').map((tag: string) => tag.trim()).filter(Boolean)
       : [];
 
   return (

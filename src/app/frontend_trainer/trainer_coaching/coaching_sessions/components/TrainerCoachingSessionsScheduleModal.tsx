@@ -138,7 +138,7 @@ export default function TrainerSessionsScheduleModal({
             <TrainerInfrastructureSearchableDropdown
               options={durationOptions}
               value={selectedDuration}
-              onChange={(val: string | number) => setValue('duration', String(val), { shouldValidate: true })}
+              onChange={(val: string | number) => setValue('duration', val as any, { shouldValidate: true })}
               placeholder={t("TEXT_SELECT_DURATION")}
               ariaLabel={t("TEXT_DURATION")}
              ariaInvalid={Boolean(errors.duration)}

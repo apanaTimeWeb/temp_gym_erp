@@ -23,7 +23,10 @@ class TrainerWorkoutApiError extends Error {
 
 const parseTrainerWorkoutResponse = <T extends z.ZodTypeAny>(raw: ApiResponse<unknown>, dataSchema: T) => {
   const response = TrainerInfrastructureApiResponseSchema(dataSchema).parse(raw);
-  if (!response.success) throw new TrainerWorkoutApiError(response.message, response.errorCode, response.statusCode);
+  if (!response.success) {
+    const err = response as { message: string; errorCode?: string; statusCode?: number };
+    throw new TrainerWorkoutApiError(err.message, err.errorCode ?? 'UNKNOWN', err.statusCode ?? 500);
+  }
   return response;
 };
 

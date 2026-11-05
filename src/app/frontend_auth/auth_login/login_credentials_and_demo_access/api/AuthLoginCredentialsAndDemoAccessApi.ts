@@ -50,7 +50,7 @@ function parseAuthSessionResponse(rawPayload: unknown, httpStatus: number, httpO
 async function postAuthSession(endpoint: string, body: unknown, idempotencyKey: string): Promise<AuthUser> {
   let response: Response;
   try {
-    response = await apiFetch(endpoint, {
+    response = (await apiFetch(endpoint, {
       method: 'POST',
       headers: {
         [AuthSessionConstants.HEADERS.CONTENT_TYPE]: AuthSessionConstants.HEADERS.CONTENT_TYPE_JSON,
@@ -58,7 +58,7 @@ async function postAuthSession(endpoint: string, body: unknown, idempotencyKey: 
       },
       body: JSON.stringify(body),
       cache: 'no-store',
-    });
+    })) as unknown as Response;
   } catch {
     throw new AuthApiError('', AuthErrorConstants.CODE.RESPONSE_UNREADABLE);
   }

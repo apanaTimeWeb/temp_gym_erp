@@ -33,7 +33,7 @@ import type { TrainerSessionsCreateSessionDto } from '@/app/frontend_trainer/tra
  */
 export const useTrainerSessionsScheduleForm = (onSubmit: (dto: TrainerSessionsCreateSessionDto) => Promise<boolean>) => {
   const form = useForm<TrainerSessionsScheduleFormValues>({
-    resolver: zodResolver(TrainerSessionsScheduleFormSchema),
+    resolver: zodResolver(TrainerSessionsScheduleFormSchema) as any,
     defaultValues: {
       type: TRAINER_SESSIONS_SESSION_TYPE.PT,
       memberId: '',

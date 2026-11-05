@@ -7,9 +7,9 @@ import { TRAINER_NAVIGATION_URL_CONFIG } from '@/app/frontend_trainer/trainer_na
 
 describe('Trainer navigation URL contracts', () => {
   it('exposes a typed socket consumer without taking ownership of host transport', () => {
-    const hook = readFileSync(resolve(process.cwd(), 'frontend_trainer/trainer_navigation/hooks/useTrainerNavigationSocket.ts'), 'utf8');
-    const provider = readFileSync(resolve(process.cwd(), 'frontend_trainer/trainer_navigation/components/TrainerNavigationSocketProvider.tsx'), 'utf8');
-    const client = readFileSync(resolve(process.cwd(), 'frontend_trainer/trainer_navigation/api/TrainerNavigationSocketClient.ts'), 'utf8');
+    const hook = readFileSync(resolve(process.cwd(), 'src/app/frontend_trainer/trainer_navigation/hooks/useTrainerNavigationSocket.ts'), 'utf8');
+    const provider = readFileSync(resolve(process.cwd(), 'src/app/frontend_trainer/trainer_navigation/components/TrainerNavigationSocketProvider.tsx'), 'utf8');
+    const client = readFileSync(resolve(process.cwd(), 'src/app/frontend_trainer/trainer_navigation/api/TrainerNavigationSocketClient.ts'), 'utf8');
     expect(hook).toContain('useTrainerNavigationSocket');
     expect(hook).toContain('TrainerNavigationSocketContext');
     expect(provider).toMatch(/export\s*\/\*[\s\S]*?\*\/\s*const TrainerNavigationSocketContext/);

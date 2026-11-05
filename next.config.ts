@@ -47,6 +47,26 @@ const nextConfig: NextConfig = {
         destination: "/frontend_public/public_landing",
         permanent: false,
       },
+      {
+        source: "/trainer",
+        destination: "/frontend_trainer/trainer_dashboard/dashboard_overview",
+        permanent: false,
+      },
+      {
+        source: "/trainer/dashboard",
+        destination: "/frontend_trainer/trainer_dashboard/dashboard_overview",
+        permanent: false,
+      },
+      {
+        source: "/frontend_trainer",
+        destination: "/frontend_trainer/trainer_dashboard/dashboard_overview",
+        permanent: false,
+      },
+      {
+        source: "/frontend_trainer/trainer_dashboard",
+        destination: "/frontend_trainer/trainer_dashboard/dashboard_overview",
+        permanent: false,
+      },
     ];
   },
 };

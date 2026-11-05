@@ -27,7 +27,7 @@ vi.mock('@/app/frontend_trainer/trainer_members/members_directory_and_profile/ap
 describe('useTrainerMembersQuery', () => {
   it('creates the canonical list key and executes the validated Members API query', async () => {
     capturedQueries.length = 0;
-    const params = { search: 'prahlad', status: 'ACTIVE' };
+    const params: any = { search: 'prahlad', status: 'ACTIVE' };
     renderHook(() => useTrainerMembersQuery(params));
 
     expect(capturedQueries[0]?.queryKey).toEqual(['trainer_members', 'list', params]);

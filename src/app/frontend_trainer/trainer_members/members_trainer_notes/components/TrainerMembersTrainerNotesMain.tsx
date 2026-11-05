@@ -18,14 +18,14 @@ export default function TrainerMembersTrainerNotesMain() {
   const params = useSearchParams();
   const router = useRouter();
   const [confirmNavigation, setConfirmNavigation] = useState(false);
-  const [pendingDestination, setPendingDestination] = useState(TRAINER_NOTES_ROUTES.DIRECTORY);
+  const [pendingDestination, setPendingDestination] = useState<string>(TRAINER_NOTES_ROUTES.DIRECTORY);
   const pendingNavigation = useRef<{ url: string; traversalKey?: string } | null>(null);
   const allowedDestination = useRef<string | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const memberId = params.get(TRAINER_NOTES_QUERY.MEMBER_ID)?.trim() ?? '';
   const { detail, addNote } = useTrainerMembersTrainerNotes(memberId);
   const submission = useRef<{ memberId: string; text: string; key: string } | null>(null);
-  const { register, handleSubmit, reset, formState: { errors, isDirty } } = useForm<Values>({
+  const { register, handleSubmit, reset, formState: { errors, isDirty } } = useForm<TrainerMembersTrainerNotesFormValues>({
     resolver: zodResolver(TrainerMembersTrainerNotesFormSchema), defaultValues: { text: '' },
   });
   useEffect(() => {
@@ -54,7 +54,7 @@ export default function TrainerMembersTrainerNotesMain() {
       setConfirmNavigation(true);
     };
     const interceptNavigation = (native: Event) => {
-      const event = native as Navigate;
+      const event = native as TrainerMembersTrainerNotesNavigateEvent;
       if (!event.cancelable || !event.canIntercept || !event.destination?.url) return;
       const destination = new URL(event.destination.url);
       if (destination.origin !== window.location.origin || destination.href === window.location.href) return;

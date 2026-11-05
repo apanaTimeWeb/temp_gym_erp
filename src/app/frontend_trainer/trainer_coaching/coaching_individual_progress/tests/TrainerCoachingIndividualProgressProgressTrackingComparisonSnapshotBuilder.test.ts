@@ -16,8 +16,8 @@ describe('TrainerProgressTrackingComparisonSnapshotBuilder', () => {
 
   it('sorts entries and derives changes from the earliest to latest records', () => {
     const snapshot = TrainerProgressTrackingComparisonSnapshotBuilder('member-1', 'Member One', [
-      { id: '2', memberId: 'member-1', date: '2026-02-01', weightKg: 79, heightCm: 170, bmi: 27, bodyFatPercent: 23, muscleMassKg: 32, waistCm: 90, notes: '' },
-      { id: '1', memberId: 'member-1', date: '2026-01-01', weightKg: 82, heightCm: 170, bmi: 28, bodyFatPercent: 25, muscleMassKg: 31, waistCm: 92, notes: '' },
+      { id: '2', memberId: 'member-1', date: '2026-02-01', weightKg: 79, heightCm: 170, bmi: 27, bodyFatPercent: 23, muscleMassKg: 32, waistCm: 90, notes: '', recordedBy: 'trainer-1' },
+      { id: '1', memberId: 'member-1', date: '2026-01-01', weightKg: 82, heightCm: 170, bmi: 28, bodyFatPercent: 25, muscleMassKg: 31, waistCm: 92, notes: '', recordedBy: 'trainer-1' },
     ]);
     expect(snapshot.totalEntries).toBe(2);
     expect(snapshot.latestWeightKg).toBe(79);

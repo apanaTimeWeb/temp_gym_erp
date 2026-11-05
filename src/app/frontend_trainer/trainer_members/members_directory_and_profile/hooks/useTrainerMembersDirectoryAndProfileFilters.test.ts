@@ -43,8 +43,8 @@ describe('useTrainerMembersFilters', () => {
     const { result } = renderHook(() => useTrainerMembersFilters());
     act(() => result.current.setStatusFilter(TRAINER_MEMBERS_MEMBER_STATUS.ACTIVE));
     expect(push).toHaveBeenCalledWith(expect.stringContaining(`${TRAINER_MEMBERS_URLS.ROUTES.LIST}?`));
-    expect(push.mock.calls.at(-1)[0]).toContain('status=${TRAINER_MEMBERS_MEMBER_STATUS.ACTIVE}');
-    expect(push.mock.calls.at(-1)[0]).toContain('page=1');
+    expect(push.mock.calls.at(-1)![0]).toContain(`status=${TRAINER_MEMBERS_MEMBER_STATUS.ACTIVE}`);
+    expect(push.mock.calls.at(-1)![0]).toContain('page=1');
   });
 
   it('toggles sort direction for the same field', async () => {
@@ -53,6 +53,6 @@ describe('useTrainerMembersFilters', () => {
     const { useTrainerMembersFilters } = await import('@/app/frontend_trainer/trainer_members/members_directory_and_profile/hooks/useTrainerMembersDirectoryAndProfileFilters');
     const { result } = renderHook(() => useTrainerMembersFilters());
     act(() => result.current.setSort('name'));
-    expect(push.mock.calls.at(-1)[0]).toContain('sortDirection=desc');
+    expect(push.mock.calls.at(-1)![0]).toContain('sortDirection=desc');
   });
 });
