@@ -4,7 +4,9 @@
  * Structure: :root (light) → .dark (dark) → @theme inline (Tailwind mapping)
  * ─────────────────────────────────────────────────────────── */
 
-@import "tailwindcss";
+@import "tailwindcss" source(none);
+
+@source "../**/*.{ts,tsx,js,jsx}";
 
 /* ── 1. LIGHT MODE (default) ──────────────────────────────── */
 :root {
