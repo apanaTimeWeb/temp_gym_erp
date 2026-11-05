@@ -3,7 +3,7 @@
 }
 
 @media print {
-  :global(body) {
+  body {
     background: Canvas !important;
     color: CanvasText !important;
   }
