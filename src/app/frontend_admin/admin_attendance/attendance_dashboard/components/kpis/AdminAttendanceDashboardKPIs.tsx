@@ -7,6 +7,7 @@ import { useLocale } from 'next-intl';
 import { formatNumber } from '@/app/frontend_admin/admin_attendance/attendance_dashboard/utils/AdminAttendanceDashboardFormatters';
 
 import { CalendarCheck, UserCheck, Clock, TrendingUp } from 'lucide-react';
+import { useAdminAttendanceStore } from '@/app/frontend_admin/admin_attendance/attendance_dashboard/state/useAdminAttendanceDashboardStore';
 import { useAdminAttendanceLogic } from '@/app/frontend_admin/admin_attendance/attendance_dashboard/hooks/useAdminAttendanceDashboardLogic';
 import { getAdminAttendanceTrendDirection } from '@/app/frontend_admin/admin_attendance/attendance_dashboard/utils/AdminAttendanceDashboardTrendDirection';
 
@@ -20,14 +21,23 @@ import { getAdminAttendanceTrendDirection } from '@/app/frontend_admin/admin_att
 export default function AdminAttendanceDashboardKPIs() {
   const t = useTranslations();
   const locale = useLocale();
+  const { dateRange } = useAdminAttendanceStore();
   const { summary } = useAdminAttendanceLogic();
   if (!summary) return null;
 
   const trendDirection = getAdminAttendanceTrendDirection(summary.trendVsLastWeek);
 
+  const periodTitle = (() => {
+    if (dateRange === 'last_month') return "Last Month Total";
+    if (dateRange === 'this_month') return "This Month Total";
+    if (dateRange === 'this_week') return "This Week Total";
+    if (dateRange === 'yesterday') return "Yesterday Total";
+    return t('attendance.AdminAuditRepair.today');
+  })();
+
   const cards = [
     {
-      title: t('attendance.AdminAuditRepair.today'),
+      title: periodTitle,
       value: formatNumber(summary.todayTotal, locale),
       sub: t('attendance.AdminAuditRepair.peakHour', { time: summary.peakHour }),
       subColor: 'text-secondary',

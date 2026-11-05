@@ -27,12 +27,12 @@ export const AdminFinanceRevenueReportSearchableDropdown: React.FC<AdminSearchab
   const [searchTerm, setSearchTerm] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
   const triggerRef = useRef<HTMLButtonElement>(null);
-  const accessibleName = ariaLabel?.trim() || placeholder?.trim() || t('admin_layout.components/searchable_dropdown.text_5616c87222');
   const dropdownRef = useRef<HTMLDivElement>(null);
   const activeOptionRef = useRef<HTMLDivElement>(null);
   const listboxId = useId();
 
   const selectedOption = options.find((opt) => opt.value === value);
+  const accessibleName = ariaLabel?.trim() || (selectedOption ? selectedOption.label : placeholder?.trim()) || t('admin_layout.components/searchable_dropdown.text_5616c87222');
   const filteredOptions = options.filter((opt) => opt.label.toLowerCase().includes(searchTerm.toLowerCase()));
 
 // EFFECT: Synchronizes this component effect with its declared React dependencies in admin_navigation/components/components/searchable_dropdown/AdminNavigationLayoutSearchableDropdown.tsx.

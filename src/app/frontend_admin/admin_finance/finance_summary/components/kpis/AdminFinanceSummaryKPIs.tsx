@@ -5,7 +5,8 @@
 import { FINANCE_PAYMENT_STATUSES } from '@/app/frontend_admin/admin_finance/finance_summary/constants/AdminFinanceSummaryConstants';
 import { useTranslations } from 'next-intl';
 
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import { useAdminFinanceLogic } from '@/app/frontend_admin/admin_finance/finance_summary/hooks/useAdminFinanceSummaryLogic';
 import { FileText, TrendingUp, IndianRupee, CreditCard } from 'lucide-react';
 import { AdminFinanceFormatCurrency } from '@/app/frontend_admin/admin_finance/finance_summary/utils/AdminFinanceSummaryFormatCurrency';
@@ -21,12 +22,22 @@ import { AdminFinanceFormatCurrency } from '@/app/frontend_admin/admin_finance/f
 export default function AdminFinanceOverviewKPIs() {
   const t = useTranslations();
   const locale = useLocale();
+  const searchParams = useSearchParams();
+  const range = searchParams.get('range') || 'this_month';
   const { summary, summaryStatus, statusFilter, setStatusFilter } = useAdminFinanceLogic();
   if (!summary || summaryStatus === 'error') return null;
 
+  const periodRevenueLabel = (() => {
+    if (range === 'last_month') return "Last Month Revenue";
+    if (range === 'last_3_months') return "Last 3M Revenue";
+    if (range === 'this_year' || range === 'yearly') return "This Year Revenue";
+    if (range === 'custom') return "Selected Range Revenue";
+    return t('finance.AdminAuditRepair.monthlyRevenue');
+  })();
+
   const kpis = [
     { label: t('finance.AdminAuditRepair.totalRevenue'), value: AdminFinanceFormatCurrency(summary.totalRevenue, 'INR', locale), icon: TrendingUp, colorClass: 'text-success', bgClass: 'bg-success-bg', activeBorder: 'border-border' },
-    { label: t('finance.AdminAuditRepair.monthlyRevenue'), value: AdminFinanceFormatCurrency(summary.monthlyRevenue, 'INR', locale), icon: IndianRupee, colorClass: 'text-primary', bgClass: 'bg-primary-subtle', activeBorder: 'border-focus' },
+    { label: periodRevenueLabel, value: AdminFinanceFormatCurrency(summary.monthlyRevenue, 'INR', locale), icon: IndianRupee, colorClass: 'text-primary', bgClass: 'bg-primary-subtle', activeBorder: 'border-focus' },
     { label: t('finance.AdminAuditRepair.pendingAmount'), value: AdminFinanceFormatCurrency(summary.pendingAmount, 'INR', locale), icon: FileText, colorClass: 'text-warning', bgClass: 'bg-warning-bg', activeBorder: 'border-border', filter: FINANCE_PAYMENT_STATUSES[1] },
     { label: t('finance.AdminAuditRepair.totalExpenses'), value: AdminFinanceFormatCurrency(summary.totalExpenses, 'INR', locale), icon: CreditCard, colorClass: 'text-danger', bgClass: 'bg-danger-bg', activeBorder: 'border-border' },
     { label: t('finance.AdminAuditRepair.netProfit'), value: AdminFinanceFormatCurrency(summary.netProfit, 'INR', locale), icon: TrendingUp, colorClass: 'text-success', bgClass: 'bg-success-bg', activeBorder: 'border-border' },

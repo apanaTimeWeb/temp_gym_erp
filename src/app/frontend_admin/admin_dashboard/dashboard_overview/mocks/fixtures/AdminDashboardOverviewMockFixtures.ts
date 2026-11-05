@@ -137,6 +137,35 @@ export function getAdminDashboardFixture(branchId: string | undefined, range: Ad
     return { ...membership, expiryDate: format(targetExpiry, 'yyyy-MM-dd'), daysLeft: differenceInCalendarDays(targetExpiry, today) };
   });
 
+  if (range === 'last_month') {
+    base.totalRevenue = 22000000;
+    base.monthlyRevenue = 2700000;
+    base.netProfit = 850000;
+    base.totalExpenses = 1850000;
+    base.pendingPayments = 380000;
+    base.avgAttendance = 1980;
+    base.renewalsPending = 390;
+    base.newMembersThisMonth = 780;
+  } else if (range === 'last_3_months') {
+    base.totalRevenue = 65000000;
+    base.monthlyRevenue = 7500000;
+    base.netProfit = 2250000;
+    base.totalExpenses = 5250000;
+    base.pendingPayments = 920000;
+    base.avgAttendance = 2050;
+    base.renewalsPending = 1150;
+    base.newMembersThisMonth = 2400;
+  } else if (range === 'this_year' || range === 'yearly') {
+    base.totalRevenue = 145000000;
+    base.monthlyRevenue = 28500000;
+    base.netProfit = 9500000;
+    base.totalExpenses = 19000000;
+    base.pendingPayments = 3200000;
+    base.avgAttendance = 2120;
+    base.renewalsPending = 3800;
+    base.newMembersThisMonth = 8500;
+  }
+
   // Keep revenueTrend intact (6 months trailing) as UI chart expects it for trailing view.
   // Other trends (member growth, attendance) can be sliced based on the filter range if needed.
   const trendLength = range === 'last_month' || range === 'this_month' ? 1 : range === 'last_3_months' ? 3 : range === 'last_6_months' || range === 'this_year' ? 6 : base.revenueTrend.length;
