@@ -1,0 +1,10 @@
+{
+  "MANAGER_WORKOUT_DIET_LIBRARY_NAVIGATION": {
+    "DOMAIN_LABEL": "वर्कआउट और आहार लाइब्रेरी डोमेन",
+    "SUBMODULE_NAVIGATION_LABEL": "वर्कआउट और आहार लाइब्रेरी उप-मॉड्यूल नेविगेशन",
+    "WORKOUT_PLANS": "वर्कआउट योजनाएँ",
+    "ASSIGNED_PLANS": "आवंटित योजनाएँ",
+    "EXERCISE_LIBRARY": "व्यायाम लाइब्रेरी",
+    "DIET_LIBRARY": "आहार लाइब्रेरी"
+  }
+}

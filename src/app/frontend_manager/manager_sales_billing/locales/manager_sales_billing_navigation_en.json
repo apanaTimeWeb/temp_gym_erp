@@ -1,0 +1,10 @@
+{
+  "MANAGER_SALES_BILLING_NAVIGATION": {
+    "DOMAIN_LABEL": "Sales & Billing domain",
+    "SUBMODULE_NAVIGATION_LABEL": "Sales & Billing submodule navigation",
+    "SALES_OVERVIEW": "Sales Overview",
+    "PRODUCTS": "Products",
+    "ORDERS": "Orders",
+    "POINT_OF_SALE": "Point of Sale"
+  }
+}

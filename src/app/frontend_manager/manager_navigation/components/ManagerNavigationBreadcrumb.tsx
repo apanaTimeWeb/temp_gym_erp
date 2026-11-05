@@ -1,0 +1,47 @@
+// RESPONSIBILITY: Renders the authenticated Manager route breadcrumb using role-owned navigation labels; it does not own business data or navigation configuration.
+'use client';
+
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+import { ChevronRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+
+import { MANAGER_NAV_GROUPS } from '@/app/frontend_manager/manager_navigation/constants/ManagerNavigationConfig';
+
+/**
+ * @description Renders a compact accessible breadcrumb for the active Manager route.
+ * @dependencies Manager navigation configuration and next-intl.
+ * @edge-case Falls back to the Dashboard label when the current pathname is outside the documented Manager navigation map.
+ */
+export default function ManagerNavigationBreadcrumb() {
+  const pathname = usePathname();
+  const t = useTranslations('MANAGER_SHELL');
+  const navigationItems = MANAGER_NAV_GROUPS.flatMap((group) => group.items);
+  const currentPage = navigationItems.find((item) => pathname === item.href || (item.href !== '/' && pathname.startsWith(`${item.href}/`)));
+  const dashboard = navigationItems.find((item) => item.labelKey === 'NAV_DASHBOARD');
+
+  return (
+    <nav aria-label={t('BREADCRUMB_LABEL')} className="mb-4 flex min-h-11 items-center" data-testid="manager-components-breadcrumb">
+      <ol className="flex min-w-0 items-center gap-1 text-sm text-text-secondary">
+        <li className="shrink-0">
+          <span data-testid="manager-components-breadcrumb-dashboard-link">
+            <Link
+              href={dashboard?.href ?? '/'}
+              className="inline-flex min-h-11 items-center rounded-md px-2 text-text-secondary hover:text-primary motion-safe:transition-colors motion-safe:duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+            >
+              {t('NAV_DASHBOARD')}
+            </Link>
+          </span>
+        </li>
+        {currentPage && currentPage.labelKey !== 'NAV_DASHBOARD' ? (
+          <>
+            <li aria-hidden="true" className="shrink-0 text-text-disabled"><ChevronRight size={18} strokeWidth={2} /></li>
+            <li aria-current="page" className="min-w-0 truncate px-2 text-text-primary">{t(currentPage.labelKey)}</li>
+          </>
+        ) : null}
+      </ol>
+    </nav>
+  );
+}

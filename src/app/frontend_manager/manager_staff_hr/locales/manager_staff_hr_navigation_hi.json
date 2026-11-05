@@ -1,0 +1,9 @@
+{
+  "MANAGER_STAFF_HR_NAVIGATION": {
+    "DOMAIN_LABEL": "स्टाफ और मानव संसाधन डोमेन",
+    "SUBMODULE_NAVIGATION_LABEL": "स्टाफ और मानव संसाधन उप-मॉड्यूल नेविगेशन",
+    "STAFF_DIRECTORY": "कर्मचारी निर्देशिका",
+    "STAFF_ATTENDANCE": "कर्मचारी उपस्थिति",
+    "PAYROLL_AND_LEDGER": "वेतन और खाता-बही"
+  }
+}

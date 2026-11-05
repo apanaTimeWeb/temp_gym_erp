@@ -1,0 +1,8 @@
+import type {
+  ManagerFinancePaymentsAndSummaryPaymentFormInput as SchemaInput,
+  ManagerFinancePaymentsAndSummaryPaymentFormOutput as SchemaOutput,
+} from '@/app/frontend_manager/manager_finance_expenses/finance_payments_and_summary/schemas/manager_finance_payments_and_summary_payment_form.schemas';
+
+export type ManagerFinancePaymentsAndSummaryPaymentFormInput = SchemaInput;
+export type ManagerFinancePaymentsAndSummaryPaymentFormOutput = SchemaOutput;
+export type ManagerFinancePaymentsAndSummaryPaymentFormValues = ManagerFinancePaymentsAndSummaryPaymentFormOutput;

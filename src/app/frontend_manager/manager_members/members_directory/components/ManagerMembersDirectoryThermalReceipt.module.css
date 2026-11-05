@@ -1,0 +1,6 @@
+.receipt { width: 80mm; max-width: 80mm; font-size: 12px; box-sizing: border-box; }
+.dividerBottom { border-bottom-width: 1.5px; }
+.dividerTopBottom { border-top-width: 1.5px; border-bottom-width: 1.5px; }
+.dividerBottomOnly { border-bottom-width: 1.5px; }
+.dividerTop { border-top-width: 1.5px; }
+.smallText { font-size: 10px; }

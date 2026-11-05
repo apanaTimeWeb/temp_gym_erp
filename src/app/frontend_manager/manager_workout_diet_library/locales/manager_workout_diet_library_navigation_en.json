@@ -1,0 +1,10 @@
+{
+  "MANAGER_WORKOUT_DIET_LIBRARY_NAVIGATION": {
+    "DOMAIN_LABEL": "Workout & Diet Library domain",
+    "SUBMODULE_NAVIGATION_LABEL": "Workout & Diet Library submodule navigation",
+    "WORKOUT_PLANS": "Workout Plans",
+    "ASSIGNED_PLANS": "Assigned Plans",
+    "EXERCISE_LIBRARY": "Exercise Library",
+    "DIET_LIBRARY": "Diet Library"
+  }
+}

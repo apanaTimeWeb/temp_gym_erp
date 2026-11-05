@@ -1,0 +1,85 @@
+// RESPONSIBILITY: Renders ManagerStoreProductsThermalReceipt's feature UI and orchestrates presentation through module-owned state/hooks; it does not own API transport or business rules.
+'use client';
+import { useTranslations, useLocale } from 'next-intl';
+import { createPortal } from 'react-dom';
+
+import { ManagerEnvConfig } from '@/app/frontend_manager/manager_infrastructure/constants/ManagerInfrastructureEnvConfig';
+import { useManagerInfrastructureMounted } from '@/app/frontend_manager/manager_infrastructure/hooks/useManagerInfrastructureMounted';
+
+import styles from '@/app/frontend_manager/manager_sales_billing/store_point_of_sale/components/ManagerStoreProductsThermalReceipt.module.css';
+import { ManagerStoreProductsFormatCurrency } from '@/app/frontend_manager/manager_sales_billing/store_point_of_sale/utils/ManagerStoreProductsFormatters';
+import type { ManagerStoreProductsThermalReceiptProps } from '@/app/frontend_manager/manager_sales_billing/store_point_of_sale/types/manager_store_products_thermal_receipt.types';
+
+// DATA FLOW: feature print state → receipt component props → print portal → browser print stylesheet.
+
+
+
+
+/** @description Renders the ManagerStoreProductsThermalReceipt component for its owning Manager frontend boundary. @dependencies Data flow: feature print state → receipt component props → print portal → browser print stylesheet. @edge-case Preserves the documented interaction and boundary states. */
+export default function ManagerStoreProductsThermalReceipt(props: ManagerStoreProductsThermalReceiptProps) {
+  const t = useTranslations('MANAGER_STORE_PRODUCTS');
+  const locale = useLocale();
+
+ const { data } = props;
+
+ const mounted = useManagerInfrastructureMounted();
+
+ if (!data || !mounted) return null;
+
+ const receiptContent = (
+ <div id="thermal-receipt" className={`hidden print:block p-4 mx-auto bg-page text-text-primary font-mono leading-tight break-words ${styles.receipt}`}>
+ <div className={`text-center border-border pb-2 mb-2 ${styles.dividerBottom}`}>
+ <h2 className="font-bold text-lg uppercase tracking-wider">{data.gymName}</h2>
+ <p className="text-xs">{t("COPY_PH")}{data.gymPhone}</p>
+ <p className="font-bold mt-1 text-sm">{t("COPY_PAYMENT_RECEIPT")}</p>
+ </div>
+ 
+ <div className="mb-3 space-y-0.5 text-xs">
+ <p><span className="font-bold">{t("COPY_RECEIPT_NO")}</span> {data.receiptNo}</p>
+ <p><span className="font-bold">{t("COPY_DATE_1")}</span> {data.date}</p>
+ <p><span className="font-bold">{t("COPY_MEMBER")}</span> {data.customerName}</p>
+ </div>
+ 
+ <table className="w-full mb-2 text-xs">
+ <thead className={`border-border ${styles.dividerTopBottom}`}>
+ <tr>
+ <th className="text-left font-bold py-1.5">{t("COPY_DESCRIPTION_1")}</th>
+ <th className="text-right font-bold py-1.5">{t("COPY_AMOUNT")}</th>
+ </tr>
+ </thead>
+ <tbody className={`border-border ${styles.dividerBottomOnly}`}>
+ {data.items.map((item, i) => (
+ <tr key={`${item.name}-${item.price}-${item.amount}-${item.qty ?? 1}`}>
+ <td className="py-1.5 pr-1">
+ {item.name}
+ {item.qty && item.qty > 1 && (
+ <span className={`block text-text-primary mt-0.5 ${styles.smallText}`}>
+ {item.qty}{t("COPY_X")}{ManagerStoreProductsFormatCurrency(item.price, ManagerEnvConfig.currencyCode, locale)}
+ </span>
+ )}
+ </td>
+ <td className="text-right py-1.5 align-top">{ManagerStoreProductsFormatCurrency(item.amount, ManagerEnvConfig.currencyCode, locale)}</td>
+ </tr>
+ ))}
+ </tbody>
+ </table>
+ 
+ <div className="flex justify-between font-bold text-base mb-2">
+ <span>{t("COPY_TOTAL_2")}</span>
+ <span>{ManagerStoreProductsFormatCurrency(data.total, ManagerEnvConfig.currencyCode, locale)}</span>
+ </div>
+ 
+ <div className="mb-4 text-xs">
+ <p><span className="font-bold">{t("COPY_PAID_VIA")}</span> {data.paymentMethod}</p>
+ </div>
+ 
+ <div className={`text-center border-border pt-2 mt-3 ${styles.dividerTop}`}>
+ <p className="font-bold uppercase mb-0.5 text-sm">{t("COPY_THANK_YOU")}</p>
+ <p className={styles.smallText}>{t("COPY_NO_REFUND_NO_EXCHANGE")}</p>
+ <p className={`mt-0.5 ${styles.smallText}`}>{t("COPY_GENERATED_GYMSMART_MANAGER")}</p>
+ </div>
+ </div>
+ );
+
+ return createPortal(receiptContent, document.body);
+}

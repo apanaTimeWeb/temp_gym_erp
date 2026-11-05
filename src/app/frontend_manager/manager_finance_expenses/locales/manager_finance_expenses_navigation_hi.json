@@ -1,0 +1,8 @@
+{
+  "MANAGER_FINANCE_EXPENSES_NAVIGATION": {
+    "DOMAIN_LABEL": "वित्त और व्यय डोमेन",
+    "SUBMODULE_NAVIGATION_LABEL": "वित्त और व्यय उप-मॉड्यूल नेविगेशन",
+    "FINANCE": "वित्त",
+    "EXPENSES": "व्यय"
+  }
+}

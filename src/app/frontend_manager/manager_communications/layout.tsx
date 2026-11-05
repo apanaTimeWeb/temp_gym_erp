@@ -1,0 +1,13 @@
+import type { ReactNode } from 'react';
+import { useTranslations } from 'next-intl';
+
+export default function ManagerCommunicationsDomainLayout({ children }: { children: ReactNode }) {
+  const t = useTranslations('MANAGER_COMMUNICATIONS_NAVIGATION');
+ return <section aria-label={t('DOMAIN_LABEL')} className="min-h-full"><nav aria-label={t('SUBMODULE_NAVIGATION_LABEL')} className="flex flex-wrap gap-2 border-b border-border px-6 py-3 bg-card">
+        <a href="/frontend_manager/manager_communications/communications_compose" className={`inline-flex min-h-10 items-center rounded-lg border border-border px-3 py-2 text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-input focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring`} data-testid="manager_manager_communications-layout-link-communications_compose">{t('COMPOSE')}</a>
+        <a href="/frontend_manager/manager_communications/communications_history" className={`inline-flex min-h-10 items-center rounded-lg border border-border px-3 py-2 text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-input focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring`} data-testid="manager_manager_communications-layout-link-communications_history">{t('HISTORY')}</a>
+        <a href="/frontend_manager/manager_communications/communications_automations" className={`inline-flex min-h-10 items-center rounded-lg border border-border px-3 py-2 text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-input focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring`} data-testid="manager_manager_communications-layout-link-communications_automations">{t('AUTOMATIONS')}</a>
+        <a href="/frontend_manager/manager_communications/communications_churn_recovery" className={`inline-flex min-h-10 items-center rounded-lg border border-border px-3 py-2 text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-input focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring`} data-testid="manager_manager_communications-layout-link-communications_churn_recovery">{t('CHURN_RECOVERY')}</a>
+        <a href="/frontend_manager/manager_communications/notifications_inbox" className={`inline-flex min-h-10 items-center rounded-lg border border-border px-3 py-2 text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-input focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring`} data-testid="manager_manager_communications-layout-link-notifications_inbox">{t('NOTIFICATIONS')}</a>
+</nav>{children}</section>;
+}

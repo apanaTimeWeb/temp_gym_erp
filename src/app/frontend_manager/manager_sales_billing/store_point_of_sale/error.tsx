@@ -1,0 +1,3 @@
+'use client';
+import { useTranslations } from 'next-intl';
+export default function ManagerWorkflowError({ reset }: { reset: () => void }) { const t = useTranslations('MANAGER_STORE_PRODUCTS'); return <section className="p-6 space-y-3" role="alert" data-testid="manager_manager_sales_billing-store-point-of-sale-error-boundary-fallback"><p>{t('COPY_POS_ERROR_TITLE')}</p><p className="text-sm text-text-secondary">{t('TEXT_GENERIC_ERROR')}</p><button type="button" onClick={reset} className="min-h-11 px-4 rounded-lg bg-primary text-on-primary" data-testid="manager_manager_sales_billing-store-point-of-sale-error-boundary-button-retry">{t('COPY_POS_ERROR_RETRY')}</button></section>; }

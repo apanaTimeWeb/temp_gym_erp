@@ -1,0 +1,29 @@
+{
+  "MANAGER_PROFILE_AND_SECURITY": {
+    "COPY_PROFILE_UNAVAILABLE": "Profile Unavailable",
+    "COPY_WE_COULDN_T_LOAD_PROFILE_MODULE_TRY_AGAIN": "We couldn't load the profile module. Please try again.",
+    "COPY_TRY_AGAIN": "Try Again",
+    "COPY_MY_PROFILE": "My Profile",
+    "COPY_MANAGE_ACCOUNT_DETAILS_PASSWORD": "Manage your account details and password.",
+    "COPY_LOADING_PROFILE": "Loading profile",
+    "COPY_ACTIVE": "Active",
+    "COPY_FULL_NAME": "Full Name *",
+    "COPY_EMAIL_ADDRESS": "Email Address",
+    "COPY_PHONE_NUMBER": "Phone Number",
+    "COPY_ROLE": "Role",
+    "COPY_SAVE_CHANGES": "Save Changes",
+    "COPY_CHANGE_PASSWORD": "Change Password",
+    "COPY_UPDATE_PASSWORD": "Update Password",
+    "TEXT_404_TITLE": "Resource Not Found",
+    "TEXT_404_DESCRIPTION": "The requested resource could not be found. It may have been removed or you might not have permission to access it.",
+    "TEXT_404_RETURN": "Return to Dashboard",
+    "COPY_CURRENT_PASSWORD": "Current Password",
+    "COPY_NEW_PASSWORD": "New Password",
+    "COPY_CONFIRM_NEW_PASSWORD": "Confirm New Password",
+    "COPY_HIDE_PASSWORD": "Hide password",
+    "COPY_SHOW_PASSWORD": "Show password",
+    "TEXT_GENERIC_ERROR": "The request could not be completed. Please try again.",
+    "TEXT_TAB_PERSONAL_INFO": "Personal Info",
+    "TEXT_TAB_SECURITY": "Security"
+  }
+}

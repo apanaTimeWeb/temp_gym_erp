@@ -1,0 +1,11 @@
+{
+  "MANAGER_COMMUNICATIONS_NAVIGATION": {
+    "DOMAIN_LABEL": "संदेश संचार डोमेन",
+    "SUBMODULE_NAVIGATION_LABEL": "संदेश संचार उप-मॉड्यूल नेविगेशन",
+    "COMPOSE": "संदेश लिखें",
+    "HISTORY": "इतिहास",
+    "AUTOMATIONS": "स्वचालन",
+    "CHURN_RECOVERY": "ग्राहक वापसी",
+    "NOTIFICATIONS": "सूचनाएँ"
+  }
+}

@@ -1,0 +1,4 @@
+import { MANAGER_MEMBERSHIP_LIFECYCLE_TAB_IDS } from '@/app/frontend_manager/manager_membership_plans/membership_lifecycle/constants/manager_membership_lifecycle_tab.constants';
+import type { ManagerMembershipLifecycleViewId } from '@/app/frontend_manager/manager_membership_plans/membership_lifecycle/types/manager_membership_lifecycle.types';
+export const MANAGER_MEMBERSHIP_LIFECYCLE_VIEW_IDS = MANAGER_MEMBERSHIP_LIFECYCLE_TAB_IDS;
+export const MANAGER_MEMBERSHIP_LIFECYCLE_DEFAULT_VIEW: ManagerMembershipLifecycleViewId = MANAGER_MEMBERSHIP_LIFECYCLE_VIEW_IDS[0];

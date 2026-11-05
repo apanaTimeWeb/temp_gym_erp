@@ -1,0 +1,29 @@
+{
+  "MANAGER_PROFILE_AND_SECURITY": {
+    "COPY_PROFILE_UNAVAILABLE": "प्रोफ़ाइल Unavailable",
+    "COPY_WE_COULDN_T_LOAD_PROFILE_MODULE_TRY_AGAIN": "We couldn't load the profile module. Please try again.",
+    "COPY_TRY_AGAIN": "फिर से प्रयास करें",
+    "COPY_MY_PROFILE": "My प्रोफ़ाइल",
+    "COPY_MANAGE_ACCOUNT_DETAILS_PASSWORD": "Manage your account details and password.",
+    "COPY_LOADING_PROFILE": "लोड हो रहा है profile",
+    "COPY_ACTIVE": "सक्रिय",
+    "COPY_FULL_NAME": "Full नाम *",
+    "COPY_EMAIL_ADDRESS": "ईमेल Address",
+    "COPY_PHONE_NUMBER": "फ़ोन Number",
+    "COPY_ROLE": "Role",
+    "COPY_SAVE_CHANGES": "बदलाव सहेजें",
+    "COPY_CHANGE_PASSWORD": "Change Password",
+    "COPY_UPDATE_PASSWORD": "अपडेट करें Password",
+    "TEXT_404_TITLE": "संसाधन नहीं मिला",
+    "TEXT_404_DESCRIPTION": "अनुरोधित संसाधन नहीं मिल सका। इसे हटाया जा सकता है या आपके पास इसे देखने की अनुमति नहीं हो सकती है।",
+    "TEXT_404_RETURN": "डैशबोर्ड पर लौटें",
+    "COPY_CURRENT_PASSWORD": "वर्तमान पासवर्ड",
+    "COPY_NEW_PASSWORD": "नया पासवर्ड",
+    "COPY_CONFIRM_NEW_PASSWORD": "नया पासवर्ड पुष्टि करें",
+    "COPY_HIDE_PASSWORD": "पासवर्ड छिपाएँ",
+    "COPY_SHOW_PASSWORD": "पासवर्ड दिखाएँ",
+    "TEXT_GENERIC_ERROR": "अनुरोध पूरा नहीं हो सका। कृपया फिर से प्रयास करें।",
+    "TEXT_TAB_PERSONAL_INFO": "व्यक्तिगत जानकारी",
+    "TEXT_TAB_SECURITY": "सुरक्षा"
+  }
+}

@@ -1,0 +1,3 @@
+import type { MANAGER_FINANCE_PAYMENTS_AND_SUMMARY_VIEW_IDS } from '@/app/frontend_manager/manager_finance_expenses/finance_payments_and_summary/constants/manager_finance_payments_and_summary_view.constants';
+
+export type ManagerFinancePaymentsAndSummaryViewId = typeof MANAGER_FINANCE_PAYMENTS_AND_SUMMARY_VIEW_IDS[number];

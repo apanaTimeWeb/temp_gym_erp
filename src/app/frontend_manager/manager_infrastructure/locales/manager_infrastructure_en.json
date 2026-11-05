@@ -1,0 +1,16 @@
+{
+  "MANAGER_INFRASTRUCTURE": {
+    "COPY_PERMISSION_DENIED_1": "Permission denied",
+    "COPY_PERMISSION_DENIED_2": "Permission denied",
+    "COPY_CURRENT_ROLE_DOES_NOT_HAVE_ACCESS_MANAGER_WORKSPACE": "Your current role does not have access to this Manager workspace.",
+    "errors": {
+      "network": "Connection failed. Please check your internet connection.",
+      "timeout": "The request timed out. Please try again.",
+      "unexpected": "An unexpected error occurred. Please try again.",
+      "runtime": "Something went wrong. Please refresh and try again."
+    },
+    "COPY_TOGGLE_DATA_DENSITY": "Toggle table density",
+    "COPY_DENSITY_COMPACT": "Compact density",
+    "COPY_DENSITY_COMFORTABLE": "Comfortable density"
+  }
+}

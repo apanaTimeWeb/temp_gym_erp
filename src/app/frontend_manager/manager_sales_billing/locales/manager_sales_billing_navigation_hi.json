@@ -1,0 +1,10 @@
+{
+  "MANAGER_SALES_BILLING_NAVIGATION": {
+    "DOMAIN_LABEL": "बिक्री और बिलिंग डोमेन",
+    "SUBMODULE_NAVIGATION_LABEL": "बिक्री और बिलिंग उप-मॉड्यूल नेविगेशन",
+    "SALES_OVERVIEW": "बिक्री का अवलोकन",
+    "PRODUCTS": "उत्पाद",
+    "ORDERS": "ऑर्डर",
+    "POINT_OF_SALE": "बिक्री केंद्र"
+  }
+}

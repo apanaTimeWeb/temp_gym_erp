@@ -1,0 +1,2 @@
+'use client';
+export default function ManagerWorkflowError({ reset }: { reset: () => void }) { return <section className="p-6" role="alert" data-testid="manager_manager_sales_billing-store-products-catalog-error-boundary-fallback"><p>Unable to load this workflow.</p><button type="button" onClick={reset} data-testid="manager_manager_sales_billing-store-products-catalog-error-boundary-button-retry">Try again</button></section>; }

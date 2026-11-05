@@ -1,0 +1,8 @@
+{
+  "MANAGER_FINANCE_EXPENSES_NAVIGATION": {
+    "DOMAIN_LABEL": "Finance & Expenses domain",
+    "SUBMODULE_NAVIGATION_LABEL": "Finance & Expenses submodule navigation",
+    "FINANCE": "Finance",
+    "EXPENSES": "Expenses"
+  }
+}

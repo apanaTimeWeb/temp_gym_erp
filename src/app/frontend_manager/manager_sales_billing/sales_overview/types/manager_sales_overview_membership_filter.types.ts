@@ -1,0 +1,4 @@
+import type { MANAGER_MEMBERS_DIRECTORYHIP_FILTERS, MANAGER_SALES_OVERVIEW_MEMBERSHIP_FILTER_IDS } from '@/app/frontend_manager/manager_sales_billing/sales_overview/constants/manager_sales_overview_filter.constants';
+
+export type ManagerSalesOverviewMembershipFilter = typeof MANAGER_MEMBERS_DIRECTORYHIP_FILTERS[number];
+export type ManagerSalesOverviewMembershipFilterId = typeof MANAGER_SALES_OVERVIEW_MEMBERSHIP_FILTER_IDS[number];

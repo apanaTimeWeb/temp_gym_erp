@@ -1,0 +1,11 @@
+{
+  "MANAGER_COMMUNICATIONS_NAVIGATION": {
+    "DOMAIN_LABEL": "Compose Messages domain",
+    "SUBMODULE_NAVIGATION_LABEL": "Compose Messages submodule navigation",
+    "COMPOSE": "Compose",
+    "HISTORY": "History",
+    "AUTOMATIONS": "Automations",
+    "CHURN_RECOVERY": "Churn Recovery",
+    "NOTIFICATIONS": "Notifications"
+  }
+}
