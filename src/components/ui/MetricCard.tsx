@@ -61,7 +61,7 @@ export function MetricCard({
         </div>
         {Icon && (
           <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${tonePill}`}>
-            <Icon size={20} strokeWidth={2} aria-hidden="true" />
+            <Icon size={20} strokeWidth={2} aria-hidden={true} />
           </div>
         )}
       </div>

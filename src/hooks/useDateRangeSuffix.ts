@@ -1,5 +1,4 @@
 'use client';
 
-export { useDateRangeSuffix } from '@/lib/useDateRangeSuffix';
-export { default } from '@/lib/useDateRangeSuffix';
+export { useDateRangeSuffix, useDateRangeSuffix as default } from '@/lib/useDateRangeSuffix';
 

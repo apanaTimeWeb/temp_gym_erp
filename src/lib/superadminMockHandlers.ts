@@ -365,7 +365,7 @@ export function handleSuperadminMockApiRequest(
     const flagId = urlPath.split('/')[4];
     const flag = currentFeatureFlags.find(f => f.id === flagId);
     if (flag) {
-      flag.enabled = !flag.enabled;
+      flag.isGlobalEnabled = !flag.isGlobalEnabled;
       return buildMockSuccess(flag, 'Flag toggled');
     }
     return buildMockSuccess(currentFeatureFlags[0], 'Flag toggled');
@@ -377,12 +377,9 @@ export function handleSuperadminMockApiRequest(
         const newFlag = {
           id: `flag_${Date.now()}`,
           name: body.name || 'New Flag',
-          key: body.key || 'NEW_FLAG',
           description: body.description || 'Description',
-          enabled: body.enabled ?? false,
-          targetAudience: body.targetAudience || 'ALL_TENANTS',
-          createdAt: new Date().toISOString().split('T')[0],
-          updatedAt: new Date().toISOString().split('T')[0],
+          isGlobalEnabled: body.isGlobalEnabled ?? false,
+          enabledTenantIds: body.enabledTenantIds || [],
         };
         currentFeatureFlags.unshift(newFlag as any);
         return buildMockSuccess(newFlag, 'Flag created');
@@ -400,10 +397,9 @@ export function handleSuperadminMockApiRequest(
           id: `note_${Date.now()}`,
           version: body.version || 'v2.0.0',
           title: body.title || 'New Release',
-          date: new Date().toISOString(),
-          description: body.description || '',
-          highlights: body.highlights || [],
-          channel: body.channel || 'STABLE',
+          date: new Date().toISOString().split('T')[0],
+          content: body.content || '',
+          isPublished: body.isPublished ?? false,
         };
         currentReleaseNotes.unshift(newNote as any);
         return buildMockSuccess(newNote, 'Release note created');
