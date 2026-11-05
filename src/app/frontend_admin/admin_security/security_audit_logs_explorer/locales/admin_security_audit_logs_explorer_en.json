@@ -1,0 +1,95 @@
+{
+  "audit_logs": {
+    "admin_audit_logs_detail_drawer": {
+      "text_abbee93bb7": "Audit log details",
+      "text_13b39459a6": "Audit Log Detail",
+      "text_e45df43b19": "Close audit log detail",
+      "text_aaaa9e3932": "Failed to load log detail",
+      "text_9f5cd8a2e8": "Retry",
+      "text_c250d77524": "Event Details",
+      "text_79def035e4": "Sensitive Request Metadata",
+      "text_97322c15b2": "IP:",
+      "text_875eb14299": "User Agent:",
+      "text_74f39697ac": "Before",
+      "text_79ba5e1b3f": "After",
+      "loading": "Loading…",
+      "detailFailed": "The audit log detail request failed."
+    },
+    "admin_audit_logs_kpis": {
+      "text_404aaeec8e": "Total Events",
+      "text_0d17be1c02": "High Severity",
+      "text_31d0b9f274": "Medium Severity",
+      "text_f9a1c0f4fc": "Low Severity",
+      "text_5b038231b3": "Events Today",
+      "text_a7ad0973cf": "Unique Users",
+      "auto_allTime": "all time",
+      "auto_requiresAttention": "requires attention",
+      "auto_monitorClosely": "monitor closely",
+      "auto_informational": "informational",
+      "auto_activeActors": "active actors"
+    },
+    "admin_audit_logs_table": {
+      "text_8631a11f58": "Failed to load audit logs. Retry the route request to recover.",
+      "auto_timestamp": "Timestamp",
+      "auto_action": "Action",
+      "auto_actor": "Actor",
+      "auto_entity": "Entity",
+      "auto_details": "Details",
+      "auto_severity": "Severity"
+    },
+    "admin_audit_logs_toolbar": {
+      "text_70dcc312af": "Search is handled by the backend contract when supported...",
+      "text_30c9e16a86": "Audit log free-text search is not part of the supplied contract",
+      "text_44e196a029": "All Actors",
+      "text_902f1999fb": "All Actions",
+      "text_235465db3e": "All Entities",
+      "text_3f66052a10": "From",
+      "text_2ca6f39dcc": "Audit log date from",
+      "text_ae79ea1e9c": "To",
+      "text_b5df674721": "Audit log date to",
+      "text_a93eba1850": "Reset audit log filters",
+      "auto_75f7af8b9c": "Export CSV",
+      "auto_cedcd4dda4": "Exporting…",
+      "exportContractBlocked": "CSV export is unavailable until the host API contract defines safe binary-response handling.",
+      "exportSuccess": "Audit log export completed.",
+      "exportError": "Audit log export could not be completed."
+    },
+    "AdminAuditLogsError": {
+      "text_e0e192081e": "Failed to load Audit Logs",
+      "text_cef2fe093b": "Try Again"
+    },
+    "admin_audit_logs_empty_state": {
+      "text_no_audit_logs": "No audit logs found",
+      "text_no_match": "No log events match the current filters."
+    },
+    "AdminAuditRepair": {
+      "timestamp": "Timestamp",
+      "actor": "Actor",
+      "branch": "Branch",
+      "entity": "Entity",
+      "allActors": "All Actors",
+      "loadingSummary": "Loading audit summary…",
+      "summaryError": "Unable to load audit summary.",
+      "retry": "Retry"
+    },
+    "AdminAuditLogsFilters": {
+      "allActions": "All Actions",
+      "create": "Create",
+      "update": "Update",
+      "delete": "Delete",
+      "login": "Login",
+      "payment": "Payment",
+      "refund": "Refund",
+      "allEntities": "All Entities",
+      "member": "Member",
+      "paymentEntity": "Payment",
+      "staff": "Staff",
+      "settings": "Settings",
+      "plan": "Plan"
+    },
+    "metadata": {
+      "title": "Audit Logs | Admin - GymSmart",
+      "description": "Monitor system activity, security events, and audit trails."
+    }
+  }
+}

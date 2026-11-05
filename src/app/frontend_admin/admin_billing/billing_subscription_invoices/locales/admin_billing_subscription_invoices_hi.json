@@ -1,0 +1,120 @@
+{
+  "subscriptions": {
+    "AdminSubscriptionsError": {
+      "text_6d251ad405": "सदस्यता डेटा लोड नहीं हो सका",
+      "text_cef2fe093b": "फिर से प्रयास करें",
+      "loadingInvoices": "इनवॉइस लोड हो रहे हैं…",
+      "invoiceLoadFailed": "इनवॉइस लोड नहीं हो सके।",
+      "loadingPlans": "प्लान लोड हो रहे हैं…",
+      "plansLoadFailed": "प्लान लोड नहीं हो सके।",
+      "noPlans": "कोई प्लान उपलब्ध नहीं है।",
+      "loadingPaymentMethods": "भुगतान विधियाँ लोड हो रही हैं…",
+      "paymentMethodsLoadFailed": "भुगतान विधियाँ लोड नहीं हो सकीं।",
+      "retry": "फिर से प्रयास करें",
+      "loadingSubscription": "सब्सक्रिप्शन लोड हो रहा है…",
+      "subscriptionLoadFailed": "सब्सक्रिप्शन विवरण लोड नहीं हो सका।",
+      "loadingKpis": "बिलिंग सारांश लोड हो रहा है…",
+      "kpiLoadFailed": "बिलिंग सारांश लोड नहीं हो सका।",
+      "noKpis": "बिलिंग सारांश उपलब्ध नहीं है।",
+      "defaultMethodCannotRemove": "इस भुगतान विधि को हटाने से पहले दूसरी डिफ़ॉल्ट विधि चुनें।"
+    },
+    "admin_billing_subscription_invoices": {
+      "text_50d038cf02": "इनवॉइस इतिहास",
+      "text_c3e815afba": "इनवॉइस",
+      "text_5e193a73d8": "अभी कोई इनवॉइस नहीं है",
+      "auto_e1af0c24ca": "सदस्यता बिलिंग गतिविधि दर्ज होने के बाद इनवॉइस इतिहास यहाँ दिखाई देगा।",
+      "invoice": "इनवॉइस #",
+      "date": "तारीख",
+      "plan": "प्लान",
+      "billing": "बिलिंग",
+      "amount": "राशि",
+      "status": "स्थिति",
+      "actions": "कार्रवाइयाँ"
+    },
+    "admin_subscriptions_main": {
+      "text_440a9f2ca1": "वर्तमान प्लान",
+      "text_7a310fd153": "/माह · नवीनीकरण",
+      "text_92dbd5ced5": "अपने-आप नवीनीकरण",
+      "text_99209d6924": "ऑटो-रिन्यू टॉगल करें",
+      "auto_3ed83e9c97": "सहेजा जा रहा है...",
+      "auto_tabOverview": "ओवरव्यू",
+      "auto_tabPlans": "प्लान अपग्रेड करें",
+      "auto_tabInvoices": "इनवॉइस",
+      "auto_tabPayment": "भुगतान विधियाँ",
+      "auto_on": "चालू",
+      "auto_off": "बंद",
+      "ariaInvoicesWorkflow": "इनवॉइस कार्यप्रवाह"
+    },
+    "admin_subscriptions_payment_method": {
+      "text_ad68e79c90": "भुगतान विधियाँ",
+      "text_95331a092c": "कोई भुगतान तरीका नहीं जोड़ा गया",
+      "text_808d7dca8a": "डिफ़ॉल्ट",
+      "text_6eaa24bb52": "डिफ़ॉल्ट सेट करें",
+      "text_02c31ab7b6": "भुगतान तरीका हटाएँ"
+    },
+    "AdminSubscriptionsPaymentMethodLabel": {
+      "text_3f2b426323": "नेट बैंकिंग",
+      "text_5871b8d86f": "समाप्ति"
+    },
+    "AdminSubscriptionsPlanCard": {
+      "text_385b4b232f": "सबसे लोकप्रिय",
+      "text_4fc0e2bc80": "वर्तमान",
+      "text_ab0cc39294": "/माह",
+      "text_1758356db2": "या",
+      "text_6f3c17a871": "/वर्ष (2 महीने बचाएँ)",
+      "text_52ec63b267": "✓ आपका वर्तमान प्लान",
+      "text_7a0a9bd139": "सेल्स से संपर्क करें",
+      "text_216133f9a1": "अपग्रेड करें:",
+      "customPrice": "कस्टम"
+    },
+    "admin_subscriptions_kpis": {
+      "auto_currentPlan": "वर्तमान प्लान{suffix}",
+      "auto_monthlySpend": "मासिक खर्च{suffix}",
+      "auto_totalInvoices": "कुल इनवॉइस{suffix}",
+      "auto_nextBilling": "अगली बिलिंग{suffix}",
+      "auto_daysToRenewal": "नवीनीकरण में दिन{suffix}",
+      "auto_saveAnnual": "वार्षिक प्लान से बचत{suffix}"
+    },
+    "AdminSubscriptionsConfirm": {
+      "upgradeTitle": "{planName} पर अपग्रेड करें",
+      "upgradeMessage": "आप अपनी सदस्यता को {planName} प्लान पर अपग्रेड करने वाले हैं। बिलिंग तुरंत अपडेट होगी।",
+      "upgradeConfirm": "अपग्रेड की पुष्टि करें",
+      "setDefaultTitle": "डिफ़ॉल्ट भुगतान विधि सेट करें",
+      "setDefaultMessage": "इस भुगतान विधि को सदस्यता बिलिंग के लिए डिफ़ॉल्ट बनाएं।",
+      "setDefaultConfirm": "डिफ़ॉल्ट सेट करें",
+      "removeTitle": "भुगतान विधि हटाएँ",
+      "removeMessage": "इस भुगतान विधि को सदस्यता बिलिंग विकल्पों से हटाएँ।",
+      "removeConfirm": "हटाएँ",
+      "autoRenewTitle": "ऑटो-रिन्यू बदलें",
+      "autoRenewMessage": "स्वचालित नवीनीकरण को {nextState} में बदलें।",
+      "autoRenewConfirm": "पुष्टि करें"
+    },
+    "metadata": {
+      "title": "सदस्यता और बिलिंग | एडमिन - GymSmart",
+      "description": "अपनी SaaS सदस्यता, इनवॉइस और भुगतान विधियाँ प्रबंधित करें।"
+    },
+    "static": {
+      "paid": "भुगतान किया गया",
+      "pending": "लंबित",
+      "failed": "विफल",
+      "refunded": "रिफंड किया गया"
+    },
+    "AdminAuditRepair": {
+      "invoicePdfUnavailable": "चालान PDF उपलब्ध नहीं है क्योंकि उसका URL स्वीकृत समान-मूल पथ नहीं है।"
+    },
+    "AdminRepair": {
+      "requestFailed": "अनुरोध पूरा नहीं हो सका। कृपया दोबारा कोशिश करें।"
+    }
+  },
+  "admin_subscriptions_kpis": {
+    "auto_allTime": "सभी समय",
+    "auto_daysRemaining": "शेष दिन",
+    "auto_vsMonthlyBilling": "मासिक बिलिंग की तुलना में"
+  },
+  "admin_billing_subscription_invoices": {
+    "auto_download": "डाउनलोड {invoice}"
+  },
+  "AdminAuditRepair": {
+    "financialAmountHidden": "सूची में प्रति-चालान राशि छिपाई गई है। चालान या अधिकृत विवरण खोलें।"
+  }
+}

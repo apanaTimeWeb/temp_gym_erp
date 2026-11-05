@@ -1,0 +1,172 @@
+{
+  "reports": {
+    "ReportsError": {
+      "text_fc856e9f9e": "Failed to load reports",
+      "text_cef2fe093b": "Try Again"
+    },
+    "admin_reports_attendance": {
+      "text_aff29fd842": "Attendance Summary by Gym",
+      "text_0e47830c90": "No attendance records found",
+      "text_373e6c1e10": "Attendance Heatmap (Simulated by Day)",
+      "text_cabfc9d38a": "High (80%+)",
+      "text_ff8daa2365": "Medium (60%+)",
+      "text_c040292c67": "Low (40%+)",
+      "text_4e0fa4378f": "Poor",
+      "text_bc4359231d": "Gym",
+      "text_c221964277": "No heatmap data available",
+      "auto_f0707f1ee7": "There are no gym attendance records for this period.",
+      "auto_1d0c4b148c": "No attendance records match the selected period.",
+      "auto_attendanceRate": "{gym} attendance rate"
+    },
+    "AdminReportsDateFilterDropdown": {
+      "text_12e1289bac": "Select Range"
+    },
+    "admin_reports_main": {
+      "text_1ea6687cfe": "All Gyms",
+      "exportPdf": "Export as PDF",
+      "exportCsv": "Export as CSV",
+      "customStartDate": "Start date",
+      "customEndDate": "End date",
+      "customRangeHelp": "Choose an inclusive start and end date.",
+      "dateRangeInvalid": "Choose valid start and end dates; the start date must not be after the end date.",
+      "loadError": "Reports could not be loaded. Retry the request.",
+      "retry": "Retry loading reports",
+      "exportError": "The export could not be completed. Check the connection and try again.",
+      "exportRangeRequired": "Select a valid date range before exporting.",
+      "loadingSection": "Loading this report section…",
+      "kpiLoadError": "Report KPIs could not be loaded.",
+      "exportContractBlocked": "PDF and CSV exports are unavailable until the host API contract defines safe binary-response handling.",
+      "chooseDateRange": "Choose date range",
+      "selectEndDate": "Select an end date",
+      "calendarDialogLabel": "Choose a custom date range",
+      "previousMonth": "Previous month",
+      "nextMonth": "Next month"
+    },
+    "admin_reports_membership": {
+      "text_fd05c3efa5": "Membership Growth by Gym",
+      "text_e044ab4747": "New members, renewals, exits and net growth for the selected period",
+      "text_b25928c699": "Total",
+      "emptyTitle": "No membership data found",
+      "emptyDescription": "No membership growth records are available for this date range."
+    },
+    "admin_finance_payroll_report": {
+      "text_86bb288973": "Staff Payroll by Gym",
+      "text_9062d7cc94": "No payroll data",
+      "text_3aab2cfaf7": "Fully Paid",
+      "text_96f608c16c": "Pending",
+      "auto_2a76b3d03a": "No payroll records are available for the selected report scope."
+    },
+    "admin_finance_profit_and_loss_report": {
+      "text_abc7e55ec9": "Profit & Loss by Gym",
+      "text_c51b793f71": "Full revenue, cost, and profit breakdown for the selected period",
+      "text_b25928c699": "Total",
+      "auto_profitMargin": "{gym} profit margin",
+      "emptyTitle": "No profit and loss data found",
+      "emptyDescription": "No profit and loss records are available for this date range.",
+      "accessibility": {
+        "filters": "Report filters",
+        "data": "P&L report data"
+      }
+    },
+    "admin_finance_revenue_report": {
+      "text_177bf7fe0c": "Revenue by Gym",
+      "text_a47fd0727f": "Revenue by Payment Method",
+      "text_8764bbb6f1": "No payment-method data",
+      "text_098e8b7646": "Revenue by Plan",
+      "text_9dd0910563": "No plan revenue data",
+      "text_3757697e2a": "members)",
+      "text_d965c78fbc": "Monthly Revenue Trend",
+      "text_096b9d52b6": "No monthly revenue data",
+      "auto_a64dbf269d": "No monthly revenue records are available for the selected report scope.",
+      "auto_2e04c86d5b": "No revenue by plan is available for the selected report scope.",
+      "auto_fdf7814a62": "No revenue by payment method is available for the selected report scope.",
+      "auto_revenueShare": "{gym} revenue share",
+      "auto_methodRevenueShare": "{method} revenue share",
+      "auto_planRevenueShare": "{plan} revenue share",
+      "auto_sortBy": "Sort by"
+    },
+    "admin_reports_kpis": {
+      "auto_totalIncome": "Total Income{suffix}",
+      "auto_netProfit": "Net Profit{suffix}",
+      "auto_totalExpenses": "Total Expenses{suffix}",
+      "auto_totalMembers": "Total Members{suffix}",
+      "auto_totalPayroll": "Total Payroll{suffix}",
+      "auto_avgAttendance": "Avg Attendance Rate{suffix}",
+      "auto_margin": "{value} margin",
+      "auto_newMembers": "+{count} new",
+      "neutralPeriod": "For the selected period"
+    },
+    "AdminAuditRepair": {
+      "gym": "Gym",
+      "avgDailyCheckIns": "Avg Daily Check-ins",
+      "totalCheckIns": "Total Check-ins",
+      "attendanceRate": "Attendance Rate",
+      "peakDay": "Peak Day",
+      "thisMonth": "This Month",
+      "lastMonth": "Last Month",
+      "last3Months": "Last 3 Months",
+      "last6Months": "Last 6 Months",
+      "thisYear": "This Year",
+      "monthlyAllTime": "Monthly (All Time)",
+      "yearlyAllTime": "Yearly (All Time)",
+      "customRange": "Custom Range",
+      "allGyms": "All Gyms",
+      "totalPayroll": "Total Payroll",
+      "paid": "Paid",
+      "pending": "Pending",
+      "advances": "Advances",
+      "revenue": "Revenue",
+      "expenses": "Expenses",
+      "netProfit": "Net Profit",
+      "margin": "Margin",
+      "trend": "Trend",
+      "month": "Month",
+      "monday": "Mon",
+      "tuesday": "Tue",
+      "wednesday": "Wed",
+      "thursday": "Thu",
+      "friday": "Fri",
+      "saturday": "Sat",
+      "sunday": "Sun",
+      "staffCount": "Staff Count",
+      "status": "Status",
+      "membershipRevenue": "Membership Rev.",
+      "storeRevenue": "Store Rev.",
+      "staffCost": "Staff Cost",
+      "operationalCost": "Operational Cost",
+      "activeMembers": "Active Members",
+      "newMembers": "New Members",
+      "renewals": "Renewals",
+      "exits": "Exits",
+      "netGrowth": "Net Growth",
+      "totalRevenue": "Total Revenue",
+      "totalExpenses": "Total Expenses"
+    },
+    "AdminReportsAttendance": {
+      "auto_attendanceRate": "Attendance rate for {gymName}"
+    },
+    "static": {
+      "revenue": "Revenue",
+      "membership_growth": "Membership Growth",
+      "attendance": "Attendance",
+      "payroll": "Payroll",
+      "p_l": "P&L",
+      "this_month": "This Month",
+      "last_month": "Last Month",
+      "last_3_months": "Last 3 Months",
+      "last_6_months": "Last 6 Months",
+      "this_year": "This Year",
+      "custom_range": "Custom Range",
+      "export_as_pdf": "Export as PDF",
+      "export_as_csv": "Export as CSV"
+    }
+  },
+  "admin_reports_kpis": {
+    "auto_vsLastPeriod": "vs last period",
+    "auto_acrossAllGyms": "across all gyms",
+    "auto_thisPeriod": "this period"
+  },
+  "admin_finance_revenue_report": {
+    "auto_sortBy": "Sort by {header}"
+  }
+}

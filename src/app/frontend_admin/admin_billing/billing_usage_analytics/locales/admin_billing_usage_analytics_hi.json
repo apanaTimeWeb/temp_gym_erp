@@ -1,0 +1,111 @@
+{
+  "usage": {
+    "AdminUsageError": {
+      "text_fdcf1e1f90": "उपयोग डेटा लोड नहीं हो सका",
+      "text_cef2fe093b": "फिर से प्रयास करें"
+    },
+    "admin_usage_alert": {
+      "text_990eac0988": "उपयोग अलर्ट हटाएँ",
+      "auto_c4a86b6a2b": "चेतावनी: आप अपनी सदस्यता सीमा के अंत के करीब हैं। कृपया उपयोग मीटर देखें।",
+      "auto_07939f69f3": "कार्रवाई आवश्यक: आपकी सदस्यता योजना की एक या अधिक सीमाएँ पूरी हो गई हैं। सेवा में रुकावट से बचने के लिए अपग्रेड करें।"
+    },
+    "admin_usage_main": {
+      "text_435f18dc05": "उपयोग डेटा लोड हो रहा है",
+      "text_440a9f2ca1": "वर्तमान प्लान",
+      "text_f7fa5df80f": "/ माह",
+      "text_78906379a6": "नवीनीकरण",
+      "text_56e3badc4e": "रिफ्रेश करें",
+      "text_eb5ad770f5": "संसाधन उपयोग",
+      "auto_bde13e461c": "उपलब्ध नहीं",
+      "auto_members": "सदस्य",
+      "auto_staffSeats": "स्टाफ सीटें",
+      "auto_branches": "शाखाएँ",
+      "auto_smsThisMonth": "इस महीने के SMS",
+      "auto_storageUsed": "स्टोरेज उपयोग",
+      "auto_apiCallsToday": "आज API कॉल",
+      "auto_unitMembers": "सदस्य",
+      "auto_unitSeats": "सीटें",
+      "auto_unitBranches": "शाखाएँ",
+      "auto_unitSms": "SMS",
+      "auto_unitGb": "GB",
+      "auto_unitCalls": "कॉल",
+      "auto_upgradeTitle": "{planName} अपग्रेड अनुरोध",
+      "auto_upgradeMessage": "क्या {planName} प्लान का अपग्रेड अनुरोध Superadmin को भेजना है? आपका वर्तमान प्लान तुरंत नहीं बदलेगा।",
+      "auto_upgradeConfirm": "अनुरोध भेजें",
+      "auto_upgradeCancel": "रद्द करें",
+      "loadError": "उपयोग डेटा लोड नहीं हो सका।",
+      "retry": "पुनः प्रयास करें",
+      "upgradeError": "अपग्रेड अनुरोध नहीं भेजा जा सका। कृपया दोबारा प्रयास करें।"
+    },
+    "admin_usage_metric_card": {
+      "text_ec4a8cfea4": "सीमा पर",
+      "text_782bd6b85f": "सीमा के करीब",
+      "text_0339f20514": "बढ़ाने के लिए अपग्रेड करें",
+      "text_e4d68c5a97": "सीमा",
+      "auto_usage": "{label} उपयोग"
+    },
+    "admin_usage_plan_card": {
+      "text_1ef5e4215a": "सदस्यता योजनाएँ",
+      "text_ab79ad6aa7": "अपग्रेड अनुरोध की समीक्षा आपका सुपर एडमिन करेगा।",
+      "text_4fc0e2bc80": "वर्तमान",
+      "text_cf765512cc": "भेजा जा रहा है…",
+      "auto_94fe6d906b": "अपग्रेड करें",
+      "auto_0757510097": "संपर्क का अनुरोध करें",
+      "customPrice": "कस्टम"
+    },
+    "AdminUsagePlans": {
+      "starter": {
+        "name": "स्टार्टर",
+        "features": {
+          "branch": "1 शाखा",
+          "members": "500 सदस्य",
+          "staff": "5 स्टाफ",
+          "sms": "2,000 SMS/माह",
+          "storage": "5 GB स्टोरेज"
+        }
+      },
+      "growth": {
+        "name": "ग्रोथ",
+        "features": {
+          "branches": "5 शाखाएँ",
+          "members": "2,000 सदस्य",
+          "staff": "15 स्टाफ",
+          "sms": "10,000 SMS/माह",
+          "storage": "20 GB स्टोरेज"
+        }
+      },
+      "pro": {
+        "name": "प्रो",
+        "features": {
+          "branches": "15 शाखाएँ",
+          "members": "10,000 सदस्य",
+          "staff": "50 स्टाफ",
+          "sms": "50,000 SMS/माह",
+          "storage": "100 GB स्टोरेज"
+        }
+      },
+      "enterprise": {
+        "name": "एंटरप्राइज़",
+        "features": {
+          "branches": "असीमित शाखाएँ",
+          "members": "असीमित सदस्य",
+          "staff": "असीमित स्टाफ",
+          "sms": "कस्टम SMS सीमा",
+          "storage": "कस्टम स्टोरेज सीमा"
+        }
+      }
+    },
+    "metadata": {
+      "title": "उपयोग और सदस्यता — एडमिन | Smart Gym 360",
+      "description": "खाते के उपयोग और सदस्यता सीमाओं की समीक्षा करें।"
+    },
+    "AdminUsageDialog": {
+      "confirm": "पुष्टि करें",
+      "cancel": "रद्द करें",
+      "typeToConfirm": "पुष्टि के लिए {phrase} टाइप करें"
+    }
+  },
+  "admin_usage_metric_card": {
+    "auto_upgradePlanFor": "{label} सीमा बढ़ाने के लिए प्लान अपग्रेड करें"
+  }
+}

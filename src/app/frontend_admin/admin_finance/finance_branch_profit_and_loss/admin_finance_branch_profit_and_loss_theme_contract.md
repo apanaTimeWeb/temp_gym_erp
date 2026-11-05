@@ -1,0 +1,3 @@
+# Branch P&L Theme Contract
+
+Consumes global semantic tokens from canonical `globals.css`: `bg-page`, `bg-card`, `bg-input`, `bg-surface-highlight`, `bg-surface-hover`, `bg-skeleton-base`, `text-primary`, `text-secondary`, `text-disabled`, `text-success`, `text-warning`, `text-danger`, `bg-success-bg`, `bg-warning-bg`, `bg-danger-bg`, `bg-info-bg`, `text-info`, `border-border`, `ring-primary`, `bg-primary`, `text-on-primary`, `bg-primary-hover`, `shadow-card`, and `shadow-dialog`. Charts consume the approved global chart theme token adapter. No raw hex or arbitrary CSS variable classes are permitted.

@@ -1,0 +1,24 @@
+@media screen {
+  .adminShellRoot { min-height: 100vh; }
+}
+
+@media print {
+  :global(body) {
+    background: Canvas !important;
+    color: CanvasText !important;
+  }
+  .adminShellRoot :global([data-admin-shell-header]),
+  .adminShellRoot :global([data-admin-shell-sidebar]),
+  .adminShellRoot :global([data-admin-shell-toasts]),
+  .adminShellRoot :global([data-admin-shell-command-palette]) {
+    display: none !important;
+  }
+  .adminShellRoot :global([data-admin-shell-main]) {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .adminShellRoot :global(*) {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+}

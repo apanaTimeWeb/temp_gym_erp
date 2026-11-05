@@ -1,0 +1,180 @@
+{
+  "permissions": {
+    "PermissionsError": {
+      "text_06340cfc2a": "अनुमतियाँ लोड नहीं हो सकीं",
+      "text_cef2fe093b": "फिर से प्रयास करें"
+    },
+    "admin_permissions_staff_overrides": {
+      "text_347718c2e3": "प्रति-स्टाफ ओवरराइड",
+      "text_05a1c7e503": "कोई कस्टम ओवरराइड नहीं — सभी स्टाफ अपनी भूमिका के डिफ़ॉल्ट उपयोग कर रहे हैं।",
+      "text_fe080f8a0d": "बदलावों के लिए पुष्टि आवश्यक है और वे तुरंत लागू होते हैं।",
+      "text_299ef4aaf3": "डिफ़ॉल्ट पर रीसेट करें",
+      "text_c6c69f06e9": "कस्टम ओवरराइड",
+      "text_59b732d48e": "विशेषाधिकार बढ़ाने के लिए बैकएंड प्राधिकरण ही निर्णायक रहेगा।",
+      "auto_759b88491c": "अक्षम",
+      "auto_5037b668d6": "सक्षम",
+      "auto_5b6239be97": "सक्षम करें",
+      "auto_32447c7d34": "अक्षम करें",
+      "auto_permissionToggle": "{action} {feature} के लिए {name}",
+      "noStaffMatch": "वर्तमान फ़िल्टर से कोई स्टाफ़ मेल नहीं खाता।",
+      "clearFilters": "फ़िल्टर साफ़ करें",
+      "unsupportedPermission": "सर्वर से मिली असमर्थित अनुमति; केवल पढ़ने के लिए।"
+    },
+    "admin_permissions_matrix": {
+      "text_c2bcde8908": "भूमिका अनुमति मैट्रिक्स",
+      "text_62d0417cb2": "यहाँ भूमिका के डिफ़ॉल्ट दिखते हैं। स्टाफ-विशिष्ट बदलाव ओवरराइड पैनल में प्रबंधित होते हैं।",
+      "text_1785713451": "अनुमति",
+      "text_babe3050e2": "प्रबंधक",
+      "text_63deca910c": "ट्रेनर",
+      "text_1db62ec5e7": "रिसेप्शनिस्ट",
+      "auto_620ad07fd6": "अक्षम",
+      "auto_abfb1a2940": "सक्षम"
+    },
+    "admin_permissions_role_card": {
+      "text_de04fa0e29": "में से",
+      "text_4a93eb442a": "अनुमतियाँ सक्षम",
+      "text_3ea3f9802a": "सक्षम"
+    },
+    "admin_permissions_toolbar": {
+      "text_b22d435d78": "भूमिका अनुमति फ़िल्टर",
+      "text_c9c81e99d9": "सभी भूमिकाएँ",
+      "text_efceb97cfb": "स्टाफ नाम या आईडी खोजें"
+    },
+    "AdminPermissionsConfirm": {
+      "changeTitle": "अनुमति बदलें",
+      "changeMessage": "{staffName}: इस अनुमति को बदलने से तुरंत यह प्रभावित होगा कि यह स्टाफ सदस्य क्या कर सकता है। अनुमति: {permission}।",
+      "changeConfirm": "पुष्टि करें",
+      "resetTitle": "अनुमतियाँ रीसेट करें",
+      "resetMessage": "{staffName} की अनुमतियों को {role} डिफ़ॉल्ट पर रीसेट करें? सभी कस्टम ओवरराइड हट जाएँगे।",
+      "resetConfirm": "रीसेट करें"
+    },
+    "admin_permissions_empty_state": {
+      "title": "कोई अनुमति कॉन्फ़िगर नहीं है",
+      "description": "बैकएंड ने इस मॉड्यूल के लिए कोई अनुमति परिभाषा नहीं लौटाई है।"
+    },
+    "AdminPermissionsCatalog": {
+      "members": {
+        "view": {
+          "label": "सदस्य देखें",
+          "description": "सदस्य प्रोफ़ाइल और सदस्य सूची देखें।"
+        },
+        "create": {
+          "label": "सदस्य बनाएँ",
+          "description": "नए सदस्य रिकॉर्ड बनाएँ।"
+        },
+        "edit": {
+          "label": "सदस्य संपादित करें",
+          "description": "सदस्य रिकॉर्ड संपादित करें।"
+        },
+        "delete": {
+          "label": "सदस्य हटाएँ",
+          "description": "सदस्य रिकॉर्ड हटाएँ।"
+        }
+      },
+      "finance": {
+        "view": {
+          "label": "वित्त देखें",
+          "description": "वित्तीय जानकारी देखें।"
+        },
+        "collect": {
+          "label": "भुगतान एकत्र करें",
+          "description": "सदस्यों से भुगतान लें।"
+        },
+        "expenses": {
+          "label": "खर्च प्रबंधित करें",
+          "description": "खर्च बनाएँ और प्रबंधित करें।"
+        },
+        "refunds": {
+          "label": "रिफंड जारी करें",
+          "description": "वित्तीय रिफंड जारी करें।"
+        }
+      },
+      "hr": {
+        "view": {
+          "label": "एचआर देखें",
+          "description": "स्टाफ और HR रिकॉर्ड देखें।"
+        },
+        "manage": {
+          "label": "स्टाफ प्रबंधित करें",
+          "description": "स्टाफ रिकॉर्ड प्रबंधित करें।"
+        },
+        "payroll": {
+          "label": "पेरोल प्रबंधित करें",
+          "description": "वेतन प्रक्रियाएँ प्रबंधित करें।"
+        }
+      },
+      "attendance": {
+        "view": {
+          "label": "उपस्थिति देखें",
+          "description": "उपस्थिति रिकॉर्ड देखें।"
+        },
+        "mark": {
+          "label": "उपस्थिति दर्ज करें",
+          "description": "सदस्य की उपस्थिति दर्ज करें।"
+        }
+      },
+      "reports": {
+        "view": {
+          "label": "रिपोर्ट देखें",
+          "description": "रिपोर्ट देखें।"
+        },
+        "export": {
+          "label": "रिपोर्ट निर्यात करें",
+          "description": "रिपोर्ट एक्सपोर्ट करें।"
+        }
+      },
+      "settings": {
+        "view": {
+          "label": "सेटिंग्स देखें",
+          "description": "एप्लिकेशन सेटिंग्स देखें।"
+        },
+        "edit": {
+          "label": "सेटिंग्स संपादित करें",
+          "description": "एप्लिकेशन सेटिंग्स संपादित करें।"
+        }
+      },
+      "store": {
+        "view": {
+          "label": "स्टोर देखें",
+          "description": "स्टोर डेटा देखें।"
+        },
+        "manage": {
+          "label": "स्टोर प्रबंधित करें",
+          "description": "स्टोर डेटा प्रबंधित करें।"
+        }
+      },
+      "roles": {
+        "manager": {
+          "label": "प्रबंधक",
+          "description": "परिचालन ब्रांच प्रबंधन।"
+        },
+        "trainer": {
+          "label": "ट्रेनर",
+          "description": "प्रशिक्षण और उपस्थिति वर्कफ़्लो।"
+        },
+        "receptionist": {
+          "label": "रिसेप्शनिस्ट",
+          "description": "फ्रंट-डेस्क और सदस्य सहायता।"
+        }
+      },
+      "groups": {
+        "members": "सदस्य",
+        "finance": "वित्त",
+        "hr": "एचआर",
+        "attendance": "उपस्थिति",
+        "reports": "रिपोर्ट",
+        "settings": "सेटिंग्स",
+        "store": "स्टोर"
+      }
+    },
+    "PermissionsLoading": {
+      "label": "अनुमतियाँ लोड हो रही हैं"
+    },
+    "AdminPermissionsError": {
+      "mutationFailed": "अनुमति में बदलाव विफल हुआ। कृपया फिर से प्रयास करें।"
+    }
+  },
+  "admin_permissions_role_card": {
+    "auto_permissionsEnabled": "{role} अनुमतियाँ सक्रिय"
+  }
+}

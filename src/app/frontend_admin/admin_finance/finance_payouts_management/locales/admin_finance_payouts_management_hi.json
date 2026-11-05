@@ -1,0 +1,79 @@
+{
+  "payouts": {
+    "admin_payouts_pnl_statement": {
+      "text_587bef7062": "लाभ और हानि विवरण",
+      "text_b968ad7e9b": "प्रत्येक जिम और महीने के अनुसार कर-तैयार विवरण",
+      "text_f19bc6d402": "लाभ और हानि का कोई रिकॉर्ड नहीं मिला",
+      "auto_55e2fbeab5": "वर्तमान फ़िल्टर से कोई P&L रिकॉर्ड मेल नहीं खाता।"
+    },
+    "admin_payouts_summary_table": {
+      "text_be46153ca6": "सभी महीने",
+      "text_1ea6687cfe": "सभी जिम",
+      "text_6b308de777": "सभी स्थिति",
+      "text_f79b0cb03e": "भुगतान वितरण का कोई रिकॉर्ड नहीं मिला",
+      "auto_76a79e50dc": "वर्तमान फ़िल्टर से कोई भुगतान रिकॉर्ड मेल नहीं खाता।",
+      "auto_94f2f2b4e4": "भुगतान किया गया"
+    },
+    "admin_payouts_main": {
+      "auto_bb0fa27be3": "सारांश"
+    },
+    "admin_payouts_kpis": {
+      "auto_netProfit": "शुद्ध लाभ{suffix}",
+      "auto_grossRevenue": "सकल राजस्व{suffix}",
+      "auto_totalExpenses": "कुल खर्च{suffix}",
+      "auto_pendingPayouts": "लंबित भुगतान{suffix}"
+    },
+    "AdminAuditRepair": {
+      "gym": "जिम",
+      "month": "महीना",
+      "revenue": "राजस्व",
+      "cogs": "COGS",
+      "grossProfit": "सकल लाभ",
+      "staffCost": "स्टाफ लागत",
+      "rentUtilities": "किराया और उपयोगिताएँ",
+      "marketing": "मार्केटिंग",
+      "misc": "विविध",
+      "ebitda": "EBITDA",
+      "tax": "कर",
+      "netProfit": "शुद्ध लाभ",
+      "grossRevenue": "सकल राजस्व",
+      "payroll": "पेरोल",
+      "expenses": "खर्च",
+      "platformFee": "प्लेटफ़ॉर्म शुल्क",
+      "status": "स्थिति",
+      "payoutSummary": "भुगतान सारांश",
+      "pnlStatement": "लाभ और हानि विवरण",
+      "failed": "विफल",
+      "financialAmountHidden": "गोपनीयता के लिए वित्तीय राशि छिपाई गई है"
+    },
+    "AdminPayoutsFilters": {
+      "allMonths": "सभी महीने",
+      "june2026": "जून 2026",
+      "may2026": "मई 2026",
+      "april2026": "अप्रैल 2026",
+      "march2026": "मार्च 2026",
+      "allGyms": "सभी जिम",
+      "gymAndheriEast": "अंधेरी ईस्ट",
+      "gymBandraWest": "बांद्रा वेस्ट",
+      "gymPowai": "पवई",
+      "gymThane": "ठाणे",
+      "allStatus": "सभी स्थिति",
+      "paid": "भुगतान किया गया",
+      "pending": "लंबित",
+      "processing": "प्रोसेसिंग"
+    },
+    "AdminRepair": {
+      "loadError": "भुगतान डेटा लोड नहीं हो सका।",
+      "pnlLoadError": "लाभ और हानि विवरण लोड नहीं हो सका।",
+      "summaryLoadError": "भुगतान सारांश मेट्रिक्स लोड नहीं हो सके।",
+      "loadingSummary": "भुगतान सारांश लोड हो रहा है…",
+      "retry": "पुनः प्रयास करें"
+    }
+  },
+  "admin_payouts_kpis": {
+    "auto_afterDeductions": "सभी कटौतियों के बाद",
+    "auto_allGymsCombined": "सभी जिम मिलाकर",
+    "auto_payrollOps": "पेरोल + संचालन",
+    "auto_awaitingTransfer": "ट्रांसफर की प्रतीक्षा में"
+  }
+}

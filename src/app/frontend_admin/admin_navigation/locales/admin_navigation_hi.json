@@ -1,0 +1,248 @@
+{
+  "admin_navigation": {
+    "AdminNavigationLayoutCommandPalette": {
+      "text_a68d28f1ee": "कमांड पैलेट"
+    },
+    "AdminNavigationLayoutHeader": {
+      "text_8b9b1bbd66": "साइडबार टॉगल करें"
+    },
+    "AdminNavigationLayoutHeaderProfile": {
+      "text_45a612f7ef": "प्रोफ़ाइल मेनू",
+      "text_9ba8d391c5": "मेरी प्रोफ़ाइल",
+      "text_c7f73bb54d": "सेटिंग्स",
+      "text_6e78c91f5a": "लॉग आउट",
+      "unknownUser": "अज्ञात उपयोगकर्ता"
+    },
+    "AdminNavigationLayoutKeyboardShortcuts": {
+      "openCommandPalette": "कमांड पैलेट खोलें",
+      "shortcutHelp": "कीबोर्ड शॉर्टकट",
+      "title": "कीबोर्ड शॉर्टकट",
+      "close": "बंद करें",
+      "commandPalette": "कमांड पैलेट",
+      "closeOverlays": "ओवरले बंद करें",
+      "submitForm": "सक्रिय फ़ॉर्म सबमिट करें",
+      "showHelp": "कीबोर्ड शॉर्टकट सहायता दिखाएँ",
+      "keyCommandPalette": "Ctrl / ⌘ + K",
+      "keyEscape": "Esc",
+      "keySubmit": "Ctrl / ⌘ + S",
+      "keyHelp": "?"
+    },
+    "AdminNavigationLayoutSidebar": {
+      "text_1ca64e5fd3": "GymSmart ADMIN",
+      "text_3871a45480": "GymSmart",
+      "text_b31bc5e6ee": "ADMIN प्रणाली",
+      "text_7994a318d8": "मेनू खोजें...",
+      "text_13a91dc70a": "मेनू खोजें",
+      "text_a68d28f1ee": "कोई मिलान नहीं मिला",
+      "remaining_adminUser": "एडमिन उपयोगकर्ता",
+      "remaining_superAdmin": "सुपर एडमिन",
+      "text_sidebarLabel": "एडमिन नेविगेशन",
+      "remaining_roleUnavailable": "भूमिका उपलब्ध नहीं"
+    },
+    "AdminNavigation": {
+      "groups": {
+        "overview": "ओवरव्यू",
+        "operations": "सदस्य और संचालन",
+        "financeBilling": "बिलिंग और वित्त",
+        "people": "कर्मचारी",
+        "communication": "संचार",
+        "accessControl": "सुरक्षा और एक्सेस",
+        "insights": "रिपोर्ट और विश्लेषण",
+        "system": "सिस्टम"
+      },
+      "items": {
+        "dashboard": "डैशबोर्ड",
+        "members": "सदस्य",
+        "attendance": "उपस्थिति",
+        "sales": "बिक्री",
+        "billing": "बिलिंग",
+        "finance": "वित्त",
+        "hr": "एचआर",
+        "gyms": "जिम और ब्रांच",
+        "communication": "संचार",
+        "security": "सुरक्षा",
+        "reports": "रिपोर्ट",
+        "dataExport": "डेटा एक्सपोर्ट",
+        "settings": "सेटिंग्स"
+      },
+      "financeGroups": {
+        "transactionsOperations": "लेन-देन और संचालन",
+        "staffFinance": "स्टाफ वित्त",
+        "financialAnalyticsReports": "वित्तीय विश्लेषण और रिपोर्ट",
+        "billingPaymentMethods": "बिलिंग और भुगतान के तरीके"
+      },
+      "financeTabs": {
+        "payments": "भुगतान",
+        "expenses": "खर्च",
+        "summary": "सारांश",
+        "pendingSalesPayments": "लंबित बिक्री भुगतान",
+        "payouts": "भुगतान वितरण",
+        "payroll": "वेतन",
+        "salaryAdvances": "वेतन अग्रिम",
+        "staffDues": "स्टाफ बकाया",
+        "staffLedger": "स्टाफ लेजर",
+        "branchPnl": "ब्रांच P&L",
+        "planRevenue": "प्लान राजस्व",
+        "pnlReport": "P&L रिपोर्ट",
+        "revenueReport": "राजस्व रिपोर्ट",
+        "payrollReport": "वेतन रिपोर्ट",
+        "subscriptionInvoices": "सदस्यता चालान",
+        "subscriptionPaymentMethods": "सदस्यता भुगतान तरीके"
+      },
+      "communicationTabs": {
+        "notices": "सूचनाएँ और घोषणाएँ",
+        "whatsappCampaigns": "WhatsApp कैंपेन",
+        "notifications": "सूचनाएँ"
+      },
+      "hrTabs": {
+        "staff": "स्टाफ प्रबंधन",
+        "performance": "स्टाफ प्रदर्शन"
+      },
+      "reportsTabs": {
+        "attendance": "उपस्थिति रिपोर्ट",
+        "membership": "सदस्यता रिपोर्ट"
+      },
+      "salesTabs": {
+        "overview": "अवलोकन",
+        "membershipReport": "सदस्यता रिपोर्ट",
+        "allMemberships": "सभी सदस्यताएँ",
+        "storeSales": "स्टोर बिक्री",
+        "pendingPayments": "लंबित बिक्री भुगतान",
+        "membershipGrowthReport": "सदस्यता वृद्धि रिपोर्ट"
+      },
+      "subscriptionTabs": {
+        "overview": "अवलोकन",
+        "plans": "प्लान"
+      },
+      "financeNavigation": "वित्त द्वितीयक नेविगेशन",
+      "communicationNavigation": "संचार द्वितीयक नेविगेशन",
+      "hrNavigation": "HR द्वितीयक नेविगेशन",
+      "reportsNavigation": "रिपोर्ट द्वितीयक नेविगेशन",
+      "salesNavigation": "बिक्री द्वितीयक नेविगेशन",
+      "subscriptionNavigation": "सदस्यता द्वितीयक नेविगेशन",
+      "membersNavigation": "सदस्य नेविगेशन",
+      "membersTabs": {
+        "directory": "सदस्य निर्देशिका",
+        "blacklist": "ब्लैकलिस्ट प्रबंधन"
+      },
+      "billingNavigation": "बिलिंग नेविगेशन",
+      "billingGroups": {
+        "plansAndPromotions": "प्लान और प्रमोशन",
+        "subscriptionLifecycle": "सदस्यता जीवनचक्र",
+        "usageAnalytics": "उपयोग विश्लेषण"
+      },
+      "billingTabs": {
+        "plansCatalog": "प्लान कैटलॉग",
+        "coupons": "कूपन",
+        "subscriptionsOverview": "सदस्यता अवलोकन",
+        "subscriptionPlans": "सदस्यता प्लान",
+        "subscriptionInvoices": "सदस्यता चालान",
+        "subscriptionPaymentMethods": "सदस्यता भुगतान विधियाँ",
+        "usageAnalytics": "उपयोग विश्लेषण"
+      },
+      "gymsNavigation": "जिम नेविगेशन",
+      "gymsGroups": {
+        "branchOperations": "ब्रांच संचालन",
+        "healthMonitoring": "स्वास्थ्य निगरानी"
+      },
+      "gymsTabs": {
+        "branchesDirectory": "ब्रांच निर्देशिका",
+        "healthAlerts": "जिम हेल्थ अलर्ट"
+      },
+      "securityNavigation": "सुरक्षा नेविगेशन",
+      "securityGroups": {
+        "accessGovernance": "एक्सेस प्रबंधन",
+        "auditAndCompliance": "ऑडिट और अनुपालन"
+      },
+      "securityTabs": {
+        "permissions": "अनुमति प्रबंधन",
+        "auditLogs": "ऑडिट लॉग एक्सप्लोरर"
+      },
+      "activeDomain": "सक्रिय डोमेन नेविगेशन",
+      "attendanceTabs": {
+        "dashboard": "उपस्थिति अवलोकन",
+        "reports": "उपस्थिति रिपोर्ट"
+      },
+      "attendanceNavigation": "उपस्थिति द्वितीयक नेविगेशन",
+      "reportsCatalog": {
+        "title": "रिपोर्ट और अंतर्दृष्टि",
+        "intro": "रिपोर्ट को उस व्यावसायिक डोमेन के अनुसार देखें जो कार्यप्रवाह का स्वामी है।",
+        "attendanceTitle": "उपस्थिति रिपोर्ट",
+        "attendanceDescription": "उपस्थिति रुझान, शाखा-स्तरीय उपस्थिति डेटा और निर्यात।",
+        "salesGrowthTitle": "सदस्यता वृद्धि रिपोर्ट",
+        "salesGrowthDescription": "सदस्यता वृद्धि और सदस्यता-संबंधी रिपोर्टिंग।",
+        "salesTitle": "बिक्री सदस्यता रिपोर्ट",
+        "salesDescription": "बिक्री-स्वामित्व वाली सदस्यता रिपोर्टिंग और बिक्री सारांश।",
+        "financeTitle": "वित्त रिपोर्ट",
+        "financeDescription": "वित्त के स्वामित्व वाले लाभ-हानि, राजस्व और पेरोल रिपोर्ट।",
+        "notFoundTitle": "रिपोर्ट कैटलॉग नहीं मिला",
+        "notFoundDescription": "अनुरोधित रिपोर्ट कैटलॉग मार्ग उपलब्ध नहीं है।",
+        "backToReports": "रिपोर्ट पर वापस जाएँ"
+      }
+    },
+    "AdminRouteHeaders": {
+      "route_admin_dashboard_title": "एडमिन डैशबोर्ड",
+      "route_admin_dashboard_subtitle": "वापस स्वागत है, एडमिन! यहाँ आपके बिज़नेस का ओवरव्यू है।",
+      "route_admin_finance_pnl_title": "ब्रांच पी एंड एल",
+      "route_admin_finance_pnl_subtitle": "ब्रांच लाभप्रदता और प्रदर्शन की समीक्षा करें।",
+      "route_admin_hr_performance_title": "स्टाफ प्रदर्शन",
+      "route_admin_hr_performance_subtitle": "स्टाफ प्रदर्शन मेट्रिक्स की समीक्षा करें।",
+      "route_admin_plans_revenue_title": "प्लान राजस्व",
+      "route_admin_plans_revenue_subtitle": "सदस्यता प्लान के राजस्व की समीक्षा करें।",
+      "route_admin_audit_logs_title": "ऑडिट लॉग",
+      "route_admin_audit_logs_subtitle": "एडमिन गतिविधि और ऑडिट इतिहास की समीक्षा करें।",
+      "route_admin_gym_health_alerts_title": "जिम हेल्थ अलर्ट",
+      "route_admin_gym_health_alerts_subtitle": "जिम के संचालन संबंधी हेल्थ अलर्ट की समीक्षा करें।",
+      "route_admin_data_export_title": "डेटा एक्सपोर्ट",
+      "route_admin_data_export_subtitle": "अनुमोदित एडमिन डेटा एक्सपोर्ट करें।",
+      "route_admin_announcements_title": "घोषणाएँ",
+      "route_admin_announcements_subtitle": "जिम ऑडियंस के साथ अपडेट साझा करें।",
+      "route_admin_attendance_title": "उपस्थिति",
+      "route_admin_attendance_subtitle": "उपस्थिति गतिविधि और ट्रेंड की समीक्षा करें।",
+      "route_admin_blacklist_title": "ब्लैकलिस्ट",
+      "route_admin_blacklist_subtitle": "सदस्य एक्सेस प्रतिबंध प्रबंधित करें।",
+      "route_admin_branches_title": "ब्रांच",
+      "route_admin_branches_subtitle": "ब्रांच प्रदर्शन और विवरण की समीक्षा करें।",
+      "route_admin_campaigns_title": "कैंपेन",
+      "route_admin_campaigns_subtitle": "सदस्य संचार कैंपेन प्रबंधित करें।",
+      "route_admin_coupons_title": "कूपन",
+      "route_admin_coupons_subtitle": "डिस्काउंट कूपन और उपयोग प्रबंधित करें।",
+      "route_admin_finance_title": "वित्त",
+      "route_admin_finance_subtitle": "वित्तीय गतिविधि और मेट्रिक्स की समीक्षा करें।",
+      "route_admin_hr_title": "एचआर और मैनेजर",
+      "route_admin_hr_subtitle": "एडमिन स्टाफ जानकारी प्रबंधित करें।",
+      "route_admin_members_title": "सदस्य",
+      "route_admin_members_subtitle": "जिम सदस्यों की जानकारी प्रबंधित करें।",
+      "route_admin_notifications_title": "सूचनाएँ",
+      "route_admin_notifications_subtitle": "सूचनाओं की समीक्षा और प्रबंधन करें।",
+      "route_admin_payouts_title": "भुगतान",
+      "route_admin_payouts_subtitle": "भुगतान गतिविधि और स्थिति की समीक्षा करें।",
+      "route_admin_permissions_title": "अनुमतियाँ",
+      "route_admin_permissions_subtitle": "भूमिका और अनुमति सेटिंग्स प्रबंधित करें।",
+      "route_admin_plans_title": "प्लान",
+      "route_admin_plans_subtitle": "सदस्यता प्लान प्रबंधित करें।",
+      "route_admin_profile_title": "एडमिन प्रोफ़ाइल",
+      "route_admin_profile_subtitle": "अपना एडमिन प्रोफ़ाइल प्रबंधित करें।",
+      "route_admin_reports_title": "रिपोर्ट",
+      "route_admin_reports_subtitle": "एडमिन रिपोर्ट की समीक्षा करें।",
+      "route_admin_sales_title": "बिक्री रिपोर्ट",
+      "route_admin_sales_subtitle": "बिक्री गतिविधि और प्रदर्शन की समीक्षा करें।",
+      "route_admin_settings_title": "एडमिन सेटिंग्स",
+      "route_admin_settings_subtitle": "जिम एडमिन सेटिंग्स कॉन्फ़िगर करें।",
+      "route_admin_subscriptions_title": "सदस्यता",
+      "route_admin_subscriptions_subtitle": "सदस्यता और बिलिंग विवरण की समीक्षा करें।",
+      "route_admin_usage_title": "उपयोग प्लान",
+      "route_admin_usage_subtitle": "उपयोग और प्लान सीमाओं की समीक्षा करें।",
+      "route_default_title": "एडमिन",
+      "route_default_subtitle": "एडमिन कार्यक्षेत्र"
+    },
+    "components/admin_layout_command_palette": {
+      "text_7b6b539e73": "कमांड पैलेट",
+      "text_d9150f4eca": "खोजें या यहाँ जाएँ...",
+      "text_0ddc47f0e6": "खोजें या यहाँ जाएँ",
+      "text_1f7a4f9e2f": "Esc",
+      "text_414cb17461": "नेविगेशन परिणाम",
+      "text_a68d28f1ee": "कोई मिलान नहीं मिला"
+    }
+  }
+}

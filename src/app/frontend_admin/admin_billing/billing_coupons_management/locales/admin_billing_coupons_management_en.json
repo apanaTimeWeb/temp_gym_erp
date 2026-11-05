@@ -1,0 +1,134 @@
+{
+  "coupons": {
+    "AdminRepair": {
+      "requestFailed": "The billing change could not be completed. Please try again."
+    },
+    "admin_coupons_empty_state": {
+      "text_6511a4c55d": "No coupons found",
+      "text_0c9ea45172": "Create your first discount coupon to get started",
+      "text_ef780dfea9": "Create Coupon"
+    },
+    "admin_coupons_kpis": {
+      "text_7d485b4ab7": "Total Coupons",
+      "text_9ca2d93313": "Active Coupons",
+      "text_fb84cffc14": "Total Redeemed",
+      "text_38070154ce": "Revenue Lost",
+      "auto_currentlyLive": "currently live",
+      "auto_allTime": "all time",
+      "auto_toDiscounts": "to discounts",
+      "filterActive": "Filter by active coupons",
+      "loadError": "Coupon summary could not be loaded.",
+      "retry": "Retry"
+    },
+    "admin_coupons_modal": {
+      "text_70d3a544a3": "Close modal",
+      "text_0938f3dd7b": "Coupon Code",
+      "text_fd6fb2dc5e": "e.g. WELCOME20",
+      "text_55f8ebc805": "Description",
+      "text_6c1c764659": "Short description of this coupon",
+      "text_ab547ca1cd": "Discount Type",
+      "text_8dce170de2": "Value",
+      "text_56551a1daa": "e.g. 20",
+      "text_6bd88b8a35": "Min Order",
+      "text_222c927402": "Max Discount",
+      "text_0eb6dbfd2a": "0 = unlimited",
+      "text_b456dc42d2": "Usage Limit",
+      "text_f48d8391a9": "e.g. 100",
+      "text_85d7edabb6": "Assign to Gyms",
+      "text_5366942a24": "Valid From",
+      "text_a144230d85": "Valid Until",
+      "text_77dfd2135f": "Cancel",
+      "auto_1ef60f7612": "Create Coupon",
+      "auto_69cc82eca6": "Update Coupon",
+      "auto_0741bc9942": "Saving...",
+      "auto_f637f1087c": "Edit Coupon"
+    },
+    "admin_coupons_table": {
+      "text_45312a0aa0": "Copy coupon code",
+      "text_21be6e4ee3": "Min:",
+      "text_02c0e4a1da": "Used",
+      "text_11f5c0dfb7": "Used (Unlimited)",
+      "text_cc2be0893e": "Edit coupon",
+      "text_408815991b": "Delete coupon",
+      "auto_56f64a5e4d": "active",
+      "auto_d4b4f4c7e6": "Activate coupon",
+      "auto_de2ee1a936": "Deactivate coupon",
+      "retry": "Retry",
+      "loadError": "Coupons could not be loaded.",
+      "copySuccess": "Coupon code copied.",
+      "copyFailed": "Could not copy coupon code.",
+      "copyUnavailable": "Clipboard access is unavailable in this browser."
+    },
+    "admin_coupons_toolbar": {
+      "text_9932ce7a96": "Search by code or description...",
+      "text_eabec7e58d": "Search coupons",
+      "text_6b308de777": "All Status",
+      "text_521f58fd09": "New Coupon",
+      "remaining_allTime": "All Time",
+      "remaining_thisWeek": "This Week",
+      "remaining_thisMonth": "This Month",
+      "remaining_customRange": "Custom Range",
+      "customStartDate": "Start date",
+      "customEndDate": "End date",
+      "customRangeLabel": "Custom date range",
+      "customRangeHelp": "Choose a valid start and end date to apply this range."
+    },
+    "AdminCouponsConfirm": {
+      "deleteTitle": "Delete Coupon",
+      "deleteMessage": "This coupon will be permanently deleted. This action cannot be undone.",
+      "deleteConfirm": "Delete"
+    },
+    "AdminAuditRepair": {
+      "today": "Today"
+    },
+    "AdminCouponsCatalog": {
+      "type": {
+        "percentage": "Percentage (%)",
+        "flat": "Flat Amount"
+      },
+      "status": {
+        "all": "All Status",
+        "active": "Active",
+        "inactive": "Inactive",
+        "expired": "Expired"
+      },
+      "gyms": {
+        "all": "All Gyms",
+        "andheriEast": "Andheri East",
+        "bandraWest": "Bandra West",
+        "powai": "Powai",
+        "thane": "Thane"
+      },
+      "table": {
+        "code": "Code",
+        "typeValue": "Type / Value",
+        "assignedGyms": "Assigned Gyms",
+        "usage": "Usage",
+        "validUntil": "Valid Until",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "off": "off"
+    },
+    "validation": {
+      "codeMin": "Code must be at least 3 characters.",
+      "codeMax": "Code must be 20 characters or fewer.",
+      "descriptionRequired": "Description is required.",
+      "positiveNumber": "Enter a positive number.",
+      "nonNegativeNumber": "Enter 0 or a positive number.",
+      "usageMin": "Usage limit must be at least 1.",
+      "gymsRequired": "Assign at least one gym.",
+      "startRequired": "Start date is required.",
+      "endRequired": "End date is required.",
+      "endBeforeStart": "End date must be on or after start date.",
+      "allGymsExclusive": "“All Gyms” cannot be combined with individual gyms."
+    },
+    "AdminCouponsModal": {
+      "text_zeroPlaceholder": "0"
+    }
+  },
+  "admin_coupons_table": {
+    "auto_editCoupon": "Edit coupon {code}",
+    "auto_couponUsage": "Coupon usage for {code}"
+  }
+}

@@ -1,0 +1,7 @@
+// RESPONSIBILITY: Response and UI state types for the Sales memberships directory only.
+import type { QueryStatus } from '@tanstack/react-query';
+import { ADMIN_SALES_MEMBERSHIP_FILTER, DATE_FILTERS } from '@/app/frontend_admin/admin_sales/sales_memberships/constants/AdminSalesMembershipsConstants';
+export type MembershipFilter = (typeof ADMIN_SALES_MEMBERSHIP_FILTER)[keyof typeof ADMIN_SALES_MEMBERSHIP_FILTER];
+export type DateFilter = (typeof DATE_FILTERS)[number];
+export interface Member { id: string; name: string; email: string; phone: string; gender: string; address?: string; branch: string; planId: string; plan?: { id: string; name: string; tier: string }; billingCycle: string; status: string; joinDate: string; expiryDate: string; paidAmount: number; pendingAmount: number; photo?: string; createdAt: string; }
+export interface AdminSalesMembershipsState { isCustomRangeBlocked: boolean; startDate: string; endDate: string; search: string; setSearch: (search: string) => void; currentPage: number; setCurrentPage: (page: number) => void; membershipFilter: MembershipFilter; setMembershipFilter: (filter: MembershipFilter) => void; allMemberships: Member[]; allMembershipsTotal: number; allMembershipsStatus: QueryStatus; allMembershipsError: string; retryAllMemberships: () => Promise<unknown>; membershipKpiCounts: { active: number | null; expiringSoon: number | null; expired: number | null }; membershipKpiCountsPending: boolean; membershipKpiCountsError: boolean; retryMembershipKpiCounts: () => Promise<unknown>; }

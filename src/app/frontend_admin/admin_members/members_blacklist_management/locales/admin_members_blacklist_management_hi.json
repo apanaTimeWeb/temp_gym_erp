@@ -1,0 +1,144 @@
+{
+  "blacklist": {
+    "admin_blacklist_cross_gym_view": {
+      "text_dd683b697d": "कोई जिम-विशिष्ट प्रतिबंध नहीं",
+      "text_a956fd7d18": "सभी सक्रिय प्रतिबंध पहले से वैश्विक हैं। शाखा-विशिष्ट प्रतिबंध यहाँ दिखेंगे, ताकि आप उनकी समीक्षा करके सभी शाखाओं में लागू कर सकें।",
+      "text_ea3e10e942": "शाखा-विशिष्ट प्रतिबंध",
+      "text_80929f9c4f": "मिले। इन सदस्यों को केवल चुनिंदा शाखाओं में ब्लॉक किया गया है। उपयोग करें",
+      "text_901bb4c2c3": "सभी पर लागू करें",
+      "text_fcc98f082f": "किसी प्रविष्टि को वैश्विक प्रतिबंध में बदलने के लिए।",
+      "text_d789a1e992": "आईडी:",
+      "text_bb67a0d7d8": "प्रतिबंध सभी शाखाओं पर लागू करें",
+      "text_95f4f02070": "ब्लैकलिस्ट से हटाएँ",
+      "member": "सदस्य",
+      "contact": "संपर्क",
+      "reason": "कारण",
+      "bannedAtBranches": "प्रतिबंधित ब्रांच",
+      "blacklistedBy": "ब्लैकलिस्ट द्वारा",
+      "date": "तारीख",
+      "actions": "कार्रवाई",
+      "entriesCount": "{count} शाखा-विशिष्ट प्रतिबंध"
+    },
+    "admin_blacklist_empty_state": {
+      "text_209fc8147a": "ब्लैकलिस्ट में कोई सदस्य नहीं है",
+      "text_c92ec0d993": "जिम में उनकी पहुँच प्रतिबंधित करने के लिए सदस्य को ब्लैकलिस्ट करें",
+      "text_e0b464e57f": "सदस्य को ब्लैकलिस्ट करें"
+    },
+    "admin_blacklist_kpis": {
+      "text_697df5412b": "कुल ब्लैकलिस्ट किए गए सदस्य",
+      "text_d0838925b1": "वैश्विक प्रतिबंध",
+      "text_d4569d3f03": "विशिष्ट जिम प्रतिबंध",
+      "text_c161761c78": "इस महीने जोड़े गए",
+      "auto_acrossAllGyms": "सभी जिम में",
+      "auto_targetedBranches": "चयनित शाखाएँ"
+    },
+    "admin_blacklist_modal": {
+      "text_e0b464e57f": "सदस्य को ब्लैकलिस्ट करें",
+      "text_bbfa773e5a": "बंद करें",
+      "text_7a88b2371d": "सदस्य आईडी",
+      "text_bae8fcee2a": "e.g. M1042",
+      "text_64346b483c": "पूरा नाम",
+      "text_d2fbdd7c0d": "सदस्य का नाम",
+      "text_77064d5265": "फोन",
+      "text_84add5b295": "ईमेल",
+      "text_5f1bc37f9c": "member@email.com",
+      "text_f219cc0614": "कारण",
+      "text_301589da9a": "ब्लैकलिस्ट करने का कारण बताएँ...",
+      "text_fcb84ff6bf": "प्रतिबंध का दायरा",
+      "text_e787b8cb73": "जिम चुनें",
+      "text_77dfd2135f": "रद्द करें",
+      "auto_6a52089785": "सदस्य को ब्लैकलिस्ट करें",
+      "auto_5bc493f10a": "ब्लैकलिस्ट किया जा रहा है...",
+      "auto_51fddaa265": "विशिष्ट जिम",
+      "auto_a3c4f8abb1": "वैश्विक (सभी जिम)",
+      "auto_85fd03cbf9": "वैश्विक"
+    },
+    "admin_blacklist_table": {
+      "text_d789a1e992": "आईडी:",
+      "text_e922812370": "ब्लैकलिस्ट स्थिति बदलें",
+      "text_ed59206098": "सदस्य को अनब्लॉक करें",
+      "text_12aabd251c": "अनब्लॉक करें",
+      "auto_dfef94ff4f": "निष्क्रिय",
+      "auto_0aecfd61ed": "सक्रिय",
+      "auto_4666088d01": "वैश्विक",
+      "auto_d68c6eb6ce": "वैश्विक",
+      "member": "सदस्य",
+      "contact": "संपर्क",
+      "reason": "कारण",
+      "scope": "स्कोप",
+      "blacklistedBy": "ब्लैकलिस्ट द्वारा",
+      "date": "तारीख",
+      "status": "स्थिति",
+      "actions": "कार्रवाई"
+    },
+    "admin_blacklist_toolbar": {
+      "text_212b62a779": "नाम, आईडी या फ़ोन से खोजें...",
+      "text_b64efd493e": "सभी स्कोप",
+      "text_1ea6687cfe": "सभी जिम",
+      "text_e0b464e57f": "सदस्य को ब्लैकलिस्ट करें",
+      "searchLabel": "सदस्य के नाम, आईडी या फ़ोन से ब्लैकलिस्ट प्रविष्टियाँ खोजें"
+    },
+    "admin_blacklist_cross_gym_empty_state": {
+      "text_no_gym_bans": "कोई जिम-विशिष्ट प्रतिबंध नहीं",
+      "text_no_members": "चयनित जिम में कोई ब्लैकलिस्ट सदस्य असाइन नहीं है।"
+    },
+    "admin_blacklist_main": {
+      "auto_1f0b9339cd": "सभी"
+    },
+    "AdminBlacklistConfirm": {
+      "addMessage": "{name} को ब्लैकलिस्ट करें?",
+      "restoreMessage": "{name} को ब्लैकलिस्ट से पुनर्स्थापित करें?",
+      "propagateMessage": "{name} के लिए यह ब्लैकलिस्ट बदलाव लागू करें?",
+      "removeTitle": "ब्लैकलिस्ट से हटाएँ",
+      "removeMessage": "{name} को ब्लैकलिस्ट से हटाएँ?",
+      "removeConfirm": "हटाएँ",
+      "addTitle": "सदस्य को ब्लैकलिस्ट करें",
+      "addConfirm": "ब्लैकलिस्ट करें",
+      "restoreTitle": "सदस्य पुनर्स्थापित करें",
+      "restoreConfirm": "पुनर्स्थापित करें",
+      "propagateTitle": "ब्लैकलिस्ट बदलाव लागू करें",
+      "propagateConfirm": "लागू करें"
+    },
+    "admin_blacklist_tabs": {
+      "allEntries": "सभी प्रविष्टियाँ",
+      "crossBranchView": "क्रॉस-ब्रांच दृश्य"
+    },
+    "admin_blacklist_filters": {
+      "allGyms": "सभी जिम",
+      "gymAndheriEast": "अंधेरी ईस्ट",
+      "gymBandraWest": "बांद्रा वेस्ट",
+      "gymPowai": "पवई",
+      "gymThane": "ठाणे",
+      "allScopes": "सभी स्कोप",
+      "globalBan": "ग्लोबल प्रतिबंध",
+      "gymSpecific": "जिम-विशिष्ट"
+    },
+    "validation": {
+      "memberIdRequired": "आईडी आवश्यक है।",
+      "nameRequired": "नाम आवश्यक है।",
+      "phoneInvalid": "मान्य फोन नंबर दर्ज करें।",
+      "emailInvalid": "मान्य ईमेल पता दर्ज करें।",
+      "reasonMin": "कारण कम से कम 10 अक्षरों का होना चाहिए।",
+      "gymRequired": "कम से कम एक जिम चुनें।",
+      "specificGymsOnly": "एक या अधिक विशिष्ट जिम चुनें; “सभी जिम” केवल वैश्विक प्रतिबंध के लिए मान्य है।",
+      "globalScopeAllGyms": "वैश्विक प्रतिबंध सभी जिम पर लागू होना चाहिए।"
+    },
+    "AdminBlacklistModal": {
+      "text_phoneExample": "उदा. 9876543210"
+    },
+    "common": {
+      "invalidDate": "अमान्य तारीख"
+    },
+    "table": {
+      "loadError": "ब्लैकलिस्ट रिकॉर्ड लोड नहीं हो सके।",
+      "retry": "पुनः प्रयास करें"
+    },
+    "AdminRepair": {
+      "requestFailed": "ब्लैकलिस्ट परिवर्तन पूरा नहीं हो सका। कृपया फिर से प्रयास करें।",
+      "crossGymLoadError": "क्रॉस-ब्रांच ब्लैकलिस्ट प्रविष्टियाँ लोड नहीं हो सकीं।",
+      "summaryLoadError": "ब्लैकलिस्ट सारांश लोड नहीं हो सका।",
+      "loadingSummary": "ब्लैकलिस्ट सारांश लोड हो रहा है…",
+      "retry": "पुनः प्रयास करें"
+    }
+  }
+}

@@ -1,0 +1,3 @@
+// RESPONSIBILITY: Runtime validation for the Sales all-memberships response only.
+import { z } from 'zod';
+export const memberSchema = z.object({ id: z.string(), name: z.string(), email: z.string(), phone: z.string(), gender: z.string(), address: z.string().optional(), branch: z.string(), planId: z.string(), plan: z.object({ id: z.string(), name: z.string(), tier: z.string() }).optional(), billingCycle: z.string(), status: z.string(), joinDate: z.string(), expiryDate: z.string(), paidAmount: z.number().int().nonnegative(), pendingAmount: z.number().int().nonnegative(), photo: z.string().optional(), createdAt: z.string() });

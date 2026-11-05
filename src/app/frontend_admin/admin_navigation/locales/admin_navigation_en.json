@@ -1,0 +1,248 @@
+{
+  "admin_navigation": {
+    "AdminNavigationLayoutCommandPalette": {
+      "text_a68d28f1ee": "Command palette"
+    },
+    "AdminNavigationLayoutHeader": {
+      "text_8b9b1bbd66": "Toggle sidebar"
+    },
+    "AdminNavigationLayoutHeaderProfile": {
+      "text_45a612f7ef": "Profile menu",
+      "text_9ba8d391c5": "My Profile",
+      "text_c7f73bb54d": "Settings",
+      "text_6e78c91f5a": "Log out",
+      "unknownUser": "Unknown user"
+    },
+    "AdminNavigationLayoutKeyboardShortcuts": {
+      "openCommandPalette": "Open command palette",
+      "shortcutHelp": "Keyboard shortcuts",
+      "title": "Keyboard shortcuts",
+      "close": "Close",
+      "commandPalette": "Command palette",
+      "closeOverlays": "Close overlays",
+      "submitForm": "Submit active form",
+      "showHelp": "Show keyboard shortcut help",
+      "keyCommandPalette": "Ctrl / ⌘ + K",
+      "keyEscape": "Esc",
+      "keySubmit": "Ctrl / ⌘ + S",
+      "keyHelp": "?"
+    },
+    "AdminNavigationLayoutSidebar": {
+      "text_1ca64e5fd3": "GymSmart ADMIN",
+      "text_3871a45480": "GymSmart",
+      "text_b31bc5e6ee": "ADMIN System",
+      "text_7994a318d8": "Search menu...",
+      "text_13a91dc70a": "Search menu",
+      "text_a68d28f1ee": "No matches found",
+      "remaining_adminUser": "Admin User",
+      "remaining_superAdmin": "Super Admin",
+      "text_sidebarLabel": "Admin navigation",
+      "remaining_roleUnavailable": "Role unavailable"
+    },
+    "AdminNavigation": {
+      "groups": {
+        "overview": "Overview",
+        "operations": "Members & Operations",
+        "financeBilling": "Billing & Finance",
+        "people": "People",
+        "communication": "Communication",
+        "accessControl": "Security & Access",
+        "insights": "Reports & Insights",
+        "system": "System"
+      },
+      "items": {
+        "dashboard": "Dashboard",
+        "members": "Members",
+        "attendance": "Attendance",
+        "sales": "Sales",
+        "billing": "Billing",
+        "finance": "Finance",
+        "hr": "HR",
+        "gyms": "Gyms & Branches",
+        "communication": "Communication",
+        "security": "Security",
+        "reports": "Reports",
+        "dataExport": "Data Export",
+        "settings": "Settings"
+      },
+      "financeGroups": {
+        "transactionsOperations": "Transactions & Operations",
+        "staffFinance": "Staff Finance",
+        "financialAnalyticsReports": "Financial Analytics & Reports",
+        "billingPaymentMethods": "Billing & Payment Methods"
+      },
+      "financeTabs": {
+        "payments": "Payments",
+        "expenses": "Expenses",
+        "summary": "Summary",
+        "pendingSalesPayments": "Pending Sales Payments",
+        "payouts": "Payouts",
+        "payroll": "Payroll",
+        "salaryAdvances": "Salary Advances",
+        "staffDues": "Staff Dues",
+        "staffLedger": "Staff Ledger",
+        "branchPnl": "Branch P&L",
+        "planRevenue": "Plan Revenue",
+        "pnlReport": "P&L Report",
+        "revenueReport": "Revenue Report",
+        "payrollReport": "Payroll Report",
+        "subscriptionInvoices": "Subscription Invoices",
+        "subscriptionPaymentMethods": "Subscription Payment Methods"
+      },
+      "communicationTabs": {
+        "notices": "Notices & Announcements",
+        "whatsappCampaigns": "WhatsApp Campaigns",
+        "notifications": "Notifications"
+      },
+      "hrTabs": {
+        "staff": "Staff Management",
+        "performance": "Staff Performance"
+      },
+      "reportsTabs": {
+        "attendance": "Attendance Report",
+        "membership": "Membership Report"
+      },
+      "salesTabs": {
+        "overview": "Overview",
+        "membershipReport": "Membership Report",
+        "allMemberships": "All Memberships",
+        "storeSales": "Store Sales",
+        "pendingPayments": "Pending Sales Payments",
+        "membershipGrowthReport": "Membership Growth Report"
+      },
+      "subscriptionTabs": {
+        "overview": "Overview",
+        "plans": "Plans"
+      },
+      "financeNavigation": "Finance secondary navigation",
+      "communicationNavigation": "Communication secondary navigation",
+      "hrNavigation": "HR secondary navigation",
+      "reportsNavigation": "Reports secondary navigation",
+      "salesNavigation": "Sales secondary navigation",
+      "subscriptionNavigation": "Subscription secondary navigation",
+      "membersNavigation": "Members navigation",
+      "membersTabs": {
+        "directory": "Member Directory",
+        "blacklist": "Blacklist Management"
+      },
+      "billingNavigation": "Billing navigation",
+      "billingGroups": {
+        "plansAndPromotions": "Plans & Promotions",
+        "subscriptionLifecycle": "Subscription Lifecycle",
+        "usageAnalytics": "Usage Analytics"
+      },
+      "billingTabs": {
+        "plansCatalog": "Plans Catalog",
+        "coupons": "Coupons",
+        "subscriptionsOverview": "Subscriptions Overview",
+        "subscriptionPlans": "Subscription Plans",
+        "subscriptionInvoices": "Subscription Invoices",
+        "subscriptionPaymentMethods": "Subscription Payment Methods",
+        "usageAnalytics": "Usage Analytics"
+      },
+      "gymsNavigation": "Gyms navigation",
+      "gymsGroups": {
+        "branchOperations": "Branch Operations",
+        "healthMonitoring": "Health Monitoring"
+      },
+      "gymsTabs": {
+        "branchesDirectory": "Branches Directory",
+        "healthAlerts": "Gym Health Alerts"
+      },
+      "securityNavigation": "Security navigation",
+      "securityGroups": {
+        "accessGovernance": "Access Governance",
+        "auditAndCompliance": "Audit & Compliance"
+      },
+      "securityTabs": {
+        "permissions": "Permissions Management",
+        "auditLogs": "Audit Logs Explorer"
+      },
+      "activeDomain": "Active domain navigation",
+      "attendanceTabs": {
+        "dashboard": "Attendance Overview",
+        "reports": "Attendance Reports"
+      },
+      "attendanceNavigation": "Attendance secondary navigation",
+      "reportsCatalog": {
+        "title": "Reports & Insights",
+        "intro": "Browse reports by the business domain that owns the workflow.",
+        "attendanceTitle": "Attendance Reports",
+        "attendanceDescription": "Attendance trends, branch-level attendance data, and attendance exports.",
+        "salesGrowthTitle": "Membership Growth Report",
+        "salesGrowthDescription": "Membership growth and membership-related reporting.",
+        "salesTitle": "Sales Membership Report",
+        "salesDescription": "Sales-owned membership reporting and sales summary.",
+        "financeTitle": "Finance Reports",
+        "financeDescription": "Profit and loss, revenue, and payroll reporting owned by Finance.",
+        "notFoundTitle": "Report catalog not found",
+        "notFoundDescription": "The requested report catalog route is unavailable.",
+        "backToReports": "Back to Reports"
+      }
+    },
+    "AdminRouteHeaders": {
+      "route_admin_dashboard_title": "Dashboard",
+      "route_admin_dashboard_subtitle": "Welcome back, Admin! Here's your business overview.",
+      "route_admin_finance_pnl_title": "Branch P&L",
+      "route_admin_finance_pnl_subtitle": "Review branch profitability and performance.",
+      "route_admin_hr_performance_title": "Staff Performance",
+      "route_admin_hr_performance_subtitle": "Review staff performance metrics.",
+      "route_admin_plans_revenue_title": "Plan Revenue",
+      "route_admin_plans_revenue_subtitle": "Review revenue across membership plans.",
+      "route_admin_audit_logs_title": "Audit Logs",
+      "route_admin_audit_logs_subtitle": "Review administrative activity and audit history.",
+      "route_admin_gym_health_alerts_title": "Gym Health Alerts",
+      "route_admin_gym_health_alerts_subtitle": "Review operational health alerts across gyms.",
+      "route_admin_data_export_title": "Data Export",
+      "route_admin_data_export_subtitle": "Export approved administrative data.",
+      "route_admin_announcements_title": "Announcements",
+      "route_admin_announcements_subtitle": "Communicate updates to gym audiences.",
+      "route_admin_attendance_title": "Attendance",
+      "route_admin_attendance_subtitle": "Review attendance activity and trends.",
+      "route_admin_blacklist_title": "Blacklist",
+      "route_admin_blacklist_subtitle": "Manage member access restrictions.",
+      "route_admin_branches_title": "Branches",
+      "route_admin_branches_subtitle": "Review branch performance and details.",
+      "route_admin_campaigns_title": "Campaigns",
+      "route_admin_campaigns_subtitle": "Manage member communication campaigns.",
+      "route_admin_coupons_title": "Coupons",
+      "route_admin_coupons_subtitle": "Manage discount coupons and usage.",
+      "route_admin_finance_title": "Finance",
+      "route_admin_finance_subtitle": "Review financial activity and metrics.",
+      "route_admin_hr_title": "HR & Managers",
+      "route_admin_hr_subtitle": "Manage administrative staff information.",
+      "route_admin_members_title": "Members",
+      "route_admin_members_subtitle": "Manage and review gym members.",
+      "route_admin_notifications_title": "Notifications",
+      "route_admin_notifications_subtitle": "Review and manage notifications.",
+      "route_admin_payouts_title": "Payouts",
+      "route_admin_payouts_subtitle": "Review payout activity and status.",
+      "route_admin_permissions_title": "Permissions",
+      "route_admin_permissions_subtitle": "Manage role and permission settings.",
+      "route_admin_plans_title": "Plans",
+      "route_admin_plans_subtitle": "Manage membership plans.",
+      "route_admin_profile_title": "Profile",
+      "route_admin_profile_subtitle": "Manage your administrator profile.",
+      "route_admin_reports_title": "Reports",
+      "route_admin_reports_subtitle": "Review administrative reports.",
+      "route_admin_sales_title": "Sales Reports",
+      "route_admin_sales_subtitle": "Review sales activity and performance.",
+      "route_admin_settings_title": "Settings",
+      "route_admin_settings_subtitle": "Configure gym administration settings.",
+      "route_admin_subscriptions_title": "Subscription",
+      "route_admin_subscriptions_subtitle": "Review subscription and billing details.",
+      "route_admin_usage_title": "Usage Plan",
+      "route_admin_usage_subtitle": "Review usage and plan limits.",
+      "route_default_title": "Admin",
+      "route_default_subtitle": "Admin workspace"
+    },
+    "components/admin_layout_command_palette": {
+      "text_7b6b539e73": "Command palette",
+      "text_d9150f4eca": "Search or jump to...",
+      "text_0ddc47f0e6": "Search or jump to",
+      "text_1f7a4f9e2f": "Esc",
+      "text_414cb17461": "Navigation results",
+      "text_a68d28f1ee": "No matches found"
+    }
+  }
+}

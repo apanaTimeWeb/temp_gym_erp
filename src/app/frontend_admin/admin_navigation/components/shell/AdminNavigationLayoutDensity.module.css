@@ -1,0 +1,9 @@
+.densityRoot { min-height: 100vh; }
+@media (min-width: 768px) {
+  :global([data-admin-density='compact'] table tbody td),
+  :global([data-admin-density='compact'] table thead th) {
+    padding-block: calc(var(--table-row-height-compact) / 4);
+    font-size: var(--font-size-caption);
+  }
+  :global([data-admin-density='compact'] table tbody tr) { min-height: var(--table-row-height-compact); }
+}

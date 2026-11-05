@@ -1,0 +1,15 @@
+// RESPONSIBILITY: Provides feature-local formatting or transformation helpers for finance_payments; it does not own network state or UI workflow.
+// DATA FLOW: verified feature data → focused utility → formatted/normalized result → owning component or hook (admin_finance/finance_payments/utils/AdminFinanceOverviewFormatCurrency.ts)
+
+/** Formats an API amount represented in integer minor units. Currency identity is an explicit contract input; absent or invalid identity is never inferred from locale. @description Implements AdminFinanceFormatCurrency for the owning feature’s explicitly typed data. @param amountMinor - Input used by this utility as declared by the signature. @param currencyCode - Input used by this utility as declared by the signature. @param locale - Input used by this utility as declared by the signature. @returns The typed result declared by the function signature. */
+export function AdminFinanceFormatCurrency(amountMinor: number, currencyCode: string | undefined, locale: string): string {
+  if (!Number.isSafeInteger(amountMinor) || !currencyCode || !/^[A-Z]{3}$/.test(currencyCode)) return '—';
+  try {
+    const probe = new Intl.NumberFormat(locale, { style: 'currency', currency: currencyCode });
+    const fractionDigits = probe.resolvedOptions().maximumFractionDigits ?? 2;
+    const divisor = 10 ** fractionDigits;
+    return new Intl.NumberFormat(locale, { style: 'currency', currency: currencyCode, maximumFractionDigits: fractionDigits }).format(amountMinor / divisor);
+  } catch {
+    return '—';
+  }
+}

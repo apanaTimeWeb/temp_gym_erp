@@ -1,0 +1,86 @@
+{
+  "attendance": {
+    "admin_attendance_main": {
+      "text_480de365cc": "View-only mode — Manual check-in is managed by Branch Managers.",
+      "text_9f5cd8a2e8": "Retry",
+      "text_28a8490d8e": "Attendance Records"
+    },
+    "admin_attendance_toolbar": {
+      "text_9ecaf04b35": "Search by member name or phone...",
+      "text_617d2d01c3": "Search attendance records",
+      "text_24345a1437": "Today",
+      "text_6b308de777": "All Status",
+      "text_0bf51d9a45": "All Branches"
+    },
+    "admin_attendance_trend_chart": {
+      "text_a70e43d730": "Weekly Attendance Trend",
+      "text_7be3443a0f": "Daily check-in count for the current week",
+      "series_checkIns": "Check-ins",
+      "tooltip_checkIns": "{count} check-ins"
+    },
+    "AdminAttendanceError": {
+      "text_b304c3222c": "Failed to load attendance data",
+      "text_975588cab2": "An error occurred while loading the attendance module.",
+      "text_cef2fe093b": "Try Again"
+    },
+    "admin_attendance_empty_state": {
+      "auto_c615f80782": "Attendance records will appear here once members start checking in.",
+      "auto_7727fbc5ff": "Try adjusting the date range, status, or branch filter.",
+      "auto_8da6855922": "No attendance records found",
+      "auto_78cd6b3dc7": "No records match your filters"
+    },
+    "AdminAuditRepair": {
+      "today": "Today",
+      "presentToday": "Present Today",
+      "lateArrivals": "Late Arrivals",
+      "weeklyAverage": "Weekly Average",
+      "allBranches": "All Branches",
+      "todayCheckIns": "Today's Check-Ins",
+      "peakHour": "Peak hour: {time}",
+      "attendanceRate": "{percent}% attendance rate",
+      "lateRate": "{percent}% of today’s check-ins",
+      "weeklyTrend": "{direction} {percent}% vs last week",
+      "increased": "increased",
+      "decreased": "decreased",
+      "weeklyTrendUnchanged": "No change vs last week",
+      "loadingAttendance": "Loading attendance data…"
+    },
+    "metadata": {
+      "title": "Attendance Overview — Admin | Smart Gym 360",
+      "description": "Review attendance activity and trends."
+    },
+    "static": {
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "this_week": "This Week",
+      "this_month": "This Month",
+      "last_month": "Last Month",
+      "all_status": "All Status",
+      "present": "Present",
+      "late": "Late",
+      "absent": "Absent"
+    },
+    "table": {
+      "member": "Member",
+      "branch": "Branch",
+      "plan": "Plan",
+      "trainer": "Trainer",
+      "checkIn": "Check-In",
+      "checkOut": "Check-Out",
+      "duration": "Duration",
+      "status": "Status"
+    },
+    "admin_attendance_table": {
+      "sortBy": "Sort by {header}. Sorting applies to the current page.",
+      "pageSortNotice": "Sorting applies only to the currently loaded page."
+    },
+    "AdminRepair": {
+      "loadFailed": "Unable to load attendance information. Please retry."
+    }
+  },
+  "AdminAttendanceError": {
+    "loadingBranches": "Loading branches…",
+    "branchesFailed": "Branch options could not be loaded.",
+    "retry": "Retry"
+  }
+}

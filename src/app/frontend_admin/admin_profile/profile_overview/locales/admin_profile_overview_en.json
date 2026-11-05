@@ -1,0 +1,48 @@
+{
+  "profile": {
+    "AdminRepair": {
+      "requestFailed": "The profile request could not be completed. Please try again."
+    },
+    "AdminProfileError": {
+      "text_176517bebf": "Failed to load profile.",
+      "text_cef2fe093b": "Try Again"
+    },
+    "admin_profile_main": {
+      "text_9f5cd8a2e8": "Retry",
+      "text_9ba8d391c5": "My Profile",
+      "text_28dfd9f67e": "Manage your account details and password.",
+      "text_ad12e4228c": "Personal Information",
+      "text_64346b483c": "Full Name",
+      "text_09ba557fd1": "Email Address",
+      "text_a23bc17981": "Email cannot be changed here.",
+      "text_ab25d61bb1": "Phone Number",
+      "text_38d7a68249": "+91 XXXXX XXXXX",
+      "text_c3f104d136": "Role",
+      "text_fa2984b367": "Save Changes",
+      "text_49289db43e": "Change Password",
+      "text_61dcf34e70": "Update Password",
+      "auto_7ee35f2834": "Confirm New Password",
+      "auto_856b015424": "New Password",
+      "auto_898ba9670f": "Current Password",
+      "auto_a9257207f9": "Profile could not be loaded.",
+      "tabPersonal": "Personal Info",
+      "tabSecurity": "Security",
+      "validation_passwordMismatch": "New passwords must match."
+    },
+    "AdminProfilePasswordField": {
+      "auto_hide": "Hide {label}",
+      "auto_show": "Show {label}"
+    },
+    "metadata": {
+      "title": "My Profile | Admin | GymSmart",
+      "description": "Manage the administrator profile."
+    },
+    "validation": {
+      "nameRequired": "Enter a name with at least two characters.",
+      "nameTooLong": "Name must be 100 characters or fewer.",
+      "phoneInvalid": "Enter a valid phone number.",
+      "passwordMinLength": "Password must contain at least eight characters.",
+      "passwordMismatch": "The new passwords do not match."
+    }
+  }
+}

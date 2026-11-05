@@ -1,0 +1,180 @@
+{
+  "permissions": {
+    "PermissionsError": {
+      "text_06340cfc2a": "Failed to load permissions",
+      "text_cef2fe093b": "Try Again"
+    },
+    "admin_permissions_staff_overrides": {
+      "text_347718c2e3": "Per-Staff Overrides",
+      "text_05a1c7e503": "No custom overrides — all staff are using their role defaults.",
+      "text_fe080f8a0d": "Changes require confirmation and are applied immediately.",
+      "text_299ef4aaf3": "Reset to Defaults",
+      "text_c6c69f06e9": "Custom override",
+      "text_59b732d48e": "Backend authorization remains authoritative for privilege escalation.",
+      "auto_759b88491c": "Disabled",
+      "auto_5037b668d6": "Enabled",
+      "auto_5b6239be97": "Enable",
+      "auto_32447c7d34": "Disable",
+      "auto_permissionToggle": "{action} {feature} for {name}",
+      "noStaffMatch": "No staff match the current filters.",
+      "clearFilters": "Clear filters",
+      "unsupportedPermission": "Unsupported permission from server; read-only."
+    },
+    "admin_permissions_matrix": {
+      "text_c2bcde8908": "Role Permission Matrix",
+      "text_62d0417cb2": "Role defaults are shown here. Staff-specific changes are managed in the override panel.",
+      "text_1785713451": "Permission",
+      "text_babe3050e2": "Manager",
+      "text_63deca910c": "Trainer",
+      "text_1db62ec5e7": "Receptionist",
+      "auto_620ad07fd6": "Disabled",
+      "auto_abfb1a2940": "Enabled"
+    },
+    "admin_permissions_role_card": {
+      "text_de04fa0e29": "of",
+      "text_4a93eb442a": "permissions enabled",
+      "text_3ea3f9802a": "enabled"
+    },
+    "admin_permissions_toolbar": {
+      "text_b22d435d78": "Permission role filter",
+      "text_c9c81e99d9": "All Roles",
+      "text_efceb97cfb": "Search staff name or ID"
+    },
+    "AdminPermissionsConfirm": {
+      "changeTitle": "Change Permission",
+      "changeMessage": "{staffName}: Changing this permission will immediately affect what this staff member can do. Permission: {permission}.",
+      "changeConfirm": "Confirm",
+      "resetTitle": "Reset Permissions",
+      "resetMessage": "Reset {staffName} permissions to {role} defaults? All custom overrides will be lost.",
+      "resetConfirm": "Reset"
+    },
+    "admin_permissions_empty_state": {
+      "title": "No permissions configured",
+      "description": "The backend returned no permission definitions for this module."
+    },
+    "AdminPermissionsCatalog": {
+      "members": {
+        "view": {
+          "label": "View Members",
+          "description": "View member profiles and member lists."
+        },
+        "create": {
+          "label": "Create Members",
+          "description": "Create new member records."
+        },
+        "edit": {
+          "label": "Edit Members",
+          "description": "Edit member records."
+        },
+        "delete": {
+          "label": "Delete Members",
+          "description": "Delete member records."
+        }
+      },
+      "finance": {
+        "view": {
+          "label": "View Finance",
+          "description": "View financial information."
+        },
+        "collect": {
+          "label": "Collect Payments",
+          "description": "Collect member payments."
+        },
+        "expenses": {
+          "label": "Manage Expenses",
+          "description": "Create and manage expenses."
+        },
+        "refunds": {
+          "label": "Issue Refunds",
+          "description": "Issue financial refunds."
+        }
+      },
+      "hr": {
+        "view": {
+          "label": "View HR",
+          "description": "View staff and HR records."
+        },
+        "manage": {
+          "label": "Manage Staff",
+          "description": "Manage staff records."
+        },
+        "payroll": {
+          "label": "Manage Payroll",
+          "description": "Manage payroll workflows."
+        }
+      },
+      "attendance": {
+        "view": {
+          "label": "View Attendance",
+          "description": "View attendance records."
+        },
+        "mark": {
+          "label": "Mark Attendance",
+          "description": "Mark member attendance."
+        }
+      },
+      "reports": {
+        "view": {
+          "label": "View Reports",
+          "description": "View reports."
+        },
+        "export": {
+          "label": "Export Reports",
+          "description": "Export reports."
+        }
+      },
+      "settings": {
+        "view": {
+          "label": "View Settings",
+          "description": "View application settings."
+        },
+        "edit": {
+          "label": "Edit Settings",
+          "description": "Edit application settings."
+        }
+      },
+      "store": {
+        "view": {
+          "label": "View Store",
+          "description": "View store data."
+        },
+        "manage": {
+          "label": "Manage Store",
+          "description": "Manage store data."
+        }
+      },
+      "roles": {
+        "manager": {
+          "label": "Manager",
+          "description": "Operational branch management."
+        },
+        "trainer": {
+          "label": "Trainer",
+          "description": "Training and attendance workflows."
+        },
+        "receptionist": {
+          "label": "Receptionist",
+          "description": "Front-desk and member support."
+        }
+      },
+      "groups": {
+        "members": "Members",
+        "finance": "Finance",
+        "hr": "HR",
+        "attendance": "Attendance",
+        "reports": "Reports",
+        "settings": "Settings",
+        "store": "Store"
+      }
+    },
+    "PermissionsLoading": {
+      "label": "Loading permissions"
+    },
+    "AdminPermissionsError": {
+      "mutationFailed": "The permission change failed. Please try again."
+    }
+  },
+  "admin_permissions_role_card": {
+    "auto_permissionsEnabled": "{role} permissions enabled"
+  }
+}

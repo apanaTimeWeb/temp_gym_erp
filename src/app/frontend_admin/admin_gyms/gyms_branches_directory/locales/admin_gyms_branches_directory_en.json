@@ -1,0 +1,88 @@
+{
+  "branches": {
+    "admin_branches_card": {
+      "text_6a5638d4a1": "Failed to load branches",
+      "text_36f1f2dde6": "Please refresh the page or try again later.",
+      "text_9f5cd8a2e8": "Retry",
+      "text_35cf82f9d2": "Revenue",
+      "text_badd385121": "View details",
+      "text_8d437dbf95": "Expenses",
+      "text_fcfac3efb6": "Students",
+      "text_a4730a22cf": "Staff",
+      "text_d789a1e992": "ID:"
+    },
+    "admin_branches_detail_drawer": {
+      "text_cf7fcd62b8": "Close branch details",
+      "text_c43f7b7c3a": "Unable to load branch details",
+      "text_9f5cd8a2e8": "Retry",
+      "auto_c531903b50": "Please try again."
+    },
+    "admin_branches_empty_state": {
+      "text_ca43a19c5d": "No branches found",
+      "text_62a18fb502": "Try a different search or status filter to view another branch.",
+      "text_412226715c": "Clear filters"
+    },
+    "admin_branches_header_selector": {
+      "text_fcf716ea9b": "Select branch"
+    },
+    "admin_branches_toolbar": {
+      "text_b6d6b08977": "Branch Analytics",
+      "text_377d867c5c": "Read-only • Click any metric to see details",
+      "text_ab2f8364dc": "Search branches",
+      "text_a51f2fb3bd": "Search branches...",
+      "text_1f1f8bfdd5": "Filter branch status",
+      "text_9cb29e734a": "All Statuses",
+      "text_a1c4a4c55b": "Select date range",
+      "text_119c12c518": "Select range",
+      "text_c4d63e4c56": "From:",
+      "text_7e7fbc8110": "To:"
+    },
+    "AdminBranchesError": {
+      "text_1647b9db6c": "Access Denied",
+      "text_1879a51e18": "You don't have permission to view this page.",
+      "text_cdac261089": "Return to Dashboard",
+      "text_8d886c0ba6": "Something went wrong",
+      "text_f10af425f9": "Please retry. If the issue continues, contact support.",
+      "text_042c862e44": "Try again"
+    },
+    "admin_branches_detail_loading": {
+      "text_loading_branch_details": "Loading branch details"
+    },
+    "admin_branches_detail_content": {
+      "auto_bdbd7c154c": "No student records found.",
+      "auto_5ebf3ca704": "No staff records found.",
+      "auto_9fe77cb956": "No expense records found.",
+      "auto_71b0df7a57": "No revenue records found."
+    },
+    "AdminAuditRepair": {
+      "allBranchesAggregate": "All Branches (Aggregate)"
+    },
+    "metadata": {
+      "title": "Branches | Admin | GymSmart",
+      "description": "Overview of all gym locations."
+    },
+    "static": {
+      "this_week": "This Week",
+      "this_month": "This Month",
+      "this_year": "This Year",
+      "custom_range": "Custom Range",
+      "all_statuses": "All Statuses",
+      "active": "Active",
+      "inactive": "Inactive",
+      "revenue_breakdown": "Revenue Breakdown",
+      "expense_breakdown": "Expense Breakdown",
+      "staff_list": "Staff List",
+      "students": "Students",
+      "on_leave": "On Leave",
+      "expired": "Expired"
+    },
+    "AdminBranchesDetailContent": {
+      "text_joined": "Joined"
+    }
+  },
+  "admin_branches_header_selector": {
+    "loading": "Loading branches…",
+    "error": "Branch list failed to load.",
+    "retry": "Retry"
+  }
+}

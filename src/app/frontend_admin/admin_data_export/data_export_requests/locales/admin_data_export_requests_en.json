@@ -1,0 +1,19 @@
+{
+  "data-export": {
+    "AdminDataExportPage": {
+      "text_title": "Data Export",
+      "text_description": "Export creation and export-job history are documented for this route.",
+      "text_blocked": "BLOCKED BY SUPPLIED SCOPE",
+      "text_no_invented": "No invented export controls are exposed.",
+      "text_scope_gap": "The supplied Admin feature map specifies export creation, export history, API integration, and MSW support, but it does not provide the export request/response contract, field definitions, status model, or mock transport.",
+      "text_no_fabrication": "Per the frontend audit specification, missing API/product contract details must remain explicitly blocked rather than being fabricated to make the route appear complete."
+    },
+    "AdminDataExportLoading": {
+      "text_loading": "Loading Data Export"
+    },
+    "metadata": {
+      "title": "Data Export — Admin | Smart Gym 360",
+      "description": "Data export settings."
+    }
+  }
+}

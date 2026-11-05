@@ -1,0 +1,99 @@
+{
+  "members": {
+    "admin_members_header_search": {
+      "text_c698311c9b": "Search members...",
+      "text_84abda0656": "Search members globally",
+      "text_67300d0fed": "Clear search",
+      "text_1333fd5129": "No members found for \"",
+      "text_e2bbf209ae": "\"",
+      "text_bf33f2c023": "View all members →",
+      "auto_6fee0f145a": "No results",
+      "resultsCount": "{count} results"
+    },
+    "admin_members_profile_drawer": {
+      "text_75caff26c6": "Member Profile",
+      "text_c32c06424e": "Close profile",
+      "text_e873f4db37": "Contact Info",
+      "text_53bc9670e7": "Membership",
+      "text_02fc962d8c": "Outstanding:"
+    },
+    "admin_members_toolbar": {
+      "text_9fd6edc02a": "Search by name, email, phone...",
+      "text_a1d97aee95": "Search members",
+      "text_6b308de777": "All Status",
+      "text_0bf51d9a45": "All Branches",
+      "text_5a8d375693": "All Members",
+      "text_1632205ebc": "All Genders",
+      "text_5f1f815bea": "All Plans",
+      "remaining_allGenders": "All Genders",
+      "remaining_allPlans": "All Plans",
+      "remaining_monthlyBasic": "Monthly Basic",
+      "remaining_annualPro": "Annual Pro",
+      "remaining_quarterlyClassic": "Quarterly Classic"
+    },
+    "admin_members_empty_state": {
+      "auto_fe81c1cadb": "Members will appear here once they are added via branch managers.",
+      "auto_ba33d5371f": "Try adjusting your search or filter criteria.",
+      "auto_cfa1045651": "No members found",
+      "auto_3b3dc4e403": "No members match your filters"
+    },
+    "AdminAuditRepair": {
+      "totalMembers": "Total Members",
+      "activeMembers": "Active Members",
+      "expiringThisMonth": "Expiring This Month",
+      "totalOutstanding": "Total Outstanding",
+      "allBranches": "All Branches",
+      "male": "Male",
+      "female": "Female",
+      "other": "Other",
+      "newThisMonth": "+{count} this month",
+      "percentOfTotal": "{value}% of total",
+      "expiringThisWeek": "{count} expiring this week",
+      "membersWithDues": "{count} members with dues",
+      "summaryLoading": "Loading member summary",
+      "summaryFailed": "The member summary could not be loaded. Your member list is still available.",
+      "retrySummary": "Retry summary",
+      "exportCsv": "Export CSV",
+      "exportingCsv": "Exporting…",
+      "listLoading": "Loading members",
+      "listFailed": "The member list could not be loaded.",
+      "retryList": "Retry list",
+      "exportFailed": "The member export could not be completed. Please try again.",
+      "exportEmpty": "No export content was returned.",
+      "profileLoading": "Loading member profile…",
+      "profileFailed": "Member profile could not be loaded.",
+      "retryProfile": "Retry profile"
+    },
+    "metadata": {
+      "title": "Members — Admin | Smart Gym 360",
+      "description": "Manage member records and membership status."
+    },
+    "AdminMembersCatalog": {
+      "status": {
+        "all": "All Status",
+        "active": "Active",
+        "expired": "Expired",
+        "pending": "Pending",
+        "frozen": "Frozen",
+        "unknown": "Unknown"
+      },
+      "expiry": {
+        "all": "All Members",
+        "thisWeek": "Expiring This Week",
+        "thisMonth": "Expiring This Month"
+      },
+      "table": {
+        "member": "Member",
+        "branch": "Branch",
+        "plan": "Plan",
+        "joinDate": "Join Date",
+        "status": "Status",
+        "expiry": "Expiry",
+        "outstanding": "Outstanding"
+      }
+    }
+  },
+  "admin_members_table": {
+    "auto_openProfile": "Open {name} profile"
+  }
+}

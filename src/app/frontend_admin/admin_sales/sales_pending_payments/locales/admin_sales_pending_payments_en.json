@@ -1,0 +1,141 @@
+{
+  "sales": {
+    "SalesError": {
+      "text_1647b9db6c": "Access Denied",
+      "text_1879a51e18": "You don't have permission to view this page.",
+      "text_cdac261089": "Return to Dashboard",
+      "text_2dc9d37464": "Something went wrong!",
+      "text_22b2c820bf": "Please retry. If the problem continues, contact support with the current request time.",
+      "text_042c862e44": "Try again"
+    },
+    "AdminSalesDateFilterDropdown": {
+      "text_12e1289bac": "Select Range",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "customRangeHelp": "Choose a valid start date and end date to apply this range."
+    },
+    "admin_sales_membership_report": {
+      "text_a873abb3d3": "Loading membership report",
+      "text_b25928c699": "Total",
+      "auto_b254e610f8": "No membership report data",
+      "auto_8bae4e6d16": "Unable to load membership report",
+      "auto_refreshSales": "Refresh the Sales view and try again.",
+      "auto_noMembershipRecords": "No membership receivable records match the current Sales filters."
+    },
+    "admin_sales_overview": {
+      "text_41bdcad919": "Sales overview could not be loaded.",
+      "text_762e600e5f": "Monthly Revenue",
+      "text_c7474256e3": "New Members Trend",
+      "text_6f62ec7108": "Marketing ROI: Revenue by Referral Source",
+      "remaining_newMembers": "New Members",
+      "series_revenue": "Revenue",
+      "auto_noReferralData": "No referral-source data is available for this range."
+    },
+    "admin_sales_pending_payments": {
+      "text_315dc9e5fb": "members with pending payments",
+      "text_ae2f98a099": "Plan",
+      "text_acb1814fce": "days overdue",
+      "text_f3789fc9e6": "Open Reminder in WhatsApp",
+      "auto_d5bc7150da": "All members are up to date.",
+      "auto_6f3655f8b3": "No pending payments",
+      "whatsappReminderTitle": "Payment Reminder",
+      "whatsappMemberLabel": "Member",
+      "whatsappOutstandingDues": "Outstanding Dues",
+      "whatsappPendingAmount": "Pending Amount",
+      "whatsappOverdueBy": "Overdue By",
+      "whatsappFooter": "Please clear dues ASAP to avoid service interruption.",
+      "auto_loadFailed": "Pending payments could not be loaded.",
+      "accessibility": {
+        "filters": "Sales filters",
+        "data": "Pending payments data"
+      },
+      "whatsappInvalidRecipient": "WhatsApp reminder unavailable: invalid recipient phone number."
+    },
+    "admin_sales_store_sales": {
+      "text_42f8f91b08": "Loading store sales",
+      "text_9f5cd8a2e8": "Retry",
+      "text_c48f2bf5b2": "Total Products",
+      "text_408fa7b3a9": "Total Orders",
+      "text_3b56959818": "Total Store Revenue",
+      "text_e6240146f7": "Recent Store Orders",
+      "text_88fcf03353": "total orders",
+      "text_f1e486fe3f": "Order #",
+      "text_44d25b5d1b": "Items",
+      "text_b25928c699": "Total",
+      "text_163d8174ff": "Showing",
+      "text_de04fa0e29": "of",
+      "text_50f94286ba": "Previous",
+      "text_bc981983e7": "Next",
+      "auto_03aef17c06": "No store orders match the current Sales scope.",
+      "auto_39613b51eb": "No store orders found",
+      "auto_storeSalesLoadFailed": "Store sales could not be loaded.",
+      "auto_storeSummaryLoadFailed": "Store summary could not be loaded."
+    },
+    "admin_sales_toolbar": {
+      "text_6d7a30a931": "Search...",
+      "text_f3e4fadb9e": "Export",
+      "remaining_csvHeader": "Date,Revenue,New Members",
+      "searchLabel": "Search Sales",
+      "searchMembers": "Search sales records"
+    },
+    "admin_sales_all_memberships": {
+      "auto_7f704f07a0": "Try selecting a different filter.",
+      "auto_8819ce96c1": "All",
+      "auto_112a3f9892": "Expired",
+      "status_active": "Active",
+      "status_expired": "Expired",
+      "auto_loadFailed": "Memberships could not be loaded."
+    },
+    "AdminAuditRepair": {
+      "totalMembers": "Total Members",
+      "active": "Active",
+      "expiringSoon": "Expiring Soon",
+      "expired": "Expired",
+      "thisMonth": "This Month",
+      "lastMonth": "Last Month",
+      "last3Months": "Last 3 Months",
+      "last6Months": "Last 6 Months",
+      "thisYear": "This Year",
+      "monthlyAllTime": "Monthly (All Time)",
+      "yearlyAllTime": "Yearly (All Time)",
+      "customRange": "Custom Range",
+      "plan": "Plan",
+      "totalReceivable": "Total Receivable",
+      "amountReceived": "Amount Received",
+      "remaining": "Remaining",
+      "refund": "Refund",
+      "member": "Member",
+      "start": "Start",
+      "endDate": "End Date",
+      "status": "Status",
+      "amount": "Amount",
+      "daysLeft": "Days Left"
+    },
+    "AdminSalesTabs": {
+      "overview": "Overview",
+      "membershipReport": "Membership Report",
+      "pendingPayments": "Pending Payments",
+      "allMemberships": "All Memberships",
+      "storeSales": "Store Sales"
+    },
+    "AdminSalesAllMemberships": {
+      "auto_4b31b4cf4c": "No memberships found"
+    },
+    "admin_sales_date_filter": {
+      "customRangeBlocked": "Custom date ranges are not available for Sales until the authoritative API contract is supplied. Choose a supported preset to continue."
+    },
+    "AdminRepair": {
+      "membershipKpiError": "Unable to load membership summary counts.",
+      "retry": "Retry",
+      "loadingCount": "Loading…",
+      "requestFailed": "Unable to load sales data. Please try again."
+    }
+  },
+  "admin_sales_membership_report": {
+    "auto_sortBy": "Sort membership report by {label}"
+  },
+  "AdminAuditRepair": {
+    "financialAmountHidden": "Per-record financial amount hidden in bulk list.",
+    "amountAvailableOnRequest": "Please contact the gym to confirm the outstanding amount."
+  }
+}

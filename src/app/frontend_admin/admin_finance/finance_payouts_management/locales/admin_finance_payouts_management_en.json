@@ -1,0 +1,79 @@
+{
+  "payouts": {
+    "admin_payouts_pnl_statement": {
+      "text_587bef7062": "Profit & Loss Statement",
+      "text_b968ad7e9b": "Tax-ready breakdown per gym per month",
+      "text_f19bc6d402": "No P&L records found",
+      "auto_55e2fbeab5": "No P&L records match the current filters."
+    },
+    "admin_payouts_summary_table": {
+      "text_be46153ca6": "All Months",
+      "text_1ea6687cfe": "All Gyms",
+      "text_6b308de777": "All Status",
+      "text_f79b0cb03e": "No payout records found",
+      "auto_76a79e50dc": "No payout records match the current filters.",
+      "auto_94f2f2b4e4": "paid"
+    },
+    "admin_payouts_main": {
+      "auto_bb0fa27be3": "summary"
+    },
+    "admin_payouts_kpis": {
+      "auto_netProfit": "Net Profit{suffix}",
+      "auto_grossRevenue": "Gross Revenue{suffix}",
+      "auto_totalExpenses": "Total Expenses{suffix}",
+      "auto_pendingPayouts": "Pending Payouts{suffix}"
+    },
+    "AdminAuditRepair": {
+      "gym": "Gym",
+      "month": "Month",
+      "revenue": "Revenue",
+      "cogs": "COGS",
+      "grossProfit": "Gross Profit",
+      "staffCost": "Staff Cost",
+      "rentUtilities": "Rent & Utilities",
+      "marketing": "Marketing",
+      "misc": "Misc",
+      "ebitda": "EBITDA",
+      "tax": "Tax",
+      "netProfit": "Net Profit",
+      "grossRevenue": "Gross Revenue",
+      "payroll": "Payroll",
+      "expenses": "Expenses",
+      "platformFee": "Platform Fee",
+      "status": "Status",
+      "payoutSummary": "Payout Summary",
+      "pnlStatement": "P&L Statement",
+      "failed": "Failed",
+      "financialAmountHidden": "Financial amount hidden for privacy"
+    },
+    "AdminPayoutsFilters": {
+      "allMonths": "All Months",
+      "june2026": "June 2026",
+      "may2026": "May 2026",
+      "april2026": "April 2026",
+      "march2026": "March 2026",
+      "allGyms": "All Gyms",
+      "gymAndheriEast": "Andheri East",
+      "gymBandraWest": "Bandra West",
+      "gymPowai": "Powai",
+      "gymThane": "Thane",
+      "allStatus": "All Status",
+      "paid": "Paid",
+      "pending": "Pending",
+      "processing": "Processing"
+    },
+    "AdminRepair": {
+      "loadError": "Unable to load payout data.",
+      "pnlLoadError": "Unable to load the profit and loss statement.",
+      "summaryLoadError": "Unable to load payout summary metrics.",
+      "loadingSummary": "Loading payout summary…",
+      "retry": "Retry"
+    }
+  },
+  "admin_payouts_kpis": {
+    "auto_afterDeductions": "after all deductions",
+    "auto_allGymsCombined": "all gyms combined",
+    "auto_payrollOps": "payroll + ops",
+    "auto_awaitingTransfer": "awaiting transfer"
+  }
+}

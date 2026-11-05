@@ -1,0 +1,86 @@
+{
+  "attendance": {
+    "admin_attendance_main": {
+      "text_480de365cc": "केवल देखने का मोड — मैन्युअल चेक-इन शाखा प्रबंधक संभालते हैं।",
+      "text_9f5cd8a2e8": "फिर से प्रयास करें",
+      "text_28a8490d8e": "उपस्थिति रिकॉर्ड"
+    },
+    "admin_attendance_toolbar": {
+      "text_9ecaf04b35": "सदस्य के नाम या फ़ोन से खोजें...",
+      "text_617d2d01c3": "उपस्थिति रिकॉर्ड खोजें",
+      "text_24345a1437": "आज",
+      "text_6b308de777": "सभी स्थिति",
+      "text_0bf51d9a45": "सभी शाखाएँ"
+    },
+    "admin_attendance_trend_chart": {
+      "text_a70e43d730": "साप्ताहिक उपस्थिति रुझान",
+      "text_7be3443a0f": "इस सप्ताह के दैनिक चेक-इन की संख्या",
+      "series_checkIns": "चेक-इन",
+      "tooltip_checkIns": "{count} चेक-इन"
+    },
+    "AdminAttendanceError": {
+      "text_b304c3222c": "उपस्थिति डेटा लोड नहीं हो सका",
+      "text_975588cab2": "उपस्थिति मॉड्यूल लोड करते समय त्रुटि हुई।",
+      "text_cef2fe093b": "फिर से प्रयास करें"
+    },
+    "admin_attendance_empty_state": {
+      "auto_c615f80782": "सदस्य चेक-इन शुरू करने के बाद उपस्थिति रिकॉर्ड यहाँ दिखाई देंगे।",
+      "auto_7727fbc5ff": "तारीख अवधि, स्थिति या शाखा फ़िल्टर बदलने का प्रयास करें।",
+      "auto_8da6855922": "कोई उपस्थिति रिकॉर्ड नहीं मिला",
+      "auto_78cd6b3dc7": "आपके फ़िल्टर से कोई रिकॉर्ड मेल नहीं खाता"
+    },
+    "AdminAuditRepair": {
+      "today": "आज",
+      "presentToday": "आज उपस्थित",
+      "lateArrivals": "देर से आने वाले",
+      "weeklyAverage": "साप्ताहिक औसत",
+      "allBranches": "सभी शाखाएँ",
+      "todayCheckIns": "आज के चेक-इन",
+      "peakHour": "व्यस्ततम समय: {time}",
+      "attendanceRate": "{percent}% उपस्थिति दर",
+      "lateRate": "आज के चेक-इन में {percent}%",
+      "weeklyTrend": "पिछले सप्ताह की तुलना में {direction} {percent}%",
+      "increased": "बढ़ा",
+      "decreased": "घटा",
+      "weeklyTrendUnchanged": "पिछले सप्ताह की तुलना में कोई बदलाव नहीं",
+      "loadingAttendance": "उपस्थिति डेटा लोड हो रहा है…"
+    },
+    "metadata": {
+      "title": "उपस्थिति अवलोकन — एडमिन | Smart Gym 360",
+      "description": "उपस्थिति गतिविधि और रुझानों की समीक्षा करें।"
+    },
+    "static": {
+      "today": "आज",
+      "yesterday": "कल",
+      "this_week": "इस सप्ताह",
+      "this_month": "इस महीने",
+      "last_month": "पिछले महीने",
+      "all_status": "सभी स्थिति",
+      "present": "उपस्थित",
+      "late": "देर से",
+      "absent": "अनुपस्थित"
+    },
+    "table": {
+      "member": "सदस्य",
+      "branch": "शाखा",
+      "plan": "प्लान",
+      "trainer": "ट्रेनर",
+      "checkIn": "चेक-इन",
+      "checkOut": "चेक-आउट",
+      "duration": "अवधि",
+      "status": "स्थिति"
+    },
+    "admin_attendance_table": {
+      "sortBy": "{header} के अनुसार क्रमबद्ध करें। क्रमबद्धता केवल वर्तमान पृष्ठ पर लागू होती है।",
+      "pageSortNotice": "क्रमबद्धता केवल वर्तमान में लोड किए गए पृष्ठ पर लागू होती है।"
+    },
+    "AdminRepair": {
+      "loadFailed": "उपस्थिति की जानकारी लोड नहीं हो सकी। कृपया दोबारा कोशिश करें।"
+    }
+  },
+  "AdminAttendanceError": {
+    "loadingBranches": "शाखाएँ लोड हो रही हैं…",
+    "branchesFailed": "शाखा विकल्प लोड नहीं हो सके।",
+    "retry": "पुनः प्रयास करें"
+  }
+}

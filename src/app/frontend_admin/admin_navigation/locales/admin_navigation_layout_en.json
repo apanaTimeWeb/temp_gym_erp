@@ -1,0 +1,275 @@
+{
+  "admin_layout": {
+    "AdminNavigationLayoutConfirmModal": {
+      "text_3deb745651": "Type",
+      "text_1c6b376132": "to continue",
+      "defaultConfirm": "Confirm",
+      "defaultCancel": "Cancel"
+    },
+    "AdminNavigationLayoutToast": {
+      "text_dc83cd8031": "Dismiss notification"
+    },
+    "AdminNavigationLayoutHeader": {
+      "text_8b9b1bbd66": "Toggle sidebar"
+    },
+    "AdminNavigationLayoutHeaderProfile": {
+      "text_45a612f7ef": "Profile menu",
+      "text_9ba8d391c5": "My Profile",
+      "text_c7f73bb54d": "Settings",
+      "text_6e78c91f5a": "Log out",
+      "unknownUser": "Unknown user"
+    },
+    "AdminNavigationLayoutSidebar": {
+      "text_1ca64e5fd3": "GymSmart ADMIN",
+      "text_3871a45480": "GymSmart",
+      "text_b31bc5e6ee": "ADMIN System",
+      "text_7994a318d8": "Search menu...",
+      "text_13a91dc70a": "Search menu",
+      "text_a68d28f1ee": "No matches found",
+      "remaining_adminUser": "Admin User",
+      "remaining_superAdmin": "Super Admin",
+      "text_sidebarLabel": "Admin navigation",
+      "remaining_roleUnavailable": "Role unavailable"
+    },
+    "AdminNavigationLayoutErrorFallback": {
+      "text_1647b9db6c": "Access Denied",
+      "text_f329d9bd73": "You don't have permission to view the",
+      "text_1807102ea0": "module. Contact your administrator if you believe this is an error.",
+      "text_8fb719081e": "Back to Dashboard",
+      "text_af14db2628": "Failed to load",
+      "text_5440beb3f9": "An unexpected error occurred. Please try again or contact support if the issue persists.",
+      "text_cef2fe093b": "Try Again"
+    },
+    "AdminNavigationLayoutPagination": {
+      "text_100325b8d6": "Pagination",
+      "text_163d8174ff": "Showing",
+      "text_4374aaee24": "to",
+      "text_de04fa0e29": "of",
+      "text_cdf7e925f5": "results",
+      "text_fb06270f7c": "Page",
+      "text_81f547195b": "Previous page",
+      "text_4bfc194b68": "Next page"
+    },
+    "AdminNavigationLayoutTableSkeleton": {
+      "text_loading_table": "Loading table"
+    },
+    "AdminNavigationLayoutDensityToggle": {
+      "remaining_useComfortableDensity": "Use comfortable density",
+      "remaining_useCompactDensity": "Use compact density",
+      "remaining_comfortableDensity": "Comfortable density",
+      "remaining_compactDensity": "Compact density"
+    },
+    "AdminUnsavedChangesGuard": {
+      "title": "Unsaved Changes",
+      "message": "You have unsaved changes. Are you sure you want to leave? Your changes will be lost.",
+      "discard": "Discard Changes",
+      "leave": "Leave Page"
+    },
+    "AdminNavigation": {
+      "groups": {
+        "overview": "Overview",
+        "members": "Members",
+        "attendance": "Attendance",
+        "plansSales": "Plans & Sales",
+        "financePerformance": "Finance & Performance",
+        "staffFranchise": "Staff & Franchise",
+        "communication": "Communication",
+        "accessControl": "Access Control",
+        "system": "System"
+      },
+      "items": {
+        "dashboard": "Dashboard",
+        "members": "Members",
+        "attendance": "Attendance",
+        "plans": "Plans",
+        "salesReports": "Sales Reports",
+        "finance": "Finance",
+        "branchPnl": "Branch P&L",
+        "planRevenue": "Plan Revenue",
+        "reports": "Reports",
+        "hrManagers": "HR & Managers",
+        "staffPerformance": "Staff Performance",
+        "branches": "Branches",
+        "payouts": "Payouts",
+        "announcements": "Announcements",
+        "campaigns": "Campaigns",
+        "permissions": "Permissions",
+        "blacklist": "Blacklist",
+        "coupons": "Coupons",
+        "healthAlerts": "Gym Health Alerts",
+        "auditLogs": "Audit Logs",
+        "subscription": "Subscription",
+        "usagePlan": "Usage Plan",
+        "dataExport": "Data Export",
+        "notifications": "Notifications",
+        "settings": "Settings"
+      }
+    },
+    "AdminRouteHeaders": {
+      "route_admin_dashboard_title": "Dashboard",
+      "route_admin_dashboard_subtitle": "Welcome back, Admin! Here's your business overview.",
+      "route_admin_finance_pnl_title": "Branch P&L",
+      "route_admin_finance_pnl_subtitle": "Review branch profitability and performance.",
+      "route_admin_hr_performance_title": "Staff Performance",
+      "route_admin_hr_performance_subtitle": "Review staff performance metrics.",
+      "route_admin_plans_revenue_title": "Plan Revenue",
+      "route_admin_plans_revenue_subtitle": "Review revenue across membership plans.",
+      "route_admin_audit_logs_title": "Audit Logs",
+      "route_admin_audit_logs_subtitle": "Review administrative activity and audit history.",
+      "route_admin_gym_health_alerts_title": "Gym Health Alerts",
+      "route_admin_gym_health_alerts_subtitle": "Review operational health alerts across gyms.",
+      "route_admin_data_export_title": "Data Export",
+      "route_admin_data_export_subtitle": "Export approved administrative data.",
+      "route_admin_announcements_title": "Announcements",
+      "route_admin_announcements_subtitle": "Communicate updates to gym audiences.",
+      "route_admin_attendance_title": "Attendance",
+      "route_admin_attendance_subtitle": "Review attendance activity and trends.",
+      "route_admin_blacklist_title": "Blacklist",
+      "route_admin_blacklist_subtitle": "Manage member access restrictions.",
+      "route_admin_branches_title": "Branches",
+      "route_admin_branches_subtitle": "Review branch performance and details.",
+      "route_admin_campaigns_title": "Campaigns",
+      "route_admin_campaigns_subtitle": "Manage member communication campaigns.",
+      "route_admin_coupons_title": "Coupons",
+      "route_admin_coupons_subtitle": "Manage discount coupons and usage.",
+      "route_admin_finance_title": "Finance",
+      "route_admin_finance_subtitle": "Review financial activity and metrics.",
+      "route_admin_hr_title": "HR & Managers",
+      "route_admin_hr_subtitle": "Manage administrative staff information.",
+      "route_admin_members_title": "Members",
+      "route_admin_members_subtitle": "Manage and review gym members.",
+      "route_admin_notifications_title": "Notifications",
+      "route_admin_notifications_subtitle": "Review and manage notifications.",
+      "route_admin_payouts_title": "Payouts",
+      "route_admin_payouts_subtitle": "Review payout activity and status.",
+      "route_admin_permissions_title": "Permissions",
+      "route_admin_permissions_subtitle": "Manage role and permission settings.",
+      "route_admin_plans_title": "Plans",
+      "route_admin_plans_subtitle": "Manage membership plans.",
+      "route_admin_profile_title": "Profile",
+      "route_admin_profile_subtitle": "Manage your administrator profile.",
+      "route_admin_reports_title": "Reports",
+      "route_admin_reports_subtitle": "Review administrative reports.",
+      "route_admin_sales_title": "Sales Reports",
+      "route_admin_sales_subtitle": "Review sales activity and performance.",
+      "route_admin_settings_title": "Settings",
+      "route_admin_settings_subtitle": "Configure gym administration settings.",
+      "route_admin_subscriptions_title": "Subscription",
+      "route_admin_subscriptions_subtitle": "Review subscription and billing details.",
+      "route_admin_usage_title": "Usage Plan",
+      "route_admin_usage_subtitle": "Review usage and plan limits.",
+      "route_default_title": "Admin",
+      "route_default_subtitle": "Admin workspace"
+    },
+    "AdminNavigationLayoutNotFound": {
+      "title": "Page Not Found",
+      "description": "The page you are looking for doesn't exist or has been moved.",
+      "returnToDashboard": "Return to Dashboard"
+    },
+    "AdminNavigationLayoutKeyboardShortcuts": {
+      "openCommandPalette": "Open command palette",
+      "shortcutHelp": "Keyboard shortcuts",
+      "title": "Keyboard shortcuts",
+      "close": "Close",
+      "commandPalette": "Command palette",
+      "closeOverlays": "Close overlays",
+      "submitForm": "Submit active form",
+      "showHelp": "Show keyboard shortcut help",
+      "keyCommandPalette": "Ctrl / ⌘ + K",
+      "keyEscape": "Esc",
+      "keySubmit": "Ctrl / ⌘ + S",
+      "keyHelp": "?"
+    },
+    "metadata": {
+      "title": "GymSmart ADMIN | Gym Management System",
+      "description": "Complete gym management platform — members, attendance, finance, HR, and more."
+    },
+    "components/admin_layout_command_palette": {
+      "text_7b6b539e73": "Command palette",
+      "text_d9150f4eca": "Search or jump to...",
+      "text_0ddc47f0e6": "Search or jump to",
+      "text_1f7a4f9e2f": "Esc",
+      "text_414cb17461": "Navigation results",
+      "text_a68d28f1ee": "No matches found"
+    },
+    "components/searchable_dropdown": {
+      "text_5616c87222": "Search options",
+      "text_6d7a30a931": "Search...",
+      "text_658e79f9dc": "No results found"
+    },
+    "AdminNavigationLayoutCommandPalette": {
+      "text_a68d28f1ee": "Command palette"
+    }
+  },
+  "layout": {
+    "AdminNavigationLayoutHeaderProfile": {
+      "auto_d6b8ac9da7": "Admin"
+    },
+    "AdminNavigationLayoutDensityToggle": {
+      "auto_76e8709aa3": "compact"
+    }
+  },
+  "AdminNavigationLayoutPagination": {
+    "auto_goToPage": "Go to page {page}"
+  },
+  "AdminNavigationLayoutConfirmModal": {
+    "auto_typeToConfirm": "Type {phrase} to confirm"
+  },
+  "AdminRouteHeaders": {
+    "route_admin_finance_pnl_title": "Branch P&L Comparison",
+    "route_admin_finance_pnl_subtitle": "Profit & Loss analysis across all branches",
+    "route_admin_hr_performance_title": "Staff Performance",
+    "route_admin_hr_performance_subtitle": "Review branch staff performance and trends",
+    "route_admin_plans_revenue_title": "Plan Revenue",
+    "route_admin_plans_revenue_subtitle": "Compare membership-plan performance and revenue",
+    "route_admin_audit_logs_title": "Audit Logs & Security",
+    "route_admin_audit_logs_subtitle": "Monitor critical system actions, detect fraud, and maintain compliance.",
+    "route_admin_gym_health_alerts_title": "Gym Health Alerts",
+    "route_admin_gym_health_alerts_subtitle": "Proactive monitoring — get alerted when a gym is underperforming before it becomes a crisis",
+    "route_admin_data_export_title": "Data Export",
+    "route_admin_data_export_subtitle": "Export members, payments, and attendance data across all gyms in CSV, Excel, or PDF",
+    "route_admin_announcements_title": "Announcements",
+    "route_admin_announcements_subtitle": "Broadcast notices to members, trainers, and staff across your branches",
+    "route_admin_attendance_title": "Attendance Overview",
+    "route_admin_attendance_subtitle": "Read-only daily attendance analytics across all branches",
+    "route_admin_blacklist_title": "Blacklist",
+    "route_admin_blacklist_subtitle": "Manage cross-gym member bans — global or branch-specific",
+    "route_admin_branches_title": "Branches",
+    "route_admin_branches_subtitle": "Manage branch profiles, staff, finance, and operational status",
+    "route_admin_campaigns_title": "Campaigns",
+    "route_admin_campaigns_subtitle": "Run bulk WhatsApp campaigns across all your branches",
+    "route_admin_coupons_title": "Coupons",
+    "route_admin_coupons_subtitle": "Create and manage discount coupons across all your gyms",
+    "route_admin_finance_title": "Finance",
+    "route_admin_finance_subtitle": "Track revenue, payments and financial overview",
+    "route_admin_hr_title": "HR & Managers",
+    "route_admin_hr_subtitle": "Manage branch managers, view staff profiles, and oversee payroll",
+    "route_admin_members_title": "Members Overview",
+    "route_admin_members_subtitle": "Cross-branch member analytics, expiry tracking, and outstanding dues",
+    "route_admin_notifications_title": "Notification Center",
+    "route_admin_notifications_subtitle": "Review and manage operational notifications",
+    "route_admin_payouts_title": "Payouts & Profit",
+    "route_admin_payouts_subtitle": "Net profit per gym, monthly payout summaries, and tax-ready P&L statements",
+    "route_admin_permissions_title": "Permissions",
+    "route_admin_permissions_subtitle": "Define what each role can access across your gyms",
+    "route_admin_plans_title": "Membership Plans",
+    "route_admin_plans_subtitle": "Manage subscription plans, pricing, and features",
+    "route_admin_profile_title": "Profile",
+    "route_admin_profile_subtitle": "Manage your Admin profile and account details",
+    "route_admin_reports_title": "Reports",
+    "route_admin_reports_subtitle": "Consolidated cross-gym analytics and performance reports",
+    "route_admin_sales_title": "Sales & Reports",
+    "route_admin_sales_subtitle": "Monitor membership revenue, track payments and analyze performance",
+    "route_admin_settings_title": "Settings",
+    "route_admin_settings_subtitle": "Configure your gym management system",
+    "route_admin_subscriptions_title": "Subscription & Billing",
+    "route_admin_subscriptions_subtitle": "Manage your GymSmart SaaS plan, invoices, and payment methods.",
+    "route_admin_usage_title": "Usage & Subscription",
+    "route_admin_usage_subtitle": "Monitor your plan limits and manage your subscription",
+    "route_default_title": "Admin",
+    "route_default_subtitle": "GymSmart administration workspace"
+  },
+  "components/searchable_dropdown": {
+    "text_defaultPlaceholder": "Select an option..."
+  }
+}

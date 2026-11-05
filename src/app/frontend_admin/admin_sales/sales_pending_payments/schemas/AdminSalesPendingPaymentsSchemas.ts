@@ -1,0 +1,3 @@
+// RESPONSIBILITY: Runtime validation for Sales pending-payment rows only.
+import { z } from 'zod';
+export const pendingPaymentMemberSchema = z.object({ id: z.string(), name: z.string(), email: z.string(), phone: z.string(), gender: z.string(), address: z.string().optional(), branch: z.string(), planId: z.string(), plan: z.string().optional(), billingCycle: z.string(), status: z.string(), joinDate: z.string(), expiryDate: z.string(), paidAmount: z.number().int().nonnegative(), pendingAmount: z.number().int().nonnegative().optional(), photo: z.string().optional(), createdAt: z.string(), daysOverdue: z.number().int().nonnegative().optional() });

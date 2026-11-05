@@ -1,0 +1,46 @@
+{
+  "notifications": {
+    "NotificationsError": {
+      "text_1647b9db6c": "Access Denied",
+      "text_1879a51e18": "You don't have permission to view this page.",
+      "text_cdac261089": "Return to Dashboard",
+      "text_2dc9d37464": "Something went wrong!",
+      "text_22b2c820bf": "Please retry. If the problem continues, contact support with the current request time.",
+      "text_042c862e44": "Try again"
+    },
+    "admin_notifications_client": {
+      "text_215ed57ea0": "All Notifications",
+      "text_6403f2b7eb": "New",
+      "text_8958e22c23": "Mark all read",
+      "text_b75e7880cd": "Unable to load notifications.",
+      "text_9f5cd8a2e8": "Retry"
+    },
+    "admin_notifications_header": {
+      "text_753a22b2eb": "Notifications",
+      "text_f0252bf7d6": "Close notifications",
+      "text_6631dc85a2": "No new notifications",
+      "text_382194f7b8": "View All Notifications"
+    },
+    "admin_notifications_list_skeleton": {
+      "text_dc258532ad": "Loading notifications"
+    },
+    "admin_notifications_empty_state": {
+      "text_none": "No new notifications to show right now.",
+      "remaining_caughtUp": "You're all caught up!"
+    },
+    "metadata": {
+      "title": "Notifications | Admin | GymSmart",
+      "description": "View and manage admin notifications."
+    },
+    "AdminRepair": {
+      "loadError": "Unable to load notifications.",
+      "retry": "Retry",
+      "unread": "Unread",
+      "read": "Read",
+      "markAsRead": "Mark as read",
+      "unreadCount": "Unread notifications: {count}",
+      "markingAll": "Marking all as read",
+      "requestFailed": "The request could not be completed. Please try again."
+    }
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "members": {
+    "admin_members_header_search": {
+      "text_c698311c9b": "सदस्यों को खोजें...",
+      "text_84abda0656": "सभी जिम में सदस्य खोजें",
+      "text_67300d0fed": "खोज साफ़ करें",
+      "text_1333fd5129": "\" के लिए कोई सदस्य नहीं मिला",
+      "text_e2bbf209ae": "\"",
+      "text_bf33f2c023": "सभी सदस्य देखें →",
+      "auto_6fee0f145a": "कोई परिणाम नहीं",
+      "resultsCount": "{count} परिणाम"
+    },
+    "admin_members_profile_drawer": {
+      "text_75caff26c6": "सदस्य प्रोफ़ाइल",
+      "text_c32c06424e": "प्रोफ़ाइल बंद करें",
+      "text_e873f4db37": "संपर्क जानकारी",
+      "text_53bc9670e7": "सदस्यता",
+      "text_02fc962d8c": "बकाया:"
+    },
+    "admin_members_toolbar": {
+      "text_9fd6edc02a": "नाम, ईमेल या फ़ोन से खोजें...",
+      "text_a1d97aee95": "सदस्यों को खोजें",
+      "text_6b308de777": "सभी स्थिति",
+      "text_0bf51d9a45": "सभी शाखाएँ",
+      "text_5a8d375693": "सभी सदस्य",
+      "text_1632205ebc": "सभी जेंडर",
+      "text_5f1f815bea": "सभी प्लान",
+      "remaining_allGenders": "सभी जेंडर",
+      "remaining_allPlans": "सभी प्लान",
+      "remaining_monthlyBasic": "मासिक बेसिक",
+      "remaining_annualPro": "वार्षिक प्रो",
+      "remaining_quarterlyClassic": "त्रैमासिक क्लासिक"
+    },
+    "admin_members_empty_state": {
+      "auto_fe81c1cadb": "ब्रांच मैनेजर द्वारा सदस्य जोड़ने के बाद वे यहाँ दिखाई देंगे।",
+      "auto_ba33d5371f": "अपनी खोज या फ़िल्टर मानदंड बदलने का प्रयास करें।",
+      "auto_cfa1045651": "कोई सदस्य नहीं मिला",
+      "auto_3b3dc4e403": "आपके फ़िल्टर से कोई सदस्य मेल नहीं खाता"
+    },
+    "AdminAuditRepair": {
+      "totalMembers": "कुल सदस्य",
+      "activeMembers": "सक्रिय सदस्य",
+      "expiringThisMonth": "इस महीने समाप्त होने वाले",
+      "totalOutstanding": "कुल बकाया",
+      "allBranches": "सभी शाखाएँ",
+      "male": "पुरुष",
+      "female": "महिला",
+      "other": "अन्य",
+      "newThisMonth": "+{count} इस महीने",
+      "percentOfTotal": "कुल का {value}%",
+      "expiringThisWeek": "{count} इस सप्ताह समाप्त होने वाले",
+      "membersWithDues": "{count} बकाया वाले सदस्य",
+      "summaryLoading": "सदस्यों का सारांश लोड हो रहा है",
+      "summaryFailed": "सदस्यों का सारांश लोड नहीं हो सका। सदस्यों की सूची अभी भी उपलब्ध है।",
+      "retrySummary": "सारांश फिर से लोड करें",
+      "exportCsv": "CSV निर्यात करें",
+      "exportingCsv": "निर्यात हो रहा है…",
+      "listLoading": "सदस्य लोड हो रहे हैं",
+      "listFailed": "सदस्य सूची लोड नहीं हो सकी।",
+      "retryList": "सूची फिर से लोड करें",
+      "exportFailed": "सदस्य डेटा निर्यात नहीं हो सका। कृपया फिर से प्रयास करें।",
+      "exportEmpty": "निर्यात के लिए कोई डेटा वापस नहीं आया।",
+      "profileLoading": "सदस्य प्रोफ़ाइल लोड हो रही है…",
+      "profileFailed": "सदस्य प्रोफ़ाइल लोड नहीं हो सकी।",
+      "retryProfile": "प्रोफ़ाइल फिर से प्रयास करें"
+    },
+    "metadata": {
+      "title": "सदस्य — एडमिन | Smart Gym 360",
+      "description": "सदस्य रिकॉर्ड और सदस्यता स्थिति प्रबंधित करें।"
+    },
+    "AdminMembersCatalog": {
+      "status": {
+        "all": "सभी स्थिति",
+        "active": "सक्रिय",
+        "expired": "समाप्त",
+        "pending": "लंबित",
+        "frozen": "फ्रोजन",
+        "unknown": "अज्ञात"
+      },
+      "expiry": {
+        "all": "सभी सदस्य",
+        "thisWeek": "इस सप्ताह समाप्त होने वाले",
+        "thisMonth": "इस महीने समाप्त होने वाले"
+      },
+      "table": {
+        "member": "सदस्य",
+        "branch": "शाखा",
+        "plan": "प्लान",
+        "joinDate": "शामिल होने की तिथि",
+        "status": "स्थिति",
+        "expiry": "समाप्ति",
+        "outstanding": "बकाया"
+      }
+    }
+  },
+  "admin_members_table": {
+    "auto_openProfile": "{name} की प्रोफ़ाइल खोलें"
+  }
+}

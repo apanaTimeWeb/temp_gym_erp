@@ -1,0 +1,201 @@
+{
+  "finance": {
+    "FinanceError": {
+      "text_1647b9db6c": "Access Denied",
+      "text_1879a51e18": "You don't have permission to view this page.",
+      "text_cdac261089": "Return to Dashboard",
+      "text_2dc9d37464": "Something went wrong!",
+      "text_22b2c820bf": "Please retry. If the problem continues, contact support with the current request time.",
+      "text_042c862e44": "Try again"
+    },
+    "AdminFinanceDateFilterDropdown": {
+      "text_12e1289bac": "Select Range",
+      "customStartDate": "Start date",
+      "customEndDate": "End date",
+      "customRangeHelp": "Choose an inclusive start and end date.",
+      "customRangeInvalid": "Choose valid dates and ensure the start date is not after the end date."
+    },
+    "admin_finance_expenses_table": {
+      "text_a78210146a": "Expense category",
+      "text_1fd266c217": "All Categories",
+      "text_d8e7170f94": "Total:",
+      "text_51b38f2fd6": "Read-only analytics",
+      "text_15f519954e": "No expenses found",
+      "auto_4508b993fb": "No expenses match the selected branch and category filters.",
+      "date": "Date",
+      "category": "Category",
+      "branch": "Branch",
+      "amount": "Amount",
+      "notes": "Notes",
+      "recordedBy": "Recorded By"
+    },
+    "admin_finance_payments_table": {
+      "text_bc48c55226": "Loading payments",
+      "text_18d540a249": "Failed to load payments.",
+      "text_11ee134422": "Please check your connection and try again.",
+      "text_c1f531f996": "No payments found",
+      "auto_ee688868e5": "No payments match the current filters."
+    },
+    "AdminFinancePnlCharts": {
+      "text_c7ebaca60f": "Revenue vs Expenses by Branch",
+      "text_f2fc0d3c2b": "Profit Share by Branch",
+      "text_7c2d057fd5": "No profitable branches in this period.",
+      "series_revenue": "Revenue",
+      "series_expenses": "Expenses"
+    },
+    "AdminFinancePnlEmptyState": {
+      "text_2ccc4a6f8d": "Try changing the period or clearing the filter.",
+      "text_f641dcde74": "Clear Filter"
+    },
+    "admin_finance_pnl": {
+      "text_209d61d684": "Branch-wise Breakdown",
+      "text_5c89dc5750": "Click any row to expand revenue & expense details. Click column headers to sort.",
+      "text_1d98da511f": "Clear filter ×"
+    },
+    "AdminFinancePnlRowBreakdown": {
+      "text_de2968d33b": "Revenue Breakdown",
+      "text_06fccc1c0e": "Expense Breakdown",
+      "text_3ce4d2eff4": "Period Summary",
+      "text_f3a8370f38": "Total Revenue",
+      "text_750134b65d": "Total Expenses",
+      "text_8bebc63cc9": "Net Profit",
+      "text_b059c52693": "MoM Change"
+    },
+    "AdminFinancePnlTable": {
+      "text_1627510b24": "Branch",
+      "text_b25928c699": "Total",
+      "text_a0c2a342bf": "Combined net",
+      "expandBranch": "Expand branch details",
+      "collapseBranch": "Collapse branch details"
+    },
+    "admin_finance_revenue_summary": {
+      "text_ad2e428a29": "Monthly Revenue (Last 6 Months)",
+      "text_loading": "Loading monthly revenue summary…"
+    },
+    "admin_finance_tabs": {
+      "text_7e1f7a5cf9": "Search payments...",
+      "text_3a82474c4f": "Search payments",
+      "text_1e5fcf297b": "Refresh finance data",
+      "remaining_allMethods": "All Methods",
+      "remaining_allStatuses": "All Statuses",
+      "payments": "Payments",
+      "expenses": "Expenses",
+      "summary": "Summary",
+      "exportCsv": "Export CSV",
+      "exportFailed": "Unable to export branch profit and loss data. Please try again.",
+      "exportNoRows": "There is no P&L data to export for the current period.",
+      "retry": "Try again",
+      "financeLoadError": "Some finance data could not be loaded. Retry the failed requests.",
+      "summaryUnavailable": "Revenue summary is unavailable because this response does not provide complete aggregate totals."
+    },
+    "AdminFinancePnlError": {
+      "text_5a61f899b6": "P&L Data Unavailable",
+      "text_83752884ab": "The Branch P&L Comparison page encountered an error and couldn't load. Your data is safe — this is a display issue.",
+      "text_f10af425f9": "Please retry. If the issue continues, contact support.",
+      "text_cef2fe093b": "Try Again"
+    },
+    "NotFound": {
+      "text_e637d9faea": "Page Not Found",
+      "text_0b7e734f76": "The requested resource could not be found.",
+      "text_cdac261089": "Return to Dashboard"
+    },
+    "AdminAuditRepair": {
+      "thisMonth": "This Month",
+      "lastMonth": "Last Month",
+      "last3Months": "Last 3 Months",
+      "last6Months": "Last 6 Months",
+      "thisYear": "This Year",
+      "monthlyAllTime": "Monthly (All Time)",
+      "yearlyAllTime": "Yearly (All Time)",
+      "customRange": "Custom Range",
+      "totalRevenue": "Total Revenue",
+      "monthlyRevenue": "Monthly Revenue",
+      "pendingAmount": "Pending Amount",
+      "totalExpenses": "Total Expenses",
+      "netProfit": "Net Profit",
+      "totalProfit": "Total Profit",
+      "profitableBranches": "Profitable Branches",
+      "lossMakingBranches": "Loss-making Branches",
+      "avgProfitMargin": "Avg Profit Margin",
+      "memberships": "Memberships",
+      "ptSessions": "PT Sessions",
+      "products": "Products",
+      "other": "Other",
+      "rent": "Rent",
+      "salaries": "Salaries",
+      "utilities": "Utilities",
+      "maintenance": "Maintenance",
+      "marketing": "Marketing",
+      "upi": "UPI",
+      "cash": "Cash",
+      "card": "Card",
+      "netBanking": "NetBanking",
+      "paid": "Paid",
+      "due": "Due",
+      "refunded": "Refunded",
+      "invoiceNo": "Invoice No",
+      "member": "Member",
+      "amount": "Amount",
+      "method": "Method",
+      "status": "Status",
+      "paidAt": "Paid On",
+      "equipment": "Equipment",
+      "supplies": "Supplies"
+    },
+    "AdminFinanceLogic": {
+      "genericError": "Unable to load finance data. Please try again."
+    },
+    "AdminFinancePnlKPIs": {
+      "auto_filterBy": "Filter by {label}"
+    },
+    "metadata": {
+      "title": "Branch P&L Comparison | Finance | Smart Gym 360",
+      "description": "Compare profit and loss across all branches — revenue, expenses, and net profit side by side."
+    },
+    "static": {
+      "this_month": "This Month",
+      "last_month": "Last Month",
+      "q1_jan_mar": "Q1 (Jan–Mar)",
+      "q2_apr_jun": "Q2 (Apr–Jun)",
+      "q3_jul_sep": "Q3 (Jul–Sep)",
+      "q4_oct_dec": "Q4 (Oct–Dec)",
+      "this_year_fy": "This Year (FY)",
+      "profitable": "Profitable",
+      "break_even": "Break-even",
+      "loss_making": "Loss-making",
+      "branch": "Branch",
+      "revenue": "Revenue",
+      "expenses": "Expenses",
+      "net_profit": "Net Profit",
+      "margin": "Margin %",
+      "mom": "MoM Δ",
+      "status": "Status",
+      "empty": "",
+      "no_pnl_data": "No branch P&L data found for this period.",
+      "no_profitable": "No profitable branches found for this period.",
+      "no_breakeven": "No break-even branches found for this period.",
+      "no_loss": "No loss-making branches found for this period.",
+      "all_branches_combined": "All branches combined",
+      "operational_costs": "Operational costs",
+      "click_to_filter": "Click to filter table",
+      "across_all_branches": "Across all branches"
+    },
+    "admin_finance_payments": {
+      "accessibility": {
+        "data": "Payments"
+      }
+    }
+  },
+  "AdminFinancePnlBreakdownBar": {
+    "auto_breakdown": "P&L breakdown"
+  },
+  "admin_finance_revenue_summary": {
+    "auto_revenueShare": "{month} revenue share"
+  },
+  "admin_finance_payments_table": {
+    "auto_sortBy": "Sort by {header}"
+  },
+  "AdminAuditRepair": {
+    "financialAmountHidden": "Per-record financial amount hidden in bulk list."
+  }
+}

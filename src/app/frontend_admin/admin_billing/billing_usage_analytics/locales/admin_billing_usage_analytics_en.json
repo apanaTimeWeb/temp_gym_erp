@@ -1,0 +1,111 @@
+{
+  "usage": {
+    "AdminUsageError": {
+      "text_fdcf1e1f90": "Failed to load usage data",
+      "text_cef2fe093b": "Try Again"
+    },
+    "admin_usage_alert": {
+      "text_990eac0988": "Dismiss usage alert",
+      "auto_c4a86b6a2b": "Warning: You are near the end of your subscription limit. Please review your usage meters.",
+      "auto_07939f69f3": "Action Required: You have reached one or more limits of your subscription plan. Please upgrade to avoid service interruption."
+    },
+    "admin_usage_main": {
+      "text_435f18dc05": "Loading usage data",
+      "text_440a9f2ca1": "Current Plan",
+      "text_f7fa5df80f": "/ month",
+      "text_78906379a6": "Renews",
+      "text_56e3badc4e": "Refresh",
+      "text_eb5ad770f5": "Resource Usage",
+      "auto_bde13e461c": "N/A",
+      "auto_members": "Members",
+      "auto_staffSeats": "Staff Seats",
+      "auto_branches": "Branches",
+      "auto_smsThisMonth": "SMS This Month",
+      "auto_storageUsed": "Storage Used",
+      "auto_apiCallsToday": "API Calls Today",
+      "auto_unitMembers": "members",
+      "auto_unitSeats": "seats",
+      "auto_unitBranches": "branches",
+      "auto_unitSms": "SMS",
+      "auto_unitGb": "GB",
+      "auto_unitCalls": "calls",
+      "auto_upgradeTitle": "Request {planName} upgrade",
+      "auto_upgradeMessage": "Send a plan upgrade request for {planName} to the Superadmin? Your current plan will not change immediately.",
+      "auto_upgradeConfirm": "Send Request",
+      "auto_upgradeCancel": "Cancel",
+      "loadError": "Unable to load usage data.",
+      "retry": "Retry",
+      "upgradeError": "Unable to send the upgrade request. Please retry."
+    },
+    "admin_usage_metric_card": {
+      "text_ec4a8cfea4": "At Limit",
+      "text_782bd6b85f": "Near Limit",
+      "text_0339f20514": "Upgrade to increase",
+      "text_e4d68c5a97": "limit",
+      "auto_usage": "{label} usage"
+    },
+    "admin_usage_plan_card": {
+      "text_1ef5e4215a": "Subscription Plans",
+      "text_ab79ad6aa7": "Upgrade requests are reviewed by your Superadmin.",
+      "text_4fc0e2bc80": "Current",
+      "text_cf765512cc": "Sending…",
+      "auto_94fe6d906b": "Upgrade",
+      "auto_0757510097": "Request Contact",
+      "customPrice": "Custom"
+    },
+    "AdminUsagePlans": {
+      "starter": {
+        "name": "Starter",
+        "features": {
+          "branch": "1 Branch",
+          "members": "500 Members",
+          "staff": "5 Staff",
+          "sms": "2,000 SMS/mo",
+          "storage": "5 GB Storage"
+        }
+      },
+      "growth": {
+        "name": "Growth",
+        "features": {
+          "branches": "5 Branches",
+          "members": "2,000 Members",
+          "staff": "15 Staff",
+          "sms": "10,000 SMS/mo",
+          "storage": "20 GB Storage"
+        }
+      },
+      "pro": {
+        "name": "Pro",
+        "features": {
+          "branches": "15 Branches",
+          "members": "10,000 Members",
+          "staff": "50 Staff",
+          "sms": "50,000 SMS/mo",
+          "storage": "100 GB Storage"
+        }
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "features": {
+          "branches": "Unlimited Branches",
+          "members": "Unlimited Members",
+          "staff": "Unlimited Staff",
+          "sms": "Custom SMS",
+          "storage": "Custom Storage"
+        }
+      }
+    },
+    "metadata": {
+      "title": "Usage & Subscription — Admin | Smart Gym 360",
+      "description": "Review account usage and subscription limits."
+    },
+    "AdminUsageDialog": {
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "typeToConfirm": "Type {phrase} to confirm"
+    }
+  },
+  "admin_usage_metric_card": {
+    "auto_upgradePlanFor": "Upgrade plan to increase {label} limit"
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "branches": {
+    "admin_branches_card": {
+      "text_6a5638d4a1": "शाखाएँ लोड नहीं हो सकीं",
+      "text_36f1f2dde6": "कृपया पृष्ठ रीफ़्रेश करें या बाद में फिर से प्रयास करें।",
+      "text_9f5cd8a2e8": "फिर से प्रयास करें",
+      "text_35cf82f9d2": "राजस्व",
+      "text_badd385121": "विवरण देखें",
+      "text_8d437dbf95": "खर्च",
+      "text_fcfac3efb6": "छात्र",
+      "text_a4730a22cf": "स्टाफ",
+      "text_d789a1e992": "आईडी:"
+    },
+    "admin_branches_detail_drawer": {
+      "text_cf7fcd62b8": "शाखा विवरण बंद करें",
+      "text_c43f7b7c3a": "शाखा विवरण लोड नहीं हो सका",
+      "text_9f5cd8a2e8": "फिर से प्रयास करें",
+      "auto_c531903b50": "कृपया फिर प्रयास करें।"
+    },
+    "admin_branches_empty_state": {
+      "text_ca43a19c5d": "कोई शाखा नहीं मिली",
+      "text_62a18fb502": "दूसरी शाखा देखने के लिए कोई अन्य खोज या स्थिति फ़िल्टर आज़माएँ।",
+      "text_412226715c": "फ़िल्टर साफ़ करें"
+    },
+    "admin_branches_header_selector": {
+      "text_fcf716ea9b": "शाखा चुनें"
+    },
+    "admin_branches_toolbar": {
+      "text_b6d6b08977": "शाखा विश्लेषण",
+      "text_377d867c5c": "केवल पढ़ने के लिए • विवरण देखने हेतु किसी भी मेट्रिक पर क्लिक करें",
+      "text_ab2f8364dc": "शाखाएँ खोजें",
+      "text_a51f2fb3bd": "शाखाएँ खोजें...",
+      "text_1f1f8bfdd5": "शाखा की स्थिति फ़िल्टर करें",
+      "text_9cb29e734a": "सभी स्थितियाँ",
+      "text_a1c4a4c55b": "तिथि सीमा चुनें",
+      "text_119c12c518": "सीमा चुनें",
+      "text_c4d63e4c56": "से:",
+      "text_7e7fbc8110": "प्रति:"
+    },
+    "AdminBranchesError": {
+      "text_1647b9db6c": "पहुँच अस्वीकृत",
+      "text_1879a51e18": "आपको यह पृष्ठ देखने की अनुमति नहीं है।",
+      "text_cdac261089": "डैशबोर्ड पर लौटें",
+      "text_8d886c0ba6": "कुछ गलत हो गया",
+      "text_f10af425f9": "कृपया फिर से प्रयास करें। समस्या जारी रहने पर सहायता टीम से संपर्क करें।",
+      "text_042c862e44": "फिर से प्रयास करें"
+    },
+    "admin_branches_detail_loading": {
+      "text_loading_branch_details": "ब्रांच विवरण लोड हो रहा है।"
+    },
+    "admin_branches_detail_content": {
+      "auto_bdbd7c154c": "कोई छात्र रिकॉर्ड नहीं मिला।",
+      "auto_5ebf3ca704": "कोई स्टाफ रिकॉर्ड नहीं मिला।",
+      "auto_9fe77cb956": "कोई व्यय रिकॉर्ड नहीं मिला।",
+      "auto_71b0df7a57": "कोई राजस्व रिकॉर्ड नहीं मिला।"
+    },
+    "AdminAuditRepair": {
+      "allBranchesAggregate": "सभी शाखाएँ (समग्र)"
+    },
+    "metadata": {
+      "title": "शाखाएँ | एडमिन | GymSmart",
+      "description": "सभी जिम स्थानों का अवलोकन।"
+    },
+    "static": {
+      "this_week": "इस सप्ताह",
+      "this_month": "इस महीने",
+      "this_year": "इस वर्ष",
+      "custom_range": "कस्टम अवधि",
+      "all_statuses": "सभी स्थिति",
+      "active": "सक्रिय",
+      "inactive": "निष्क्रिय",
+      "revenue_breakdown": "राजस्व विवरण",
+      "expense_breakdown": "व्यय विवरण",
+      "staff_list": "स्टाफ सूची",
+      "students": "छात्र",
+      "on_leave": "छुट्टी पर",
+      "expired": "समाप्त"
+    },
+    "AdminBranchesDetailContent": {
+      "text_joined": "जुड़ा"
+    }
+  },
+  "admin_branches_header_selector": {
+    "loading": "शाखाएँ लोड हो रही हैं…",
+    "error": "शाखा सूची लोड नहीं हो सकी।",
+    "retry": "पुनः प्रयास करें"
+  }
+}

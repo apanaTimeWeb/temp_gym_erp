@@ -1,0 +1,8 @@
+.palette {
+  width: min(calc(100vw - 24px), 600px);
+  margin-top: 10vh;
+}
+
+.results {
+  max-height: 60vh;
+}

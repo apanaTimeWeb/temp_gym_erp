@@ -1,0 +1,21 @@
+// RESPONSIBILITY: Server component page entry point for Admin Attendance (read-only view).
+// DATA FLOW: Next.js route/lifecycle or owning module entry → feature-local components/hooks/contracts → host integration boundary (admin_attendance/attendance_dashboard/page.tsx)
+
+import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
+import AdminAttendanceMain from '@/app/frontend_admin/admin_attendance/attendance_dashboard/components/main_view/AdminAttendanceDashboardMain';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('attendance.metadata');
+  return { title: t('title'), description: t('description') };
+}
+
+/**
+ * AdminAttendancePage renders the admin attendance page UI surface and coordinates only the state or handlers required by its owning module.
+ * @remarks Business behavior remains inside the feature module and semantic theme tokens are consumed at the JSX boundary.
+ */
+export default function AdminAttendancePage() {
+  return (
+      <AdminAttendanceMain />
+  );
+}

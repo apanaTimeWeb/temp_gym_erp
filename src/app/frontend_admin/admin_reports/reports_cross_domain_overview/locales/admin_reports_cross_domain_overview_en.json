@@ -1,0 +1,14 @@
+{
+  "reports_cross_domain_overview": {
+    "title": "Reports & Insights",
+    "intro": "Browse reports by the business domain that owns the workflow.",
+    "accessibility": {
+      "loading": "Loading report catalog"
+    },
+    "error": {
+      "title": "Unable to load Reports",
+      "description": "Try loading the report catalog again.",
+      "retry": "Retry"
+    }
+  }
+}

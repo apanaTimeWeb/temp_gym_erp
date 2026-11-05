@@ -1,0 +1,132 @@
+{
+  "plans": {
+    "PlansError": {
+      "text_1647b9db6c": "पहुँच अस्वीकृत",
+      "text_1879a51e18": "आपको यह पृष्ठ देखने की अनुमति नहीं है।",
+      "text_cdac261089": "डैशबोर्ड पर लौटें",
+      "text_2dc9d37464": "कुछ गलत हो गया!",
+      "text_22b2c820bf": "कृपया फिर से प्रयास करें। समस्या जारी रहने पर अनुरोध का वर्तमान समय देकर सहायता टीम से संपर्क करें।",
+      "text_042c862e44": "फिर से प्रयास करें"
+    },
+    "admin_plans_grid": {
+      "text_2122500ef6": "सदस्यता प्लान लोड नहीं हो सके।",
+      "text_11ee134422": "कृपया अपना कनेक्शन जाँचें और फिर से प्रयास करें।",
+      "text_a05fc9f95b": "अभी तक कोई सदस्यता प्लान नहीं बनाया गया है।",
+      "text_385b4b232f": "सबसे लोकप्रिय",
+      "text_13a7a7c3a7": "प्लान संपादित करें",
+      "text_75cd512896": "प्लान हटाएँ",
+      "text_7b01bcf516": "1 महीना",
+      "text_8ce49e113d": "3 महीने",
+      "text_422c023cc8": "6 महीने",
+      "text_2de83657ff": "12 महीने",
+      "text_fc338f87a0": "विशेषताएँ",
+      "text_7346564378": "फ्रीज़ की अनुमति"
+    },
+    "admin_plans_modal": {
+      "text_70d3a544a3": "संवाद बंद करें",
+      "text_ec0632cbbf": "प्लान का नाम",
+      "text_9911dade32": "उदा. गोल्ड योजना",
+      "text_5bd44ebe63": "स्तर",
+      "text_4696ca3454": "विशेषताएँ (प्रति पंक्ति एक)",
+      "text_77dfd2135f": "रद्द करें",
+      "auto_2e26fa2246": "अपडेट करें",
+      "auto_eeae04113e": "जिम एक्सेस (सुबह 6 बजे - रात 10 बजे)\nलॉकर एक्सेस\nफिटनेस आकलन",
+      "remaining_editPlan": "प्लान संपादित करें",
+      "remaining_createNewPlan": "नया प्लान बनाएँ",
+      "remaining_createPlan": "प्लान बनाएँ"
+    },
+    "AdminPlansRevenueCharts": {
+      "text_3be612e2eb": "प्लान के अनुसार राजस्व वितरण"
+    },
+    "admin_plans_revenue": {
+      "text_71436fe853": "राजस्व डेटा लोड नहीं हो सका। कृपया फिर से प्रयास करें।",
+      "text_fbb4303165": "सदस्यता प्लान का राजस्व",
+      "text_47e0d7476a": "सदस्यता प्लान के अनुसार राजस्व श्रेय और प्रदर्शन मेट्रिक्स ट्रैक करें।",
+      "text_1210e4e75d": "प्लान विवरण",
+      "text_a04247f58d": "प्लान खोजें...",
+      "retry": "पुनः प्रयास करें",
+      "aggregateScopeUnavailable": "इस पृष्ठांकित प्रतिक्रिया में कुल राजस्व राशि उपलब्ध नहीं है। केवल वर्तमान पृष्ठ दिखाया जा रहा है; भ्रामक कुल से बचने के लिए KPI और चार्ट छिपाए गए हैं।"
+    },
+    "AdminPlansRevenueTable": {
+      "text_6a50bf56d9": "राजस्व डेटा नहीं मिला",
+      "auto_7a5702dc84": "अवधि या खोज क्वेरी बदलने का प्रयास करें।",
+      "auto_sortBy": "{column} के अनुसार क्रमबद्ध करें; वर्तमान क्रम {direction}",
+      "auto_ascending": "आरोही",
+      "auto_descending": "अवरोही",
+      "auto_unsorted": "क्रमबद्ध नहीं"
+    },
+    "admin_plans_toolbar": {
+      "text_61b770863d": "सक्रिय योजनाएँ:",
+      "text_6e18b08ca2": "प्लान खोजें",
+      "text_6b5429fd0b": "प्लान खोजें...",
+      "text_0e08b1c93a": "टियर के अनुसार प्लान फ़िल्टर करें",
+      "text_bb7f93d151": "सभी टियर",
+      "text_87360b6bf2": "प्लान रीफ़्रेश करें",
+      "text_7e048e0455": "प्लान बनाएँ"
+    },
+    "Error": {
+      "text_2dc9d37464": "कुछ गलत हो गया!",
+      "text_f10af425f9": "कृपया फिर से प्रयास करें। समस्या जारी रहने पर सहायता टीम से संपर्क करें।",
+      "text_cef2fe093b": "फिर से प्रयास करें"
+    },
+    "NotFound": {
+      "text_e637d9faea": "पृष्ठ नहीं मिला",
+      "text_0b7e734f76": "अनुरोधित संसाधन नहीं मिला।",
+      "text_cdac261089": "डैशबोर्ड पर लौटें"
+    },
+    "Loading": {
+      "text_loading_plan_revenue": "प्लान राजस्व लोड हो रहा है..."
+    },
+    "AdminPlansConfirm": {
+      "deleteTitle": "प्लान हटाएँ",
+      "deleteMessage": "क्या आप वाकई इस प्लान को हटाना चाहते हैं?",
+      "deleteConfirm": "हटाएँ"
+    },
+    "AdminAuditRepair": {
+      "totalRevenue": "कुल राजस्व",
+      "totalSubscriptions": "कुल सदस्यताएँ",
+      "avgRenewalRate": "औसत नवीनीकरण दर",
+      "topPerformingPlan": "सर्वश्रेष्ठ प्रदर्शन करने वाली योजना",
+      "oneMonthPrice": "1 महीने की कीमत",
+      "threeMonthsPrice": "3 महीने की कीमत",
+      "sixMonthsPrice": "6 महीने की कीमत",
+      "twelveMonthsPrice": "12 महीने की कीमत",
+      "customPricePerDay": "प्रति दिन कस्टम कीमत",
+      "fixedTier": "स्थिर टियर"
+    },
+    "metadata": {
+      "title": "प्लान राजस्व | एडमिन",
+      "description": "सदस्यता प्लान राजस्व एट्रिब्यूशन डैशबोर्ड।"
+    },
+    "static": {
+      "this_month": "इस महीने",
+      "last_month": "पिछले महीने",
+      "this_quarter": "इस तिमाही",
+      "this_year": "इस वर्ष",
+      "plan_name": "प्लान का नाम",
+      "tier": "स्तर",
+      "active_subs": "सक्रिय सब्सक्रिप्शन",
+      "new_signups": "नए साइनअप",
+      "renewal_rate": "नवीनीकरण दर",
+      "total_revenue": "कुल राजस्व"
+    },
+    "validation": {
+      "nameRequired": "प्लान का नाम आवश्यक है।",
+      "validPrice": "मान्य शून्य या सकारात्मक कीमत दर्ज करें।",
+      "featuresRequired": "फीचर्स आवश्यक हैं।"
+    },
+    "AdminPlansModal": {
+      "text_fixedTier": "संपादन के दौरान टियर नहीं बदला जा सकता",
+      "text_oneMonthPrice": "1 माह की कीमत",
+      "text_threeMonthsPrice": "3 माह की कीमत",
+      "text_sixMonthsPrice": "6 माह की कीमत",
+      "text_twelveMonthsPrice": "12 माह की कीमत",
+      "text_customPricePerDay": "कस्टम कीमत / दिन",
+      "text_zeroPlaceholder": "0"
+    }
+  },
+  "admin_plans_grid": {
+    "auto_edit": "{name} संपादित करें",
+    "auto_delete": "{name} हटाएँ"
+  }
+}

@@ -1,0 +1,201 @@
+{
+  "finance": {
+    "FinanceError": {
+      "text_1647b9db6c": "पहुँच अस्वीकृत",
+      "text_1879a51e18": "आपको यह पृष्ठ देखने की अनुमति नहीं है।",
+      "text_cdac261089": "डैशबोर्ड पर लौटें",
+      "text_2dc9d37464": "कुछ गलत हो गया!",
+      "text_22b2c820bf": "कृपया फिर से प्रयास करें। समस्या जारी रहने पर अनुरोध का वर्तमान समय देकर सहायता टीम से संपर्क करें।",
+      "text_042c862e44": "फिर से प्रयास करें"
+    },
+    "AdminFinanceDateFilterDropdown": {
+      "text_12e1289bac": "सीमा चुनें",
+      "customStartDate": "प्रारंभ तिथि",
+      "customEndDate": "समाप्ति तिथि",
+      "customRangeHelp": "शुरू और समाप्ति की तिथियाँ चुनें; दोनों तिथियाँ शामिल होंगी।",
+      "customRangeInvalid": "मान्य तिथियाँ चुनें और सुनिश्चित करें कि प्रारंभ तिथि समाप्ति तिथि के बाद न हो।"
+    },
+    "admin_finance_expenses_table": {
+      "text_a78210146a": "खर्च की श्रेणी",
+      "text_1fd266c217": "सभी श्रेणियाँ",
+      "text_d8e7170f94": "कुल:",
+      "text_51b38f2fd6": "केवल-पठन विश्लेषण",
+      "text_15f519954e": "कोई खर्च नहीं मिला",
+      "auto_4508b993fb": "चयनित शाखा और श्रेणी फ़िल्टर से कोई व्यय मेल नहीं खाता।",
+      "date": "तारीख",
+      "category": "श्रेणी",
+      "branch": "ब्रांच",
+      "amount": "राशि",
+      "notes": "नोट्स",
+      "recordedBy": "दर्जकर्ता"
+    },
+    "admin_finance_payments_table": {
+      "text_bc48c55226": "भुगतान लोड हो रहे हैं",
+      "text_18d540a249": "भुगतान लोड नहीं हो सके।",
+      "text_11ee134422": "कृपया अपना कनेक्शन जाँचें और फिर से प्रयास करें।",
+      "text_c1f531f996": "कोई भुगतान नहीं मिला",
+      "auto_ee688868e5": "वर्तमान फ़िल्टर से कोई भुगतान मेल नहीं खाता।"
+    },
+    "AdminFinancePnlCharts": {
+      "text_c7ebaca60f": "शाखा के अनुसार राजस्व बनाम खर्च",
+      "text_f2fc0d3c2b": "शाखा के अनुसार लाभ का हिस्सा",
+      "text_7c2d057fd5": "इस अवधि में कोई शाखा लाभ में नहीं है।",
+      "series_revenue": "आय",
+      "series_expenses": "खर्च"
+    },
+    "AdminFinancePnlEmptyState": {
+      "text_2ccc4a6f8d": "अवधि बदलें या फ़िल्टर हटाकर देखें।",
+      "text_f641dcde74": "फ़िल्टर हटाएँ"
+    },
+    "admin_finance_pnl": {
+      "text_209d61d684": "शाखा-वार विवरण",
+      "text_5c89dc5750": "राजस्व और खर्च का विवरण खोलने के लिए किसी पंक्ति पर क्लिक करें। क्रमबद्ध करने के लिए कॉलम शीर्षक चुनें।",
+      "text_1d98da511f": "फ़िल्टर साफ़ करें ×"
+    },
+    "AdminFinancePnlRowBreakdown": {
+      "text_de2968d33b": "राजस्व विवरण",
+      "text_06fccc1c0e": "व्यय विवरण",
+      "text_3ce4d2eff4": "अवधि सारांश",
+      "text_f3a8370f38": "कुल राजस्व",
+      "text_750134b65d": "कुल खर्च",
+      "text_8bebc63cc9": "शुद्ध लाभ",
+      "text_b059c52693": "महीने-दर-महीने बदलाव"
+    },
+    "AdminFinancePnlTable": {
+      "text_1627510b24": "शाखा",
+      "text_b25928c699": "कुल",
+      "text_a0c2a342bf": "संयुक्त शुद्ध राशि",
+      "expandBranch": "शाखा का विवरण खोलें",
+      "collapseBranch": "शाखा का विवरण बंद करें"
+    },
+    "admin_finance_revenue_summary": {
+      "text_ad2e428a29": "मासिक राजस्व (पिछले 6 महीने)",
+      "text_loading": "मासिक राजस्व सारांश लोड हो रहा है…"
+    },
+    "admin_finance_tabs": {
+      "text_7e1f7a5cf9": "भुगतान खोजें...",
+      "text_3a82474c4f": "भुगतान खोजें",
+      "text_1e5fcf297b": "वित्तीय डेटा रीफ़्रेश करें",
+      "remaining_allMethods": "सभी तरीके",
+      "remaining_allStatuses": "सभी स्थितियाँ",
+      "payments": "भुगतान",
+      "expenses": "व्यय",
+      "summary": "सारांश",
+      "exportCsv": "CSV निर्यात करें",
+      "exportFailed": "शाखा लाभ और हानि डेटा निर्यात नहीं हो सका। कृपया पुनः प्रयास करें।",
+      "exportNoRows": "वर्तमान अवधि के लिए निर्यात करने हेतु P&L डेटा उपलब्ध नहीं है।",
+      "retry": "पुनः प्रयास करें",
+      "financeLoadError": "कुछ वित्तीय डेटा लोड नहीं हो सका। विफल अनुरोधों को पुनः प्रयास करें।",
+      "summaryUnavailable": "पूर्ण कुल राशि उपलब्ध न होने के कारण राजस्व सारांश नहीं दिखाया जा सकता।"
+    },
+    "AdminFinancePnlError": {
+      "text_5a61f899b6": "लाभ-हानि डेटा उपलब्ध नहीं है",
+      "text_83752884ab": "शाखा लाभ-हानि तुलना पृष्ठ लोड नहीं हो सका। आपका डेटा सुरक्षित है — यह केवल प्रदर्शन संबंधी समस्या है।",
+      "text_f10af425f9": "कृपया फिर से प्रयास करें। समस्या जारी रहने पर सहायता टीम से संपर्क करें।",
+      "text_cef2fe093b": "फिर से प्रयास करें"
+    },
+    "NotFound": {
+      "text_e637d9faea": "पृष्ठ नहीं मिला",
+      "text_0b7e734f76": "अनुरोधित संसाधन नहीं मिला।",
+      "text_cdac261089": "डैशबोर्ड पर लौटें"
+    },
+    "AdminAuditRepair": {
+      "thisMonth": "इस महीने",
+      "lastMonth": "पिछला महीना",
+      "last3Months": "पिछले 3 महीने",
+      "last6Months": "पिछले 6 महीने",
+      "thisYear": "इस वर्ष",
+      "monthlyAllTime": "मासिक (सभी समय)",
+      "yearlyAllTime": "वार्षिक (सभी समय)",
+      "customRange": "कस्टम सीमा",
+      "totalRevenue": "कुल राजस्व",
+      "monthlyRevenue": "मासिक राजस्व",
+      "pendingAmount": "लंबित राशि",
+      "totalExpenses": "कुल खर्च",
+      "netProfit": "शुद्ध लाभ",
+      "totalProfit": "कुल लाभ",
+      "profitableBranches": "लाभदायक शाखाएँ",
+      "lossMakingBranches": "घाटा वाली शाखाएँ",
+      "avgProfitMargin": "औसत लाभ मार्जिन",
+      "memberships": "सदस्यताएँ",
+      "ptSessions": "पीटी सत्र",
+      "products": "उत्पाद",
+      "other": "अन्य",
+      "rent": "किराया",
+      "salaries": "वेतन",
+      "utilities": "उपयोगिताएँ",
+      "maintenance": "रखरखाव",
+      "marketing": "मार्केटिंग",
+      "upi": "UPI",
+      "cash": "नकद",
+      "card": "कार्ड",
+      "netBanking": "नेट बैंकिंग",
+      "paid": "भुगतान किया गया",
+      "due": "बकाया",
+      "refunded": "वापस किया गया",
+      "invoiceNo": "चालान संख्या",
+      "member": "सदस्य",
+      "amount": "राशि",
+      "method": "विधि",
+      "status": "स्थिति",
+      "paidAt": "भुगतान तिथि",
+      "equipment": "उपकरण",
+      "supplies": "आपूर्तियाँ"
+    },
+    "AdminFinanceLogic": {
+      "genericError": "वित्तीय डेटा लोड नहीं हो सका। कृपया फिर से प्रयास करें।"
+    },
+    "AdminFinancePnlKPIs": {
+      "auto_filterBy": "{label} से फ़िल्टर करें"
+    },
+    "metadata": {
+      "title": "ब्रांच P&L तुलना | फाइनेंस | Smart Gym 360",
+      "description": "सभी शाखाओं के राजस्व, खर्च और शुद्ध लाभ की तुलना करें।"
+    },
+    "static": {
+      "this_month": "इस महीने",
+      "last_month": "पिछले महीने",
+      "q1_jan_mar": "Q1 (जन–मार्च)",
+      "q2_apr_jun": "Q2 (अप्रैल–जून)",
+      "q3_jul_sep": "Q3 (जुल–सितंबर)",
+      "q4_oct_dec": "Q4 (अक्टू–दिसंबर)",
+      "this_year_fy": "इस वर्ष (वित्तीय वर्ष)",
+      "profitable": "लाभदायक",
+      "break_even": "ब्रेक-ईवन",
+      "loss_making": "घाटे वाला",
+      "branch": "शाखा",
+      "revenue": "राजस्व",
+      "expenses": "व्यय",
+      "net_profit": "शुद्ध लाभ",
+      "margin": "मार्जिन %",
+      "mom": "महीने-दर-महीने Δ",
+      "status": "स्थिति",
+      "empty": "",
+      "no_pnl_data": "इस अवधि के लिए कोई शाखा P&L डेटा नहीं मिला।",
+      "no_profitable": "इस अवधि के लिए कोई लाभदायक शाखा नहीं मिली।",
+      "no_breakeven": "इस अवधि के लिए कोई ब्रेक-ईवन शाखा नहीं मिली।",
+      "no_loss": "इस अवधि के लिए कोई घाटे वाली शाखा नहीं मिली।",
+      "all_branches_combined": "सभी शाखाओं का संयुक्त योग",
+      "operational_costs": "परिचालन लागत",
+      "click_to_filter": "तालिका फ़िल्टर करने के लिए क्लिक करें",
+      "across_all_branches": "सभी शाखाओं में"
+    },
+    "admin_finance_payments": {
+      "accessibility": {
+        "data": "भुगतान डेटा"
+      }
+    }
+  },
+  "AdminFinancePnlBreakdownBar": {
+    "auto_breakdown": "P&L विवरण"
+  },
+  "admin_finance_revenue_summary": {
+    "auto_revenueShare": "{month} राजस्व हिस्सा"
+  },
+  "admin_finance_payments_table": {
+    "auto_sortBy": "{header} के अनुसार क्रमबद्ध करें"
+  },
+  "AdminAuditRepair": {
+    "financialAmountHidden": "सूची में प्रति-रिकॉर्ड वित्तीय राशि छिपाई गई है।"
+  }
+}

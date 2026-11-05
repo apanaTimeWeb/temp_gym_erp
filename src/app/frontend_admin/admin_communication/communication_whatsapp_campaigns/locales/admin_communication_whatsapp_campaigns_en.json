@@ -1,0 +1,73 @@
+{
+  "campaigns": {
+    "admin_campaigns_audience_picker": {
+      "text_d7613d037b": "1. Select Target Audience"
+    },
+    "admin_campaigns_composer": {
+      "text_958e798f0b": "3. Edit Message",
+      "text_95802daab3": "Insert",
+      "text_93ab84fd5e": "Campaign message",
+      "text_43cd839993": "Type your message here...",
+      "text_93ef0dd827": "The",
+      "text_a4dbc94e51": "variable will automatically be replaced with each member's actual name when generating the WhatsApp link."
+    },
+    "admin_campaigns_main": {
+      "text_b03d458e96": "Global Marketing & CRM",
+      "text_0b4a5a9636": "Run bulk WhatsApp campaigns across all your branches efficiently.",
+      "text_c4f3bfebca": "Unable to load recipients for this audience.",
+      "text_cef2fe093b": "Try Again",
+      "auto_fdd45d642d": "Unable to load message templates.",
+      "auto_eba5dda303": "Loading message templates...",
+      "auto_4ba6c29865": "Unable to load campaign audiences.",
+      "auto_1591648946": "Loading audiences...",
+      "auto_296c7e0ba8": "Preview & Send",
+      "auto_97714fe58d": "Loading Recipients...",
+      "auto_edcdbec5b3": "Select an audience to load recipients.",
+      "auto_recipientCount": "{count, plural, =1 {# recipient selected.} other {# recipients selected.}}",
+      "auto_noAudiences": "No audiences are available for this campaign.",
+      "auto_noTemplates": "No message templates are available.",
+      "auto_recipientsLoading": "Loading recipients…",
+      "auto_recipientsUnavailable": "Recipients could not be loaded. Retry to continue.",
+      "auto_noRecipients": "No recipients match this audience."
+    },
+    "admin_campaigns_queue_panel": {
+      "text_f076d0104b": "4. WhatsApp Queue",
+      "text_27e7700fda": "sent",
+      "text_13f89e125e": "Queue is empty",
+      "text_5edb1f138a": "Select an audience and generate the queue.",
+      "text_0af2f3edcb": "Mark Sent",
+      "text_3da474537a": "Skip",
+      "text_cf9b77061f": "Open",
+      "auto_e304e82e22": "Send All",
+      "auto_8ee833f9dc": "Opening Tabs...",
+      "status_sent": "Sent",
+      "status_skipped": "Skipped",
+      "status_opened": "Opened",
+      "status_queued": "Queued",
+      "text_openFailed": "WhatsApp could not be opened. Check the recipient phone number and allow pop-ups.",
+      "auto_openAllChats": "Open queued chats",
+      "sendBehaviorNotice": "Opening a chat does not send a message. Review the prefilled text in WhatsApp and send it there."
+    },
+    "admin_campaigns_section_state": {
+      "text_cef2fe093b": "Try Again"
+    },
+    "admin_campaigns_template_picker": {
+      "text_550db245f6": "2. Choose Message Template"
+    },
+    "AdminCampaignsError": {
+      "text_b7548c3c70": "Failed to load Campaigns",
+      "text_a1c0aaa0d2": "We encountered an error loading the marketing dashboard. Please try again.",
+      "text_cef2fe093b": "Try Again"
+    },
+    "metadata": {
+      "title": "Campaigns | Admin",
+      "description": "Manage admin marketing campaigns."
+    },
+    "AdminRepair": {
+      "itemUnavailable": "This queue item is no longer available.",
+      "invalidRecipientPhone": "This recipient does not have a valid phone number.",
+      "popupBlocked": "Your browser blocked the WhatsApp window. Allow pop-ups and retry.",
+      "openFailed": "WhatsApp could not be opened. Please retry."
+    }
+  }
+}

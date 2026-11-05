@@ -1,0 +1,137 @@
+{
+  "announcements": {
+    "admin_announcements_empty_state": {
+      "text_4242d274f9": "No announcements found",
+      "text_2683f14609": "Create an announcement to start communicating with gym members.",
+      "text_9a45c17c89": "Send First Announcement",
+      "filteredTitle": "No announcements match these filters",
+      "filteredDescription": "Change or reset the filters to see announcements.",
+      "resetFilters": "Reset filters"
+    },
+    "admin_announcements_kpis": {
+      "text_4e68410f3b": "Total Announcements",
+      "text_9644b22eec": "Active Now",
+      "text_1cd1bdad46": "Scheduled",
+      "text_a689a999a5": "Expired",
+      "text_d7f83b735d": "Total Views",
+      "text_f9312169ef": "Pinned",
+      "auto_liveVisible": "live & visible",
+      "auto_upcoming": "upcoming",
+      "auto_acrossAll": "across all",
+      "auto_alwaysOnTop": "always on top",
+      "loadingLabel": "Loading announcement metrics",
+      "loadError": "Announcement metrics could not be loaded",
+      "retry": "Retry metrics",
+      "unavailable": "Announcement metrics are unavailable"
+    },
+    "admin_announcements_main": {
+      "text_ad3057e65c": "Send a Branch Announcement",
+      "text_71ccab9dbd": "Broadcast a notice to members, trainers, or staff at your gym branches. Supports scheduling and pinning.",
+      "text_30642945b5": "Send Announcement"
+    },
+    "admin_announcements_modal": {
+      "text_bbfa773e5a": "Close",
+      "text_9616975c7a": "Title *",
+      "text_b6d5688f06": "e.g. Grand Opening — New Branch!",
+      "text_d0f19ecb98": "Message Body *",
+      "text_6021925ec7": "Write the full announcement message here...",
+      "text_7568d32184": "Priority *",
+      "text_f49bd7f256": "Pin Announcement",
+      "text_81962d4053": "Always show at top",
+      "text_ed59b37623": "Target Audience *",
+      "text_5193fbc75c": "Target Branches *",
+      "text_0ed4cd1e4c": "Publish Date & Time *",
+      "text_c8f7179844": "Expiry Date & Time *",
+      "text_77dfd2135f": "Cancel",
+      "auto_0727937d60": "Publish Announcement",
+      "auto_ab2edcb408": "Save Changes",
+      "auto_a2deb25a6b": "Broadcast to your branch members, trainers, or staff",
+      "auto_20f51762b1": "Update announcement details",
+      "auto_721b86aeda": "New Announcement",
+      "auto_b07da8e396": "Edit Announcement"
+    },
+    "admin_announcements_table": {
+      "text_931dc77aed": "Failed to load announcements",
+      "text_52fbc15299": "Search announcements...",
+      "text_26b646aa94": "Search announcements",
+      "text_30642945b5": "Send Announcement",
+      "text_f43653d7fa": "Filter by status",
+      "text_870c2d046e": "Filter by priority",
+      "text_8b807ad7ec": "All Priority",
+      "text_aee7f4f0e8": "Filter by branch",
+      "text_56553100b0": "Reset filters",
+      "text_44c57abd88": "Reset",
+      "text_bd63359087": "announcement",
+      "text_e8b9965bfd": "Edit announcement",
+      "text_bec58ef798": "Delete announcement",
+      "auto_8f947cbef2": "Pin announcement",
+      "auto_ed86d9759e": "Unpin announcement",
+      "auto_3f34490255": "Sent",
+      "header": {
+        "empty": "",
+        "titlePreview": "Title & Preview",
+        "audience": "Audience",
+        "branches": "Branches",
+        "schedule": "Schedule",
+        "priority": "Priority",
+        "status": "Status",
+        "views": "Views",
+        "acknowledged": "Acknowledged",
+        "delivery": "Delivery",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Active",
+        "scheduled": "Scheduled",
+        "expired": "Expired",
+        "draft": "Draft"
+      },
+      "priority": {
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low"
+      },
+      "retry": "Retry"
+    },
+    "AdminAnnouncementsError": {
+      "text_3d61be7ff8": "Failed to load Announcements",
+      "text_cef2fe093b": "Try Again"
+    },
+    "AdminAnnouncementsFilters": {
+      "allMyBranches": "All My Branches",
+      "gymAndheriEast": "Andheri East",
+      "gymBandraWest": "Bandra West",
+      "gymPowai": "Powai",
+      "gymThane": "Thane",
+      "everyoneAtBranch": "Everyone at Branch",
+      "members": "Members",
+      "trainers": "Trainers",
+      "staff": "Staff",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low",
+      "allStatus": "All Status",
+      "active": "Active",
+      "scheduled": "Scheduled",
+      "expired": "Expired",
+      "draft": "Draft"
+    },
+    "metadata": {
+      "title": "Announcements | Admin - GymSmart",
+      "description": "Broadcast notices and announcements to members, staff, and trainers."
+    },
+    "AdminAnnouncementsConfirm": {
+      "deleteTitle": "Delete announcement",
+      "deleteMessage": "Are you sure you want to delete this announcement?",
+      "deleteConfirm": "Delete"
+    },
+    "AdminAnnouncementsDialog": {
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "typeToConfirm": "Type {phrase} to confirm"
+    },
+    "AdminRepair": {
+      "requestFailed": "The request could not be completed. Please try again."
+    }
+  }
+}

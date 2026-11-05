@@ -1,0 +1,120 @@
+{
+  "subscriptions": {
+    "AdminRepair": {
+      "requestFailed": "The billing change could not be completed. Please try again."
+    },
+    "AdminSubscriptionsError": {
+      "text_6d251ad405": "Failed to load Subscription data",
+      "text_cef2fe093b": "Try Again",
+      "loadingInvoices": "Loading invoices…",
+      "invoiceLoadFailed": "Invoices could not be loaded.",
+      "loadingPlans": "Loading plans…",
+      "plansLoadFailed": "Plans could not be loaded.",
+      "noPlans": "No plans are available.",
+      "loadingPaymentMethods": "Loading payment methods…",
+      "paymentMethodsLoadFailed": "Payment methods could not be loaded.",
+      "retry": "Try again",
+      "loadingSubscription": "Loading subscription…",
+      "subscriptionLoadFailed": "Subscription details could not be loaded.",
+      "loadingKpis": "Loading billing summary…",
+      "kpiLoadFailed": "Billing summary could not be loaded.",
+      "noKpis": "Billing summary is unavailable.",
+      "defaultMethodCannotRemove": "Choose another default payment method before removing this one."
+    },
+    "admin_finance_subscription_invoices": {
+      "text_50d038cf02": "Invoice History",
+      "text_c3e815afba": "invoices",
+      "text_5e193a73d8": "No invoices yet",
+      "auto_e1af0c24ca": "Invoice history will appear here after subscription billing activity is recorded.",
+      "invoice": "Invoice #",
+      "date": "Date",
+      "plan": "Plan",
+      "billing": "Billing",
+      "amount": "Amount",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "admin_subscriptions_main": {
+      "text_440a9f2ca1": "Current Plan",
+      "text_7a310fd153": "/month · Renews",
+      "text_92dbd5ced5": "Auto-renew",
+      "text_99209d6924": "Toggle auto-renew",
+      "auto_3ed83e9c97": "Saving...",
+      "auto_tabOverview": "Overview",
+      "auto_tabPlans": "Upgrade Plan",
+      "auto_tabInvoices": "Invoices",
+      "auto_tabPayment": "Payment Methods",
+      "auto_on": "On",
+      "auto_off": "Off",
+      "ariaPaymentMethodsWorkflow": "Payment methods workflow"
+    },
+    "admin_subscriptions_payment_method": {
+      "text_ad68e79c90": "Payment Methods",
+      "text_95331a092c": "No payment methods added",
+      "text_808d7dca8a": "Default",
+      "text_6eaa24bb52": "Set Default",
+      "text_02c31ab7b6": "Remove payment method"
+    },
+    "AdminSubscriptionsPaymentMethodLabel": {
+      "text_3f2b426323": "Net Banking",
+      "text_5871b8d86f": "Exp"
+    },
+    "AdminSubscriptionsPlanCard": {
+      "text_385b4b232f": "Most Popular",
+      "text_4fc0e2bc80": "Current",
+      "text_ab0cc39294": "/month",
+      "text_1758356db2": "or",
+      "text_6f3c17a871": "/year (save 2 months)",
+      "text_52ec63b267": "✓ Your Current Plan",
+      "text_7a0a9bd139": "Contact Sales",
+      "text_216133f9a1": "Upgrade to",
+      "customPrice": "Custom"
+    },
+    "admin_subscriptions_kpis": {
+      "auto_currentPlan": "Current Plan{suffix}",
+      "auto_monthlySpend": "Monthly Spend{suffix}",
+      "auto_totalInvoices": "Total Invoices{suffix}",
+      "auto_nextBilling": "Next Billing{suffix}",
+      "auto_daysToRenewal": "Days to Renewal{suffix}",
+      "auto_saveAnnual": "Save with Annual{suffix}"
+    },
+    "AdminSubscriptionsConfirm": {
+      "upgradeTitle": "Upgrade to {planName}",
+      "upgradeMessage": "You are about to upgrade your subscription to the {planName} plan. Your billing will be updated immediately.",
+      "upgradeConfirm": "Confirm Upgrade",
+      "setDefaultTitle": "Set Default Payment Method",
+      "setDefaultMessage": "Set this payment method as the default for subscription billing.",
+      "setDefaultConfirm": "Set Default",
+      "removeTitle": "Remove Payment Method",
+      "removeMessage": "Remove this payment method from your subscription billing options.",
+      "removeConfirm": "Remove",
+      "autoRenewTitle": "Change Auto-Renewal",
+      "autoRenewMessage": "Change automatic renewal to {nextState}.",
+      "autoRenewConfirm": "Confirm"
+    },
+    "metadata": {
+      "title": "Subscription & Billing | Admin - GymSmart",
+      "description": "Manage your SaaS subscription, invoices, and payment methods."
+    },
+    "static": {
+      "paid": "Paid",
+      "pending": "Pending",
+      "failed": "Failed",
+      "refunded": "Refunded"
+    },
+    "AdminAuditRepair": {
+      "invoicePdfUnavailable": "Invoice PDF is unavailable because its URL is not an approved same-origin path."
+    }
+  },
+  "admin_subscriptions_kpis": {
+    "auto_allTime": "all time",
+    "auto_daysRemaining": "days remaining",
+    "auto_vsMonthlyBilling": "vs monthly billing"
+  },
+  "admin_finance_subscription_invoices": {
+    "auto_download": "Download {invoice}"
+  },
+  "AdminAuditRepair": {
+    "financialAmountHidden": "Per-record amount hidden in list view. Open the invoice or authorized detail to view it."
+  }
+}

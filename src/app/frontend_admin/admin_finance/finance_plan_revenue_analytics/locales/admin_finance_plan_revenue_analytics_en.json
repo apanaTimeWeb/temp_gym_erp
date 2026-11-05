@@ -1,0 +1,132 @@
+{
+  "plans": {
+    "PlansError": {
+      "text_1647b9db6c": "Access Denied",
+      "text_1879a51e18": "You don't have permission to view this page.",
+      "text_cdac261089": "Return to Dashboard",
+      "text_2dc9d37464": "Something went wrong!",
+      "text_22b2c820bf": "Please retry. If the problem continues, contact support with the current request time.",
+      "text_042c862e44": "Try again"
+    },
+    "admin_plans_grid": {
+      "text_2122500ef6": "Failed to load membership plans.",
+      "text_11ee134422": "Please check your connection and try again.",
+      "text_a05fc9f95b": "No membership plans created yet.",
+      "text_385b4b232f": "Most Popular",
+      "text_13a7a7c3a7": "Edit Plan",
+      "text_75cd512896": "Delete Plan",
+      "text_7b01bcf516": "1 Month",
+      "text_8ce49e113d": "3 Months",
+      "text_422c023cc8": "6 Months",
+      "text_2de83657ff": "12 Months",
+      "text_fc338f87a0": "Features",
+      "text_7346564378": "Freeze Allowed"
+    },
+    "admin_plans_modal": {
+      "text_70d3a544a3": "Close modal",
+      "text_ec0632cbbf": "Plan Name",
+      "text_9911dade32": "e.g. Gold Plan",
+      "text_5bd44ebe63": "Tier",
+      "text_4696ca3454": "Features (one per line)",
+      "text_77dfd2135f": "Cancel",
+      "auto_2e26fa2246": "Update",
+      "auto_eeae04113e": "Gym Access (6am - 10pm)\nLocker Access\nFitness Assessment",
+      "remaining_editPlan": "Edit Plan",
+      "remaining_createNewPlan": "Create New Plan",
+      "remaining_createPlan": "Create Plan"
+    },
+    "AdminPlansRevenueCharts": {
+      "text_3be612e2eb": "Revenue Distribution by Plan"
+    },
+    "admin_plans_revenue": {
+      "text_71436fe853": "Failed to load revenue data. Please try again.",
+      "text_fbb4303165": "Membership Plan Revenue",
+      "text_47e0d7476a": "Track revenue attribution and performance metrics across subscription plans.",
+      "text_1210e4e75d": "Plan Breakdown",
+      "text_a04247f58d": "Search plan...",
+      "retry": "Try again",
+      "aggregateScopeUnavailable": "Complete revenue totals are unavailable for this paginated response. Showing the current page only; aggregate KPIs and charts are hidden to avoid misleading totals."
+    },
+    "AdminPlansRevenueTable": {
+      "text_6a50bf56d9": "No revenue data found",
+      "auto_7a5702dc84": "Try adjusting the period or search query.",
+      "auto_sortBy": "Sort by {column}; current sort {direction}",
+      "auto_ascending": "ascending",
+      "auto_descending": "descending",
+      "auto_unsorted": "not sorted"
+    },
+    "admin_plans_toolbar": {
+      "text_61b770863d": "Active Plans:",
+      "text_6e18b08ca2": "Search plans",
+      "text_6b5429fd0b": "Search plans...",
+      "text_0e08b1c93a": "Filter plans by tier",
+      "text_bb7f93d151": "All Tiers",
+      "text_87360b6bf2": "Refresh plans",
+      "text_7e048e0455": "Create Plan"
+    },
+    "Error": {
+      "text_2dc9d37464": "Something went wrong!",
+      "text_f10af425f9": "Please retry. If the issue continues, contact support.",
+      "text_cef2fe093b": "Try Again"
+    },
+    "NotFound": {
+      "text_e637d9faea": "Page Not Found",
+      "text_0b7e734f76": "The requested resource could not be found.",
+      "text_cdac261089": "Return to Dashboard"
+    },
+    "Loading": {
+      "text_loading_plan_revenue": "Loading Plan Revenue..."
+    },
+    "AdminPlansConfirm": {
+      "deleteTitle": "Delete Plan",
+      "deleteMessage": "Are you sure you want to delete this plan?",
+      "deleteConfirm": "Delete"
+    },
+    "AdminAuditRepair": {
+      "totalRevenue": "Total Revenue",
+      "totalSubscriptions": "Total Subscriptions",
+      "avgRenewalRate": "Avg Renewal Rate",
+      "topPerformingPlan": "Top Performing Plan",
+      "oneMonthPrice": "1 Month Price",
+      "threeMonthsPrice": "3 Months Price",
+      "sixMonthsPrice": "6 Months Price",
+      "twelveMonthsPrice": "12 Months Price",
+      "customPricePerDay": "Custom Price / Day",
+      "fixedTier": "Tier (Fixed)"
+    },
+    "metadata": {
+      "title": "Plan Revenue | Admin",
+      "description": "Membership plan revenue attribution dashboard."
+    },
+    "static": {
+      "this_month": "This Month",
+      "last_month": "Last Month",
+      "this_quarter": "This Quarter",
+      "this_year": "This Year",
+      "plan_name": "Plan Name",
+      "tier": "Tier",
+      "active_subs": "Active Subs",
+      "new_signups": "New Signups",
+      "renewal_rate": "Renewal Rate",
+      "total_revenue": "Total Revenue"
+    },
+    "validation": {
+      "nameRequired": "Plan name is required.",
+      "validPrice": "Enter a valid non-negative price.",
+      "featuresRequired": "Features are required."
+    },
+    "AdminPlansModal": {
+      "text_fixedTier": "Tier cannot be changed while editing",
+      "text_oneMonthPrice": "1 Month Price",
+      "text_threeMonthsPrice": "3 Months Price",
+      "text_sixMonthsPrice": "6 Months Price",
+      "text_twelveMonthsPrice": "12 Months Price",
+      "text_customPricePerDay": "Custom Price / Day",
+      "text_zeroPlaceholder": "0"
+    }
+  },
+  "admin_plans_grid": {
+    "auto_edit": "Edit {name}",
+    "auto_delete": "Delete {name}"
+  }
+}

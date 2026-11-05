@@ -1,0 +1,71 @@
+{
+  "gym-health-alerts": {
+    "GymHealthAlertsError": {
+      "text_7716400a2c": "Failed to load gym health alerts",
+      "text_cef2fe093b": "Try Again"
+    },
+    "admin_gym_health_alerts_filters": {
+      "text_dfa05e15fa": "Alert severity filters",
+      "text_85dc44cf4f": "Search alerts"
+    },
+    "admin_gym_health_alerts_table": {
+      "text_9f3ad23bcd": "Unable to load health alerts. Retry the route to request fresh data.",
+      "text_d0a3276f46": "No active alerts — your gym is healthy!",
+      "text_de314fa0c9": "Severity",
+      "text_b969680a49": "Alert",
+      "text_bc4359231d": "Gym",
+      "text_74fb2cc6c8": "Detected",
+      "text_97c89a4d66": "Action",
+      "text_70afe9eff3": "Dismiss",
+      "text_e7d139364f": "· threshold",
+      "text_c0ba32fc60": "Open related area",
+      "text_a42c475248": "No action configured",
+      "sortBy": "Sort by {column}",
+      "paginationSummary": "Showing {start}–{end} of {total} alerts",
+      "rowsPerPage": "Rows per page",
+      "paginationNavigation": "Health alert pages",
+      "previousPage": "Previous",
+      "nextPage": "Next",
+      "pageSummary": "Page {page} of {pages}",
+      "retry": "Retry"
+    },
+    "admin_gym_health_alerts_empty_state": {
+      "text_all_healthy": "All gyms are healthy",
+      "text_no_alerts": "No alerts match the current filters."
+    },
+    "AdminGymHealthAlertsConfirm": {
+      "dismissTitle": "Dismiss alert",
+      "dismissMessage": "Dismiss \"{title}\"? It will be removed from the active alert feed.",
+      "dismissConfirm": "Dismiss",
+      "dismissSuccess": "Alert dismissed."
+    },
+    "AdminAuditRepair": {
+      "totalActiveAlerts": "Total Active Alerts",
+      "criticalAlerts": "Critical Alerts",
+      "warningAlerts": "Warning Alerts",
+      "infoAlerts": "Info Alerts"
+    },
+    "AdminGymHealthAlertsFilters": {
+      "allSeverities": "All Severities",
+      "critical": "Critical",
+      "warning": "Warning",
+      "info": "Info"
+    },
+    "metadata": {
+      "title": "Gym Health Alerts — Admin | Smart Gym 360",
+      "description": "Monitor gym system health alerts."
+    },
+    "AdminGymHealthAlertsSeverity": {
+      "critical": "Critical",
+      "warning": "Warning",
+      "info": "Info"
+    },
+    "AdminGymHealthAlertsTable": {
+      "auto_dismiss": "Dismiss {title}"
+    }
+  },
+  "admin_gym_health_alerts_table": {
+    "retry": "Retry",
+    "noMatches": "No alerts match the current filters."
+  }
+}

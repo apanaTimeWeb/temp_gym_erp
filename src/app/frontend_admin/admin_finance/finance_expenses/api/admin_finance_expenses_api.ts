@@ -1,0 +1,31 @@
+// RESPONSIBILITY: Owns typed API operations for finance_expenses; it does not implement the global HTTP transport or backend authorization.
+// DATA FLOW: feature hook/view → feature API client → apiFetch host transport → typed ApiResponse/data validation → UI/cache (admin_finance/finance_expenses/api/admin_finance_expenses_api.ts)
+
+import { adminFinanceExpensesApiFetch as apiFetch } from '@/app/frontend_admin/admin_finance/finance_expenses/utils/AdminFinanceExpensesApiResponse';
+import { ADMIN_FINANCE_API } from '@/app/frontend_admin/admin_finance/finance_expenses/config/admin_finance_expenses.url_config.ts';
+import type { Payment, FinanceSummary, Expense } from '@/app/frontend_admin/admin_finance/finance_expenses/types/AdminFinanceExpensesTypes';
+import { z } from 'zod';
+import { paymentSchema, financeSummarySchema, expenseSchema } from '@/app/frontend_admin/admin_finance/finance_expenses/schemas/AdminFinanceExpensesSchemas';
+export const AdminFinanceApi = {
+  fetchPayments: async (params?: Record<string, string>) => {
+            const query = new URLSearchParams();
+    Object.entries(params ?? {}).forEach(([key, value]) => query.set(key, value));
+    const suffix = query.toString() ? `?${query.toString()}` : '';
+    return apiFetch<{ payments: Payment[]; total: number }>(`${ADMIN_FINANCE_API.payments}${suffix}`, { method: 'GET', dataSchema: z.object({ payments: z.array(paymentSchema), total: z.number() }) });
+        },
+  fetchSummary: async (branchId?: string, range?: string, dateRange?: { startDate?: string; endDate?: string }) => {
+    const params = new URLSearchParams();
+    if (branchId) params.set('branchId', branchId);
+    if (range) params.set('range', range);
+    if (dateRange?.startDate) params.set('startDate', dateRange.startDate);
+    if (dateRange?.endDate) params.set('endDate', dateRange.endDate);
+    const suffix = params.toString() ? `?${params.toString()}` : '';
+    return apiFetch<FinanceSummary>(`${ADMIN_FINANCE_API.summary}${suffix}`, { method: 'GET', dataSchema: financeSummarySchema });
+  },
+  fetchExpenses: async (params?: Record<string, string>) => {
+          const query = new URLSearchParams();
+    Object.entries(params ?? {}).forEach(([key, value]) => query.set(key, value));
+    const suffix = query.toString() ? `?${query.toString()}` : '';
+    return apiFetch<{ expenses: Expense[]; total: number; totalAmount: number }>(`${ADMIN_FINANCE_API.expenses}${suffix}`, { method: 'GET', dataSchema: z.object({ expenses: z.array(expenseSchema), total: z.number(), totalAmount: z.number() }) });
+      },
+};

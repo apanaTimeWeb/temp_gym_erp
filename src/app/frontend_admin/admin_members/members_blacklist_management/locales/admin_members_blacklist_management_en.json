@@ -1,0 +1,144 @@
+{
+  "blacklist": {
+    "admin_blacklist_cross_gym_view": {
+      "text_dd683b697d": "No gym-specific bans",
+      "text_a956fd7d18": "All active bans are already global. Gym-specific bans will appear here so you can review and propagate them across all branches.",
+      "text_ea3e10e942": "gym-specific ban",
+      "text_80929f9c4f": "found. These members are blocked only at specific branches. Use",
+      "text_901bb4c2c3": "Propagate to All",
+      "text_fcc98f082f": "to upgrade any entry to a global ban.",
+      "text_d789a1e992": "ID:",
+      "text_bb67a0d7d8": "Propagate ban to all branches",
+      "text_95f4f02070": "Remove from blacklist",
+      "member": "Member",
+      "contact": "Contact",
+      "reason": "Reason",
+      "bannedAtBranches": "Banned At Branches",
+      "blacklistedBy": "Blacklisted By",
+      "date": "Date",
+      "actions": "Actions",
+      "entriesCount": "{count, plural, one {# gym-specific ban} other {# gym-specific bans}}"
+    },
+    "admin_blacklist_empty_state": {
+      "text_209fc8147a": "No blacklisted members",
+      "text_c92ec0d993": "Blacklist a member to restrict their access across gyms",
+      "text_e0b464e57f": "Blacklist Member"
+    },
+    "admin_blacklist_kpis": {
+      "text_697df5412b": "Total Blacklisted",
+      "text_d0838925b1": "Global Bans",
+      "text_d4569d3f03": "Gym-Specific Bans",
+      "text_c161761c78": "Added This Month",
+      "auto_acrossAllGyms": "across all gyms",
+      "auto_targetedBranches": "targeted branches"
+    },
+    "admin_blacklist_modal": {
+      "text_e0b464e57f": "Blacklist Member",
+      "text_bbfa773e5a": "Close",
+      "text_7a88b2371d": "Member ID",
+      "text_bae8fcee2a": "e.g. M1042",
+      "text_64346b483c": "Full Name",
+      "text_d2fbdd7c0d": "Member name",
+      "text_77064d5265": "Phone",
+      "text_84add5b295": "Email",
+      "text_5f1bc37f9c": "member@email.com",
+      "text_f219cc0614": "Reason",
+      "text_301589da9a": "Describe the reason for blacklisting...",
+      "text_fcb84ff6bf": "Ban Scope",
+      "text_e787b8cb73": "Select Gyms",
+      "text_77dfd2135f": "Cancel",
+      "auto_6a52089785": "Blacklist Member",
+      "auto_5bc493f10a": "Blacklisting...",
+      "auto_51fddaa265": "Specific Gyms",
+      "auto_a3c4f8abb1": "Global (All Gyms)",
+      "auto_85fd03cbf9": "global"
+    },
+    "admin_blacklist_table": {
+      "text_d789a1e992": "ID:",
+      "text_e922812370": "Toggle blacklist",
+      "text_ed59206098": "Unblock member",
+      "text_12aabd251c": "Unblock",
+      "auto_dfef94ff4f": "Inactive",
+      "auto_0aecfd61ed": "Active",
+      "auto_4666088d01": "Global",
+      "auto_d68c6eb6ce": "global",
+      "member": "Member",
+      "contact": "Contact",
+      "reason": "Reason",
+      "scope": "Scope",
+      "blacklistedBy": "Blacklisted By",
+      "date": "Date",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "admin_blacklist_toolbar": {
+      "text_212b62a779": "Search by name, ID, or phone...",
+      "text_b64efd493e": "All Scopes",
+      "text_1ea6687cfe": "All Gyms",
+      "text_e0b464e57f": "Blacklist Member",
+      "searchLabel": "Search blacklist entries by member name, ID, or phone"
+    },
+    "admin_blacklist_cross_gym_empty_state": {
+      "text_no_gym_bans": "No gym-specific bans",
+      "text_no_members": "No blacklisted members are currently assigned to the selected gyms."
+    },
+    "admin_blacklist_main": {
+      "auto_1f0b9339cd": "all"
+    },
+    "AdminBlacklistConfirm": {
+      "addMessage": "Blacklist {name}?",
+      "restoreMessage": "Restore {name} from the blacklist?",
+      "propagateMessage": "Apply this blacklist change for {name}?",
+      "removeTitle": "Remove from blacklist",
+      "removeMessage": "Remove {name} from the blacklist?",
+      "removeConfirm": "Remove",
+      "addTitle": "Blacklist member",
+      "addConfirm": "Blacklist",
+      "restoreTitle": "Restore member",
+      "restoreConfirm": "Restore",
+      "propagateTitle": "Apply blacklist change",
+      "propagateConfirm": "Apply"
+    },
+    "admin_blacklist_tabs": {
+      "allEntries": "All Entries",
+      "crossBranchView": "Cross-Branch View"
+    },
+    "admin_blacklist_filters": {
+      "allGyms": "All Gyms",
+      "gymAndheriEast": "Andheri East",
+      "gymBandraWest": "Bandra West",
+      "gymPowai": "Powai",
+      "gymThane": "Thane",
+      "allScopes": "All Scopes",
+      "globalBan": "Global Ban",
+      "gymSpecific": "Gym-Specific"
+    },
+    "validation": {
+      "memberIdRequired": "Member ID is required.",
+      "nameRequired": "Name is required.",
+      "phoneInvalid": "Enter a valid phone number.",
+      "emailInvalid": "Enter a valid email address.",
+      "reasonMin": "Reason must be at least 10 characters.",
+      "gymRequired": "Select at least one gym.",
+      "specificGymsOnly": "Choose one or more specific gyms; “All Gyms” is valid only for a global ban.",
+      "globalScopeAllGyms": "A global ban must apply to all gyms."
+    },
+    "AdminBlacklistModal": {
+      "text_phoneExample": "e.g. 9876543210"
+    },
+    "common": {
+      "invalidDate": "Invalid date"
+    },
+    "table": {
+      "loadError": "Could not load blacklist records.",
+      "retry": "Retry"
+    },
+    "AdminRepair": {
+      "requestFailed": "The blacklist change could not be completed. Please try again.",
+      "crossGymLoadError": "Unable to load cross-branch blacklist entries.",
+      "summaryLoadError": "Unable to load blacklist summary.",
+      "loadingSummary": "Loading blacklist summary…",
+      "retry": "Retry"
+    }
+  }
+}

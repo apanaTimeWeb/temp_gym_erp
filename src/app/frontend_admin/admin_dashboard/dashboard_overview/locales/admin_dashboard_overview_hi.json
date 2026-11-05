@@ -1,0 +1,90 @@
+{
+  "dashboard": {
+    "admin_dashboard_alerts": {
+      "text_f663d709ad": "सिस्टम अलर्ट",
+      "text_a5f995a220": "कार्रवाई आवश्यक",
+      "text_04b7b26c8c": "गंभीर",
+      "text_3409e17794": "इस समय कोई अलर्ट नहीं है।",
+      "text_5590566204": "सभी अलर्ट देखें"
+    },
+    "admin_dashboard_attendance_trend": {
+      "text_0bf09b5516": "साप्ताहिक उपस्थिति",
+      "text_393230b08a": "शाखाओं में दैनिक चेक-इन",
+      "text_cdc93143c6": "औसत",
+      "text_9613df14d6": "/दिन",
+      "text_a34f9d7e15": "उपस्थिति रुझान डेटा उपलब्ध नहीं है।",
+      "series_checkIns": "चेक-इन",
+      "tooltip_checkIns": "{count} चेक-इन"
+    },
+    "admin_dashboard_branch_leaderboard": {
+      "text_b84bd2d793": "शाखा लीडरबोर्ड डेटा उपलब्ध नहीं है",
+      "text_186698a248": "शाखा लीडरबोर्ड",
+      "text_f2cb6cc8de": "राजस्व के आधार पर शीर्ष प्रदर्शन करने वाले स्थान",
+      "text_dd48a11495": "रैंक",
+      "text_dae07c6ee8": "रुझान",
+      "auto_d88f3d054d": "वर्तमान डैशबोर्ड दायरे के लिए कोई शाखा प्रदर्शन रिकॉर्ड उपलब्ध नहीं है।",
+      "auto_9ad7e475b7": "सक्रिय सदस्य",
+      "auto_53620f46a5": "राजस्व",
+      "auto_fd1e365daf": "राजस्व",
+      "auto_427d80bd4b": "शाखा का नाम"
+    },
+    "AdminDashboardDateFilterDropdown": {
+      "text_12e1289bac": "सीमा चुनें"
+    },
+    "admin_dashboard_expiring_widget": {
+      "text_8eb6a72b06": "समाप्त होने वाली सदस्यताएँ",
+      "text_a126722ec0": "ध्यान देने की आवश्यकता",
+      "text_4e68dca8ab": "इस सप्ताह",
+      "text_bdf25fc1fa": "इस सप्ताह समाप्त होने वाले",
+      "text_90cc4645c0": "दिन शेष",
+      "text_6c8c925d4a": "सभी समाप्ति देखें",
+      "noData": "समाप्ति के करीब कोई सदस्यता उपलब्ध नहीं है।"
+    },
+    "admin_dashboard_revenue_trend": {
+      "text_cc3465852a": "राजस्व और लाभ रुझान",
+      "text_75caecb7dc": "पिछले छह महीनों का प्रदर्शन",
+      "series_totalRevenue": "कुल राजस्व",
+      "series_netProfit": "शुद्ध लाभ",
+      "noData": "राजस्व प्रवृत्ति का डेटा उपलब्ध नहीं है।"
+    },
+    "DashboardError": {
+      "text_1647b9db6c": "पहुँच अस्वीकृत",
+      "text_1879a51e18": "आपको यह पृष्ठ देखने की अनुमति नहीं है।",
+      "text_cdac261089": "डैशबोर्ड पर लौटें",
+      "text_2dc9d37464": "कुछ गलत हो गया!",
+      "text_22b2c820bf": "कृपया फिर से प्रयास करें। समस्या जारी रहने पर अनुरोध का वर्तमान समय देकर सहायता टीम से संपर्क करें।",
+      "text_042c862e44": "फिर से प्रयास करें",
+      "retryAction": "पुनः प्रयास करें"
+    },
+    "admin_dashboard_kpis": {
+      "auto_avgAttendance": "औसत उपस्थिति दर{suffix}",
+      "auto_renewalsPending": "लंबित नवीनीकरण{suffix}",
+      "auto_totalIncome": "कुल आय{suffix}",
+      "auto_netProfit": "शुद्ध लाभ{suffix}",
+      "auto_activeMembers": "सक्रिय सदस्य{suffix}",
+      "auto_totalOutstanding": "कुल बकाया{suffix}"
+    },
+    "AdminAuditRepair": {
+      "thisMonth": "इस महीने",
+      "lastMonth": "पिछला महीना",
+      "last3Months": "पिछले 3 महीने",
+      "last6Months": "पिछले 6 महीने",
+      "thisYear": "इस वर्ष",
+      "monthlyAllTime": "मासिक (सभी समय)",
+      "yearlyAllTime": "वार्षिक (सभी समय)",
+      "customRange": "कस्टम सीमा"
+    },
+    "admin_dashboard_date_filter": {
+      "startDate": "प्रारंभ तिथि",
+      "endDate": "समाप्ति तिथि",
+      "invalidRange": "मान्य प्रारंभ और समाप्ति तिथियाँ चुनें। समाप्ति तिथि, प्रारंभ तिथि से पहले नहीं हो सकती।"
+    }
+  },
+  "admin_dashboard_kpis": {
+    "auto_thisMonth": "इस महीने",
+    "auto_next7Days": "अगले 7 दिन",
+    "auto_allTime": "सभी समय",
+    "auto_capacity": "{percent}% क्षमता",
+    "auto_membersDue": "{count} सदस्य बकाया"
+  }
+}

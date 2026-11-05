@@ -1,0 +1,140 @@
+{
+  "sales": {
+    "SalesError": {
+      "text_1647b9db6c": "पहुँच अस्वीकृत",
+      "text_1879a51e18": "आपको यह पृष्ठ देखने की अनुमति नहीं है।",
+      "text_cdac261089": "डैशबोर्ड पर लौटें",
+      "text_2dc9d37464": "कुछ गलत हो गया!",
+      "text_22b2c820bf": "कृपया फिर से प्रयास करें। समस्या जारी रहने पर अनुरोध का वर्तमान समय देकर सहायता टीम से संपर्क करें।",
+      "text_042c862e44": "फिर से प्रयास करें"
+    },
+    "AdminSalesDateFilterDropdown": {
+      "text_12e1289bac": "सीमा चुनें",
+      "startDate": "आरंभ तिथि",
+      "endDate": "समाप्ति तिथि",
+      "customRangeHelp": "इस अवधि को लागू करने के लिए सही आरंभ और समाप्ति तिथि चुनें।"
+    },
+    "admin_sales_membership_report": {
+      "text_a873abb3d3": "सदस्यता रिपोर्ट लोड हो रही है",
+      "text_b25928c699": "कुल",
+      "auto_b254e610f8": "सदस्यता रिपोर्ट डेटा नहीं है",
+      "auto_8bae4e6d16": "सदस्यता रिपोर्ट लोड नहीं हो सकी",
+      "auto_refreshSales": "Sales दृश्य को रिफ्रेश करें और फिर प्रयास करें।",
+      "auto_noMembershipRecords": "वर्तमान Sales फ़िल्टर से कोई सदस्यता प्राप्य रिकॉर्ड नहीं मिला।"
+    },
+    "admin_sales_overview": {
+      "text_41bdcad919": "बिक्री अवलोकन लोड नहीं हो सका।",
+      "text_762e600e5f": "मासिक राजस्व",
+      "text_c7474256e3": "नए सदस्यों का रुझान",
+      "text_6f62ec7108": "मार्केटिंग ROI: रेफ़रल स्रोत के अनुसार राजस्व",
+      "remaining_newMembers": "नए सदस्य",
+      "series_revenue": "आय",
+      "auto_noReferralData": "इस अवधि के लिए रेफ़रल स्रोत डेटा उपलब्ध नहीं है।"
+    },
+    "admin_finance_pending_sales_payments": {
+      "text_315dc9e5fb": "सदस्य जिनका भुगतान लंबित है",
+      "text_ae2f98a099": "योजना",
+      "text_acb1814fce": "दिन बकाया",
+      "text_f3789fc9e6": "WhatsApp में रिमाइंडर खोलें",
+      "auto_d5bc7150da": "सभी सदस्य अपडेट हैं।",
+      "auto_6f3655f8b3": "कोई लंबित भुगतान नहीं है",
+      "whatsappReminderTitle": "भुगतान अनुस्मारक",
+      "whatsappMemberLabel": "सदस्य",
+      "whatsappOutstandingDues": "बकाया राशि",
+      "whatsappPendingAmount": "लंबित राशि",
+      "whatsappOverdueBy": "इतने दिन से लंबित",
+      "whatsappFooter": "सेवा में रुकावट से बचने के लिए कृपया बकाया राशि जल्द से जल्द जमा करें।",
+      "auto_loadFailed": "लंबित भुगतान लोड नहीं हो सके।"
+    },
+    "admin_sales_store_sales": {
+      "text_42f8f91b08": "स्टोर बिक्री लोड हो रही है",
+      "text_9f5cd8a2e8": "फिर से प्रयास करें",
+      "text_c48f2bf5b2": "कुल उत्पाद",
+      "text_408fa7b3a9": "कुल ऑर्डर",
+      "text_3b56959818": "स्टोर का कुल राजस्व",
+      "text_e6240146f7": "हाल के स्टोर ऑर्डर",
+      "text_88fcf03353": "कुल ऑर्डर",
+      "text_f1e486fe3f": "ऑर्डर #",
+      "text_44d25b5d1b": "आइटम",
+      "text_b25928c699": "कुल",
+      "text_163d8174ff": "दिखाया जा रहा है",
+      "text_de04fa0e29": "में से",
+      "text_50f94286ba": "पिछला",
+      "text_bc981983e7": "अगला",
+      "auto_03aef17c06": "वर्तमान बिक्री दायरे से कोई स्टोर ऑर्डर मेल नहीं खाता।",
+      "auto_39613b51eb": "कोई स्टोर ऑर्डर नहीं मिला",
+      "auto_storeSalesLoadFailed": "स्टोर बिक्री लोड नहीं हो सकी।",
+      "auto_storeSummaryLoadFailed": "स्टोर सारांश लोड नहीं हो सका।"
+    },
+    "admin_sales_toolbar": {
+      "text_6d7a30a931": "खोजें...",
+      "text_f3e4fadb9e": "निर्यात करें",
+      "remaining_csvHeader": "दिनांक,राजस्व,नए सदस्य",
+      "searchLabel": "Sales खोजें",
+      "searchMembers": "बिक्री रिकॉर्ड खोजें"
+    },
+    "admin_sales_all_memberships": {
+      "auto_7f704f07a0": "कोई अन्य फ़िल्टर चुनें।",
+      "auto_8819ce96c1": "सभी",
+      "auto_112a3f9892": "समाप्त",
+      "status_active": "सक्रिय",
+      "status_expired": "समाप्त",
+      "auto_loadFailed": "सदस्यता लोड नहीं हो सकी।",
+      "accessibility": {
+        "filters": "बिक्री फ़िल्टर",
+        "data": "सदस्यता डेटा"
+      }
+    },
+    "AdminAuditRepair": {
+      "totalMembers": "कुल सदस्य",
+      "active": "सक्रिय",
+      "expiringSoon": "जल्द समाप्त होने वाले",
+      "expired": "समाप्त",
+      "thisMonth": "इस महीने",
+      "lastMonth": "पिछला महीना",
+      "last3Months": "पिछले 3 महीने",
+      "last6Months": "पिछले 6 महीने",
+      "thisYear": "इस वर्ष",
+      "monthlyAllTime": "मासिक (सभी समय)",
+      "yearlyAllTime": "वार्षिक (सभी समय)",
+      "customRange": "कस्टम सीमा",
+      "plan": "योजना",
+      "totalReceivable": "कुल प्राप्य",
+      "amountReceived": "प्राप्त राशि",
+      "remaining": "शेष",
+      "refund": "रिफंड",
+      "member": "सदस्य",
+      "start": "शुरू",
+      "endDate": "समाप्ति तिथि",
+      "status": "स्थिति",
+      "amount": "राशि",
+      "daysLeft": "बाकी दिन"
+    },
+    "AdminSalesTabs": {
+      "overview": "अवलोकन",
+      "membershipReport": "सदस्यता रिपोर्ट",
+      "pendingPayments": "लंबित भुगतान",
+      "allMemberships": "सभी सदस्यताएँ",
+      "storeSales": "स्टोर बिक्री"
+    },
+    "AdminSalesAllMemberships": {
+      "auto_4b31b4cf4c": "कोई सदस्यता नहीं मिली"
+    },
+    "admin_sales_date_filter": {
+      "customRangeBlocked": "Sales में कस्टम तिथि सीमा तब तक उपलब्ध नहीं है जब तक आधिकारिक API अनुबंध उपलब्ध न हो। आगे बढ़ने के लिए समर्थित अवधि चुनें।"
+    },
+    "AdminRepair": {
+      "membershipKpiError": "सदस्यता सारांश गणनाएँ लोड नहीं हो सकीं।",
+      "retry": "पुनः प्रयास करें",
+      "loadingCount": "लोड हो रहा है…",
+      "requestFailed": "बिक्री डेटा लोड नहीं हो सका। कृपया दोबारा कोशिश करें।"
+    }
+  },
+  "admin_sales_membership_report": {
+    "auto_sortBy": "{header} के अनुसार क्रमबद्ध करें"
+  },
+  "AdminAuditRepair": {
+    "financialAmountHidden": "सूची में प्रति-रिकॉर्ड वित्तीय राशि छिपाई गई है।",
+    "amountAvailableOnRequest": "बकाया राशि की पुष्टि के लिए जिम से संपर्क करें।"
+  }
+}
