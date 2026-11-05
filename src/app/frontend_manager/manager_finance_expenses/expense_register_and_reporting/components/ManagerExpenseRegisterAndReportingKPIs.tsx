@@ -1,6 +1,7 @@
 // RESPONSIBILITY: Renders ManagerExpenseRegisterAndReportingKPIs's feature UI and orchestrates presentation through module-owned state/hooks; it does not own API transport or business rules.
 'use client';
 import { IndianRupee, TrendingDown, Clock, CheckCircle } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
 
 import { ManagerEnvConfig } from '@/app/frontend_manager/manager_infrastructure/constants/ManagerInfrastructureEnvConfig';
@@ -13,15 +14,25 @@ import { ManagerExpenseRegisterAndReportingFormatCurrency } from '@/app/frontend
 export default function ManagerExpenseRegisterAndReportingKPIs() {
   const t = useTranslations('MANAGER_EXPENSE_REGISTER_AND_REPORTING');
   const locale = useLocale();
+  const searchParams = useSearchParams();
+  const range = searchParams.get('range') || 'this_month';
 
-  const { data: stats, isPending, isError, refetch } = useExpensesStatsQuery();
+  const { data: stats, isPending, isError, refetch } = useExpensesStatsQuery({ range });
 
   if (isPending) return <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 motion-safe:animate-pulse" aria-label={t('COPY_LOADING_EXPENSE_CHART')}><div className="h-24 rounded-xl bg-input"/><div className="h-24 rounded-xl bg-input"/><div className="h-24 rounded-xl bg-input"/><div className="h-24 rounded-xl bg-input"/></div>;
   if (isError || !stats) return <div role="alert" className="rounded-lg border border-danger p-4 text-sm text-danger-text">{t('TEXT_GENERIC_ERROR')} <button type="button" className="min-h-11 underline" onClick={() => void refetch()}>{t('COPY_RETRY')}</button></div>;
 
+  const periodLabel = (() => {
+    if (range === 'last_month') return "Expenses (Last Month)";
+    if (range === 'last_3_months') return "Expenses (Last 3M)";
+    if (range === 'this_year') return "Expenses (This Year)";
+    if (range === 'custom') return "Expenses (Selected Period)";
+    return t("COPY_EXPENSES_MONTH");
+  })();
+
   const KPI_CARDS = [
     { label: t("COPY_TOTAL_EXPENSES_ALL_TIME"), value: ManagerExpenseRegisterAndReportingFormatCurrency(stats.totalAmount, ManagerEnvConfig.currencyCode, locale), icon: IndianRupee, color: 'text-primary', bg: "bg-primary-subtle" },
-    { label: t("COPY_EXPENSES_MONTH"), value: ManagerExpenseRegisterAndReportingFormatCurrency(stats.thisMonthAmount, ManagerEnvConfig.currencyCode, locale), icon: TrendingDown, color: 'text-info-text', bg: 'bg-info-bg' },
+    { label: periodLabel, value: ManagerExpenseRegisterAndReportingFormatCurrency(stats.thisMonthAmount, ManagerEnvConfig.currencyCode, locale), icon: TrendingDown, color: 'text-info-text', bg: 'bg-info-bg' },
     { label: t("COPY_PENDING_DUES"), value: ManagerExpenseRegisterAndReportingFormatCurrency(stats.pendingAmount, ManagerEnvConfig.currencyCode, locale), icon: Clock, color: 'text-danger-text', bg: 'bg-danger-bg' },
     { label: t("COPY_TOTAL_PAID"), value: ManagerExpenseRegisterAndReportingFormatCurrency(stats.paidAmount, ManagerEnvConfig.currencyCode, locale), icon: CheckCircle, color: 'text-success-text', bg: 'bg-success-bg' }
   ];

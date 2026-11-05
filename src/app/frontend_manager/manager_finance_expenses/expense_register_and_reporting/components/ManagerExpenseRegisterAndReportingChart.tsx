@@ -2,6 +2,7 @@
 'use client';
 import dynamic from 'next/dynamic';
 import { useMemo } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 import { useTranslations, useLocale } from 'next-intl';
 
@@ -27,8 +28,10 @@ const Chart = dynamic(() => import('react-apexcharts'), {
 export default function ManagerExpenseRegisterAndReportingChart() {
   const t = useTranslations('MANAGER_EXPENSE_REGISTER_AND_REPORTING');
   const locale = useLocale();
+  const searchParams = useSearchParams();
+  const range = searchParams.get('range') || 'this_month';
 
-  const { data, isPending, isError } = useExpensesListQuery({ limit: '1000' });
+  const { data, isPending, isError } = useExpensesListQuery({ limit: '1000', range });
   const expenses = data?.expenses || [];
 
   const chartData = useMemo(() => {

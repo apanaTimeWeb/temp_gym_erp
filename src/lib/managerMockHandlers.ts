@@ -75,12 +75,88 @@ export function handleManagerMockApiRequest(
 
   // 1. DASHBOARD
   if (path === 'dashboard/stats' || path === 'dashboard') {
-    return buildMockSuccess(MOCK_DASHBOARD_STATS, 'Dashboard statistics loaded');
+    const range = searchParams.get('range');
+    let stats = { ...MOCK_DASHBOARD_STATS };
+    if (range === 'last_month') {
+      stats = {
+        ...stats,
+        newMembersThisMonth: 38,
+        monthlyRevenue: 7800000,
+        newInquiries: 29,
+        revenueGrowthPercent: 8.4,
+        totalPTRevenue: 22000,
+        churnRate: 3.8,
+        revenueChart: [
+          { month: 'Dec', revenue: 7200000 },
+          { month: 'Jan', revenue: 7500000 },
+          { month: 'Feb', revenue: 8000000 },
+          { month: 'Mar', revenue: 7800000 },
+          { month: 'Apr', revenue: 8200000 },
+        ],
+        memberGrowth: [
+          { month: 'Dec', count: 1050 },
+          { month: 'Jan', count: 1100 },
+          { month: 'Feb', count: 1150 },
+          { month: 'Mar', count: 1200 },
+          { month: 'Apr', count: 1220 },
+        ],
+      };
+    } else if (range === 'last_3_months') {
+      stats = {
+        ...stats,
+        newMembersThisMonth: 122,
+        monthlyRevenue: 24500000,
+        newInquiries: 98,
+        revenueGrowthPercent: 15.2,
+        totalPTRevenue: 71000,
+        churnRate: 4.0,
+      };
+    } else if (range === 'this_year' || range === 'yearly') {
+      stats = {
+        ...stats,
+        newMembersThisMonth: 480,
+        monthlyRevenue: 95000000,
+        newInquiries: 380,
+        revenueGrowthPercent: 24.0,
+        totalPTRevenue: 285000,
+        churnRate: 4.1,
+      };
+    } else if (range === 'weekly') {
+      stats = {
+        ...stats,
+        newMembersThisMonth: 12,
+        monthlyRevenue: 1950000,
+        newInquiries: 8,
+        revenueGrowthPercent: 5.0,
+        totalPTRevenue: 6000,
+      };
+    } else if (range === 'custom') {
+      stats = {
+        ...stats,
+        newMembersThisMonth: 25,
+        monthlyRevenue: 4800000,
+        newInquiries: 19,
+        revenueGrowthPercent: 9.1,
+        totalPTRevenue: 15000,
+      };
+    }
+    return buildMockSuccess(stats, 'Dashboard statistics loaded');
   }
 
   // 2. ATTENDANCE
   if (path === 'attendance/stats') {
-    return buildMockSuccess(MOCK_ATTENDANCE_STATS, 'Attendance stats loaded');
+    const range = searchParams.get('range');
+    let stats = { ...MOCK_ATTENDANCE_STATS };
+    if (range === 'last_month') {
+      stats = { totalCheckIns: 3240, memberCheckIns: 2850, staffCheckIns: 390 };
+    } else if (range === 'last_3_months') {
+      stats = { totalCheckIns: 9800, memberCheckIns: 8600, staffCheckIns: 1200 };
+    } else if (range === 'this_year') {
+      stats = { totalCheckIns: 38500, memberCheckIns: 33800, staffCheckIns: 4700 };
+    } else if (range === 'custom') {
+      stats = { totalCheckIns: 860, memberCheckIns: 750, staffCheckIns: 110 };
+    }
+    return buildMockSuccess(stats, 'Attendance stats loaded');
   }
   if (path === 'attendance/members') {
     return buildMockSuccess(MANAGER_ATTENDANCE_TRACKING_MEMBER_SNAPSHOTS, 'Attendance member snapshots loaded');
@@ -94,6 +170,8 @@ export function handleManagerMockApiRequest(
   if (path === 'attendance') {
     const search = (searchParams.get('search') || '').trim().toLowerCase();
     const date = searchParams.get('date') || '';
+    const startDate = searchParams.get('startDate') || '';
+    const endDate = searchParams.get('endDate') || '';
     const status = (searchParams.get('status') || '').trim().toUpperCase();
     const type = (searchParams.get('type') || '').trim().toUpperCase();
     const page = Math.max(Number(searchParams.get('page') || '1'), 1);
@@ -102,7 +180,8 @@ export function handleManagerMockApiRequest(
     const filtered = MOCK_ATTENDANCE_RECORDS.filter((record) => {
       const name = (record.member?.name || record.staff?.name || '').toLowerCase();
       const matchesSearch = !search || name.includes(search);
-      const matchesDate = !date || record.date === date;
+      const matchesDateRange = (!startDate || record.date >= startDate) && (!endDate || record.date <= endDate);
+      const matchesDate = date ? record.date === date : matchesDateRange;
       const recordStatus = (record.status || '').toUpperCase();
       const matchesStatus =
         !status ||
@@ -232,7 +311,55 @@ export function handleManagerMockApiRequest(
 
   // 5. FINANCE & EXPENSES
   if (path === 'finance/summary') {
-    return buildMockSuccess(MOCK_FINANCE_SUMMARY, 'Finance summary loaded');
+    const range = searchParams.get('range');
+    let summary = { ...MOCK_FINANCE_SUMMARY };
+    if (range === 'last_month') {
+      summary = {
+        ...summary,
+        monthlyRevenue: 11800000,
+        totalPayments: 420,
+        pendingAmount: 1200000,
+        gstCollected: 2124000,
+        totalRefunds: 350000,
+      };
+    } else if (range === 'last_3_months') {
+      summary = {
+        ...summary,
+        monthlyRevenue: 35300000,
+        totalPayments: 1280,
+        pendingAmount: 2800000,
+        gstCollected: 6354000,
+        totalRefunds: 1100000,
+      };
+    } else if (range === 'last_6_months') {
+      summary = {
+        ...summary,
+        monthlyRevenue: 71500000,
+        totalPayments: 2500,
+        pendingAmount: 3900000,
+        gstCollected: 12870000,
+        totalRefunds: 2200000,
+      };
+    } else if (range === 'this_year') {
+      summary = {
+        ...summary,
+        monthlyRevenue: 145000000,
+        totalPayments: 5100,
+        pendingAmount: 4500000,
+        gstCollected: 26100000,
+        totalRefunds: 4200000,
+      };
+    } else if (range === 'custom') {
+      summary = {
+        ...summary,
+        monthlyRevenue: 8500000,
+        totalPayments: 310,
+        pendingAmount: 900000,
+        gstCollected: 1530000,
+        totalRefunds: 200000,
+      };
+    }
+    return buildMockSuccess(summary, 'Finance summary loaded');
   }
   if (path === 'finance/payments' || path === 'finance') {
     const page = Math.max(Number(searchParams.get('page') || '1'), 1);
@@ -250,10 +377,26 @@ export function handleManagerMockApiRequest(
   }
 
   if (path === 'expenses/stats') {
+    const range = searchParams.get('range');
     const totalAmount = currentExpenses.reduce((s, e) => s + e.amount, 0);
     const paidAmount = currentExpenses.filter((e) => e.status === 'PAID').reduce((s, e) => s + e.amount, 0);
+    let thisMonthAmount = paidAmount;
+    let pendingAmount = totalAmount - paidAmount;
+    if (range === 'last_month') {
+      thisMonthAmount = Math.round(paidAmount * 0.85);
+      pendingAmount = 35000;
+    } else if (range === 'last_3_months') {
+      thisMonthAmount = Math.round(paidAmount * 2.6);
+      pendingAmount = 95000;
+    } else if (range === 'this_year') {
+      thisMonthAmount = Math.round(paidAmount * 11.2);
+      pendingAmount = 240000;
+    } else if (range === 'custom') {
+      thisMonthAmount = Math.round(paidAmount * 0.5);
+      pendingAmount = 20000;
+    }
     return buildMockSuccess(
-      { totalAmount, paidAmount, pendingAmount: totalAmount - paidAmount, thisMonthAmount: paidAmount },
+      { totalAmount, paidAmount, pendingAmount, thisMonthAmount },
       'Expense stats loaded'
     );
   }
@@ -313,13 +456,49 @@ export function handleManagerMockApiRequest(
 
   // 7. SALES & BILLING
   if (path === 'sales/overview') {
-    return buildMockSuccess({ monthlyRevenue: MOCK_SALES_OVERVIEW }, 'Sales overview loaded');
+    const range = searchParams.get('range');
+    let overview = [...MOCK_SALES_OVERVIEW];
+    if (range === 'last_month') {
+      overview = [
+        { month: 'Dec', revenue: 4200000, storeRevenue: 450000, newMembers: 11 },
+        { month: 'Jan', revenue: 4500000, storeRevenue: 500000, newMembers: 12 },
+        { month: 'Feb', revenue: 5200000, storeRevenue: 600000, newMembers: 18 },
+        { month: 'Mar', revenue: 4800000, storeRevenue: 400000, newMembers: 10 },
+        { month: 'Apr', revenue: 6100000, storeRevenue: 800000, newMembers: 22 },
+      ];
+    } else if (range === 'last_3_months') {
+      overview = [
+        { month: 'Feb', revenue: 5200000, storeRevenue: 600000, newMembers: 18 },
+        { month: 'Mar', revenue: 4800000, storeRevenue: 400000, newMembers: 10 },
+        { month: 'Apr', revenue: 6100000, storeRevenue: 800000, newMembers: 22 },
+      ];
+    } else if (range === 'this_year') {
+      overview = [
+        { month: 'Jan', revenue: 4500000, storeRevenue: 500000, newMembers: 12 },
+        { month: 'Feb', revenue: 5200000, storeRevenue: 600000, newMembers: 18 },
+        { month: 'Mar', revenue: 4800000, storeRevenue: 400000, newMembers: 10 },
+        { month: 'Apr', revenue: 6100000, storeRevenue: 800000, newMembers: 22 },
+        { month: 'May', revenue: 5900000, storeRevenue: 750000, newMembers: 20 },
+        { month: 'Jun', revenue: 6500000, storeRevenue: 900000, newMembers: 25 },
+        { month: 'Jul', revenue: 6800000, storeRevenue: 950000, newMembers: 28 },
+      ];
+    }
+    return buildMockSuccess({ monthlyRevenue: overview }, 'Sales overview loaded');
   }
   if (path === 'sales/membership-report') {
+    const range = searchParams.get('range');
+    let totals = { activeCount: 450, revenue: 15000000, totalReceivable: 15000000, totalReceived: 14500000, remaining: 500000, refunds: 0 };
+    if (range === 'last_month') {
+      totals = { activeCount: 420, revenue: 13800000, totalReceivable: 13800000, totalReceived: 13400000, remaining: 400000, refunds: 0 };
+    } else if (range === 'last_3_months') {
+      totals = { activeCount: 435, revenue: 41000000, totalReceivable: 41000000, totalReceived: 39500000, remaining: 1500000, refunds: 0 };
+    } else if (range === 'this_year') {
+      totals = { activeCount: 510, revenue: 165000000, totalReceivable: 165000000, totalReceived: 158000000, remaining: 7000000, refunds: 0 };
+    }
     return buildMockSuccess(
       {
         report: MOCK_MEMBERSHIP_REPORT,
-        totals: { activeCount: 450, revenue: 15000000, totalReceivable: 15000000, totalReceived: 14500000, remaining: 500000, refunds: 0 },
+        totals,
         total: MOCK_MEMBERSHIP_REPORT.length,
       },
       'Membership report loaded'
@@ -459,7 +638,49 @@ export function handleManagerMockApiRequest(
   }
 
   if (path === 'reports/summary' || path === 'reports/overview' || path === 'reports') {
-    return buildMockSuccess(MOCK_REPORT_SUMMARY, 'Reports summary loaded');
+    const range = searchParams.get('range');
+    let summary = { ...MOCK_REPORT_SUMMARY };
+    if (range === 'last_month') {
+      summary = {
+        ...summary,
+        kpis: {
+          ...summary.kpis,
+          totalRevenue: 13800000,
+          totalExpenses: 220000,
+          netProfit: 1160000,
+          newMembersThisMonth: 19,
+          churnRate: 2.1,
+          avgAttendanceRate: 68,
+        },
+      };
+    } else if (range === 'last_3_months') {
+      summary = {
+        ...summary,
+        kpis: {
+          ...summary.kpis,
+          totalRevenue: 41000000,
+          totalExpenses: 680000,
+          netProfit: 3420000,
+          newMembersThisMonth: 64,
+          churnRate: 2.4,
+          avgAttendanceRate: 67,
+        },
+      };
+    } else if (range === 'this_year' || range === 'yearly') {
+      summary = {
+        ...summary,
+        kpis: {
+          ...summary.kpis,
+          totalRevenue: 165000000,
+          totalExpenses: 2800000,
+          netProfit: 13700000,
+          newMembersThisMonth: 280,
+          churnRate: 2.3,
+          avgAttendanceRate: 66,
+        },
+      };
+    }
+    return buildMockSuccess(summary, 'Reports summary loaded');
   }
 
   // 15. SETTINGS & PROFILE

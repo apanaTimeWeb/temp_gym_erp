@@ -30,8 +30,8 @@ export function useExpensesListQuery(params?: Record<string, string>) {
  * @dependencies Uses feature-owned APIs, query keys, schemas, types, constants, stores, and approved global infrastructure only.
  * @edge-case Preserves loading, empty, error, retry, cancellation, permission, and direct-URL behavior documented for this flow.
  */
-export function useExpensesStatsQuery() {
+export function useExpensesStatsQuery(params?: Record<string, string>) {
   return useQuery({
-    queryKey: ManagerExpenseRegisterAndReportingQueryKeys.stats(),
-    queryFn: async () => { const response = await ManagerExpenseRegisterAndReportingApi.fetchExpenseStats(); if (!response.success) throw new Error(response.message || 'Unable to load expense statistics'); return response.data; } });
+    queryKey: ManagerExpenseRegisterAndReportingQueryKeys.stats(params),
+    queryFn: async () => { const response = await ManagerExpenseRegisterAndReportingApi.fetchExpenseStats(params); if (!response.success) throw new Error(response.message || 'Unable to load expense statistics'); return response.data; } });
 }

@@ -41,6 +41,9 @@ export function useManagerAttendanceTrackingLogic(): ManagerAttendanceTrackingVi
   const currentPage = Number.isSafeInteger(rawPage) && rawPage > 0 ? rawPage : 1;
   const search = searchParams.get('search') || '';
   const dateFilter = searchParams.get('date') || '';
+  const range = searchParams.get('range') || 'this_month';
+  const startDate = searchParams.get('startDate') || '';
+  const endDate = searchParams.get('endDate') || '';
   const statusFilter = searchParams.get('status') || '';
   const tabParam = searchParams.get('tab') as AttendanceTab | null;
   const tab: AttendanceTab = tabParam && ATTENDANCE_TABS.includes(tabParam) ? tabParam : ATTENDANCE_TABS[0];
@@ -74,13 +77,16 @@ export function useManagerAttendanceTrackingLogic(): ManagerAttendanceTrackingVi
     const next: Record<string, string> = { page: String(currentPage), limit: String(MANAGER_ITEMS_PER_PAGE) };
     if (debouncedSearch) next.search = debouncedSearch;
     if (dateFilter) next.date = dateFilter;
+    if (range) next.range = range;
+    if (startDate) next.startDate = startDate;
+    if (endDate) next.endDate = endDate;
     if (statusFilter) next.status = statusFilter;
     if (tab !== 'Daily Attendance Report') next.type = tab === 'Member Attendance' ? 'MEMBER' : 'STAFF';
     return next;
-  }, [currentPage, dateFilter, debouncedSearch, statusFilter, tab]);
+  }, [currentPage, dateFilter, debouncedSearch, endDate, range, startDate, statusFilter, tab]);
 
   const { data: listData, isPending: listLoading, isError: listError, error: listErrorValue, refetch } = useAttendanceListQuery(params);
-  const { data: statsData, isPending: statsLoading, isError: statsError, error: statsErrorValue } = useTodayStatsQuery();
+  const { data: statsData, isPending: statsLoading, isError: statsError, error: statsErrorValue } = useTodayStatsQuery(range);
   const { data: membersData, isError: membersError, error: membersErrorValue } = useActiveMembersQuery();
   const { data: staffData, isError: staffError, error: staffErrorValue } = useStaffQuery();
   const members = useMemo(() => membersData?.members || [], [membersData]);

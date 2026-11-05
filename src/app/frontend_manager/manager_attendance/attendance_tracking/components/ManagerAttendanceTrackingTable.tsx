@@ -104,13 +104,13 @@ export default function ManagerAttendanceTrackingTable() {
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
-              {paginatedRecords.map((r, mapIndex) => (<tr data-testid={`manager_attendance-attendance-attendancetable-row-${r.id}`} key={r.id} tabIndex={0} role="button" aria-label={t("TEXT_VIEW_ATTENDANCE_HISTORY", { value: r.member?.name || r.staff?.name || t("TEXT_RECORD_FALLBACK") })} onClick={() => setCalendarUser({ id: String(r.memberId || r.staffId || r.id), name: String(r.member?.name || r.staff?.name || ''), type: r.type as ManagerAttendanceTrackingPersonType })} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') {
+              {paginatedRecords.map((r, mapIndex) => (<tr data-testid={`manager_attendance-attendance-attendancetable-row-${r.id}`} key={r.id} tabIndex={0} onClick={() => setCalendarUser({ id: String(r.memberId || r.staffId || r.id), name: String(r.member?.name || r.staff?.name || ''), type: r.type as ManagerAttendanceTrackingPersonType })} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
         setCalendarUser({ id: String(r.memberId || r.staffId || r.id), name: String(r.member?.name || r.staff?.name || ''), type: r.type as ManagerAttendanceTrackingPersonType });
     } }} className="cursor-pointer hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-200 ease-in-out">
                   {/* Name */}
                   <td className="px-2.5 py-3 whitespace-nowrap">
-                    <div className="flex items-center gap-2 max-w-[140px]">
+                    <div className="flex items-center gap-2 min-w-32">
                       <div className={`w-8 h-8 rounded-full flex items-center justify-center text-text-primary text-xs font-bold shrink-0 ${getAttendanceTypeSurface(r.type as ManagerAttendanceTrackingPersonType)}`}>
                         {(r.member?.name || r.staff?.name || '?').charAt(0)}
                       </div>

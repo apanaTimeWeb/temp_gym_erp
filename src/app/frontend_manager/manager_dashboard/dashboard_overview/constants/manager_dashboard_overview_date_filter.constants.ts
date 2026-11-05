@@ -6,8 +6,9 @@ import type { ManagerDashboardOverviewDateRange } from '@/app/frontend_manager/m
  * @edge-case Preserves the documented weekly, monthly, yearly, and custom range options without embedding UI copy.
  */
 export const MANAGER_DASHBOARD_OVERVIEW_DATE_RANGE_OPTIONS = [
-  { value: 'weekly', labelKey: 'TEXT_TIME_WEEK' },
-  { value: 'monthly', labelKey: 'TEXT_TIME_MONTH' },
-  { value: 'yearly', labelKey: 'TEXT_TIME_YEAR' },
+  { value: 'this_month', labelKey: 'TEXT_TIME_THIS_MONTH' },
+  { value: 'last_month', labelKey: 'TEXT_TIME_LAST_MONTH' },
+  { value: 'last_3_months', labelKey: 'TEXT_TIME_LAST_3_MONTHS' },
+  { value: 'this_year', labelKey: 'TEXT_TIME_YEAR' },
   { value: 'custom', labelKey: 'COPY_CUSTOM_RANGE' },
 ] as const satisfies readonly { value: ManagerDashboardOverviewDateRange; labelKey: string }[];

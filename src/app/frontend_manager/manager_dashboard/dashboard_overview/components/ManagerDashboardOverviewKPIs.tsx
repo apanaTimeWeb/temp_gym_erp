@@ -23,8 +23,23 @@ export default function ManagerDashboardOverviewKPIs() {
   if (!stats) return null;
   const s = stats;
 
-  const timeLabel = (() => { if (range === 'weekly') { return t("TEXT_TIME_WEEK"); } return (() => { if (range === 'yearly') { return t("TEXT_TIME_YEAR"); } return (() => { if (range === 'custom') { return t("TEXT_TIME_SELECTED"); } return t("TEXT_TIME_MONTH"); })(); })(); })();
-  const inqLabel = (() => { if (range === 'weekly') { return t("TEXT_INQUIRIES_WEEK"); } return (() => { if (range === 'yearly') { return t("TEXT_INQUIRIES_YEAR"); } return (() => { if (range === 'custom') { return t("TEXT_INQUIRIES_CUSTOM"); } return t("TEXT_INQUIRIES_MONTH"); })(); })(); })();
+  const timeLabel = (() => {
+    if (range === 'weekly') return t("TEXT_TIME_WEEK");
+    if (range === 'last_month') return t("TEXT_TIME_LAST_MONTH");
+    if (range === 'last_3_months') return t("TEXT_TIME_LAST_3_MONTHS");
+    if (range === 'yearly' || range === 'this_year') return t("TEXT_TIME_YEAR");
+    if (range === 'custom') return t("TEXT_TIME_SELECTED");
+    return t("TEXT_TIME_MONTH");
+  })();
+
+  const inqLabel = (() => {
+    if (range === 'weekly') return t("TEXT_INQUIRIES_WEEK");
+    if (range === 'last_month') return "New Inquiries (Last Month)";
+    if (range === 'last_3_months') return "New Inquiries (Last 3M)";
+    if (range === 'yearly' || range === 'this_year') return t("TEXT_INQUIRIES_YEAR");
+    if (range === 'custom') return t("TEXT_INQUIRIES_CUSTOM");
+    return t("TEXT_INQUIRIES_MONTH");
+  })();
 
   return (
     <>
@@ -129,7 +144,7 @@ export default function ManagerDashboardOverviewKPIs() {
         <ManagerStatCard
           title={t("COPY_PT_REVENUE")}
           value={ManagerDashboardOverviewFormatCurrency(s.totalPTRevenue || 0, ManagerEnvConfig.currencyCode, locale)}
-          change={t("COPY_MONTH")}
+          change={timeLabel}
           changeType="neutral"
           icon={Target}
           iconBg="bg-info-bg"
@@ -147,7 +162,7 @@ export default function ManagerDashboardOverviewKPIs() {
         <ManagerStatCard
           title={t("COPY_MEMBERS_LOST")}
           value={`${s.churnRate || 0}%`}
-          change={t("COPY_MONTH")}
+          change={timeLabel}
           changeType={(s.churnRate || 0) > 5 ? "down" : "neutral"}
           icon={AlertCircle}
           iconBg={(s.churnRate || 0) > 5 ? "bg-danger-bg" : "bg-warning-bg"}

@@ -27,12 +27,14 @@ export default function ManagerExpenseRegisterAndReportingTable() {
   const locale = useLocale();
 
   const { confirm } = useConfirm();
-  const { search, statusFilter, currentPage, setCurrentPage, openEdit, deleteExpense, markAsPaid } = useManagerExpenseRegisterAndReportingLogic();
+  const { search, statusFilter, currentPage, setCurrentPage, openEdit, deleteExpense, markAsPaid, range } = useManagerExpenseRegisterAndReportingLogic();
   
   const { data, isPending, isError, error, refetch } = useExpensesListQuery({
     search,
     status: statusFilter !== EXPENSE_ALL_STATUS_FILTER ? statusFilter : '',
-    page: currentPage.toString() });
+    page: currentPage.toString(),
+    range,
+  });
 
   const expenses = data?.expenses || [];
   const totalExpenses = data?.total || 0;
