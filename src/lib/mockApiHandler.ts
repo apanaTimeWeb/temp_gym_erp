@@ -1,59 +1,7 @@
 import type { ApiResponse } from '@/lib/api';
 import { handleManagerMockApiRequest } from '@/lib/managerMockHandlers';
 import { handleSuperadminMockApiRequest } from '@/lib/superadminMockHandlers';
-
-// Trainer Mock Fixture Imports
-import {
-  TRAINER_DASHBOARD_MOCK_DASHBOARD_STATS,
-} from '@/app/frontend_trainer/trainer_dashboard/dashboard_overview/mocks/TrainerDashboardOverviewMockData';
-
-import {
-  TRAINER_MEMBERS_MOCK_MEMBERS,
-  TRAINER_MEMBERS_MOCK_MEMBER_STATS,
-} from '@/app/frontend_trainer/trainer_members/members_directory_and_profile/mocks/handlers/TrainerMembersDirectoryAndProfileMockData';
-
-import {
-  TRAINER_SESSIONS_MOCK_TRAINER_SESSIONS,
-  TRAINER_SESSIONS_MOCK_TRAINER_SESSION_MEMBERS,
-} from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/mocks/fixtures/TrainerCoachingSessionsMockData';
-
-import {
-  TRAINER_WORKOUT_MOCK_WORKOUTS,
-  TRAINER_WORKOUT_MOCK_EXERCISES,
-} from '@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/mocks/handlers/TrainerCoachingWorkoutPlansMockData';
-
-import {
-  TRAINER_LIBRARY_MOCK_LIBRARY_DIET_PLANS,
-  TRAINER_LIBRARY_MOCK_LIBRARY_ASSIGNED_MEMBERS,
-} from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/mocks/fixtures/TrainerCoachingDietLibraryAndAssignmentsMockData';
-
-import {
-  TRAINER_EARNINGS_MOCK_EARNINGS_DATA,
-} from '@/app/frontend_trainer/trainer_earnings/earnings_overview_and_ledger/mocks/fixtures/TrainerEarningsOverviewAndLedgerEarningsMockData';
-
-import {
-  TRAINER_ATTENDANCE_MOCK_STATS,
-  TRAINER_ATTENDANCE_MOCK_MEMBERS,
-  TRAINER_ATTENDANCE_MOCK_RECORDS,
-} from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/mocks/fixtures/TrainerOperationsMemberAttendanceAttendanceMockData';
-
-import {
-  TRAINER_SCHEDULE_MOCK_AVAILABILITY,
-  TRAINER_SCHEDULE_MOCK_LEAVES,
-} from '@/app/frontend_trainer/trainer_operations/operations_weekly_availability/mocks/fixtures/TrainerOperationsWeeklyAvailabilityScheduleMockData';
-
-import {
-  TRAINER_PROGRESS_TRACKING_MOCK_PROGRESS_MEMBERS,
-  TRAINER_PROGRESS_TRACKING_MOCK_PROGRESS_ENTRIES,
-} from '@/app/frontend_trainer/trainer_coaching/coaching_individual_progress/mocks/fixtures/TrainerCoachingIndividualProgressProgressTrackingMockData';
-
-import {
-  TRAINER_PROFILE_MOCK_TRAINER_PROFILE,
-} from '@/app/frontend_trainer/trainer_account/account_personal_profile/mocks/fixtures/TrainerAccountPersonalProfileProfileMockData';
-
-import {
-  TRAINER_NOTIFICATIONS_MOCK_TRAINER_NOTIFICATIONS,
-} from '@/app/frontend_trainer/trainer_account/account_notifications/mocks/fixtures/TrainerAccountNotificationsNotificationsMockData';
+import { handleTrainerMockApiRequest } from '@/lib/trainerMockHandlers';
 
 // Admin Mock Fixture Imports
 import {
@@ -192,6 +140,17 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
   if (urlPath.startsWith('/api/v1/manager') || urlPath.startsWith('/manager')) {
     const managerResponse = handleManagerMockApiRequest(urlPath, method, searchParams, options);
     if (managerResponse) return managerResponse;
+  }
+
+  // TRAINER ENDPOINTS
+  if (
+    urlPath.startsWith('/trainer') ||
+    urlPath.startsWith('/frontend_trainer') ||
+    urlPath.startsWith('/api/v1/trainer') ||
+    urlPath.startsWith('/api/trainer')
+  ) {
+    const trainerResponse = handleTrainerMockApiRequest(urlPath, method, searchParams, options);
+    if (trainerResponse) return trainerResponse;
   }
 
   // 1. AUTH ENDPOINTS
@@ -598,157 +557,9 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
     return buildMockSuccess(MOCK_ADMIN_PROFILE);
   }
 
-  // 3. TRAINER ENDPOINTS
-  let trainerPath = '';
-  if (urlPath.startsWith('/trainer/')) {
-    trainerPath = urlPath.slice('/trainer/'.length);
-  } else if (urlPath.startsWith('/frontend_trainer/api/')) {
-    trainerPath = urlPath.slice('/frontend_trainer/api/'.length);
-  }
-
-  if (trainerPath) {
-    // Dashboard Stats
-    if (trainerPath === 'trainer_dashboard/stats' || trainerPath === 'stats') {
-      return buildMockSuccess(TRAINER_DASHBOARD_MOCK_DASHBOARD_STATS, 'Dashboard statistics retrieved successfully');
-    }
-
-    // Members
-    if (trainerPath === 'members') {
-      return buildMockSuccess({
-        members: TRAINER_MEMBERS_MOCK_MEMBERS,
-        total: TRAINER_MEMBERS_MOCK_MEMBERS.length,
-        page: 1,
-        limit: 50,
-      });
-    }
-    if (trainerPath === 'trainer_members/stats' || trainerPath === 'members/stats') {
-      return buildMockSuccess(TRAINER_MEMBERS_MOCK_MEMBER_STATS);
-    }
-    if (trainerPath.startsWith('trainer_members/') || trainerPath.startsWith('members/')) {
-      const parts = trainerPath.split('/');
-      const memberId = parts[1];
-      const sub = parts[2];
-      if (sub === 'notes') {
-        return buildMockSuccess((TRAINER_MEMBERS_MOCK_MEMBERS[0] as any).trainerNotes || []);
-      }
-      if (sub === 'attendance') {
-        return buildMockSuccess([]);
-      }
-      const member = TRAINER_MEMBERS_MOCK_MEMBERS.find((m) => m.id === memberId) || TRAINER_MEMBERS_MOCK_MEMBERS[0];
-      return buildMockSuccess(member);
-    }
-
-    // Sessions
-    if (trainerPath === 'sessions/members' || trainerPath === 'trainer_sessions/members') {
-      return buildMockSuccess(TRAINER_SESSIONS_MOCK_TRAINER_SESSION_MEMBERS);
-    }
-    if (trainerPath === 'sessions' || trainerPath === 'trainer_sessions') {
-      return buildMockSuccess(TRAINER_SESSIONS_MOCK_TRAINER_SESSIONS);
-    }
-    if (trainerPath.startsWith('trainer_sessions/') || trainerPath.startsWith('sessions/')) {
-      return buildMockSuccess(TRAINER_SESSIONS_MOCK_TRAINER_SESSIONS[0]);
-    }
-
-    // Workouts & Exercises
-    if (trainerPath === 'trainer_workout/workouts' || trainerPath === 'workouts') {
-      return buildMockSuccess({
-        workouts: TRAINER_WORKOUT_MOCK_WORKOUTS,
-        total: TRAINER_WORKOUT_MOCK_WORKOUTS.length,
-        page: 1,
-        limit: 50,
-      });
-    }
-    if (trainerPath === 'trainer_workout/exercises' || trainerPath === 'exercises') {
-      return buildMockSuccess({
-        exercises: TRAINER_WORKOUT_MOCK_EXERCISES,
-        total: TRAINER_WORKOUT_MOCK_EXERCISES.length,
-        page: 1,
-        limit: 50,
-      });
-    }
-
-    // Diet Plans
-    if (trainerPath === 'diet-plans' || trainerPath === 'trainer_diet/diet-plans') {
-      return buildMockSuccess(TRAINER_LIBRARY_MOCK_LIBRARY_DIET_PLANS);
-    }
-    if (trainerPath === 'diet-plans/assigned-members' || trainerPath === 'trainer_diet/assigned-members') {
-      return buildMockSuccess(TRAINER_LIBRARY_MOCK_LIBRARY_ASSIGNED_MEMBERS);
-    }
-
-    // Earnings
-    if (trainerPath === 'earnings' || trainerPath === 'trainer_earnings') {
-      const page = Number(searchParams.get('historyPage') || '1');
-      const limit = Number(searchParams.get('historyLimit') || '10');
-      return buildMockSuccess({
-        ...TRAINER_EARNINGS_MOCK_EARNINGS_DATA,
-        historyTotal: TRAINER_EARNINGS_MOCK_EARNINGS_DATA.history.length,
-        historyPage: page,
-        historyLimit: limit,
-      });
-    }
-
-    // Attendance
-    if (trainerPath === 'attendance' || trainerPath === 'trainer_attendance') {
-      const page = Number(searchParams.get('page') || '1');
-      const limit = Number(searchParams.get('limit') || '10');
-      return buildMockSuccess({
-        attendance: TRAINER_ATTENDANCE_MOCK_RECORDS,
-        total: TRAINER_ATTENDANCE_MOCK_RECORDS.length,
-        page,
-        limit,
-      });
-    }
-    if (trainerPath === 'trainer_attendance/stats' || trainerPath === 'attendance/stats') {
-      return buildMockSuccess(TRAINER_ATTENDANCE_MOCK_STATS);
-    }
-    if (trainerPath === 'trainer_attendance/members-basic' || trainerPath === 'attendance/members-basic') {
-      return buildMockSuccess(TRAINER_ATTENDANCE_MOCK_MEMBERS);
-    }
-    if (trainerPath === 'trainer_attendance/today-stats') {
-      return buildMockSuccess({ present: 18, absent: 4, late: 2 });
-    }
-    if (trainerPath.startsWith('trainer_attendance/checkout/')) {
-      return buildMockSuccess(null, 'Checkout recorded');
-    }
-
-    // Schedule & Leaves
-    if (trainerPath === 'schedule' || trainerPath === 'trainer_schedule') {
-      return buildMockSuccess({
-        availability: TRAINER_SCHEDULE_MOCK_AVAILABILITY,
-        leaves: TRAINER_SCHEDULE_MOCK_LEAVES,
-      });
-    }
-    if (trainerPath === 'trainer_schedule/availability') {
-      return buildMockSuccess(TRAINER_SCHEDULE_MOCK_AVAILABILITY);
-    }
-    if (trainerPath === 'trainer_schedule/leaves') {
-      return buildMockSuccess(TRAINER_SCHEDULE_MOCK_LEAVES);
-    }
-
-    // Profile & Notifications
-    if (trainerPath === 'profile' || trainerPath === 'trainer_profile') {
-      return buildMockSuccess(TRAINER_PROFILE_MOCK_TRAINER_PROFILE);
-    }
-    if (trainerPath === 'trainer_profile/password') {
-      return buildMockSuccess(null, 'Password updated');
-    }
-    if (trainerPath === 'notifications' || trainerPath === 'trainer_notifications') {
-      return buildMockSuccess({
-        notifications: TRAINER_NOTIFICATIONS_MOCK_TRAINER_NOTIFICATIONS,
-        total: TRAINER_NOTIFICATIONS_MOCK_TRAINER_NOTIFICATIONS.length,
-        page: 1,
-        limit: 20,
-      });
-    }
-    if (trainerPath === 'trainer_notifications/read-all') {
-      return buildMockSuccess(null, 'All marked as read');
-    }
-    if (trainerPath.startsWith('trainer_notifications/') && trainerPath.endsWith('/read')) {
-      return buildMockSuccess(null, 'Marked as read');
-    }
-
-    return buildMockSuccess({}, 'Resource processed');
-  }
+  // Fallback for Trainer Endpoints
+  const trainerResponse = handleTrainerMockApiRequest(urlPath, method, searchParams, options);
+  if (trainerResponse) return trainerResponse;
 
   return null;
 }

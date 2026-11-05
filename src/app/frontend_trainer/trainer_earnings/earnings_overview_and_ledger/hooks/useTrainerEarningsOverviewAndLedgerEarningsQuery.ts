@@ -52,9 +52,9 @@ export function useTrainerEarningsQuery() {
   const sortDirection: TrainerEarningsEarningsSortDirection = searchParams.get('sortDirection') === 'asc' ? 'asc' : 'desc';
 
   const query = useQuery({
-    queryKey: TRAINER_EARNINGS_QUERY_KEYS.data({ startDate, endDate, search, page, limit: TRAINER_EARNINGS_EARNINGS_ITEMS_PER_PAGE, sortBy, sortDirection }),
+    queryKey: [...TRAINER_EARNINGS_QUERY_KEYS.data({ startDate, endDate, search, page, limit: TRAINER_EARNINGS_EARNINGS_ITEMS_PER_PAGE, sortBy, sortDirection }), range],
     enabled: validDateWindow,
-    queryFn: () => TrainerEarningsApi.fetchEarningsData(startDate, endDate, search, page, TRAINER_EARNINGS_EARNINGS_ITEMS_PER_PAGE, sortBy, sortDirection),
+    queryFn: () => TrainerEarningsApi.fetchEarningsData(startDate, endDate, search, page, TRAINER_EARNINGS_EARNINGS_ITEMS_PER_PAGE, sortBy, sortDirection, range),
     staleTime: 5 * 60 * 1000,
   });
 

@@ -38,10 +38,10 @@ import type { TrainerAttendanceCreateDto } from '@/app/frontend_trainer/trainer_
  */
 export function useTrainerAttendanceMain() {
   const filters = useTrainerAttendanceFilters();
-  const { tab, search, filterDate, currentPage, sortBy, sortDirection } = filters;
+  const { tab, search, filterDate, currentPage, sortBy, sortDirection, range } = filters;
   const recordsQuery = useTrainerAttendanceRecordsQuery({ tab, search, filterDate, currentPage, sortBy, sortDirection });
   const myAttendanceHistoryQuery = useTrainerAttendanceMyHistoryQuery(tab === 'MY_ATTENDANCE');
-  const statsQuery = useTrainerAttendanceStatsQuery();
+  const statsQuery = useTrainerAttendanceStatsQuery(range);
   const stats = statsQuery.data;
   const membersQuery = useTrainerAttendanceMembersQuery();
   const members = membersQuery.data ?? [];

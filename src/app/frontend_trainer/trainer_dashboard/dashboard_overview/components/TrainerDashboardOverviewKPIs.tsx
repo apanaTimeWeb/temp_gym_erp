@@ -3,6 +3,7 @@
 import { Users, CalendarCheck, Clock, Dumbbell } from 'lucide-react';
 
 import { useLocale, useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 
 import { useTrainerDashboardQuery } from '@/app/frontend_trainer/trainer_dashboard/dashboard_overview/hooks/useTrainerDashboardOverviewQuery';
 
@@ -29,15 +30,31 @@ import TrainerInfrastructureStatCard from '@/app/frontend_trainer/trainer_dashbo
 export default function TrainerDashboardKPIs() {
   const locale = useLocale();
   const t = useTranslations('TRAINER_DASHBOARD');
+  const searchParams = useSearchParams();
+  const range = searchParams.get('range') ?? 'this_month';
   const { data: stats } = useTrainerDashboardQuery();
-if (!stats) return null;
+  if (!stats) return null;
   const s = stats;
+
+  const rangeLabels: Record<string, string> = {
+    this_month: t('TEXT_THIS_MONTH'),
+    last_month: t('TEXT_LAST_MONTH'),
+    last_3_months: t('TEXT_LAST_3_MONTHS'),
+    last_6_months: t('TEXT_LAST_6_MONTHS'),
+    this_year: t('TEXT_THIS_YEAR'),
+    custom: t('TEXT_CUSTOM'),
+  };
+  const activeRangeText = rangeLabels[range] || t('TEXT_THIS_MONTH');
+
+  const sessionsTitle = range === 'this_month' ? t('TEXT_TODAYS_SESSIONS') : `${activeRangeText} Sessions`;
+  const attendanceTitle = range === 'this_month' ? t('TEXT_TODAYS_ATTENDANCE') : `${activeRangeText} Attendance`;
+  const attendanceChange = range === 'this_month' ? t('TEXT_MEMBERS_PRESENT_TODAY') : `Check-ins (${activeRangeText})`;
 
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-4">
         <TrainerInfrastructureStatCard
-          title={t("TEXT_TODAYS_SESSIONS")}
+          title={sessionsTitle}
           value={TrainerDashboardFormatNumber(s.todaysSessions, locale)}
           change={t("TEXT_COMPLETED_OF", { completed: s.completedSessions, total: s.todaysSessions })}
           changeType="neutral"
@@ -55,9 +72,9 @@ if (!stats) return null;
           iconColor="text-info"
         />
         <TrainerInfrastructureStatCard
-          title={t("TEXT_TODAYS_ATTENDANCE")}
+          title={attendanceTitle}
           value={TrainerDashboardFormatNumber(s.todaysAttendance, locale)}
-          change={t("TEXT_MEMBERS_PRESENT_TODAY")}
+          change={attendanceChange}
           changeType="neutral"
           icon={CalendarCheck}
           iconBg="bg-success-bg"
