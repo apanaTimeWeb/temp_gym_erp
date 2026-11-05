@@ -62,7 +62,7 @@ export default function AdminDashboardOverviewAttendanceTrend() {
     },
     tooltip: {
       theme: 'dark',
-      y: { formatter: (v) => t('dashboard.admin_dashboard_attendance_trend.tooltip_checkIns', { count: v }) },
+      y: { formatter: (v) => t('dashboard.admin_dashboard_attendance_trend.tooltip_checkIns', { count: v ?? 0 }) },
     },
   };
 

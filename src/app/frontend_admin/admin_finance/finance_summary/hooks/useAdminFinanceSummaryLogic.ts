@@ -14,7 +14,7 @@ import type { AdminFinanceExpenseUrlParamKey } from '@/app/frontend_admin/admin_
 import { EXPENSE_CATEGORIES, FINANCE_DATE_FILTER_PRESETS, FINANCE_EXPENSE_ITEMS_PER_PAGE, FINANCE_ITEMS_PER_PAGE, FINANCE_PAYMENT_METHODS, FINANCE_PAYMENT_STATUSES } from '@/app/frontend_admin/admin_finance/finance_summary/constants/AdminFinanceSummaryConstants';
 import { isValidAdminFinanceDateRange } from '@/app/frontend_admin/admin_finance/finance_summary/utils/AdminFinanceSummaryDateRangeUtils';
 
-const ADMIN_FINANCE_LEAF_SCOPE = 'summary' as const;
+const ADMIN_FINANCE_LEAF_SCOPE: 'summary' | 'payments' | 'expenses' = 'summary';
 /** @description useAdminFinanceLogic: Owns Finance URL filter state and TanStack Query server-state orchestration for read-only finance analytics. @dependencies Consumes AdminFinanceQueryKeys, AdminNavigationLayoutBackendMessage, AdminFinanceApi, useAdminNavigationLayoutDebounce, AdminFinanceTypes. @edge-case Preserves documented loading, empty, error, permission, and recovery behavior without owning presentation. @returns The hook’s typed data, state, actions, and recovery handlers. */
 export function useAdminFinanceLogic() {
   const t = useTranslations();

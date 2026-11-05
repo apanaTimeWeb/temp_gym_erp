@@ -38,6 +38,7 @@ export interface Staff {
   certifications?: string[];
   contractType?: string;
   terminationDate?: string;
+  temporaryPassword?: string;
 }
 
 export interface AdminHrBranchReference {

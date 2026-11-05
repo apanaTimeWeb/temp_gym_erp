@@ -18,7 +18,7 @@ export default function NotFound() {
       <h2 className="text-2xl font-bold text-primary mb-2">{t('hr.NotFound.text_e637d9faea')}</h2>
       <p className="text-secondary mb-6 max-w-md">
         {t('hr.NotFound.text_0b7e734f76')}</p>
-      <Link data-testid="admin_hr-admin_hr-performance-not-found-state" href={ADMIN_HR_PERFORMANCE_ROUTES.dashboard} className="px-6 py-2 bg-primary text-on-primary font-bold rounded-lg hover:bg-primary-hover motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page">
+      <Link data-testid="admin_hr-admin_hr-performance-not-found-state" href={ADMIN_HR_PERFORMANCE_ROUTES.root} className="px-6 py-2 bg-primary text-on-primary font-bold rounded-lg hover:bg-primary-hover motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page">
         {t('hr.NotFound.text_cdac261089')}</Link>
     </div>
   );

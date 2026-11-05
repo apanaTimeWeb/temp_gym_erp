@@ -1,8 +1,8 @@
+'use client';
 // RESPONSIBILITY: Owns only UI filter, pagination, and selected-detail state for the Admin Audit Logs module.
 // DATA FLOW: module API / client state → useAdminAuditLogsStore → consuming Admin feature component.
 
 import type { AdminAuditLogsStore } from '@/app/frontend_admin/admin_security/security_audit_logs_explorer/types/AdminSecurityAuditLogsExplorerStoreTypes';
-'use client';
 import { normalizeAdminSecurityAuditLogsExplorerUrlPage } from '@/app/frontend_admin/admin_security/security_audit_logs_explorer/utils/AdminSecurityAuditLogsExplorerUrlPage';
 import { create } from 'zustand';
 /**

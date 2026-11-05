@@ -7,7 +7,8 @@ import AdminNavigationLayoutConfirmModal from '@/app/frontend_admin/admin_billin
 import type { AdminConfirmContextType, AdminConfirmOptions } from '@/app/frontend_admin/admin_billing/billing_coupons_management/types/AdminBillingCouponsManagementConfirmTypes';
 import type { AdminBillingCouponsManagementConfirmProviderProps } from '@/app/frontend_admin/admin_billing/billing_coupons_management/types/admin_billing_coupons_management_confirm_provider.types';
 
-export const ConfirmContext = createContext<AdminConfirmContextType | undefined>(undefined);
+import { ConfirmContext } from '@/app/frontend_admin/admin_navigation/components/feedback/AdminNavigationLayoutConfirmProvider';
+export { ConfirmContext };
 interface PendingConfirmation {
   id: number;
   options: AdminConfirmOptions;

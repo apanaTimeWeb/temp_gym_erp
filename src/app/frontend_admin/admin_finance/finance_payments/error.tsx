@@ -3,7 +3,7 @@
 // DATA FLOW: Next.js route/lifecycle or owning module entry → feature-local components/hooks/contracts → host integration boundary (admin_finance/finance_payments/error.tsx)
 
 import { useTranslations } from 'next-intl';
-import { ADMIN_FINANCE_ROUTES } from '@/app/frontend_admin/admin_finance/finance_payments/config/admin_finance_payments.url_config.ts';
+import { ADMIN_FINANCE_ROUTES } from '@/app/frontend_admin/admin_finance/finance_payments/config/admin_finance_payments.url_config';
 
 import { useEffect } from "react";
 import Link from 'next/link';

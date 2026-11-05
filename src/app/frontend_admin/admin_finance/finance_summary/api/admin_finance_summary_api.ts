@@ -2,7 +2,7 @@
 // DATA FLOW: feature hook/view → feature API client → apiFetch host transport → typed ApiResponse/data validation → UI/cache (admin_finance/finance_summary/api/admin_finance_summary_api.ts)
 
 import { adminFinanceSummaryApiFetch as apiFetch } from '@/app/frontend_admin/admin_finance/finance_summary/utils/AdminFinanceSummaryApiResponse';
-import { ADMIN_FINANCE_API } from '@/app/frontend_admin/admin_finance/finance_summary/config/admin_finance_summary.url_config.ts';
+import { ADMIN_FINANCE_API } from '@/app/frontend_admin/admin_finance/finance_summary/config/admin_finance_summary.url_config';
 import type { Payment, FinanceSummary, Expense } from '@/app/frontend_admin/admin_finance/finance_summary/types/AdminFinanceSummaryTypes';
 import { z } from 'zod';
 import { paymentSchema, financeSummarySchema, expenseSchema } from '@/app/frontend_admin/admin_finance/finance_summary/schemas/AdminFinanceSummarySchemas';

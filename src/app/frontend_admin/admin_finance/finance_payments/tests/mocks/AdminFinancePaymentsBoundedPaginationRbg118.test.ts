@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll, afterAll, afterEach } from 'vitest';
 import { setupServer } from 'msw/node';
 import { adminFinanceMockHandlers } from '@/app/frontend_admin/admin_finance/finance_payments/mocks/handlers/AdminFinancePaymentsMockHandlers';
-import { ADMIN_FINANCE_API } from '@/app/frontend_admin/admin_finance/finance_payments/config/admin_finance_payments.url_config.ts';
+import { ADMIN_FINANCE_API } from '@/app/frontend_admin/admin_finance/finance_payments/config/admin_finance_payments.url_config';
 const server=setupServer(...adminFinanceMockHandlers);
 beforeAll(()=>server.listen({onUnhandledRequest:'error'}));afterEach(()=>server.resetHandlers());afterAll(()=>server.close());
 describe('RBG118 bounded mock Payments pagination',()=>{

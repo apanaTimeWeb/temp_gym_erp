@@ -1,7 +1,7 @@
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
 import { setupServer } from 'msw/node';
 import { adminFinanceMockHandlers } from '../../mocks/handlers/AdminFinancePaymentsMockHandlers';
-import { ADMIN_FINANCE_API } from '../../config/admin_finance_payments.url_config.ts';
+import { ADMIN_FINANCE_API } from '../../config/admin_finance_payments.url_config';
 
 const server = setupServer(...adminFinanceMockHandlers);
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));

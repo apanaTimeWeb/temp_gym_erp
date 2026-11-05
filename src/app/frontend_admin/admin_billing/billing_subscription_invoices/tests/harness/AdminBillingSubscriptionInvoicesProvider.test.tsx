@@ -13,7 +13,7 @@ function ConfirmationProbe() {
     <button type="button" onClick={() => void confirm({
       title: 'Discard draft', message: 'Discard your changes?',
       confirmText: 'Discard', cancelText: 'Keep editing', type: 'warning',
-    }).then(accepted => setOutcome(accepted ? 'accepted' : 'cancelled'))}>Open confirmation</button>
+    }).then((accepted: boolean) => setOutcome(accepted ? 'accepted' : 'cancelled'))}>Open confirmation</button>
     <output data-testid="confirmation-result">{outcome}</output>
   </>;
 }

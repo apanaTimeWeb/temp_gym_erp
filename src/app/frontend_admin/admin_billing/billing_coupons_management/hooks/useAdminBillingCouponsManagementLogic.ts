@@ -38,9 +38,9 @@ export function useAdminCouponsLogic() {
     return () => clearTimeout(timeoutId);
   }, [search]);
   useAdminNavigationLayoutUrlQuerySync([
-    { key: 'search', value: search, defaultValue: '', setValue: (val) => useAdminCouponsStore.getState().setSearch(val as string) },
-    { key: 'status', value: statusFilter, defaultValue: 'all', setValue: (val) => { if (COUPON_STATUS_OPTIONS.some((option) => option.value === val)) useAdminCouponsStore.getState().setStatusFilter(val); } },
-    { key: 'dateRange', value: dateRange, defaultValue: 'all_time', setValue: (val) => { if (COUPON_DATE_RANGE_OPTIONS.some((option) => option.value === val)) useAdminCouponsStore.getState().setDateRange(val); } },
+    { key: 'search', value: search, defaultValue: '', setValue: (val) => useAdminCouponsStore.getState().setSearch(typeof val === 'string' ? val : '') },
+    { key: 'status', value: statusFilter, defaultValue: 'all', setValue: (val) => { if (typeof val === 'string' && COUPON_STATUS_OPTIONS.some((option) => option.value === val)) useAdminCouponsStore.getState().setStatusFilter(val as any); } },
+    { key: 'dateRange', value: dateRange, defaultValue: 'all_time', setValue: (val) => { if (typeof val === 'string' && COUPON_DATE_RANGE_OPTIONS.some((option) => option.value === val)) useAdminCouponsStore.getState().setDateRange(val as any); } },
     { key: 'page', value: currentPage, defaultValue: 1, setValue: (value) => setCurrentPage(normalizeAdminBillingCouponsManagementUrlPage(value)) },
   ]);
 

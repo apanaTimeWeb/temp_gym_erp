@@ -33,7 +33,7 @@ describe('AdminMembersApi.fetchSummary', () => {
   });
 
   it('carries typed list filters into the list endpoint', async () => {
-    vi.mocked(apiFetch).mockResolvedValue({ success: true, requestId: 'admin-api-test-request', message: 'ok', data: [], meta: { total: 0 } });
+    vi.mocked(apiFetch).mockResolvedValue({ success: true, requestId: 'admin-api-test-request', message: 'ok', data: [], meta: { total: 0, page: 1, limit: 10, totalPages: 1, hasNextPage: false, hasPrevPage: false } });
     await AdminMembersApi.fetchMembers({ search: 'Riya', status: 'active', branchId: 'b2', gender: 'Female', plan: 'pro', page: 2, limit: 10 });
     expect(apiFetch).toHaveBeenCalledWith(expect.stringContaining('/admin/members/list?'), expect.objectContaining({ method: 'GET', dataSchema: expect.anything() }));
     expect(apiFetch).toHaveBeenCalledWith(expect.stringContaining('search=Riya'), expect.objectContaining({ method: 'GET', dataSchema: expect.anything() }));

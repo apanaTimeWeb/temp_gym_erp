@@ -9,6 +9,7 @@ export type BillingCycle = (typeof ADMIN_SUBSCRIPTIONS_BILLING_CYCLE_VALUES)[key
 export type SubscriptionStatus = (typeof ADMIN_SUBSCRIPTIONS_STATUS_VALUES)[keyof typeof ADMIN_SUBSCRIPTIONS_STATUS_VALUES];
 
 export interface CurrentSubscription {
+  id?: string;
   planId: string;
   planName: string;
   tier: PlanTier;

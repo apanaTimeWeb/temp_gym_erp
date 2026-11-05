@@ -7,7 +7,8 @@ import AdminNavigationLayoutConfirmModal from '@/app/frontend_admin/admin_securi
 import type { AdminConfirmContextType, AdminConfirmOptions } from '@/app/frontend_admin/admin_security/security_permissions_management/types/AdminSecurityPermissionsManagementConfirmTypes';
 import type { AdminConfirmProviderProps } from '@/app/frontend_admin/admin_security/security_permissions_management/types/AdminSecurityPermissionsManagementConfirmProviderTypes';
 
-export const ConfirmContext = createContext<AdminConfirmContextType | undefined>(undefined);
+import { ConfirmContext } from '@/app/frontend_admin/admin_navigation/components/feedback/AdminNavigationLayoutConfirmProvider';
+export { ConfirmContext };
 interface PendingConfirmation {
   id: number;
   options: AdminConfirmOptions;

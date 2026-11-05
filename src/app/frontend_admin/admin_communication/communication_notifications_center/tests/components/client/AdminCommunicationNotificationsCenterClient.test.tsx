@@ -17,7 +17,7 @@ function setup({ pending = false, unread = true } = {}) {
     ],
     status: 'success', isError: false, retry: vi.fn(), markAllAsRead, markAsRead,
     isMarkAllPending: pending,
-  } as ReturnType<typeof useAdminNotificationsPage>);
+  } as unknown as ReturnType<typeof useAdminNotificationsPage>);
   return render(<NextIntlClientProvider locale="en" messages={messages}><AdminNotificationsClient /></NextIntlClientProvider>);
 }
 describe('notifications client', () => {

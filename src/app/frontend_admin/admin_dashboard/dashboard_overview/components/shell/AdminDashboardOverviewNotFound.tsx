@@ -2,7 +2,7 @@
 // RESPONSIBILITY: Reusable 404 Not Found template for admin modules
 // DATA FLOW: Next.js route/lifecycle or owning module entry → feature-local components/hooks/contracts → host integration boundary (admin_navigation/components/shell/AdminNavigationLayoutNotFound.tsx)
 
-import { ADMIN_DASHBOARD_URL } from '@/app/frontend_admin/admin_dashboard/dashboard_overview/config/admin_dashboard_overview.url_config';
+import { ADMIN_DASHBOARD_ROUTES } from '@/app/frontend_admin/admin_dashboard/dashboard_overview/config/admin_dashboard_overview.url_config';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { AlertCircle } from 'lucide-react';
@@ -15,7 +15,7 @@ import type { AdminNavigationLayoutNotFoundProps } from '@/app/frontend_admin/ad
 export default function AdminNavigationLayoutNotFound({
   title,
   description,
-  returnLink = ADMIN_DASHBOARD_URL,
+  returnLink = ADMIN_DASHBOARD_ROUTES.root,
   returnText,
 }: AdminNavigationLayoutNotFoundProps) {
   const t = useTranslations();

@@ -3,7 +3,7 @@
 // DATA FLOW: Next.js route/lifecycle or owning module entry → feature-local components/hooks/contracts → host integration boundary (admin_sales/sales_store_sales/error.tsx)
 
 import { useTranslations } from 'next-intl';
-import { ADMIN_SALES_ROUTES } from '@/app/frontend_admin/admin_sales/sales_store_sales/config/admin_sales_store_sales.url_config.ts';
+import { ADMIN_SALES_ROUTES } from '@/app/frontend_admin/admin_sales/sales_store_sales/config/admin_sales_store_sales.url_config';
 
 import { useEffect } from "react";
 import Link from 'next/link';

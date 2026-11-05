@@ -63,11 +63,11 @@ describe('useAdminPlansLogic', () => {
 
   it('maps a submitted form into the create mutation contract', async () => {
     const { result } = renderHook(() => useAdminPlansLogic());
-    await act(async () => result.current.savePlan({ name: 'Gold', tier: 'PREMIUM', price1Month: '100', price3Month: '270', price6Month: '500', price12Month: '900', priceCustom: '1200', features: 'A\nB' }));
+    await act(async () => result.current.savePlan({ name: 'Gold', tier: 'Gold', price1Month: '100', price3Month: '270', price6Month: '500', price12Month: '900', priceCustom: '1200', features: 'A\nB' }));
 
     expect(createPlan).toHaveBeenCalledWith({
       payload: {
-        name: 'Gold', tier: 'PREMIUM', price1Month: 100, price3Month: 270, price6Month: 500, price12Month: 900, priceCustom: 1200, isActive: true, features: ['A', 'B'],
+        name: 'Gold', tier: 'Gold', price1Month: 100, price3Month: 270, price6Month: 500, price12Month: 900, priceCustom: 1200, isActive: true, features: ['A', 'B'],
       },
       idempotencyKey: 'intent:create-plan',
     });

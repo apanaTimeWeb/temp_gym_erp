@@ -1,4 +1,6 @@
 // RESPONSIBILITY: Source-derived fixtures for Sales Overview endpoints only.
+import type { OverviewDataPoint } from '@/app/frontend_admin/admin_sales/sales_overview/types/AdminSalesOverviewTypes';
+
 export const MOCK_ADMIN_SALES_OVERVIEW: OverviewDataPoint[] = [
   { date: '2026-01-01', newMembers: 8, revenue: 9000 },
   { date: '2026-02-01', newMembers: 9, revenue: 10000 },

@@ -86,7 +86,7 @@ export function useAdminPlansLogic(): PlansContextType {
     setEditId(p.id);
     setForm({
       name: p.name,
-      tier: p.tier,
+      tier: (TIERS.includes(p.tier as any) ? p.tier : 'Gold') as PlanFormValues['tier'],
       price1Month: String(adminPlansMinorToMajor(p.price1Month)),
       price3Month: String(adminPlansMinorToMajor(p.price3Month)),
       price6Month: String(adminPlansMinorToMajor(p.price6Month)),

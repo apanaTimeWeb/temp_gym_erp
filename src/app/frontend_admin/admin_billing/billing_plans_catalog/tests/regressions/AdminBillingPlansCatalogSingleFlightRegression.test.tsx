@@ -14,7 +14,7 @@ vi.mock('../../hooks/useAdminBillingPlansCatalogMutations', () => ({ useAdminPla
 vi.mock('../../hooks/useAdminBillingPlansCatalogConfirm', () => ({ useAdminNavigationLayoutConfirm: vi.fn() }));
 vi.mock('../../state/useAdminBillingPlansCatalogStore', () => ({ useAdminPlansStore: vi.fn() }));
 vi.mock('../../state/useAdminBillingPlansCatalogToastStore', () => ({ useAdminNavigationLayoutToastStore: vi.fn() }));
-const form = { name: 'Gold', tier: 'Gold', price1Month: '10', price3Month: '20', price6Month: '30', price12Month: '40', priceCustom: '50', features: 'A\nB' };
+const form = { name: 'Gold', tier: 'Gold' as const, price1Month: '10', price3Month: '20', price6Month: '30', price12Month: '40', priceCustom: '50', features: 'A\nB' };
 let resolveWrite!: () => void;
 const write = vi.fn(() => new Promise<void>((resolve) => { resolveWrite = resolve; }));
 const cancel = vi.fn();

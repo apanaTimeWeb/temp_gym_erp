@@ -16,8 +16,8 @@ function Filters() {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   useAdminPlansRevenueUrlQuerySync([
-    { key: 'period', value: period, defaultValue: 'THIS_MONTH', setValue: setPeriod },
-    { key: 'search', value: search, defaultValue: '', setValue: setSearch },
+    { key: 'period', value: period, defaultValue: 'THIS_MONTH', setValue: (v) => setPeriod(v ?? 'THIS_MONTH') },
+    { key: 'search', value: search, defaultValue: '', setValue: (v) => setSearch(v ?? '') },
     { key: 'page', value: page, defaultValue: 1, setValue: value => setPage(Number(value) || 1) },
   ]);
   return <div>

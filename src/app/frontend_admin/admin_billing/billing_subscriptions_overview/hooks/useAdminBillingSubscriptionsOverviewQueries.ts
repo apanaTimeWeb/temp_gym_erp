@@ -8,7 +8,7 @@ import { AdminSubscriptionsApi } from '@/app/frontend_admin/admin_billing/billin
 import { ADMIN_SUBSCRIPTIONS_INVOICES_ITEMS_PER_PAGE } from '@/app/frontend_admin/admin_billing/billing_subscriptions_overview/constants/AdminBillingSubscriptionsOverviewConstants';
 import { useAdminSubscriptionsStore } from '@/app/frontend_admin/admin_billing/billing_subscriptions_overview/state/useAdminBillingSubscriptionsOverviewStore';
 
-const ADMIN_SUBSCRIPTIONS_LEAF_SCOPE = 'overview' as const;
+const ADMIN_SUBSCRIPTIONS_LEAF_SCOPE: 'invoices' | 'plans' | 'payment_methods' | 'overview' = 'overview';
 /** @description useAdminSubscriptionsQueries: Owns the useAdminSubscriptionsQueries responsibility for the admin_subscriptions feature. @dependencies Consumes AdminSubscriptionsQueryKeys, AdminSubscriptionsApi, AdminSubscriptionsConstants, useAdminSubscriptionsStore. @edge-case Preserves documented loading, empty, error, permission, and recovery behavior without owning presentation. @returns The hook’s typed data, state, actions, and recovery handlers. */
 export function useAdminSubscriptionsQueries() {
   const { currentInvoicePage } = useAdminSubscriptionsStore();

@@ -7,7 +7,8 @@ import AdminNavigationLayoutConfirmModal from '@/app/frontend_admin/admin_hr/hr_
 import type { AdminConfirmContextType, AdminConfirmOptions } from '@/app/frontend_admin/admin_hr/hr_staff_management/types/AdminHrStaffManagementConfirmTypes';
 import type { AdminConfirmProviderProps } from '@/app/frontend_admin/admin_hr/hr_staff_management/types/AdminHrStaffManagementConfirmProviderTypes';
 
-export const ConfirmContext = createContext<AdminConfirmContextType | undefined>(undefined);
+import { ConfirmContext } from '@/app/frontend_admin/admin_navigation/components/feedback/AdminNavigationLayoutConfirmProvider';
+export { ConfirmContext };
 interface PendingConfirmation {
   id: number;
   options: AdminConfirmOptions;

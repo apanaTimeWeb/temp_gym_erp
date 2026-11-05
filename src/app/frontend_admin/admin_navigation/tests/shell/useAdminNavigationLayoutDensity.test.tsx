@@ -27,7 +27,8 @@ describe('useAdminNavigationLayoutDensity', () => {
 
   it('throws when rendered outside the provider', () => {
     const hook = renderHook(() => useAdminNavigationLayoutDensity());
-    expect(hook.result.error).toBeInstanceOf(Error);
-    expect(hook.result.error?.message).toContain('useAdminNavigationLayoutDensity must be used inside AdminNavigationLayoutDensityProvider');
+    const error = (hook.result as any).error;
+    expect(error).toBeInstanceOf(Error);
+    expect(error?.message).toContain('useAdminNavigationLayoutDensity must be used inside AdminNavigationLayoutDensityProvider');
   });
 });

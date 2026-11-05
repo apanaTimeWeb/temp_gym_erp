@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { adminFinanceStaffDuesManagementApiFetch as apiFetch } from '@/app/frontend_admin/admin_finance/finance_staff_dues_management/utils/AdminFinanceStaffDuesManagementApiResponse';
-import { ADMIN_FINANCE_STAFF_DUES_API } from '@/app/frontend_admin/admin_finance/finance_staff_dues_management/config/admin_finance_staff_dues_management.url_config.ts';
+import { ADMIN_FINANCE_STAFF_DUES_API } from '@/app/frontend_admin/admin_finance/finance_staff_dues_management/config/admin_finance_staff_dues_management.url_config';
 import type { Staff, FinanceStaffDuesSummary } from '@/app/frontend_admin/admin_finance/finance_staff_dues_management/types/AdminFinanceStaffDuesManagementTypes';
 import { staffSchema, financeStaffDuesSummarySchema } from '@/app/frontend_admin/admin_finance/finance_staff_dues_management/schemas/AdminFinanceStaffDuesManagementSchemas';
 

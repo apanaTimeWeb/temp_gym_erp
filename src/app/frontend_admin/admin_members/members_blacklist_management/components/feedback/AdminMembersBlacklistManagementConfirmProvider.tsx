@@ -7,7 +7,8 @@ import AdminNavigationLayoutConfirmModal from '@/app/frontend_admin/admin_member
 import type { AdminConfirmContextType, AdminConfirmOptions } from '@/app/frontend_admin/admin_members/members_blacklist_management/types/AdminMembersBlacklistManagementConfirmTypes';
 import type { AdminConfirmProviderProps } from '@/app/frontend_admin/admin_members/members_blacklist_management/types/AdminMembersBlacklistManagementConfirmProviderTypes';
 
-export const ConfirmContext = createContext<AdminConfirmContextType | undefined>(undefined);
+import { ConfirmContext } from '@/app/frontend_admin/admin_navigation/components/feedback/AdminNavigationLayoutConfirmProvider';
+export { ConfirmContext };
 interface PendingConfirmation {
   token: number;
   options: AdminConfirmOptions;

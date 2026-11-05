@@ -7,7 +7,8 @@ import AdminNavigationLayoutConfirmModal from '@/app/frontend_admin/admin_financ
 import type { AdminConfirmContextType, AdminConfirmOptions } from '@/app/frontend_admin/admin_finance/finance_staff_dues_management/types/AdminFinanceStaffDuesManagementConfirmTypes';
 import type { AdminConfirmProviderProps } from '@/app/frontend_admin/admin_finance/finance_staff_dues_management/types/AdminFinanceStaffDuesManagementConfirmProviderTypes';
 
-export const ConfirmContext = createContext<AdminConfirmContextType | undefined>(undefined);
+import { ConfirmContext } from '@/app/frontend_admin/admin_navigation/components/feedback/AdminNavigationLayoutConfirmProvider';
+export { ConfirmContext };
 interface PendingConfirmation {
   options: AdminConfirmOptions;
   resolve: (value: boolean) => void;

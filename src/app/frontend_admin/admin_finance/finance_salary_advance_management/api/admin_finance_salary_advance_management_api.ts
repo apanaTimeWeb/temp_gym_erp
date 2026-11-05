@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { adminFinanceSalaryAdvanceManagementApiFetch as apiFetch } from '@/app/frontend_admin/admin_finance/finance_salary_advance_management/utils/AdminFinanceSalaryAdvanceManagementApiResponse';
-import { ADMIN_FINANCE_SALARY_ADVANCE_API } from '@/app/frontend_admin/admin_finance/finance_salary_advance_management/config/admin_finance_salary_advance_management.url_config.ts';
+import { ADMIN_FINANCE_SALARY_ADVANCE_API } from '@/app/frontend_admin/admin_finance/finance_salary_advance_management/config/admin_finance_salary_advance_management.url_config';
 import type { Staff, FinanceSalaryAdvanceSummary } from '@/app/frontend_admin/admin_finance/finance_salary_advance_management/types/AdminFinanceSalaryAdvanceManagementTypes';
 import { staffSchema, financeSalaryAdvanceSummarySchema } from '@/app/frontend_admin/admin_finance/finance_salary_advance_management/schemas/AdminFinanceSalaryAdvanceManagementSchemas';
 

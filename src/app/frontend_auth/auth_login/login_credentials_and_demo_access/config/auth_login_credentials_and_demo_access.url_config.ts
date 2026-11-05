@@ -12,7 +12,7 @@ export const AuthUrlConfig = {
   PAGES: {
     LOGIN: '/frontend_auth/auth/login',
     LANDING: '/frontend_public/public_landing',
-    ADMIN_DASHBOARD: '/frontend_admin/admin_dashboard',
+    ADMIN_DASHBOARD: '/frontend_admin/admin_dashboard/dashboard_overview',
     MANAGER_DASHBOARD: '/frontend_manager/manager_dashboard',
     TRAINER_DASHBOARD: '/frontend_trainer/trainer_dashboard/dashboard_overview',
     SUPERADMIN_DASHBOARD: '/frontend_superadmin/superadmin_dashboard',

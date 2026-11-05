@@ -3,6 +3,7 @@
 
 // Type contract owned by this module; kept outside implementation files for AI isolation.
 
+import type { AdminToastType } from '@/app/frontend_admin/admin_finance/finance_payroll_report/types/AdminFinancePayrollReportToastTypes';
 import type { ReportDateRange } from '@/app/frontend_admin/admin_finance/finance_payroll_report/types/AdminFinancePayrollReportTypes';
 export interface ToastState {
   toast: { id: string; message: string; type: AdminToastType } | null;

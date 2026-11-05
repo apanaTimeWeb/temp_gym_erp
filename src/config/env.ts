@@ -14,6 +14,8 @@ export const env = {
   NEXT_PUBLIC_LANDING_EMAIL: process.env.NEXT_PUBLIC_LANDING_EMAIL || '',
   NEXT_PUBLIC_LANDING_PHONE: process.env.NEXT_PUBLIC_LANDING_PHONE || '',
   NEXT_PUBLIC_LANDING_ADDRESS: process.env.NEXT_PUBLIC_LANDING_ADDRESS || '',
+  NEXT_PUBLIC_GYM_NAME: process.env.NEXT_PUBLIC_GYM_NAME || 'Gym ERP',
+  NEXT_PUBLIC_GYM_PHONE: process.env.NEXT_PUBLIC_GYM_PHONE || '+1 (555) 000-0000',
 } as const;
 
 export default env;

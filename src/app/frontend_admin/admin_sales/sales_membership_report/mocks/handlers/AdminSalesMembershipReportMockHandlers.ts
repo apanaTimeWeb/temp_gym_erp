@@ -5,6 +5,7 @@ import { SALES_MOCK_SINGLE_BRANCH_MULTIPLIER } from '@/app/frontend_admin/admin_
 import { MOCK_ADMIN_MEMBERSHIP_REPORT, MOCK_ADMIN_MEMBERSHIP_TOTALS } from '@/app/frontend_admin/admin_sales/sales_membership_report/mocks/fixtures/AdminSalesMembershipReportMockFixtures';
 import { filterAdminSalesMembershipReportRows } from '@/app/frontend_admin/admin_sales/sales_membership_report/utils/AdminSalesMembershipReportFilterMembershipReportRows';
 import { isValidAdminSalesDateRange } from '@/app/frontend_admin/admin_sales/sales_membership_report/utils/AdminSalesMembershipReportDateRangeUtils';
+import type { MembershipTotals } from '@/app/frontend_admin/admin_sales/sales_membership_report/types/AdminSalesMembershipReportTypes';
 
 const failure = (message: string, statusCode: number) => HttpResponse.json({
   success: false,

@@ -2,7 +2,7 @@
 // RESPONSIBILITY: Renders one SaaS subscription plan comparison card and its upgrade action.
 // DATA FLOW: feature data/state and user input → AdminSubscriptionsManagementPlanCard → accessible UI/events routed to owning hooks (admin_subscriptions/subscriptions_overview/components/plan_cards/AdminSubscriptionsManagementPlanCard.tsx)
 
-import { ADMIN_SUBSCRIPTIONS_EXTERNAL_URLS } from '@/app/frontend_admin/admin_billing/billing_subscriptions_overview/config/admin_billing_subscriptions_overview.url_config.ts';
+import { ADMIN_SUBSCRIPTIONS_EXTERNAL_URLS } from '@/app/frontend_admin/admin_billing/billing_subscriptions_overview/config/admin_billing_subscriptions_overview.url_config';
 import { useLocale, useTranslations } from 'next-intl';
 import { Star, CheckCircle, Zap } from 'lucide-react';
 import { AdminSubscriptionsFormatCurrency } from '@/app/frontend_admin/admin_billing/billing_subscriptions_overview/utils/AdminBillingSubscriptionsOverviewFormatCurrency';

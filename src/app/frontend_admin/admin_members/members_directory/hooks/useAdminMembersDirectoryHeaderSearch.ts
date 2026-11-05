@@ -1,3 +1,4 @@
+"use client";
 // RESPONSIBILITY: Provides debounced Admin header member search through the existing Admin Members API client.
 // DATA FLOW: Header input → useAdminMembersHeaderSearch → AdminMembersApi → TanStack Query → AdminHeaderSearch
 
@@ -6,7 +7,6 @@
  * @dependencies Consumes only the owning module form/schema/mutation contract.
  * @edge-case Preserves validation, cancel, and failed-submit recovery without leaking business state.
  */
-"use client";
 import { ADMIN_MEMBERS_QUERY_KEYS } from '@/app/frontend_admin/admin_members/members_directory/constants/AdminMembersDirectoryQueryKeys';
 import { useQuery } from '@tanstack/react-query';
 import { useAdminMembersDebounce } from '@/app/frontend_admin/admin_members/members_directory/hooks/useAdminMembersDirectoryDebounce';

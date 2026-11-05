@@ -41,7 +41,7 @@ describe('useAdminHrStaffMutations', () => {
   it('normalizes create payload values, preserves backend feedback, and closes the modal', async () => {
     const { result } = renderHook(() => useAdminHrStaffMutations(null, setShowModal, showToast));
     await act(async () => {
-      await result.current.saveStaff({ ...staff, salary: '25000', joinDate: '2026-10-05' });
+      await result.current.saveStaff({ ...staff, salary: 25000, joinDate: '2026-10-05' });
     });
     expect(createMutation.mutateAsync).toHaveBeenCalledWith(expect.objectContaining({
       payload: expect.objectContaining({ salary: 25000, isActive: true, joinDate: expect.stringContaining('2026-10-05') }),

@@ -38,7 +38,7 @@ describe('useAdminFinancePayrollManagementPayrollMutations', () => {
   it('calculates pending payroll amount and routes the payload through the mutation layer', async () => {
     const { result } = renderHook(() => useAdminFinancePayrollManagementPayrollMutations(staff, payrolls, setShowPayrollModal, showToast));
     await act(async () => {
-      await result.current.savePayroll({ staffId: 's1', month: '2026-11', amount: '25000', paidAmount: 10000 });
+      await result.current.savePayroll({ staffId: 's1', month: '2026-11', amount: 25000, paidAmount: 10000 });
     });
     expect(mutationMocks[0].mutateAsync).toHaveBeenCalledWith(expect.objectContaining({ payload: expect.objectContaining({ amount: 2500000, paidAmount: 1000000, pendingAmount: 1500000, status: PAYROLL_STATUS.PARTIAL }) }));
     expect(showToast).toHaveBeenCalledWith('ok', 'success', 'hr-payroll-create-success');

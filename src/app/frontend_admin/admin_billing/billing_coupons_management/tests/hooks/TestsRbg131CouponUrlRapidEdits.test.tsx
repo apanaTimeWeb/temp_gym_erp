@@ -6,7 +6,7 @@ import { useAdminNavigationLayoutUrlQuerySync } from '@/app/frontend_admin/admin
 let current='tab=overview';
 const replace=vi.fn();
 vi.mock('next/navigation',()=>({useRouter:()=>({replace}),usePathname:()=>'/coupons',useSearchParams:()=>new URLSearchParams(current)}));
-function useHarness(){const [search,setSearch]=useState('');const [status,setStatus]=useState('all');useAdminNavigationLayoutUrlQuerySync([{key:'search',value:search,defaultValue:'',setValue:setSearch},{key:'status',value:status,defaultValue:'all',setValue:setStatus}]);return{search,status,setSearch,setStatus}}
+function useHarness(){const [search,setSearch]=useState('');const [status,setStatus]=useState('all');useAdminNavigationLayoutUrlQuerySync([{key:'search',value:search,defaultValue:'',setValue:(val)=>setSearch(typeof val === 'string' ? val : '')},{key:'status',value:status,defaultValue:'all',setValue:(val)=>setStatus(typeof val === 'string' ? val : 'all')}]);return{search,status,setSearch,setStatus}}
 describe('RBG131 URL pending writes',()=>{
   it('merges search and status before router acknowledgment',()=>{
     current='tab=overview';replace.mockReset();

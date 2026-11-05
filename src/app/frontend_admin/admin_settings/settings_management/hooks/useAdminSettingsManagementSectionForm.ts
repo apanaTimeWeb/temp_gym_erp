@@ -20,7 +20,7 @@ export function useAdminSettingsSectionForm<TFormValues extends FieldValues>(
   toastId: string,
 ) {
   const form = useForm<TFormValues>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema as any),
     defaultValues: initialData as DefaultValues<TFormValues>,
   });
   const formValues = useWatch({ control: form.control });
@@ -56,6 +56,6 @@ export function useAdminSettingsSectionForm<TFormValues extends FieldValues>(
     }
   }, [form, mutation, toastId]);
 
-  return { form: form as UseFormReturn<TFormValues>, formValues, mutation, submitForm };
+  return { form: form as unknown as UseFormReturn<TFormValues>, formValues, mutation, submitForm };
 }
 

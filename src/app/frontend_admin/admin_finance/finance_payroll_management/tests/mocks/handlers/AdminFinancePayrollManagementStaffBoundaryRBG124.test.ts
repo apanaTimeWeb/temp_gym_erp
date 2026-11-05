@@ -9,7 +9,7 @@ afterAll(() => server.close());
 beforeEach(async () => { expect((await fetch(`${origin}/admin/hr/__mock-reset`, { method: 'HEAD' })).status).toBe(204); });
 const read = async (query: string) => (await fetch(`${origin}/admin/hr/staff?${query}`)).json();
 describe('Finance payroll staff mock RBG124', () => {
-  it('rejects overlarge and non-decimal pagination input', () => {
+  it('rejects overlarge and non-decimal pagination input', async () => {
     for (const raw of ['101', '999999', '2.5', 'Infinity', '-1']) expect(readAdminFinanceMockPageParam(raw, 10)).toBe(10);
     expect(readAdminFinanceMockPageParam('100', 10)).toBe(100);
     const response = await read('limit=10000&search=%20%20');

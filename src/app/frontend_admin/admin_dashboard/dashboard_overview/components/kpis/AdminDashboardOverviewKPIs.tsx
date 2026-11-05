@@ -5,6 +5,7 @@
 import { useLocale, useTranslations } from 'next-intl';
 
 import { useAdminDashboardLogic } from '@/app/frontend_admin/admin_dashboard/dashboard_overview/hooks/useAdminDashboardOverviewLogic';
+import { useAdminDashboardDateRangeSuffix } from '@/app/frontend_admin/admin_dashboard/dashboard_overview/hooks/useAdminDashboardOverviewDateRangeSuffix';
 import AdminNavigationLayoutStatCard from '@/app/frontend_admin/admin_dashboard/dashboard_overview/components/AdminDashboardOverviewStatCard';
 import { AdminDashboardFormatCurrency } from '@/app/frontend_admin/admin_dashboard/dashboard_overview/utils/AdminDashboardOverviewFormatCurrency';
 import { formatNumber } from '@/app/frontend_admin/admin_dashboard/dashboard_overview/utils/AdminDashboardOverviewFormatters';
@@ -21,6 +22,7 @@ import { Users, DollarSign, TrendingUp, AlertCircle, Clock, UserCheck } from 'lu
 export default function AdminDashboardOverviewKPIs() {
   const locale = useLocale();
   const t = useTranslations();
+  const suffix = useAdminDashboardDateRangeSuffix();
   const { stats } = useAdminDashboardLogic();
   
   if (!stats) return null;
@@ -31,7 +33,7 @@ export default function AdminDashboardOverviewKPIs() {
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-4" data-testid="admin_dashboard-admindashboardkpis-summary">
       <AdminNavigationLayoutStatCard
-        title={t('dashboard.admin_dashboard_kpis.auto_avgAttendance')}
+        title={t('dashboard.admin_dashboard_kpis.auto_avgAttendance', { suffix })}
         value={s.avgAttendance == null ? displayValue(s.avgAttendance) : formatNumber(s.avgAttendance, locale)}
         change={t('admin_dashboard_kpis.auto_thisMonth')}
         changeType="neutral"
@@ -40,7 +42,7 @@ export default function AdminDashboardOverviewKPIs() {
         iconColor="text-primary"
        testId="admin_dashboard-admindashboardkpis-kpi-1"/>
       <AdminNavigationLayoutStatCard
-        title={t('dashboard.admin_dashboard_kpis.auto_renewalsPending')}
+        title={t('dashboard.admin_dashboard_kpis.auto_renewalsPending', { suffix })}
         value={s.renewalsPending == null ? displayValue(s.renewalsPending) : formatNumber(s.renewalsPending, locale)}
         change={t('admin_dashboard_kpis.auto_next7Days')}
         changeType="neutral"
@@ -51,7 +53,7 @@ export default function AdminDashboardOverviewKPIs() {
     </div>
     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
       <AdminNavigationLayoutStatCard
-        title={t('dashboard.admin_dashboard_kpis.auto_totalIncome')}
+        title={t('dashboard.admin_dashboard_kpis.auto_totalIncome', { suffix })}
         value={AdminDashboardFormatCurrency(s.totalRevenue || 0, s.currency, locale)}
         change={t('admin_dashboard_kpis.auto_allTime')}
         changeType="neutral"
@@ -60,7 +62,7 @@ export default function AdminDashboardOverviewKPIs() {
         iconColor="text-primary"
        testId="admin_dashboard-admindashboardkpis-kpi-3"/>
       <AdminNavigationLayoutStatCard
-        title={t('dashboard.admin_dashboard_kpis.auto_netProfit')}
+        title={t('dashboard.admin_dashboard_kpis.auto_netProfit', { suffix })}
         value={AdminDashboardFormatCurrency(s.netProfit || 0, s.currency, locale)}
         change={t('admin_dashboard_kpis.auto_allTime')}
         changeType="neutral"
@@ -69,7 +71,7 @@ export default function AdminDashboardOverviewKPIs() {
         iconColor="text-success"
        testId="admin_dashboard-admindashboardkpis-kpi-4"/>
       <AdminNavigationLayoutStatCard
-        title={t('dashboard.admin_dashboard_kpis.auto_activeMembers')}
+        title={t('dashboard.admin_dashboard_kpis.auto_activeMembers', { suffix })}
         value={formatNumber(s.activeMembers || 0, locale)}
         change={t('admin_dashboard_kpis.auto_capacity', { percent: s.totalMembers ? Math.round((s.activeMembers / s.totalMembers) * 100) : 0 })}
         changeType="neutral"
@@ -78,7 +80,7 @@ export default function AdminDashboardOverviewKPIs() {
         iconColor="text-info"
        testId="admin_dashboard-admindashboardkpis-kpi-5"/>
       <AdminNavigationLayoutStatCard
-        title={t('dashboard.admin_dashboard_kpis.auto_totalOutstanding')}
+        title={t('dashboard.admin_dashboard_kpis.auto_totalOutstanding', { suffix })}
         value={AdminDashboardFormatCurrency(s.pendingPayments || 0, s.currency, locale)}
         change={t('admin_dashboard_kpis.auto_membersDue', { count: s.membersByStatus?.pending || 0 })}
         changeType="neutral"

@@ -13,8 +13,8 @@ describe('useAdminBranchesStore', () => {
   });
 
   it('tracks branch detail view state independently from server data', () => {
-    useAdminBranchesStore.getState().setDetailView('overview');
-    expect(useAdminBranchesStore.getState().detailView).toBe('overview');
+    useAdminBranchesStore.getState().setDetailView('revenue');
+    expect(useAdminBranchesStore.getState().detailView).toBe('revenue');
   });
 
   it('stores filter and time-range preferences', () => {

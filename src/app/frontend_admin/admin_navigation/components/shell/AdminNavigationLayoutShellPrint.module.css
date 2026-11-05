@@ -7,17 +7,17 @@
     background: Canvas !important;
     color: CanvasText !important;
   }
-  .adminShellRoot :global([data-admin-shell-header]),
-  .adminShellRoot :global([data-admin-shell-sidebar]),
-  .adminShellRoot :global([data-admin-shell-toasts]),
-  .adminShellRoot :global([data-admin-shell-command-palette]) {
+  .adminShellRoot [data-admin-shell-header],
+  .adminShellRoot [data-admin-shell-sidebar],
+  .adminShellRoot [data-admin-shell-toasts],
+  .adminShellRoot [data-admin-shell-command-palette] {
     display: none !important;
   }
-  .adminShellRoot :global([data-admin-shell-main]) {
+  .adminShellRoot [data-admin-shell-main] {
     margin: 0 !important;
     padding: 0 !important;
   }
-  .adminShellRoot :global(*) {
+  .adminShellRoot * {
     box-shadow: none !important;
     text-shadow: none !important;
   }

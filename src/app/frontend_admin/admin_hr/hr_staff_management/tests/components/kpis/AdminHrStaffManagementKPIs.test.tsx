@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import AdminHrKPIs from '@/app/frontend_admin/admin_hr/hr_staff_management/components/kpis/AdminHrStaffManagementKPIs';
 
 const localeState = vi.hoisted(() => ({ locale: 'en-IN' }));
-const model = vi.hoisted(() => ({ staff: [], totalStaff: 0, status: 'success', error: '', retryStaff: vi.fn() }));
+const model = vi.hoisted(() => ({ staff: [] as any[], totalStaff: 0, status: 'success', error: '', retryStaff: vi.fn() }));
 vi.mock('next-intl', () => ({ useTranslations: () => (key: string) => key, useLocale: () => localeState.locale }));
 vi.mock('@/app/frontend_admin/admin_hr/hr_staff_management/hooks/useAdminHrStaffManagementViewModel', () => ({ useAdminHrViewModel: () => model }));
 

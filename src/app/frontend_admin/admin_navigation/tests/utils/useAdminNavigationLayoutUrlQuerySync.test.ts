@@ -17,8 +17,8 @@ describe('useAdminNavigationLayoutUrlQuerySync', () => {
       const [page, setPage] = useState<number | string>(1);
       const [status, setStatus] = useState('all');
       useAdminNavigationLayoutUrlQuerySync([
-        { key: 'page', value: page, defaultValue: 1, setValue: setPage },
-        { key: 'status', value: status, defaultValue: 'all', setValue: setStatus },
+        { key: 'page', value: page, defaultValue: 1, setValue: (val) => setPage(val ?? 1) },
+        { key: 'status', value: status, defaultValue: 'all', setValue: (val) => setStatus(typeof val === 'string' ? val : 'all') },
       ]);
       return { page, status, setPage, setStatus };
     });

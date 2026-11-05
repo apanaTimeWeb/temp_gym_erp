@@ -10,7 +10,7 @@ const normalizeMockPagination = (value: string | null, fallback: number): number
   return Number.isSafeInteger(n) && n > 0 ? n : fallback;
 };
 import { http, HttpResponse } from 'msw';
-import { ADMIN_FINANCE_API } from '@/app/frontend_admin/admin_finance/finance_summary/config/admin_finance_summary.url_config.ts';
+import { ADMIN_FINANCE_API } from '@/app/frontend_admin/admin_finance/finance_summary/config/admin_finance_summary.url_config';
 
 const ok = <T>(data: T, message = 'Success') => HttpResponse.json({ success: true, message, data  , requestId: globalThis.crypto.randomUUID()});
 

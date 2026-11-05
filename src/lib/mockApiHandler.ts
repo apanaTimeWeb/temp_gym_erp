@@ -53,12 +53,108 @@ import {
   TRAINER_NOTIFICATIONS_MOCK_TRAINER_NOTIFICATIONS,
 } from '@/app/frontend_trainer/trainer_account/account_notifications/mocks/fixtures/TrainerAccountNotificationsNotificationsMockData';
 
-function buildMockSuccess<T>(data: T, message = 'Success'): ApiResponse<T> {
+// Admin Mock Fixture Imports
+import {
+  getAdminDashboardFixture,
+} from '@/app/frontend_admin/admin_dashboard/dashboard_overview/mocks/fixtures/AdminDashboardOverviewMockFixtures';
+
+import {
+  MOCK_MEMBERS_BRANCH_REFERENCES,
+} from '@/app/frontend_admin/admin_members/members_directory/mocks/fixtures/AdminMembersDirectoryBranchReferenceMockFixtures';
+
+import {
+  MOCK_ADMIN_MEMBERS_EXPANDED,
+  MOCK_ADMIN_MEMBERS_SUMMARY,
+} from '@/app/frontend_admin/admin_members/members_directory/mocks/fixtures/AdminMembersDirectoryMockFixtures';
+
+import {
+  MOCK_ADMIN_ATTENDANCE_RECORDS_EXPANDED,
+} from '@/app/frontend_admin/admin_attendance/attendance_dashboard/mocks/fixtures/AdminAttendanceDashboardMockFixtures';
+
+import {
+  getAdminAttendanceReportsFixture,
+} from '@/app/frontend_admin/admin_attendance/attendance_reports/mocks/fixtures/AdminAttendanceReportsMockFixtures';
+
+import {
+  MOCK_ADMIN_SALES_OVERVIEW,
+  MOCK_ADMIN_SALES_REFERRALS,
+} from '@/app/frontend_admin/admin_sales/sales_overview/mocks/fixtures/AdminSalesOverviewMockFixtures';
+
+import {
+  MOCK_ADMIN_ALL_MEMBERSHIPS,
+} from '@/app/frontend_admin/admin_sales/sales_memberships/mocks/fixtures/AdminSalesMembershipsMockFixtures';
+
+import {
+  MOCK_ADMIN_FINANCE_SUMMARY,
+  MOCK_ADMIN_PAYMENTS_EXPANDED,
+  MOCK_ADMIN_EXPENSES,
+} from '@/app/frontend_admin/admin_finance/finance_summary/mocks/fixtures/AdminFinanceSummaryMockFixtures';
+
+import {
+  MOCK_ADMIN_STAFF_EXPANDED,
+} from '@/app/frontend_admin/admin_hr/hr_staff_management/mocks/fixtures/AdminHrStaffManagementMockFixtures';
+
+import {
+  MOCK_BRANCHES,
+} from '@/app/frontend_admin/admin_gyms/gyms_branches_directory/mocks/fixtures/AdminGymsBranchesDirectoryMockFixtures';
+
+import {
+  MOCK_ADMIN_PLANS,
+} from '@/app/frontend_admin/admin_billing/billing_plans_catalog/mocks/fixtures/AdminBillingPlansCatalogMockFixtures';
+
+import {
+  MOCK_COUPONS_EXPANDED,
+  MOCK_COUPONS_KPI,
+} from '@/app/frontend_admin/admin_billing/billing_coupons_management/mocks/fixtures/AdminBillingCouponsManagementMockFixtures';
+
+import {
+  MOCK_ANNOUNCEMENTS,
+  MOCK_ANNOUNCEMENT_KPI,
+} from '@/app/frontend_admin/admin_communication/communication_notices_and_announcements/mocks/fixtures/AdminCommunicationNoticesAndAnnouncementsMockFixtures';
+
+import {
+  MOCK_ADMIN_NOTIFICATIONS,
+} from '@/app/frontend_admin/admin_communication/communication_notifications_center/mocks/fixtures/AdminCommunicationNotificationsCenterMockFixtures';
+
+import {
+  ADMIN_CAMPAIGNS_TEMPLATES,
+  ADMIN_CAMPAIGNS_AUDIENCES,
+  ADMIN_CAMPAIGNS_RECIPIENTS_PENDING,
+} from '@/app/frontend_admin/admin_communication/communication_whatsapp_campaigns/mocks/fixtures/AdminCommunicationWhatsAppCampaignsManagementMockFixtures';
+
+import {
+  MOCK_AUDIT_LOGS,
+  MOCK_AUDIT_KPI,
+  MOCK_AUDIT_ACTORS,
+} from '@/app/frontend_admin/admin_security/security_audit_logs_explorer/mocks/fixtures/AdminSecurityAuditLogsExplorerMockFixtures';
+
+import {
+  MOCK_ADMIN_SETTINGS,
+} from '@/app/frontend_admin/admin_settings/settings_management/mocks/fixtures/AdminSettingsManagementMockFixtures';
+
+import {
+  MOCK_ADMIN_PROFILE,
+} from '@/app/frontend_admin/admin_profile/profile_overview/mocks/fixtures/AdminProfileOverviewMockFixtures';
+
+function getStoredUser() {
+  if (typeof window !== 'undefined') {
+    try {
+      const raw = localStorage.getItem('gymsmart_user');
+      if (raw) return JSON.parse(raw);
+    } catch {
+      // Storage access fallback
+    }
+  }
+  return null;
+}
+
+function buildMockSuccess<T>(data: T, message = 'Success', meta?: any): ApiResponse<T> {
   const requestId = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `req_${Date.now()}`;
   const envelope = {
     success: true as const,
     message,
     data,
+    meta,
     requestId,
     status: 200,
     ok: true,
@@ -158,12 +254,21 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
         document.cookie = `gymsmart_token=${token}; path=/; max-age=86400`;
         document.cookie = `gymsmart_user=${encodeURIComponent(JSON.stringify(user))}; path=/; max-age=86400`;
       }
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.setItem('gymsmart_token', token);
+          localStorage.setItem('gymsmart_user', JSON.stringify(user));
+        } catch {
+          // Storage fallback
+        }
+      }
 
       return buildMockSuccess(user, 'Login successful');
     }
 
-    // GET session check
-    const user = {
+    // GET session check: prioritize active stored user
+    const stored = getStoredUser();
+    const user = stored || {
       id: 'usr_trainer_01',
       name: 'Michael Trainer',
       email: 'trainer@smartgym360.com',
@@ -174,7 +279,8 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
   }
 
   if (urlPath === '/auth/me' || urlPath === '/frontend_auth/auth/me') {
-    const user = {
+    const stored = getStoredUser();
+    const user = stored || {
       id: 'usr_trainer_01',
       name: 'Michael Trainer',
       email: 'trainer@smartgym360.com',
@@ -184,8 +290,237 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
     return buildMockSuccess(user, 'Current user retrieved');
   }
 
-  // 2. TRAINER ENDPOINTS
-  // Normalized path by stripping leading /trainer/ or /frontend_trainer/api/
+  // 2. ADMIN ENDPOINTS
+  if (urlPath === '/admin/dashboard/fetchDashboardStats') {
+    const branchId = searchParams.get('branchId') || undefined;
+    const rawRange = searchParams.get('range') || 'this_month';
+    const fixture = getAdminDashboardFixture(branchId === 'all' ? undefined : branchId, rawRange as any);
+    return buildMockSuccess(fixture, 'Dashboard data loaded');
+  }
+
+  if (urlPath === '/admin/branches/fetchBranches' || urlPath === '/admin/branches') {
+    return buildMockSuccess({ items: MOCK_MEMBERS_BRANCH_REFERENCES });
+  }
+
+  if (urlPath === '/admin/members/summary') {
+    return buildMockSuccess(MOCK_ADMIN_MEMBERS_SUMMARY);
+  }
+
+  if (urlPath === '/admin/members/list' || urlPath === '/admin/members') {
+    const search = (searchParams.get('search') || '').trim().toLowerCase();
+    const status = searchParams.get('status');
+    const branchId = searchParams.get('branchId');
+    let filtered = MOCK_ADMIN_MEMBERS_EXPANDED;
+    if (search) {
+      filtered = filtered.filter((m) => `${m.name} ${m.email} ${m.phone}`.toLowerCase().includes(search));
+    }
+    if (status && status !== 'all') {
+      filtered = filtered.filter((m) => m.status === status);
+    }
+    if (branchId && branchId !== 'all') {
+      filtered = filtered.filter((m) => m.branchId === branchId);
+    }
+    const page = parseInt(searchParams.get('page') || '1', 10) || 1;
+    const limit = parseInt(searchParams.get('limit') || '10', 10) || 10;
+    const totalPages = Math.max(1, Math.ceil(filtered.length / limit));
+    const safePage = Math.min(page, totalPages);
+    const start = (safePage - 1) * limit;
+    const pageData = filtered.slice(start, start + limit);
+    return buildMockSuccess(pageData, 'Success', {
+      total: filtered.length,
+      page: safePage,
+      limit,
+      totalPages,
+      hasNextPage: safePage < totalPages,
+      hasPrevPage: safePage > 1,
+    });
+  }
+
+  if (urlPath.startsWith('/admin/members/')) {
+    const memberId = urlPath.replace('/admin/members/', '');
+    if (memberId === 'export') {
+      return buildMockSuccess('id,name,email,phone\nm1,Rahul,rahul@example.com,9876543210', 'Member export ready');
+    }
+    const member = MOCK_ADMIN_MEMBERS_EXPANDED.find((m) => m.id === memberId) || MOCK_ADMIN_MEMBERS_EXPANDED[0];
+    return buildMockSuccess(member, 'Member retrieved');
+  }
+
+  if (urlPath === '/admin/attendance/summary') {
+    return buildMockSuccess({
+      todayTotal: 2450,
+      todayPresent: 2180,
+      todayLate: 120,
+      weeklyAverage: 2100,
+      peakHour: '18:00',
+      trendVsLastWeek: 4.5,
+      uniqueMembersThisMonth: 3850,
+    });
+  }
+
+  if (urlPath === '/admin/attendance/records') {
+    const page = parseInt(searchParams.get('page') || '1', 10) || 1;
+    const limit = parseInt(searchParams.get('limit') || '10', 10) || 10;
+    const totalPages = Math.max(1, Math.ceil(MOCK_ADMIN_ATTENDANCE_RECORDS_EXPANDED.length / limit));
+    const safePage = Math.min(page, totalPages);
+    const start = (safePage - 1) * limit;
+    const pageData = MOCK_ADMIN_ATTENDANCE_RECORDS_EXPANDED.slice(start, start + limit);
+    return buildMockSuccess(pageData, 'Success', {
+      total: MOCK_ADMIN_ATTENDANCE_RECORDS_EXPANDED.length,
+      page: safePage,
+      limit,
+      totalPages,
+      hasNextPage: safePage < totalPages,
+      hasPrevPage: safePage > 1,
+    });
+  }
+
+  if (urlPath === '/admin/attendance/trend') {
+    return buildMockSuccess([
+      { date: '2026-10-01', count: 312 },
+      { date: '2026-10-02', count: 287 },
+      { date: '2026-10-03', count: 345 },
+      { date: '2026-10-04', count: 298 },
+      { date: '2026-10-05', count: 378 },
+      { date: '2026-10-06', count: 421 },
+      { date: '2026-10-07', count: 395 },
+    ]);
+  }
+
+  if (urlPath === '/admin/reports/attendance') {
+    const from = searchParams.get('from') || '2026-10-01';
+    const to = searchParams.get('to') || '2026-10-31';
+    const gymId = searchParams.get('gymId') || 'all';
+    return buildMockSuccess(getAdminAttendanceReportsFixture({ gymId, from, to }));
+  }
+
+  if (urlPath === '/admin/sales/overview') {
+    return buildMockSuccess(MOCK_ADMIN_SALES_OVERVIEW);
+  }
+
+  if (urlPath === '/admin/sales/referral-sources') {
+    return buildMockSuccess(MOCK_ADMIN_SALES_REFERRALS);
+  }
+
+  if (urlPath === '/admin/sales/summary') {
+    return buildMockSuccess({
+      totalRevenue: 154000,
+      newMembers: 34,
+      conversionRate: 14.2,
+      activeLeads: 88,
+    });
+  }
+
+  if (urlPath === '/admin/sales/all-memberships') {
+    return buildMockSuccess(MOCK_ADMIN_ALL_MEMBERSHIPS);
+  }
+
+  if (urlPath === '/admin/finance/summary') {
+    return buildMockSuccess(MOCK_ADMIN_FINANCE_SUMMARY);
+  }
+
+  if (urlPath === '/admin/finance/payments/fetchPayments' || urlPath === '/admin/finance/payments') {
+    const page = parseInt(searchParams.get('page') || '1', 10) || 1;
+    const limit = parseInt(searchParams.get('limit') || '10', 10) || 10;
+    const totalPages = Math.max(1, Math.ceil(MOCK_ADMIN_PAYMENTS_EXPANDED.length / limit));
+    const safePage = Math.min(page, totalPages);
+    const start = (safePage - 1) * limit;
+    const pageData = MOCK_ADMIN_PAYMENTS_EXPANDED.slice(start, start + limit);
+    return buildMockSuccess(pageData, 'Success', {
+      total: MOCK_ADMIN_PAYMENTS_EXPANDED.length,
+      page: safePage,
+      limit,
+      totalPages,
+      hasNextPage: safePage < totalPages,
+      hasPrevPage: safePage > 1,
+    });
+  }
+
+  if (urlPath === '/admin/finance/payments/fetchExpenses' || urlPath === '/admin/finance/expenses') {
+    return buildMockSuccess(MOCK_ADMIN_EXPENSES);
+  }
+
+  if (urlPath.startsWith('/admin/hr/staff')) {
+    if (urlPath === '/admin/hr/staff') {
+      const page = parseInt(searchParams.get('page') || '1', 10) || 1;
+      const limit = parseInt(searchParams.get('limit') || '10', 10) || 10;
+      const totalPages = Math.max(1, Math.ceil(MOCK_ADMIN_STAFF_EXPANDED.length / limit));
+      const safePage = Math.min(page, totalPages);
+      const start = (safePage - 1) * limit;
+      const pageData = MOCK_ADMIN_STAFF_EXPANDED.slice(start, start + limit);
+      return buildMockSuccess(pageData, 'Success', {
+        total: MOCK_ADMIN_STAFF_EXPANDED.length,
+        page: safePage,
+        limit,
+        totalPages,
+        hasNextPage: safePage < totalPages,
+        hasPrevPage: safePage > 1,
+      });
+    }
+    const staffId = urlPath.replace('/admin/hr/staff/', '');
+    const found = MOCK_ADMIN_STAFF_EXPANDED.find((s) => s.id === staffId) || MOCK_ADMIN_STAFF_EXPANDED[0];
+    return buildMockSuccess(found);
+  }
+
+  if (urlPath === '/admin/gyms/branches' || urlPath === '/admin/gyms/branches_directory') {
+    return buildMockSuccess(MOCK_BRANCHES);
+  }
+
+  if (urlPath === '/admin/plans/fetchAllPlans' || urlPath === '/admin/plans') {
+    return buildMockSuccess(MOCK_ADMIN_PLANS);
+  }
+
+  if (urlPath.startsWith('/admin/coupons')) {
+    if (urlPath === '/admin/coupons/kpis') {
+      return buildMockSuccess(MOCK_COUPONS_KPI);
+    }
+    return buildMockSuccess(MOCK_COUPONS_EXPANDED);
+  }
+
+  if (urlPath.startsWith('/admin/announcements')) {
+    if (urlPath === '/admin/announcements/kpis') {
+      return buildMockSuccess(MOCK_ANNOUNCEMENT_KPI);
+    }
+    return buildMockSuccess(MOCK_ANNOUNCEMENTS);
+  }
+
+  if (urlPath.startsWith('/admin/notifications')) {
+    if (urlPath === '/admin/notifications/read-all' || urlPath.endsWith('/read')) {
+      return buildMockSuccess(null, 'Marked as read');
+    }
+    return buildMockSuccess(MOCK_ADMIN_NOTIFICATIONS);
+  }
+
+  if (urlPath.startsWith('/admin/campaigns')) {
+    if (urlPath === '/admin/campaigns/templates') {
+      return buildMockSuccess(ADMIN_CAMPAIGNS_TEMPLATES);
+    }
+    if (urlPath === '/admin/campaigns/audiences') {
+      return buildMockSuccess(ADMIN_CAMPAIGNS_AUDIENCES);
+    }
+    if (urlPath === '/admin/campaigns/recipients') {
+      return buildMockSuccess(ADMIN_CAMPAIGNS_RECIPIENTS_PENDING);
+    }
+  }
+
+  if (urlPath.startsWith('/admin/audit-logs')) {
+    if (urlPath === '/admin/audit-logs/kpis') {
+      return buildMockSuccess(MOCK_AUDIT_KPI);
+    }
+    if (urlPath === '/admin/audit-logs/actors') {
+      return buildMockSuccess(MOCK_AUDIT_ACTORS);
+    }
+    return buildMockSuccess(MOCK_AUDIT_LOGS);
+  }
+
+  if (urlPath === '/admin/settings/fetchSettings' || urlPath === '/admin/settings') {
+    return buildMockSuccess(MOCK_ADMIN_SETTINGS);
+  }
+
+  if (urlPath === '/admin/adminProfile/fetchProfile' || urlPath === '/admin/profile') {
+    return buildMockSuccess(MOCK_ADMIN_PROFILE);
+  }
+
+  // 3. TRAINER ENDPOINTS
   let trainerPath = '';
   if (urlPath.startsWith('/trainer/')) {
     trainerPath = urlPath.slice('/trainer/'.length);
@@ -253,50 +588,19 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
         limit: 50,
       });
     }
-    if (trainerPath.startsWith('trainer_workout/workouts/')) {
-      return buildMockSuccess(TRAINER_WORKOUT_MOCK_WORKOUTS[0]);
-    }
-    if (trainerPath.startsWith('trainer_workout/exercises/')) {
-      return buildMockSuccess(TRAINER_WORKOUT_MOCK_EXERCISES[0]);
-    }
 
-    // Diet Library
-    if (trainerPath === 'trainer_library/diet-plans' || trainerPath === 'diet-plans') {
-      return buildMockSuccess({
-        dietPlans: TRAINER_LIBRARY_MOCK_LIBRARY_DIET_PLANS,
-        total: TRAINER_LIBRARY_MOCK_LIBRARY_DIET_PLANS.length,
-      });
+    // Diet Plans
+    if (trainerPath === 'diet-plans' || trainerPath === 'trainer_diet/diet-plans') {
+      return buildMockSuccess(TRAINER_LIBRARY_MOCK_LIBRARY_DIET_PLANS);
     }
-    if (trainerPath === 'trainer_library/assigned-members') {
+    if (trainerPath === 'diet-plans/assigned-members' || trainerPath === 'trainer_diet/assigned-members') {
       return buildMockSuccess(TRAINER_LIBRARY_MOCK_LIBRARY_ASSIGNED_MEMBERS);
     }
 
-    // Progress Tracking
-    if (trainerPath === 'trainer_progress_tracking/members') {
-      return buildMockSuccess(TRAINER_PROGRESS_TRACKING_MOCK_PROGRESS_MEMBERS);
-    }
-    if (trainerPath.includes('progress_tracking') && trainerPath.endsWith('/entries')) {
-      return buildMockSuccess({
-        entries: TRAINER_PROGRESS_TRACKING_MOCK_PROGRESS_ENTRIES,
-        total: TRAINER_PROGRESS_TRACKING_MOCK_PROGRESS_ENTRIES.length,
-        page: 1,
-        limit: 10,
-      });
-    }
-    if (trainerPath.includes('progress_tracking') && trainerPath.endsWith('/summary')) {
-      return buildMockSuccess({
-        totalEntries: 12,
-        startWeight: 85,
-        currentWeight: 78,
-        weightChange: -7,
-        trend: 'decreasing',
-      });
-    }
-
     // Earnings
-    if (trainerPath === 'earnings' || trainerPath === 'trainer_earnings' || trainerPath === 'trainer_earnings/data') {
-      const page = Number(searchParams.get('page') || '1');
-      const limit = Number(searchParams.get('limit') || '10');
+    if (trainerPath === 'earnings' || trainerPath === 'trainer_earnings') {
+      const page = Number(searchParams.get('historyPage') || '1');
+      const limit = Number(searchParams.get('historyLimit') || '10');
       return buildMockSuccess({
         ...TRAINER_EARNINGS_MOCK_EARNINGS_DATA,
         historyTotal: TRAINER_EARNINGS_MOCK_EARNINGS_DATA.history.length,
@@ -370,4 +674,3 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
 
   return null;
 }
-

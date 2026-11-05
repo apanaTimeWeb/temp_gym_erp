@@ -9,8 +9,8 @@ function Probe() {
   const { confirm } = useAdminNavigationLayoutConfirm();
   const [responses, setResponses] = useState<boolean[]>([]);
   return <><button type="button" onClick={() => {
-    void confirm({ title: 'First change', message: 'Remove first?', requireTyping: true, confirmationPhrase: 'REMOVE' }).then(v => setResponses(a => [...a, v]));
-    void confirm({ title: 'Second change', message: 'Remove second?', requireTyping: true, confirmationPhrase: 'REMOVE' }).then(v => setResponses(a => [...a, v]));
+    void confirm({ title: 'First change', message: 'Remove first?', requireTyping: true, confirmationPhrase: 'REMOVE' }).then((v: boolean) => setResponses(a => [...a, v]));
+    void confirm({ title: 'Second change', message: 'Remove second?', requireTyping: true, confirmationPhrase: 'REMOVE' }).then((v: boolean) => setResponses(a => [...a, v]));
   }}>Queue confirmations</button><output data-testid="response-count">{responses.length}</output></>;
 }
 describe('RBG130 queued billing confirmations', () => {

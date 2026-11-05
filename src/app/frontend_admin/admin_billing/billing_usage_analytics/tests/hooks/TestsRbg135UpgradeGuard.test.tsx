@@ -12,7 +12,7 @@ vi.mock('@/app/frontend_admin/admin_billing/billing_usage_analytics/api/admin_bi
 vi.mock('@/app/frontend_admin/admin_billing/billing_usage_analytics/hooks/useAdminBillingUsageAnalyticsConfirm',()=>({useAdminNavigationLayoutConfirm:vi.fn()}));
 vi.mock('@/app/frontend_admin/admin_billing/billing_usage_analytics/state/useAdminBillingUsageAnalyticsToastStore',()=>({useAdminNavigationLayoutToastStore:vi.fn()}));
 const confirm=vi.fn(),showToast=vi.fn();
-const usage={tenantId:'t1',planName:'Growth',planTier:'Growth',billingCycleEnd:'2026-11-15T00:00:00Z',monthlyPrice:4999,smsSent:10,smsLimit:100,databaseGb:1,mediaGb:1,storageLimitGb:10,activeMembers:5,memberLimit:50,staffCount:1,staffLimit:5,branchCount:1,branchLimit:5,apiCallsToday:1,apiCallsLimit:100,usageHistory:[]};
+const usage={tenantId:'t1',planName:'Growth',planTier:'Growth' as const,billingCycleEnd:'2026-11-15T00:00:00Z',monthlyPrice:4999,smsSent:10,smsLimit:100,databaseGb:1,mediaGb:1,storageLimitGb:10,activeMembers:5,memberLimit:50,staffCount:1,staffLimit:5,branchCount:1,branchLimit:5,apiCallsToday:1,apiCallsLimit:100,usageHistory:[]};
 let client:QueryClient;
 function wrapper({children}:{children:React.ReactNode}){return <QueryClientProvider client={client}>{children}</QueryClientProvider>}
 describe('RBG135 usage upgrade guard',()=>{

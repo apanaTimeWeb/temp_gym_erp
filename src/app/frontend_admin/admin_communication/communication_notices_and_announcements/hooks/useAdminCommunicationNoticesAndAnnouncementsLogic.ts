@@ -28,7 +28,7 @@ export function useAdminAnnouncementsLogic() {
     { key: 'status', value: statusFilter, defaultValue: 'all', setValue: (val) => { const normalized = typeof val === 'string' ? val : ''; if (['all', 'active', 'scheduled', 'expired', 'draft'].includes(normalized)) store.setStatusFilter(normalized as 'all' | import('@/app/frontend_admin/admin_communication/communication_notices_and_announcements/types/AdminCommunicationNoticesAndAnnouncementsTypes').AnnouncementStatus); } },
     { key: 'priority', value: priorityFilter, defaultValue: 'all', setValue: (val) => { const normalized = typeof val === 'string' ? val : ''; if (['all', 'high', 'medium', 'low'].includes(normalized)) store.setPriorityFilter(normalized as 'all' | import('@/app/frontend_admin/admin_communication/communication_notices_and_announcements/types/AdminCommunicationNoticesAndAnnouncementsTypes').AnnouncementPriority); } },
     { key: 'gym', value: gymFilter, defaultValue: 'all', setValue: (val) => store.setGymFilter(typeof val === 'string' ? val : 'all') },
-    { key: 'page', value: currentPage, defaultValue: 1, setValue: (value) => store.setCurrentPage(normalizeAdminAnnouncementsPage(value)), },
+    { key: 'page', value: currentPage, defaultValue: 1, setValue: (value) => store.setCurrentPage(normalizeAdminAnnouncementsPage(value ?? null)), },
   ]);
 
   const queryParams = {

@@ -21,7 +21,7 @@ describe('useAdminBlacklistStore', () => {
   it('controls the blacklist modal and active tab', () => {
     const store = useAdminBlacklistStore.getState();
     store.setShowModal(true);
-    store.setActiveTab('cross_gym');
-    expect(useAdminBlacklistStore.getState()).toMatchObject({ showModal: true, activeTab: 'cross_gym' });
+    store.setActiveTab('cross-branch');
+    expect(useAdminBlacklistStore.getState()).toMatchObject({ showModal: true, activeTab: 'cross-branch' });
   });
 });

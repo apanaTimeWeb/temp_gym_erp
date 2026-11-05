@@ -1,7 +1,7 @@
 // RESPONSIBILITY: API client for the Subscriptions / Billing module.
 // DATA FLOW: feature hook/view → feature API client → apiFetch host transport → typed ApiResponse/data validation → UI/cache (admin_subscriptions/subscriptions_plans/api/admin_subscriptions_management_api.ts)
 
-import { ADMIN_SUBSCRIPTIONS_API } from '@/app/frontend_admin/admin_billing/billing_subscription_plans/config/admin_billing_subscription_plans.url_config.ts';
+import { ADMIN_SUBSCRIPTIONS_API } from '@/app/frontend_admin/admin_billing/billing_subscription_plans/config/admin_billing_subscription_plans.url_config';
 import { saaSPlanSchema, invoiceSchema, paymentMethodSchema, subscriptionKpiDataSchema, currentSubscriptionSchema } from '@/app/frontend_admin/admin_billing/billing_subscription_plans/schemas/AdminBillingSubscriptionPlansSchemas';
 import type { CurrentSubscription, SaaSPlan, Invoice, PaymentMethod, SubscriptionKPIData } from '@/app/frontend_admin/admin_billing/billing_subscription_plans/types/AdminBillingSubscriptionPlansTypes';
 import { z } from 'zod';

@@ -37,7 +37,7 @@ export default function AdminFinancePlanRevenueAnalyticsCharts({ data }: AdminPl
     legend: { position: 'right' },
     tooltip: {
       y: {
-        formatter: (val) => AdminPlansFormatCurrency(val, undefined, locale),
+        formatter: (val) => AdminPlansFormatCurrency(val ?? 0, undefined, locale),
       },
     },
   };

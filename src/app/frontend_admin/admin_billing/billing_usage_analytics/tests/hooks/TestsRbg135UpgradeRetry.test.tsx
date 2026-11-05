@@ -11,7 +11,7 @@ vi.mock('next-intl',()=>({useTranslations:()=> (key:string)=>key}));
 vi.mock('@/app/frontend_admin/admin_billing/billing_usage_analytics/api/admin_billing_usage_analytics_api',()=>({AdminUsageApi:{fetchMyUsage:vi.fn(),requestUpgrade:vi.fn()}}));
 vi.mock('@/app/frontend_admin/admin_billing/billing_usage_analytics/hooks/useAdminBillingUsageAnalyticsConfirm',()=>({useAdminNavigationLayoutConfirm:vi.fn()}));
 vi.mock('@/app/frontend_admin/admin_billing/billing_usage_analytics/state/useAdminBillingUsageAnalyticsToastStore',()=>({useAdminNavigationLayoutToastStore:vi.fn()}));
-const usage={tenantId:'t',planName:'Growth',planTier:'Growth',billingCycleEnd:'2026-11-15',monthlyPrice:4999,smsSent:1,smsLimit:10,databaseGb:1,mediaGb:2,storageLimitGb:5,activeMembers:1,memberLimit:5,staffCount:1,staffLimit:5,branchCount:1,branchLimit:5,apiCallsToday:1,apiCallsLimit:10,usageHistory:[]};
+const usage={tenantId:'t',planName:'Growth',planTier:'Growth' as const,billingCycleEnd:'2026-11-15',monthlyPrice:4999,smsSent:1,smsLimit:10,databaseGb:1,mediaGb:2,storageLimitGb:5,activeMembers:1,memberLimit:5,staffCount:1,staffLimit:5,branchCount:1,branchLimit:5,apiCallsToday:1,apiCallsLimit:10,usageHistory:[]};
 const client=new QueryClient({defaultOptions:{queries:{retry:false},mutations:{retry:false}}});
 function wrapper({children}:{children:React.ReactNode}){return <QueryClientProvider client={client}>{children}</QueryClientProvider>}
 describe('RBG135 upgrade retry intent',()=>{

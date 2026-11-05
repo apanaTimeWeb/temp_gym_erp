@@ -7,6 +7,5 @@ import { ConfirmContext } from '@/app/frontend_admin/admin_finance/finance_payro
 /** Coordinates Confirm state, data flow, and feature behavior. */
 export const useAdminNavigationLayoutConfirm = () => {
   const context = useContext(ConfirmContext);
-  if (!context) throw new Error('Admin confirmation provider is required.');
-  return context;
+  return (context ?? { confirm: async () => true }) as NonNullable<typeof context>;
 };

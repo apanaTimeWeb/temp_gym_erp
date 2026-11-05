@@ -22,16 +22,16 @@ describe('Admin dashboard mock fixture scope', () => {
 
   it('keeps aggregate data when no branch is selected', () => {
     const aggregate = getAdminDashboardFixture(undefined, 'this_month');
-    expect(aggregate.activeMembers).toBe(12500);
-    expect(aggregate.totalRevenue).toBe(24500000);
-    expect(aggregate.branchLeaderboard).toHaveLength(4);
+    expect(aggregate?.activeMembers).toBe(12500);
+    expect(aggregate?.totalRevenue).toBe(24500000);
+    expect(aggregate?.branchLeaderboard).toHaveLength(4);
   });
 
   it('changes trend length from the selected range', () => {
     const month = getAdminDashboardFixture(undefined, 'this_month');
     const year = getAdminDashboardFixture(undefined, 'this_year');
 
-    expect(month.revenueTrend).toHaveLength(1);
-    expect(year.revenueTrend).toHaveLength(6);
+    expect(month?.revenueTrend).toHaveLength(1);
+    expect(year?.revenueTrend).toHaveLength(6);
   });
 });

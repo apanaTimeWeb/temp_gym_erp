@@ -7,7 +7,7 @@ import { io, type Socket } from 'socket.io-client';
 import { logErrorToMonitoring } from '@/app/frontend_admin/admin_navigation/utils/AdminNavigationLayoutMonitoring';
 import type { AdminNavigationLayoutWebSocketContextValue, AdminNavigationLayoutWebSocketProviderProps, AdminSocketListener } from '@/app/frontend_admin/admin_navigation/types/AdminNavigationLayoutTypes';
 
-const AdminNavigationLayoutWebSocketContext = createContext<AdminNavigationLayoutWebSocketContextValue | null>(null);
+export const AdminNavigationLayoutWebSocketContext = createContext<AdminNavigationLayoutWebSocketContextValue | null>(null);
 
 /**
  * @description AdminNavigationLayoutWebSocketProvider owns connection lifecycle/reconnect and exposes a cleanup-safe event subscription API.
@@ -60,7 +60,9 @@ export default function AdminNavigationLayoutWebSocketProvider({ children, url }
  */
 export function useAdminNavigationLayoutWebSocketEvent(eventName: string, listener: AdminSocketListener) {
   const context = useContext(AdminNavigationLayoutWebSocketContext);
-  if (!context) throw new Error('useAdminNavigationLayoutWebSocketEvent must be used inside AdminNavigationLayoutWebSocketProvider');
-  useEffect(() => context.subscribe(eventName, listener), [context, eventName, listener]);
-  return context.connected;
+  useEffect(() => {
+    if (!context) return;
+    return context.subscribe(eventName, listener);
+  }, [context, eventName, listener]);
+  return context?.connected ?? false;
 }

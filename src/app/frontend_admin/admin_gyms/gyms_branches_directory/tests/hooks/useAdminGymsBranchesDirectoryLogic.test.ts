@@ -27,7 +27,7 @@ describe('useAdminBranchesLogic', () => {
   it('filters branch rows from the module store and opens/closes the selected detail', () => {
     const { result } = renderHook(() => useAdminBranchesLogic());
     expect(result.current.branches.map((branch) => branch.id)).toEqual(['b1']);
-    act(() => result.current.openDetail(listQuery.data.data[0], 'overview' as never));
+    act(() => result.current.openDetail(listQuery.data.data[0] as any, 'overview' as never));
     expect(store.setSelectedBranchId).toHaveBeenCalledWith('b1');
     expect(store.setDetailView).toHaveBeenCalledWith('overview');
     act(() => result.current.closeDetail());

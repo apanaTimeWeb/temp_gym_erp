@@ -38,8 +38,8 @@ export function useAdminMembersLogic() {
 
   // Keep the visible toolbar selection authoritative; a stale branchId URL value must not silently override it.
   const activeBranch = branchFilter !== 'all' ? branchFilter : undefined;
-  const selectedGender: FetchMembersParams['gender'] = genderFilter === 'all' ? undefined : genderFilter;
-  const selectedPlan: FetchMembersParams['plan'] = planFilter === 'all' ? undefined : planFilter;
+  const selectedGender: FetchMembersParams['gender'] = genderFilter === 'all' ? undefined : (genderFilter as FetchMembersParams['gender']);
+  const selectedPlan: FetchMembersParams['plan'] = planFilter === 'all' ? undefined : (planFilter as FetchMembersParams['plan']);
 
   const queryParams: FetchMembersParams = {
     search: debouncedSearch || undefined,

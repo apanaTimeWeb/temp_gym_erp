@@ -16,7 +16,7 @@ describe('useAdminMembersHeaderSearch', () => {
     expect(vi.mocked(useQuery).mock.calls[0]?.[0]).toEqual(expect.objectContaining({ enabled: false, staleTime: 30000 }));
 
     const { rerender } = renderHook(({ search }) => useAdminMembersHeaderSearch(search), { initialProps: { search: 'Riya' } });
-    const options = vi.mocked(useQuery).mock.calls.at(-1)?.[0] as { queryFn: () => Promise<unknown>; enabled: boolean };
+    const options = vi.mocked(useQuery).mock.calls.at(-1)?.[0] as unknown as { queryFn: () => Promise<unknown>; enabled: boolean };
     expect(options.enabled).toBe(true);
     return expect(options.queryFn()).resolves.toEqual([]);
   });

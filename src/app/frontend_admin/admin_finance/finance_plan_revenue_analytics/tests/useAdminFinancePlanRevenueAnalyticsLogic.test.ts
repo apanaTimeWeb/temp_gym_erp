@@ -31,7 +31,7 @@ describe('useAdminPlansRevenueLogic', () => {
       refetch: vi.fn(),
     } as never);
     vi.mocked(AdminPlansRevenueApi.fetchPlanRevenue).mockResolvedValue({ data: records } as never);
-    vi.mocked(useAdminPlansRevenueDebounce).mockImplementation((value: string) => value);
+    vi.mocked(useAdminPlansRevenueDebounce).mockImplementation(((value: any) => value) as any);
   });
 
   it('derives revenue aggregates from the server response and exposes pagination metadata', () => {

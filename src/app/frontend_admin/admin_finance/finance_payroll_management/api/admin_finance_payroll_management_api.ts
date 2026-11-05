@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { adminFinancePayrollManagementApiFetch as apiFetch } from '@/app/frontend_admin/admin_finance/finance_payroll_management/utils/AdminFinancePayrollManagementApiResponse';
-import { ADMIN_FINANCE_PAYROLL_API } from '@/app/frontend_admin/admin_finance/finance_payroll_management/config/admin_finance_payroll_management.url_config.ts';
+import { ADMIN_FINANCE_PAYROLL_API } from '@/app/frontend_admin/admin_finance/finance_payroll_management/config/admin_finance_payroll_management.url_config';
 import type { Staff, Payroll, FinancePayrollSummary } from '@/app/frontend_admin/admin_finance/finance_payroll_management/types/AdminFinancePayrollManagementTypes';
 import { staffSchema, payrollSchema, financePayrollSummarySchema } from '@/app/frontend_admin/admin_finance/finance_payroll_management/schemas/AdminFinancePayrollManagementSchemas';
 

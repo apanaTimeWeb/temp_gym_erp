@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { adminFinanceStaffLedgerManagementApiFetch as apiFetch } from '@/app/frontend_admin/admin_finance/finance_staff_ledger_management/utils/AdminFinanceStaffLedgerManagementApiResponse';
-import { ADMIN_FINANCE_STAFF_LEDGER_API } from '@/app/frontend_admin/admin_finance/finance_staff_ledger_management/config/admin_finance_staff_ledger_management.url_config.ts';
+import { ADMIN_FINANCE_STAFF_LEDGER_API } from '@/app/frontend_admin/admin_finance/finance_staff_ledger_management/config/admin_finance_staff_ledger_management.url_config';
 import type { Staff, FinanceStaffLedgerSummary, LedgerEntry } from '@/app/frontend_admin/admin_finance/finance_staff_ledger_management/types/AdminFinanceStaffLedgerManagementTypes';
 import { staffSchema, financeStaffLedgerSummarySchema, ledgerEntrySchema } from '@/app/frontend_admin/admin_finance/finance_staff_ledger_management/schemas/AdminFinanceStaffLedgerManagementSchemas';
 

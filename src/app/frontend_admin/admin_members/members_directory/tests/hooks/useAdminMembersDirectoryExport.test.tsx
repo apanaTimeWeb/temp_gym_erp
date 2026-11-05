@@ -12,7 +12,7 @@ vi.mock('@/app/frontend_admin/admin_members/members_directory/api/admin_members_
 vi.mock('@/app/frontend_admin/admin_members/members_directory/components/feedback/AdminMembersDirectoryToastService', () => ({ adminToast: { success: vi.fn(), error: vi.fn() } }));
 vi.mock('@/app/frontend_admin/admin_members/members_directory/components/feedback/AdminMembersDirectoryBackendMessage', () => ({ getAdminBackendMessage: () => 'export failed safely' }));
 
-const filters = { search: 'Riya', status: 'active', branchId: 'branch-1' };
+const filters = { search: 'Riya', status: 'active' as const, branchId: 'branch-1' };
 let createObjectURL: ReturnType<typeof vi.fn>;
 let revokeObjectURL: ReturnType<typeof vi.fn>;
 let clickSpy: ReturnType<typeof vi.spyOn>;

@@ -71,7 +71,7 @@ export default function AdminDashboardOverviewRevenueTrend() {
       theme: 'dark',
       y: {
         formatter: (v) =>
-          AdminDashboardFormatCurrency(v, stats.currency, locale),
+          AdminDashboardFormatCurrency(v ?? 0, stats.currency, locale),
       },
     },
     legend: {

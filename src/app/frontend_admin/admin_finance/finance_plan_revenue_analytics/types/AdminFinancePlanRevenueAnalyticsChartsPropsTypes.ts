@@ -3,6 +3,8 @@
 
 // Type contract owned by this module; extracted from the component signature for AI isolation.
 
+import type { PlanRevenueRecord } from '@/app/frontend_admin/admin_finance/finance_plan_revenue_analytics/types/AdminFinancePlanRevenueAnalyticsTypes';
+
 export interface AdminPlansRevenueChartsProps {
   data: PlanRevenueRecord[];
 }
