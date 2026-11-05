@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { apiFetch } from '@/lib/api';
 import { TrainerInfrastructureApiResponseSchema } from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/schemas/TrainerCoachingSessionsTrainerInfrastructureApiResponseSchema';
 import { TRAINER_SESSIONS_ALL_SESSION_FILTER } from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/config/TrainerCoachingSessionsConstants';
-import { TrainerSessionsTrainerSessionSchema } from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/schemas/TrainerCoachingSessionsDomainSchemas';
+import { TrainerSessionsTrainerSessionSchema, TrainerSessionsTrainerSessionMemberSchema } from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/schemas/TrainerCoachingSessionsDomainSchemas';
 import { TRAINER_SESSIONS_URLS } from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/config/trainer_coaching_sessions.url_config';
 import type { TrainerSessionsTrainerSession, TrainerSessionsTrainerSessionMember, TrainerSessionsCreateSessionDto, TrainerSessionsSessionFilter } from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/types/TrainerCoachingSessionsTypes';
 import type { ApiResponse } from '@/lib/api';
@@ -22,9 +22,9 @@ class TrainerSessionsApiError extends Error {
  */
 export async function fetchTrainerSessionsTrainerSessionMembers(): Promise<TrainerSessionsTrainerSessionMember[]> {
   const raw = await apiFetch<ApiResponse<unknown>>(TRAINER_SESSIONS_URLS.API.MEMBERS);
-  const response = TrainerInfrastructureApiResponseSchema(z.array(z.object({ id: z.string(), name: z.string() }))).parse(raw);
+  const response = TrainerInfrastructureApiResponseSchema(z.array(TrainerSessionsTrainerSessionMemberSchema)).parse(raw);
   if (!response.success) throw new TrainerSessionsApiError(response.message, response.errorCode, response.statusCode);
-  return z.array(z.object({ id: z.string(), name: z.string() })).parse(response.data);
+  return z.array(TrainerSessionsTrainerSessionMemberSchema).parse(response.data);
 }
 
 /** @description Fetches filtered sessions and preserves canonical API failures for query retry UI. */

@@ -25,7 +25,7 @@ export function useTrainerSessionsMain() {
   const [showScheduleModal, setShowScheduleModal] = useState(false);
   const [attendanceSession, setAttendanceSession] = useState<TrainerSessionsTrainerSession | null>(null);
   const [editingSession, setEditingSession] = useState<TrainerSessionsTrainerSession | null>(null);
-  const actions = useTrainerSessionsActions({ setShowScheduleModal, setAttendanceSession, setEditingSession });
+  const actions = useTrainerSessionsActions({ setShowScheduleModal, setAttendanceSession, setEditingSession, members: memberOptionsRaw });
 
   return {
     filter,

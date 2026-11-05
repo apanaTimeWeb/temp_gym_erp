@@ -1,7 +1,7 @@
 "use client";
 // RESPONSIBILITY: Owns Trainer Progress Tracking route orchestration state and action handlers; the Main component remains a view compositor.
 // DATA FLOW: URL filters + feature queries + module store → useTrainerProgressTrackingMain → Main view and child components.
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, useEffect } from 'react';
 
 import { useTranslations } from 'next-intl';
 
@@ -35,6 +35,14 @@ const EMPTY_COMPARISON_MEMBER_IDS: string[] = [];
 export function useTrainerProgressTrackingMain({ enableComparison = true }: { enableComparison?: boolean } = {}) {
   const { selectedMemberId, setSelectedMemberId, activeTab, setActiveTab, currentPage, setCurrentPage, sortBy, sortDirection, setSort } = useTrainerProgressTrackingFilters();
   const membersQuery = useTrainerProgressTrackingMembersQuery();
+
+  // Auto-select first member if none selected so charts and tables are immediately visible
+  useEffect(() => {
+    if (!selectedMemberId && membersQuery.data && membersQuery.data.length > 0) {
+      setSelectedMemberId(membersQuery.data[0].id);
+    }
+  }, [selectedMemberId, membersQuery.data, setSelectedMemberId]);
+
   const progressQuery = useTrainerProgressTrackingEntriesQuery({ memberId: selectedMemberId, page: currentPage, limit: 10, sortBy, sortDirection });
   const chartQuery = useTrainerProgressTrackingCompleteHistoryQuery(selectedMemberId);
   const summaryQuery = useTrainerProgressTrackingSummaryQuery(selectedMemberId);

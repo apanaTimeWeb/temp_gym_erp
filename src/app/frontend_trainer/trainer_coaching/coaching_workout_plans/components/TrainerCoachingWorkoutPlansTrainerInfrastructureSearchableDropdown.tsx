@@ -91,8 +91,9 @@ export default function TrainerInfrastructureSearchableDropdown({
     triggerRef.current?.focus();
   };
 
+  const hasWidthClass = /(?:^|\s)w-/.test(className);
   return (
-    <div className={`relative w-full ${className} `} ref={dropdownRef}>
+    <div className={`relative ${hasWidthClass ? '' : 'w-full'} ${className}`.trim()} ref={dropdownRef}>
       <button
         ref={triggerRef}
         id={id}
