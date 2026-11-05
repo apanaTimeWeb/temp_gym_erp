@@ -17,9 +17,9 @@ export function ManagerAttendanceTrackingCheckInMethodBadge({ method }: ManagerA
 
   if (!method) return <span className="text-text-secondary text-xs">—</span>;
   const config: Record<CheckInMethod, { icon: ReactNode; label: string; class: string }> = {
-    QR:        { icon: <QrCode size={18} strokeWidth={2}/>,       label: t("COPY_QR"),       class: 'bg-info text-on-info' },
-    Manual:    { icon: <Edit size={18} strokeWidth={2}/>,          label: t("COPY_MANUAL"),   class: 'bg-warning text-on-warning' },
-    Biometric: { icon: <Fingerprint size={18} strokeWidth={2}/>,   label: t("COPY_BIOMETRIC"), class: 'bg-success text-on-success' } };
+    QR:        { icon: <QrCode size={14} strokeWidth={2}/>,       label: t("COPY_QR"),       class: 'bg-info text-on-info' },
+    Manual:    { icon: <Edit size={14} strokeWidth={2}/>,          label: t("COPY_MANUAL"),   class: 'bg-warning text-on-warning' },
+    Biometric: { icon: <Fingerprint size={14} strokeWidth={2}/>,   label: t("COPY_BIOMETRIC"), class: 'bg-success text-on-success' } };
   const { icon, label, class: cls } = config[method];
   return (
     <span data-testid={`manager_attendance-attendance-check-in-method-badge-${method.toLowerCase()}`} className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold ${cls}`}>

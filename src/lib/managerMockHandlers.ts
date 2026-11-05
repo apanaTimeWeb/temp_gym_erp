@@ -92,12 +92,37 @@ export function handleManagerMockApiRequest(
     return buildMockSuccess(MOCK_ATTENDANCE_RECORDS, 'Attendance history loaded');
   }
   if (path === 'attendance') {
-    const page = Number(searchParams.get('page') || '1');
-    const limit = Number(searchParams.get('limit') || '10');
+    const search = (searchParams.get('search') || '').trim().toLowerCase();
+    const date = searchParams.get('date') || '';
+    const status = (searchParams.get('status') || '').trim().toUpperCase();
+    const type = (searchParams.get('type') || '').trim().toUpperCase();
+    const page = Math.max(Number(searchParams.get('page') || '1'), 1);
+    const limit = Math.max(Number(searchParams.get('limit') || '10'), 1);
+
+    const filtered = MOCK_ATTENDANCE_RECORDS.filter((record) => {
+      const name = (record.member?.name || record.staff?.name || '').toLowerCase();
+      const matchesSearch = !search || name.includes(search);
+      const matchesDate = !date || record.date === date;
+      const recordStatus = (record.status || '').toUpperCase();
+      const matchesStatus =
+        !status ||
+        status === 'ALL' ||
+        status === 'ALL_FILTER' ||
+        recordStatus === status ||
+        (status === 'PRESENT' && (recordStatus.includes('PRESENT') || Boolean(record.checkIn))) ||
+        (status === 'ABSENT' && recordStatus.includes('ABSENT')) ||
+        (status === 'LATE' && recordStatus.includes('LATE'));
+      const matchesType = !type || record.type === type;
+      return matchesSearch && matchesDate && matchesStatus && matchesType;
+    });
+
+    const start = (page - 1) * limit;
+    const paginated = filtered.slice(start, start + limit);
+
     return buildMockSuccess(
-      { attendances: MOCK_ATTENDANCE_RECORDS, total: MOCK_ATTENDANCE_RECORDS.length },
+      { attendances: paginated, total: filtered.length },
       'Attendance records loaded',
-      { total: MOCK_ATTENDANCE_RECORDS.length, page, limit, totalPages: Math.ceil(MOCK_ATTENDANCE_RECORDS.length / limit) || 1 }
+      { total: filtered.length, page, limit, totalPages: Math.ceil(filtered.length / limit) || 1 }
     );
   }
 
@@ -136,12 +161,24 @@ export function handleManagerMockApiRequest(
         return buildMockSuccess(MOCK_MEMBERS[0], 'Member added');
       }
     }
-    const page = Number(searchParams.get('page') || '1');
-    const limit = Number(searchParams.get('limit') || '10');
+    const search = (searchParams.get('search') || '').trim().toLowerCase();
+    const status = (searchParams.get('status') || '').trim().toUpperCase();
+    const page = Math.max(Number(searchParams.get('page') || '1'), 1);
+    const limit = Math.max(Number(searchParams.get('limit') || '10'), 1);
+
+    const filtered = MOCK_MEMBERS.filter((m) => {
+      const matchesSearch = !search || m.name.toLowerCase().includes(search) || m.phone.includes(search) || (m.email && m.email.toLowerCase().includes(search));
+      const matchesStatus = !status || status === 'ALL' || m.status?.toUpperCase() === status;
+      return matchesSearch && matchesStatus;
+    });
+
+    const start = (page - 1) * limit;
+    const paginated = filtered.slice(start, start + limit);
+
     return buildMockSuccess(
-      { members: MOCK_MEMBERS, total: MOCK_MEMBERS.length },
+      { members: paginated, total: filtered.length },
       'Members list loaded',
-      { total: MOCK_MEMBERS.length, page, limit, totalPages: Math.ceil(MOCK_MEMBERS.length / limit) || 1 }
+      { total: filtered.length, page, limit, totalPages: Math.ceil(filtered.length / limit) || 1 }
     );
   }
   if (path.startsWith('members/')) {
@@ -198,10 +235,12 @@ export function handleManagerMockApiRequest(
     return buildMockSuccess(MOCK_FINANCE_SUMMARY, 'Finance summary loaded');
   }
   if (path === 'finance/payments' || path === 'finance') {
-    const page = Number(searchParams.get('page') || '1');
-    const limit = Number(searchParams.get('limit') || '10');
+    const page = Math.max(Number(searchParams.get('page') || '1'), 1);
+    const limit = Math.max(Number(searchParams.get('limit') || '10'), 1);
+    const start = (page - 1) * limit;
+    const paginated = MOCK_PAYMENTS.slice(start, start + limit);
     return buildMockSuccess(
-      { payments: MOCK_PAYMENTS, total: MOCK_PAYMENTS.length },
+      { payments: paginated, total: MOCK_PAYMENTS.length },
       'Payments loaded',
       { total: MOCK_PAYMENTS.length, page, limit, totalPages: Math.ceil(MOCK_PAYMENTS.length / limit) || 1 }
     );
@@ -235,10 +274,12 @@ export function handleManagerMockApiRequest(
         return buildMockSuccess(currentExpenses[0], 'Expense recorded');
       }
     }
-    const page = Number(searchParams.get('page') || '1');
-    const limit = Number(searchParams.get('limit') || '10');
+    const page = Math.max(Number(searchParams.get('page') || '1'), 1);
+    const limit = Math.max(Number(searchParams.get('limit') || '10'), 1);
+    const start = (page - 1) * limit;
+    const paginated = currentExpenses.slice(start, start + limit);
     return buildMockSuccess(
-      { expenses: currentExpenses, total: currentExpenses.length, page, limit },
+      { expenses: paginated, total: currentExpenses.length, page, limit },
       'Expenses loaded',
       { total: currentExpenses.length, page, limit, totalPages: Math.ceil(currentExpenses.length / limit) || 1 }
     );

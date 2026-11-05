@@ -63,7 +63,9 @@ export default function ManagerInfrastructureResponsiveTable({ labels, children,
         ...(normalizedLabel.includes('status') || normalizedLabel.includes('स्थिति') || normalizedLabel.includes('progress') || normalizedLabel.includes('प्रगति') ? { 'data-mobile-status': 'true' } : {}),
         ...(normalizedLabel.includes('action') || normalizedLabel.includes('receipt') || normalizedLabel.includes('कार्रवाई') || normalizedLabel.includes('कार्य') || normalizedLabel.includes('रसीद') ? { 'data-mobile-actions': 'true' } : {}),
       };
-      const mobileCellClass = !isCardStack ? '' : `${cardStackCellClass} max-md:flex max-md:items-start max-md:justify-between max-md:gap-4 max-md:border-b max-md:border-border max-md:px-3 max-md:py-2 max-md:text-right max-md:last:border-b-0 md:table-cell md:align-middle md:border-0 md:px-4 md:py-3.5 md:text-left`;
+      const hasExistingPadding = typeof cellProps.className === 'string' && /\b(px-|p-)/.test(cellProps.className);
+      const defaultDesktopPadding = hasExistingPadding ? '' : 'md:px-4 md:py-3.5';
+      const mobileCellClass = !isCardStack ? '' : `${cardStackCellClass} max-md:flex max-md:items-start max-md:justify-between max-md:gap-4 max-md:border-b max-md:border-border max-md:px-3 max-md:py-2 max-md:text-right max-md:last:border-b-0 md:table-cell md:align-middle md:border-0 ${defaultDesktopPadding} md:text-left`.trim();
       const originalChildren = cellProps.children as ReactNode;
       const isFinalCell = currentCellIndex === finalCellIndex;
       const actionChildren = isFinalCell ? <ManagerInfrastructureTableContextMenu label={rowActionLabel} testId={rowActionTestId}>{originalChildren}</ManagerInfrastructureTableContextMenu> : originalChildren;

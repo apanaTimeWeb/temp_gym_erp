@@ -79,8 +79,8 @@ export default function ManagerAttendanceTrackingTable() {
   const paginatedRecords = records;
 
   return (
-    <div className="p-5">
-      {(() => { if (isPending) return (<div className="motion-safe:animate-pulse bg-card rounded-xl border border-border mt-4">
+    <div className="flex flex-col w-full">
+      {(() => { if (isPending) return (<div className="motion-safe:animate-pulse bg-card rounded-xl border border-border p-4">
           {[...Array(5)].map((_, i) => (<div key={`skeleton-${i}`} className="h-16 border-b border-border flex items-center px-4 gap-4">
               <div className="h-8 w-8 bg-input rounded-full"></div>
               <div className="h-4 bg-input rounded w-32"></div>
@@ -90,15 +90,15 @@ export default function ManagerAttendanceTrackingTable() {
               <div className="h-4 bg-input rounded w-16"></div>
               <div className="h-4 bg-input rounded w-16"></div>
             </div>))}
-        </div>); return (() => { if (isError) return (<div className="text-center py-16 bg-card rounded-2xl border border-danger mt-4">
+        </div>); return (() => { if (isError) return (<div className="text-center py-16 bg-card rounded-2xl border border-danger m-4">
           <p className="text-danger-text font-medium">{errorMessage || t("TEXT_GENERIC_ERROR")}</p>
           <span className="text-sm text-text-secondary">{t("COPY_RETRY_REQUEST")}</span>
-        </div>); return (<div className="overflow-x-auto">
+        </div>); return (
           <ManagerInfrastructureResponsiveTable labels={ATTENDANCE_TABLE_HEADERS}>
 <table className="w-full">
-            <thead className="bg-input">
+            <thead className="bg-input border-b border-border">
               <tr>
-                {ATTENDANCE_TABLE_HEADERS.map(h => (<th key={h} className="text-left text-xs font-semibold text-text-secondary uppercase tracking-wider px-4 py-3 whitespace-nowrap">
+                {ATTENDANCE_TABLE_HEADERS.map(h => (<th key={h} className="text-left text-xs font-semibold text-text-secondary uppercase tracking-wider px-2.5 py-3 whitespace-nowrap">
                     {h}
                   </th>))}
               </tr>
@@ -109,54 +109,54 @@ export default function ManagerAttendanceTrackingTable() {
         setCalendarUser({ id: String(r.memberId || r.staffId || r.id), name: String(r.member?.name || r.staff?.name || ''), type: r.type as ManagerAttendanceTrackingPersonType });
     } }} className="cursor-pointer hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-200 ease-in-out">
                   {/* Name */}
-                  <td className="px-4 py-3 whitespace-nowrap">
-                    <div className="flex items-center gap-2">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-text-primary text-xs font-bold ${getAttendanceTypeSurface(r.type as ManagerAttendanceTrackingPersonType)}`}>
+                  <td className="px-2.5 py-3 whitespace-nowrap">
+                    <div className="flex items-center gap-2 max-w-[140px]">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-text-primary text-xs font-bold shrink-0 ${getAttendanceTypeSurface(r.type as ManagerAttendanceTrackingPersonType)}`}>
                         {(r.member?.name || r.staff?.name || '?').charAt(0)}
                       </div>
-                      <span className="text-sm font-medium text-text-primary">
+                      <span className="text-sm font-medium text-text-primary truncate">
                         {ManagerAttendanceTrackingDisplayValue(r.member?.name ?? r.staff?.name)}
                       </span>
                     </div>
                   </td>
                   {/* Type */}
-                  <td className="px-4 py-3 whitespace-nowrap">
-                    <span data-testid={`manager_attendance-attendance-attendancetable-type-${r.id}`} className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${getAttendanceTypeBadgeSurface(r.type as ManagerAttendanceTrackingPersonType)}`}>
+                  <td className="px-2.5 py-3 whitespace-nowrap">
+                    <span data-testid={`manager_attendance-attendance-attendancetable-type-${r.id}`} className={`inline-flex px-2 py-0.5 rounded-full text-xs font-semibold ${getAttendanceTypeBadgeSurface(r.type as ManagerAttendanceTrackingPersonType)}`}>
                       {r.type}
                     </span>
                   </td>
                   {/* Status */}
-                  <td className="px-4 py-3 whitespace-nowrap">
-                    <span data-testid={`manager_attendance-attendance-attendancetable-status-${r.id}`} className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${getAttendanceStatusSurface(normalizeAttendanceStatus(r.status, r.checkIn))}`}>
+                  <td className="px-2.5 py-3 whitespace-nowrap">
+                    <span data-testid={`manager_attendance-attendance-attendancetable-status-${r.id}`} className={`inline-flex px-2 py-0.5 rounded-full text-xs font-semibold ${getAttendanceStatusSurface(normalizeAttendanceStatus(r.status, r.checkIn))}`}>
                       {getAttendanceStatusLabel(normalizeAttendanceStatus(r.status, r.checkIn), t)}
                     </span>
                   </td>
                   {/* Date */}
-                  <td className="px-4 py-3 text-sm text-text-secondary whitespace-nowrap">{ManagerAttendanceTrackingFormatDate(r.date)}</td>
+                  <td className="px-2.5 py-3 text-sm text-text-secondary whitespace-nowrap">{ManagerAttendanceTrackingFormatDate(r.date)}</td>
                   {/* Check In */}
-                  <td className="px-4 py-3 text-sm text-text-secondary whitespace-nowrap">
-                    <div className="flex items-center gap-1">
-                      <Clock size={18} strokeWidth={2} className="opacity-50"/>
+                  <td className="px-2.5 py-3 text-xs text-text-secondary whitespace-nowrap">
+                    <div className="flex items-center gap-1.5">
+                      <Clock size={14} strokeWidth={2} className="opacity-50 shrink-0"/>
                       {formatTime(r.checkIn)}
                     </div>
                   </td>
                   {/* Check Out — CRITICAL FIX */}
-                  <td className="px-4 py-3 text-sm text-text-secondary whitespace-nowrap">
-                    <div className="flex items-center gap-1">
-                      <Clock size={18} strokeWidth={2} className="opacity-50"/>
+                  <td className="px-2.5 py-3 text-xs text-text-secondary whitespace-nowrap">
+                    <div className="flex items-center gap-1.5">
+                      <Clock size={14} strokeWidth={2} className="opacity-50 shrink-0"/>
                       {formatTime(r.checkOut ?? r.checkOutTime)}
                     </div>
                   </td>
                   {/* Duration — CRITICAL FIX */}
-                  <td className="px-4 py-3 text-sm text-text-secondary whitespace-nowrap">
+                  <td className="px-2.5 py-3 text-sm text-text-secondary whitespace-nowrap">
                     {formatDuration(r.durationMinutes)}
                   </td>
                   {/* Method — CRITICAL FIX */}
-                  <td className="px-4 py-3 whitespace-nowrap">
+                  <td className="px-2.5 py-3 whitespace-nowrap">
                     <ManagerAttendanceTrackingCheckInMethodBadge method={r.checkInMethod}/>
                   </td>
                   {/* Actions */}
-                  <td className="px-4 py-3 text-sm whitespace-nowrap">
+                  <td className="px-2.5 py-3 text-sm whitespace-nowrap">
                     <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "p-1.5 rounded-md hover:bg-primary-subtle text-primary motion-safe:transition-all flex items-center gap-1 border border-transparent hover:border-border motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_attendance-attendance-managerattendancetable-button-view-monthly-calendar-${mapIndex}`} onClick={(event) => { event.stopPropagation(); setCalendarUser({ id: String(r.memberId || r.staffId || r.id), name: String(r.member?.name || r.staff?.name || ''), type: r.type as ManagerAttendanceTrackingPersonType }); }}  title={t("COPY_VIEW_MONTHLY_CALENDAR")} aria-label={t("COPY_VIEW_MONTHLY_ATTENDANCE_CALENDAR")} type="button">
                       <Calendar size={18} strokeWidth={2} data-testid="manager_attendance-managerattendancetable-interactive"/>
                       <span className="text-xs font-medium">{t("COPY_HISTORY")}</span>
@@ -171,9 +171,9 @@ export default function ManagerAttendanceTrackingTable() {
             </tbody>
           </table>
 </ManagerInfrastructureResponsiveTable>
-        </div>); })(); })()}
+        ); })(); })()}
 
-      <div className="border-t border-border mt-4 pt-4">
+      <div className="border-t border-border p-4">
         <ManagerPagination data-testid="manager_attendance-managerattendancetable-managerpagination-1"
           currentPage={currentPage}
           totalPages={totalPages}

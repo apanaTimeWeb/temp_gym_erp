@@ -88,7 +88,7 @@ export default function ManagerInfrastructureTableContextMenu({ label, testId, c
         aria-expanded={open}
         data-row-action-menu-trigger="true"
         data-testid={testId}
-        className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-border bg-input text-text-secondary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+        className="inline-flex min-h-11 min-w-11 md:min-h-8 md:min-w-8 items-center justify-center rounded-lg border border-border bg-input text-text-secondary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shrink-0"
         onClick={(event) => { event.stopPropagation(); setOpen((value) => !value); }}
       >
         <MoreHorizontal size={18} aria-hidden="true" />

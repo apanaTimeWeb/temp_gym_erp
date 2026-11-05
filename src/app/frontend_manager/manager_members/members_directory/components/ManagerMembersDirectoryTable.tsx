@@ -73,8 +73,7 @@ export default function ManagerMembersDirectoryTable() {
         <div data-testid="manager_members-manager-members-table-status" role="alert" className="p-8 text-center text-danger-text space-y-3"><p>{ManagerInfrastructureGetErrorMessage(error, t('TEXT_GENERIC_ERROR'))}</p><button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "px-4 py-2 rounded-lg bg-primary text-on-primary text-sm font-semibold motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_members-manager-members-table-button-refresh" type="button" onClick={() => void refetch()} >{t("COPY_RETRY")}</button></div>
       ); } return (
         <>
-          <div className="overflow-x-auto">
-            <ManagerInfrastructureResponsiveTable labels={MEMBERS_TABLE_HEADERS.map((header) => t(header.labelKey))}>
+          <ManagerInfrastructureResponsiveTable labels={MEMBERS_TABLE_HEADERS.map((header) => t(header.labelKey))}>
               <table className="w-full text-left border-collapse">
                 <thead className="bg-primary-subtle/60 border-b border-border">
                   <tr>
@@ -159,82 +158,82 @@ export default function ManagerMembersDirectoryTable() {
                         )}
                       </td>
                       <td className="px-4 py-3.5 text-xs whitespace-nowrap">
-                        <div className="flex items-center justify-end gap-1.5">
+                        <div className="flex items-center justify-end gap-1">
                           {m.pendingAmount > 0 && (
                             <button
-                              className="min-h-11 min-w-11 inline-flex items-center justify-center p-1.5 rounded-lg bg-warning-bg text-warning-text hover:bg-warning hover:text-on-warning border border-warning/30 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                              className="min-h-11 min-w-11 md:min-h-8 md:min-w-8 inline-flex items-center justify-center p-1.5 rounded-lg bg-warning-bg text-warning-text hover:bg-warning hover:text-on-warning border border-warning/30 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shrink-0"
                               data-testid={`manager_members-members-managermemberstable-button-collect-dues-${m.id}`}
                               onClick={(e) => { e.stopPropagation(); setSelectedMember(m); setShowPaymentModal(true); }}
                               title={t("COPY_COLLECT_DUES")}
                               aria-label={t("TEXT_COLLECT_DUES", { value: m.name })}
                               type="button"
                             >
-                              <Banknote size={17} strokeWidth={2}/>
+                              <Banknote size={16} strokeWidth={2}/>
                             </button>
                           )}
                           <button
-                            className="min-h-11 min-w-11 inline-flex items-center justify-center p-1.5 rounded-lg bg-input text-text-secondary hover:text-text-primary hover:bg-surface-hover border border-border/40 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                            className="min-h-11 min-w-11 md:min-h-8 md:min-w-8 inline-flex items-center justify-center p-1.5 rounded-lg bg-input text-text-secondary hover:text-text-primary hover:bg-surface-hover border border-border/40 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shrink-0"
                             data-testid={`manager_members-members-managermemberstable-button-edit-${m.id}`}
                             onClick={(e) => { e.stopPropagation(); openEdit(m); }}
                             title={t("COPY_EDIT_2")}
                             aria-label={t("TEXT_EDIT_MEMBER_ROW", { value: m.name })}
                             type="button"
                           >
-                            <Edit size={17} strokeWidth={2} />
+                            <Edit size={16} strokeWidth={2} />
                           </button>
                           <button
-                            className="min-h-11 min-w-11 inline-flex items-center justify-center p-1.5 rounded-lg bg-success-bg text-success-text hover:bg-success hover:text-on-success border border-success/30 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                            className="min-h-11 min-w-11 md:min-h-8 md:min-w-8 inline-flex items-center justify-center p-1.5 rounded-lg bg-success-bg text-success-text hover:bg-success hover:text-on-success border border-success/30 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shrink-0"
                             data-testid={`manager_members-members-managermemberstable-button-whatsapp-${m.id}`}
                             onClick={(e) => { e.stopPropagation(); openMsg(m, 'whatsapp'); }}
                             title={t("COPY_WHATSAPP_1")}
                             aria-label={t("TEXT_WHATSAPP_MEMBER", { value: m.name })}
                             type="button"
                           >
-                            <MessageCircle size={17} strokeWidth={2}/>
+                            <MessageCircle size={16} strokeWidth={2}/>
                           </button>
                           <button
-                            className="min-h-11 min-w-11 inline-flex items-center justify-center p-1.5 rounded-lg bg-info-bg text-info-text hover:bg-info hover:text-on-info border border-info/30 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                            className="min-h-11 min-w-11 md:min-h-8 md:min-w-8 inline-flex items-center justify-center p-1.5 rounded-lg bg-info-bg text-info-text hover:bg-info hover:text-on-info border border-info/30 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shrink-0"
                             data-testid={`manager_members-members-managermemberstable-button-email-${m.id}`}
                             onClick={(e) => { e.stopPropagation(); openMsg(m, 'email'); }}
                             title={t("COPY_EMAIL_4")}
                             aria-label={t("TEXT_EMAIL_MEMBER", { value: m.name })}
                             type="button"
                           >
-                            <Mail size={17} strokeWidth={2}/>
+                            <Mail size={16} strokeWidth={2}/>
                           </button>
                           {(() => {
                             if (m.status !== MEMBER_SUSPENDED_STATUS && m.pendingAmount > 0) {
                               return (
                                 <button
-                                  className="min-h-11 min-w-11 inline-flex items-center justify-center p-1.5 rounded-lg bg-danger-bg text-danger-text hover:bg-danger hover:text-on-danger border border-danger/30 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                                  className="min-h-11 min-w-11 md:min-h-8 md:min-w-8 inline-flex items-center justify-center p-1.5 rounded-lg bg-danger-bg text-danger-text hover:bg-danger hover:text-on-danger border border-danger/30 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shrink-0"
                                   data-testid={`manager_members-members-managermemberstable-button-suspend-member-${mapIndex}`}
                                   onClick={(e) => { e.stopPropagation(); setSelectedMember(m); toggleSuspend(true); }}
                                   title={t("COPY_SUSPEND_MEMBER")}
                                   aria-label={t("TEXT_SUSPEND_MEMBER", { value: m.name })}
                                   type="button"
                                 >
-                                  <Ban size={17} strokeWidth={2}/>
+                                  <Ban size={16} strokeWidth={2}/>
                                 </button>
                               );
                             }
                             if (m.status === MEMBER_SUSPENDED_STATUS) {
                               return (
                                 <button
-                                  className="min-h-11 min-w-11 inline-flex items-center justify-center p-1.5 rounded-lg bg-success-bg text-success-text hover:bg-success hover:text-on-success border border-success/30 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                                  className="min-h-11 min-w-11 md:min-h-8 md:min-w-8 inline-flex items-center justify-center p-1.5 rounded-lg bg-success-bg text-success-text hover:bg-success hover:text-on-success border border-success/30 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shrink-0"
                                   data-testid={`manager_members-members-managermemberstable-button-unsuspend-member-${m.id}`}
                                   onClick={(e) => { e.stopPropagation(); setSelectedMember(m); toggleSuspend(false); }}
                                   title={t("COPY_UNSUSPEND_MEMBER")}
                                   aria-label={t("TEXT_UNSUSPEND_MEMBER", { value: m.name })}
                                   type="button"
                                 >
-                                  <Ban size={17} strokeWidth={2}/>
+                                  <Ban size={16} strokeWidth={2}/>
                                 </button>
                               );
                             }
                             return null;
                           })()}
                           <button
-                            className="min-h-11 min-w-11 inline-flex items-center justify-center p-1.5 rounded-lg bg-danger-bg text-danger-text hover:bg-danger hover:text-on-danger border border-danger/30 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                            className="min-h-11 min-w-11 md:min-h-8 md:min-w-8 inline-flex items-center justify-center p-1.5 rounded-lg bg-danger-bg text-danger-text hover:bg-danger hover:text-on-danger border border-danger/30 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shrink-0"
                             data-testid={`manager_members-members-managermemberstable-button-delete-member-${m.id}`}
                             onClick={async (e) => { 
                               e.stopPropagation();
@@ -250,7 +249,7 @@ export default function ManagerMembersDirectoryTable() {
                             aria-label={t("TEXT_DELETE_MEMBER_ROW", { value: m.name })}
                             type="button"
                           >
-                            <Trash2 size={17} strokeWidth={2}/>
+                            <Trash2 size={16} strokeWidth={2}/>
                           </button>
                         </div>
                       </td>
@@ -266,7 +265,6 @@ export default function ManagerMembersDirectoryTable() {
               </tbody>
             </table>
 </ManagerInfrastructureResponsiveTable>
-          </div>
           <ManagerPagination data-testid="manager_members-managermemberstable-managerpagination-1" 
             currentPage={currentPage} 
             totalPages={totalPages} 
