@@ -38,6 +38,8 @@ export default function ManagerCommunicationsCampaignsChurnRecoveryTableRow({
   const t = useTranslations('MANAGER_COMMUNICATIONS_CAMPAIGNS');
 
   const badge = getDaysBadge(member.daysSinceExit);
+  const rowCardClass = `${styles?.cardStackRow || 'cardStackRow'} max-md:mb-3 max-md:rounded-xl max-md:border max-md:border-border max-md:bg-card max-md:p-2 max-md:shadow-card md:table-row md:mb-0 md:rounded-none md:border-0 md:bg-transparent md:p-0 md:shadow-none`;
+  const cellBaseClass = `${styles?.cardStackCell || 'cardStackCell'} max-md:flex max-md:items-start max-md:justify-between max-md:gap-4 max-md:border-b max-md:border-border max-md:px-3 max-md:py-2 max-md:text-right max-md:last:border-b-0 md:table-cell md:align-middle md:border-0 md:px-4 md:py-3.5 md:text-left`;
 
   return (
     <tr
@@ -46,7 +48,7 @@ export default function ManagerCommunicationsCampaignsChurnRecoveryTableRow({
         if (trigger) { event.preventDefault(); trigger.click(); }
       }}
       data-testid={`manager_communications-communications-managerchurnrecoverytablerow-row-${member.memberId}`}
-      className={`${styles.cardStackRow} mb-3 rounded-xl border border-border bg-card p-2 shadow-card motion-safe:transition-all hover:bg-primary-subtle cursor-pointer motion-safe:duration-200 ease-in-out md:mb-0 md:rounded-none md:border-0 md:bg-transparent md:p-0 md:shadow-none`}
+      className={`${rowCardClass} motion-safe:transition-all hover:bg-primary-subtle cursor-pointer motion-safe:duration-200 ease-in-out`}
       tabIndex={0}
       role="button"
       aria-label={t("TEXT_OPEN_WINBACK_COMPOSER", { value: member.name })}
@@ -60,7 +62,7 @@ export default function ManagerCommunicationsCampaignsChurnRecoveryTableRow({
       }}
     >
       {/* Name + Plan */}
-      <td className={`px-4 py-3 ${styles.cardStackCell} flex items-start justify-between gap-4 border-b border-border px-3 py-2 text-right last:border-b-0 md:border-0 md:px-4 md:py-3 md:text-left`} data-label={MANAGER_CHURN_RECOVERY_TABLE_HEADERS[0]} data-mobile-primary="true"><span className="sr-only md:hidden">{MANAGER_CHURN_RECOVERY_TABLE_HEADERS[0]}</span>
+      <td className={`px-4 py-3 ${cellBaseClass}`} data-label={MANAGER_CHURN_RECOVERY_TABLE_HEADERS[0]} data-mobile-primary="true"><span className="sr-only md:hidden">{MANAGER_CHURN_RECOVERY_TABLE_HEADERS[0]}</span>
         <div className="flex flex-col">
           <span className="text-sm font-medium text-text-primary truncate max-w-40">{member.name}</span>
           <span className="text-xs text-text-secondary truncate max-w-40">{member.plan}</span>
@@ -68,36 +70,36 @@ export default function ManagerCommunicationsCampaignsChurnRecoveryTableRow({
       </td>
 
       {/* Phone */}
-      <td className={`px-4 py-3 text-sm text-text-primary font-mono ${styles.cardStackCell} flex items-start justify-between gap-4 border-b border-border px-3 py-2 text-right last:border-b-0 md:border-0 md:px-4 md:py-3 md:text-left`} data-label={MANAGER_CHURN_RECOVERY_TABLE_HEADERS[1]}><span className="sr-only md:hidden">{MANAGER_CHURN_RECOVERY_TABLE_HEADERS[1]}</span>
+      <td className={`px-4 py-3 text-sm text-text-primary font-mono ${cellBaseClass}`} data-label={MANAGER_CHURN_RECOVERY_TABLE_HEADERS[1]}><span className="sr-only md:hidden">{MANAGER_CHURN_RECOVERY_TABLE_HEADERS[1]}</span>
         {maskPhone(member.phone)}
       </td>
 
       {/* Exit Date */}
-      <td className={`px-4 py-3 text-sm text-text-secondary whitespace-nowrap ${styles.cardStackCell} flex items-start justify-between gap-4 border-b border-border px-3 py-2 text-right last:border-b-0 md:border-0 md:px-4 md:py-3 md:text-left`} data-label={MANAGER_CHURN_RECOVERY_TABLE_HEADERS[2]}><span className="sr-only md:hidden">{MANAGER_CHURN_RECOVERY_TABLE_HEADERS[2]}</span>
+      <td className={`px-4 py-3 text-sm text-text-secondary whitespace-nowrap ${cellBaseClass}`} data-label={MANAGER_CHURN_RECOVERY_TABLE_HEADERS[2]}><span className="sr-only md:hidden">{MANAGER_CHURN_RECOVERY_TABLE_HEADERS[2]}</span>
         {ManagerCommunicationsCampaignsFormatDate(member.exitDate)}
       </td>
 
       {/* Days Since Exit */}
-      <td className={`px-4 py-3 ${styles.cardStackCell} flex items-start justify-between gap-4 border-b border-border px-3 py-2 text-right last:border-b-0 md:border-0 md:px-4 md:py-3 md:text-left`} data-label={MANAGER_CHURN_RECOVERY_TABLE_HEADERS[3]}><span className="sr-only md:hidden">{MANAGER_CHURN_RECOVERY_TABLE_HEADERS[3]}</span>
+      <td className={`px-4 py-3 ${cellBaseClass}`} data-label={MANAGER_CHURN_RECOVERY_TABLE_HEADERS[3]}><span className="sr-only md:hidden">{MANAGER_CHURN_RECOVERY_TABLE_HEADERS[3]}</span>
         <span data-testid={`manager_communications-managerchurnrecoverytablerow-age-badge-${member.memberId}`} className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${badge.bg} ${badge.text}`}>
           {badge.label}
         </span>
       </td>
 
       {/* Reason */}
-      <td className={`px-4 py-3 text-sm text-text-secondary ${styles.cardStackCell} flex items-start justify-between gap-4 border-b border-border px-3 py-2 text-right last:border-b-0 md:border-0 md:px-4 md:py-3 md:text-left`} data-label={MANAGER_CHURN_RECOVERY_TABLE_HEADERS[4]}><span className="sr-only md:hidden">{MANAGER_CHURN_RECOVERY_TABLE_HEADERS[4]}</span>
+      <td className={`px-4 py-3 text-sm text-text-secondary ${cellBaseClass}`} data-label={MANAGER_CHURN_RECOVERY_TABLE_HEADERS[4]}><span className="sr-only md:hidden">{MANAGER_CHURN_RECOVERY_TABLE_HEADERS[4]}</span>
         {CANCELLATIONS_REASON_LABEL[member.reason]}
       </td>
 
       {/* Recovery status */}
-      <td className={`px-4 py-3 ${styles.cardStackCell} flex items-start justify-between gap-4 border-b border-border px-3 py-2 text-right last:border-b-0 md:border-0 md:px-4 md:py-3 md:text-left`} data-label={MANAGER_CHURN_RECOVERY_TABLE_HEADERS[5]} data-mobile-status="true"><span className="sr-only md:hidden">{MANAGER_CHURN_RECOVERY_TABLE_HEADERS[5]}</span>
+      <td className={`px-4 py-3 ${cellBaseClass}`} data-label={MANAGER_CHURN_RECOVERY_TABLE_HEADERS[5]} data-mobile-status="true"><span className="sr-only md:hidden">{MANAGER_CHURN_RECOVERY_TABLE_HEADERS[5]}</span>
         {(() => { if (member.recovered) return (<span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-success text-on-success" data-testid={`manager_communications-managerchurnrecoverytablerow-status-badge-${member.memberId}`}>
             <CheckCircle size={18} strokeWidth={2}/>{t("COPY_RECOVERED")}</span>); return (() => { if (member.lastContactedAt) return (<span className="text-xs text-text-secondary">{t("COPY_CONTACTED")}{ManagerCommunicationsCampaignsFormatDate(member.lastContactedAt)}
           </span>); return (<span className="text-xs text-text-disabled">{t("COPY_NOT_CONTACTED")}</span>); })(); })()}
       </td>
 
       {/* Action */}
-      <td className={`px-4 py-3 text-right ${styles.cardStackCell} flex items-start justify-between gap-4 border-b border-border px-3 py-2 text-right last:border-b-0 md:border-0 md:px-4 md:py-3 md:text-left`} data-testid="manager_communications-managercommunicationschurnrecoverytablerow-interactive" data-label={MANAGER_CHURN_RECOVERY_TABLE_HEADERS[6]} data-mobile-actions="true"><span className="sr-only md:hidden">{MANAGER_CHURN_RECOVERY_TABLE_HEADERS[6]}</span>
+      <td className={`px-4 py-3 text-right ${cellBaseClass}`} data-testid="manager_communications-managercommunicationschurnrecoverytablerow-interactive" data-label={MANAGER_CHURN_RECOVERY_TABLE_HEADERS[6]} data-mobile-actions="true"><span className="sr-only md:hidden">{MANAGER_CHURN_RECOVERY_TABLE_HEADERS[6]}</span>
         <ManagerInfrastructureTableRowActionMenu label={MANAGER_CHURN_RECOVERY_TABLE_HEADERS[6]} testId={`manager_communications-communications-managerchurnrecoverytablerow-row-${member.memberId}-actions-menu`}>
         {!member.recovered && (
           <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-primary-subtle text-primary motion-safe:transition-all motion-safe:hover:bg-primary-hover motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-200 ease-in-out hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_communications-manager-churn-recovery-button-close"

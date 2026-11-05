@@ -71,41 +71,43 @@
 
 @media (min-width: 768px) {
   .cardStackTable {
-    display: table;
+    display: table !important;
   }
 
   .visuallyHiddenHeader {
-    position: static;
-    width: auto;
-    height: auto;
-    padding: initial;
-    margin: 0;
-    overflow: visible;
-    clip: auto;
-    white-space: normal;
-    border: 0;
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    padding: initial !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: normal !important;
+    border: 0 !important;
+    display: table-header-group !important;
   }
 
   .cardStackBody {
-    display: table-row-group;
+    display: table-row-group !important;
   }
 
   .cardStackFooter {
-    display: table-footer-group;
+    display: table-footer-group !important;
   }
 
   .cardStackRow {
-    display: table-row;
-    min-height: 0;
+    display: table-row !important;
+    min-height: 0 !important;
   }
 
   .cardStackCell {
-    display: table-cell;
-    min-height: var(--manager-table-row-height);
-    grid-column: auto;
+    display: table-cell !important;
+    min-height: var(--manager-table-row-height) !important;
+    grid-column: auto !important;
+    vertical-align: middle !important;
   }
 
   .cardStackCell::before {
-    content: none;
+    content: none !important;
   }
 }

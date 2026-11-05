@@ -55,7 +55,7 @@ export default function ManagerMembersDirectoryToolbar() {
   useManagerInfrastructureDebouncedValueCommit(localSearch, search, setSearch, 300);
 
   return (
-    <div className="bg-card rounded-xl shadow-card border border-border p-4 flex flex-col gap-3 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+    <div className="bg-card rounded-xl shadow-card border border-border p-4 flex flex-col gap-3">
       {/* Row 1: Search + Primary Actions */}
       <div className="flex flex-col lg:flex-row gap-3 items-start lg:items-center justify-between">
         <div className="relative w-full lg:w-72">

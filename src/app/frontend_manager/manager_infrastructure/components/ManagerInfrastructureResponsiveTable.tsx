@@ -30,6 +30,14 @@ export default function ManagerInfrastructureResponsiveTable({ labels, children,
   const table = Children.only(children) as ManagerInfrastructureTableElementWithChildren;
   if (table.type !== 'table') throw new Error('ManagerInfrastructureResponsiveTable expects a table element as its only child.');
 
+  const cardStackCellClass = styles?.cardStackCell || 'cardStackCell';
+  const cardStackRowClass = styles?.cardStackRow || 'cardStackRow';
+  const cardStackTableClass = styles?.cardStackTable || 'cardStackTable';
+  const visuallyHiddenHeaderClass = styles?.visuallyHiddenHeader || 'visuallyHiddenHeader';
+  const cardStackBodyClass = styles?.cardStackBody || 'cardStackBody';
+  const cardStackFooterClass = styles?.cardStackFooter || 'cardStackFooter';
+  const horizontalScrollTableClass = styles?.horizontalScrollTable || 'horizontalScrollTable';
+
   const transformRow = (row: ReactElement, rowIndex: number): ReactElement => {
     const rowChildren = Children.toArray((row.props as { children?: ReactNode }).children);
     const dataCells = rowChildren.filter((cell) => isValidElement(cell) && cell.type === 'td') as ReactElement[];
@@ -56,7 +64,7 @@ export default function ManagerInfrastructureResponsiveTable({ labels, children,
         ...(normalizedLabel.includes('status') || normalizedLabel.includes('स्थिति') || normalizedLabel.includes('progress') || normalizedLabel.includes('प्रगति') ? { 'data-mobile-status': 'true' } : {}),
         ...(normalizedLabel.includes('action') || normalizedLabel.includes('receipt') || normalizedLabel.includes('कार्रवाई') || normalizedLabel.includes('कार्य') || normalizedLabel.includes('रसीद') ? { 'data-mobile-actions': 'true' } : {}),
       };
-      const mobileCellClass = !isCardStack ? '' : `${styles.cardStackCell} flex items-start justify-between gap-4 border-b border-border px-3 py-2 text-right last:border-b-0 md:border-0 md:px-4 md:py-3 md:text-left`;
+      const mobileCellClass = !isCardStack ? '' : `${cardStackCellClass} max-md:flex max-md:items-start max-md:justify-between max-md:gap-4 max-md:border-b max-md:border-border max-md:px-3 max-md:py-2 max-md:text-right max-md:last:border-b-0 md:table-cell md:align-middle md:border-0 md:px-4 md:py-3.5 md:text-left`;
       const originalChildren = cellProps.children as ReactNode;
       const isFinalCell = currentCellIndex === finalCellIndex;
       const actionChildren = isFinalCell ? <ManagerInfrastructureTableContextMenu label={rowActionLabel} testId={rowActionTestId}>{originalChildren}</ManagerInfrastructureTableContextMenu> : originalChildren;
@@ -69,7 +77,7 @@ export default function ManagerInfrastructureResponsiveTable({ labels, children,
       } as never);
     });
     return cloneElement(row as ManagerInfrastructureTableElementWithChildren, {
-      className: appendClass((row.props as Record<string, unknown>).className, isCardStack ? `${styles.cardStackRow} mb-3 rounded-xl border border-border bg-card p-2 shadow-card md:mb-0 md:rounded-none md:border-0 md:bg-transparent md:p-0 md:shadow-none` : ''),
+      className: appendClass((row.props as Record<string, unknown>).className, isCardStack ? `${cardStackRowClass} max-md:mb-3 max-md:rounded-xl max-md:border max-md:border-border max-md:bg-card max-md:p-2 max-md:shadow-card md:table-row md:mb-0 md:rounded-none md:border-0 md:bg-transparent md:p-0 md:shadow-none` : ''),
       style: { ...((row.props as Record<string, unknown>).style as CSSProperties | undefined), minHeight: 'var(--manager-table-row-height)' },
       onContextMenu: handleContextMenu,
       children: transformedCells,
@@ -87,10 +95,10 @@ export default function ManagerInfrastructureResponsiveTable({ labels, children,
   const transformedTableChildren = Children.map((table.props as { children?: ReactNode }).children, (section) => {
     if (!isValidElement(section)) return section;
     const props = section.props as Record<string, unknown>;
-    if (section.type === 'thead') return isCardStack ? cloneElement(section as ManagerInfrastructureTableElementWithChildren, { className: appendClass(props.className, styles.visuallyHiddenHeader) } as never) : section;
+    if (section.type === 'thead') return isCardStack ? cloneElement(section as ManagerInfrastructureTableElementWithChildren, { className: appendClass(props.className, `${visuallyHiddenHeaderClass} max-md:hidden md:table-header-group`) } as never) : section;
     if (section.type === 'tbody' || section.type === 'tfoot') {
       return cloneElement(section as ManagerInfrastructureTableElementWithChildren, {
-        className: appendClass(props.className, isCardStack ? (section.type === 'tfoot' ? styles.cardStackFooter : styles.cardStackBody) : ''),
+        className: appendClass(props.className, isCardStack ? (section.type === 'tfoot' ? `${cardStackFooterClass} md:table-footer-group` : `${cardStackBodyClass} md:table-row-group`) : ''),
         children: transformRows(props.children as ReactNode),
       } as never);
     }
@@ -98,9 +106,9 @@ export default function ManagerInfrastructureResponsiveTable({ labels, children,
   });
 
   return (
-    <div className={`relative w-full ${isCardStack ? '' : 'overflow-x-auto'} ${className}`.trim()} data-manager-responsive-table="true" data-density={density} data-mobile-pattern={mobilePattern}>
+    <div className={`relative w-full overflow-x-auto ${className}`.trim()} data-manager-responsive-table="true" data-density={density} data-mobile-pattern={mobilePattern}>
       {cloneElement(table, {
-        className: appendClass((table.props as Record<string, unknown>).className, isCardStack ? `${styles.cardStackTable} w-full` : `${styles.horizontalScrollTable} md:min-w-full`),
+        className: appendClass((table.props as Record<string, unknown>).className, isCardStack ? `${cardStackTableClass} w-full md:table` : `${horizontalScrollTableClass} md:min-w-full`),
         style: { ...((table.props as Record<string, unknown>).style as CSSProperties | undefined), fontSize: 'var(--manager-table-font-size)' },
         children: transformedTableChildren,
       } as never)}

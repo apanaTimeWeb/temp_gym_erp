@@ -19,6 +19,8 @@ export default function ManagerInquiriesPipelineTableRow({ inq, mapIndex, select
   const t = useTranslations('MANAGER_INQUIRIES_PIPELINE');
   const { confirm } = useConfirm();
   const setConvertLead = useManagerInquiriesPipelineUiStore((state) => state.setConvertLead);
+  const rowCardClass = `${styles?.cardStackRow || 'cardStackRow'} max-md:mb-3 max-md:rounded-xl max-md:border max-md:border-border max-md:bg-card max-md:p-2 max-md:shadow-card md:table-row md:mb-0 md:rounded-none md:border-0 md:bg-transparent md:p-0 md:shadow-none`;
+  const cellBaseClass = `${styles?.cardStackCell || 'cardStackCell'} max-md:flex max-md:items-start max-md:justify-between max-md:gap-4 max-md:border-b max-md:border-border max-md:px-3 max-md:py-2 max-md:text-right max-md:last:border-b-0 md:table-cell md:align-middle md:border-0 md:px-4 md:py-3.5 md:text-left`;
   return (
     <tr
       onContextMenu={(event) => {
@@ -27,9 +29,9 @@ export default function ManagerInquiriesPipelineTableRow({ inq, mapIndex, select
       }}
                   data-testid={`manager_inquiries-inquiries-managerinquiriestable-row-${inq.id}`}
                   key={inq.id}
-                  className={[`${styles.cardStackRow} mb-3 rounded-xl border border-border bg-card p-2 shadow-card md:mb-0 md:rounded-none md:border-0 md:bg-transparent md:p-0 md:shadow-none`, selected ? 'bg-primary-subtle' : 'hover:bg-primary-subtle', 'motion-safe:transition-all motion-safe:duration-200 ease-in-out'].filter(Boolean).join(' ')}
+                  className={[rowCardClass, selected ? 'bg-primary-subtle' : 'hover:bg-primary-subtle', 'motion-safe:transition-all motion-safe:duration-200 ease-in-out'].filter(Boolean).join(' ')}
                 >
-                  <td className={`px-5 py-3.5 w-12 ${styles.cardStackCell} flex items-start justify-between gap-4 border-b border-border px-3 py-2 text-right last:border-b-0 md:border-0 md:px-4 md:py-3 md:text-left`} data-label="" data-testid={`manager_inquiries-managerinquiriestable-cell-select-${mapIndex}`}>
+                  <td className={`px-5 py-3.5 w-12 ${cellBaseClass}`} data-label="" data-testid={`manager_inquiries-managerinquiriestable-cell-select-${mapIndex}`}>
                     <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "w-4 h-4 rounded border-border text-text-primary focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_inquiries-inquiries-managerinquiriestable-input-toggleselectone-${mapIndex}`}
                       type="checkbox"
                       checked={selected}
@@ -37,7 +39,7 @@ export default function ManagerInquiriesPipelineTableRow({ inq, mapIndex, select
                       
                      aria-label={t("TEXT_SELECT_INQUIRY", { value: inq.name })}/>
                   </td>
-                  <td className={`px-5 py-3.5 ${styles.cardStackCell} flex items-start justify-between gap-4 border-b border-border px-3 py-2 text-right last:border-b-0 md:border-0 md:px-4 md:py-3 md:text-left`} data-label={t(INQUIRIES_TABLE_HEADER_KEYS[0])} data-mobile-primary="true"><span className="sr-only md:hidden">{t(INQUIRIES_TABLE_HEADER_KEYS[0])}</span>
+                  <td className={`px-5 py-3.5 ${cellBaseClass}`} data-label={t(INQUIRIES_TABLE_HEADER_KEYS[0])} data-mobile-primary="true"><span className="sr-only md:hidden">{t(INQUIRIES_TABLE_HEADER_KEYS[0])}</span>
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm bg-warning text-on-warning" data-testid="manager_inquiries-managerinquiriestable-status-badge-1">
                         {ManagerInquiriesPipelineDisplayValue(inq.name).charAt(0)}
@@ -45,12 +47,12 @@ export default function ManagerInquiriesPipelineTableRow({ inq, mapIndex, select
                       <p className="text-sm font-semibold text-text-primary">{ManagerInquiriesPipelineDisplayValue(inq.name)}</p>
                     </div>
                   </td>
-                  <td className={`px-5 py-3.5 ${styles.cardStackCell} flex items-start justify-between gap-4 border-b border-border px-3 py-2 text-right last:border-b-0 md:border-0 md:px-4 md:py-3 md:text-left`} data-label={t(INQUIRIES_TABLE_HEADER_KEYS[1])}><span className="sr-only md:hidden">{t(INQUIRIES_TABLE_HEADER_KEYS[1])}</span>
+                  <td className={`px-5 py-3.5 ${cellBaseClass}`} data-label={t(INQUIRIES_TABLE_HEADER_KEYS[1])}><span className="sr-only md:hidden">{t(INQUIRIES_TABLE_HEADER_KEYS[1])}</span>
                     <p className="text-sm text-text-primary">{ManagerInquiriesPipelineMaskSensitiveData(inq.phone, 'phone')}</p>
                     <p className="text-xs text-text-secondary">{ManagerInquiriesPipelineMaskSensitiveData(inq.email, 'email')}</p>
                   </td>
-                  <td className={`px-5 py-3.5 text-sm text-text-secondary ${styles.cardStackCell} flex items-start justify-between gap-4 border-b border-border px-3 py-2 text-right last:border-b-0 md:border-0 md:px-4 md:py-3 md:text-left`} data-label={t(INQUIRIES_TABLE_HEADER_KEYS[2])}><span className="sr-only md:hidden">{t(INQUIRIES_TABLE_HEADER_KEYS[2])}</span>{ManagerInquiriesPipelineDisplayValue(inq.source)}</td>
-                  <td className={`px-5 py-3.5 ${styles.cardStackCell} flex items-start justify-between gap-4 border-b border-border px-3 py-2 text-right last:border-b-0 md:border-0 md:px-4 md:py-3 md:text-left`} data-label={t(INQUIRIES_TABLE_HEADER_KEYS[3])} data-mobile-status="true" data-testid={`manager_inquiries-managerinquiriestable-cell-status-${mapIndex}`}>
+                  <td className={`px-5 py-3.5 text-sm text-text-secondary ${cellBaseClass}`} data-label={t(INQUIRIES_TABLE_HEADER_KEYS[2])}><span className="sr-only md:hidden">{t(INQUIRIES_TABLE_HEADER_KEYS[2])}</span>{ManagerInquiriesPipelineDisplayValue(inq.source)}</td>
+                  <td className={`px-5 py-3.5 ${cellBaseClass}`} data-label={t(INQUIRIES_TABLE_HEADER_KEYS[3])} data-mobile-status="true" data-testid={`manager_inquiries-managerinquiriestable-cell-status-${mapIndex}`}>
                     <span className="sr-only md:hidden">{t(INQUIRIES_TABLE_HEADER_KEYS[3])}</span>
                     <div className="w-32">
                       <ManagerSearchableDropdown dataTestId="manager_inquiries-managerinquiriestable-managersearchabledropdown-1"
@@ -60,10 +62,10 @@ export default function ManagerInquiriesPipelineTableRow({ inq, mapIndex, select
                        data-testid="manager_inquiries-managerinquiriestable-searchable-dropdown-1"/>
                     </div>
                   </td>
-                  <td className={`px-5 py-3.5 text-sm text-text-secondary ${styles.cardStackCell} flex items-start justify-between gap-4 border-b border-border px-3 py-2 text-right last:border-b-0 md:border-0 md:px-4 md:py-3 md:text-left`} data-label={t(INQUIRIES_TABLE_HEADER_KEYS[4])}><span className="sr-only md:hidden">{t(INQUIRIES_TABLE_HEADER_KEYS[4])}</span>
+                  <td className={`px-5 py-3.5 text-sm text-text-secondary ${cellBaseClass}`} data-label={t(INQUIRIES_TABLE_HEADER_KEYS[4])}><span className="sr-only md:hidden">{t(INQUIRIES_TABLE_HEADER_KEYS[4])}</span>
                     {ManagerInquiriesPipelineFormatDate(inq.createdAt)}
                   </td>
-                  <td className={`px-5 py-3.5 ${styles.cardStackCell} flex items-start justify-between gap-4 border-b border-border px-3 py-2 text-right last:border-b-0 md:border-0 md:px-4 md:py-3 md:text-left`} data-label={t(INQUIRIES_TABLE_HEADER_KEYS[5])} data-mobile-actions="true"><span className="sr-only md:hidden">{t(INQUIRIES_TABLE_HEADER_KEYS[5])}</span>
+                  <td className={`px-5 py-3.5 ${cellBaseClass}`} data-label={t(INQUIRIES_TABLE_HEADER_KEYS[5])} data-mobile-actions="true"><span className="sr-only md:hidden">{t(INQUIRIES_TABLE_HEADER_KEYS[5])}</span>
                     <ManagerInfrastructureTableRowActionMenu label={t(INQUIRIES_TABLE_HEADER_KEYS[5])} testId={`manager_inquiries-inquiries-managerinquiriestable-row-${inq.id}-actions-menu`}>
                     <div className="flex items-center gap-2">
                       <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "p-1.5 rounded-lg bg-success text-on-success motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_inquiries-inquiries-managerinquiriestable-button-whatsapp-${mapIndex}`}
