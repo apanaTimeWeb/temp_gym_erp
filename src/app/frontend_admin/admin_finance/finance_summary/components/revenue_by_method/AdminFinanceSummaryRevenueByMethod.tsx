@@ -23,7 +23,7 @@ export default function AdminFinanceOverviewRevenueByMethod() {
       {Object.entries(summary.revenueByMethod).map(([method, amount]) => (
         <div key={method} className="rounded-xl p-4 shadow-card border border-border bg-card">
           <p className="text-xs mb-1 text-secondary">{t(FINANCE_PAYMENT_METHOD_LABEL_KEYS[method] ?? 'finance.AdminAuditRepair.other')}</p>
-          <p className="text-lg font-bold text-primary">{AdminFinanceFormatCurrency(Number(amount) || 0, undefined, locale)}</p>
+          <p className="text-lg font-bold text-primary">{AdminFinanceFormatCurrency(Number(amount) || 0, 'INR', locale)}</p>
         </div>
       ))}
     </div>

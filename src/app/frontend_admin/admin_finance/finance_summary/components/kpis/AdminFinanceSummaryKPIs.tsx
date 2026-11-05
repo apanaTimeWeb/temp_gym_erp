@@ -25,11 +25,11 @@ export default function AdminFinanceOverviewKPIs() {
   if (!summary || summaryStatus === 'error') return null;
 
   const kpis = [
-    { label: t('finance.AdminAuditRepair.totalRevenue'), value: AdminFinanceFormatCurrency(summary.totalRevenue, undefined, locale), icon: TrendingUp, colorClass: 'text-success', bgClass: 'bg-success-bg', activeBorder: 'border-border' },
-    { label: t('finance.AdminAuditRepair.monthlyRevenue'), value: AdminFinanceFormatCurrency(summary.monthlyRevenue, undefined, locale), icon: IndianRupee, colorClass: 'text-primary', bgClass: 'bg-primary-subtle', activeBorder: 'border-focus' },
-    { label: t('finance.AdminAuditRepair.pendingAmount'), value: AdminFinanceFormatCurrency(summary.pendingAmount, undefined, locale), icon: FileText, colorClass: 'text-warning', bgClass: 'bg-warning-bg', activeBorder: 'border-border', filter: FINANCE_PAYMENT_STATUSES[1] },
-    { label: t('finance.AdminAuditRepair.totalExpenses'), value: AdminFinanceFormatCurrency(summary.totalExpenses, undefined, locale), icon: CreditCard, colorClass: 'text-danger', bgClass: 'bg-danger-bg', activeBorder: 'border-border' },
-    { label: t('finance.AdminAuditRepair.netProfit'), value: AdminFinanceFormatCurrency(summary.netProfit, undefined, locale), icon: TrendingUp, colorClass: 'text-success', bgClass: 'bg-success-bg', activeBorder: 'border-border' },
+    { label: t('finance.AdminAuditRepair.totalRevenue'), value: AdminFinanceFormatCurrency(summary.totalRevenue, 'INR', locale), icon: TrendingUp, colorClass: 'text-success', bgClass: 'bg-success-bg', activeBorder: 'border-border' },
+    { label: t('finance.AdminAuditRepair.monthlyRevenue'), value: AdminFinanceFormatCurrency(summary.monthlyRevenue, 'INR', locale), icon: IndianRupee, colorClass: 'text-primary', bgClass: 'bg-primary-subtle', activeBorder: 'border-focus' },
+    { label: t('finance.AdminAuditRepair.pendingAmount'), value: AdminFinanceFormatCurrency(summary.pendingAmount, 'INR', locale), icon: FileText, colorClass: 'text-warning', bgClass: 'bg-warning-bg', activeBorder: 'border-border', filter: FINANCE_PAYMENT_STATUSES[1] },
+    { label: t('finance.AdminAuditRepair.totalExpenses'), value: AdminFinanceFormatCurrency(summary.totalExpenses, 'INR', locale), icon: CreditCard, colorClass: 'text-danger', bgClass: 'bg-danger-bg', activeBorder: 'border-border' },
+    { label: t('finance.AdminAuditRepair.netProfit'), value: AdminFinanceFormatCurrency(summary.netProfit, 'INR', locale), icon: TrendingUp, colorClass: 'text-success', bgClass: 'bg-success-bg', activeBorder: 'border-border' },
   ] as const;
 
   return (

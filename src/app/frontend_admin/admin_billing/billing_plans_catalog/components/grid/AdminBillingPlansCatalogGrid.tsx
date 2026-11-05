@@ -100,19 +100,19 @@ export default function AdminBillingPlansCatalogGrid({ logic }: AdminPlansGridPr
               <div className="grid grid-cols-2 gap-3 mb-6 bg-input p-4 rounded-xl">
                 <div>
                   <p className="text-xs text-secondary">{t('plans.admin_plans_grid.text_7b01bcf516')}</p>
-                  <p className="font-bold text-primary">{AdminPlansFormatCurrency(p.price1Month, undefined, locale)}</p>
+                  <p className="font-bold text-primary">{AdminPlansFormatCurrency(p.price1Month, 'INR', locale)}</p>
                 </div>
                 <div>
                   <p className="text-xs text-secondary">{t('plans.admin_plans_grid.text_8ce49e113d')}</p>
-                  <p className="font-bold text-primary">{AdminPlansFormatCurrency(p.price3Month, undefined, locale)}</p>
+                  <p className="font-bold text-primary">{AdminPlansFormatCurrency(p.price3Month, 'INR', locale)}</p>
                 </div>
                 <div>
                   <p className="text-xs text-secondary">{t('plans.admin_plans_grid.text_422c023cc8')}</p>
-                  <p className="font-bold text-primary">{AdminPlansFormatCurrency(p.price6Month, undefined, locale)}</p>
+                  <p className="font-bold text-primary">{AdminPlansFormatCurrency(p.price6Month, 'INR', locale)}</p>
                 </div>
                 <div>
                   <p className="text-xs text-secondary">{t('plans.admin_plans_grid.text_2de83657ff')}</p>
-                  <p className="font-bold text-success">{AdminPlansFormatCurrency(p.price12Month, undefined, locale)}</p>
+                  <p className="font-bold text-success">{AdminPlansFormatCurrency(p.price12Month, 'INR', locale)}</p>
                 </div>
               </div>
 

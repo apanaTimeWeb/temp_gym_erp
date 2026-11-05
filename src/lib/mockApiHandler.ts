@@ -85,6 +85,11 @@ import {
 } from '@/app/frontend_admin/admin_sales/sales_memberships/mocks/fixtures/AdminSalesMembershipsMockFixtures';
 
 import {
+  MOCK_ADMIN_STORE_ORDERS,
+  MOCK_ADMIN_STORE_PRODUCTS,
+} from '@/app/frontend_admin/admin_sales/sales_store_sales/mocks/fixtures/AdminSalesStoreSalesMockFixtures';
+
+import {
   MOCK_ADMIN_FINANCE_SUMMARY,
   MOCK_ADMIN_PAYMENTS_EXPANDED,
   MOCK_ADMIN_EXPENSES,
@@ -97,6 +102,11 @@ import {
 import {
   MOCK_BRANCHES,
 } from '@/app/frontend_admin/admin_gyms/gyms_branches_directory/mocks/fixtures/AdminGymsBranchesDirectoryMockFixtures';
+
+import {
+  MOCK_GYM_HEALTH_ALERTS,
+  MOCK_GYM_HEALTH_KPI,
+} from '@/app/frontend_admin/admin_gyms/gyms_health_alerts_monitoring/mocks/fixtures/AdminGymsHealthAlertsMonitoringMockFixtures';
 
 import {
   MOCK_ADMIN_PLANS,
@@ -299,7 +309,16 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
   }
 
   if (urlPath === '/admin/branches/fetchBranches' || urlPath === '/admin/branches') {
-    return buildMockSuccess({ items: MOCK_MEMBERS_BRANCH_REFERENCES });
+    if (searchParams.get('consumer') === 'members') {
+      return buildMockSuccess({ items: MOCK_MEMBERS_BRANCH_REFERENCES });
+    }
+    return buildMockSuccess(MOCK_BRANCHES);
+  }
+
+  if (urlPath.startsWith('/admin/branches/') && urlPath !== '/admin/branches/fetchBranches') {
+    const branchId = urlPath.replace('/admin/branches/', '');
+    const found = MOCK_BRANCHES.find((b) => b.id === branchId) || MOCK_BRANCHES[0];
+    return buildMockSuccess(found);
   }
 
   if (urlPath === '/admin/members/summary') {
@@ -394,7 +413,7 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
   }
 
   if (urlPath === '/admin/sales/overview') {
-    return buildMockSuccess(MOCK_ADMIN_SALES_OVERVIEW);
+    return buildMockSuccess({ monthlyRevenue: MOCK_ADMIN_SALES_OVERVIEW });
   }
 
   if (urlPath === '/admin/sales/referral-sources') {
@@ -411,7 +430,29 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
   }
 
   if (urlPath === '/admin/sales/all-memberships') {
-    return buildMockSuccess(MOCK_ADMIN_ALL_MEMBERSHIPS);
+    return buildMockSuccess({
+      members: MOCK_ADMIN_ALL_MEMBERSHIPS,
+      total: MOCK_ADMIN_ALL_MEMBERSHIPS.length,
+    });
+  }
+
+  if (urlPath === '/admin/sales/store-orders') {
+    return buildMockSuccess({
+      orders: MOCK_ADMIN_STORE_ORDERS,
+      total: MOCK_ADMIN_STORE_ORDERS.length,
+    });
+  }
+
+  if (urlPath === '/admin/sales/store-summary') {
+    const totalRevenue = MOCK_ADMIN_STORE_ORDERS.reduce((sum, order) => sum + order.total, 0);
+    return buildMockSuccess({
+      summary: {
+        totalProducts: MOCK_ADMIN_STORE_PRODUCTS.length,
+        totalOrders: MOCK_ADMIN_STORE_ORDERS.length,
+        totalRevenue,
+        lowStockProducts: MOCK_ADMIN_STORE_PRODUCTS.filter((product) => product.stock <= 10),
+      },
+    });
   }
 
   if (urlPath === '/admin/finance/summary') {
@@ -466,6 +507,26 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
 
   if (urlPath === '/admin/gyms/branches' || urlPath === '/admin/gyms/branches_directory') {
     return buildMockSuccess(MOCK_BRANCHES);
+  }
+
+  if (urlPath === '/admin/gym-health-alerts/summary') {
+    return buildMockSuccess(MOCK_GYM_HEALTH_KPI);
+  }
+
+  if (urlPath === '/frontend_admin/admin_gyms/gyms_health_alerts_monitoring' || urlPath.startsWith('/admin/gym-health-alerts')) {
+    if (urlPath.includes('/dismiss')) {
+      return buildMockSuccess(null, 'Alert dismissed');
+    }
+    const severity = searchParams.get('severity');
+    const search = searchParams.get('search')?.trim().toLowerCase() ?? '';
+    let alerts = MOCK_GYM_HEALTH_ALERTS;
+    if (severity && severity !== 'all') {
+      alerts = alerts.filter((item) => item.severity === severity);
+    }
+    if (search) {
+      alerts = alerts.filter((item) => `${item.title} ${item.description} ${item.gymName}`.toLowerCase().includes(search));
+    }
+    return buildMockSuccess(alerts);
   }
 
   if (urlPath === '/admin/plans/fetchAllPlans' || urlPath === '/admin/plans') {

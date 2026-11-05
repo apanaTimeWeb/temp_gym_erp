@@ -174,7 +174,7 @@ export default function AdminSalesAnalyticsAllMemberships() {
                       {t(ADMIN_SALES_MEMBERSHIP_STATUS_LABEL_KEYS[r.status] ?? r.status)}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-sm font-medium text-primary">{AdminSalesFormatCurrency(r.paidAmount || 0, undefined, locale)}</td>
+                  <td className="px-4 py-3 text-sm font-medium text-primary">{AdminSalesFormatCurrency(r.paidAmount || 0, 'INR', locale)}</td>
                   <td className={`px-4 py-3 text-sm font-medium ${getDaysLeftColorClass(daysLeft)}`}>
                     {!Number.isFinite(daysLeft) ? '—' : daysLeft <= 0 ? t('sales.admin_sales_all_memberships.auto_112a3f9892') : `${daysLeft}d`}
                   </td>

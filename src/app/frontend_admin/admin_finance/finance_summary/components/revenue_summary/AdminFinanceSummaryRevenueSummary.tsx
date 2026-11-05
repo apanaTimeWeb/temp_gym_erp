@@ -70,7 +70,7 @@ export default function AdminFinanceOverviewRevenueSummary() {
                   />
                   {item.revenue > 0 && (
                     <span className="text-xs font-medium text-primary">
-                      {AdminFinanceFormatCurrency(item.revenue, undefined, locale)}
+                      {AdminFinanceFormatCurrency(item.revenue, 'INR', locale)}
                     </span>
                   )}
                 </div>

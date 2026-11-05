@@ -62,7 +62,7 @@ export default function AdminSalesAnalyticsStoreSales() {
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
           <div className="bg-card rounded-lg p-4 border border-border shadow-card"><div className="flex items-center gap-2 text-secondary text-xs font-medium mb-2"><Package size={18} aria-hidden="true"  strokeWidth={2}/> {t('sales.admin_sales_store_sales.text_c48f2bf5b2')}</div><div className="text-2xl font-bold text-primary">{storeSummary.totalProducts}</div></div>
           <div className="bg-card rounded-lg p-4 border border-border shadow-card"><div className="flex items-center gap-2 text-secondary text-xs font-medium mb-2"><ShoppingCart size={18} aria-hidden="true"  strokeWidth={2}/> {t('sales.admin_sales_store_sales.text_408fa7b3a9')}</div><div className="text-2xl font-bold text-primary">{storeSummary.totalOrders}</div></div>
-          <div className="bg-card rounded-lg p-4 border border-border shadow-card sm:col-span-2"><div className="flex items-center gap-2 text-secondary text-xs font-medium mb-2"><IndianRupee size={18} aria-hidden="true"  strokeWidth={2}/> {t('sales.admin_sales_store_sales.text_3b56959818')}</div><div className="text-2xl font-bold text-primary">{AdminSalesFormatCurrency(storeSummary.totalRevenue, undefined, locale)}</div></div>
+          <div className="bg-card rounded-lg p-4 border border-border shadow-card sm:col-span-2"><div className="flex items-center gap-2 text-secondary text-xs font-medium mb-2"><IndianRupee size={18} aria-hidden="true"  strokeWidth={2}/> {t('sales.admin_sales_store_sales.text_3b56959818')}</div><div className="text-2xl font-bold text-primary">{AdminSalesFormatCurrency(storeSummary.totalRevenue, 'INR', locale)}</div></div>
         </div>
       )}
 
@@ -89,16 +89,16 @@ export default function AdminSalesAnalyticsStoreSales() {
                     <span className="w-9 h-9 rounded-lg bg-primary-subtle flex items-center justify-center shrink-0"><ShoppingCart size={18} className="text-primary" aria-hidden="true"  strokeWidth={2}/></span>
                     <span className="min-w-0"><span className="block font-medium text-primary text-sm truncate">{t('sales.admin_sales_store_sales.text_f1e486fe3f')}{order.id.toUpperCase()}</span><span className="block text-xs text-secondary">{formatDate(order.createdAt, locale)}</span></span>
                   </span>
-                  <span className="flex items-center gap-3 sm:gap-4 justify-end"><span className={`text-xs font-bold px-2.5 py-1 rounded-full ${getPaymentClasses(order.method)}`} data-testid="sales-analytics-sales-analytics-store-sales-status-badge">{order.method}</span><span className="font-bold text-primary">{expandedOrder === order.id ? AdminSalesFormatCurrency(order.total, undefined, locale) : <span aria-label={t('AdminAuditRepair.financialAmountHidden')}>{maskAdminSalesListAmount()}</span>}</span>{expandedOrder === order.id ? <ChevronUp size={18} className="text-secondary" aria-hidden="true"  strokeWidth={2}/> : <ChevronDown size={18} className="text-secondary" aria-hidden="true"  strokeWidth={2}/>}</span>
+                  <span className="flex items-center gap-3 sm:gap-4 justify-end"><span className={`text-xs font-bold px-2.5 py-1 rounded-full ${getPaymentClasses(order.method)}`} data-testid="sales-analytics-sales-analytics-store-sales-status-badge">{order.method}</span><span className="font-bold text-primary">{expandedOrder === order.id ? AdminSalesFormatCurrency(order.total, 'INR', locale) : <span aria-label={t('AdminAuditRepair.financialAmountHidden')}>{maskAdminSalesListAmount()}</span>}</span>{expandedOrder === order.id ? <ChevronUp size={18} className="text-secondary" aria-hidden="true"  strokeWidth={2}/> : <ChevronDown size={18} className="text-secondary" aria-hidden="true"  strokeWidth={2}/>}</span>
                 </button>
 
                 {expandedOrder === order.id && (
                   <div id={`store-order-${order.id}`} className="border-t border-border bg-input px-4 py-3">
                     <p className="text-xs font-semibold text-secondary uppercase tracking-wider mb-2">{t('sales.admin_sales_store_sales.text_44d25b5d1b')}</p>
                     <div className="space-y-1.5">
-                      {(order.items ?? []).map((item) => <div key={item.id} className="flex items-center justify-between gap-4 text-sm"><span className="text-primary min-w-0 truncate">{item.product.name} <span className="text-secondary">× {item.qty}</span></span><span className="text-secondary font-medium shrink-0">{AdminSalesFormatCurrency(item.price * item.qty, undefined, locale)}</span></div>)}
+                      {(order.items ?? []).map((item) => <div key={item.id} className="flex items-center justify-between gap-4 text-sm"><span className="text-primary min-w-0 truncate">{item.product.name} <span className="text-secondary">× {item.qty}</span></span><span className="text-secondary font-medium shrink-0">{AdminSalesFormatCurrency(item.price * item.qty, 'INR', locale)}</span></div>)}
                     </div>
-                    <div className="flex justify-between mt-3 pt-2 border-t border-border"><span className="text-sm font-semibold text-primary">{t('sales.admin_sales_store_sales.text_b25928c699')}</span><span className="text-sm font-bold text-primary">{AdminSalesFormatCurrency(order.total, undefined, locale)}</span></div>
+                    <div className="flex justify-between mt-3 pt-2 border-t border-border"><span className="text-sm font-semibold text-primary">{t('sales.admin_sales_store_sales.text_b25928c699')}</span><span className="text-sm font-bold text-primary">{AdminSalesFormatCurrency(order.total, 'INR', locale)}</span></div>
                   </div>
                 )}
               </article>

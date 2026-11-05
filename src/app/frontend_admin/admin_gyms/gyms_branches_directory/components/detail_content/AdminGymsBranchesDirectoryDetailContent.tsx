@@ -33,7 +33,7 @@ export default function AdminGymsBranchesDirectoryDetailContent({ branch, view }
             </div>
             <div className="flex items-center gap-2">
               <span className={`rounded-full px-2 py-0.5 text-xs ${BRANCH_PAYMENT_METHOD_STYLES[item.method] ?? 'bg-input text-secondary'}`} data-testid="branches-directory-branches-directory-detail-content-status-badge">{item.method}</span>
-              <span className="font-bold text-success">{AdminBranchesFormatCurrency(item.amount, undefined, locale)}</span>
+              <span className="font-bold text-success">{AdminBranchesFormatCurrency(item.amount, 'INR', locale)}</span>
             </div>
           </div>
         ))}
@@ -51,7 +51,7 @@ export default function AdminGymsBranchesDirectoryDetailContent({ branch, view }
               <p className="text-sm font-medium text-primary">{item.label}</p>
               <p className="text-xs text-secondary">{item.category} · {item.date}</p>
             </div>
-            <span className="font-bold text-danger">{AdminBranchesFormatCurrency(item.amount, undefined, locale)}</span>
+            <span className="font-bold text-danger">{AdminBranchesFormatCurrency(item.amount, 'INR', locale)}</span>
           </div>
         ))}
       </div>
