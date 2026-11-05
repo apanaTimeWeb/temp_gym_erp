@@ -4,6 +4,7 @@
       "name": "Module Purpose",
       "namespace": "superadmin_support_tickets",
       "ui": {
+      "loading_tickets": "Loading support tickets…",
         "a11y_open_ticket": "Open ticket {id}",
         "a11y_reply_ticket": "Reply to ticket {id}",
         "saving": "Saving...",
@@ -62,6 +63,7 @@
       "locale": "en-IN"
     },
     "ui": {
+      "loading_tickets": "Loading support tickets…",
       "assign_ticket_2ce81f4": "Assign Ticket",
       "enter_the_name_or_email_of_the_superadmin_team_member_to_as_57eb516": "Enter the name or email of the team member to assign this ticket to.",
       "assignee_138416f": "Assignee",

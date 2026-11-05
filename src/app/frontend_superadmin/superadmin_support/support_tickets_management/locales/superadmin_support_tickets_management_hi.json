@@ -4,6 +4,7 @@
       "name": "superadmin_support_tickets",
       "namespace": "superadmin_support_tickets",
       "ui": {
+      "loading_tickets": "सपोर्ट टिकट लोड हो रहे हैं…",
         "a11y_open_ticket": "Ticket {id} open karein",
         "a11y_reply_ticket": "Ticket {id} ka reply karein",
         "saving": "सहेजा जा रहा है...",
@@ -26,6 +27,7 @@
       }
     },
     "ui": {
+      "loading_tickets": "सपोर्ट टिकट लोड हो रहे हैं…",
       "404_4f4adcbf": "404",
       "page_not_found_title": "पेज नहीं मिला",
       "page_not_found_message": "मांगा गया पेज उपलब्ध नहीं है या इस Superadmin क्षेत्र में मौजूद नहीं है।",

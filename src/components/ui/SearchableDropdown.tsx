@@ -88,7 +88,7 @@ export function SearchableDropdown<T extends string | number = string>({
         onClick={() => setIsOpen((prev) => !prev)}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
-        aria-label={ariaLabel || placeholder}
+        aria-label={ariaLabel || (selectedOption ? selectedOption.label : placeholder)}
         aria-labelledby={ariaLabelledBy}
         aria-invalid={ariaInvalid}
         aria-describedby={ariaDescribedBy}
@@ -108,7 +108,7 @@ export function SearchableDropdown<T extends string | number = string>({
         <div
           id={listboxId}
           role="listbox"
-          aria-label={ariaLabel || placeholder}
+          aria-label={ariaLabel || (selectedOption ? selectedOption.label : placeholder)}
           className="absolute start-0 top-full z-50 mt-1 max-h-60 w-full min-w-44 overflow-hidden rounded-xl border border-border bg-card shadow-lg motion-safe:animate-in motion-safe:fade-in-50 motion-safe:zoom-in-95"
         >
           {options.length > 5 && (
