@@ -24,7 +24,7 @@ export default function ManagerPtAssignmentsTable({ assignments, totalAssignment
   const pageSize = Number.isSafeInteger(pageSizeProp) && pageSizeProp > 0 ? pageSizeProp : Math.max(1, assignments.length);
 
   return (
-    <div className="bg-card border border-border rounded-xl flex flex-col overflow-hidden motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+    <div className="bg-card border border-border rounded-xl flex flex-col overflow-hidden">
       <div className="px-5 py-4 border-b border-border flex items-center justify-between">
         <h2 className="text-base font-semibold text-text-primary">{t("COPY_ACTIVE_ASSIGNMENTS_TRACKING")}</h2>
         <span className="text-xs text-text-secondary font-medium">{totalAssignments}{t("COPY_TOTAL")}</span>

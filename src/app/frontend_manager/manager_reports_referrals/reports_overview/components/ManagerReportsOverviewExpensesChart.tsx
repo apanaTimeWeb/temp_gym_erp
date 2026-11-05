@@ -18,7 +18,7 @@ const CHART_BASE = {
   legend: { labels: { colors: 'var(--text-secondary)' } } };
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false, loading: () => (
-  <div className="h-64 rounded-xl bg-card motion-safe:animate-pulse motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1" aria-hidden="true" />
+  <div className="h-64 rounded-xl bg-card motion-safe:animate-pulse" aria-hidden="true" />
 )});
 
 /** @description Renders the ManagerReportsOverviewExpensesChart component for its owning Manager frontend boundary. @dependencies Local dependencies are owned by this feature module (1 documented module/import dependencies).. @edge-case Preserves loading state. */

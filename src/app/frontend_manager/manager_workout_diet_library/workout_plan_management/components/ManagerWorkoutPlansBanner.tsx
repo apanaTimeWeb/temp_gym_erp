@@ -14,7 +14,7 @@ export default function ManagerWorkoutPlansBanner() {
  const totalWorkouts = workoutData?.total || 0;
 
  return (
- <div className="rounded-xl p-5 text-text-primary shadow-card bg-card border border-border motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+ <div className="rounded-xl p-5 text-text-primary shadow-card bg-card border border-border">
  <div className="flex items-center justify-between">
  <div>
  <h2 className="text-xl font-bold">{t("COPY_COMPLETE_WORKOUT_DATABASE")}</h2>

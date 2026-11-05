@@ -15,7 +15,7 @@ export default function ManagerReportsOverviewCharts() {
   if (!summary) return null;
 
   return (
-    <div className="bg-card border border-border rounded-xl p-5 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+    <div className="bg-card border border-border rounded-xl p-5">
       {tab === 'Revenue'    && <ManagerReportsOverviewRevenueChart    />}
       {tab === 'Attendance' && <ManagerReportsOverviewAttendanceChart />}
       {tab === 'Members'    && <ManagerReportsOverviewMembersChart    />}

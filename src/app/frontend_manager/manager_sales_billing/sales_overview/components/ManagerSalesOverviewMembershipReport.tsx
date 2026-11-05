@@ -39,7 +39,7 @@ export default function ManagerSalesOverviewMembershipReport() {
 
   if (isError) {
     return (
-      <div className="text-center py-16 bg-card rounded-2xl border border-danger motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+      <div className="text-center py-16 bg-card rounded-2xl border border-danger">
         <p className="text-danger-text font-medium">{errorMessage || t("TEXT_GENERIC_ERROR")}</p>
         <span className="text-sm text-text-secondary">{t("COPY_RETRY_REQUEST_4")}</span>
       </div>

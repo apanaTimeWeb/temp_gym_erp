@@ -10,7 +10,7 @@ export default function Loading() {
         <div className="h-24 bg-skeleton-base bg-skeleton-highlight rounded-xl motion-safe:animate-pulse"></div>
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
           {[1, 2, 3, 4, 5, 6].map(i => (
-            <div key={`plan-loading-skeleton-${i}`} className="h-64 bg-card rounded-xl motion-safe:animate-pulse border border-border motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1" />
+            <div key={`plan-loading-skeleton-${i}`} className="h-64 bg-card rounded-xl motion-safe:animate-pulse border border-border" />
           ))}
         </div>
       </div>

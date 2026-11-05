@@ -31,7 +31,7 @@ export default function ManagerDashboardOverviewPendingPayments() {
   );
 
   return (
-    <div className="rounded-xl shadow-card border p-5 bg-card border-border motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+    <div className="rounded-xl shadow-card border p-5 bg-card border-border">
       <div className="flex min-w-0 flex-wrap items-center justify-between gap-3 mb-3">
         <h2 className="font-semibold text-text-primary">{t("COPY_PENDING_DUES_2")}</h2>
         <span data-testid="manager_dashboard-manager-dashboard-pending-payments-status" className="bg-danger-bg text-danger-text px-2.5 py-1 rounded-full text-xs font-bold whitespace-nowrap">

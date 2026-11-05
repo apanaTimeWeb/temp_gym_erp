@@ -33,7 +33,7 @@ export default function ManagerCommunicationsCampaignsHistory() {
 
   if (isError) {
     return (
-      <div data-testid="manager_communications-manager-communications-history-status" role="alert" className="bg-card border border-border rounded-xl p-12 text-center space-y-3 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+      <div data-testid="manager_communications-manager-communications-history-status" role="alert" className="bg-card border border-border rounded-xl p-12 text-center space-y-3">
         <p className="text-sm font-semibold text-danger-text">{errorMessage || t("TEXT_GENERIC_ERROR")}</p>
         <p className="text-sm text-text-secondary">{t("COPY_RETRY_REQUEST_ADJUST_CURRENT_FILTERS")}</p><button type="button" onClick={() => void reload()} className="mx-auto inline-flex min-h-11 items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary"><RefreshCw size={16} aria-hidden="true" />{t("COPY_RETRY")}</button>
       </div>
@@ -74,7 +74,7 @@ export default function ManagerCommunicationsCampaignsHistory() {
       {(() => { if (paginatedCampaigns.length === 0) { return (
         <ManagerCommunicationsHistoryEmptyState isFiltered={Boolean(historySearch || historyChannelFilter !== 'all')} />
       ); } return (
-        <div className="bg-card rounded-xl border border-border overflow-hidden motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+        <div className="bg-card rounded-xl border border-border overflow-hidden">
           <div className="overflow-x-auto">
             <ManagerInfrastructureResponsiveTable labels={MANAGER_COMMUNICATION_HISTORY_HEADERS}>
 <table className="w-full">

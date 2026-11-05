@@ -70,7 +70,7 @@ export default function ManagerAttendanceTrackingCalendar() {
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop p-4 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-200">
-      <div role="dialog" aria-modal="true" aria-labelledby="manager-attendance-calendar-dialog-title" className="w-full max-w-md bg-card shadow-card flex flex-col max-h-full rounded-2xl border-2 border-primary overflow-hidden motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+      <div role="dialog" aria-modal="true" aria-labelledby="manager-attendance-calendar-dialog-title" className="w-full max-w-md bg-card shadow-card flex flex-col max-h-full rounded-2xl border-2 border-primary overflow-hidden">
         
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-border">

@@ -5,8 +5,6 @@ import { createPortal } from 'react-dom';
 
 import { ManagerEnvConfig } from '@/app/frontend_manager/manager_members/members_directory/constants/ManagerMembersDirectoryLocalEnvConfig';
 import { useManagerMembersDirectoryLocalMounted } from '@/app/frontend_manager/manager_members/members_directory/hooks/useManagerMembersDirectoryLocalMounted';
-
-import styles from '@/app/frontend_manager/manager_members/members_directory/components/ManagerMembersDirectoryThermalReceipt.module.css';
 import { ManagerMembersDirectoryFormatCurrency } from '@/app/frontend_manager/manager_members/members_directory/utils/ManagerMembersDirectoryFormatters';
 import type { ManagerMembersDirectoryThermalReceiptProps } from '@/app/frontend_manager/manager_members/members_directory/types/manager_members_directory_thermal_receipt.types';
 
@@ -27,8 +25,8 @@ export default function ManagerMembersDirectoryThermalReceipt(props: ManagerMemb
  if (!data || !mounted) return null;
 
  const receiptContent = (
- <div id="thermal-receipt" className={`hidden print:block p-4 mx-auto bg-page text-text-primary font-mono leading-tight break-words ${styles.receipt}`}>
- <div className={`text-center border-border pb-2 mb-2 ${styles.dividerBottom}`}>
+ <div id="thermal-receipt" className="hidden print:block p-4 mx-auto bg-page text-text-primary font-mono leading-tight break-words thermalReceipt">
+ <div className="text-center border-border pb-2 mb-2 thermalDividerBottom">
  <h2 className="font-bold text-lg uppercase tracking-wider">{data.gymName}</h2>
  <p className="text-xs">{t("COPY_PH")}{data.gymPhone}</p>
  <p className="font-bold mt-1 text-sm">{t("COPY_PAYMENT_RECEIPT")}</p>
@@ -41,19 +39,19 @@ export default function ManagerMembersDirectoryThermalReceipt(props: ManagerMemb
  </div>
  
  <table className="w-full mb-2 text-xs">
- <thead className={`border-border ${styles.dividerTopBottom}`}>
+ <thead className="border-border thermalDividerTopBottom">
  <tr>
  <th className="text-left font-bold py-1.5">{t("COPY_DESCRIPTION")}</th>
  <th className="text-right font-bold py-1.5">{t("COPY_AMOUNT_2")}</th>
  </tr>
  </thead>
- <tbody className={`border-border ${styles.dividerBottomOnly}`}>
+ <tbody className="border-border thermalDividerBottomOnly">
  {data.items.map((item, i) => (
  <tr key={`${item.name}-${item.price}-${item.amount}-${item.qty ?? 1}`}>
  <td className="py-1.5 pr-1">
  {item.name}
  {item.qty && item.qty > 1 && (
- <span className={`block text-text-primary mt-0.5 ${styles.smallText}`}>
+ <span className="block text-text-primary mt-0.5 thermalSmallText">
  {item.qty}{t("COPY_X_2")}{ManagerMembersDirectoryFormatCurrency(item.price, ManagerEnvConfig.currencyCode, locale)}
  </span>
  )}
@@ -73,10 +71,10 @@ export default function ManagerMembersDirectoryThermalReceipt(props: ManagerMemb
  <p><span className="font-bold">{t("COPY_PAID_VIA")}</span> {data.paymentMethod}</p>
  </div>
  
- <div className={`text-center border-border pt-2 mt-3 ${styles.dividerTop}`}>
+ <div className="text-center border-border pt-2 mt-3 thermalDividerTop">
  <p className="font-bold uppercase mb-0.5 text-sm">{t("COPY_THANK_YOU")}</p>
- <p className={styles.smallText}>{t("COPY_NO_REFUND_NO_EXCHANGE")}</p>
- <p className={`mt-0.5 ${styles.smallText}`}>{t("COPY_GENERATED_GYMSMART_MANAGER")}</p>
+ <p className="thermalSmallText">{t("COPY_NO_REFUND_NO_EXCHANGE")}</p>
+ <p className="mt-0.5 thermalSmallText">{t("COPY_GENERATED_GYMSMART_MANAGER")}</p>
  </div>
  </div>
  );

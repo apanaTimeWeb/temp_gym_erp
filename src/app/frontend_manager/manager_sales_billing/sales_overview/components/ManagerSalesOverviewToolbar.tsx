@@ -33,7 +33,7 @@ export default function ManagerSalesOverviewToolbar() {
   useManagerInfrastructureDebouncedValueCommit(localSearch, search, setSearch, 300);
 
   return (
-  <div className="bg-card rounded-xl shadow-card border border-border p-4 flex flex-wrap gap-3 items-center justify-between mb-5 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+  <div className="bg-card rounded-xl shadow-card border border-border p-4 flex flex-wrap gap-3 items-center justify-between mb-5">
   <div className="flex gap-2 flex-wrap items-center">
     <ManagerSalesOverviewDateFilterDropdown  data-testid="manager_sales-managersalestoolbar-sales-date-filter-dropdown-1"/>
   </div>

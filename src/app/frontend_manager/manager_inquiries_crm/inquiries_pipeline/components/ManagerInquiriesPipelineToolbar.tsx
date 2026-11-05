@@ -30,10 +30,6 @@ export default function ManagerInquiriesPipelineToolbar() {
 
   useManagerInfrastructureDebouncedValueCommit(localSearch, search, setSearch, 300);
 
-  useManagerInfrastructureDebouncedValueCommit(localSearch, search, setSearch, 300);
-
-  useManagerInfrastructureDebouncedValueCommit(localSearch, search, setSearch, 300);
-
   if (selectedIds.length > 0) {
     return (
       <div className="bg-primary-subtle border border-border-focus rounded-xl p-4 flex flex-wrap gap-3 items-center justify-between motion-safe:transition-all motion-safe:duration-200 ease-in-out">
@@ -59,7 +55,7 @@ export default function ManagerInquiriesPipelineToolbar() {
   }
 
   return (
-    <div className="bg-card rounded-xl shadow-card border border-border p-4 flex flex-wrap gap-3 items-center justify-between motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+    <div className="bg-card rounded-xl shadow-card border border-border p-4 flex flex-wrap gap-3 items-center justify-between">
       <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "border border-border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page  w-full sm:w-64  bg-input text-text-primary"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_inquiries-manager-inquiries-toolbar-input-value"
         value={localSearch}
         onChange={e => setLocalSearch(e.target.value)}

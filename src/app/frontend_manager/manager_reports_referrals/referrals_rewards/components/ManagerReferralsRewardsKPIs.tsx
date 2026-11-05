@@ -21,7 +21,7 @@ export default function ManagerReferralsRewardsKPIs() {
     return (
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 motion-safe:animate-pulse">
         {[1, 2, 3, 4].map((i) => (
-          <div key={`skeleton-${i}`} className="bg-card h-28 rounded-xl border border-border motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1"></div>
+          <div key={`skeleton-${i}`} className="bg-card h-28 rounded-xl border border-border"></div>
         ))}
       </div>
     );

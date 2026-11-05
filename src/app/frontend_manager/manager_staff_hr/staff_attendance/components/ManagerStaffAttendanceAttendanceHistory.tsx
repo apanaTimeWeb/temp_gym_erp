@@ -75,7 +75,7 @@ export default function ManagerStaffPayrollAndAttendanceAttendanceHistory() {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-col gap-4 rounded-xl border border-border bg-card p-4 sm:flex-row sm:items-end sm:justify-between motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+      <div className="flex flex-col gap-4 rounded-xl border border-border bg-card p-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h2 className="text-lg font-bold text-text-primary">{t('COPY_TRAINER_ATTENDANCE_HISTORY')}</h2>
           <p className="text-sm text-text-secondary">{t('COPY_READ_ONLY_ATTENDANCE_RECORDS_SUPPLIED_MANAGER_STAFF_PAYROLL_AND_ATTENDANCE_ATTENDANCE_API')}</p>
@@ -105,7 +105,7 @@ export default function ManagerStaffPayrollAndAttendanceAttendanceHistory() {
         </div>
       </div>
 
-      <div className="overflow-x-auto rounded-xl border border-border bg-card motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+      <div className="overflow-x-auto rounded-xl border border-border bg-card">
         <ManagerInfrastructureResponsiveTable mobilePattern="horizontal-scroll" labels={[t('COPY_DATE_2'), t('COPY_STATUS_2'), t('COPY_CHECK'), t('COPY_CHECK_OUT')]}>
           <table className="w-full text-left border-collapse">
             <thead>

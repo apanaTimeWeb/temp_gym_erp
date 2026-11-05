@@ -14,7 +14,7 @@ import type { ManagerFinancePaymentsAndSummaryRevenueExpenseChartProps } from '@
  */
 const Chart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
-  loading: () => <div className="h-64 rounded-xl bg-card motion-safe:animate-pulse motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1" aria-hidden="true" /> });
+  loading: () => <div className="h-64 rounded-xl bg-card motion-safe:animate-pulse" aria-hidden="true" /> });
 
 /** @description Renders the ManagerFinancePaymentsAndSummaryRevenueExpenseChart component for its owning Manager frontend boundary. @dependencies Local dependencies are owned by this feature module (1 documented module/import dependencies).. @edge-case Preserves loading state. */
 export function ManagerFinancePaymentsAndSummaryRevenueExpenseChart({ data }: ManagerFinancePaymentsAndSummaryRevenueExpenseChartProps) {
@@ -35,7 +35,7 @@ export function ManagerFinancePaymentsAndSummaryRevenueExpenseChart({ data }: Ma
     dataLabels: { enabled: false } };
   
   return (
-    <div className="bg-card border border-border rounded-xl p-5 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+    <div className="bg-card border border-border rounded-xl p-5">
       <p className="text-sm font-semibold text-text-primary mb-2">{t("COPY_REVENUE_TREND")}</p>
       <Chart
         type="bar"

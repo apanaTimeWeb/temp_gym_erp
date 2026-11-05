@@ -40,7 +40,7 @@ export default function ManagerExpenseRegisterAndReportingTable() {
   const totalPages = Math.ceil(totalExpenses / MANAGER_ITEMS_PER_PAGE);
 
   return (
-    <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden flex flex-col h-full min-h-96 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+    <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden flex flex-col h-full min-h-96">
       {isPending ? (
         <ManagerTableSkeleton rows={6} />
       ) : isError ? (

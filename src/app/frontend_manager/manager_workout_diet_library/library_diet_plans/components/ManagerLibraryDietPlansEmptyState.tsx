@@ -14,7 +14,7 @@ export default function ManagerLibraryDietPlansEmptyState({ view, onAdd }: Manag
   const isDiet = view === 'diet';
   const label = isDiet ? t("TEXT_DIET_PLANS") : t("TEXT_EXERCISES");
   return (
-    <div data-testid="manager_library-library-empty-state" className="col-span-full flex min-h-64 flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border bg-card p-8 text-center motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+    <div data-testid="manager_library-library-empty-state" className="col-span-full flex min-h-64 flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border bg-card p-8 text-center">
       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-subtle text-primary">
         {isDiet ? <Apple size={18} strokeWidth={2} aria-hidden="true" /> : <Dumbbell size={18} strokeWidth={2} aria-hidden="true"/>}
       </div>

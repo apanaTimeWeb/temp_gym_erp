@@ -32,7 +32,7 @@ export default function ManagerSalesOverviewPendingPayments() {
     return (
       <div className="space-y-3">
         {[...Array(5)].map((_, i) => (
-          <div key={`skeleton-${i}`} className="motion-safe:animate-pulse flex items-center justify-between p-4 border border-border rounded-xl bg-card motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+          <div key={`skeleton-${i}`} className="motion-safe:animate-pulse flex items-center justify-between p-4 border border-border rounded-xl bg-card">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 bg-input rounded-full"></div>
               <div>
@@ -55,7 +55,7 @@ export default function ManagerSalesOverviewPendingPayments() {
 
   if (isError) {
     return (
-      <div className="text-center py-16 bg-card rounded-2xl border border-danger motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+      <div className="text-center py-16 bg-card rounded-2xl border border-danger">
         <p className="text-danger-text font-medium">{errorMessage || t("TEXT_GENERIC_ERROR")}</p>
         <span className="text-sm text-text-secondary">{t("COPY_RETRY_REQUEST_2")}</span>
       </div>

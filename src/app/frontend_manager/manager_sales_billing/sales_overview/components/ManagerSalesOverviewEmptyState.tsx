@@ -9,7 +9,7 @@ import type { ManagerSalesOverviewEmptyStateProps } from '@/app/frontend_manager
 /** @description Renders the empty state UI for Sales module lists. Receives a message and optional subtext via props. No API calls. @dependencies Local dependencies are owned by this feature module (1 documented module/import dependencies).. @edge-case Preserves empty state. */
 export default function ManagerSalesOverviewEmptyState({ message, subtext }: ManagerSalesOverviewEmptyStateProps) {
   return (
-    <div data-testid="manager_sales-sales-empty-state" className="flex flex-col items-center justify-center py-12 text-center border border-border rounded-xl bg-card motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+    <div data-testid="manager_sales-sales-empty-state" className="flex flex-col items-center justify-center py-12 text-center border border-border rounded-xl bg-card">
       <div className="w-12 h-12 rounded-full bg-primary-subtle flex items-center justify-center mb-3">
         <IndianRupee size={18} strokeWidth={2} className="text-primary"/>
       </div>

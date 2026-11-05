@@ -5,7 +5,7 @@ export default function ManagerBusinessSettingsLoading() {
     <div className="max-w-3xl mx-auto space-y-6 p-6">
       <div className="h-8 w-36 bg-skeleton-base bg-skeleton-highlight motion-safe:animate-pulse rounded" />
       {[...Array(2)].map((_, i) => (
-        <div key={`skeleton-${i}`} className="bg-card border border-border rounded-xl p-6 space-y-4 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+        <div key={`skeleton-${i}`} className="bg-card border border-border rounded-xl p-6 space-y-4">
           <div className="h-5 w-48 bg-skeleton-base motion-safe:animate-pulse rounded" />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {[...Array(2)].map((_, j) => (

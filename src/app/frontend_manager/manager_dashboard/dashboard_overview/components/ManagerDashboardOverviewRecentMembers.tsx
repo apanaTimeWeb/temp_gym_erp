@@ -55,7 +55,7 @@ export default function ManagerDashboardOverviewRecentMembers() {
   };
 
   return (
-    <div className="xl:col-span-2 rounded-xl shadow-card border overflow-hidden bg-card border-border motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+    <div className="xl:col-span-2 rounded-xl shadow-card border overflow-hidden bg-card border-border">
       <div className="min-w-0 px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-3 border-b border-border">
         <h2 className="font-semibold text-text-primary">{t("COPY_RECENT_MEMBERS")}</h2>
         <div className="min-w-0 flex flex-wrap items-center gap-3">

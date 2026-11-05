@@ -86,7 +86,7 @@ export default function ManagerStoreProductsOrderTable() {
 
   if (isPending) {
     return (
-      <div className="motion-safe:animate-pulse bg-card rounded-xl border border-border mt-4 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+      <div className="motion-safe:animate-pulse bg-card rounded-xl border border-border mt-4">
         {[...Array(5)].map((_, i) => (
           <div key={`skeleton-${i}`} className="h-16 border-b border-border flex items-center px-4 gap-4">
             <div className="h-4 bg-input rounded w-16"></div>
@@ -102,7 +102,7 @@ export default function ManagerStoreProductsOrderTable() {
 
   if (isError) {
     return (
-      <div className="text-center py-16 bg-card rounded-2xl border border-danger mt-4 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+      <div className="text-center py-16 bg-card rounded-2xl border border-danger mt-4">
         <p className="text-danger-text font-medium">{errorMessage || t("TEXT_GENERIC_ERROR")}</p>
         <span className="text-sm text-text-secondary">{t("COPY_RETRY_REQUEST_2")}</span>
       </div>
@@ -114,7 +114,7 @@ export default function ManagerStoreProductsOrderTable() {
     <div className="flex flex-col h-full min-h-96 print:hidden">
       <label htmlFor="manager-store-orders-search" className="sr-only">{t('COPY_SEARCH')}</label>
       <input id="manager-store-orders-search" type="search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder={t('COPY_SEARCH')} className="min-h-11 w-full max-w-sm rounded-lg border border-border bg-input px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" />
-      <div className="overflow-x-auto flex-1 bg-card rounded-xl border border-border motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+      <div className="overflow-x-auto flex-1 bg-card rounded-xl border border-border">
         <ManagerInfrastructureResponsiveTable labels={[t('COPY_ORDER_ID'), t('COPY_TOTAL_1'), t('COPY_METHOD'), t('COPY_STATUS'), t('COPY_DATE_2'), t('COPY_RECEIPT')]}>
 <table className="w-full">
           <thead className="bg-input">
@@ -149,29 +149,31 @@ export default function ManagerStoreProductsOrderTable() {
                 <td className="px-4 py-3 text-sm text-text-secondary">
                   {ManagerStoreProductsFormatDate(o.createdAt)}
                 </td>
-                <td className="px-4 py-3 flex items-center gap-2">
-                  <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 min-w-11 inline-flex items-center justify-center p-1.5 rounded-lg bg-success text-on-success hover:bg-success motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_store-store-managerstoreordertable-button-whatsapp-receipt-${mapIndex}`} 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleWhatsApp(o);
-                    }}
-                    
-                    aria-label={t("TEXT_WHATSAPP_RECEIPT_ORDER", { value: `ORD-${o.id}` })}
-                    title={t("COPY_SEND_VIA_WHATSAPP")}
-                   type="button">
-                    <MessageCircle size={18} strokeWidth={2}/>
-                  </button>
-                  <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 min-w-11 inline-flex items-center justify-center p-1.5 rounded-lg bg-input text-text-secondary hover:text-primary motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_store-store-managerstoreordertable-button-print-receipt-${mapIndex}`} 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handlePrint(o);
-                    }}
-                    
-                    aria-label={t("TEXT_PRINT_RECEIPT_ORDER", { value: `ORD-${o.id}` })}
-                    title={t("COPY_PRINT_RECEIPT")}
-                   type="button">
-                    <Printer size={18} strokeWidth={2}/>
-                  </button>
+                <td className="px-4 py-3 whitespace-nowrap">
+                  <div className="flex items-center gap-2">
+                    <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 min-w-11 inline-flex items-center justify-center p-1.5 rounded-lg bg-success text-on-success hover:bg-success motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_store-store-managerstoreordertable-button-whatsapp-receipt-${mapIndex}`} 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleWhatsApp(o);
+                      }}
+                      
+                      aria-label={t("TEXT_WHATSAPP_RECEIPT_ORDER", { value: `ORD-${o.id}` })}
+                      title={t("COPY_SEND_VIA_WHATSAPP")}
+                     type="button">
+                      <MessageCircle size={18} strokeWidth={2}/>
+                    </button>
+                    <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 min-w-11 inline-flex items-center justify-center p-1.5 rounded-lg bg-input text-text-secondary hover:text-primary motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_store-store-managerstoreordertable-button-print-receipt-${mapIndex}`} 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handlePrint(o);
+                      }}
+                      
+                      aria-label={t("TEXT_PRINT_RECEIPT_ORDER", { value: `ORD-${o.id}` })}
+                      title={t("COPY_PRINT_RECEIPT")}
+                     type="button">
+                      <Printer size={18} strokeWidth={2}/>
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}

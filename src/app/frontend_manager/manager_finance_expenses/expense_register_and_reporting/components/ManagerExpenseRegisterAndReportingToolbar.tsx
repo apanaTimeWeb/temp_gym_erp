@@ -20,7 +20,7 @@ export default function ManagerExpenseRegisterAndReportingToolbar() {
   useEffect(() => { const timer = window.setTimeout(() => setSearch(searchDraft), 300); return () => window.clearTimeout(timer); }, [searchDraft, setSearch]);
 
   return (
-    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-card p-4 rounded-xl border border-border shadow-card motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-card p-4 rounded-xl border border-border shadow-card">
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full sm:w-auto">
         <h1 className="text-2xl font-bold text-text-primary mr-4">{t("COPY_EXPENSES_2")}</h1>
         <div className="relative w-full sm:w-64">

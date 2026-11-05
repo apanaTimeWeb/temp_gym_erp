@@ -23,7 +23,7 @@ export default function ManagerNotificationsInboxTable() {
     handleMarkRead, handleMarkAllRead, handleDelete, reload } = useManagerNotificationsInboxLogic();
 
   return (
-    <div className="bg-card border border-border rounded-xl overflow-hidden shadow-card motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+    <div className="bg-card border border-border rounded-xl overflow-hidden shadow-card">
       {/* Toolbar */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 border-b border-border">
         <div className="relative w-full sm:w-72">

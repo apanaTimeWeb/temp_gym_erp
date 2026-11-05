@@ -72,7 +72,7 @@ export default function ManagerStaffPayrollAndAttendanceLedgerTable() {
         </div>
       )}
 
-      <div className="border border-border rounded-xl overflow-hidden bg-card motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+      <div className="border border-border rounded-xl overflow-hidden bg-card">
         <div className="overflow-x-auto">
           <ManagerInfrastructureResponsiveTable labels={[t('COPY_DATE_1'), t('COPY_TRANSACTION_TYPE'), t('COPY_NOTES_1'), t('COPY_CREDIT'), t('COPY_DEBIT'), t('COPY_BALANCE')]}>
 <table className="w-full text-left border-collapse">

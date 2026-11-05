@@ -15,7 +15,7 @@ import { useManagerFinancePaymentsAndSummaryLogic } from '@/app/frontend_manager
  */
 const Chart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
-  loading: () => <div className="h-64 rounded-xl bg-card motion-safe:animate-pulse motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1" aria-hidden="true" /> });
+  loading: () => <div className="h-64 rounded-xl bg-card motion-safe:animate-pulse" aria-hidden="true" /> });
 
 
 

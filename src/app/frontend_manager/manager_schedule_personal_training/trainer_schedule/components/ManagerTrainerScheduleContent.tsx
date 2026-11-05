@@ -34,7 +34,7 @@ export function ManagerTrainerScheduleContent() {
       <div className="min-h-full pb-10">
         
         <div className="p-6 mt-10">
-          <div className="max-w-md w-full bg-card border border-danger rounded-xl p-8 text-center space-y-4 mx-auto motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+          <div className="max-w-md w-full bg-card border border-danger rounded-xl p-8 text-center space-y-4 mx-auto">
             <div data-testid="manager_schedule-manager-schedule-content-status" className="w-12 h-12 bg-danger-bg text-danger-text rounded-full flex items-center justify-center mx-auto">
               <AlertCircle size={18} strokeWidth={2}/>
             </div>

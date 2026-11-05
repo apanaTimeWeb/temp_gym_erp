@@ -18,7 +18,7 @@ export default function ManagerReportsOverviewTable() {
   if (!summary) return null;
 
   return (
-    <div className="bg-card border border-border rounded-xl overflow-hidden shadow-card motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+    <div className="bg-card border border-border rounded-xl overflow-hidden shadow-card">
       <div className="px-5 py-3.5 border-b border-border">
         <p className="text-sm font-semibold text-text-primary">{tab}{t("COPY_DATA")}</p>
       </div>

@@ -8,7 +8,7 @@ export default function Loading() {
  return (
  <div className="min-h-screen flex flex-col p-6 space-y-5 bg-page">
  <div className="h-20 bg-skeleton-base bg-skeleton-highlight rounded-xl motion-safe:animate-pulse"></div>
- <div className="h-18 bg-card rounded-xl motion-safe:animate-pulse motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1"></div>
+ <div className="h-18 bg-card rounded-xl motion-safe:animate-pulse"></div>
  <ManagerTableSkeleton rows={8} />
  </div>
  );

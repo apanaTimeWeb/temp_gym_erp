@@ -28,7 +28,7 @@ export function ManagerSalesOverviewContent() {
             </button>
           </div>
         )}
-        <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+        <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden">
           <ManagerSalesOverviewTabs data-testid="manager_sales-managersalescontent-sales-tabs-1" />
           <div className="p-5">
             {view === 'overview' && <ManagerSalesOverview />}

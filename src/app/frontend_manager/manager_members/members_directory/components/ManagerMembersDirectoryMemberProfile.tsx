@@ -39,7 +39,7 @@ export default function ManagerMembersDirectoryMemberProfile() {
          type="button">{t("COPY_BACK_MEMBERS")}</button>
 
         {/* Profile Card */}
-        <div className="bg-card rounded-xl shadow-card border border-border p-6 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+        <div className="bg-card rounded-xl shadow-card border border-border p-6">
           <div className="flex flex-wrap items-center justify-between gap-5 mb-6">
             <div className="flex items-center gap-5">
               <div className="w-20 h-20 rounded-full flex items-center justify-center text-3xl font-bold text-primary bg-primary-subtle shrink-0">
@@ -105,7 +105,7 @@ export default function ManagerMembersDirectoryMemberProfile() {
         </div>
 
         {/* Sub Tabs */}
-        <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+        <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden">
           <div className="flex border-b border-border" role="tablist" aria-label={t("COPY_PROFILE_SECTIONS")}>
             {PROFILE_TABS.map(({ id: t, label }, mapIndex) => (
               <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", (`px-5 py-3.5 text-sm font-medium motion-safe:transition-all motion-safe:duration-200 border-b-2 ${profileTab === t

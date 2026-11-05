@@ -20,7 +20,7 @@ import type { ManagerDashboardOverviewRevenueChartData } from '@/app/frontend_ma
  */
 const Chart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
-  loading: () => <div className="h-64 rounded-xl bg-card motion-safe:animate-pulse motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1" aria-hidden="true" /> });
+  loading: () => <div className="h-64 rounded-xl bg-card motion-safe:animate-pulse" aria-hidden="true" /> });
 
 /** @description Renders the ManagerDashboardOverviewRevenueChart component for its owning Manager frontend boundary. @dependencies Local dependencies are owned by this feature module (5 documented module/import dependencies).. @edge-case Preserves loading state. */
 export default function ManagerDashboardOverviewRevenueChart() {
@@ -59,7 +59,7 @@ export default function ManagerDashboardOverviewRevenueChart() {
     dataLabels: { enabled: false } };
 
   return (
-    <div className="min-w-0 bg-card rounded-xl shadow-card border border-border p-5 flex flex-col h-full min-h-72 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+    <div className="min-w-0 bg-card rounded-xl shadow-card border border-border p-5 flex flex-col h-full min-h-72">
       <h3 className="text-base font-bold text-text-primary mb-4">{t("COPY_REVENUE_TRENDS")}</h3>
       <div className="min-w-0 flex-1 w-full h-56">
         <Chart

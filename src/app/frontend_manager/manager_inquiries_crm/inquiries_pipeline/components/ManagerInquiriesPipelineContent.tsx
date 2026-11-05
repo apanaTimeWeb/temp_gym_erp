@@ -25,7 +25,7 @@ export function ManagerInquiriesPipelineContent() {
       
       <div className="p-6 space-y-5">
         <ManagerInquiriesPipelineKPIs />
-        <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+        <div className="space-y-4">
           <ManagerInquiriesPipelineToolbar />
           <ManagerInquiriesPipelineTable />
         </div>

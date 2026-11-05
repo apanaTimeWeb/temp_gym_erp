@@ -24,13 +24,13 @@ export default function ManagerReportsOverviewLoading() {
         {/* KPI skeletons */}
         <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
           {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
-            <div key={`skeleton-${i}`} className="h-24 bg-card rounded-xl motion-safe:animate-pulse border border-border motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1" />
+            <div key={`skeleton-${i}`} className="h-24 bg-card rounded-xl motion-safe:animate-pulse border border-border" />
           ))}
         </div>
         {/* Chart skeleton */}
-        <div className="h-80 bg-card rounded-xl motion-safe:animate-pulse border border-border motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1" />
+        <div className="h-80 bg-card rounded-xl motion-safe:animate-pulse border border-border" />
         {/* Table skeleton */}
-        <div className="bg-card rounded-xl border border-border overflow-hidden motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+        <div className="bg-card rounded-xl border border-border overflow-hidden">
           <div className="h-12 bg-skeleton-base motion-safe:animate-pulse border-b border-border" />
           {[1, 2, 3, 4, 5, 6].map(i => (
             <div key={`skeleton-${i}`} className="h-12 border-b border-border px-5 flex items-center gap-4">

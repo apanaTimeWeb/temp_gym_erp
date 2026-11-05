@@ -27,7 +27,7 @@ export function ManagerAttendanceTrackingContent() {
   <div className="p-6 space-y-5">
   <ManagerAttendanceTrackingKPIs />
   
-  <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+  <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden">
   <ManagerAttendanceTrackingToolbar />
   <ManagerAttendanceTrackingTable />
   </div>

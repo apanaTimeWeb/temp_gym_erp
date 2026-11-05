@@ -18,7 +18,7 @@ import type { OverviewDataPoint } from '@/app/frontend_manager/manager_sales_bil
  */
 const Chart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
-  loading: () => <div className="h-64 rounded-xl bg-card motion-safe:animate-pulse motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1" aria-hidden="true" /> });
+  loading: () => <div className="h-64 rounded-xl bg-card motion-safe:animate-pulse" aria-hidden="true" /> });
 
 /** @description Renders the ManagerSalesOverview component for its owning Manager frontend boundary. @dependencies Local dependencies are owned by this feature module (5 documented module/import dependencies).. @edge-case Preserves loading state, error state. */
 export default function ManagerSalesOverview() {

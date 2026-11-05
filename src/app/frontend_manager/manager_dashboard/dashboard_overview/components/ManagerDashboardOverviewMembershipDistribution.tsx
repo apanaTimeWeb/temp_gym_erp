@@ -20,7 +20,7 @@ export default function ManagerDashboardOverviewMembershipDistribution() {
  const total = (s.membersByPlan || []).reduce((a, b) => a + b.count, 0);
 
  return (
- <div className="rounded-xl shadow-card border p-5 bg-card border-border motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+ <div className="rounded-xl shadow-card border p-5 bg-card border-border">
  <h2 className="font-semibold mb-4 text-text-primary">{t("COPY_MEMBERSHIP_DISTRIBUTION")}</h2>
  <div className="flex flex-wrap gap-3">
  {(s.membersByPlan || []).map((p, __testIdIndex0) => {

@@ -30,7 +30,7 @@ export default function ManagerDashboardOverviewExpiringMemberships() {
   );
 
   return (
-    <div className="rounded-xl shadow-card border p-5 bg-card border-border motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+    <div className="rounded-xl shadow-card border p-5 bg-card border-border">
       <div className="flex items-center justify-between gap-3 mb-3">
         <h2 className="font-semibold text-text-primary">{t("COPY_EXPIRING_MEMBERSHIPS")}</h2>
       </div>

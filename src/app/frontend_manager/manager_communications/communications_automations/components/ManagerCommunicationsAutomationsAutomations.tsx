@@ -48,7 +48,7 @@ export default function ManagerCommunicationsCampaignsAutomations() {
     <div className="space-y-6 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-300">
       
       {/* Header Panel */}
-      <div className="bg-card border border-border rounded-xl p-5 md:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+      <div className="bg-card border border-border rounded-xl p-5 md:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <h2 className="text-lg font-bold text-text-primary flex items-center gap-2">
             <Zap size={18} strokeWidth={2} className="text-warning-text fill-warning/20"/>{t("COPY_AUTOMATED_TRIGGERS")}</h2>

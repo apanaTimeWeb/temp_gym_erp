@@ -11,7 +11,7 @@ export default function ManagerNotificationsInboxLoading() {
         {/* KPI skeletons */}
         <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
           {[1, 2, 3, 4].map(i => (
-            <div key={`skeleton-${i}`} className="bg-card border border-border rounded-xl p-5 flex items-center gap-4 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+            <div key={`skeleton-${i}`} className="bg-card border border-border rounded-xl p-5 flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-skeleton-highlight shrink-0" />
               <div className="space-y-2 flex-1">
                 <div className="h-3 w-20 bg-skeleton-base rounded" />
@@ -21,7 +21,7 @@ export default function ManagerNotificationsInboxLoading() {
           ))}
         </div>
         {/* List skeleton */}
-        <div className="bg-card border border-border rounded-xl overflow-hidden motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+        <div className="bg-card border border-border rounded-xl overflow-hidden">
           <div className="p-4 border-b border-border flex gap-3">
             <div className="h-9 w-72 bg-skeleton-base rounded-lg" />
             <div className="h-9 w-28 bg-skeleton-base rounded-lg" />

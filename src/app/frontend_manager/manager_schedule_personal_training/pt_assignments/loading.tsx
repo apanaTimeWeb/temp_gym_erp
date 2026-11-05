@@ -7,7 +7,7 @@ export default function ManagerPtAssignmentsLoading() {
       <div className="h-12 w-96 bg-skeleton-base motion-safe:animate-pulse rounded-xl" />
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {[...Array(3)].map((_, i) => (
-          <div key={`skeleton-${i}`} className="bg-card border border-border rounded-xl p-5 space-y-3 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+          <div key={`skeleton-${i}`} className="bg-card border border-border rounded-xl p-5 space-y-3">
             <div className="h-5 w-32 bg-skeleton-base motion-safe:animate-pulse rounded" />
             <div className="h-8 w-20 bg-skeleton-base motion-safe:animate-pulse rounded" />
             <div className="h-4 w-full bg-skeleton-base motion-safe:animate-pulse rounded" />

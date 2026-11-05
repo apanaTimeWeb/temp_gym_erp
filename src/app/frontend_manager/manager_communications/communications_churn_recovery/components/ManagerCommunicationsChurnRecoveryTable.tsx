@@ -49,7 +49,7 @@ export default function ManagerCommunicationsCampaignsChurnRecoveryTable({
   const endEntry   = Math.min(currentPage * CANCELLATIONS_ITEMS_PER_PAGE, allFilteredCount);
 
   return (
-    <div className="bg-card border border-border rounded-lg overflow-hidden motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+    <div className="bg-card border border-border rounded-lg overflow-hidden">
       {/* Controls */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-4 border-b border-border">
         {/* Search */}

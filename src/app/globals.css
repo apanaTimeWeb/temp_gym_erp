@@ -360,3 +360,11 @@
     content: none !important;
   }
 }
+
+/* ── 7. THERMAL RECEIPT PRINT UTILITIES ────────────────────── */
+.thermalReceipt { width: 80mm; max-width: 80mm; font-size: 12px; box-sizing: border-box; }
+.thermalDividerBottom { border-bottom-width: 1.5px; }
+.thermalDividerTopBottom { border-top-width: 1.5px; border-bottom-width: 1.5px; }
+.thermalDividerBottomOnly { border-bottom-width: 1.5px; }
+.thermalDividerTop { border-top-width: 1.5px; }
+.thermalSmallText { font-size: 10px; }

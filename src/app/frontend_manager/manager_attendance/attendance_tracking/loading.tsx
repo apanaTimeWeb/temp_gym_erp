@@ -11,7 +11,7 @@ export default function Loading() {
  
  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
  {[1, 2, 3].map(i => (
- <div key={`skeleton-${i}`} className="h-24 bg-card rounded-xl motion-safe:animate-pulse motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1"></div>
+ <div key={`skeleton-${i}`} className="h-24 bg-card rounded-xl motion-safe:animate-pulse"></div>
  ))}
  </div>
  

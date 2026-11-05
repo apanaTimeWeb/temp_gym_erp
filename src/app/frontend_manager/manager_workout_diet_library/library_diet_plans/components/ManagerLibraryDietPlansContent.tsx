@@ -24,7 +24,7 @@ export function ManagerLibraryDietPlansContent() {
  <div className="p-6 space-y-5">
  <ManagerLibraryDietPlansTabs  data-testid="manager_library-managerlibrarycontent-library-tabs-1"/>
  
- <div className="overflow-hidden rounded-xl border border-border bg-card p-5 shadow-card motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+ <div className="overflow-hidden rounded-xl border border-border bg-card p-5 shadow-card">
    {view === 'diet' ? <ManagerLibraryDietPlansDietView /> : <ManagerLibraryDietPlansExercisesView />}
  </div>
  </div>

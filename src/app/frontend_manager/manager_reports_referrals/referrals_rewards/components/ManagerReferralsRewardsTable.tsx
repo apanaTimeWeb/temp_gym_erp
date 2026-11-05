@@ -35,7 +35,7 @@ export default function ManagerReferralsRewardsTable() {
   } = useManagerReferralsRewardsLogic();
 
   return (
-    <div className="bg-card border border-border rounded-xl flex flex-col min-h-96 shadow-card motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+    <div className="bg-card border border-border rounded-xl flex flex-col min-h-96 shadow-card">
       
       {/* Header & Filters */}
       <div className="p-4 border-b border-border flex flex-col sm:flex-row justify-between gap-4 shrink-0 bg-input">

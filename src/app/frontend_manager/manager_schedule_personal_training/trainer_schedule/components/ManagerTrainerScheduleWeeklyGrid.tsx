@@ -39,7 +39,7 @@ export default function ManagerTrainerScheduleWeeklyGrid() {
   }
 
   return (
-    <div className="overflow-x-auto rounded-xl border border-border bg-card motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+    <div className="overflow-x-auto rounded-xl border border-border bg-card">
       <table className="w-full text-left border-collapse min-w-224">
         <thead>
           <tr className="border-b border-border bg-primary-subtle">
@@ -54,13 +54,15 @@ export default function ManagerTrainerScheduleWeeklyGrid() {
         <tbody className="divide-y divide-border">
           {trainers.map((trainer, mapIndex) => (
             <tr key={trainer.trainerId} className="hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-200 ease-in-out">
-              <td className="py-3 px-4 sticky left-0 bg-card z-20 flex flex-col items-start justify-center gap-0.5">
-                <ManagerTooltip content={trainer.trainerName}>
-                  <p className="text-sm font-semibold text-text-primary truncate max-w-40">{trainer.trainerName}</p>
-                </ManagerTooltip>
-                <ManagerTooltip content={trainer.trainerRole}>
-                  <p className="text-xs text-text-secondary truncate max-w-40">{trainer.trainerRole}</p>
-                </ManagerTooltip>
+              <td className="py-3 px-4 sticky left-0 bg-card z-20 align-middle">
+                <div className="flex flex-col items-start justify-center gap-0.5">
+                  <ManagerTooltip content={trainer.trainerName}>
+                    <p className="text-sm font-semibold text-text-primary truncate max-w-40">{trainer.trainerName}</p>
+                  </ManagerTooltip>
+                  <ManagerTooltip content={trainer.trainerRole}>
+                    <p className="text-xs text-text-secondary truncate max-w-40">{trainer.trainerRole}</p>
+                  </ManagerTooltip>
+                </div>
               </td>
               {days.map(day => {
                 const shifts = trainer.shifts.filter((shift) => shift.day === day);

@@ -80,7 +80,7 @@ export default function ManagerAttendanceTrackingTable() {
 
   return (
     <div className="p-5">
-      {(() => { if (isPending) return (<div className="motion-safe:animate-pulse bg-card rounded-xl border border-border mt-4 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+      {(() => { if (isPending) return (<div className="motion-safe:animate-pulse bg-card rounded-xl border border-border mt-4">
           {[...Array(5)].map((_, i) => (<div key={`skeleton-${i}`} className="h-16 border-b border-border flex items-center px-4 gap-4">
               <div className="h-8 w-8 bg-input rounded-full"></div>
               <div className="h-4 bg-input rounded w-32"></div>
@@ -90,7 +90,7 @@ export default function ManagerAttendanceTrackingTable() {
               <div className="h-4 bg-input rounded w-16"></div>
               <div className="h-4 bg-input rounded w-16"></div>
             </div>))}
-        </div>); return (() => { if (isError) return (<div className="text-center py-16 bg-card rounded-2xl border border-danger mt-4 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+        </div>); return (() => { if (isError) return (<div className="text-center py-16 bg-card rounded-2xl border border-danger mt-4">
           <p className="text-danger-text font-medium">{errorMessage || t("TEXT_GENERIC_ERROR")}</p>
           <span className="text-sm text-text-secondary">{t("COPY_RETRY_REQUEST")}</span>
         </div>); return (<div className="overflow-x-auto">

@@ -33,7 +33,7 @@ export default function ManagerInquiriesPipelineTable() {
 
   if (isPending) {
     return (
-      <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden flex flex-col h-full min-h-96 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+      <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden flex flex-col h-full min-h-96">
         <div className="overflow-x-auto">
           <ManagerInfrastructureResponsiveTable labels={['', ...INQUIRIES_TABLE_HEADER_KEYS.map((labelKey) => t(labelKey))]}>
 <table className="w-full">
@@ -51,9 +51,11 @@ export default function ManagerInquiriesPipelineTable() {
               {MANAGER_SKELETON_ROWS.map((key) => (
                 <tr key={key} className="motion-safe:animate-pulse">
                   <td className="px-5 py-4"><div className="h-4 bg-input rounded w-4"></div></td>
-                  <td className="px-5 py-4 flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-input"></div>
-                    <div className="h-4 bg-input rounded w-24"></div>
+                  <td className="px-5 py-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-full bg-input"></div>
+                      <div className="h-4 bg-input rounded w-24"></div>
+                    </div>
                   </td>
                   <td className="px-5 py-4"><div className="h-4 bg-input rounded w-32"></div></td>
                   <td className="px-5 py-4"><div className="h-4 bg-input rounded w-16"></div></td>
@@ -72,7 +74,7 @@ export default function ManagerInquiriesPipelineTable() {
 
   if (isError) {
     return (
-      <div className="bg-card rounded-xl shadow-card border border-danger overflow-hidden flex flex-col h-full min-h-96 justify-center items-center py-16 text-center motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+      <div className="bg-card rounded-xl shadow-card border border-danger overflow-hidden flex flex-col h-full min-h-96 justify-center items-center py-16 text-center">
         <p role="alert" aria-live="assertive" className="text-danger-text font-medium">{errorMessage || t("TEXT_GENERIC_ERROR")}</p>
         <p className="text-sm mt-1 text-text-secondary">{t("COPY_CHECK_CONNECTION_TRY_AGAIN")}</p>
       </div>
@@ -80,7 +82,7 @@ export default function ManagerInquiriesPipelineTable() {
   }
 
   return (
-    <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden flex flex-col h-full min-h-96 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+    <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden flex flex-col h-full min-h-96">
       <div className="overflow-x-auto">
         <ManagerInfrastructureResponsiveTable labels={['', ...INQUIRIES_TABLE_HEADER_KEYS.map((labelKey) => t(labelKey))]}>
 <table className="w-full">

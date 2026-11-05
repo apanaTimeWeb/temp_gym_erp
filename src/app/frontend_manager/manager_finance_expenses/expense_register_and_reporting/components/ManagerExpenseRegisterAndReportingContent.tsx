@@ -37,7 +37,7 @@ export function ManagerExpenseRegisterAndReportingContent() {
       
       <div className="p-4 sm:p-6 space-y-6 max-w-screen-2xl mx-auto w-full">
         
-        <div className="flex flex-wrap gap-2 bg-card border border-border p-1 rounded-xl w-fit mb-4 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+        <div className="flex flex-wrap gap-2 bg-card border border-border p-1 rounded-xl w-fit mb-4">
           {expenseViews.map(({ id, label }, mapIndex) => (
             <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", (`px-4 py-2 text-sm font-semibold rounded-lg motion-safe:transition-all ${
                 activeTab === id ? 'bg-primary text-on-primary shadow-card' : 'text-text-secondary hover:text-primary hover:bg-primary-subtle'

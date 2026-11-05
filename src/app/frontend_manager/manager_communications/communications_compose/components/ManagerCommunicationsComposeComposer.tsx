@@ -27,7 +27,7 @@ export default function ManagerCommunicationsCampaignsComposer() {
   const watchedMessage = form.watch('message');
   const bulkRecipients = segmentRecipients.map((r) => ({ name: r.name, phone: r.phone, email: r.email }));
 
-  return <div className="bg-card border border-border rounded-xl p-6 space-y-6 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+  return <div className="bg-card border border-border rounded-xl p-6 space-y-6">
     <ManagerCommunicationsCampaignsSegmentPicker />
     <div className="space-y-2"><div id="manager-communications-channel-label" className="block text-sm font-semibold text-text-secondary uppercase tracking-wider">{t("COPY_2_CHOOSE_CHANNEL")}</div><div data-testid="manager_communications-managercommunicationscomposer-radiogroup"role="radiogroup" aria-labelledby="manager-communications-channel-label" className="flex flex-wrap gap-3">
       <label className={[`flex items-center gap-2 px-5 py-2.5 rounded-xl border text-sm font-semibold cursor-pointer motion-safe:transition-all ${watchedChannel === 'whatsapp' ? 'bg-social-whatsapp text-on-primary border-social-whatsapp' : 'bg-input border-border text-text-secondary'}`, "motion-safe:duration-200 ease-in-out"].filter(Boolean).join(' ')}>

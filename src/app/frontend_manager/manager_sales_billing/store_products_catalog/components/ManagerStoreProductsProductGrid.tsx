@@ -30,7 +30,7 @@ export default function ManagerStoreProductsProductGrid() {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {[...Array(8)].map((_, i) => (
-          <div key={`skeleton-${i}`} className="motion-safe:animate-pulse bg-card rounded-xl border border-border p-4 h-64 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+          <div key={`skeleton-${i}`} className="motion-safe:animate-pulse bg-card rounded-xl border border-border p-4 h-64">
             <div className="h-32 bg-input rounded-lg mb-4"></div>
             <div className="h-4 bg-input rounded w-3/4 mb-2"></div>
             <div className="h-4 bg-input rounded w-1/2 mb-4"></div>
@@ -46,7 +46,7 @@ export default function ManagerStoreProductsProductGrid() {
 
   if (isError) {
     return (
-      <div className="text-center py-16 bg-card rounded-2xl border border-danger mt-4 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+      <div className="text-center py-16 bg-card rounded-2xl border border-danger mt-4">
         <p className="text-danger-text font-medium">{errorMessage || t("TEXT_GENERIC_ERROR")}</p>
         <p className="text-sm text-text-secondary">{t("COPY_RETRY_REQUEST_1")}</p><button type="button" onClick={() => void loadAll()} className="mt-4 min-h-11 min-w-11 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring">{t("COPY_RETRY")}</button>
       </div>

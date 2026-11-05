@@ -77,7 +77,7 @@ export default function ManagerMembersDirectoryProfileDiet() {
       </div>
 
       {isAssigning && (
-        <div className="bg-card border border-border p-6 rounded-xl space-y-4 shadow-card motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+        <div className="bg-card border border-border p-6 rounded-xl space-y-4 shadow-card">
           <h4 className="font-semibold text-text-primary">{t("COPY_ASSIGN_DIET_PLAN_LIBRARY")}</h4>
           {dietsLoading ? (
             <p className="text-sm text-text-secondary">{t("COPY_LOADING_DIET_PLANS")}</p>
