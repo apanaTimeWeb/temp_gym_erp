@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server';
 
 // Mock Fixture Imports
 import {
+  TRAINER_DASHBOARD_MOCK_DASHBOARD_STATS,
+} from '@/app/frontend_trainer/trainer_dashboard/dashboard_overview/mocks/TrainerDashboardOverviewMockData';
+
+import {
   TRAINER_MEMBERS_MOCK_MEMBERS,
   TRAINER_MEMBERS_MOCK_MEMBER_STATS,
 } from '@/app/frontend_trainer/trainer_members/members_directory_and_profile/mocks/handlers/TrainerMembersDirectoryAndProfileMockData';
@@ -59,6 +63,11 @@ function ok(data: unknown, message = 'Success') {
 }
 
 function handleRoute(path: string, method: string, url: URL) {
+  // 0. Dashboard Stats
+  if (path === 'trainer_dashboard/stats' || path === 'dashboard/stats' || path === 'stats') {
+    return ok(TRAINER_DASHBOARD_MOCK_DASHBOARD_STATS, 'Dashboard statistics retrieved successfully');
+  }
+
   // 1. Members
   if (path === 'members') {
     return ok({
