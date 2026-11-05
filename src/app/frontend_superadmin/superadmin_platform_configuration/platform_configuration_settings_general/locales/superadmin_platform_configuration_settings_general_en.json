@@ -1,0 +1,65 @@
+{
+  "superadmin_platform_configuration_settings": {
+    "module": {
+      "name": "superadmin_platform_configuration_settings",
+      "namespace": "superadmin_platform_configuration_settings"
+    },
+    "ui": {
+      "failed_to_load_view_f0191174": "Failed to load view",
+      "an_unexpected_error_occurred_while_rendering_1a97607b": "An unexpected error occurred while rendering this module. Please try again or contact support if the issue persists.",
+      "try_again_d876a9fe": "Try Again",
+      "loading_platform_settings_056ed69b": "Loading platform settings",
+      "platform_settings_could_not_be_loaded_00f9abd2": "Platform settings could not be loaded.",
+      "retry_6327b4e5": "Retry",
+      "platform_settings_bc7aef6e": "Platform Settings",
+      "configure_global_saas_limits_master_credenti_246230e0": "Configure global SaaS limits, master credentials, and platform defaults.",
+      "changelog_c49182dc": "Changelog",
+      "v2_4_1_current_6b444d2d": "v2.4.1 (current)",
+      "released_on_sept_09_2026_bb49ecfc": "Released on Sept 09, 2026",
+      "added_support_for_trialgyms_count_in_dashboa_66b93a0a": "Added support for trial gyms count in dashboard.",
+      "fixed_overdue_invoices_kpi_aggregation_bug_ba59f236": "Fixed overdue invoices KPI aggregation bug.",
+      "added_quot_revenue_by_plan_tier_quot_donut_c_a5d1f407": "Added \"Revenue by Plan Tier\" donut chart.",
+      "v2_4_0_fd7b4c8a": "v2.4.0",
+      "released_on_aug_21_2026_113677d0": "Released on Aug 21, 2026",
+      "introduced_superadmin_module_a7ce793b": "Introduced Superadmin module.",
+      "added_global_audit_logs_7b2a40b5": "Added global audit logs.",
+      "basic_gym_management_and_uptime_tracker_d3d15603": "Basic Gym management and uptime tracker.",
+      "save_setting_aria": "Save {key}",
+      "page_not_found_title": "Page not found",
+      "page_not_found_message": "The requested page is unavailable or no longer exists in this Superadmin area.",
+      "back_to_module": "Back to module",
+      "setting_value_invalid": "Enter a valid value for this setting type.",
+      "setting_save_failed": "The setting could not be saved. Please retry.",
+      "category_system": "System",
+      "category_limits": "Limits",
+      "category_integrations": "Integrations",
+      "category_business": "Business",
+      "category_general": "General",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "no_platform_settings": "No platform settings are available.",
+      "secret_write_only_placeholder": "Enter a new secret; the existing value is never displayed.",
+      "route_loading": "Loading page",
+      "boundary_title": "Unable to load this section",
+      "boundary_retry": "Try again"
+    },
+    "actions": {
+      "retry": "Retry",
+      "cancel": "Cancel",
+      "save": "Save",
+      "close": "Close",
+      "submit": "Submit",
+      "delete": "Delete",
+      "edit": "Edit",
+      "create": "Create",
+      "export": "Export",
+      "search": "Search"
+    }
+  },
+  "ui": {
+    "unsaved_settings_changes_title": "Unsaved settings changes",
+    "unsaved_settings_changes_message": "You have unsaved platform settings changes. Leave this page and discard them?",
+    "leave_settings_action": "Leave page",
+    "stay_on_settings_action": "Stay on page"
+  }
+}

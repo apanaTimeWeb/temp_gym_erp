@@ -1,0 +1,65 @@
+{
+  "superadmin_platform_configuration_settings": {
+    "module": {
+      "name": "superadmin_platform_configuration_settings",
+      "namespace": "superadmin_platform_configuration_settings"
+    },
+    "ui": {
+      "failed_to_load_view_f0191174": "लोड करने में विफल देखें",
+      "an_unexpected_error_occurred_while_rendering_1a97607b": "इस मॉड्यूल को दिखाते समय अप्रत्याशित त्रुटि हुई। कृपया दोबारा कोशिश करें या समस्या बनी रहने पर सहायता टीम से संपर्क करें।",
+      "try_again_d876a9fe": "फिर से प्रयास करें",
+      "loading_platform_settings_056ed69b": "प्लेटफ़ॉर्म सेटिंग लोड हो रही हैं",
+      "platform_settings_could_not_be_loaded_00f9abd2": "प्लेटफ़ॉर्म सेटिंग लोड नहीं हो सकीं।",
+      "retry_6327b4e5": "पुनः प्रयास करें",
+      "platform_settings_bc7aef6e": "प्लेटफ़ॉर्म सेटिंग",
+      "configure_global_saas_limits_master_credenti_246230e0": "वैश्विक SaaS सीमाएँ, मास्टर क्रेडेंशियल और प्लेटफ़ॉर्म डिफ़ॉल्ट कॉन्फ़िगर करें।",
+      "changelog_c49182dc": "बदलाव विवरण",
+      "v2_4_1_current_6b444d2d": "v2.4.1 (वर्तमान)",
+      "released_on_sept_09_2026_bb49ecfc": "09 सितंबर 2026 को जारी किया गया",
+      "added_support_for_trialgyms_count_in_dashboa_66b93a0a": "डैशबोर्ड में ट्रायल जिम की संख्या दिखाने का समर्थन जोड़ा गया।",
+      "fixed_overdue_invoices_kpi_aggregation_bug_ba59f236": "बकाया इनवॉइस KPI एकत्रीकरण की समस्या ठीक की गई।",
+      "added_quot_revenue_by_plan_tier_quot_donut_c_a5d1f407": "\"प्लान स्तर के अनुसार राजस्व\" डोनट चार्ट जोड़ा गया।",
+      "v2_4_0_fd7b4c8a": "v2.4.0",
+      "released_on_aug_21_2026_113677d0": "21 अगस्त 2026 को जारी किया गया",
+      "introduced_superadmin_module_a7ce793b": "सुपर एडमिन मॉड्यूल प्रस्तुत किया गया।",
+      "added_global_audit_logs_7b2a40b5": "वैश्विक ऑडिट लॉग जोड़े गए।",
+      "basic_gym_management_and_uptime_tracker_d3d15603": "बुनियादी जिम प्रबंधन और अपटाइम ट्रैकर।",
+      "save_setting_aria": "{key} सहेजें",
+      "page_not_found_title": "पेज नहीं मिला",
+      "page_not_found_message": "मांगा गया पेज उपलब्ध नहीं है या इस Superadmin क्षेत्र में मौजूद नहीं है।",
+      "back_to_module": "मॉड्यूल पर वापस जाएँ",
+      "setting_value_invalid": "इस सेटिंग के प्रकार के अनुसार मान्य मान दर्ज करें।",
+      "setting_save_failed": "सेटिंग सहेजी नहीं जा सकी। कृपया फिर से प्रयास करें।",
+      "category_system": "सिस्टम",
+      "category_limits": "सीमाएँ",
+      "category_integrations": "एकीकरण",
+      "category_business": "व्यवसाय",
+      "category_general": "सामान्य",
+      "enabled": "सक्षम",
+      "disabled": "अक्षम",
+      "no_platform_settings": "कोई प्लेटफ़ॉर्म सेटिंग उपलब्ध नहीं है।",
+      "secret_write_only_placeholder": "नया गुप्त मान दर्ज करें; मौजूदा मान कभी प्रदर्शित नहीं होगा।",
+      "route_loading": "पृष्ठ लोड हो रहा है",
+      "boundary_title": "अनुभाग लोड नहीं हो सका",
+      "boundary_retry": "पुनः प्रयास करें"
+    },
+    "actions": {
+      "retry": "पुनः प्रयास करें",
+      "cancel": "रद्द करें",
+      "save": "सहेजें",
+      "close": "बंद करें",
+      "submit": "जमा करें",
+      "delete": "हटाएँ",
+      "edit": "संपादित करें",
+      "create": "बनाएँ",
+      "export": "निर्यात करें",
+      "search": "खोजें"
+    }
+  },
+  "ui": {
+    "unsaved_settings_changes_title": "सेटिंग में बिना सहेजे बदलाव",
+    "unsaved_settings_changes_message": "प्लेटफ़ॉर्म सेटिंग में बदलाव सहेजे नहीं गए हैं। क्या आप उन्हें छोड़कर पेज से जाना चाहते हैं?",
+    "leave_settings_action": "पेज छोड़ें",
+    "stay_on_settings_action": "पेज पर रहें"
+  }
+}

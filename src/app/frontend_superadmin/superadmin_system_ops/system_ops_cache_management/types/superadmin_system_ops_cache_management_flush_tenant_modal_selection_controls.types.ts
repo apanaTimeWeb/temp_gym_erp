@@ -1,0 +1,1 @@
+export interface SuperadminSystemOpsCacheManagementFlushTenantModalSelectionControlsProps { search: string; filteredCount: number; onSearchChange: (value: string) => void; onSelectAll: () => void; onClear: () => void; }

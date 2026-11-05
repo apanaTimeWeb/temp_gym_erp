@@ -1,0 +1,2 @@
+import type { SuperadminInfrastructureTenant } from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_cache_management/types/superadmin_system_ops_cache_management.types';
+export interface SuperadminSystemOpsCacheManagementFlushTenantModalTenantListProps { isPending: boolean; isError: boolean; tenants: SuperadminInfrastructureTenant[]; filteredTenants: SuperadminInfrastructureTenant[]; selectedTenantIds: string[]; onRetry: () => void; onToggle: (tenantId: string) => void; }

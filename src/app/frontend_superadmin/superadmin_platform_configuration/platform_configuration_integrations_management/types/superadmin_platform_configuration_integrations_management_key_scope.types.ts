@@ -1,0 +1,1 @@
+export type SuperadminPlatformConfigurationIntegrationsKeyScope = typeof import('@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_integrations_management/constants/superadmin_platform_configuration_integrations_management.constants').SUPERADMIN_PLATFORM_CONFIGURATION_INTEGRATIONS_KEY_SCOPES[number];

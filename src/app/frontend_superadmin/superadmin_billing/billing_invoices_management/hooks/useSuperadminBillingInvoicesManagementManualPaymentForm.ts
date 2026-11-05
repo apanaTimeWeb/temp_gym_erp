@@ -19,7 +19,7 @@ import type { SuperadminBillingInvoicesManualPaymentFormValues } from '@/app/fro
  */
 export function useSuperadminBillingInvoicesManagementManualPaymentForm(onSave: (amount: number) => Promise<boolean>, unsavedChangesMessage = 'Unsaved manual payment changes') {
   const form = useForm<SuperadminBillingInvoicesManualPaymentFormValues>({
-    resolver: zodResolver(SuperadminBillingInvoicesManualPaymentFormSchema),
+    resolver: zodResolver(SuperadminBillingInvoicesManualPaymentFormSchema) as any,
     defaultValues: { amount: undefined },
   });
 

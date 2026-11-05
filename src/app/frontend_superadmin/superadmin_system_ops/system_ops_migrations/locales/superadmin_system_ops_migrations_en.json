@@ -1,0 +1,94 @@
+{
+  "superadmin_system_ops_migrations": {
+    "module": {
+      "name": "Module Purpose",
+      "namespace": "superadmin_system_ops_migrations"
+    },
+    "page": {
+      "title": "Module Purpose",
+      "description": "Module Purpose workspace."
+    },
+    "actions": {
+      "retry": "Retry",
+      "cancel": "Cancel",
+      "save": "Save",
+      "close": "Close",
+      "submit": "Submit",
+      "delete": "Delete",
+      "edit": "Edit",
+      "create": "Create",
+      "export": "Export",
+      "search": "Search"
+    },
+    "state": {
+      "loading": "Loading…",
+      "empty": "No records found",
+      "error": "Something went wrong",
+      "success": "Completed successfully"
+    },
+    "accessibility": {
+      "openMenu": "Open menu",
+      "closeMenu": "Close menu",
+      "previousPage": "Previous page",
+      "nextPage": "Next page"
+    },
+    "validation": {
+      "required": "This field is required",
+      "invalid": "Enter a valid value"
+    },
+    "currency": {
+      "locale": "en-IN"
+    },
+    "ui": {
+      "loading_schema_rollouts_9804507": "Loading schema rollouts",
+      "schema_rollout_history_could_not_be_loaded_dea6d68": "Schema rollout history could not be loaded.",
+      "retry_72295fa": "Retry",
+      "schema_rollouts_af7888a": "Schema Rollouts",
+      "manage_and_track_database_schema_migrations_across_a_e149a61": "Manage and track database schema migrations across all gym instances.",
+      "target_schema_version_8f3ab78": "Target schema version",
+      "e_g_v1_6_0_b356f2d": "e.g. v1.6.0",
+      "no_schema_rollouts_found_f7ef8f3": "No schema rollouts found.",
+      "start_a_deployment_to_create_the_first_migration_his_af10f3b": "Start a deployment to create the first migration history entry.",
+      "error_title": "Failed to load view",
+      "error_description": "An unexpected error occurred while rendering this module. Please try again or contact support if the issue persists.",
+      "retry": "Try Again",
+      "deploy_new_schema_2caa745": "Deploy New Schema",
+      "applied_date_3a20841": "Applied Date",
+      "deploying": "Deploying…",
+      "description": "Description",
+      "status": "Status",
+      "target": "Target",
+      "version": "Version",
+      "target_schema_version_required_4b7b1c9": "Enter a target schema version.",
+      "mobile_heading": "{heading}",
+      "action_failed_retry": "Action failed. Please retry.",
+      "unsaved_migration_version": "A schema version is entered but not deployed. Are you sure you want to leave?",
+      "migration_failed_safe_summary": "Migration reported a failure. Review the backend migration logs for details.",
+      "route_error_title": "Unable to load this view",
+      "route_error_description": "An unexpected rendering error occurred. Retry the module view or return to the module.",
+      "back_to_module": "Back to module",
+      "not_found_title": "Page not found",
+      "not_found_description": "The requested route does not exist in this module.",
+      "error_retry": "Try again",
+      "cancel_action": "Cancel",
+      "confirm_deploy_schema_message": "This will apply the schema change to ALL active tenant databases. This cannot be undone. Target schema version: {version}.",
+      "confirm_deploy_schema_title": "Confirm schema deployment",
+      "deploy_schema_action": "I Understand — Deploy Schema",
+      "target_schema_version_invalid_format": "Enter a version like v1.6.0 or 2026.10.1.",
+      "status_completed": "Completed",
+      "status_failed": "Failed",
+      "status_pending": "Pending",
+      "status_in_progress": "In progress",
+      "status_rolled_back": "Rolled back",
+      "status_success": "Success",
+      "status_rollback": "Rollback",
+      "unsaved_changes_title": "Unsaved changes",
+      "unsaved_changes_message": "You have unsaved changes. Leave this page and discard them?",
+      "leave_page": "Leave page",
+      "stay_on_page": "Stay on page",
+      "route_loading": "Loading page",
+      "boundary_title": "Unable to load this section",
+      "boundary_retry": "Try again"
+    }
+  }
+}

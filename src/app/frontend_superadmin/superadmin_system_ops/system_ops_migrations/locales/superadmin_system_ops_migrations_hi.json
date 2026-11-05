@@ -1,0 +1,94 @@
+{
+  "superadmin_system_ops_migrations": {
+    "module": {
+      "name": "Module Purpose",
+      "namespace": "superadmin_system_ops_migrations"
+    },
+    "page": {
+      "title": "Module Purpose",
+      "description": "Module Purpose workspace."
+    },
+    "actions": {
+      "retry": "Dobara try karein",
+      "cancel": "Cancel",
+      "save": "Save",
+      "close": "Close",
+      "submit": "Submit",
+      "delete": "Delete",
+      "edit": "Edit",
+      "create": "Create",
+      "export": "Export",
+      "search": "Search"
+    },
+    "state": {
+      "loading": "Load ho raha hai…",
+      "empty": "Koi record nahi mila",
+      "error": "Kuch galat ho gaya",
+      "success": "Safalta se poora hua"
+    },
+    "accessibility": {
+      "openMenu": "Menu kholen",
+      "closeMenu": "Menu band karein",
+      "previousPage": "Pichhla page",
+      "nextPage": "Agla page"
+    },
+    "validation": {
+      "required": "Yeh field zaroori hai",
+      "invalid": "Sahi value enter karein"
+    },
+    "currency": {
+      "locale": "hi-IN"
+    },
+    "ui": {
+      "loading_schema_rollouts_9804507": "Loading schema rollouts",
+      "schema_rollout_history_could_not_be_loaded_dea6d68": "Schema rollout history could not be loaded.",
+      "retry_72295fa": "दोबारा कोशिश करें",
+      "schema_rollouts_af7888a": "Schema Rollouts",
+      "manage_and_track_database_schema_migrations_across_a_e149a61": "Manage and track database schema migrations across all gym instances.",
+      "target_schema_version_8f3ab78": "Target schema version",
+      "e_g_v1_6_0_b356f2d": "e.g. v1.6.0",
+      "no_schema_rollouts_found_f7ef8f3": "No schema rollouts found.",
+      "start_a_deployment_to_create_the_first_migration_his_af10f3b": "Start a deployment to create the first migration history entry.",
+      "error_title": "व्यू लोड नहीं हो सका",
+      "error_description": "इस मॉड्यूल को रेंडर करते समय एक अप्रत्याशित त्रुटि हुई। कृपया फिर से प्रयास करें या समस्या बनी रहे तो सपोर्ट से संपर्क करें।",
+      "retry": "फिर से कोशिश करें",
+      "deploy_new_schema_2caa745": "नया स्कीमा डिप्लॉय करें",
+      "applied_date_3a20841": "लागू होने की तारीख",
+      "deploying": "डिप्लॉय किया जा रहा है…",
+      "description": "विवरण",
+      "status": "स्थिति",
+      "target": "लक्ष्य",
+      "version": "वर्ज़न",
+      "target_schema_version_required_4b7b1c9": "लक्ष्य स्कीमा संस्करण दर्ज करें।",
+      "mobile_heading": "कॉलम",
+      "action_failed_retry": "Action fail hua. Dobara koshish karein.",
+      "unsaved_migration_version": "स्कीमा संस्करण दर्ज है लेकिन अभी लागू नहीं हुआ है। क्या आप वाकई इस पेज से बाहर जाना चाहते हैं?",
+      "migration_failed_safe_summary": "माइग्रेशन विफल हुआ। विस्तृत जानकारी के लिए बैकएंड माइग्रेशन लॉग देखें।",
+      "route_error_title": "यह दृश्य लोड नहीं हो सका",
+      "route_error_description": "दृश्य रेंडर करते समय एक अनपेक्षित त्रुटि हुई। मॉड्यूल को फिर से प्रयास करें या मॉड्यूल पर लौटें।",
+      "back_to_module": "मॉड्यूल पर वापस जाएँ",
+      "not_found_title": "पृष्ठ नहीं मिला",
+      "not_found_description": "अनुरोधित रूट इस मॉड्यूल में मौजूद नहीं है।",
+      "error_retry": "फिर से प्रयास करें",
+      "cancel_action": "रद्द करें",
+      "confirm_deploy_schema_message": "यह स्कीमा बदलाव सभी सक्रिय टेनेंट डेटाबेस पर लागू होगा। इसे पूर्ववत नहीं किया जा सकता। लक्षित स्कीमा संस्करण: {version}।",
+      "confirm_deploy_schema_title": "स्कीमा परिनियोजन की पुष्टि करें",
+      "deploy_schema_action": "मैं समझता/समझती हूँ — स्कीमा डिप्लॉय करें",
+      "target_schema_version_invalid_format": "v1.6.0 या 2026.10.1 जैसे संस्करण दर्ज करें।",
+      "status_completed": "पूर्ण",
+      "status_failed": "विफल",
+      "status_pending": "लंबित",
+      "status_in_progress": "प्रगति में",
+      "status_rolled_back": "वापस रोल किया गया",
+      "status_success": "सफल",
+      "status_rollback": "रोलबैक",
+      "unsaved_changes_title": "बिना सहेजे बदलाव",
+      "unsaved_changes_message": "आपके कुछ बदलाव सहेजे नहीं गए हैं। क्या आप उन्हें छोड़कर यह पेज छोड़ना चाहते हैं?",
+      "leave_page": "पेज छोड़ें",
+      "stay_on_page": "यहीं रहें",
+      "route_loading": "पृष्ठ लोड हो रहा है",
+      "boundary_title": "अनुभाग लोड नहीं हो सका",
+      "boundary_retry": "पुनः प्रयास करें"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+.superadmin-page-title {
+  font-size: var(--font-size-page-title);
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.superadmin-section-title {
+  font-size: var(--font-size-section-title);
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.superadmin-kpi-number {
+  font-size: var(--font-size-kpi);
+  line-height: 1.2;
+  font-weight: 700;
+}

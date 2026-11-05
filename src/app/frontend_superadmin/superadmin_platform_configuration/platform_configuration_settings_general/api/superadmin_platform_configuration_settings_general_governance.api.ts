@@ -1,0 +1,11 @@
+import { superadminSettingsGeneralApiFetch as apiFetch } from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_settings_general/api/superadmin_platform_configuration_settings_general_api_fetch.api';
+import { SUPERADMIN_PLATFORM_CONFIGURATION_SETTINGS_GENERAL_API } from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_settings_general/config/superadmin_platform_configuration_settings_general.url_config';
+import { SuperadminPlatformConfigurationSettingsV1DataSchema, SuperadminPlatformConfigurationSettingsV1ResponseSchema } from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_settings_general/schemas/superadmin_platform_configuration_settings_general_v1_contract.schemas';
+
+import type { SuperadminPlatformConfigurationSettingsV1Data } from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_settings_general/types/superadmin_platform_configuration_settings_general_v1.types';
+import type { ApiResponse } from '@/lib/api';
+
+
+export async function fetchSettingsGovernance(): Promise<ApiResponse<SuperadminPlatformConfigurationSettingsV1Data>> {
+    return apiFetch<SuperadminPlatformConfigurationSettingsV1Data>(SUPERADMIN_PLATFORM_CONFIGURATION_SETTINGS_GENERAL_API.GOVERNANCE.BACKEND_API.BASE, { dataSchema: SuperadminPlatformConfigurationSettingsV1DataSchema, responseSchema: SuperadminPlatformConfigurationSettingsV1ResponseSchema });
+}

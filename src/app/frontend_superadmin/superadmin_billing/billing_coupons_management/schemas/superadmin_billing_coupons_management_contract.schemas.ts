@@ -30,19 +30,22 @@ export const CouponRecordSchema = z.object({
   }
 });
 
-export const CouponApiPayloadSchema = z.object({
+const CouponBasePayloadSchema = z.object({
   code: z.string().min(3).max(20),
   discountType: z.enum(['PERCENTAGE', 'EXACT']),
   discountValue: z.number().positive(),
   maxUses: z.number().int().min(1),
   expiryDate: z.string().min(1),
   currency: z.string().optional(),
-}).superRefine(({ discountType, discountValue }, ctx) => {
+});
+
+export const CouponApiPayloadSchema = CouponBasePayloadSchema.superRefine(({ discountType, discountValue }, ctx) => {
   if (discountType === 'EXACT' && !Number.isInteger(discountValue)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Exact coupon discounts must use integer minor units.', path: ['discountValue'] });
   }
 });
-export const CouponUpdatePayloadSchema = CouponApiPayloadSchema.innerType().partial().superRefine((payload, ctx) => {
+
+export const CouponUpdatePayloadSchema = CouponBasePayloadSchema.partial().superRefine((payload: Partial<z.infer<typeof CouponBasePayloadSchema>>, ctx: z.RefinementCtx) => {
   if (Object.keys(payload).length === 0) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'At least one coupon field must be updated.' });
   }
@@ -66,7 +69,7 @@ export interface SuperadminBillingCouponsValidationMessages {
 
 export const createSuperadminBillingCouponsFormSchema = (messages: SuperadminBillingCouponsValidationMessages, allowGeneratedCode = false) => z.object({
   code: allowGeneratedCode ? z.string().trim().optional().or(z.literal('')) : z.string().min(3, messages.codeMin).max(20, messages.codeMax).regex(/^[A-Z0-9-]+$/, messages.codeFormat),
-  discountType: z.enum(['PERCENTAGE', 'EXACT'], { required_error: messages.discountTypeRequired }),
+  discountType: z.enum(['PERCENTAGE', 'EXACT'], { message: messages.discountTypeRequired }),
   discountValue: z.number().positive(messages.discountPositive),
   maxUses: z.number().int(messages.maxUsesInteger).min(1, messages.maxUsesMinimum),
   expiryDate: z.string().min(1, messages.expiryRequired).refine((val) => {
