@@ -1,0 +1,2 @@
+'use client';
+export default function TrainerCoachingWorkoutPlansError({reset}: {error: Error; reset: () => void}) { return <div role="alert" className="rounded-xl bg-danger-bg p-6 text-danger"><button type="button" onClick={reset} className="min-h-11 rounded-lg bg-primary px-5 text-on-primary">Retry</button></div>; }

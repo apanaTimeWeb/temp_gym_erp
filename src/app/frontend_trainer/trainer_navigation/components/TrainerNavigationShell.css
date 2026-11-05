@@ -1,0 +1,57 @@
+/* RESPONSIBILITY: Defines Trainer shell geometry and scrollbar visuals exclusively through global design-system tokens. No feature business styling. */
+.trainer-shell-header-height {
+  height: var(--layout-header-height);
+}
+
+.trainer-shell-sidebar-width {
+  width: var(--layout-sidebar-width);
+}
+
+.trainer-shell-sidebar-width-collapsed {
+  width: var(--layout-sidebar-width-collapsed);
+}
+
+.trainer-shell-content-offset {
+  margin-left: var(--layout-sidebar-width);
+}
+
+.trainer-shell-content-offset-collapsed {
+  margin-left: var(--layout-sidebar-width-collapsed);
+}
+
+.trainer-shell-control-height {
+  min-height: var(--touch-target-min);
+}
+
+.trainer-shell-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.trainer-shell-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.trainer-shell-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.trainer-shell-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: var(--radius-full);
+}
+
+
+@media (max-width: 767px) {
+  .trainer-shell-content-offset,
+  .trainer-shell-content-offset-collapsed { margin-left: 0; }
+}
+
+.trainer-navigation-command-palette-offset {
+  padding-top: var(--layout-content-padding);
+}
+
+.trainer-navigation-command-palette-results {
+  max-height: calc(100vh - var(--layout-header-height) - (2 * var(--layout-content-padding)));
+}

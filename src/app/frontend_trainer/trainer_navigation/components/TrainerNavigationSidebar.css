@@ -1,0 +1,60 @@
+/* RESPONSIBILITY: Owns only responsive Trainer sidebar geometry and motion-safe drawer transitions. */
+.trainer-sidebar {
+  position: fixed;
+  left: 0;
+  top: var(--layout-header-height);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--layout-header-height));
+  width: var(--layout-sidebar-width);
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border);
+}
+.trainer-sidebar-collapsed { width: var(--layout-sidebar-width-collapsed); }
+@media (max-width: 767px) {
+  .trainer-sidebar {
+    z-index: 40;
+    width: min(86vw, var(--layout-sidebar-width));
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .trainer-sidebar-open {
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .trainer-sidebar-collapsed { width: min(86vw, var(--layout-sidebar-width)); }
+}
+
+@media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+  .trainer-sidebar {
+    transform: translateX(-100%);
+  }
+  .trainer-sidebar-open { transform: translateX(0); }
+}
+
+.trainer-mobile-backdrop { display: none; }
+@media (max-width: 767px) {
+  .trainer-mobile-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    min-width: var(--touch-target-min);
+    min-height: var(--touch-target-min);
+    border: 0;
+    background: var(--overlay-backdrop);
+  }
+}
+
+
+.trainer-sidebar-safe-area {
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+.trainer-mobile-backdrop-safe-area {
+  padding-top: env(safe-area-inset-top);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+}

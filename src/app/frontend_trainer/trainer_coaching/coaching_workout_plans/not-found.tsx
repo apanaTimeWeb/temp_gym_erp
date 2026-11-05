@@ -1,0 +1,2 @@
+import Link from 'next/link';
+export default function TrainerCoachingWorkoutPlansNotFound() { return <div className="p-6 text-primary"><p>Not found.</p><Link href="/frontend_trainer/trainer_coaching/coaching_workout_plans" className="underline focus-visible:ring-2 focus-visible:ring-focus-ring">Workout</Link></div>; }
