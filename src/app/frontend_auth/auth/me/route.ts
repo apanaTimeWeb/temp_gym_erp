@@ -25,7 +25,7 @@ export async function GET() {
     id: 'usr_trainer_01',
     name: 'Michael Trainer',
     email: 'trainer@smartgym360.com',
-    role: 'trainer',
+    role: 'TRAINER',
     tenantId: 'gym_demo_01',
   };
 

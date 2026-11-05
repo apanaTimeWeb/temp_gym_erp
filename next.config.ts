@@ -69,6 +69,14 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: "/auth/me",
+        destination: "/frontend_auth/auth/me",
+      },
+    ];
+  },
 };
 
 export default withNextIntl(nextConfig);
