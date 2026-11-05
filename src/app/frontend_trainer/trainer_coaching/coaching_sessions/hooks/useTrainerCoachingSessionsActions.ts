@@ -9,6 +9,7 @@ import { useTrainerInfrastructureFeedback } from '@/app/frontend_trainer/trainer
 import { useTrainerInfrastructureIdempotencyKey } from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/hooks/TrainerCoachingSessionsuseTrainerInfrastructureIdempotencyKey';
 
 import { useTrainerSessionsMutations } from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/hooks/useTrainerCoachingSessionsMutations';
+import { TrainerMembersBuildWhatsAppUrl } from '@/app/frontend_trainer/trainer_members/members_directory_and_profile/utils/TrainerMembersDirectoryAndProfileBuildWhatsAppUrl';
 
 import type { TrainerSessionsActionStateSetters } from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/types/TrainerCoachingSessionsActionStateTypes';
 
@@ -19,7 +20,7 @@ import type { TrainerSessionsCreateSessionDto } from '@/app/frontend_trainer/tra
  * @dependencies Trainer Sessions mutation hooks plus approved Trainer confirmation, feedback, and idempotency infrastructure.
  * @edge-case Reuses the same idempotency key during retries and preserves form/modal state when a mutation fails.
  */
-export function useTrainerSessionsActions({ setShowScheduleModal, setAttendanceSession, setEditingSession }: TrainerSessionsActionStateSetters) {
+export function useTrainerSessionsActions({ setShowScheduleModal, setAttendanceSession, setEditingSession, members = [] }: TrainerSessionsActionStateSetters) {
   const t = useTranslations('TRAINER_SESSIONS');
   const { createSession, createSessionPending, markNoShowSession, markNoShowSessionPending, cancelSession, cancelSessionPending, markAttendance, markAttendancePending, updateSessionPending } = useTrainerSessionsMutations();
   const { confirm } = useTrainerInfrastructureConfirm();
@@ -70,6 +71,19 @@ export function useTrainerSessionsActions({ setShowScheduleModal, setAttendanceS
       const response = await createSession({ dto, idempotencyKey: actionKeys.begin(actionId) });
       actionKeys.clear(actionId);
       setShowScheduleModal(false);
+
+      // WhatsApp handoff for personal training session
+      if (dto.type === 'PT' || dto.memberId) {
+        const selectedMember = members.find((m) => m.id === dto.memberId);
+        const memberName = selectedMember?.name || response.data.member || 'Member';
+        const memberPhone = selectedMember?.phone || '9876543210';
+        const msg = `Hi ${memberName}, your Personal Training session has been confirmed for ${dto.date} at ${dto.time} (${dto.duration}). See you at GymSmart!`;
+        const whatsappUrl = TrainerMembersBuildWhatsAppUrl(memberPhone, msg);
+        if (whatsappUrl && typeof window !== 'undefined') {
+          window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+        }
+      }
+
       showSuccess(response.message, actionId);
       return true;
     } catch (error) {

@@ -131,6 +131,10 @@ export function handleTrainerMockApiRequest(
     trainerPath = urlPath.slice('/trainer/'.length);
   } else if (urlPath.startsWith('/frontend_trainer/api/')) {
     trainerPath = urlPath.slice('/frontend_trainer/api/'.length);
+  } else if (urlPath.startsWith('/api/v1/trainer/')) {
+    trainerPath = urlPath.slice('/api/v1/trainer/'.length);
+  } else if (urlPath.startsWith('/api/trainer/')) {
+    trainerPath = urlPath.slice('/api/trainer/'.length);
   }
 
   if (!trainerPath) return null;
@@ -572,17 +576,21 @@ export function handleTrainerMockApiRequest(
     if (method === 'POST') {
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
+        const muscle = body.muscle || body.primaryMuscle || 'Chest';
         const newExercise = {
           id: `ex_${Date.now()}`,
           name: body.name || 'Custom Exercise',
           category: body.category || 'Strength',
-          primaryMuscle: body.primaryMuscle || 'Chest',
+          primaryMuscle: muscle,
+          muscleGroup: body.muscleGroup || [muscle],
           secondaryMuscles: body.secondaryMuscles || ['Triceps'],
           equipment: body.equipment || 'Barbell',
           difficulty: body.difficulty || 'Intermediate',
           instructions: body.instructions || 'Perform with controlled tempo',
           videoUrl: body.videoUrl || '',
+          imageUrl: body.imageUrl || '',
           thumbnailUrl: body.thumbnailUrl || '',
+          isActive: true,
         };
         currentExercises.unshift(newExercise);
         return buildMockSuccess(newExercise, 'Exercise created');
@@ -594,8 +602,8 @@ export function handleTrainerMockApiRequest(
     const search = searchParams.get('search')?.toLowerCase() || '';
     const category = searchParams.get('category') || '';
     let filtered = currentExercises;
-    if (search) filtered = filtered.filter((e: any) => e.name.toLowerCase().includes(search) || e.primaryMuscle?.toLowerCase().includes(search));
-    if (category && category !== 'ALL') filtered = filtered.filter((e: any) => e.category?.toLowerCase() === category.toLowerCase());
+    if (search) filtered = filtered.filter((e: any) => e.name.toLowerCase().includes(search) || e.primaryMuscle?.toLowerCase().includes(search) || (Array.isArray(e.muscleGroup) && e.muscleGroup.some((m: string) => m.toLowerCase().includes(search))));
+    if (category && category !== 'ALL' && category !== 'All') filtered = filtered.filter((e: any) => e.category?.toLowerCase() === category.toLowerCase());
 
     const page = Number(searchParams.get('page') || '1');
     const limit = Number(searchParams.get('limit') || '50');
@@ -614,7 +622,12 @@ export function handleTrainerMockApiRequest(
     if (method === 'PATCH') {
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
+        if (body.muscle && !body.muscleGroup) {
+          body.muscleGroup = [body.muscle];
+          body.primaryMuscle = body.muscle;
+        }
         Object.assign(exercise, body);
+        if (exercise.isActive === undefined) exercise.isActive = true;
       } catch {}
       return buildMockSuccess(exercise, 'Exercise updated');
     }
@@ -634,22 +647,27 @@ export function handleTrainerMockApiRequest(
     if (method === 'POST') {
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
+        const member = TRAINER_SESSIONS_MOCK_TRAINER_SESSION_MEMBERS.find((m: any) => m.id === body.memberId) || TRAINER_SESSIONS_MOCK_TRAINER_SESSION_MEMBERS[0];
         const newSession = {
-          id: `ses_${Date.now()}`,
-          title: body.title || 'Personal Training',
-          memberId: body.memberId || '1',
-          memberName: body.memberName || 'John Doe',
-          date: body.date || new Date().toISOString().split('T')[0],
-          startTime: body.startTime || '10:00',
-          endTime: body.endTime || '11:00',
-          sessionType: body.sessionType || 'PT',
-          status: 'SCHEDULED',
-          notes: body.notes || '',
+          id: `s_${Date.now()}`,
+          title: body.type === 'PT' ? `PT - ${member?.name || 'Rahul Sharma'}` : (body.title || 'Group Session'),
+          type: body.type || 'PT',
+          time: body.time || '10:00 AM',
+          sessionDate: body.date || new Date().toISOString().split('T')[0],
+          duration: body.duration || '60 min',
+          status: 'Upcoming',
+          attendees: 1,
+          maxAttendees: body.type === 'PT' ? 1 : 15,
+          member: member?.name || 'Rahul Sharma',
+          enrolledMembers: member ? [{ id: member.id, name: member.name }] : [{ id: 'm1', name: 'Rahul Sharma' }],
+          isOnline: false,
+          location: body.location || 'Studio A',
+          room: body.room || 'Room 1',
         };
         currentSessions.unshift(newSession);
-        return buildMockSuccess(newSession, 'Session scheduled');
+        return buildMockSuccess(newSession, 'Session scheduled successfully');
       } catch {
-        return buildMockSuccess(currentSessions[0], 'Session scheduled');
+        return buildMockSuccess(currentSessions[0], 'Session scheduled successfully');
       }
     }
 
@@ -675,17 +693,22 @@ export function handleTrainerMockApiRequest(
     const sub = parts[2];
     const session = currentSessions.find((s: any) => s.id === id) || currentSessions[0];
 
-    if (sub === 'attendance' && method === 'PATCH') {
-      session.status = 'COMPLETED';
-      return buildMockSuccess(session, 'Session attendance marked');
+    if (method === 'DELETE') {
+      currentSessions = currentSessions.filter((s: any) => s.id !== id);
+      return buildMockSuccess(null, 'Session cancelled successfully');
+    }
+
+    if (sub === 'attendance') {
+      if (session) session.status = 'Completed';
+      return buildMockSuccess(null, 'Attendance marked successfully');
     }
 
     if (method === 'PATCH') {
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
-        Object.assign(session, body);
+        if (session) Object.assign(session, body);
       } catch {}
-      return buildMockSuccess(session, 'Session updated');
+      return buildMockSuccess(session, 'Session updated successfully');
     }
 
     return buildMockSuccess(session, 'Session detail retrieved');

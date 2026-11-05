@@ -91,8 +91,9 @@ export default function TrainerInfrastructureSearchableDropdown({
     triggerRef.current?.focus();
   };
 
+  const hasWidthClass = /(?:^|\s)w-/.test(className);
   return (
-    <div className={`relative w-full ${className} `} ref={dropdownRef}>
+    <div className={`relative ${hasWidthClass ? '' : 'w-full'} ${className}`.trim()} ref={dropdownRef}>
       <button
         ref={triggerRef}
         id={id}
@@ -101,7 +102,7 @@ export default function TrainerInfrastructureSearchableDropdown({
         aria-expanded={isOpen}
         aria-controls={listboxId}
         disabled={disabled}
-        aria-label={ariaLabel ?? resolvedPlaceholder}
+        aria-label={selectedOption ? (ariaLabel ? `${ariaLabel}: ${selectedOption.label}` : selectedOption.label) : (ariaLabel ?? resolvedPlaceholder)}
         aria-invalid={ariaInvalid}
         aria-describedby={ariaDescribedBy}
         className={`w-full min-h-11 bg-input border border-border rounded-lg px-4 py-2.5 flex items-center justify-between cursor-pointer ${disabled ? 'opacity-50 cursor-not-allowed' : ''} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-colors motion-safe:duration-base motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95`}

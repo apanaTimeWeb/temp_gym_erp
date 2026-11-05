@@ -2,7 +2,7 @@
   "TRAINER_ATTENDANCE": {
     "TEXT_TODAY_ATTENDANCE_KPIS": "आज की उपस्थिति के प्रमुख आँकड़े",
     "TEXT_CHECK_OUT": "चेक-आउट",
-    "TEXT_ADD_RECORD": "रिकॉर्ड जोड़ें",
+    "TEXT_ADD_RECORD": "उपस्थिति दर्ज करें",
     "TEXT_FILTER_BY_DATE": "तारीख के अनुसार फ़िल्टर करें",
     "TEXT_CALENDAR": "कैलेंडर",
     "TEXT_CHECK_IN": "चेक-इन",

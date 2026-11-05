@@ -25,5 +25,5 @@ export const TrainerSessionsTrainerSessionSchema = z.object({ id:z.string(), tit
 export const TrainerSessionsCreateSessionDtoSchema = z.object({ memberId:z.string().optional().or(z.literal('')), date:z.string().min(1,'TEXT_DATE_REQUIRED').pipe(TrainerSessionsDateSchema), time:z.string().min(1,'TEXT_TIME_REQUIRED').pipe(TrainerSessionsTimeSchema), duration:z.string().min(1,'TEXT_DURATION_REQUIRED').pipe(TrainerSessionsDurationSchema), type:TrainerSessionsSessionTypeSchema, recurrenceType:z.enum(TRAINER_SESSIONS_RECURRENCE_TYPES).optional(), recurrenceEndDate:z.string().optional(), location:z.string().optional(), room:z.string().optional() }).superRefine((data, context) => {
   if (data.type === 'PT' && !data.memberId) context.addIssue({ code: z.ZodIssueCode.custom, path: ['memberId'], message: 'TEXT_MEMBER_REQUIRED_PT' });
 });
-export const TrainerSessionsTrainerSessionMemberSchema = z.object({id:z.string(),name:z.string()});
+export const TrainerSessionsTrainerSessionMemberSchema = z.object({id:z.string(),name:z.string(),phone:z.string().optional()});
 export const TrainerSessionsTrainerSessionMembersResponseSchema = TrainerInfrastructureApiResponseSchema(z.array(TrainerSessionsTrainerSessionMemberSchema));

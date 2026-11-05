@@ -21,7 +21,7 @@ export const useTrainerProgressTrackingStore = create<TrainerProgressTrackingSto
   setEditingEntryId: (editingEntryId) => set({ editingEntryId }),
   activeComparisonMetric: 'weightChangeKg',
   setActiveComparisonMetric: (activeComparisonMetric) => set({ activeComparisonMetric }),
-  selectedComparisonIds: [],
+  selectedComparisonIds: ['1', '2'],
   toggleComparisonMember: (memberId) => set((state) => {
     const ids = state.selectedComparisonIds;
     if (ids.includes(memberId)) return { selectedComparisonIds: ids.filter(id => id !== memberId) };

@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { z } from 'zod';
 import { TrainerMembersTrainerNotesFormSchema } from '@/app/frontend_trainer/trainer_members/members_trainer_notes/schemas/TrainerMembersTrainerNotesSchemas';
-import { TRAINER_NOTES_QUERY, TRAINER_NOTES_ROUTES } from '@/app/frontend_trainer/trainer_members/members_trainer_notes/config/trainer_members_trainer_notes.url_config';
+import { TRAINER_NOTES_QUERY, TRAINER_NOTES_ROUTES, TRAINER_NOTES_PAGE_LIST } from '@/app/frontend_trainer/trainer_members/members_trainer_notes/config/trainer_members_trainer_notes.url_config';
 import { useTrainerMembersTrainerNotes } from '@/app/frontend_trainer/trainer_members/members_trainer_notes/hooks/useTrainerMembersTrainerNotes';
 
 
@@ -23,6 +23,13 @@ export default function TrainerMembersTrainerNotesMain() {
   const allowedDestination = useRef<string | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const memberId = params.get(TRAINER_NOTES_QUERY.MEMBER_ID)?.trim() ?? '';
+
+  useEffect(() => {
+    if (!memberId) {
+      router.replace(`${TRAINER_NOTES_PAGE_LIST}?id=MEM-001`);
+    }
+  }, [memberId, router]);
+
   const { detail, addNote } = useTrainerMembersTrainerNotes(memberId);
   const submission = useRef<{ memberId: string; text: string; key: string } | null>(null);
   const { register, handleSubmit, reset, formState: { errors, isDirty } } = useForm<TrainerMembersTrainerNotesFormValues>({

@@ -101,9 +101,11 @@ export default function TrainerMembersProfileView({ activeView, onBackToList, on
                   <span className="inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold bg-info-bg text-info" data-testid="trainer_members-members-profile_status_state">
                     {displayValue(selectedMember.plan?.name)}
                   </span>
-                  <span className="inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-bg text-purple" data-testid="trainer_members-members-profile_billing_cycle">
-                    {t(TRAINER_MEMBERS_BILLING_CYCLE_LABEL_KEYS[selectedMember.billingCycle as keyof typeof TRAINER_MEMBERS_BILLING_CYCLE_LABEL_KEYS] ?? 'TEXT_UNKNOWN')}
-                  </span>
+                  {selectedMember.billingCycle && (
+                    <span className="inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-bg text-purple" data-testid="trainer_members-members-profile_billing_cycle">
+                      {t(TRAINER_MEMBERS_BILLING_CYCLE_LABEL_KEYS[selectedMember.billingCycle] ?? 'TEXT_UNKNOWN')}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>

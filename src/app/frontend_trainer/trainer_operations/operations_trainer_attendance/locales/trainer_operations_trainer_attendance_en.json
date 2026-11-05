@@ -2,7 +2,7 @@
   "TRAINER_ATTENDANCE": {
     "TEXT_TODAY_ATTENDANCE_KPIS": "Today attendance KPIs",
     "TEXT_CHECK_OUT": "Check Out",
-    "TEXT_ADD_RECORD": "Add Record",
+    "TEXT_ADD_RECORD": "Mark Attendance",
     "TEXT_FILTER_BY_DATE": "Filter by date",
     "TEXT_CALENDAR": "Calendar",
     "TEXT_CHECK_IN": "Check In",

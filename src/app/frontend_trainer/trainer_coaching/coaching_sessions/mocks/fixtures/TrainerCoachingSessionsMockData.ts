@@ -9,9 +9,9 @@ const currentDate = new Date();
 const today = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
 
 export const TRAINER_SESSIONS_MOCK_TRAINER_SESSION_MEMBERS = [
-  { id: 'm1', name: 'Rahul Sharma' },
-  { id: 'm2', name: 'Neha Gupta' },
-  { id: 'm3', name: 'Amit Kumar' },
+  { id: 'm1', name: 'Rahul Sharma', phone: '9876543210' },
+  { id: 'm2', name: 'Neha Gupta', phone: '9876543211' },
+  { id: 'm3', name: 'Amit Kumar', phone: '9876543212' },
 ];
 
 export const TRAINER_SESSIONS_MOCK_TRAINER_SESSIONS: TrainerSessionsTrainerSession[] = [
