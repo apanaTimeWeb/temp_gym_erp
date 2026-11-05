@@ -7,7 +7,7 @@
 export const MANAGER_EXPENSE_REGISTER_AND_REPORTING_QUERY_KEYS = {
   all: ['manager_expenses'] as const,
   list: (params?: Record<string, string>) => [...MANAGER_EXPENSE_REGISTER_AND_REPORTING_QUERY_KEYS.all, 'list', params] as const,
-  stats: () => [...MANAGER_EXPENSE_REGISTER_AND_REPORTING_QUERY_KEYS.all, 'stats'] as const,
+  stats: (params?: Record<string, string>) => [...MANAGER_EXPENSE_REGISTER_AND_REPORTING_QUERY_KEYS.all, 'stats', params] as const,
   detail: (id: string) => [...MANAGER_EXPENSE_REGISTER_AND_REPORTING_QUERY_KEYS.all, 'detail', id] as const,
 } as const;
 

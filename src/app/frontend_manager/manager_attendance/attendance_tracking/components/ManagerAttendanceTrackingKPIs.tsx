@@ -2,6 +2,7 @@
 'use client';
 import { CalendarCheck, Users, UserCog } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 
 import { useManagerAttendanceTrackingLogic } from '@/app/frontend_manager/manager_attendance/attendance_tracking/hooks/useManagerAttendanceTrackingLogic';
 
@@ -9,14 +10,28 @@ import { useManagerAttendanceTrackingLogic } from '@/app/frontend_manager/manage
 /** @description Renders the top KPI stat cards (total check-ins, member check-ins, staff check-ins) for the Attendance module. @dependencies Local dependencies are owned by this feature module (1 documented module/import dependencies).. @edge-case Preserves the documented interaction and boundary states. */
 export default function ManagerAttendanceTrackingKPIs() {
   const t = useTranslations('MANAGER_ATTENDANCE_TRACKING');
+  const searchParams = useSearchParams();
+  const range = searchParams.get('range') || 'this_month';
 
- const { todayStats } = useManagerAttendanceTrackingLogic();
+  const { todayStats } = useManagerAttendanceTrackingLogic();
 
- const kpis = [
- { label: t("COPY_TODAY_S_CHECK_INS"), value: todayStats.totalCheckIns, icon: CalendarCheck, color: 'text-warning-text', bg: "bg-warning-bg" },
- { label: t("COPY_MEMBER_CHECK_INS"), value: todayStats.memberCheckIns, icon: Users, color: 'text-info-text', bg: "bg-info-bg" },
- { label: t("COPY_STAFF_CHECK_INS"), value: todayStats.staffCheckIns, icon: UserCog, color: 'text-success-text', bg: "bg-success-bg" },
- ];
+  const getKpiTitle = (key: 'total' | 'member' | 'staff') => {
+    if (key === 'total') {
+      if (range === 'last_month') return t('COPY_CHECK_INS_LAST_MONTH');
+      if (range === 'last_3_months') return t('COPY_CHECK_INS_LAST_3_MONTHS');
+      if (range === 'this_year') return t('COPY_CHECK_INS_THIS_YEAR');
+      if (range === 'custom') return t('COPY_CHECK_INS_PERIOD');
+      return t('COPY_TODAY_S_CHECK_INS');
+    }
+    if (key === 'member') return t('COPY_MEMBER_CHECK_INS');
+    return t('COPY_STAFF_CHECK_INS');
+  };
+
+  const kpis = [
+    { label: getKpiTitle('total'), value: todayStats.totalCheckIns, icon: CalendarCheck, color: 'text-warning-text', bg: 'bg-warning-bg' },
+    { label: getKpiTitle('member'), value: todayStats.memberCheckIns, icon: Users, color: 'text-info-text', bg: 'bg-info-bg' },
+    { label: getKpiTitle('staff'), value: todayStats.staffCheckIns, icon: UserCog, color: 'text-success-text', bg: 'bg-success-bg' },
+  ];
 
  return (
  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

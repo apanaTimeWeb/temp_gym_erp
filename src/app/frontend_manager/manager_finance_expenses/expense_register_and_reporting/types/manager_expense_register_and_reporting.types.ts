@@ -44,6 +44,7 @@ export interface ExpenseCategoryBreakdown {
 }
 
 export interface ManagerExpenseRegisterAndReportingViewModel {
+  range: string; setRange: (value: string) => void;
   search: string; setSearch: (value: string) => void;
   statusFilter: string; setStatusFilter: (value: string) => void;
   currentPage: number; setCurrentPage: (value: number) => void;

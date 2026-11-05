@@ -75,7 +75,7 @@ export default function ManagerWorkoutPlansExerciseTable() {
             <thead className="bg-input"><tr>{headers.map((header) => <th key={header} className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-text-secondary">{header}</th>)}</tr></thead>
             <tbody className="divide-y divide-border">
               {exercises.map((exercise) => (
-                <tr key={exercise.id} data-testid={`manager_exercise-library-row-${exercise.id}`} className="cursor-pointer hover:bg-primary-subtle" tabIndex={0} role="button" aria-label={t('TEXT_EDIT_EXERCISE', { value: exercise.name })} onClick={() => openEditEx(exercise)} onKeyDown={(event) => {
+                <tr key={exercise.id} data-testid={`manager_exercise-library-row-${exercise.id}`} className="cursor-pointer hover:bg-primary-subtle" tabIndex={0} onClick={() => openEditEx(exercise)} onKeyDown={(event) => {
                   if (event.target !== event.currentTarget) return;
                   if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openEditEx(exercise); }
                 }}>

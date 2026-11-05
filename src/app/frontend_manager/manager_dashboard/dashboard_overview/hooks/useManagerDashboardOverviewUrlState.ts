@@ -19,16 +19,18 @@ import type { ManagerDashboardOverviewDateRange } from '@/app/frontend_manager/m
  * @dependencies Uses feature-owned APIs, query keys, schemas, types, constants, stores, and approved global infrastructure only.
  * @edge-case Preserves loading, empty, error, retry, cancellation, permission, and direct-URL behavior documented for this flow.
  */
-const MANAGER_DASHBOARD_OVERVIEW_DATE_RANGES: readonly ManagerDashboardOverviewDateRange[] = ['weekly', 'monthly', 'yearly', 'custom'];
+const MANAGER_DASHBOARD_OVERVIEW_DATE_RANGES: readonly ManagerDashboardOverviewDateRange[] = ['this_month', 'last_month', 'last_3_months', 'this_year', 'weekly', 'monthly', 'yearly', 'custom'];
 
 function isIsoDate(value: string): boolean {
   return /^\d{4}-\d{2}-\d{2}$/.test(value) && !Number.isNaN(Date.parse(`${value}T00:00:00.000Z`)) && new Date(`${value}T00:00:00.000Z`).toISOString().slice(0, 10) === value;
 }
 
 function parseManagerDashboardOverviewDateRange(value: string | null): ManagerDashboardOverviewDateRange {
+  if (value === 'monthly') return 'this_month';
+  if (value === 'yearly') return 'this_year';
   return value && MANAGER_DASHBOARD_OVERVIEW_DATE_RANGES.includes(value as ManagerDashboardOverviewDateRange)
     ? (value as ManagerDashboardOverviewDateRange)
-    : 'monthly';
+    : 'this_month';
 }
 
 export function useManagerDashboardOverviewUrlState() {

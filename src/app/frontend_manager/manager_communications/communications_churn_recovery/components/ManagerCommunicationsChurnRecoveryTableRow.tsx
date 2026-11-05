@@ -49,8 +49,6 @@ export default function ManagerCommunicationsCampaignsChurnRecoveryTableRow({
       data-testid={`manager_communications-communications-managerchurnrecoverytablerow-row-${member.memberId}`}
       className={`${rowCardClass} motion-safe:transition-all hover:bg-primary-subtle cursor-pointer motion-safe:duration-200 ease-in-out`}
       tabIndex={0}
-      role="button"
-      aria-label={t("TEXT_OPEN_WINBACK_COMPOSER", { value: member.name })}
       onClick={(event) => { if (!isInteractiveRowTarget(event.target)) onOpenComposer(member.memberId); }}
       onKeyDown={(event) => {
         if (event.target !== event.currentTarget) return;

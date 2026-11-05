@@ -25,8 +25,9 @@ export const ManagerAttendanceTrackingApi = {
     const query = new URLSearchParams(params || {}).toString();
     return apiFetch(`${MANAGER_ATTENDANCE_TRACKING_API.BASE}${query ? `?${query}` : ''}`, { dataSchema: attendanceResponseSchema });
   },
-  fetchAttendanceStats: async (): Promise<ApiResponse<AttendanceStatsResponse>> => {
-    return apiFetch(MANAGER_ATTENDANCE_TRACKING_API.STATS, { dataSchema: attendanceStatsSchema });
+  fetchAttendanceStats: async (range?: string): Promise<ApiResponse<AttendanceStatsResponse>> => {
+    const query = range ? `?range=${encodeURIComponent(range)}` : '';
+    return apiFetch(`${MANAGER_ATTENDANCE_TRACKING_API.STATS}${query}`, { dataSchema: attendanceStatsSchema });
   },
   fetchAttendanceHistory: async (userId: string, type: ManagerAttendanceTrackingPersonType, month: string): Promise<ApiResponse<Attendance[]>> => {
     const query = new URLSearchParams({ userId, type, month }).toString();

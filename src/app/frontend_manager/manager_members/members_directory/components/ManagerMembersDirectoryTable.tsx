@@ -118,8 +118,6 @@ export default function ManagerMembersDirectoryTable() {
                       key={m.id} 
                       className="hover:bg-primary-subtle/50 motion-safe:transition-colors cursor-pointer"
                       tabIndex={0}
-                      role="button"
-                      aria-label={t("TEXT_OPEN_MEMBER", { value: m.name })}
                       onClick={() => { openMemberProfile(m); }}
                       onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openMemberProfile(m); } }}
                     >

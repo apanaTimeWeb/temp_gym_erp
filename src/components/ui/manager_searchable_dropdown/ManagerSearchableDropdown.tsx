@@ -66,7 +66,7 @@ export default function ManagerSearchableDropdown({
         onClick={() => setIsOpen(!isOpen)}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
-        aria-label={ariaLabel || placeholder}
+        aria-label={ariaLabel || (selectedOption ? selectedOption.label : placeholder)}
         aria-invalid={ariaInvalid}
         aria-describedby={ariaDescribedBy}
         className="flex min-h-11 w-full items-center justify-between rounded-xl border border-border bg-input px-3.5 py-2.5 text-left text-sm text-primary transition-all hover:border-border/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-50"

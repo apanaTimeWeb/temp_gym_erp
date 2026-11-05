@@ -15,12 +15,21 @@ import { ManagerFinancePaymentsAndSummaryFormatCurrency, ManagerFinancePaymentsA
 export default function ManagerFinancePaymentsAndSummaryKpiCards() {
   const t = useTranslations('MANAGER_FINANCE_PAYMENTS_AND_SUMMARY');
   const locale = useLocale();
-  const { summary } = useManagerFinancePaymentsAndSummaryLogic();
+  const { summary, range } = useManagerFinancePaymentsAndSummaryLogic();
+
+  const periodRevenueLabel = (() => {
+    if (range === 'last_month') return "Last Month";
+    if (range === 'last_3_months') return "Last 3 Months";
+    if (range === 'last_6_months') return "Last 6 Months";
+    if (range === 'this_year') return "This Year";
+    if (range === 'custom') return "Selected Range";
+    return t("COPY_MONTH");
+  })();
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-6 gap-4">
       <ManagerFinancePaymentsAndSummaryKpiCard label={t("COPY_TOTAL_REVENUE")}   value={summary ? ManagerFinancePaymentsAndSummaryFormatCurrency(summary.totalRevenue, ManagerEnvConfig.currencyCode, locale)   : '—'} icon={<TrendingUp size={18} strokeWidth={2} className="text-success-text"/>} color="bg-success-bg" />
-      <ManagerFinancePaymentsAndSummaryKpiCard label={t("COPY_MONTH")}      value={summary ? ManagerFinancePaymentsAndSummaryFormatCurrency(summary.monthlyRevenue, ManagerEnvConfig.currencyCode, locale) : '—'} icon={<IndianRupee size={18} strokeWidth={2} className="text-primary"/>} color="bg-primary-subtle" />
+      <ManagerFinancePaymentsAndSummaryKpiCard label={periodRevenueLabel}      value={summary ? ManagerFinancePaymentsAndSummaryFormatCurrency(summary.monthlyRevenue, ManagerEnvConfig.currencyCode, locale) : '—'} icon={<IndianRupee size={18} strokeWidth={2} className="text-primary"/>} color="bg-primary-subtle" />
       <ManagerFinancePaymentsAndSummaryKpiCard label={t("COPY_TOTAL_PAYMENTS")}  value={summary ? ManagerFinancePaymentsAndSummaryFormatNumber(summary.totalPayments) : '—'} icon={<Wallet size={18} strokeWidth={2} className="text-info-text"/>} color="bg-info-bg"    />
       <ManagerFinancePaymentsAndSummaryKpiCard label={t("COPY_PENDING_AMOUNT")}  value={summary ? ManagerFinancePaymentsAndSummaryFormatCurrency(summary.pendingAmount, ManagerEnvConfig.currencyCode, locale)  : '—'} icon={<Clock size={18} strokeWidth={2} className="text-warning-text"/>} color="bg-warning-bg" />
       <ManagerFinancePaymentsAndSummaryKpiCard label={t("COPY_GST_COLLECTED")}   value={summary ? ManagerFinancePaymentsAndSummaryFormatCurrency(summary.gstCollected || 0, ManagerEnvConfig.currencyCode, locale) : '—'} icon={<Percent size={18} strokeWidth={2} className="text-success-text"/>} color="bg-success-bg" />

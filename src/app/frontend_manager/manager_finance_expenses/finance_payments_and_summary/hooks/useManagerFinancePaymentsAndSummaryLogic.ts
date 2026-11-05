@@ -70,5 +70,5 @@ export function useManagerFinancePaymentsAndSummaryLogic(): ManagerFinancePaymen
     popup.focus();
     popup.print();
   }, [paymentsQuery.data?.payments, ui, t]);
-  return { tab, setTab, search, setSearch, statusFilter, setStatusFilter, methodFilter, setMethodFilter, currentPage, setCurrentPage, startDate, setStartDate, endDate, setEndDate, payments: paymentsQuery.data?.payments ?? [], summary: summaryQuery.data ?? null, totalPayments: paymentsQuery.data?.total ?? 0, isPending: paymentsQuery.isPending, isError: paymentsQuery.isError, errorMessage, reload, exportCSV, exportPDF, printReceipt, toast: ui.toast, showToast: ui.showToast, hideToast: ui.hideToast };
+  return { tab, setTab, range, search, setSearch, statusFilter, setStatusFilter, methodFilter, setMethodFilter, currentPage, setCurrentPage, startDate, setStartDate, endDate, setEndDate, payments: paymentsQuery.data?.payments ?? [], summary: summaryQuery.data ?? null, totalPayments: paymentsQuery.data?.total ?? 0, isPending: paymentsQuery.isPending, isError: paymentsQuery.isError, errorMessage, reload, exportCSV, exportPDF, printReceipt, toast: ui.toast, showToast: ui.showToast, hideToast: ui.hideToast };
 }

@@ -49,10 +49,10 @@ export function useFetchStaff(params: Record<string, string>) {
  * @dependencies Uses feature-owned APIs, query keys, schemas, types, constants, stores, and approved global infrastructure only.
  * @edge-case Preserves loading, empty, error, retry, cancellation, permission, and direct-URL behavior defined by the feature contract.
  */
-export function useTodayStatsQuery() {
+export function useTodayStatsQuery(range?: string) {
   return useQuery({
-    queryKey: ManagerAttendanceTrackingQueryKeys.todayStats(),
-    queryFn: () => ManagerAttendanceTrackingApi.fetchAttendanceStats().then(res => res.data) });
+    queryKey: [...ManagerAttendanceTrackingQueryKeys.todayStats(), range],
+    queryFn: () => ManagerAttendanceTrackingApi.fetchAttendanceStats(range).then(res => res.data) });
 }
 
 /** Orchestrates the owning Manager feature behavior while preserving its documented state boundary. */

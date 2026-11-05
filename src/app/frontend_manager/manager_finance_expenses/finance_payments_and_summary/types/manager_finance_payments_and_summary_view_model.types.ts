@@ -7,6 +7,7 @@ import type { Payment, FinanceSummary } from '@/app/frontend_manager/manager_fin
 export interface ManagerFinancePaymentsAndSummaryViewModel {
   tab: ManagerFinancePaymentsAndSummaryViewId;
   setTab: (tab: ManagerFinancePaymentsAndSummaryViewId) => void;
+  range: string;
   search: string;
   setSearch: (value: string) => void;
   statusFilter: string;

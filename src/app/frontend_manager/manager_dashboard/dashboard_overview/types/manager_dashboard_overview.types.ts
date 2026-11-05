@@ -2,7 +2,7 @@
 // and chart data shapes. CRITICAL: 5 missing KPIs added — churnRate, revenueGrowthPercent,
 // todayCollection, frozenMembershipsCount, totalPTRevenue.
 
-export type ManagerDashboardOverviewTimeRange = 'weekly' | 'monthly' | 'yearly' | 'custom';
+export type ManagerDashboardOverviewTimeRange = 'this_month' | 'last_month' | 'last_3_months' | 'this_year' | 'weekly' | 'monthly' | 'yearly' | 'custom';
 
 export interface ManagerDashboardOverviewRecentMember {
   id: string; 
@@ -80,5 +80,5 @@ export interface ManagerDashboardOverviewStats {
   totalPTRevenue: number;           // personal training revenue this month
 }
 
-export type ManagerDashboardOverviewDateRange = 'weekly' | 'monthly' | 'yearly' | 'custom';
+export type ManagerDashboardOverviewDateRange = 'this_month' | 'last_month' | 'last_3_months' | 'this_year' | 'weekly' | 'monthly' | 'yearly' | 'custom';
 export type ManagerDashboardOverviewDateField = 'startDate' | 'endDate';

@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import ManagerToast from '@/app/frontend_manager/manager_attendance/attendance_tracking/components/ManagerAttendanceTrackingLocalToast';
 
 import ManagerAttendanceTrackingCalendar from '@/app/frontend_manager/manager_attendance/attendance_tracking/components/ManagerAttendanceTrackingCalendar';
+import ManagerAttendanceTrackingDateFilterDropdown from '@/app/frontend_manager/manager_attendance/attendance_tracking/components/ManagerAttendanceTrackingDateFilterDropdown';
 import ManagerAttendanceTrackingKPIs from '@/app/frontend_manager/manager_attendance/attendance_tracking/components/ManagerAttendanceTrackingKPIs';
 import ManagerAttendanceTrackingModal from '@/app/frontend_manager/manager_attendance/attendance_tracking/components/ManagerAttendanceTrackingModal';
 import ManagerAttendanceTrackingTable from '@/app/frontend_manager/manager_attendance/attendance_tracking/components/ManagerAttendanceTrackingTable';
@@ -25,6 +26,14 @@ export function ManagerAttendanceTrackingContent() {
   <div className="min-h-full pb-10 attendance-module bg-page text-text-primary">
   
   <div className="p-6 space-y-5">
+  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div>
+      <h1 className="text-2xl font-bold text-text-primary">{t('COPY_ATTENDANCE')}</h1>
+      <p className="text-sm text-text-secondary mt-1">{t('COPY_TRACK_DAILY_MEMBER_STAFF_CHECK_INS')}</p>
+    </div>
+    <ManagerAttendanceTrackingDateFilterDropdown />
+  </div>
+
   <ManagerAttendanceTrackingKPIs />
   
   <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden">

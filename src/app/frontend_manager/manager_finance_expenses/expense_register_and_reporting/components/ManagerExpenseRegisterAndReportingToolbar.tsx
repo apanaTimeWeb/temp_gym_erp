@@ -14,7 +14,7 @@ import { useManagerExpenseRegisterAndReportingLogic } from '@/app/frontend_manag
 export default function ManagerExpenseRegisterAndReportingToolbar() {
   const t = useTranslations('MANAGER_EXPENSE_REGISTER_AND_REPORTING');
 
-  const { search, setSearch, statusFilter, setStatusFilter, openAdd, exportExpenses } = useManagerExpenseRegisterAndReportingLogic();
+  const { search, setSearch, statusFilter, setStatusFilter, openAdd, exportExpenses, range, setRange } = useManagerExpenseRegisterAndReportingLogic();
   const [searchDraft, setSearchDraft] = useState(search);
   useEffect(() => { setSearchDraft(search); }, [search]);
   useEffect(() => { const timer = window.setTimeout(() => setSearch(searchDraft), 300); return () => window.clearTimeout(timer); }, [searchDraft, setSearch]);
@@ -43,6 +43,22 @@ export default function ManagerExpenseRegisterAndReportingToolbar() {
             ]}
             className="bg-input"
            data-testid="manager_expenses-managerexpensestoolbar-searchable-dropdown-1"/>
+        </div>
+        <div className="w-full sm:w-44">
+          <ManagerSearchableDropdown
+            dataTestId="manager_expenses-managerexpensestoolbar-date-filter"
+            value={range}
+            onChange={(val) => setRange(val.toString())}
+            options={[
+              { value: 'this_month', label: 'This Month' },
+              { value: 'last_month', label: 'Last Month' },
+              { value: 'last_3_months', label: 'Last 3 Months' },
+              { value: 'this_year', label: 'This Year' },
+              { value: 'custom', label: 'Custom' },
+            ]}
+            className="bg-input"
+            ariaLabel="Date range filter"
+          />
         </div>
       </div>
       <div className="flex w-full sm:w-auto items-center gap-2">
