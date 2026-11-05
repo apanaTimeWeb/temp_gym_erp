@@ -36,10 +36,18 @@ export type ApiResponse<T> = (ApiSuccess<T> | ApiFailure) & {
   text?: () => Promise<string>;
 };
 
+import { handleMockApiRequest } from "@/lib/mockApiHandler";
+
 export async function apiFetch<T = unknown>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<ApiResponse<T>> {
+  // If a mock response is available for this endpoint (dev/demo environment), return it
+  const mock = handleMockApiRequest(endpoint, options);
+  if (mock) {
+    return mock as ApiResponse<T>;
+  }
+
   const defaultHeaders: Record<string, string> = {
     "Content-Type": "application/json",
   };

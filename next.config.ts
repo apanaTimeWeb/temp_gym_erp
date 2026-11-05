@@ -69,22 +69,6 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  async rewrites() {
-    return [
-      {
-        source: "/auth/me",
-        destination: "/frontend_auth/auth/me",
-      },
-      {
-        source: "/trainer/trainer_dashboard/stats",
-        destination: "/frontend_trainer/trainer_dashboard/stats",
-      },
-      {
-        source: "/trainer/:path*",
-        destination: "/frontend_trainer/api/:path*",
-      },
-    ];
-  },
 };
 
 export default withNextIntl(nextConfig);
