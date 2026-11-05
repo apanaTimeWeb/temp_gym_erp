@@ -1,5 +1,6 @@
 import type { ApiResponse } from '@/lib/api';
 import { handleManagerMockApiRequest } from '@/lib/managerMockHandlers';
+import { handleSuperadminMockApiRequest } from '@/lib/superadminMockHandlers';
 
 // Trainer Mock Fixture Imports
 import {
@@ -180,6 +181,12 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
   const urlPath = endpoint.split('?')[0];
   const queryStr = endpoint.includes('?') ? endpoint.split('?')[1] : '';
   const searchParams = new URLSearchParams(queryStr);
+
+  // SUPERADMIN ENDPOINTS
+  if (urlPath.startsWith('/superadmin') || urlPath.startsWith('/api/v1/superadmin') || urlPath.startsWith('/frontend_superadmin')) {
+    const superadminResponse = handleSuperadminMockApiRequest(urlPath, method, searchParams, options);
+    if (superadminResponse) return superadminResponse;
+  }
 
   // MANAGER ENDPOINTS
   if (urlPath.startsWith('/api/v1/manager') || urlPath.startsWith('/manager')) {

@@ -112,6 +112,43 @@ import managerLibraryDietPlansEn from '@/app/frontend_manager/manager_workout_di
 import managerWorkoutDietNavEn from '@/app/frontend_manager/manager_workout_diet_library/locales/manager_workout_diet_library_navigation_en.json';
 import managerWorkoutPlanManagementEn from '@/app/frontend_manager/manager_workout_diet_library/workout_plan_management/locales/manager_workout_plans_en.json';
 
+// Superadmin Locales
+import superadminAccountProfileEn from '@/app/frontend_superadmin/superadmin_account/account_profile_overview/locales/superadmin_account_profile_overview_en.json';
+import superadminAccountSecurityEn from '@/app/frontend_superadmin/superadmin_account/account_security/locales/account_security_en.json';
+import superadminAffiliatesManagementEn from '@/app/frontend_superadmin/superadmin_affiliates/affiliates_management/locales/superadmin_affiliates_management_en.json';
+import superadminAffiliatesPayoutEn from '@/app/frontend_superadmin/superadmin_affiliates/affiliates_payout_history/locales/affiliates_payout_history_en.json';
+import superadminAnalyticsDashboardEn from '@/app/frontend_superadmin/superadmin_analytics/analytics_dashboard/locales/superadmin_analytics_dashboard_en.json';
+import superadminAnalyticsCancellationsEn from '@/app/frontend_superadmin/superadmin_analytics/analytics_reports_cancellations/locales/analytics_reports_cancellations_en.json';
+import superadminAnalyticsReportsCenterEn from '@/app/frontend_superadmin/superadmin_analytics/analytics_reports_center/locales/superadmin_analytics_reports_center_en.json';
+import superadminAnalyticsHealthEn from '@/app/frontend_superadmin/superadmin_analytics/analytics_reports_health/locales/analytics_reports_health_en.json';
+import superadminAuditComplianceDashboardEn from '@/app/frontend_superadmin/superadmin_audit_compliance/audit_compliance_dashboard/locales/superadmin_audit_compliance_dashboard_en.json';
+import superadminAuditComplianceGlobalAuditEn from '@/app/frontend_superadmin/superadmin_audit_compliance/audit_compliance_global_audit_overview/locales/superadmin_audit_compliance_global_audit_overview_en.json';
+import superadminBillingCouponsEn from '@/app/frontend_superadmin/superadmin_billing/billing_coupons_management/locales/superadmin_billing_coupons_management_en.json';
+import superadminBillingInvoicesEn from '@/app/frontend_superadmin/superadmin_billing/billing_invoices_management/locales/superadmin_billing_invoices_management_en.json';
+import superadminBillingPlansEn from '@/app/frontend_superadmin/superadmin_billing/billing_plans_management/locales/superadmin_billing_plans_management_en.json';
+import superadminBillingUsageMetersEn from '@/app/frontend_superadmin/superadmin_billing/billing_usage_meters_dashboard/locales/superadmin_billing_usage_meters_dashboard_en.json';
+import superadminCommunicationBroadcastsEn from '@/app/frontend_superadmin/superadmin_communication/communication_broadcasts_campaigns/locales/superadmin_communication_broadcasts_campaigns_en.json';
+import superadminCommunicationMessagingEn from '@/app/frontend_superadmin/superadmin_communication/communication_messaging_center/locales/superadmin_communication_messaging_center_en.json';
+import superadminCommunicationNotificationsEn from '@/app/frontend_superadmin/superadmin_communication/communication_notifications/locales/superadmin_communication_notifications_en.json';
+import superadminDashboardOverviewEn from '@/app/frontend_superadmin/superadmin_dashboard/dashboard_overview/locales/superadmin_dashboard_overview_en.json';
+import superadminGymsDetailEn from '@/app/frontend_superadmin/superadmin_gyms/gyms_detail/locales/superadmin_gyms_detail_en.json';
+import superadminGymsDirectoryEn from '@/app/frontend_superadmin/superadmin_gyms/gyms_directory/locales/superadmin_gyms_directory_en.json';
+import superadminPlatformFeaturesEn from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_features_management/locales/superadmin_platform_configuration_features_management_en.json';
+import superadminPlatformIntegrationsEn from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_integrations_management/locales/superadmin_platform_configuration_integrations_management_en.json';
+import superadminPlatformReleaseNotesEn from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_release_notes/locales/platform_configuration_release_notes_en.json';
+import superadminPlatformSettingsGeneralEn from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_settings_general/locales/superadmin_platform_configuration_settings_general_en.json';
+import superadminPlatformWhiteLabelingEn from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_white_labeling_settings/locales/superadmin_platform_configuration_white_labeling_settings_en.json';
+import superadminPlatformShellLayoutEn from '@/app/frontend_superadmin/superadmin_platform_shell/platform_shell_layout/locales/superadmin_platform_shell_layout_en.json';
+import superadminPlatformShellNavEn from '@/app/frontend_superadmin/superadmin_platform_shell/platform_shell_navigation/locales/superadmin_platform_shell_navigation_en.json';
+import superadminSupportTicketsEn from '@/app/frontend_superadmin/superadmin_support/support_tickets_management/locales/superadmin_support_tickets_management_en.json';
+import superadminSystemOpsBackupsEn from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_backups/locales/superadmin_system_ops_backups_en.json';
+import superadminSystemOpsCacheEn from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_cache_management/locales/superadmin_system_ops_cache_management_en.json';
+import superadminSystemOpsInfrastructureEn from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_infrastructure/locales/superadmin_system_ops_infrastructure_en.json';
+import superadminSystemOpsJobsEn from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_jobs/locales/superadmin_system_ops_jobs_en.json';
+import superadminSystemOpsMigrationsEn from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_migrations/locales/superadmin_system_ops_migrations_en.json';
+import superadminSystemOpsOverviewEn from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_overview/locales/superadmin_system_ops_en.json';
+import superadminTeamManagementEn from '@/app/frontend_superadmin/superadmin_team/team_management/locales/superadmin_team_management_en.json';
+
 function deepMerge(target: Record<string, any>, source: Record<string, any>): Record<string, any> {
   for (const key of Object.keys(source)) {
     if (
@@ -240,6 +277,42 @@ const allSources: Record<string, any>[] = [
   managerLibraryDietPlansEn,
   managerWorkoutDietNavEn,
   managerWorkoutPlanManagementEn,
+  // Superadmin
+  superadminAccountProfileEn,
+  superadminAccountSecurityEn,
+  superadminAffiliatesManagementEn,
+  superadminAffiliatesPayoutEn,
+  superadminAnalyticsDashboardEn,
+  superadminAnalyticsCancellationsEn,
+  superadminAnalyticsReportsCenterEn,
+  superadminAnalyticsHealthEn,
+  superadminAuditComplianceDashboardEn,
+  superadminAuditComplianceGlobalAuditEn,
+  superadminBillingCouponsEn,
+  superadminBillingInvoicesEn,
+  superadminBillingPlansEn,
+  superadminBillingUsageMetersEn,
+  superadminCommunicationBroadcastsEn,
+  superadminCommunicationMessagingEn,
+  superadminCommunicationNotificationsEn,
+  superadminDashboardOverviewEn,
+  superadminGymsDetailEn,
+  superadminGymsDirectoryEn,
+  superadminPlatformFeaturesEn,
+  superadminPlatformIntegrationsEn,
+  superadminPlatformReleaseNotesEn,
+  superadminPlatformSettingsGeneralEn,
+  superadminPlatformWhiteLabelingEn,
+  superadminPlatformShellLayoutEn,
+  superadminPlatformShellNavEn,
+  superadminSupportTicketsEn,
+  superadminSystemOpsBackupsEn,
+  superadminSystemOpsCacheEn,
+  superadminSystemOpsInfrastructureEn,
+  superadminSystemOpsJobsEn,
+  superadminSystemOpsMigrationsEn,
+  superadminSystemOpsOverviewEn,
+  superadminTeamManagementEn,
 ];
 
 export const appMessages: Record<string, any> = {};
