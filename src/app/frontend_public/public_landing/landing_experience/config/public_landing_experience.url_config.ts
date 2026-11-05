@@ -18,8 +18,8 @@ const phoneNumber = (value: string | undefined): string | null =>
 export const PublicLandingUrlConfig = {
   PAGES: {
     LANDING: '/frontend_public/public_landing',
-    ERP_LOGIN: '/frontend_auth/auth/login',
-    SAAS_LOGIN: '/frontend_auth/auth/login',
+    ERP_LOGIN: '/frontend_auth/auth_login/login_credentials_and_demo_access',
+    SAAS_LOGIN: '/frontend_auth/auth_login/login_credentials_and_demo_access',
   },
   ANCHORS: {
     HOME: '#home',

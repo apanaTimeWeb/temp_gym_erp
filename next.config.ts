@@ -15,6 +15,40 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  async redirects() {
+    return [
+      {
+        source: "/login",
+        destination: "/frontend_auth/auth_login/login_credentials_and_demo_access",
+        permanent: false,
+      },
+      {
+        source: "/frontend_auth",
+        destination: "/frontend_auth/auth_login/login_credentials_and_demo_access",
+        permanent: false,
+      },
+      {
+        source: "/frontend_auth/auth/login",
+        destination: "/frontend_auth/auth_login/login_credentials_and_demo_access",
+        permanent: false,
+      },
+      {
+        source: "/frontend_auth/auth_login",
+        destination: "/frontend_auth/auth_login/login_credentials_and_demo_access",
+        permanent: false,
+      },
+      {
+        source: "/landing",
+        destination: "/frontend_public/public_landing",
+        permanent: false,
+      },
+      {
+        source: "/frontend_public",
+        destination: "/frontend_public/public_landing",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default withNextIntl(nextConfig);
