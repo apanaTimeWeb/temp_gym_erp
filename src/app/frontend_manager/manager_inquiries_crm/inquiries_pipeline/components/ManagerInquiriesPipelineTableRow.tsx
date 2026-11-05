@@ -7,7 +7,6 @@ import { useTranslations } from 'next-intl';
 import { useConfirm } from '@/components/ui/manager_confirm_provider/ManagerConfirmProvider';
 import ManagerSearchableDropdown from '@/components/ui/manager_searchable_dropdown/ManagerSearchableDropdown';
 
-import styles from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable.module.css';
 import { INQUIRIES_STATUS_LABEL_KEYS, INQUIRIES_TABLE_HEADER_KEYS } from '@/app/frontend_manager/manager_inquiries_crm/inquiries_pipeline/constants/manager_inquiries_pipeline_shared.constants';
 import { ManagerInfrastructureTableRowActionMenu } from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureTableContextMenu';
 import { ManagerInquiriesPipelineDisplayValue, ManagerInquiriesPipelineFormatDate, ManagerInquiriesPipelineMaskSensitiveData } from '@/app/frontend_manager/manager_inquiries_crm/inquiries_pipeline/utils/ManagerInquiriesPipelineFormatters';
@@ -19,8 +18,8 @@ export default function ManagerInquiriesPipelineTableRow({ inq, mapIndex, select
   const t = useTranslations('MANAGER_INQUIRIES_PIPELINE');
   const { confirm } = useConfirm();
   const setConvertLead = useManagerInquiriesPipelineUiStore((state) => state.setConvertLead);
-  const rowCardClass = `${styles?.cardStackRow || 'cardStackRow'} max-md:mb-3 max-md:rounded-xl max-md:border max-md:border-border max-md:bg-card max-md:p-2 max-md:shadow-card md:table-row md:mb-0 md:rounded-none md:border-0 md:bg-transparent md:p-0 md:shadow-none`;
-  const cellBaseClass = `${styles?.cardStackCell || 'cardStackCell'} max-md:flex max-md:items-start max-md:justify-between max-md:gap-4 max-md:border-b max-md:border-border max-md:px-3 max-md:py-2 max-md:text-right max-md:last:border-b-0 md:table-cell md:align-middle md:border-0 md:px-4 md:py-3.5 md:text-left`;
+  const rowCardClass = 'cardStackRow max-md:mb-3 max-md:rounded-xl max-md:border max-md:border-border max-md:bg-card max-md:p-2 max-md:shadow-card md:table-row md:mb-0 md:rounded-none md:border-0 md:bg-transparent md:p-0 md:shadow-none';
+  const cellBaseClass = 'cardStackCell max-md:flex max-md:items-start max-md:justify-between max-md:gap-4 max-md:border-b max-md:border-border max-md:px-3 max-md:py-2 max-md:text-right max-md:last:border-b-0 md:table-cell md:align-middle md:border-0 md:px-4 md:py-3.5 md:text-left';
   return (
     <tr
       onContextMenu={(event) => {

@@ -6,7 +6,6 @@ import { Children, cloneElement, isValidElement } from 'react';
 import type { CSSProperties, MouseEvent, ReactElement, ReactNode } from 'react';
 
 import ManagerInfrastructureTableContextMenu from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureTableContextMenu';
-import styles from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable.module.css';
 import { useManagerInfrastructureDataDensity } from '@/app/frontend_manager/manager_infrastructure/hooks/useManagerInfrastructureDataDensity';
 import type { ManagerInfrastructureResponsiveTableProps, ManagerInfrastructureTableElementWithChildren } from '@/app/frontend_manager/manager_infrastructure/types/ManagerInfrastructureTableContextMenuTypes';
 
@@ -30,13 +29,13 @@ export default function ManagerInfrastructureResponsiveTable({ labels, children,
   const table = Children.only(children) as ManagerInfrastructureTableElementWithChildren;
   if (table.type !== 'table') throw new Error('ManagerInfrastructureResponsiveTable expects a table element as its only child.');
 
-  const cardStackCellClass = styles?.cardStackCell || 'cardStackCell';
-  const cardStackRowClass = styles?.cardStackRow || 'cardStackRow';
-  const cardStackTableClass = styles?.cardStackTable || 'cardStackTable';
-  const visuallyHiddenHeaderClass = styles?.visuallyHiddenHeader || 'visuallyHiddenHeader';
-  const cardStackBodyClass = styles?.cardStackBody || 'cardStackBody';
-  const cardStackFooterClass = styles?.cardStackFooter || 'cardStackFooter';
-  const horizontalScrollTableClass = styles?.horizontalScrollTable || 'horizontalScrollTable';
+  const cardStackCellClass = 'cardStackCell';
+  const cardStackRowClass = 'cardStackRow';
+  const cardStackTableClass = 'cardStackTable';
+  const visuallyHiddenHeaderClass = 'visuallyHiddenHeader';
+  const cardStackBodyClass = 'cardStackBody';
+  const cardStackFooterClass = 'cardStackFooter';
+  const horizontalScrollTableClass = 'horizontalScrollTable';
 
   const transformRow = (row: ReactElement, rowIndex: number): ReactElement => {
     const rowChildren = Children.toArray((row.props as { children?: ReactNode }).children);

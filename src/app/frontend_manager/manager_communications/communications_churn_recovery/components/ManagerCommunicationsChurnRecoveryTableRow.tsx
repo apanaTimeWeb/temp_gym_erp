@@ -3,7 +3,6 @@
 import { Send, CheckCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import styles from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable.module.css';
 import { CANCELLATIONS_REASON_LABEL } from '@/app/frontend_manager/manager_communications/communications_churn_recovery/constants/manager_communications_campaigns_shared.constants';
 import { MANAGER_CHURN_RECOVERY_TABLE_HEADERS } from '@/app/frontend_manager/manager_communications/communications_churn_recovery/constants/manager_communications_campaigns_table.constants';
 import { ManagerInfrastructureTableRowActionMenu } from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureTableContextMenu';
@@ -38,8 +37,8 @@ export default function ManagerCommunicationsCampaignsChurnRecoveryTableRow({
   const t = useTranslations('MANAGER_COMMUNICATIONS_CAMPAIGNS');
 
   const badge = getDaysBadge(member.daysSinceExit);
-  const rowCardClass = `${styles?.cardStackRow || 'cardStackRow'} max-md:mb-3 max-md:rounded-xl max-md:border max-md:border-border max-md:bg-card max-md:p-2 max-md:shadow-card md:table-row md:mb-0 md:rounded-none md:border-0 md:bg-transparent md:p-0 md:shadow-none`;
-  const cellBaseClass = `${styles?.cardStackCell || 'cardStackCell'} max-md:flex max-md:items-start max-md:justify-between max-md:gap-4 max-md:border-b max-md:border-border max-md:px-3 max-md:py-2 max-md:text-right max-md:last:border-b-0 md:table-cell md:align-middle md:border-0 md:px-4 md:py-3.5 md:text-left`;
+  const rowCardClass = 'cardStackRow max-md:mb-3 max-md:rounded-xl max-md:border max-md:border-border max-md:bg-card max-md:p-2 max-md:shadow-card md:table-row md:mb-0 md:rounded-none md:border-0 md:bg-transparent md:p-0 md:shadow-none';
+  const cellBaseClass = 'cardStackCell max-md:flex max-md:items-start max-md:justify-between max-md:gap-4 max-md:border-b max-md:border-border max-md:px-3 max-md:py-2 max-md:text-right max-md:last:border-b-0 md:table-cell md:align-middle md:border-0 md:px-4 md:py-3.5 md:text-left';
 
   return (
     <tr
