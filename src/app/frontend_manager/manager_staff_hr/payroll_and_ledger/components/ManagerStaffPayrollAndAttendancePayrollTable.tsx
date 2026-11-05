@@ -112,23 +112,22 @@ export default function ManagerStaffPayrollAndAttendancePayrollTable() {
         <button data-testid="manager_hr-manager-hr-payroll-table-button-close" onClick={() => { void handleGeneratePayroll(); }} className="min-h-11 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium bg-primary text-on-primary rounded-lg motion-safe:transition-all hover:bg-primary-hover motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110" aria-label={t("COPY_GENERATE_PAYROLL_CURRENT_MONTH")} type="button">
           <RefreshCw size={18} strokeWidth={2}/>{t("COPY_GENERATE_PAYROLL_2")}</button>
       </div>
-      <div className="overflow-x-auto flex-1">
-        <ManagerInfrastructureResponsiveTable labels={[...PAYROLL_TABLE_HEADERS, t('COPY_ACTIONS_1')]}>
+      <ManagerInfrastructureResponsiveTable labels={[...PAYROLL_TABLE_HEADERS, t('COPY_ACTIONS_1')]}>
 <table className="w-full">
-          <thead className="bg-input text-text-secondary">
+          <thead className="bg-input text-text-secondary border-b border-border">
             <tr>
               {PAYROLL_TABLE_HEADERS.map(h => (
-                <th key={h} className={`text-xs font-semibold uppercase tracking-wider px-4 py-3 ${['Base Salary', 'Net Payable', 'Paid Amount', 'Pending'].includes(h) ? 'text-right' : 'text-left'}`}>
+                <th key={h} className={`text-xs font-semibold uppercase tracking-wider px-3 py-3 whitespace-nowrap ${['Base Salary', 'Net Payable', 'Paid Amount', 'Pending'].includes(h) ? 'text-right' : 'text-left'}`}>
                   {h}
                 </th>
               ))}
-              <th className="text-right text-xs font-semibold uppercase tracking-wider px-4 py-3">{t("COPY_ACTIONS_1")}</th>
+              <th className="text-right text-xs font-semibold uppercase tracking-wider px-3 py-3 whitespace-nowrap">{t("COPY_ACTIONS_1")}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
             {currentData.map((p, mapIndex) => (
               <tr key={p.id} className="motion-safe:transition-all hover:bg-primary-subtle bg-card motion-safe:duration-200 ease-in-out">
-                <td className="px-4 py-3">
+                <td className="px-3 py-3 whitespace-nowrap">
                   <p className="text-sm font-medium text-text-primary">
                     {p.staff?.name || `Staff #${p.staffId}`}
                   </p>
@@ -136,33 +135,33 @@ export default function ManagerStaffPayrollAndAttendancePayrollTable() {
                     {ManagerStaffPayrollAndAttendanceDisplayValue(p.staff?.role)}
                   </div>
                 </td>
-                <td className="px-4 py-3 text-sm text-text-primary">{p.month}</td>
-                <td className="px-4 py-3 text-sm font-medium text-text-secondary text-right">
+                <td className="px-3 py-3 text-sm text-text-primary whitespace-nowrap">{p.month}</td>
+                <td className="px-3 py-3 text-sm font-medium text-text-secondary text-right whitespace-nowrap">
                   {ManagerStaffPayrollAndAttendanceFormatCurrency(((staff.find(s => String(s.id) === String(p.staffId))?.salary) || 0), ManagerEnvConfig.currencyCode, locale)}
                 </td>
-                <td className="px-4 py-3 text-sm font-bold text-text-primary text-right">{ManagerStaffPayrollAndAttendanceFormatCurrency(p.amount || 0, ManagerEnvConfig.currencyCode, locale)}</td>
-                <td className="px-4 py-3 text-sm font-bold text-success-text text-right">{ManagerStaffPayrollAndAttendanceFormatCurrency(p.paidAmount || 0, ManagerEnvConfig.currencyCode, locale)}</td>
-                <td className="px-4 py-3 text-sm font-bold text-danger-text text-right">{ManagerStaffPayrollAndAttendanceFormatCurrency(p.pendingAmount || 0, ManagerEnvConfig.currencyCode, locale)}</td>
-                <td className="px-4 py-3">
+                <td className="px-3 py-3 text-sm font-bold text-text-primary text-right whitespace-nowrap">{ManagerStaffPayrollAndAttendanceFormatCurrency(p.amount || 0, ManagerEnvConfig.currencyCode, locale)}</td>
+                <td className="px-3 py-3 text-sm font-bold text-success-text text-right whitespace-nowrap">{ManagerStaffPayrollAndAttendanceFormatCurrency(p.paidAmount || 0, ManagerEnvConfig.currencyCode, locale)}</td>
+                <td className="px-3 py-3 text-sm font-bold text-danger-text text-right whitespace-nowrap">{ManagerStaffPayrollAndAttendanceFormatCurrency(p.pendingAmount || 0, ManagerEnvConfig.currencyCode, locale)}</td>
+                <td className="px-3 py-3 whitespace-nowrap">
                   <span 
-                    className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${
+                    className={`inline-flex px-2 py-0.5 rounded-full text-xs font-semibold ${
                       p.status === MANAGER_STAFF_PAYROLL_AND_ATTENDANCE_STATUS_VALUES.PAID ? 'bg-success-bg text-success-text' : 'bg-warning-bg text-warning-text'
                     }`}
                    data-testid="manager_hr-managerhrpayrolltable-status-badge-1">
                     {p.status}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-sm text-text-secondary">
+                <td className="px-3 py-3 text-sm text-text-secondary whitespace-nowrap">
                   {p.paidAt ? ManagerStaffPayrollAndAttendanceFormatDate(p.paidAt, locale) : '—'}
                 </td>
-                <td className="px-4 py-3 text-right">
-                  <div className="flex items-center justify-end gap-2">
+                <td className="px-3 py-3 text-right whitespace-nowrap">
+                  <div className="flex items-center justify-end gap-1.5">
                     {p.status !== MANAGER_STAFF_PAYROLL_AND_ATTENDANCE_STATUS_VALUES.PAID && (
                       <button data-testid={`manager_hr-hr-managerhrpayrolltable-button-payslip`}
                         onClick={() => setPaymentModal({ payrollId: p.id, staffName: p.staff?.name || `Staff #${p.staffId}`, pendingAmount: p.pendingAmount || p.amount })}
-                        className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold bg-primary text-on-primary rounded-lg hover:bg-primary-hover motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"
+                        className="flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-primary text-on-primary rounded-lg hover:bg-primary-hover motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"
                        type="button">
-                        <Banknote size={18} strokeWidth={2}/>{t("COPY_PAY_SALARY_1")}</button>
+                        <Banknote size={16} strokeWidth={2}/>{t("COPY_PAY_SALARY_1")}</button>
                     )}
                   </div>
                 </td>
@@ -178,7 +177,6 @@ export default function ManagerStaffPayrollAndAttendancePayrollTable() {
           </tbody>
         </table>
 </ManagerInfrastructureResponsiveTable>
-      </div>
       <ManagerPagination data-testid="manager_hr-managerhrpayrolltable-managerpagination-1" 
         currentPage={currentPage} 
         totalPages={totalPages} 

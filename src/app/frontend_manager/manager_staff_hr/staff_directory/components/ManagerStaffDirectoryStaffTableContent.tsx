@@ -36,17 +36,17 @@ export default function ManagerStaffPayrollAndAttendanceStaffTableContent({ staf
   const totalPages = Math.max(1, Math.ceil(totalStaff / MANAGER_ITEMS_PER_PAGE));
   return (
     <>
-      <div className="overflow-x-auto flex-1">
+      <div className="hidden lg:block flex-1">
         <ManagerInfrastructureResponsiveTable labels={[...translatedHeaders, t('COPY_ACTIONS_3')]}>
 <table className="w-full">
-          <thead className="bg-input text-text-secondary">
+          <thead className="bg-input text-text-secondary border-b border-border">
             <tr>
               {translatedHeaders.map((header, index) => (
-                <th key={STAFF_TABLE_HEADERS[index]} className={`text-xs font-semibold uppercase tracking-wider px-4 py-3 ${index === 4 || index === 5 ? 'text-right' : 'text-left'}`}>
+                <th key={STAFF_TABLE_HEADERS[index]} className={`text-xs font-semibold uppercase tracking-wider px-3 py-3 whitespace-nowrap ${index === 4 || index === 5 ? 'text-right' : 'text-left'}`}>
                   {header}
                 </th>
               ))}
-              <th className="text-right text-xs font-semibold uppercase tracking-wider px-4 py-3">{t("COPY_ACTIONS_3")}</th>
+              <th className="text-right text-xs font-semibold uppercase tracking-wider px-3 py-3 whitespace-nowrap">{t("COPY_ACTIONS_3")}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
@@ -56,15 +56,15 @@ export default function ManagerStaffPayrollAndAttendanceStaffTableContent({ staf
                 key={s.id}
                 className="motion-safe:transition-all hover:bg-surface-hover motion-safe:duration-200 ease-in-out"
               >
-                <td className="px-4 py-3">
+                <td className="px-3 py-3 whitespace-nowrap">
                   <button
                     type="button"
                     onClick={() => setViewProfileData(s)}
                     aria-label={t('TEXT_OPEN_STAFF_PROFILE', { value: s.name })}
                     aria-haspopup="dialog"
-                    className="flex w-full items-center gap-3 rounded-md text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+                    className="flex w-full items-center gap-2.5 rounded-md text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page"
                   >
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-subtle text-sm font-bold text-primary">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-subtle text-sm font-bold text-primary shrink-0">
                       {(s.name || '?').charAt(0).toUpperCase()}
                     </span>
                     <span className="min-w-0">
@@ -73,25 +73,25 @@ export default function ManagerStaffPayrollAndAttendanceStaffTableContent({ staf
                     </span>
                   </button>
                 </td>
-                <td className="px-4 py-3 text-sm text-text-primary">{s.role}</td>
-                <td className="px-4 py-3">
+                <td className="px-3 py-3 text-sm text-text-primary whitespace-nowrap">{s.role}</td>
+                <td className="px-3 py-3 whitespace-nowrap">
                   {s.isActive === false ? (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-danger text-on-danger border border-border" data-testid="manager_hr-managerhrstafftable-status-badge-1">
-                      <Ban size={18} strokeWidth={2} className=""/>{t("COPY_SUSPENDED")}</span>
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-danger text-on-danger border border-border" data-testid="manager_hr-managerhrstafftable-status-badge-1">
+                      <Ban size={15} strokeWidth={2} className=""/>{t("COPY_SUSPENDED")}</span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-success text-on-success border border-border" data-testid="manager_hr-managerhrstafftable-status-badge-2">
-                      <CheckCircle2 size={18} strokeWidth={2} className=""/>{t("COPY_ACTIVE")}</span>
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-success text-on-success border border-border" data-testid="manager_hr-managerhrstafftable-status-badge-2">
+                      <CheckCircle2 size={15} strokeWidth={2} className=""/>{t("COPY_ACTIVE")}</span>
                   )}
                 </td>
-                <td className="px-4 py-3 text-sm text-text-secondary">{ManagerStaffPayrollAndAttendanceMaskSensitiveData(s.phone, 'phone')}</td>
-                <td className="px-4 py-3 text-sm font-medium text-success-text text-right">{ManagerStaffPayrollAndAttendanceFormatCurrency(s.salary || 0, ManagerEnvConfig.currencyCode, locale)}</td>
-                <td className="px-4 py-3 text-sm font-medium text-text-primary text-right">{s.advanceSalary && s.advanceSalary > 0 ? ManagerStaffPayrollAndAttendanceFormatCurrency(s.advanceSalary, ManagerEnvConfig.currencyCode, locale) : ManagerStaffPayrollAndAttendanceDisplayValue(null)}</td>
-                <td className="px-4 py-3 text-sm text-text-secondary">
+                <td className="px-3 py-3 text-sm text-text-secondary whitespace-nowrap">{ManagerStaffPayrollAndAttendanceMaskSensitiveData(s.phone, 'phone')}</td>
+                <td className="px-3 py-3 text-sm font-medium text-success-text text-right whitespace-nowrap">{ManagerStaffPayrollAndAttendanceFormatCurrency(s.salary || 0, ManagerEnvConfig.currencyCode, locale)}</td>
+                <td className="px-3 py-3 text-sm font-medium text-text-primary text-right whitespace-nowrap">{s.advanceSalary && s.advanceSalary > 0 ? ManagerStaffPayrollAndAttendanceFormatCurrency(s.advanceSalary, ManagerEnvConfig.currencyCode, locale) : ManagerStaffPayrollAndAttendanceDisplayValue(null)}</td>
+                <td className="px-3 py-3 text-sm text-text-secondary whitespace-nowrap">
                   {ManagerStaffPayrollAndAttendanceDisplayValue(s.joinDate ? ManagerStaffPayrollAndAttendanceFormatDate(s.joinDate) : null)}
                 </td>
-                <td className="px-4 py-3 text-right">
-                  <div className="flex items-center justify-end gap-2">
-                    <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", (`p-1.5 rounded-lg motion-safe:transition-all motion-safe:duration-200 ease-in-out ${
+                <td className="px-3 py-3 text-right whitespace-nowrap">
+                  <div className="flex items-center justify-end gap-1.5">
+                    <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", (`min-h-11 min-w-11 md:min-h-8 md:min-w-8 p-1.5 flex items-center justify-center rounded-lg motion-safe:transition-all motion-safe:duration-200 ease-in-out ${
                         s.isActive === false
                           ? 'text-success-text hover:bg-success-bg'
                           : 'text-danger-text hover:bg-danger-bg'
@@ -113,16 +113,16 @@ export default function ManagerStaffPayrollAndAttendanceStaffTableContent({ staf
                       title={s.isActive === false ? t("TEXT_ACTIVATE_STAFF") : t("TEXT_SUSPEND_STAFF")}
                       aria-label={s.isActive === false ? t("TEXT_ACTIVATE_STAFF_BY_NAME", { value: s.name }) : t("TEXT_SUSPEND_STAFF_BY_NAME", { value: s.name })}
                      type="button">
-                      {s.isActive === false ? <PlayCircle size={18} strokeWidth={2}/> : <Ban size={18} strokeWidth={2}/>}
+                      {s.isActive === false ? <PlayCircle size={16} strokeWidth={2}/> : <Ban size={16} strokeWidth={2}/>}
                     </button>
-                    <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "p-1.5 rounded hover:bg-primary-subtle motion-safe:transition-all text-text-secondary hover:text-primary motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_hr-hr-managerhrstafftable-button-edit-${s.id}`} 
+                    <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 min-w-11 md:min-h-8 md:min-w-8 p-1.5 flex items-center justify-center rounded hover:bg-primary-subtle motion-safe:transition-all text-text-secondary hover:text-primary motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_hr-hr-managerhrstafftable-button-edit-${s.id}`} 
                       onClick={(e) => { e.stopPropagation(); openEdit(s); }} 
                       
                       title={t("COPY_EDIT")}
                      type="button">
-                      <Edit2 size={18} strokeWidth={2}/>
+                      <Edit2 size={16} strokeWidth={2}/>
                     </button>
-                    <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "p-1.5 rounded motion-safe:transition-all text-danger-text hover:bg-danger-bg motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_hr-hr-managerhrstafftable-button-delete-staff-${mapIndex}`} 
+                    <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 min-w-11 md:min-h-8 md:min-w-8 p-1.5 flex items-center justify-center rounded motion-safe:transition-all text-danger-text hover:bg-danger-bg motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_hr-hr-managerhrstafftable-button-delete-staff-${mapIndex}`} 
                       onClick={async (e) => { 
                         e.stopPropagation(); 
                         const ok = await confirm({
@@ -138,7 +138,7 @@ export default function ManagerStaffPayrollAndAttendanceStaffTableContent({ staf
                       
                       title={t("COPY_DELETE_1")}
                      type="button">
-                      <Trash2 size={18} strokeWidth={2}/>
+                      <Trash2 size={16} strokeWidth={2}/>
                     </button>
                   </div>
                 </td>

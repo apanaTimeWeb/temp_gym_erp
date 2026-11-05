@@ -34,13 +34,12 @@ export default function ManagerFinancePaymentsAndSummaryTable() {
 
   return (
     <>
-      <div className="overflow-x-auto">
-        <ManagerInfrastructureResponsiveTable labels={PAYMENTS_TABLE_HEADERS}>
+      <ManagerInfrastructureResponsiveTable labels={PAYMENTS_TABLE_HEADERS}>
 <table className="w-full">
-          <thead className="bg-primary-subtle">
+          <thead className="bg-primary-subtle border-b border-border">
             <tr>
               {PAYMENTS_TABLE_HEADERS.map(h => (
-                <th key={`th-${h}`} className="text-left text-xs font-semibold text-text-secondary uppercase tracking-wider px-5 py-3 whitespace-nowrap">{h}</th>
+                <th key={`th-${h}`} className="text-left text-xs font-semibold text-text-secondary uppercase tracking-wider px-3 py-3 whitespace-nowrap">{h}</th>
               ))}
             </tr>
           </thead>
@@ -51,31 +50,31 @@ export default function ManagerFinancePaymentsAndSummaryTable() {
               const ms = MANAGER_FINANCE_PAYMENTS_AND_SUMMARY_METHOD_STYLES[p.method] ?? { bg: 'bg-input', text: 'text-text-secondary' };
               return (
                 <tr key={p.id} className="hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-200 ease-in-out">
-                  <td className="px-5 py-3.5 text-sm font-bold text-text-primary whitespace-nowrap">{p.invoiceNumber}</td>
-                  <td className="px-5 py-3.5 whitespace-nowrap">
+                  <td className="px-3 py-3 text-sm font-bold text-text-primary whitespace-nowrap">{p.invoiceNumber}</td>
+                  <td className="px-3 py-3 whitespace-nowrap">
                     <p className="text-sm font-semibold text-text-primary">{ManagerFinancePaymentsAndSummaryDisplayValue(p.member?.name)}</p>
                     <p className="text-xs text-text-secondary">{ManagerFinancePaymentsAndSummaryMaskSensitiveData(p.member?.email, 'email')}</p>
                   </td>
-                  <td className="px-5 py-3.5 text-sm text-text-secondary whitespace-nowrap">{ManagerFinancePaymentsAndSummaryDisplayValue(p.member?.plan?.name)}</td>
-                  <td className="px-5 py-3.5 text-sm font-semibold text-success-text whitespace-nowrap">{ManagerFinancePaymentsAndSummaryFormatCurrency(p.amount, ManagerEnvConfig.currencyCode, locale)}</td>
-                  <td className="px-5 py-3.5 whitespace-nowrap">
-                    <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${ms.bg} ${ms.text}`}>{p.method}</span>
+                  <td className="px-3 py-3 text-sm text-text-secondary whitespace-nowrap">{ManagerFinancePaymentsAndSummaryDisplayValue(p.member?.plan?.name)}</td>
+                  <td className="px-3 py-3 text-sm font-semibold text-success-text whitespace-nowrap">{ManagerFinancePaymentsAndSummaryFormatCurrency(p.amount, ManagerEnvConfig.currencyCode, locale)}</td>
+                  <td className="px-3 py-3 whitespace-nowrap">
+                    <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-semibold ${ms.bg} ${ms.text}`}>{p.method}</span>
                   </td>
-                  <td className="px-5 py-3.5 whitespace-nowrap">
-                    <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${
+                  <td className="px-3 py-3 whitespace-nowrap">
+                    <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-semibold ${
                       (() => { if (p.status === MANAGER_FINANCE_PAYMENTS_AND_SUMMARY_PAYMENT_STATUS_PAID) return 'bg-success-bg text-success-text'; return (() => { if (p.status === MANAGER_FINANCE_PAYMENTS_AND_SUMMARY_PAYMENT_STATUS_REFUNDED) return 'bg-warning-bg text-warning-text'; return 'bg-danger-bg text-danger-text'; })(); })()
                     }`} data-testid={`manager_finance-managerfinancetable-status-${p.id}`}>{p.status}</span>
                   </td>
-                  <td className="px-5 py-3.5 text-sm text-text-secondary whitespace-nowrap">
+                  <td className="px-3 py-3 text-sm text-text-secondary whitespace-nowrap">
                     {ManagerFinancePaymentsAndSummaryFormatDate(p.paidAt)}
                   </td>
-                  <td className="px-5 py-3.5 whitespace-nowrap">
-                    <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 min-w-11 flex items-center justify-center rounded-lg bg-input text-text-secondary hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_finance-finance-managerfinancetable-button-print-receipt-${mapIndex}`} 
+                  <td className="px-3 py-3 whitespace-nowrap">
+                    <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 min-w-11 md:min-h-8 md:min-w-8 p-1.5 flex items-center justify-center rounded-lg bg-input text-text-secondary hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_finance-finance-managerfinancetable-button-print-receipt-${mapIndex}`} 
                       onClick={(event) => { event.stopPropagation(); printReceipt(p.id); }}
                        
                       title={t("COPY_PRINT_RECEIPT")} aria-label={t("TEXT_PRINT_RECEIPT_FOR_INVOICE", { value: p.invoiceNumber })}
                      type="button">
-                      <Printer size={18} strokeWidth={2}/>
+                      <Printer size={16} strokeWidth={2}/>
                     </button>
                   </td>
                 </tr>
@@ -84,7 +83,6 @@ export default function ManagerFinancePaymentsAndSummaryTable() {
           </tbody>
         </table>
 </ManagerInfrastructureResponsiveTable>
-      </div>
       <ManagerPagination data-testid="manager_finance-managerfinancetable-managerpagination-1"
         currentPage={currentPage}
         totalPages={totalPages}
