@@ -1,0 +1,60 @@
+{
+  "superadmin_audit_compliance_global_audit": {
+    "module": {
+      "name": "Superadmin Global Audit",
+      "namespace": "superadmin_audit_compliance_global_audit"
+    },
+    "ui": {
+      "failed_to_load_view_f0191174": "Failed to load view",
+      "an_unexpected_error_occurred_while_rendering_1a97607b": "An unexpected error occurred while rendering this module. Please try again or contact support if the issue persists.",
+      "try_again_d876a9fe": "Try Again",
+      "global_audit_logs_could_not_be_loaded_a4731105": "Global audit logs could not be loaded.",
+      "retry_6327b4e5": "Retry",
+      "global_audit_logs_84dfccdf": "Global Audit Logs",
+      "immutable_security_ledger_for_system_wide_in_cf9942a7": "Immutable security ledger for system-wide infrastructure and billing events.",
+      "search_audit_logs_abc6cb83": "Search audit logs",
+      "search_by_action_actor_or_resource_0f20fc52": "Search by action, actor, or resource...",
+      "timestamp_a3d5de3e": "Timestamp",
+      "severity_007cc954": "Severity",
+      "action_amp_resource_7092f2db": "Action & Resource",
+      "actor_origin_ip_ba2d92b2": "Actor / Origin IP",
+      "no_audit_logs_match_your_search_738cf1b6": "No audit logs match your search.",
+      "refreshing_3c7a1d2e": "Refreshing...",
+      "refresh_5b2e9d1c": "Refresh",
+      "exporting_6cf5a1d2": "Exporting...",
+      "export_csv_0e36f4bc": "Export CSV",
+      "global_audit_logs_unavailable_repair": "Global audit logs are unavailable.",
+      "page_not_found_title": "Page not found",
+      "page_not_found_message": "The requested page is unavailable or no longer exists in this Superadmin area.",
+      "back_to_module": "Back to module",
+      "all_severities": "All Severities",
+      "severity_info": "Info",
+      "severity_warning": "Warning",
+      "severity_critical": "Critical",
+      "all_actors": "All Actors",
+      "actor_type_superadmin": "Superadmin",
+      "actor_type_system": "System",
+      "actor_type_tenant": "Tenant",
+      "export_failed_retry": "Export failed. Please retry.",
+      "status_export_failed": "Export failed",
+      "request_csv_export": "Request CSV export",
+      "export_request_accepted": "CSV export request accepted. The file delivery workflow is managed by the connected service."
+    },
+    "actions": {
+      "retry": "Retry",
+      "cancel": "Cancel",
+      "save": "Save",
+      "close": "Close",
+      "submit": "Submit",
+      "delete": "Delete",
+      "edit": "Edit",
+      "create": "Create",
+      "export": "Export",
+      "search": "Search"
+    },
+    "page": {
+      "title": "Global Audit Logs | Superadmin Dashboard",
+      "description": "Immutable security ledger for system-wide infrastructure and billing events."
+    }
+  }
+}

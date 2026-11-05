@@ -1,0 +1,3 @@
+import { SuperadminCommunicationMessagingComposeSchema } from '@/app/frontend_superadmin/superadmin_communication/communication_messaging_center/schemas/superadmin_communication_messaging_center_compose.schemas';
+
+export type SuperadminCommunicationMessagingComposeValues = import('zod').infer<typeof SuperadminCommunicationMessagingComposeSchema>;

@@ -1,0 +1,66 @@
+{
+  "superadmin_billing_usage_meters": {
+    "module": {
+      "name": "superadmin_billing_usage_meters",
+      "namespace": "superadmin_billing_usage_meters"
+    },
+    "ui": {
+      "failed_to_load_view_f0191174": "लोड करने में विफल देखें",
+      "an_unexpected_error_occurred_while_rendering_1a97607b": "इस मॉड्यूल को दिखाते समय अप्रत्याशित त्रुटि हुई। कृपया फिर से प्रयास करें या समस्या बनी रहने पर सहायता टीम से संपर्क करें।",
+      "try_again_d876a9fe": "फिर से प्रयास करें",
+      "usage_meters_83ceafa1": "उपयोग मीटर",
+      "monitor_gym_resource_consumption_and_billing_c0c9399b": "जिम के संसाधन उपयोग और बिलिंग सीमाओं की निगरानी करें।",
+      "to_01b6e203": "को",
+      "total_sms_sent_1742d971": "भेजे गए कुल SMS",
+      "limit_9917a4b3": "सीमा:",
+      "total_storage_gb_d4a44fab": "कुल स्टोरेज (GB)",
+      "gb_79cba118": "GB",
+      "db_33ae9939": "DB:",
+      "binary_beef6ec0": "बाइनरी:",
+      "members_ef53538a": "सदस्य",
+      "active_4d3d769b": "सक्रिय",
+      "text_6666cd76": "/",
+      "total_96b01412": "कुल",
+      "staff_8f7f9363": "कर्मचारी",
+      "billing_cycle_ends_949b51af": "बिलिंग चक्र समाप्ति:",
+      "page_not_found_title": "पेज नहीं मिला",
+      "page_not_found_message": "मांगा गया पेज उपलब्ध नहीं है या इस Superadmin क्षेत्र में मौजूद नहीं है।",
+      "back_to_module": "मॉड्यूल पर वापस जाएँ",
+      "database_storage": "डेटाबेस",
+      "binary_storage": "बाइनरी",
+      "date_range_this_week": "इस सप्ताह",
+      "date_range_this_month": "इस महीने",
+      "date_range_custom": "कस्टम अवधि",
+      "from_date": "प्रारंभ तिथि",
+      "to_date": "समाप्ति तिथि",
+      "invalid_date_range": "आरंभ तिथि, समाप्ति तिथि से बाद की नहीं हो सकती।",
+      "failed_to_load_usage_meters": "उपयोग मीटर लोड नहीं हो सके।",
+      "no_usage_meters_found": "इस तिथि सीमा में कोई उपयोग मीटर नहीं मिला।",
+      "date_unavailable": "तिथि उपलब्ध नहीं है।",
+      "loading_view": "उपयोग मीटर लोड हो रहे हैं…",
+      "whatsapp_messages": "WhatsApp संदेश",
+      "emails_sent": "भेजे गए ईमेल",
+      "api_calls": "API कॉल",
+      "route_loading": "पृष्ठ लोड हो रहा है",
+      "boundary_title": "अनुभाग लोड नहीं हो सका",
+      "boundary_retry": "पुनः प्रयास करें"
+    },
+    "actions": {
+      "retry": "पुनः प्रयास करें",
+      "cancel": "रद्द करें",
+      "save": "सहेजें",
+      "close": "बंद करें",
+      "submit": "जमा करें",
+      "delete": "हटाएँ",
+      "edit": "संपादित करें",
+      "create": "बनाएँ",
+      "export": "निर्यात करें",
+      "search": "खोजें"
+    }
+  },
+  "ui": {
+    "whatsapp_messages": "WhatsApp संदेश",
+    "emails_sent": "भेजे गए ईमेल",
+    "api_calls": "API कॉल"
+  }
+}

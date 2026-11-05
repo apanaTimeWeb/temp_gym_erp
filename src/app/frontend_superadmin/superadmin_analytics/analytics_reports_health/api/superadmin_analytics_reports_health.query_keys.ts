@@ -1,0 +1,1 @@
+export const SUPERADMIN_ANALYTICS_REPORTS_HEALTH_QUERY_KEYS = { list: (params: Readonly<Record<string, string>>) => ['superadmin_analytics', 'analytics_reports_health', params] as const, all: ['superadmin_analytics','analytics_reports_health'] as const } as const;

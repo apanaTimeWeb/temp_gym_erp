@@ -1,0 +1,5 @@
+import { Suspense } from 'react';
+import { SuperadminAffiliatesPayoutHistoryMain } from '@/app/frontend_superadmin/superadmin_affiliates/affiliates_payout_history/components/SuperadminAffiliatesPayoutHistoryMain';
+import type { Metadata } from 'next';
+export const metadata: Metadata = { title: 'Affiliates Payout History | Superadmin' };
+export default function Page() { return <Suspense fallback={<div className="min-h-64 rounded-xl border border-border bg-card p-6" aria-busy="true" role="status"><div className="h-8 w-64 rounded bg-skeleton-base motion-safe:animate-pulse"/></div>}><SuperadminAffiliatesPayoutHistoryMain/></Suspense>; }

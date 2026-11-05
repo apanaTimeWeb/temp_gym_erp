@@ -1,0 +1,66 @@
+{
+  "superadmin_billing_usage_meters": {
+    "module": {
+      "name": "superadmin_billing_usage_meters",
+      "namespace": "superadmin_billing_usage_meters"
+    },
+    "ui": {
+      "failed_to_load_view_f0191174": "Failed to load view",
+      "an_unexpected_error_occurred_while_rendering_1a97607b": "An unexpected error occurred while rendering this module. Please try again or contact support if the issue persists.",
+      "try_again_d876a9fe": "Try Again",
+      "usage_meters_83ceafa1": "Usage Meters",
+      "monitor_gym_resource_consumption_and_billing_c0c9399b": "Monitor gym resource consumption and billing limits.",
+      "to_01b6e203": "to",
+      "total_sms_sent_1742d971": "Total SMS Sent",
+      "limit_9917a4b3": "Limit:",
+      "total_storage_gb_d4a44fab": "Total Storage (GB)",
+      "gb_79cba118": "GB",
+      "db_33ae9939": "DB:",
+      "binary_beef6ec0": "Binary:",
+      "members_ef53538a": "Members",
+      "active_4d3d769b": "Active",
+      "text_6666cd76": "/",
+      "total_96b01412": "Total",
+      "staff_8f7f9363": "Staff",
+      "billing_cycle_ends_949b51af": "Billing Cycle Ends:",
+      "page_not_found_title": "Page not found",
+      "page_not_found_message": "The requested page is unavailable or no longer exists in this Superadmin area.",
+      "back_to_module": "Back to module",
+      "database_storage": "Database",
+      "binary_storage": "Binary",
+      "date_range_this_week": "This Week",
+      "date_range_this_month": "This Month",
+      "date_range_custom": "Custom Range",
+      "from_date": "From date",
+      "to_date": "To date",
+      "invalid_date_range": "Start date must be on or before end date.",
+      "failed_to_load_usage_meters": "Usage meters could not be loaded.",
+      "no_usage_meters_found": "No usage meters match this date range.",
+      "date_unavailable": "Date unavailable.",
+      "loading_view": "Loading usage meters…",
+      "whatsapp_messages": "WhatsApp messages",
+      "emails_sent": "Emails sent",
+      "api_calls": "API calls",
+      "route_loading": "Loading page",
+      "boundary_title": "Unable to load this section",
+      "boundary_retry": "Try again"
+    },
+    "actions": {
+      "retry": "Retry",
+      "cancel": "Cancel",
+      "save": "Save",
+      "close": "Close",
+      "submit": "Submit",
+      "delete": "Delete",
+      "edit": "Edit",
+      "create": "Create",
+      "export": "Export",
+      "search": "Search"
+    }
+  },
+  "ui": {
+    "whatsapp_messages": "WhatsApp messages",
+    "emails_sent": "Emails sent",
+    "api_calls": "API calls"
+  }
+}

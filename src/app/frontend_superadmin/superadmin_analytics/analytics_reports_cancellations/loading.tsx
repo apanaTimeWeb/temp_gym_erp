@@ -1,0 +1,1 @@
+export default function Loading() { return <div className="min-h-64 rounded-xl border border-border bg-card p-6" aria-busy="true" role="status"><div className="h-8 w-64 rounded bg-skeleton-base motion-safe:animate-pulse"/></div>; }
