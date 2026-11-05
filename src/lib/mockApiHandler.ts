@@ -1,4 +1,5 @@
 import type { ApiResponse } from '@/lib/api';
+import { handleManagerMockApiRequest } from '@/lib/managerMockHandlers';
 
 // Trainer Mock Fixture Imports
 import {
@@ -180,6 +181,12 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
   const queryStr = endpoint.includes('?') ? endpoint.split('?')[1] : '';
   const searchParams = new URLSearchParams(queryStr);
 
+  // MANAGER ENDPOINTS
+  if (urlPath.startsWith('/api/v1/manager') || urlPath.startsWith('/manager')) {
+    const managerResponse = handleManagerMockApiRequest(urlPath, method, searchParams, options);
+    if (managerResponse) return managerResponse;
+  }
+
   // 1. AUTH ENDPOINTS
   if (
     urlPath === '/frontend_auth/auth/demo_login' ||
@@ -215,7 +222,7 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
       tenantId: 'gym_demo_01',
     };
 
-    const token = `token_demo_${finalRole.toLowerCase()}_${Date.now()}`;
+    const token = `mock_access_${finalRole.toLowerCase()}_${Date.now()}`;
 
     // Set browser session cookies and storage
     if (typeof document !== 'undefined') {

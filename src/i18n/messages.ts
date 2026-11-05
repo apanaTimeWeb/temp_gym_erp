@@ -69,6 +69,49 @@ import adminSecurityAuditLogsEn from '@/app/frontend_admin/admin_security/securi
 import adminSecurityPermissionsEn from '@/app/frontend_admin/admin_security/security_permissions_management/locales/admin_security_permissions_management_en.json';
 import adminSettingsManagementEn from '@/app/frontend_admin/admin_settings/settings_management/locales/admin_settings_management_en.json';
 
+// Manager Locales
+import managerAttendanceTrackingEn from '@/app/frontend_manager/manager_attendance/attendance_tracking/locales/manager_attendance_tracking_en.json';
+import managerCommunicationsAutomationsEn from '@/app/frontend_manager/manager_communications/communications_automations/locales/manager_communications_campaigns_en.json';
+import managerCommunicationsChurnRecoveryEn from '@/app/frontend_manager/manager_communications/communications_churn_recovery/locales/manager_communications_campaigns_en.json';
+import managerCommunicationsComposeEn from '@/app/frontend_manager/manager_communications/communications_compose/locales/manager_communications_campaigns_en.json';
+import managerCommunicationsHistoryEn from '@/app/frontend_manager/manager_communications/communications_history/locales/manager_communications_campaigns_en.json';
+import managerCommunicationsNavEn from '@/app/frontend_manager/manager_communications/locales/manager_communications_navigation_en.json';
+import managerNotificationsInboxEn from '@/app/frontend_manager/manager_communications/notifications_inbox/locales/manager_notifications_inbox_en.json';
+import managerBusinessSettingsEn from '@/app/frontend_manager/manager_dashboard/business_settings/locales/manager_business_settings_en.json';
+import managerDashboardOverviewEn from '@/app/frontend_manager/manager_dashboard/dashboard_overview/locales/manager_dashboard_overview_en.json';
+import managerProfileAndSecurityEn from '@/app/frontend_manager/manager_dashboard/profile_and_security/locales/manager_profile_and_security_en.json';
+import managerExpenseRegisterEn from '@/app/frontend_manager/manager_finance_expenses/expense_register_and_reporting/locales/manager_expense_register_and_reporting_en.json';
+import managerFinancePaymentsEn from '@/app/frontend_manager/manager_finance_expenses/finance_payments_and_summary/locales/manager_finance_payments_and_summary_en.json';
+import managerFinanceNavEn from '@/app/frontend_manager/manager_finance_expenses/locales/manager_finance_expenses_navigation_en.json';
+import managerGrievanceResolutionEn from '@/app/frontend_manager/manager_grievances/grievance_resolution/locales/manager_grievance_resolution_en.json';
+import managerInfrastructureEn from '@/app/frontend_manager/manager_infrastructure/locales/manager_infrastructure_en.json';
+import managerMocksEn from '@/app/frontend_manager/manager_infrastructure/mocks/manager_mocks_en.json';
+import managerInquiriesPipelineEn from '@/app/frontend_manager/manager_inquiries_crm/inquiries_pipeline/locales/manager_inquiries_pipeline_en.json';
+import managerMaintenanceRequestsEn from '@/app/frontend_manager/manager_maintenance/maintenance_requests/locales/manager_maintenance_requests_en.json';
+import managerMembersDirectoryEn from '@/app/frontend_manager/manager_members/members_directory/locales/manager_members_directory_en.json';
+import managerMembershipLifecycleEn from '@/app/frontend_manager/manager_membership_plans/membership_lifecycle/locales/manager_membership_lifecycle_en.json';
+import managerNavigationEn from '@/app/frontend_manager/manager_navigation/locales/manager_navigation_en.json';
+import managerReportsReferralsNavEn from '@/app/frontend_manager/manager_reports_referrals/locales/manager_reports_referrals_navigation_en.json';
+import managerReferralsRewardsEn from '@/app/frontend_manager/manager_reports_referrals/referrals_rewards/locales/manager_referrals_rewards_en.json';
+import managerReportsOverviewEn from '@/app/frontend_manager/manager_reports_referrals/reports_overview/locales/manager_reports_overview_en.json';
+import managerSalesBillingNavEn from '@/app/frontend_manager/manager_sales_billing/locales/manager_sales_billing_navigation_en.json';
+import managerSalesOverviewEn from '@/app/frontend_manager/manager_sales_billing/sales_overview/locales/manager_sales_overview_en.json';
+import managerStoreOrdersEn from '@/app/frontend_manager/manager_sales_billing/store_order_management/locales/manager_store_products_en.json';
+import managerStorePosEn from '@/app/frontend_manager/manager_sales_billing/store_point_of_sale/locales/manager_store_products_en.json';
+import managerStoreProductsCatalogEn from '@/app/frontend_manager/manager_sales_billing/store_products_catalog/locales/manager_store_products_en.json';
+import managerScheduleNavEn from '@/app/frontend_manager/manager_schedule_personal_training/locales/manager_schedule_personal_training_navigation_en.json';
+import managerPtAssignmentsEn from '@/app/frontend_manager/manager_schedule_personal_training/pt_assignments/locales/manager_pt_assignments_en.json';
+import managerTrainerScheduleEn from '@/app/frontend_manager/manager_schedule_personal_training/trainer_schedule/locales/manager_trainer_schedule_en.json';
+import managerStaffHrNavEn from '@/app/frontend_manager/manager_staff_hr/locales/manager_staff_hr_navigation_en.json';
+import managerStaffPayrollEn from '@/app/frontend_manager/manager_staff_hr/payroll_and_ledger/locales/manager_staff_payroll_and_attendance_en.json';
+import managerStaffAttendanceEn from '@/app/frontend_manager/manager_staff_hr/staff_attendance/locales/manager_staff_payroll_and_attendance_en.json';
+import managerStaffDirectoryEn from '@/app/frontend_manager/manager_staff_hr/staff_directory/locales/manager_staff_payroll_and_attendance_en.json';
+import managerAssignedWorkoutsEn from '@/app/frontend_manager/manager_workout_diet_library/assigned_workout_plans/locales/manager_workout_plans_en.json';
+import managerExerciseLibraryEn from '@/app/frontend_manager/manager_workout_diet_library/exercise_library/locales/manager_workout_plans_en.json';
+import managerLibraryDietPlansEn from '@/app/frontend_manager/manager_workout_diet_library/library_diet_plans/locales/manager_library_diet_plans_en.json';
+import managerWorkoutDietNavEn from '@/app/frontend_manager/manager_workout_diet_library/locales/manager_workout_diet_library_navigation_en.json';
+import managerWorkoutPlanManagementEn from '@/app/frontend_manager/manager_workout_diet_library/workout_plan_management/locales/manager_workout_plans_en.json';
+
 function deepMerge(target: Record<string, any>, source: Record<string, any>): Record<string, any> {
   for (const key of Object.keys(source)) {
     if (
@@ -155,6 +198,48 @@ const allSources: Record<string, any>[] = [
   adminSecurityAuditLogsEn,
   adminSecurityPermissionsEn,
   adminSettingsManagementEn,
+  // Manager
+  managerAttendanceTrackingEn,
+  managerCommunicationsAutomationsEn,
+  managerCommunicationsChurnRecoveryEn,
+  managerCommunicationsComposeEn,
+  managerCommunicationsHistoryEn,
+  managerCommunicationsNavEn,
+  managerNotificationsInboxEn,
+  managerBusinessSettingsEn,
+  managerDashboardOverviewEn,
+  managerProfileAndSecurityEn,
+  managerExpenseRegisterEn,
+  managerFinancePaymentsEn,
+  managerFinanceNavEn,
+  managerGrievanceResolutionEn,
+  managerInfrastructureEn,
+  managerMocksEn,
+  managerInquiriesPipelineEn,
+  managerMaintenanceRequestsEn,
+  managerMembersDirectoryEn,
+  managerMembershipLifecycleEn,
+  managerNavigationEn,
+  managerReportsReferralsNavEn,
+  managerReferralsRewardsEn,
+  managerReportsOverviewEn,
+  managerSalesBillingNavEn,
+  managerSalesOverviewEn,
+  managerStoreOrdersEn,
+  managerStorePosEn,
+  managerStoreProductsCatalogEn,
+  managerScheduleNavEn,
+  managerPtAssignmentsEn,
+  managerTrainerScheduleEn,
+  managerStaffHrNavEn,
+  managerStaffPayrollEn,
+  managerStaffAttendanceEn,
+  managerStaffDirectoryEn,
+  managerAssignedWorkoutsEn,
+  managerExerciseLibraryEn,
+  managerLibraryDietPlansEn,
+  managerWorkoutDietNavEn,
+  managerWorkoutPlanManagementEn,
 ];
 
 export const appMessages: Record<string, any> = {};

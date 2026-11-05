@@ -45,7 +45,7 @@ export const useManagerMembersDirectoryUiStore = create<ManagerMembersDirectoryU
   openAdd: () => set({ editId: null, editData: ManagerMembersDirectoryCreateDefaultForm(), showAddModal: true }),
   openEdit: (member) => set({ editId: member.id, editData: {
     name: member.name, email: member.email || '', phone: member.phone, address: member.address || '', aadhaar: member.aadhaar || '', medicalHistory: member.medicalHistory || '',
-    gender: (member.gender || 'MALE') as MemberFormValues['gender'], billingCycle: member.billingCycle, customDays: 0, planId: String(member.planId),
+    gender: (member.gender || 'MALE') as MemberFormValues['gender'], billingCycle: (member.billingCycle || 'Monthly') as MemberFormValues['billingCycle'], customDays: 0, planId: String(member.planId),
     joinDate: member.joinDate ? member.joinDate.split('T')[0] : '', expiryDate: member.expiryDate ? member.expiryDate.split('T')[0] : '',
     paidAmount: member.paidAmount || 0, totalAmount: (member.paidAmount || 0) + (member.pendingAmount || 0)
   }, showAddModal: true }),

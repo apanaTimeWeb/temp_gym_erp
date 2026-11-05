@@ -59,11 +59,11 @@ export const ManagerSalesOverviewApi = {
 
   fetchPendingPayments: async (params?: Record<string, string>): Promise<ApiResponse<ManagerSalesPendingPaymentsResponse>> => {
     const query = new URLSearchParams(params || {}).toString();
-    return apiFetch(`${MANAGER_SALES_OVERVIEW_API.PENDING_PAYMENTS}${query ? `?${query}` : ''}`, { dataSchema: managerSalesPendingPaymentsResponseSchema });
+    return apiFetch<ManagerSalesPendingPaymentsResponse>(`${MANAGER_SALES_OVERVIEW_API.PENDING_PAYMENTS}${query ? `?${query}` : ''}`, { dataSchema: managerSalesPendingPaymentsResponseSchema });
   },
 
   fetchAllMemberships: async (params?: Record<string, string>): Promise<ApiResponse<ManagerSalesAllMembershipsResponse>> => {
     const query = new URLSearchParams(params || {}).toString();
-    return apiFetch(`${MANAGER_SALES_OVERVIEW_API.ALL_MEMBERSHIPS}${query ? `?${query}` : ''}`, { dataSchema: managerSalesAllMembershipsResponseSchema });
+    return apiFetch<ManagerSalesAllMembershipsResponse>(`${MANAGER_SALES_OVERVIEW_API.ALL_MEMBERSHIPS}${query ? `?${query}` : ''}`, { dataSchema: managerSalesAllMembershipsResponseSchema });
   },
 };

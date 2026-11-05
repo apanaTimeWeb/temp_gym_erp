@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { SHIFT_DAYS, SCHEDULE_SHIFT_STATUS_VALUES } from '@/app/frontend_manager/manager_schedule_personal_training/trainer_schedule/constants/manager_trainer_schedule_shared.constants';
 
 /**
  * @description Provides the ManagerTrainerScheduleSchema implementation for the schedule module.
@@ -7,7 +8,7 @@ import { z } from 'zod';
  */
 export const managerScheduleShiftSchema = z.object({
   id: z.string(), trainerId: z.string(), trainerName: z.string(), trainerRole: z.string(),
-  day: z.string(), startTime: z.string(), endTime: z.string(), status: z.string(), notes: z.string().optional() });
+  day: z.enum(SHIFT_DAYS), startTime: z.string(), endTime: z.string(), status: z.enum(SCHEDULE_SHIFT_STATUS_VALUES), notes: z.string().optional() });
 
 export const managerScheduleTrainerSchema = z.object({
   trainerId: z.string(), trainerName: z.string(), trainerRole: z.string(), isActive: z.boolean(),

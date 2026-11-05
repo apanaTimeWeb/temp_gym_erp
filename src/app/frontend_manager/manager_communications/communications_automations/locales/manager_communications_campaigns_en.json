@@ -112,6 +112,8 @@
     "COPY_SEND_CAMPAIGN": "Send Campaign",
     "COPY_ALL_CHANNELS": "All Channels",
     "COPY_LOADING": "Loading...",
+    "TEXT_RECIPIENT_SINGULAR": "{count} recipient",
+    "TEXT_RECIPIENT_PLURAL": "{count} recipients",
     "COMMUNICATIONS": {
       "TEXT_RECIPIENT_SINGULAR": "{count} recipient",
       "TEXT_RECIPIENT_PLURAL": "{count} recipients"

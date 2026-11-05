@@ -28,10 +28,10 @@ export const managerExpenseSchema = z.object({
   createdAt: dateTimeSchema,
   updatedAt: dateTimeSchema.optional(),
   vendorName: z.string().optional(),
-  paymentMode: z.string().optional(),
+  paymentMode: z.enum(['Cash', 'UPI', 'Card', 'NetBanking', 'Cheque', 'Bank Transfer', 'Other']).optional(),
   approvedBy: z.string().optional(),
   isRecurring: z.boolean().default(false),
-  recurringFrequency: z.string().nullable().optional(),
+  recurringFrequency: z.enum(['Daily', 'Weekly', 'Monthly', 'Yearly']).nullable().optional(),
   taxAmount: z.number().int().optional() });
 
 export const managerExpensesListResponseSchema = z.object({

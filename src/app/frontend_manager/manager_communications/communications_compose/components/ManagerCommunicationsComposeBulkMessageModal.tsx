@@ -5,8 +5,6 @@ import { X, Send, MessageCircle, Mail, CheckCircle, Phone, AtSign, Users } from 
 import { useTranslations } from 'next-intl';
 
 import { useManagerInfrastructureDialogFocusTrap } from '@/app/frontend_manager/manager_infrastructure/hooks/useManagerInfrastructureDialogFocusTrap';
-import { useManagerInfrastructureDialogFocusTrap } from '@/app/frontend_manager/manager_infrastructure/hooks/useManagerInfrastructureDialogFocusTrap';
-import { useManagerInfrastructureDialogFocusTrap } from '@/app/frontend_manager/manager_infrastructure/hooks/useManagerInfrastructureDialogFocusTrap';
 import { useManagerInfrastructureUnsavedChangesGuard } from '@/app/frontend_manager/manager_infrastructure/hooks/useManagerInfrastructureUnsavedChangesGuard';
 
 import { useManagerCommunicationsCampaignsBulkMessageDraft } from '@/app/frontend_manager/manager_communications/communications_compose/hooks/useManagerCommunicationsComposeBulkMessageDraft';
@@ -27,11 +25,11 @@ export default function ManagerCommunicationsCampaignsBulkMessageModal({
 
   const { message, setMessage, subject, setSubject, openedRecipientKeys, setOpenedRecipientKeys, initialSubject } = useManagerCommunicationsCampaignsBulkMessageDraft(open || false, defaultMessage);
 
-  const isDirty = open && (message !== defaultMessage || subject !== initialSubject || openedRecipientKeys.size > 0);
+  const isDirty = Boolean(open && (message !== defaultMessage || subject !== initialSubject || openedRecipientKeys.size > 0));
   const { confirmAndClose } = useManagerInfrastructureUnsavedChangesGuard(isDirty);
   const dialogRef = useRef<HTMLDivElement>(null);
   const handleGuardedClose = useCallback(() => { void confirmAndClose(onClose); }, [confirmAndClose, onClose]);
-  useManagerInfrastructureDialogFocusTrap({ dialogRef, isOpen: open, onClose: handleGuardedClose });
+  useManagerInfrastructureDialogFocusTrap({ dialogRef, isOpen: Boolean(open), onClose: handleGuardedClose });
   if (!open) return null;
 
   const Icon = type === 'whatsapp' ? MessageCircle : Mail;

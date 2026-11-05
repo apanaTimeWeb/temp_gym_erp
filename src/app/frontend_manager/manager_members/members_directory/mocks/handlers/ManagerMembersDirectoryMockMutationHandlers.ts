@@ -35,7 +35,7 @@ export const managerMembersMutationHandlers = [
     ];
     const selectedDietPlan = availableDietPlans.find((plan) => plan.id === dietPlanId);
     if (!selectedDietPlan) return HttpResponse.json({ success: false, message: 'Diet plan not found', data: null }, { status: MANAGER_HTTP_STATUS.NOT_FOUND });
-    managerMembersMockState.members[memberIndex] = { ...managerMembersMockState.members[memberIndex]!, assignedDiet: selectedDietPlan };
+    managerMembersMockState.members[memberIndex] = { ...managerMembersMockState.members[memberIndex]!, assignedDiet: selectedDietPlan as any };
     return HttpResponse.json({ success: true, message: 'Diet plan assigned', data: { success: true } });
   }),
   http.post(ManagerInfrastructureMockApiUrl(MANAGER_MEMBERS_DIRECTORY_API.WORKOUT_ASSIGN(':id')), async ({ params, request }) => {
@@ -50,7 +50,7 @@ export const managerMembersMutationHandlers = [
     ];
     const selectedWorkout = availableWorkouts.find((workout) => workout.id === workoutId);
     if (!selectedWorkout) return HttpResponse.json({ success: false, message: 'Workout not found', data: null }, { status: MANAGER_HTTP_STATUS.NOT_FOUND });
-    managerMembersMockState.members[memberIndex] = { ...managerMembersMockState.members[memberIndex]!, assignedWorkout: selectedWorkout };
+    managerMembersMockState.members[memberIndex] = { ...managerMembersMockState.members[memberIndex]!, assignedWorkout: selectedWorkout as any };
     return HttpResponse.json({ success: true, message: 'Workout assigned', data: { success: true } });
   }),
 

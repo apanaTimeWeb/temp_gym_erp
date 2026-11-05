@@ -73,7 +73,7 @@ export function useManagerReferralsRewardsLogic() {
   const isKpisLoading = kpisQuery.isPending;
   const isKpisError = kpisQuery.isError;
   const referrals = referralsQuery.data?.data ?? [];
-  const totalPages = referralsQuery.data?.meta?.totalPages ?? 1;
+  const totalPages = (referralsQuery.data && 'meta' in referralsQuery.data ? referralsQuery.data.meta?.totalPages : 1) ?? 1;
 
   const referralMutations = useManagerReferralsRewardsMutations();
 

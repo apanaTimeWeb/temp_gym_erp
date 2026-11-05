@@ -17,7 +17,7 @@ import type { CreateMaintenanceTicketPayload, MaintenanceTicket } from '@/app/fr
  * @edge-case Validates response data at the API boundary, sends an Idempotency-Key for create/resolve intents, and generates request payloads in backend minor units. Server/MSW replay semantics remain owned by the handler/backend.
  */
 export const ManagerMaintenanceRequestsApi = {
-  fetchMaintenanceIssues: async (): Promise<ApiResponse<MaintenanceTicket[]>> => apiFetch<ApiResponse<MaintenanceTicket[]>>(
+  fetchMaintenanceIssues: async (): Promise<ApiResponse<MaintenanceTicket[]>> => apiFetch<MaintenanceTicket[]>(
     MANAGER_MAINTENANCE_REQUESTS_API.BASE,
     { dataSchema: z.array(MaintenanceTicketSchema) },
   ),
@@ -34,7 +34,7 @@ export const ManagerMaintenanceRequestsApi = {
         : { estimatedCost: ManagerInfrastructureToManagerMinorUnits(validatedPayload.estimatedCost) }),
     });
 
-    return apiFetch<ApiResponse<MaintenanceTicket>>(MANAGER_MAINTENANCE_REQUESTS_API.BASE, {
+    return apiFetch<MaintenanceTicket>(MANAGER_MAINTENANCE_REQUESTS_API.BASE, {
       method: 'POST',
       body: JSON.stringify(requestPayload),
       headers: { 'Idempotency-Key': idempotencyKey },
@@ -45,7 +45,7 @@ export const ManagerMaintenanceRequestsApi = {
   resolveMaintenanceTicket: async (
     id: string,
     idempotencyKey: string,
-  ): Promise<ApiResponse<MaintenanceTicket>> => apiFetch<ApiResponse<MaintenanceTicket>>(
+  ): Promise<ApiResponse<MaintenanceTicket>> => apiFetch<MaintenanceTicket>(
     MANAGER_MAINTENANCE_REQUESTS_API.RESOLVE(id),
     {
       method: 'POST',

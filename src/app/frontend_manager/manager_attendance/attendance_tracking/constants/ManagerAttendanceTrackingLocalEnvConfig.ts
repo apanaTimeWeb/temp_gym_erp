@@ -21,7 +21,7 @@ const parsedManagerPublicEnvResult = managerPublicEnvSchema.safeParse({
 const managerRuntimeProduction = process.env.NODE_ENV === 'production';
 const managerDemoModeRequested = process.env.NEXT_PUBLIC_MANAGER_DEMO_MODE === 'true';
 
-if (!parsedManagerPublicEnvResult.success && !managerDemoModeRequested) {
+if (!parsedManagerPublicEnvResult.success && managerRuntimeProduction) {
   throw new Error('[ManagerEnvConfig] Invalid public environment configuration. Check the documented NEXT_PUBLIC_* variables.');
 }
 

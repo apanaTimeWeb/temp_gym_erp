@@ -26,6 +26,6 @@ export const ManagerStaffPayrollAndAttendanceApi = {
   },
 
   fetchStaffAttendance: async (staffId: string, month: string): Promise<ApiResponse<{ history: ManagerStaffPayrollAndAttendanceStaffAttendanceRecord[] }>> => {
-    return apiFetch(MANAGER_STAFF_PAYROLL_AND_ATTENDANCE_API.STAFF_ATTENDANCE(staffId, month), { dataSchema: z.object({ history: z.array(z.object({ date: z.string(), checkIn: z.string().optional(), checkOut: z.string().optional(), status: z.string().optional() }).passthrough()) }) });
+    return apiFetch(MANAGER_STAFF_PAYROLL_AND_ATTENDANCE_API.STAFF_ATTENDANCE(staffId, month), { dataSchema: z.object({ history: z.array(z.object({ date: z.string(), checkIn: z.string().optional(), checkOut: z.string().optional(), status: z.string() }).passthrough()) }) });
   }
 };

@@ -102,8 +102,8 @@ export default function ManagerStaffPayrollAndAttendanceStaffTable() {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         openEdit={openEdit}
-        deleteStaff={deleteStaff}
-        toggleStaffStatus={toggleStaffStatus}
+        deleteStaff={async (id) => { await deleteStaff(id); }}
+        toggleStaffStatus={async (item) => { await toggleStaffStatus(item); }}
         setViewProfileData={setViewProfileData}
       />
     </div>

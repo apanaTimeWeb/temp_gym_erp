@@ -26,8 +26,8 @@ export function useManagerCommunicationsCampaignsQueries(search: string, channel
     staleTime: 300_000,
   });
   return {
-    campaigns: campaignsQuery.data.data.campaigns,
-    campaignsTotal: campaignsQuery.data.data.total,
+    campaigns: campaignsQuery.data?.data?.campaigns ?? [],
+    campaignsTotal: campaignsQuery.data?.data?.total ?? 0,
     campaignsLoading: campaignsQuery.isPending,
     campaignsError: campaignsQuery.isError,
     campaignsErrorValue: campaignsQuery.error,

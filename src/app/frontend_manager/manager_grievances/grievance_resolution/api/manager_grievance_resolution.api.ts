@@ -16,16 +16,16 @@ import type { GrievanceTicket, CreateGrievanceTicketPayload } from '@/app/fronte
  * @edge-case Preserves loading, empty, error, disabled, retry, and cancellation behavior defined by the owning module contract; does not introduce cross-feature business ownership.
  */
 export const ManagerGrievanceResolutionApi = {
-  fetchGrievanceTickets: async (): Promise<ApiResponse<GrievanceTicket[]>> => apiFetch<ApiResponse<GrievanceTicket[]>>(MANAGER_GRIEVANCE_RESOLUTION_API.BASE, {
+  fetchGrievanceTickets: async (): Promise<ApiResponse<GrievanceTicket[]>> => apiFetch<GrievanceTicket[]>(MANAGER_GRIEVANCE_RESOLUTION_API.BASE, {
     dataSchema: z.array(GrievanceTicketSchema),
   }),
-  createGrievanceTicket: async (payload: CreateGrievanceTicketPayload, idempotencyKey: string): Promise<ApiResponse<GrievanceTicket>> => apiFetch<ApiResponse<GrievanceTicket>>(MANAGER_GRIEVANCE_RESOLUTION_API.BASE, {
+  createGrievanceTicket: async (payload: CreateGrievanceTicketPayload, idempotencyKey: string): Promise<ApiResponse<GrievanceTicket>> => apiFetch<GrievanceTicket>(MANAGER_GRIEVANCE_RESOLUTION_API.BASE, {
     method: 'POST',
     body: JSON.stringify(payload),
     headers: { 'Idempotency-Key': idempotencyKey },
     dataSchema: GrievanceTicketSchema,
   }),
-  resolveGrievanceTicket: async (id: string, resolutionNote: string, idempotencyKey: string): Promise<ApiResponse<GrievanceTicket>> => apiFetch<ApiResponse<GrievanceTicket>>(MANAGER_GRIEVANCE_RESOLUTION_API.RESOLVE(id), {
+  resolveGrievanceTicket: async (id: string, resolutionNote: string, idempotencyKey: string): Promise<ApiResponse<GrievanceTicket>> => apiFetch<GrievanceTicket>(MANAGER_GRIEVANCE_RESOLUTION_API.RESOLVE(id), {
     method: 'POST',
     body: JSON.stringify({ resolutionNote }),
     headers: { 'Idempotency-Key': idempotencyKey },

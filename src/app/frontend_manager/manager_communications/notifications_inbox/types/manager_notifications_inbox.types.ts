@@ -15,7 +15,7 @@ export interface Notification {
   memberId?: string;
   memberName?: string | null;
   createdAt: string;
-  readAt?: string;
+  readAt?: string | null;
 }
 
 export interface NotificationKPIData {

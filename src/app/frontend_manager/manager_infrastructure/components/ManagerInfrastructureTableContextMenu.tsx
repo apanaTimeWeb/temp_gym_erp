@@ -19,7 +19,7 @@ function actionLabel(element: ReactElement): string {
   const props = element.props as Record<string, unknown>;
   const ariaLabel = typeof props['aria-label'] === 'string' ? props['aria-label'] : '';
   const title = typeof props.title === 'string' ? props.title : '';
-  return ariaLabel || title || readVisibleText(props.children).trim();
+  return ariaLabel || title || readVisibleText(props.children as ReactNode).trim();
 }
 
 function collectInlineActions(node: ReactNode): ReactElement[] {

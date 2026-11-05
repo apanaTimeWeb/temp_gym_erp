@@ -14,6 +14,13 @@ import { useManagerFinancePaymentsAndSummaryLogic } from '@/app/frontend_manager
 /** @description Renders the ManagerFinancePaymentsAndSummaryFilters component for its owning Manager frontend boundary. @dependencies Local dependencies are owned by this feature module (3 documented module/import dependencies).. @edge-case Preserves the documented interaction and boundary states. */
 export default function ManagerFinancePaymentsAndSummaryFilters() {
   const t = useTranslations('MANAGER_FINANCE_PAYMENTS_AND_SUMMARY');
+  const {
+    search, setSearch,
+    statusFilter, setStatusFilter,
+    methodFilter, setMethodFilter,
+    reload, exportCSV, exportPDF
+  } = useManagerFinancePaymentsAndSummaryLogic();
+
   const [searchInput, setSearchInput] = useState(search);
   useEffect(() => { setSearchInput(search); }, [search]);
   useEffect(() => {
@@ -21,13 +28,6 @@ export default function ManagerFinancePaymentsAndSummaryFilters() {
     const timeoutId = window.setTimeout(() => setSearch(searchInput), 300);
     return () => window.clearTimeout(timeoutId);
   }, [search, searchInput, setSearch]);
-
-  const {
-    search, setSearch,
-    statusFilter, setStatusFilter,
-    methodFilter, setMethodFilter,
-    reload, exportCSV, exportPDF
-  } = useManagerFinancePaymentsAndSummaryLogic();
 
   return (
     <div className="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-3 p-4 border-b border-border">

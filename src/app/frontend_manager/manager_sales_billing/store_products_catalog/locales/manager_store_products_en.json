@@ -14,6 +14,7 @@
     "COPY_PRINT_RECEIPT": "Print Receipt",
     "COPY_NO_ORDERS_FOUND": "No orders found.",
     "COPY_NEW_SALE_POS": "New Sale — POS",
+    "COPY_POINT_OF_SALE_DESCRIPTION": "Process on-counter store retail sales and instantly generate thermal receipts.",
     "COPY_CLOSE_POINT_SALE": "Close point of sale",
     "COPY_SELECT_PRODUCTS_ADD": "Select Products to Add",
     "COPY_SEARCH_SELECT_PRODUCTS": "Search and select products...",

@@ -17,7 +17,7 @@ let mockCancelledMembers = [...MOCK_CANCELLED_MEMBERS];
  * @dependencies @/app/frontend_manager/manager_communications/manager_communications_url_config; @/app/frontend_manager/manager_infrastructure/manager_infrastructure_constants/ManagerHttpStatus; @/app/frontend_manager/manager_infrastructure/manager_infrastructure_utils/ManagerMockApiUrl
  * @edge-case Preserves loading, empty, error, disabled, retry, and cancellation behavior defined by the owning module contract; does not introduce cross-feature business ownership.
  */
-const MOCK_SEGMENT_MEMBERS: Record<CommSegment, CommRecipient[]> = {
+export const MOCK_SEGMENT_MEMBERS: Record<CommSegment, CommRecipient[]> = {
   all_active: [
     { memberId: 'M001', name: 'Arjun Sharma',   phone: '9876543210', email: 'arjun@email.com',   status: MANAGER_COMMUNICATIONS_CAMPAIGNS_STATUS_VALUES.ACTIVE,  expiryDate: '2025-08-01', pendingAmount: 0 },
     { memberId: 'M002', name: 'Priya Mehta',    phone: '9876543211', email: 'priya@email.com',   status: MANAGER_COMMUNICATIONS_CAMPAIGNS_STATUS_VALUES.ACTIVE,  expiryDate: '2025-09-15', pendingAmount: 0 },

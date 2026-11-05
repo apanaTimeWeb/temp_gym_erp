@@ -6,6 +6,6 @@ export function ManagerInfrastructureToManagerMinorUnits(value: number | string,
   if (!Number.isFinite(numericValue) || numericValue < 0) {
     throw new RangeError('Currency amount must be a finite non-negative number.');
   }
-  const fractionDigits = new Intl.NumberFormat('en', { style: 'currency', currency: currencyCode }).resolvedOptions().maximumFractionDigits;
+  const fractionDigits = new Intl.NumberFormat('en', { style: 'currency', currency: currencyCode }).resolvedOptions().maximumFractionDigits ?? 2;
   return Math.round((numericValue + Number.EPSILON) * (10 ** fractionDigits));
 }

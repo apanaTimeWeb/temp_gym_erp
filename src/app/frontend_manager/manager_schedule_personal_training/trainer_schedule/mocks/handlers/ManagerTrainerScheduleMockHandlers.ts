@@ -26,7 +26,7 @@ function replayOrConflict(request: Request, signature: string) {
   const existing = idempotencyResponses.get(key);
   if (!existing) return null;
   if (existing.signature !== signature) return HttpResponse.json(failure('Idempotency-Key was already used for a different request', 'IDEMPOTENCY_KEY_REUSED', 409), { status: 409 });
-  return HttpResponse.json(existing.body);
+  return HttpResponse.json(existing.body as any);
 }
 
 function storeIdempotentResponse(request: Request, signature: string, body: unknown): void {

@@ -53,8 +53,8 @@ export function useManagerStaffPayrollAndAttendanceLogic(initialData?: HrInitial
 
   const ui = useManagerStaffPayrollAndAttendanceUIState();
   const queries = useManagerStaffPayrollAndAttendanceQueries({ search: debouncedSearch, role: roleFilter, month: payrollMonth, page: currentPage, limit: 10 }, initialData);
-  const { savePayroll, markPayrollPaid, giveAdvance, payDue, bulkGeneratePayroll } = useManagerStaffPayrollAndAttendanceMutations(
-    queries.staff, queries.payrolls, ui.setShowPayrollModal, ui.setSaving, ui.showToast,
+  const mutations = useManagerStaffPayrollAndAttendanceMutations(
+    queries.staff, queries.payrolls, ui.editId, ui.setShowModal, ui.setShowPayrollModal, ui.setSaving, ui.showToast,
   );
 
   const error = useMemo(() => queries.error ? ManagerInfrastructureGetErrorMessage(queries.error, t('TEXT_GENERIC_ERROR')) : '', [queries.error, t]);
@@ -65,10 +65,14 @@ export function useManagerStaffPayrollAndAttendanceLogic(initialData?: HrInitial
     search, debouncedSearch, setSearch, roleFilter, setRoleFilter, currentPage, setCurrentPage,
     showModal: ui.showModal, setShowModal: ui.setShowModal, showPayrollModal: ui.showPayrollModal, setShowPayrollModal: ui.setShowPayrollModal,
     paymentModal: ui.paymentModal, setPaymentModal: ui.setPaymentModal, editId: ui.editId, editData: ui.editData, viewProfileData: ui.viewProfileData, setViewProfileData: ui.setViewProfileData, saving: ui.saving,
+    openAdd: ui.openAdd,
+    openEdit: ui.openEdit,
     openAddPayroll: ui.openAddPayroll, 
-    savePayroll: async (p) => { await savePayroll(p); }, 
-    markPayrollPaid: async (id, amount, key) => { await markPayrollPaid(id, amount, key); }, 
-    giveAdvance: async (data, key) => { await giveAdvance(data, key); }, 
-    payDue: async (data, key) => { await payDue(data, key); },
-    bulkGeneratePayroll, payrollMonth, setPayrollMonth };
+    savePayroll: mutations.savePayroll, 
+    markPayrollPaid: mutations.markPayrollPaid, 
+    giveAdvance: mutations.giveAdvance, 
+    payDue: mutations.payDue,
+    bulkGeneratePayroll: mutations.bulkGeneratePayroll,
+    downloadPayslip: mutations.downloadPayslip,
+    payrollMonth, setPayrollMonth };
 }

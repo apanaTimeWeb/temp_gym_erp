@@ -93,7 +93,7 @@ export const managerFinanceHandlers = [
     if (key) {
       const existing = idempotencyRecords.get(key);
       if (existing && existing.fingerprint !== fingerprint) return HttpResponse.json({ success: false, message: 'Idempotency key reused with a different request' }, { status: 409 });
-      if (existing) return HttpResponse.json(existing.response);
+      if (existing) return HttpResponse.json(existing.response as any);
     }
     const newPayment = { ...mockPayments[0], ...body, id: `pay-${mockPaymentIdCounter++}` } as Payment;
     mockPayments = [newPayment, ...mockPayments];

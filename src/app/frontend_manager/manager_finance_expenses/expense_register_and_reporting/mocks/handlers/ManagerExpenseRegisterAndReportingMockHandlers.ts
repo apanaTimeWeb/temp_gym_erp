@@ -30,7 +30,7 @@ function idempotencyReplay(request: Request, fingerprint: string) {
   const existing = idempotencyRecords.get(key);
   if (!existing) return { key, replay: null as Response | null };
   if (existing.fingerprint !== fingerprint) return { key, replay: HttpResponse.json({ success: false, message: 'Idempotency key reused with a different request', data: null, errorCode: 'IDEMPOTENCY_CONFLICT', statusCode: 409, requestId: 'mock-expense-idempotency-conflict' }, { status: 409 }) };
-  return { key, replay: HttpResponse.json(existing.response) };
+  return { key, replay: HttpResponse.json(existing.response as any) };
 }
 
 function storeIdempotentResponse(key: string | null, fingerprint: string, response: unknown) {

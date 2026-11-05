@@ -13,7 +13,6 @@ let mockProducts = structuredClone(MOCK_PRODUCTS);
 let mockOrders = structuredClone(MOCK_ORDERS);
 let mockProductIdCounter = 1000;
 let mockOrderIdCounter = 1000;
-  mockRequestCounter = 0;
 let mockRequestCounter = 0;
 const requestId = () => `mock-store-catalog-${++mockRequestCounter}`;
 

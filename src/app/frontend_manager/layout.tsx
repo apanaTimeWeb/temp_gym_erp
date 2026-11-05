@@ -21,15 +21,13 @@ export default function MANAGERLayout({ children }: ManagerRoleLayoutProps) {
   return (
     <>
       <ManagerNavigationRouteProgress />
-      <ManagerMocksMswBrowserBootstrap>
-        <ManagerInfrastructureQueryProvider>
-          <ManagerConfirmProvider>
-            <ManagerInfrastructureDataDensityProvider>
-              <ManagerNavigationLayout>{children}</ManagerNavigationLayout>
-            </ManagerInfrastructureDataDensityProvider>
-          </ManagerConfirmProvider>
-        </ManagerInfrastructureQueryProvider>
-      </ManagerMocksMswBrowserBootstrap>
+      <ManagerInfrastructureQueryProvider>
+        <ManagerConfirmProvider>
+          <ManagerInfrastructureDataDensityProvider>
+            <ManagerNavigationLayout>{children}</ManagerNavigationLayout>
+          </ManagerInfrastructureDataDensityProvider>
+        </ManagerConfirmProvider>
+      </ManagerInfrastructureQueryProvider>
       <Toaster />
     </>
   );

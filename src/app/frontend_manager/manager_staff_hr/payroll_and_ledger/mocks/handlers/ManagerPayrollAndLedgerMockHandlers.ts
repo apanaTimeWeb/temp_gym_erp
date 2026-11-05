@@ -103,7 +103,7 @@ async function idempotentMutation(request: Request, payload: unknown, operation:
     if (previous.fingerprint !== fingerprint) {
       return failure('The idempotency key was already used for a different request', 'IDEMPOTENCY_KEY_REUSED', MANAGER_HTTP_STATUS.CONFLICT);
     }
-    return HttpResponse.json(previous.body, { status: previous.status });
+    return HttpResponse.json(previous.body as any, { status: previous.status });
   }
   const response = operation();
   if (response.ok) {

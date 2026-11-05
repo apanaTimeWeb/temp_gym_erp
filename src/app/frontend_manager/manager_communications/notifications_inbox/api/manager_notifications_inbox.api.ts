@@ -20,7 +20,7 @@ const nullResponseSchema = z.null();
 export const ManagerNotificationsInboxApi = {
   fetchManagerNotificationsInbox: async (params?: Record<string, string>): Promise<ApiResponse<{ notifications: Notification[]; total: number }>> => {
     const query = new URLSearchParams(params ?? {}).toString();
-    return apiFetch(`${MANAGER_NOTIFICATIONS_INBOX_API.BASE}${query ? `?${query}` : ''}`, {
+    return apiFetch<{ notifications: Notification[]; total: number }>(`${MANAGER_NOTIFICATIONS_INBOX_API.BASE}${query ? `?${query}` : ''}`, {
       dataSchema: z.object({ notifications: z.array(notificationSchema), total: z.number() }) });
   },
   fetchNotificationKPIs: async (): Promise<ApiResponse<NotificationKPIData>> =>

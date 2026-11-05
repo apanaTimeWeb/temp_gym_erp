@@ -7,6 +7,7 @@ export interface ManagerNotificationsInboxViewModel {
   isPending: boolean;
   isError: boolean;
   errorMessage: string;
+  kpiError?: string;
   saving: boolean;
   search: string;
   setSearch: (value: string) => void;
