@@ -7,7 +7,7 @@ import { AuthMockBrowserScenarioHandlers } from '@/app/frontend_auth/auth_login/
 
 // The normal browser proxy is handled by Next route files; only the verified
 // unavailable-login response is intercepted in the standalone error scenario.
-export const mockServer = setupServer(...AuthMockBrowserHandlers, AuthMockBrowserScenarioHandlers.unavailableLogin);
+export const mockServer = setupServer(AuthMockBrowserScenarioHandlers.unavailableLogin, ...AuthMockBrowserHandlers);
 export function installMockServer(): void { mockServer.listen({ onUnhandledRequest: 'error' }); }
 export function resetMockServer(): void { mockServer.resetHandlers(); }
 export function closeMockServer(): void { mockServer.close(); }

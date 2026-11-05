@@ -21,10 +21,10 @@ afterAll(() => server.close());
 describe('PublicLandingContact', () => {
   it('submits a valid message and displays the backend response message', async () => {
     renderContact();
-    fireEvent.change(screen.getByLabelText('Your Name'), { target: { value: 'Member One' } });
-    fireEvent.change(screen.getByLabelText('Email Address'), { target: { value: 'member@example.org' } });
-    fireEvent.change(screen.getByLabelText('Message'), { target: { value: 'I would like to know more about memberships.' } });
-    fireEvent.click(screen.getByRole('button', { name: 'Send Message', exact: true }));
+    fireEvent.change(screen.getByLabelText(/Your Name/i), { target: { value: 'Member One' } });
+    fireEvent.change(screen.getByLabelText(/Email Address/i), { target: { value: 'member@example.org' } });
+    fireEvent.change(screen.getByLabelText(/Message/i), { target: { value: 'I would like to know more about memberships.' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Send Message' }));
     await waitFor(() => expect(screen.getByTestId('public_landing-contact-success-state')).toBeInTheDocument());
     expect(screen.getByText(/Message sent successfully/)).toBeInTheDocument();
     expect(landingMockState.contacts).toHaveLength(1);
@@ -33,7 +33,7 @@ describe('PublicLandingContact', () => {
   it('preserves input and recovers after a failed request using the same idempotency key', async () => {
     let attempts = 0;
     const seenKeys: string[] = [];
-    server.use(http.post('*/api/landing/contact', async ({ request }) => {
+    server.use(http.post('*/landing/contact', async ({ request }) => {
       attempts += 1;
       const key = request.headers.get('Idempotency-Key');
       if (key) seenKeys.push(key);
@@ -41,12 +41,12 @@ describe('PublicLandingContact', () => {
       return HttpResponse.json({ success: true, message: 'Message sent successfully. We will get back to you shortly.', data: null });
     }));
     renderContact();
-    fireEvent.change(screen.getByLabelText('Your Name'), { target: { value: 'Member One' } });
-    fireEvent.change(screen.getByLabelText('Email Address'), { target: { value: 'member@example.org' } });
-    fireEvent.change(screen.getByLabelText('Message'), { target: { value: 'Need a callback.' } });
-    fireEvent.click(screen.getByRole('button', { name: 'Send Message', exact: true }));
+    fireEvent.change(screen.getByLabelText(/Your Name/i), { target: { value: 'Member One' } });
+    fireEvent.change(screen.getByLabelText(/Email Address/i), { target: { value: 'member@example.org' } });
+    fireEvent.change(screen.getByLabelText(/Message/i), { target: { value: 'Need a callback.' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Send Message' }));
     await waitFor(() => expect(screen.getByTestId('public_landing-contact-api-error')).toHaveTextContent('Messaging service is temporarily unavailable'));
-    expect(screen.getByLabelText('Message')).toHaveValue('Need a callback.');
+    expect(screen.getByLabelText(/Message/i)).toHaveValue('Need a callback.');
     fireEvent.click(screen.getByTestId('public_landing-contact-retry'));
     await waitFor(() => expect(screen.getByTestId('public_landing-contact-success-state')).toBeInTheDocument());
     expect(attempts).toBe(2);

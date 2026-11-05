@@ -54,7 +54,8 @@ export function useAuthLoginForm(): UseAuthLoginFormReturn {
   const { isPending, variables, mutateCredentials, mutateDemoRole } = useAuthLoginMutation();
   const credentialIntentRef = useRef<{ fingerprint: string; idempotencyKey: string } | null>(null);
   const demoIntentRef = useRef<{ role: AuthLoginDemoRole; idempotencyKey: string } | null>(null);
-  useAuthLoginUnsavedChangesGuard(form.formState.isDirty);
+  const { isDirty, errors: _errors } = form.formState;
+  useAuthLoginUnsavedChangesGuard(isDirty);
 
   const handleMutationError = useCallback((error: unknown): void => {
     form.setError('root', { type: 'server', message: AuthLoginErrorMessageUtilities.getSafeMessage(error, t) });

@@ -23,7 +23,7 @@ export function useAuthLoginUnsavedChangesGuard(isDirty: boolean): void {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
       event.preventDefault();
       // Modern browsers ignore custom beforeunload text and render their own localized warning.
-      event.returnValue = AuthLoginConstants.UNSAVED_CHANGES_WARNING;
+      event.returnValue = '';
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);

@@ -56,11 +56,11 @@ const authEnv = vi.hoisted(() => ({
   NODE_ENV: 'test',
   NEXT_PUBLIC_AUTH_DEMO_MODE: 'false',
   AUTH_DEMO_MODE: 'false',
-  NEXT_PUBLIC_API_URL: AuthTestEnvironmentConstants.BACKEND_ORIGIN,
+  NEXT_PUBLIC_API_URL: 'http://auth.test:4000',
 }));
 vi.mock('@/config/env', () => ({ env: authEnv }));
 vi.mock('@/lib/api', () => ({
-  apiFetch: (url: string, options?: RequestInit) => fetch(new URL(url, AuthTestEnvironmentConstants.ORIGIN), options),
+  apiFetch: (url: string, options?: RequestInit) => fetch(new URL(url, window.location.origin), options),
 }));
 function renderLogin() {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } });

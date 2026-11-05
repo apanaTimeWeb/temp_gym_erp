@@ -9,7 +9,7 @@ import { AuthUrlConfig } from '@/app/frontend_auth/auth_login/login_credentials_
 // RESPONSIBILITY: Owns deterministic browser-facing Auth MSW error/scenario handlers used to exercise Login recovery flows.
 
 export const AuthMockBrowserScenarioHandlers = {
-  unavailableLogin: http.post(AuthUrlConfig.PROXY_API.SESSION, () => HttpResponse.json(
+  unavailableLogin: http.post(`*${AuthUrlConfig.PROXY_API.SESSION}`, () => HttpResponse.json(
     {
       success: false,
       message: AuthErrorConstants.MESSAGE.UPSTREAM_UNAVAILABLE,

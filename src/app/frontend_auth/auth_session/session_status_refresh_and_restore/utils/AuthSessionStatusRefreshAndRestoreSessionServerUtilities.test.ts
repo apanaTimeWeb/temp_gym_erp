@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { AuthBackendTransport } from '@/app/frontend_auth/auth_session/session_status_refresh_and_restore/api/AuthSessionStatusRefreshAndRestoreBackendTransport';
 
@@ -39,6 +39,10 @@ describe('AuthSessionServerUtilities', () => {
     authTestEnv.NEXT_PUBLIC_AUTH_DEMO_MODE = 'false';
   });
 
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
   it('resolves production identity from the authoritative backend session endpoint', async () => {
     vi.mocked(AuthBackendTransport.get).mockResolvedValue({
       response: new Response(JSON.stringify({
@@ -63,12 +67,16 @@ describe('AuthSessionServerUtilities', () => {
   it('resolves a real backend token even when demo mode is enabled', async () => {
     authTestEnv.AUTH_DEMO_MODE = 'true';
     vi.mocked(AuthBackendTransport.get).mockResolvedValueOnce({
-      response: new Response(JSON.stringify({ success: true, message: 'verified', data: {
-        id: 'real-u1', name: 'Backend User', email: 'real@example.com', role: 'ADMIN',
-      } }), { status: StatusCodes.OK }),
-      payload: { success: true, message: 'verified', data: {
-        id: 'real-u1', name: 'Backend User', email: 'real@example.com', role: 'ADMIN',
-      } },
+      response: new Response(JSON.stringify({
+        success: true, message: 'verified', data: {
+          id: 'real-u1', name: 'Backend User', email: 'real@example.com', role: 'ADMIN',
+        }
+      }), { status: StatusCodes.OK }),
+      payload: {
+        success: true, message: 'verified', data: {
+          id: 'real-u1', name: 'Backend User', email: 'real@example.com', role: 'ADMIN',
+        }
+      },
     });
     const resolved = await AuthSessionServerUtilities.resolveUser('real_backend_access_token');
     expect(resolved?.id).toBe('real-u1');
@@ -76,6 +84,7 @@ describe('AuthSessionServerUtilities', () => {
   });
 
   it('resolves development demo identity only from the module-owned access-token session registry', async () => {
+    vi.stubEnv('AUTH_DEMO_MODE', 'true');
     authTestEnv.AUTH_DEMO_MODE = 'true';
     const issued = AuthMockFixturesApi.issueSession(AuthMockFixturesApi.findByRole('ADMIN').user);
 

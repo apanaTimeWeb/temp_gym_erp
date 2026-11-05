@@ -32,11 +32,19 @@ export const AuthLoginErrorMessageUtilities = {
    * @param translate Active Login translation function used for the unavailable fallback.
    */
   getSafeMessage(error: unknown, translate: AuthLoginFormTranslator): string {
-    if (error instanceof AuthApiError && error.errorCode) {
-      return SAFE_MESSAGES_BY_CODE[error.errorCode] ?? translate(AuthLoginFormTranslationKeys.ERROR_UNAVAILABLE);
-    }
-    if (error instanceof AuthApiError && Object.values(SAFE_MESSAGES_BY_CODE).includes(error.message)) {
-      return error.message;
+    if (error instanceof AuthApiError) {
+      if (error.errorCode === AuthErrorConstants.CODE.BACKEND_REJECTED) {
+        if (error.message && !/(internal|stack|secret|private|detail)/i.test(error.message)) {
+          return error.message;
+        }
+        return AuthErrorConstants.MESSAGE.INVALID_CREDENTIALS;
+      }
+      if (error.errorCode && SAFE_MESSAGES_BY_CODE[error.errorCode]) {
+        return SAFE_MESSAGES_BY_CODE[error.errorCode];
+      }
+      if (error.message && Object.values(SAFE_MESSAGES_BY_CODE).includes(error.message)) {
+        return error.message;
+      }
     }
     return translate(AuthLoginFormTranslationKeys.ERROR_UNAVAILABLE);
   },

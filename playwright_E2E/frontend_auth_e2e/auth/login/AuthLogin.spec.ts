@@ -36,7 +36,7 @@ test.describe('Auth Login', () => {
     await page.getByTestId('auth_login-form-email').fill(process.env.AUTH_E2E_EMAIL!);
     await page.getByTestId('auth_login-form-password').fill(process.env.AUTH_E2E_PASSWORD!);
     await page.getByTestId('auth_login-form-submit').click();
-    const dashboardTargets = [
+    const dashboardTargets: string[] = [
       AuthLoginE2eRouteConstants.PAGES.SUPERADMIN_DASHBOARD,
       AuthLoginE2eRouteConstants.PAGES.ADMIN_DASHBOARD,
       AuthLoginE2eRouteConstants.PAGES.MANAGER_DASHBOARD,

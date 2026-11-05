@@ -19,7 +19,13 @@ vi.mock('next-intl', () => ({
   }[key] ?? key),
 }));
 
-vi.mock('lucide-react', () => ({ Loader2: () => <span aria-hidden="true" /> }));
+vi.mock('lucide-react', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('lucide-react')>();
+  return {
+    ...actual,
+    Loader2: () => <span aria-hidden="true" />,
+  };
+});
 
 describe('AuthLoginDemoActions', () => {
   it('renders nothing when development demo login is unavailable', () => {

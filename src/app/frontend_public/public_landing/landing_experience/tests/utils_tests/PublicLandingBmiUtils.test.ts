@@ -9,7 +9,7 @@ describe('calculatePublicLandingBmi', () => {
     ['25.0', 'Overweight'],
     ['29.9', 'Overweight'],
     ['30.0', 'Obese'],
-  ])('maps BMI %s to %s', (bmi, expectedStatus) => {
+  ])('maps BMI %s to %s', (bmi: string, expectedStatus: string) => {
     const result = calculatePublicLandingBmi(100, Number(bmi));
     expect(result?.status).toBe(expectedStatus);
   });

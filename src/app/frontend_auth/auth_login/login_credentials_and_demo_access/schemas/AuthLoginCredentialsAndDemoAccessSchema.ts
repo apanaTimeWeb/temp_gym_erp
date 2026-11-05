@@ -130,14 +130,19 @@ export const AuthSessionResponseSchema = z.discriminatedUnion('success', [
   z.object({
     success: z.literal(true), message: z.string(), data: AuthUserSchema.nullable(),
     requestId: z.string().uuid(),
+    meta: AuthPaginationMetaSchema.optional(),
   }),
   z.object({
     success: z.literal(false), message: z.string(), data: z.null(),
-    requestId: z.string().uuid(), error: z.string().optional(),
+    requestId: z.string().optional(), error: z.string().optional(),
     errorCode: z.string(), statusCode: z.number().int().min(400).max(599),
     validationErrors: z.array(AuthValidationErrorItemSchema).optional(),
+    meta: AuthPaginationMetaSchema.optional(),
   }),
 ]).superRefine((value, context) => {
+  if ('meta' in value && (value as { meta?: unknown }).meta !== undefined) {
+    context.addIssue({ code: z.ZodIssueCode.custom, path: ['meta'], message: 'meta is reserved for paginated list responses.' });
+  }
   if (!value.success && value.validationErrors && value.statusCode !== StatusCodes.BAD_REQUEST) {
     context.addIssue({ code: z.ZodIssueCode.custom, path: ['validationErrors'], message: 'Only HTTP 400 may carry validationErrors.' });
   }

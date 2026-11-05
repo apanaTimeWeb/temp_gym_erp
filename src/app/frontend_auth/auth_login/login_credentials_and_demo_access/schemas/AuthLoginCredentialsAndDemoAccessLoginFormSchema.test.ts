@@ -8,10 +8,11 @@ import { AuthLoginFormSchema } from '@/app/frontend_auth/auth_login/login_creden
 
 describe('AuthLoginFormSchema', () => {
   it('uses translated validation messages and blocks invalid credentials', () => {
-    const schema = AuthLoginFormSchema((key) => ({
+    const messages: Record<string, string> = {
       [AuthLoginFormTranslationKeys.EMAIL_INVALID]: 'Translated email error',
       [AuthLoginFormTranslationKeys.PASSWORD_MIN_LENGTH]: 'Translated password error',
-    }[key]));
+    };
+    const schema = AuthLoginFormSchema((key) => messages[key] ?? key);
 
     const parsed = schema.safeParse({ email: 'bad', password: '123' });
     expect(parsed.success).toBe(false);

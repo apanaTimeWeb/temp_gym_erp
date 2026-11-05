@@ -11,7 +11,7 @@ vi.mock('next-intl', () => ({
 }));
 
 vi.mock('next/image', () => ({
-  default: ({ alt }: { src: string; alt?: string }) => <span role="img" aria-label={alt ?? ''} />,
+  default: ({ alt }: { src: string; alt?: string }) => <img alt={alt ?? ''} />,
 }));
 
 describe('AuthLoginMobileHeader', () => {

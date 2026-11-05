@@ -22,11 +22,11 @@ afterAll(() => server.close());
 describe('PublicLandingBooking', () => {
   it('accepts valid input and non-.com email domains', async () => {
     renderBooking();
-    fireEvent.change(screen.getByLabelText('Full Name'), { target: { value: 'Member One' } });
-    fireEvent.change(screen.getByLabelText('Email Address'), { target: { value: 'member@example.org' } });
-    fireEvent.change(screen.getByLabelText('Phone / WhatsApp'), { target: { value: '9876543210' } });
-    fireEvent.change(screen.getByLabelText('Preferred Date'), { target: { value: getPublicLandingDateInputValueDaysFromToday(7) } });
-    fireEvent.click(screen.getByRole('button', { name: 'Proceed to Book', exact: true }));
+    fireEvent.change(screen.getByLabelText(/Full Name/i), { target: { value: 'Member One' } });
+    fireEvent.change(screen.getByLabelText(/Email Address/i), { target: { value: 'member@example.org' } });
+    fireEvent.change(screen.getByLabelText(/Phone/i), { target: { value: '9876543210' } });
+    fireEvent.change(screen.getByLabelText(/Preferred Date/i), { target: { value: getPublicLandingDateInputValueDaysFromToday(7) } });
+    fireEvent.click(screen.getByRole('button', { name: 'Proceed to Book' }));
     await waitFor(() => expect(screen.getByTestId('public_landing-booking-success-state')).toBeInTheDocument());
     expect(landingMockState.bookings).toHaveLength(1);
     expect(landingMockState.bookings[0]?.email).toBe('member@example.org');
@@ -36,7 +36,7 @@ describe('PublicLandingBooking', () => {
   it('surfaces an API error, preserves input, retries with the same user intent, and reaches success', async () => {
     let attempts = 0;
     const seenKeys: string[] = [];
-    server.use(http.post('*/api/landing/bookings', async ({ request }) => {
+    server.use(http.post('*/landing/bookings', async ({ request }) => {
       attempts += 1;
       const key = request.headers.get('Idempotency-Key');
       if (key) seenKeys.push(key);
@@ -44,13 +44,13 @@ describe('PublicLandingBooking', () => {
       return HttpResponse.json({ success: true, message: 'Booking submitted successfully. Our team will contact you shortly.', data: null });
     }));
     renderBooking();
-    fireEvent.change(screen.getByLabelText('Full Name'), { target: { value: 'Member One' } });
-    fireEvent.change(screen.getByLabelText('Email Address'), { target: { value: 'member@example.org' } });
-    fireEvent.change(screen.getByLabelText('Phone / WhatsApp'), { target: { value: '9876543210' } });
-    fireEvent.change(screen.getByLabelText('Preferred Date'), { target: { value: getPublicLandingDateInputValueDaysFromToday(7) } });
-    fireEvent.click(screen.getByRole('button', { name: 'Proceed to Book', exact: true }));
+    fireEvent.change(screen.getByLabelText(/Full Name/i), { target: { value: 'Member One' } });
+    fireEvent.change(screen.getByLabelText(/Email Address/i), { target: { value: 'member@example.org' } });
+    fireEvent.change(screen.getByLabelText(/Phone/i), { target: { value: '9876543210' } });
+    fireEvent.change(screen.getByLabelText(/Preferred Date/i), { target: { value: getPublicLandingDateInputValueDaysFromToday(7) } });
+    fireEvent.click(screen.getByRole('button', { name: 'Proceed to Book' }));
     await waitFor(() => expect(screen.getByTestId('public_landing-booking-api-error')).toHaveTextContent('Booking service is temporarily unavailable'));
-    expect(screen.getByLabelText('Email Address')).toHaveValue('member@example.org');
+    expect(screen.getByLabelText(/Email Address/i)).toHaveValue('member@example.org');
     fireEvent.click(screen.getByTestId('public_landing-booking-retry'));
     await waitFor(() => expect(screen.getByTestId('public_landing-booking-success-state')).toBeInTheDocument());
     expect(attempts).toBe(2);
@@ -61,7 +61,7 @@ describe('PublicLandingBooking', () => {
     let attempts = 0;
     const seenKeys: string[] = [];
     const seenEmails: string[] = [];
-    server.use(http.post('*/api/landing/bookings', async ({ request }) => {
+    server.use(http.post('*/landing/bookings', async ({ request }) => {
       attempts += 1;
       seenKeys.push(request.headers.get('Idempotency-Key') ?? '');
       const body = await request.json() as { email: string };
@@ -70,15 +70,15 @@ describe('PublicLandingBooking', () => {
       return HttpResponse.json({ success: true, message: 'Booking submitted successfully. Our team will contact you shortly.', data: null });
     }));
     renderBooking();
-    fireEvent.change(screen.getByLabelText('Full Name'), { target: { value: 'Member One' } });
-    fireEvent.change(screen.getByLabelText('Email Address'), { target: { value: 'first@example.org' } });
-    fireEvent.change(screen.getByLabelText('Phone / WhatsApp'), { target: { value: '9876543210' } });
-    fireEvent.change(screen.getByLabelText('Preferred Date'), { target: { value: getPublicLandingDateInputValueDaysFromToday(7) } });
-    fireEvent.click(screen.getByRole('button', { name: 'Proceed to Book', exact: true }));
+    fireEvent.change(screen.getByLabelText(/Full Name/i), { target: { value: 'Member One' } });
+    fireEvent.change(screen.getByLabelText(/Email Address/i), { target: { value: 'first@example.org' } });
+    fireEvent.change(screen.getByLabelText(/Phone/i), { target: { value: '9876543210' } });
+    fireEvent.change(screen.getByLabelText(/Preferred Date/i), { target: { value: getPublicLandingDateInputValueDaysFromToday(7) } });
+    fireEvent.click(screen.getByRole('button', { name: 'Proceed to Book' }));
     await waitFor(() => expect(screen.getByTestId('public_landing-booking-api-error')).toBeInTheDocument());
-    fireEvent.change(screen.getByLabelText('Email Address'), { target: { value: 'edited@example.org' } });
+    fireEvent.change(screen.getByLabelText(/Email Address/i), { target: { value: 'edited@example.org' } });
     expect(screen.getByTestId('public_landing-booking-retry')).toBeDisabled();
-    fireEvent.click(screen.getByRole('button', { name: 'Proceed to Book', exact: true }));
+    fireEvent.click(screen.getByRole('button', { name: 'Proceed to Book' }));
     await waitFor(() => expect(screen.getByTestId('public_landing-booking-success-state')).toBeInTheDocument());
     expect(attempts).toBe(2);
     expect(seenKeys[0]).not.toBe(seenKeys[1]);

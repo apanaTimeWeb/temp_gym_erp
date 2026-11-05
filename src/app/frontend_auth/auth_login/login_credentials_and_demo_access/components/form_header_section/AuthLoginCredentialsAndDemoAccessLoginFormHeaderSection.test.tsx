@@ -11,7 +11,7 @@ import type { ReactNode } from 'react';
 vi.mock('lucide-react', () => ({ ChevronLeft: () => <span aria-hidden="true" /> }));
 vi.mock('next/image', () => ({ default: ({ alt }: { alt?: string }) => <span role="img" aria-label={alt ?? ''} /> }));
 vi.mock('next/link', () => ({
-  default: ({ href, children }: { href: string; children: ReactNode }) => <a href={href}>{children}</a>,
+  default: ({ href, children, ...props }: { href: string; children: ReactNode; [key: string]: unknown }) => <a href={href} {...props}>{children}</a>,
 }));
 
 describe('AuthLoginFormHeaderSection', () => {

@@ -12,7 +12,9 @@ import { AuthResponseMessages } from '@/app/frontend_auth/auth_login/login_crede
 
 
 
-const apiFetchMock = vi.fn();
+const { apiFetchMock } = vi.hoisted(() => ({
+  apiFetchMock: vi.fn(),
+}));
 
 vi.mock('@/lib/api', () => ({
   apiFetch: apiFetchMock,

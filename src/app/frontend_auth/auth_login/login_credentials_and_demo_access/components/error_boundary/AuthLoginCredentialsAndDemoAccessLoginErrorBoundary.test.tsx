@@ -18,7 +18,7 @@ vi.mock('next-intl', () => ({
 
 vi.mock('@/lib/logger', () => ({ logger: { error: vi.fn() } }));
 
-function ThrowingChild() {
+function ThrowingChild(): React.JSX.Element {
   throw new Error('render failure');
 }
 

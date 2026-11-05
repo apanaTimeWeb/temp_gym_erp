@@ -52,7 +52,7 @@ describe('useAuthLoginForm', () => {
     const credentials = { email: 'admin@example.com', password: 'demo123' };
 
     await result.current.handleLoginSubmit(credentials);
-    expect(result.current.form.formState.errors.root?.message).toBe('Invalid email or password.');
+    await waitFor(() => expect(result.current.form.formState.errors.root?.message).toBe('Invalid email or password.'));
     const firstKey = vi.mocked(AuthApi.login).mock.calls[0]?.[1];
 
     await result.current.handleLoginSubmit(credentials);
@@ -105,7 +105,7 @@ describe('useAuthLoginForm', () => {
 
     await result.current.handleLoginSubmit({ email: 'admin@example.com', password: 'demo123' });
 
-    expect(result.current.form.formState.errors.root?.message).toBe('We could not sign you in. Please try again.');
+    await waitFor(() => expect(result.current.form.formState.errors.root?.message).toBe('We could not sign you in. Please try again.'));
     expect(AuthApi.login).not.toHaveBeenCalled();
     fingerprintSpy.mockRestore();
   });
@@ -119,7 +119,7 @@ describe('useAuthLoginForm', () => {
 
     await result.current.handleDemoLogin('MANAGER');
 
-    expect(result.current.form.formState.errors.root?.message).toBe('We could not sign you in. Please try again.');
+    await waitFor(() => expect(result.current.form.formState.errors.root?.message).toBe('We could not sign you in. Please try again.'));
     expect(AuthApi.loginDemo).not.toHaveBeenCalled();
     vi.stubGlobal('crypto', originalCrypto);
   });
@@ -137,6 +137,6 @@ describe('useAuthLoginForm', () => {
     const { result } = renderHook(() => useAuthLoginForm(), { wrapper: createWrapper() });
     await result.current.handleDemoLogin('MANAGER');
 
-    expect(AuthApi.loginDemo).toHaveBeenCalledWith('MANAGER', expect.any(String));
+    await waitFor(() => expect(AuthApi.loginDemo).toHaveBeenCalledWith('MANAGER', expect.any(String)));
   });
 });
