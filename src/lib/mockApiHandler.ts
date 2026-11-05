@@ -447,7 +447,10 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
       const safePage = Math.min(page, totalPages);
       const start = (safePage - 1) * limit;
       const pageData = MOCK_ADMIN_STAFF_EXPANDED.slice(start, start + limit);
-      return buildMockSuccess(pageData, 'Success', {
+      return buildMockSuccess({
+        staff: pageData,
+        total: MOCK_ADMIN_STAFF_EXPANDED.length,
+      }, 'Success', {
         total: MOCK_ADMIN_STAFF_EXPANDED.length,
         page: safePage,
         limit,
