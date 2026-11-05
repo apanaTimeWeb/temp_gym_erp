@@ -4,26 +4,27 @@ import { cookies } from 'next/headers';
 export async function POST(request: Request) {
   try {
     const body = await request.json().catch(() => ({}));
-    const role = (body && typeof body.role === 'string' ? body.role : 'trainer').toLowerCase();
+    const rawRole = (body && typeof body.role === 'string' ? body.role : 'TRAINER').toUpperCase();
+    const validRoles = ['SUPERADMIN', 'ADMIN', 'MANAGER', 'TRAINER'] as const;
+    const role: (typeof validRoles)[number] = validRoles.includes(rawRole as any) ? (rawRole as any) : 'TRAINER';
 
     const roleNameMap: Record<string, string> = {
-      trainer: 'Michael Trainer',
-      superadmin: 'Super Admin',
-      admin: 'Branch Admin',
-      manager: 'Operations Manager',
-      member: 'Alex Member',
+      TRAINER: 'Michael Trainer',
+      SUPERADMIN: 'Super Admin',
+      ADMIN: 'Branch Admin',
+      MANAGER: 'Operations Manager',
     };
 
     const user = {
-      id: `usr_${role}_01`,
-      name: roleNameMap[role] || `${role.charAt(0).toUpperCase() + role.slice(1)} User`,
-      email: `${role}@smartgym360.com`,
+      id: `usr_${role.toLowerCase()}_01`,
+      name: roleNameMap[role] || `${role} User`,
+      email: `${role.toLowerCase()}@smartgym360.com`,
       role: role,
       tenantId: 'gym_demo_01',
     };
 
     const cookieStore = await cookies();
-    const token = `token_demo_${role}_${Date.now()}`;
+    const token = `token_demo_${role.toLowerCase()}_${Date.now()}`;
     cookieStore.set('gymsmart_token', token, { path: '/', httpOnly: false });
     cookieStore.set('gymsmart_user', JSON.stringify(user), { path: '/', httpOnly: false });
 
@@ -47,4 +48,3 @@ export async function POST(request: Request) {
     );
   }
 }
-
