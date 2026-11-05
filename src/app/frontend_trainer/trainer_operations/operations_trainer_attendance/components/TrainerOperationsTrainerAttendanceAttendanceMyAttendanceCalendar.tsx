@@ -244,7 +244,14 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
                       </div>
                       {status === TRAINER_ATTENDANCE_CALENDAR_STATUS.PRESENT && checkIn && (
                         <p className="text-xs text-secondary truncate flex items-center gap-1">
-                          <Clock size={18}  strokeWidth={2}/> {checkIn}
+                          <Clock size={18}  strokeWidth={2}/> {(() => {
+                            try {
+                              const d = new Date(checkIn);
+                              return !isNaN(d.getTime()) && checkIn.includes('T') ? format(d, 'hh:mm a') : checkIn;
+                            } catch {
+                              return checkIn;
+                            }
+                          })()}
                         </p>
                       )}
                     </>

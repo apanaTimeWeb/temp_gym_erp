@@ -24,6 +24,7 @@ export default function TrainerCoachingExerciseManagementToolbar() {
   return (
     <div className="flex flex-wrap items-center gap-3 border-b border-border bg-card px-4 py-3">
       <button type="button" onClick={handleAdd}
+        aria-label={`${t('TEXT_ADD')} ${t('TEXT_EXERCISE')}`}
         className="inline-flex min-h-11 items-center rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
         data-testid="trainer-coaching_exercise_management-add">
         {t('TEXT_ADD')} {t('TEXT_EXERCISE')}

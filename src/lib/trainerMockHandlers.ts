@@ -131,6 +131,10 @@ export function handleTrainerMockApiRequest(
     trainerPath = urlPath.slice('/trainer/'.length);
   } else if (urlPath.startsWith('/frontend_trainer/api/')) {
     trainerPath = urlPath.slice('/frontend_trainer/api/'.length);
+  } else if (urlPath.startsWith('/api/v1/trainer/')) {
+    trainerPath = urlPath.slice('/api/v1/trainer/'.length);
+  } else if (urlPath.startsWith('/api/trainer/')) {
+    trainerPath = urlPath.slice('/api/trainer/'.length);
   }
 
   if (!trainerPath) return null;
@@ -572,17 +576,21 @@ export function handleTrainerMockApiRequest(
     if (method === 'POST') {
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
+        const muscle = body.muscle || body.primaryMuscle || 'Chest';
         const newExercise = {
           id: `ex_${Date.now()}`,
           name: body.name || 'Custom Exercise',
           category: body.category || 'Strength',
-          primaryMuscle: body.primaryMuscle || 'Chest',
+          primaryMuscle: muscle,
+          muscleGroup: body.muscleGroup || [muscle],
           secondaryMuscles: body.secondaryMuscles || ['Triceps'],
           equipment: body.equipment || 'Barbell',
           difficulty: body.difficulty || 'Intermediate',
           instructions: body.instructions || 'Perform with controlled tempo',
           videoUrl: body.videoUrl || '',
+          imageUrl: body.imageUrl || '',
           thumbnailUrl: body.thumbnailUrl || '',
+          isActive: true,
         };
         currentExercises.unshift(newExercise);
         return buildMockSuccess(newExercise, 'Exercise created');
@@ -594,8 +602,8 @@ export function handleTrainerMockApiRequest(
     const search = searchParams.get('search')?.toLowerCase() || '';
     const category = searchParams.get('category') || '';
     let filtered = currentExercises;
-    if (search) filtered = filtered.filter((e: any) => e.name.toLowerCase().includes(search) || e.primaryMuscle?.toLowerCase().includes(search));
-    if (category && category !== 'ALL') filtered = filtered.filter((e: any) => e.category?.toLowerCase() === category.toLowerCase());
+    if (search) filtered = filtered.filter((e: any) => e.name.toLowerCase().includes(search) || e.primaryMuscle?.toLowerCase().includes(search) || (Array.isArray(e.muscleGroup) && e.muscleGroup.some((m: string) => m.toLowerCase().includes(search))));
+    if (category && category !== 'ALL' && category !== 'All') filtered = filtered.filter((e: any) => e.category?.toLowerCase() === category.toLowerCase());
 
     const page = Number(searchParams.get('page') || '1');
     const limit = Number(searchParams.get('limit') || '50');
@@ -614,7 +622,12 @@ export function handleTrainerMockApiRequest(
     if (method === 'PATCH') {
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
+        if (body.muscle && !body.muscleGroup) {
+          body.muscleGroup = [body.muscle];
+          body.primaryMuscle = body.muscle;
+        }
         Object.assign(exercise, body);
+        if (exercise.isActive === undefined) exercise.isActive = true;
       } catch {}
       return buildMockSuccess(exercise, 'Exercise updated');
     }

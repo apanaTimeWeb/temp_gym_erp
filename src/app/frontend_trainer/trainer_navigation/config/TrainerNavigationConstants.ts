@@ -61,4 +61,10 @@ export const TRAINER_ROUTE_TITLE_MAP: Record<string, { titleKey: string; subtitl
   [TRAINER_SCHEDULE_PAGE_LIST]: { titleKey: 'TEXT_SCHEDULE_TITLE', subtitleKey: 'TEXT_SCHEDULE_SUBTITLE' },
   [TRAINER_SESSIONS_PAGE_LIST]: { titleKey: 'TEXT_SESSIONS_TITLE', subtitleKey: 'TEXT_SESSIONS_SUBTITLE' },
   [TRAINER_WORKOUT_PAGE_LIST]: { titleKey: 'TEXT_WORKOUT_TITLE', subtitleKey: 'TEXT_WORKOUT_SUBTITLE' },
+  '/frontend_trainer/trainer_account/account_security': { titleKey: 'TEXT_SECURITY_TITLE', subtitleKey: 'TEXT_SECURITY_SUBTITLE' },
+  '/frontend_trainer/trainer_coaching/coaching_exercise_management': { titleKey: 'TEXT_EXERCISE_MANAGEMENT_TITLE', subtitleKey: 'TEXT_EXERCISE_MANAGEMENT_SUBTITLE' },
+  '/frontend_trainer/trainer_coaching/coaching_progress_comparison': { titleKey: 'TEXT_PROGRESS_COMPARISON_TITLE', subtitleKey: 'TEXT_PROGRESS_COMPARISON_SUBTITLE' },
+  '/frontend_trainer/trainer_members/members_trainer_notes': { titleKey: 'TEXT_TRAINER_NOTES_TITLE', subtitleKey: 'TEXT_TRAINER_NOTES_SUBTITLE' },
+  '/frontend_trainer/trainer_operations/operations_leave_requests': { titleKey: 'TEXT_LEAVE_REQUESTS_TITLE', subtitleKey: 'TEXT_LEAVE_REQUESTS_SUBTITLE' },
+  '/frontend_trainer/trainer_operations/operations_trainer_attendance': { titleKey: 'TEXT_TRAINER_ATTENDANCE_TITLE', subtitleKey: 'TEXT_TRAINER_ATTENDANCE_SUBTITLE' },
 };
