@@ -42,6 +42,7 @@ export function useTrainerAttendanceFilters() {
 
   const search = new URLSearchParams(serializedParams).get('search') ?? '';
   const filterDate = new URLSearchParams(serializedParams).get('date') ?? 'ALL_TIME';
+  const range = new URLSearchParams(serializedParams).get('range') ?? 'this_month';
   const pageValue = Number(new URLSearchParams(serializedParams).get('page') ?? '1');
   const currentPage = Number.isInteger(pageValue) && pageValue > 0 ? pageValue : 1;
   const rawSortBy = new URLSearchParams(serializedParams).get('sortBy') ?? 'date';
@@ -67,5 +68,5 @@ export function useTrainerAttendanceFilters() {
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   }, [getCanonicalParams, pathname, router, sortBy, sortDirection]);
 
-  return { screenView, tab, setTab, search, setSearch, filterDate, setFilterDate, currentPage, setCurrentPage, sortBy, sortDirection, setSort };
+  return { screenView, tab, setTab, search, setSearch, filterDate, setFilterDate, currentPage, setCurrentPage, sortBy, sortDirection, setSort, range };
 }

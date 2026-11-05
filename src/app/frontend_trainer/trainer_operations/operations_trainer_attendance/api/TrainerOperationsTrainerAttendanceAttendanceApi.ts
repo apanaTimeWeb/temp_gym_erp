@@ -91,8 +91,9 @@ export async function fetchAllTrainerAttendanceRecords(
   return uniqueRecords;
 }
 
-export async function fetchTrainerAttendanceStats(): Promise<TrainerAttendanceStats> {
-  const raw = await apiFetch<ApiResponse<unknown>>(`${TRAINER_ATTENDANCE_URLS.API.STATS}`);
+export async function fetchTrainerAttendanceStats(range?: string): Promise<TrainerAttendanceStats> {
+  const url = range ? `${TRAINER_ATTENDANCE_URLS.API.STATS}?range=${encodeURIComponent(range)}` : TRAINER_ATTENDANCE_URLS.API.STATS;
+  const raw = await apiFetch<ApiResponse<unknown>>(url);
   const response = TrainerInfrastructureApiResponseSchema(TrainerAttendanceStatsSchema).parse(raw);
   if (!response.data) throw new Error(response.message);
   return response.data;

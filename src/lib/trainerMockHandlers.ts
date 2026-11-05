@@ -58,7 +58,61 @@ let currentExercises = JSON.parse(JSON.stringify(TRAINER_WORKOUT_MOCK_EXERCISES)
 let currentDietPlans = JSON.parse(JSON.stringify(TRAINER_LIBRARY_MOCK_LIBRARY_DIET_PLANS));
 let currentAssignedMembers = JSON.parse(JSON.stringify(TRAINER_LIBRARY_MOCK_LIBRARY_ASSIGNED_MEMBERS));
 let currentSessions = JSON.parse(JSON.stringify(TRAINER_SESSIONS_MOCK_TRAINER_SESSIONS));
-let currentAttendance = JSON.parse(JSON.stringify(TRAINER_ATTENDANCE_MOCK_RECORDS));
+function generateTrainerMockAttendance() {
+  const base = JSON.parse(JSON.stringify(TRAINER_ATTENDANCE_MOCK_RECORDS));
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth();
+
+  // Generate for last month
+  let lastYear = currentYear;
+  let lastMonth = currentMonth - 1;
+  if (lastMonth < 0) {
+    lastMonth = 11;
+    lastYear -= 1;
+  }
+  const lastMonthDays = new Date(lastYear, lastMonth + 1, 0).getDate();
+  for (let d = 1; d <= lastMonthDays; d++) {
+    const dateObj = new Date(lastYear, lastMonth, d);
+    if (dateObj.getDay() !== 0) {
+      const dateStr = `${lastYear}-${String(lastMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      base.push({
+        id: `att-staff-last-${d}`,
+        type: 'STAFF',
+        date: dateStr,
+        checkIn: `${dateStr}T08:00:00Z`,
+        checkOut: `${dateStr}T17:00:00Z`,
+        durationMinutes: 540,
+        checkInMethod: 'Biometric',
+        staffId: 'trainer_demo_user',
+        staff: { id: 'trainer_demo_user', name: 'Michael Trainer' },
+      });
+    }
+  }
+
+  // Generate for current month up to today
+  for (let d = 1; d < now.getDate(); d++) {
+    const dateObj = new Date(currentYear, currentMonth, d);
+    if (dateObj.getDay() !== 0) {
+      const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      base.push({
+        id: `att-staff-curr-${d}`,
+        type: 'STAFF',
+        date: dateStr,
+        checkIn: `${dateStr}T08:00:00Z`,
+        checkOut: `${dateStr}T17:00:00Z`,
+        durationMinutes: 540,
+        checkInMethod: 'Biometric',
+        staffId: 'trainer_demo_user',
+        staff: { id: 'trainer_demo_user', name: 'Michael Trainer' },
+      });
+    }
+  }
+
+  return base;
+}
+
+let currentAttendance = generateTrainerMockAttendance();
 let currentAvailability = JSON.parse(JSON.stringify(TRAINER_SCHEDULE_MOCK_AVAILABILITY));
 let currentLeaves = JSON.parse(JSON.stringify(TRAINER_SCHEDULE_MOCK_LEAVES));
 let currentProgressMembers = JSON.parse(JSON.stringify(TRAINER_PROGRESS_TRACKING_MOCK_PROGRESS_MEMBERS));
@@ -83,7 +137,88 @@ export function handleTrainerMockApiRequest(
 
   // 1. DASHBOARD OVERVIEW
   if (trainerPath === 'trainer_dashboard/stats' || trainerPath === 'stats') {
-    return buildMockSuccess(TRAINER_DASHBOARD_MOCK_DASHBOARD_STATS, 'Dashboard statistics retrieved successfully');
+    const range = searchParams.get('range') || 'this_month';
+    let stats = { ...TRAINER_DASHBOARD_MOCK_DASHBOARD_STATS };
+    if (range === 'last_month') {
+      stats = {
+        ...stats,
+        todaysSessions: 22,
+        completedSessions: 20,
+        pendingSessions: 2,
+        myMembersCount: 38,
+        todaysAttendance: 31,
+        pendingWorkoutPlans: 2,
+        memberGoalCompletionRate: 82,
+        goalCompletionTrend: [
+          { month: 'Sep', rate: 74 },
+          { month: 'Oct', rate: 82 },
+        ],
+      };
+    } else if (range === 'last_3_months') {
+      stats = {
+        ...stats,
+        todaysSessions: 68,
+        completedSessions: 61,
+        pendingSessions: 7,
+        myMembersCount: 36,
+        todaysAttendance: 92,
+        pendingWorkoutPlans: 1,
+        memberGoalCompletionRate: 85,
+        goalCompletionTrend: [
+          { month: 'Aug', rate: 68 },
+          { month: 'Sep', rate: 74 },
+          { month: 'Oct', rate: 82 },
+        ],
+      };
+    } else if (range === 'last_6_months') {
+      stats = {
+        ...stats,
+        todaysSessions: 135,
+        completedSessions: 122,
+        pendingSessions: 13,
+        myMembersCount: 35,
+        todaysAttendance: 180,
+        pendingWorkoutPlans: 3,
+        memberGoalCompletionRate: 86,
+        goalCompletionTrend: [
+          { month: 'May', rate: 60 },
+          { month: 'Jun', rate: 64 },
+          { month: 'Jul', rate: 67 },
+          { month: 'Aug', rate: 68 },
+          { month: 'Sep', rate: 74 },
+          { month: 'Oct', rate: 82 },
+        ],
+      };
+    } else if (range === 'this_year') {
+      stats = {
+        ...stats,
+        todaysSessions: 275,
+        completedSessions: 254,
+        pendingSessions: 21,
+        myMembersCount: 42,
+        todaysAttendance: 340,
+        pendingWorkoutPlans: 4,
+        memberGoalCompletionRate: 88,
+        goalCompletionTrend: [
+          { month: 'Q1', rate: 65 },
+          { month: 'Q2', rate: 72 },
+          { month: 'Q3', rate: 80 },
+          { month: 'Q4', rate: 88 },
+        ],
+      };
+    } else if (range === 'custom') {
+      stats = {
+        ...stats,
+        todaysSessions: 15,
+        completedSessions: 14,
+        pendingSessions: 1,
+        myMembersCount: 40,
+        todaysAttendance: 28,
+        pendingWorkoutPlans: 2,
+        memberGoalCompletionRate: 80,
+      };
+    }
+    return buildMockSuccess(stats, 'Dashboard statistics retrieved successfully');
   }
 
   // 2. DIET LIBRARY & ASSIGNMENTS
@@ -560,9 +695,59 @@ export function handleTrainerMockApiRequest(
   if (trainerPath === 'earnings' || trainerPath === 'trainer_earnings') {
     const page = Math.max(1, Number(searchParams.get('page') || searchParams.get('historyPage') || '1'));
     const limit = Math.max(1, Number(searchParams.get('limit') || searchParams.get('historyLimit') || '10'));
+    const range = searchParams.get('range');
+
+    let kpis = { ...TRAINER_EARNINGS_MOCK_EARNINGS_DATA.kpis };
+    let history = [...TRAINER_EARNINGS_MOCK_EARNINGS_DATA.history];
+
+    if (range === 'last_month') {
+      kpis = {
+        ...kpis,
+        totalEarnings: 3820000,
+        pendingPayouts: 0,
+        sessionsCompleted: 118,
+        taxDeduction: 191000,
+      };
+      history = [
+        { id: 'INV-101', date: '2026-10-31', type: 'Commission', description: 'October PT Commission', amount: 3200000, currency: 'INR', status: 'settled', tdsDeducted: 160000, netPayout: 3040000, invoiceNumber: 'INV-2026-101' },
+        { id: 'BON-101', date: '2026-10-15', type: 'Bonus', description: 'October Target Bonus', amount: 620000, currency: 'INR', status: 'settled', tdsDeducted: 31000, netPayout: 589000, invoiceNumber: 'INV-2026-102' },
+      ];
+    } else if (range === 'last_3_months') {
+      kpis = {
+        ...kpis,
+        totalEarnings: 11450000,
+        pendingPayouts: 840000,
+        sessionsCompleted: 356,
+        taxDeduction: 572500,
+      };
+      history = history.slice(0, 5);
+    } else if (range === 'this_year') {
+      kpis = {
+        ...kpis,
+        totalEarnings: 38400000,
+        pendingPayouts: 2090000,
+        sessionsCompleted: 1120,
+        taxDeduction: 1920000,
+      };
+    } else if (range === 'custom') {
+      kpis = {
+        ...kpis,
+        totalEarnings: 2200000,
+        pendingPayouts: 0,
+        sessionsCompleted: 68,
+        taxDeduction: 110000,
+      };
+      history = history.slice(0, 2);
+    }
+
+    const total = history.length;
+    const paginated = history.slice((page - 1) * limit, page * limit);
+
     return buildMockSuccess({
       ...TRAINER_EARNINGS_MOCK_EARNINGS_DATA,
-      historyTotal: TRAINER_EARNINGS_MOCK_EARNINGS_DATA.history.length,
+      kpis,
+      history: paginated,
+      historyTotal: total,
       historyPage: page,
       historyLimit: limit,
     }, 'Earnings data retrieved');
@@ -612,7 +797,29 @@ export function handleTrainerMockApiRequest(
   }
 
   if (trainerPath === 'trainer_attendance/stats' || trainerPath === 'attendance/stats') {
-    return buildMockSuccess(TRAINER_ATTENDANCE_MOCK_STATS, 'Attendance statistics retrieved');
+    const range = searchParams.get('range');
+    const date = searchParams.get('date');
+    let stats = { ...TRAINER_ATTENDANCE_MOCK_STATS };
+
+    if (range === 'last_month') {
+      stats = { totalCheckIns: 540, memberCheckIns: 412, staffCheckIns: 128 };
+    } else if (range === 'last_3_months') {
+      stats = { totalCheckIns: 1680, memberCheckIns: 1290, staffCheckIns: 390 };
+    } else if (range === 'this_year') {
+      stats = { totalCheckIns: 6420, memberCheckIns: 4920, staffCheckIns: 1500 };
+    } else if (range === 'custom') {
+      stats = { totalCheckIns: 180, memberCheckIns: 140, staffCheckIns: 40 };
+    } else if (date === 'YESTERDAY') {
+      stats = { totalCheckIns: 19, memberCheckIns: 14, staffCheckIns: 5 };
+    } else if (date === 'LAST_7_DAYS') {
+      stats = { totalCheckIns: 148, memberCheckIns: 112, staffCheckIns: 36 };
+    } else if (date === 'THIS_MONTH') {
+      stats = { totalCheckIns: 540, memberCheckIns: 412, staffCheckIns: 128 };
+    } else if (date === 'ALL_TIME') {
+      stats = { totalCheckIns: 2450, memberCheckIns: 1880, staffCheckIns: 570 };
+    }
+
+    return buildMockSuccess(stats, 'Attendance statistics retrieved');
   }
 
   if (trainerPath === 'trainer_attendance/members-basic' || trainerPath === 'attendance/members-basic') {

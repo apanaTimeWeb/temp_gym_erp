@@ -42,7 +42,7 @@ export function useTrainerAttendanceMain({ forcedTab }: { forcedTab?: 'MEMBERS' 
   const tab = forcedTab ?? filters.tab;
   const recordsQuery = useTrainerAttendanceRecordsQuery({ tab, search, filterDate, currentPage, sortBy, sortDirection });
   const myAttendanceHistoryQuery = useTrainerAttendanceMyHistoryQuery(tab === 'MY_ATTENDANCE');
-  const statsQuery = useTrainerAttendanceStatsQuery();
+  const statsQuery = useTrainerAttendanceStatsQuery(filterDate);
   const stats = statsQuery.data;
   const membersQuery = useTrainerAttendanceMembersQuery();
   const members = membersQuery.data ?? [];

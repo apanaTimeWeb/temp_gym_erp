@@ -3,7 +3,8 @@
 // DATA FLOW: props (records from TrainerAttendanceMain) → display only
 // Strictly view-only: trainers can browse past and present month logs.
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 import { format } from 'date-fns';
 
@@ -49,8 +50,25 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
   const dateFnsLocale = locale === 'hi' ? hi : enUS;
   const weekDays = useMemo(() => Array.from({ length: 7 }, (_, index) => format(new Date(2023, 0, index + 1), 'EEE', { locale: dateFnsLocale })), [dateFnsLocale]);
   const user = getUser();
+  const searchParams = useSearchParams();
+  const range = searchParams.get('range') || 'this_month';
 
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const [currentDate, setCurrentDate] = useState(() => {
+    const d = new Date();
+    if (range === 'last_month') {
+      return new Date(d.getFullYear(), d.getMonth() - 1, 1);
+    }
+    return d;
+  });
+
+  useEffect(() => {
+    const d = new Date();
+    if (range === 'last_month') {
+      setCurrentDate(new Date(d.getFullYear(), d.getMonth() - 1, 1));
+    } else if (range === 'this_month') {
+      setCurrentDate(d);
+    }
+  }, [range]);
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();

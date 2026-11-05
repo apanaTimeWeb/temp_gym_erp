@@ -87,8 +87,8 @@ export function useTrainerAttendanceMyHistoryQuery(enabled: boolean) {
   });
 }
 
-export function useTrainerAttendanceStatsQuery() {
-  return useQuery({ queryKey: TRAINER_ATTENDANCE_QUERY_KEYS.stats(), queryFn: fetchTrainerAttendanceStats, staleTime: 5 * 60 * 1000 });
+export function useTrainerAttendanceStatsQuery(date?: string) {
+  return useQuery({ queryKey: [...TRAINER_ATTENDANCE_QUERY_KEYS.stats(), date], queryFn: () => fetchTrainerAttendanceStats(date), staleTime: 5 * 60 * 1000 });
 }
 
 /**
