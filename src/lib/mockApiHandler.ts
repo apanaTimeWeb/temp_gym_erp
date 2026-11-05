@@ -338,7 +338,8 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
   }
 
   if (urlPath === '/admin/attendance/summary') {
-    return buildMockSuccess({
+    const range = searchParams.get('dateRange') || searchParams.get('range') || 'today';
+    let summary = {
       todayTotal: 2450,
       todayPresent: 2180,
       todayLate: 120,
@@ -346,7 +347,39 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
       peakHour: '18:00',
       trendVsLastWeek: 4.5,
       uniqueMembersThisMonth: 3850,
-    });
+    };
+    if (range === 'last_month') {
+      summary = {
+        todayTotal: 2280,
+        todayPresent: 2050,
+        todayLate: 110,
+        weeklyAverage: 1980,
+        peakHour: '19:00',
+        trendVsLastWeek: 2.8,
+        uniqueMembersThisMonth: 3620,
+      };
+    } else if (range === 'this_week') {
+      summary = {
+        todayTotal: 2510,
+        todayPresent: 2240,
+        todayLate: 115,
+        weeklyAverage: 2150,
+        peakHour: '18:30',
+        trendVsLastWeek: 5.2,
+        uniqueMembersThisMonth: 3900,
+      };
+    } else if (range === 'yesterday') {
+      summary = {
+        todayTotal: 2390,
+        todayPresent: 2120,
+        todayLate: 125,
+        weeklyAverage: 2080,
+        peakHour: '18:00',
+        trendVsLastWeek: 3.9,
+        uniqueMembersThisMonth: 3840,
+      };
+    }
+    return buildMockSuccess(summary);
   }
 
   if (urlPath === '/admin/attendance/records') {
@@ -386,7 +419,36 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
   }
 
   if (urlPath === '/admin/sales/overview') {
-    return buildMockSuccess({ monthlyRevenue: MOCK_ADMIN_SALES_OVERVIEW });
+    const range = searchParams.get('range');
+    let overview = [...MOCK_ADMIN_SALES_OVERVIEW];
+    if (range === 'last_month') {
+      overview = [
+        { date: '2026-09-01', newMembers: 12, revenue: 13500 },
+        { date: '2026-09-08', newMembers: 13, revenue: 14000 },
+        { date: '2026-09-15', newMembers: 13, revenue: 14500 },
+        { date: '2026-09-22', newMembers: 14, revenue: 15200 },
+      ];
+    } else if (range === 'last_3_months') {
+      overview = [
+        { date: '2026-07-01', newMembers: 12, revenue: 13500 },
+        { date: '2026-08-01', newMembers: 13, revenue: 14000 },
+        { date: '2026-09-01', newMembers: 14, revenue: 15200 },
+      ];
+    } else if (range === 'this_year' || range === 'yearly') {
+      overview = [
+        { date: '2026-01-01', newMembers: 8, revenue: 9000 },
+        { date: '2026-02-01', newMembers: 9, revenue: 10000 },
+        { date: '2026-03-01', newMembers: 10, revenue: 11000 },
+        { date: '2026-04-01', newMembers: 11, revenue: 12000 },
+        { date: '2026-05-01', newMembers: 11, revenue: 12500 },
+        { date: '2026-06-01', newMembers: 12, revenue: 13000 },
+        { date: '2026-07-01', newMembers: 12, revenue: 13500 },
+        { date: '2026-08-01', newMembers: 13, revenue: 14000 },
+        { date: '2026-09-01', newMembers: 13, revenue: 14500 },
+        { date: '2026-10-01', newMembers: 18, revenue: 20500 },
+      ];
+    }
+    return buildMockSuccess({ monthlyRevenue: overview });
   }
 
   if (urlPath === '/admin/sales/referral-sources') {
@@ -394,12 +456,36 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
   }
 
   if (urlPath === '/admin/sales/summary') {
-    return buildMockSuccess({
+    const range = searchParams.get('range');
+    let summary = {
       totalRevenue: 154000,
       newMembers: 34,
       conversionRate: 14.2,
       activeLeads: 88,
-    });
+    };
+    if (range === 'last_month') {
+      summary = {
+        totalRevenue: 138000,
+        newMembers: 29,
+        conversionRate: 13.5,
+        activeLeads: 82,
+      };
+    } else if (range === 'last_3_months') {
+      summary = {
+        totalRevenue: 425000,
+        newMembers: 95,
+        conversionRate: 15.1,
+        activeLeads: 240,
+      };
+    } else if (range === 'this_year' || range === 'yearly') {
+      summary = {
+        totalRevenue: 1720000,
+        newMembers: 380,
+        conversionRate: 16.4,
+        activeLeads: 950,
+      };
+    }
+    return buildMockSuccess(summary);
   }
 
   if (urlPath === '/admin/sales/all-memberships') {
@@ -429,7 +515,37 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
   }
 
   if (urlPath === '/admin/finance/summary') {
-    return buildMockSuccess(MOCK_ADMIN_FINANCE_SUMMARY);
+    const range = searchParams.get('range');
+    let summary = { ...MOCK_ADMIN_FINANCE_SUMMARY };
+    if (range === 'last_month') {
+      summary = {
+        ...summary,
+        monthlyRevenue: 1150000,
+        totalPayments: 810,
+        pendingAmount: 310000,
+        totalExpenses: 2650000,
+        netProfit: 2450000,
+      };
+    } else if (range === 'last_3_months') {
+      summary = {
+        ...summary,
+        monthlyRevenue: 3450000,
+        totalPayments: 2420,
+        pendingAmount: 750000,
+        totalExpenses: 7900000,
+        netProfit: 7400000,
+      };
+    } else if (range === 'this_year' || range === 'yearly') {
+      summary = {
+        ...summary,
+        monthlyRevenue: 13800000,
+        totalPayments: 9800,
+        pendingAmount: 1200000,
+        totalExpenses: 31000000,
+        netProfit: 29500000,
+      };
+    }
+    return buildMockSuccess(summary);
   }
 
   if (urlPath === '/admin/finance/payments/fetchPayments' || urlPath === '/admin/finance/payments') {
