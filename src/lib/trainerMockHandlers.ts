@@ -699,7 +699,20 @@ export function handleTrainerMockApiRequest(
     }
 
     if (sub === 'attendance') {
-      if (session) session.status = 'Completed';
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : null;
+        if (session) {
+          if (body && Array.isArray(body.memberIds) && body.memberIds.length > 0) {
+            session.status = 'Completed';
+            session.attendees = body.memberIds.length;
+          } else {
+            session.status = 'No Show';
+            session.attendees = 0;
+          }
+        }
+      } catch {
+        if (session) session.status = 'Completed';
+      }
       return buildMockSuccess(null, 'Attendance marked successfully');
     }
 
