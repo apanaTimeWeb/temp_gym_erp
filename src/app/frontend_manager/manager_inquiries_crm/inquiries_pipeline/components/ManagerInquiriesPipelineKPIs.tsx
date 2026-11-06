@@ -7,7 +7,7 @@ import { ManagerInquiriesPipelineFormatNumber } from '@/app/frontend_manager/man
 
 /** @description Renders the ManagerInquiriesPipelineKPIs component for its owning Manager frontend boundary. @dependencies Local dependencies are owned by this feature module (3 documented module/import dependencies).. @edge-case Preserves the documented interaction and boundary states. */
 export default function ManagerInquiriesPipelineKPIs() {
-  const { stats, isPending } = useManagerInquiriesPipelineLogic();
+  const { stats, isPending, dateFilter } = useManagerInquiriesPipelineLogic();
 
   if (isPending && !stats) {
     return (
@@ -27,6 +27,16 @@ export default function ManagerInquiriesPipelineKPIs() {
 
   if (!stats) return null;
 
+  const getKpiLabel = (item: (typeof MANAGER_INQUIRIES_PIPELINE_KPI_CONFIG)[number]) => {
+    if (item.key === 'total') {
+      if (dateFilter === 'this_month') return 'Total Inquiries (This Month)';
+      if (dateFilter === 'last_month') return 'Total Inquiries (Last Month)';
+      if (dateFilter === 'last_3_months') return 'Total Inquiries (Last 3M)';
+      if (dateFilter === 'this_year') return 'Total Inquiries (This Year)';
+    }
+    return item.label;
+  };
+
   return (
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
       {MANAGER_INQUIRIES_PIPELINE_KPI_CONFIG.map((item) => (
@@ -35,7 +45,7 @@ export default function ManagerInquiriesPipelineKPIs() {
             <item.icon size={18} className={item.color} />
           </div>
           <div>
-            <p className="text-xs text-text-secondary font-medium">{item.label}</p>
+            <p className="text-xs text-text-secondary font-medium">{getKpiLabel(item)}</p>
             <p className="text-kpi font-bold text-text-primary">{ManagerInquiriesPipelineFormatNumber(stats[item.key])}</p>
           </div>
         </div>

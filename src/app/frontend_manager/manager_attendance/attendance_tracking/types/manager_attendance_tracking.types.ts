@@ -63,6 +63,8 @@ export interface ManagerAttendanceTrackingViewModel {
   setSearch: (s: string) => void;
   dateFilter: string;
   setDateFilter: (s: string) => void;
+  range: string;
+  setRange: (r: string) => void;
   statusFilter: string;
   setStatusFilter: (s: string) => void;
   currentPage: number;

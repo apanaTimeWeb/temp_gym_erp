@@ -18,7 +18,7 @@ import { useManagerAttendanceTrackingLogic } from '@/app/frontend_manager/manage
 export default function ManagerAttendanceTrackingToolbar() {
   const t = useTranslations('MANAGER_ATTENDANCE_TRACKING');
 
-  const { tab, setTab, loadAll, setShowModal, search, setSearch, dateFilter, setDateFilter, statusFilter, setStatusFilter, setCurrentPage, exportAttendance } = useManagerAttendanceTrackingLogic();
+  const { tab, setTab, loadAll, setShowModal, search, setSearch, dateFilter, setDateFilter, range, setRange, statusFilter, setStatusFilter, setCurrentPage, exportAttendance } = useManagerAttendanceTrackingLogic();
   const [prevSearch, setPrevSearch] = useState(search);
   const [localSearch, setLocalSearch] = useState(search);
 
@@ -75,6 +75,22 @@ export default function ManagerAttendanceTrackingToolbar() {
         options={[{label: t("COPY_ALL_STATUS"), value: MANAGER_ATTENDANCE_TRACKING_STATUS_VALUES.ALL_FILTER}, {label: t("COPY_PRESENT_2"), value: MANAGER_ATTENDANCE_TRACKING_STATUS_VALUES.PRESENT_DISPLAY}, {label: t("COPY_ABSENT_2"), value: MANAGER_ATTENDANCE_TRACKING_STATUS_VALUES.ABSENT_DISPLAY}, {label: t("COPY_LATE"), value: MANAGER_ATTENDANCE_TRACKING_STATUS_VALUES.LATE}]}
         placeholder={t("COPY_STATUS_1")}
        data-testid="manager_attendance-managerattendancetoolbar-searchable-dropdown-1"/>
+    </div>
+    
+    <div className="w-full sm:w-40 z-30">
+      <ManagerSearchableDropdown dataTestId="manager_attendance-managerattendancetoolbar-range-dropdown"
+        value={range}
+        onChange={(v) => setRange(String(v))}
+        options={[
+          { label: 'This Month', value: 'this_month' },
+          { label: 'Last Month', value: 'last_month' },
+          { label: 'Last 3 Months', value: 'last_3_months' },
+          { label: 'This Year', value: 'this_year' },
+          { label: 'Custom', value: 'custom' },
+        ]}
+        placeholder="Period"
+        ariaLabel="Attendance period filter"
+      />
     </div>
     </div>
 
