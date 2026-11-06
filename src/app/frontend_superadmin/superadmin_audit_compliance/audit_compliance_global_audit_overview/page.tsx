@@ -19,7 +19,5 @@ export async function generateMetadata(): Promise<Metadata> {
  * @edge-cases Preserves documented loading, empty, error, disabled, cancellation, retry, and repeated-action behavior.
  */
 export default function SuperadminAuditComplianceGlobalAuditPage() {
-    return (<main className="w-full h-full bg-page min-h-screen">
-      <SuperadminAuditComplianceGlobalAuditMain />
-    </main>);
+  return <SuperadminAuditComplianceGlobalAuditMain />;
 }
