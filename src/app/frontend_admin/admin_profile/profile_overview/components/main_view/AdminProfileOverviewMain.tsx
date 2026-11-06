@@ -25,7 +25,7 @@ export default function AdminProfileOverviewMain() {
 
   if (profileQuery.isPending) {
     return (
-      <div className="mx-auto max-w-3xl space-y-6" aria-busy="true" aria-label={t('profile.admin_profile_main.text_9ba8d391c5')} data-testid="admin_profile-loading-state">
+      <div className="p-6 space-y-6 w-full max-w-4xl" aria-busy="true" aria-label={t('profile.admin_profile_main.text_9ba8d391c5')} data-testid="admin_profile-loading-state">
         <div className="h-8 w-48 rounded-lg bg-skeleton-base motion-safe:animate-pulse motion-safe:duration-base" />
         <div className="h-24 rounded-xl bg-skeleton-base motion-safe:animate-pulse motion-safe:duration-base" />
         <div className="h-64 rounded-xl bg-skeleton-base motion-safe:animate-pulse motion-safe:duration-base" />
@@ -35,7 +35,7 @@ export default function AdminProfileOverviewMain() {
 
   if (profileQuery.isError) {
     return (
-      <section className="mx-auto max-w-3xl rounded-xl border border-border bg-card p-8 text-center" role="alert" data-testid="admin_profile-load-error">
+      <section className="m-6 max-w-4xl rounded-xl border border-border bg-card p-8 text-center" role="alert" data-testid="admin_profile-load-error">
         <p className="text-sm text-danger">{t('profile.admin_profile_main.auto_a9257207f9')}</p>
         <button type="button" onClick={() => profileQuery.refetch()} className="mt-4 min-h-11 min-w-11 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-colors motion-safe:duration-base" data-testid="admin_profile-retry-load">{t('profile.admin_profile_main.text_9f5cd8a2e8')}</button>
       </section>
@@ -43,7 +43,7 @@ export default function AdminProfileOverviewMain() {
   }
 
   return (
-    <main className="mx-auto max-w-3xl space-y-6" data-testid="admin_profile-main">
+    <div className="p-6 space-y-6 w-full max-w-4xl" data-testid="admin_profile-main">
       <AdminProfileSummaryCard profile={profile} displayInitial={displayInitial} />
       <AdminProfileTabsNavigation activeTab={activeTab} onTabChange={setActiveTab} />
       {activeTab === 'personal' ? (
@@ -61,6 +61,6 @@ export default function AdminProfileOverviewMain() {
           onSubmit={handleChangePassword}
         />
       )}
-    </main>
+    </div>
   );
 }

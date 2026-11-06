@@ -32,7 +32,7 @@ export default function AdminSettingsManagementContent() {
 
   if (isPending) {
     return (
-      <div role="status" aria-live="polite" aria-busy="true" className="max-w-7xl mx-auto space-y-6 motion-safe:animate-pulse motion-safe:duration-base">
+      <div role="status" aria-live="polite" aria-busy="true" className="w-full space-y-6 motion-safe:animate-pulse motion-safe:duration-base">
         <div className="h-40 bg-card rounded-xl border border-border"></div>
         <div className="h-96 bg-card rounded-xl border border-border"></div>
       </div>
@@ -41,14 +41,14 @@ export default function AdminSettingsManagementContent() {
 
   if (isError || !settingsData?.data) {
     return (
-      <div className="max-w-7xl mx-auto text-center py-12">
+      <div className="w-full text-center py-12">
         <p className="text-danger">{t('settings.admin_settings_content.text_ca650fd593')}{t('settings.AdminRepair.requestFailed')}</p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto pb-12">
+    <div className="w-full pb-12">
       <AdminSettingsNav />
       {activeTabId === 'profile' && <AdminSettingsGymProfile initialData={settingsData.data.profile} />}
       {activeTabId === 'notifications' && <AdminSettingsNotifications initialData={settingsData.data.notifications} />}

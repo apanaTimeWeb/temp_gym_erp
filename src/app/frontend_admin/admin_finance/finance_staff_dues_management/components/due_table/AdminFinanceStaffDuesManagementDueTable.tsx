@@ -32,7 +32,7 @@ export default function AdminFinanceStaffDuesManagementDueTable() {
   const maxAmount = selectedStaff ? AdminFinanceStaffDuesManagementFromMinorUnits(selectedStaff.currentDue) : undefined;
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="space-y-6 w-full">
       {staff.some((member) => (member.currentDue || 0) > 0) && (
         <div className="bg-warning-bg border border-border rounded-xl p-4 flex gap-3 items-start">
           <AlertCircle className="text-warning mt-0.5" size={18} aria-hidden="true"  strokeWidth={2}/>

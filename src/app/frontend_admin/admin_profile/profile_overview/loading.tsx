@@ -7,7 +7,7 @@
  */
 export default function AdminProfileLoading() {
   return (
-    <div className="max-w-3xl mx-auto space-y-6" data-testid="admin_profile-loading-state">
+    <div className="p-6 max-w-4xl space-y-6 w-full" data-testid="admin_profile-loading-state">
       <div className="h-8 w-48 bg-skeleton-base motion-safe:animate-pulse rounded motion-safe:duration-base" />
       <div className="h-28 bg-skeleton-base motion-safe:animate-pulse rounded-xl border border-border motion-safe:duration-base" />
       <div className="h-10 w-64 bg-skeleton-base motion-safe:animate-pulse rounded-xl motion-safe:duration-base" />

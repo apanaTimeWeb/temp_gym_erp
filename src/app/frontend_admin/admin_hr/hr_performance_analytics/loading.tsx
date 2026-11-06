@@ -10,7 +10,7 @@ import { useTranslations } from 'next-intl';
 export default function Loading() {
   const t = useTranslations('hr.admin_hr_performance');
   return (
-    <div role="status" aria-live="polite" aria-busy="true" className="p-4 sm:p-6 space-y-6 max-w-7xl mx-auto motion-safe:animate-pulse motion-safe:duration-base" data-testid="admin_hr-admin_hr-performance-loading-state">
+    <div role="status" aria-live="polite" aria-busy="true" className="p-4 sm:p-6 space-y-6 w-full motion-safe:animate-pulse motion-safe:duration-base" data-testid="admin_hr-admin_hr-performance-loading-state">
       <span className="sr-only">{t('loadingStatus')}</span>
       <div aria-hidden="true" className="flex justify-between items-center">
         <div>

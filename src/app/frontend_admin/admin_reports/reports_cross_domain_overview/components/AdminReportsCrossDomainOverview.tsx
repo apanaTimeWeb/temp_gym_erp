@@ -6,7 +6,7 @@ import { ADMIN_REPORTS_CATALOG_LINKS } from '@/app/frontend_admin/admin_reports/
 /** Presents report entry links grouped by business owner without fetching or duplicating business data. */
 export default function AdminReportsCrossDomainOverview() {
   const t = useTranslations();
-  return <main className="mx-auto w-full max-w-7xl space-y-6 p-4 sm:p-6" data-testid="admin-reports-cross-domain-overview">
+  return <div className="w-full space-y-6 p-4 sm:p-6" data-testid="admin-reports-cross-domain-overview">
     <header className="space-y-2">
       <div className="flex items-center gap-3"><span className="rounded-lg border border-border bg-surface-highlight p-2 text-primary"><FileBarChart size={22} aria-hidden="true" /></span><h1 className="text-2xl font-bold text-primary">{t('admin_navigation.AdminNavigation.reportsCatalog.title')}</h1></div>
       <p className="max-w-3xl text-sm text-secondary">{t('admin_navigation.AdminNavigation.reportsCatalog.intro')}</p>
@@ -17,5 +17,5 @@ export default function AdminReportsCrossDomainOverview() {
         <span className="text-sm text-secondary">{t(item.descriptionKey)}</span>
       </Link>)}
     </section>
-  </main>;
+  </div>;
 }

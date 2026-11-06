@@ -28,7 +28,7 @@ export default function AdminBillingUsageAnalyticsMain() {
   const { data, metrics, planTiers, refresh, status, isFetching, error, requestUpgrade, pendingUpgradePlan } = useAdminUsageLogic();
   const planCardRef = useRef<HTMLDivElement>(null);
 
-  if (status === 'error' && !data) return <section role="alert" className="mx-auto max-w-3xl rounded-xl border border-border bg-card p-6"><p className="text-sm text-danger">{error || t('usage.admin_usage_main.loadError')}</p><button type="button" onClick={() => void refresh()} className="mt-3 min-h-11 rounded-lg border border-border px-4" data-testid="usage-analytics-usage-analytics-main-refresh">{t('usage.admin_usage_main.retry')}</button></section>;
+  if (status === 'error' && !data) return <section role="alert" className="rounded-xl border border-border bg-card p-6"><p className="text-sm text-danger">{error || t('usage.admin_usage_main.loadError')}</p><button type="button" onClick={() => void refresh()} className="mt-3 min-h-11 rounded-lg border border-border px-4" data-testid="usage-analytics-usage-analytics-main-refresh">{t('usage.admin_usage_main.retry')}</button></section>;
 
   const handleUpgrade = () => {
     planCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
