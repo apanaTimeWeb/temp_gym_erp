@@ -4,21 +4,45 @@ import React, { useEffect, useState } from 'react';
 import { Sun, Moon } from 'lucide-react';
 
 export function ThemeToggle() {
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
-    const isDarkMode = document.documentElement.classList.contains('dark');
-    setIsDark(isDarkMode);
+    const root = document.documentElement;
+    try {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        root.classList.add('dark');
+      } else if (savedTheme === 'light') {
+        root.classList.remove('dark');
+      }
+    } catch (_) {}
+
+    const syncTheme = () => {
+      setIsDark(root.classList.contains('dark'));
+    };
+
+    syncTheme();
+
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(root, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
   }, []);
 
   const toggleTheme = () => {
     const root = document.documentElement;
-    if (root.classList.contains('dark')) {
-      root.classList.remove('dark');
-      setIsDark(false);
-    } else {
+    const willBeDark = !root.classList.contains('dark');
+    if (willBeDark) {
       root.classList.add('dark');
+      try {
+        localStorage.setItem('theme', 'dark');
+      } catch (_) {}
       setIsDark(true);
+    } else {
+      root.classList.remove('dark');
+      try {
+        localStorage.setItem('theme', 'light');
+      } catch (_) {}
+      setIsDark(false);
     }
   };
 

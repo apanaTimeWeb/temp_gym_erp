@@ -7,18 +7,18 @@ import type { SuperadminTheme, SuperadminThemeContextValue, SuperadminPlatformSh
 
 
 
-const SuperadminThemeContext = createContext<SuperadminThemeContextValue>({ theme: 'dark' });
+const SuperadminThemeContext = createContext<SuperadminThemeContextValue>({ theme: 'light' });
 
 function readTheme(): SuperadminTheme {
-  if (typeof document === 'undefined') return 'dark';
-  const raw = document.documentElement.dataset.theme ?? (document.documentElement.classList.contains('light') ? 'light' : 'dark');
-  return raw === 'light' ? 'light' : 'dark';
+  if (typeof document === 'undefined') return 'light';
+  const raw = document.documentElement.dataset.theme ?? (document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+  return raw === 'dark' ? 'dark' : 'light';
 }
 
 /**
  * @description Reads the active application theme through one role-level provider contract for chart consumers.
  * @dependencies Observes the host document theme without creating a second theme system.
- * @edge-case Falls back to dark mode until the host document is available and reacts to theme attribute/class changes.
+ * @edge-case Falls back to light mode until the host document is available and reacts to theme attribute/class changes.
  */
 export function SuperadminPlatformShellLayoutThemeProvider({ children }: SuperadminPlatformShellLayoutThemeProviderProps) {
   const [theme, setTheme] = useState<SuperadminTheme>(() => readTheme());
