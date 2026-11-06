@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: 'Superadmin dashboard workspace.',
 };
 
-/** Canonical business-domain entry; redirects to its default leaf. */
+/** Canonical business-domain entry; forwards all users to its default leaf. */
 export default function SuperadminDomainRoot() {
   redirect('/frontend_superadmin/superadmin_dashboard/dashboard_overview');
 }
