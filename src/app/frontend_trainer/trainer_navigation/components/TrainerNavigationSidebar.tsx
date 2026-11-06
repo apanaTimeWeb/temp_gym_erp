@@ -161,7 +161,7 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
           ) : filteredNavGroups.map((group) => {
             const activeGroup = group.items.some((item) => pathname === item.href || pathname.startsWith(`${item.href}/`));
             const searching = searchQuery.trim().length > 0;
-            const showChildren = (!isCollapsed || isMobileOpen) && (searching || (expandedGroups[group.groupKey] ?? activeGroup));
+            const showChildren = (!isCollapsed || isMobileOpen) && (searching || (expandedGroups[group.groupKey] ?? true));
             const showLabel = !isCollapsed || isMobileOpen;
             const sectionId = `trainer-domain-${group.groupKey.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
             const DomainIcon = group.items[0].icon;

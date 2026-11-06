@@ -50,14 +50,18 @@ export default function TrainerNavigationMain({ children }: TrainerNavigationMai
 
   // Effect contract: keep drawer semantics aligned with the sidebar CSS breakpoint and close mobile navigation when returning to desktop.
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(max-width: 767px)');
+    if (typeof window === 'undefined') return;
+    const mediaQuery = typeof window.matchMedia === 'function' ? window.matchMedia('(max-width: 767px)') : null;
     const syncViewport = () => {
-      setIsMobileViewport(mediaQuery.matches);
-      if (!mediaQuery.matches) setIsMobileOpen(false);
+      const matches = mediaQuery ? mediaQuery.matches : window.innerWidth < 768;
+      setIsMobileViewport(matches);
+      if (!matches) setIsMobileOpen(false);
     };
     syncViewport();
-    mediaQuery.addEventListener('change', syncViewport);
-    return () => mediaQuery.removeEventListener('change', syncViewport);
+    if (mediaQuery) {
+      mediaQuery.addEventListener('change', syncViewport);
+      return () => mediaQuery.removeEventListener('change', syncViewport);
+    }
   }, []);
 
   const handleToggleSidebar = () => {

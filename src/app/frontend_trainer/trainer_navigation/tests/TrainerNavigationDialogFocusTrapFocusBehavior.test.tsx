@@ -13,8 +13,7 @@ describe('trainer_navigation dialog focus trap', () => {
     document.body.append(trigger, dialog);
     trigger.focus();
     const onEscape = vi.fn();
-    const dialogRef = createRef<HTMLDivElement>();
-    Object.defineProperty(dialogRef, 'current', { value: dialog, configurable: true });
+    const dialogRef = { current: dialog } as unknown as React.RefObject<HTMLDivElement>;
     const { unmount } = renderHook(() => useTrainerNavigationDialogFocusTrap({ isOpen: true, dialogRef, onEscape }));
     expect(document.activeElement).toBe(first);
     act(() => { last.focus(); document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true })); });
@@ -35,10 +34,8 @@ describe('trainer_navigation dialog focus trap lifecycle', () => {
     const parent = document.createElement('div');
     const child = document.createElement('div');
     document.body.append(parent, child);
-    const parentRef = createRef<HTMLDivElement>();
-    const childRef = createRef<HTMLDivElement>();
-    Object.defineProperty(parentRef, 'current', { value: parent, configurable: true });
-    Object.defineProperty(childRef, 'current', { value: child, configurable: true });
+    const parentRef = { current: parent } as unknown as React.RefObject<HTMLDivElement>;
+    const childRef = { current: child } as unknown as React.RefObject<HTMLDivElement>;
     const firstEscape = vi.fn();
     const latestEscape = vi.fn();
     const parentHook = renderHook(({ onEscape }) => useTrainerNavigationDialogFocusTrap({ isOpen: true, dialogRef: parentRef, onEscape }), { initialProps: { onEscape: firstEscape } });
