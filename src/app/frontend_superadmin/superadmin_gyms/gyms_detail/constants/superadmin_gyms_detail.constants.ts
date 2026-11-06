@@ -61,5 +61,14 @@ export const SUPERADMIN_GYM_DETAIL_MAIN_TABS = [
 ] as const;
 /** External WhatsApp URL builder; kept outside the canonical route/API URL contract. */
 export const SUPERADMIN_GYMS_MANAGEMENT_EXTERNAL = {
-  WHATSAPP_CLICK_TO_CHAT: (phone: string, message: string) => `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
+  WHATSAPP_CLICK_TO_CHAT: (phone: string, message: string) => {
+    const rawDigits = String(phone || '').replace(/\D/g, '');
+    const cleanDigits = rawDigits.startsWith('0') && rawDigits.length === 11 ? rawDigits.slice(1) : rawDigits;
+    const cleanPhone = cleanDigits.startsWith('91') && cleanDigits.length === 12
+      ? cleanDigits
+      : cleanDigits.length === 10
+      ? `91${cleanDigits}`
+      : cleanDigits;
+    return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
+  },
 } as const;

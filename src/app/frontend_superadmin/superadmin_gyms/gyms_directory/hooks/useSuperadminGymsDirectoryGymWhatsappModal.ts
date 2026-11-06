@@ -66,7 +66,13 @@ export function useSuperadminGymsDirectoryGymWhatsappModal() {
       return;
     }
 
-    const cleanPhone = String(selectedGym.phone).replace(/\D/g, '');
+    const rawDigits = String(selectedGym.phone).replace(/\D/g, '');
+    const cleanDigits = rawDigits.startsWith('0') && rawDigits.length === 11 ? rawDigits.slice(1) : rawDigits;
+    const cleanPhone = cleanDigits.startsWith('91') && cleanDigits.length === 12
+      ? cleanDigits
+      : cleanDigits.length === 10
+      ? `91${cleanDigits}`
+      : cleanDigits;
     if (!cleanPhone) {
       toast.error(t('ui.whatsapp_phone_unavailable_repair'), { id: 'superadmin-gym-whatsapp-phone-error' });
       return;
@@ -83,12 +89,16 @@ export function useSuperadminGymsDirectoryGymWhatsappModal() {
       sections: [{ title: 'Message', items: { Content: String(data.message) } }],
       footer: 'Powered by Smart Gym 360',
     });
-    const popup = window.open(SUPERADMIN_GYMS_MANAGEMENT_EXTERNAL.WHATSAPP_CLICK_TO_CHAT(cleanPhone, waText), '_blank');
+    const popup = window.open(SUPERADMIN_GYMS_MANAGEMENT_EXTERNAL.WHATSAPP_CLICK_TO_CHAT(cleanPhone, waText), '_blank', 'noopener,noreferrer');
     if (!popup) {
       toast.error(t('ui.whatsapp_popup_blocked_repair'), { id: 'superadmin-gym-whatsapp-popup-error' });
       return;
     }
-    popup.opener = null;
+    try {
+      popup.opener = null;
+    } catch {
+      // Ignored for strict cross-origin or sandboxed test environments
+    }
     toast.info(t('ui.whatsapp_opened_for_review_repair'), { id: 'superadmin-gym-whatsapp-opened' });
     closeWhatsappModal();
   };

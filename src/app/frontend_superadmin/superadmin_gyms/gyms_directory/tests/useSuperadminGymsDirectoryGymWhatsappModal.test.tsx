@@ -24,7 +24,16 @@ describe('useSuperadminGymsDirectoryGymWhatsappModal', () => {
     const openSpy = vi.spyOn(window, 'open').mockReturnValue({ opener: window } as Window);
     const { result } = renderHook(() => useSuperadminGymsDirectoryGymWhatsappModal());
     await act(async () => { await result.current.onSubmit({ subject: 'Plan update', message: 'Please review your plan' }); });
-    expect(openSpy).toHaveBeenCalledWith(expect.stringMatching(/^https:\/\/wa\.me\/919876543210\?text=/), '_blank');
+    expect(openSpy).toHaveBeenCalledWith(expect.stringMatching(/^https:\/\/wa\.me\/919876543210\?text=/), '_blank', 'noopener,noreferrer');
+    openSpy.mockRestore();
+  });
+
+  it('normalizes 10-digit Indian phone numbers with country code 91 for click-to-chat', async () => {
+    useSuperadminGymsDirectoryStore.getState().openWhatsappModal?.({ id: 'gym-2', name: 'Gym Beta', phone: '9876543210', ownerName: 'Owner' } as never);
+    const openSpy = vi.spyOn(window, 'open').mockReturnValue({ opener: window } as Window);
+    const { result } = renderHook(() => useSuperadminGymsDirectoryGymWhatsappModal());
+    await act(async () => { await result.current.onSubmit({ subject: 'Renewal', message: 'Please renew your plan' }); });
+    expect(openSpy).toHaveBeenCalledWith(expect.stringMatching(/^https:\/\/wa\.me\/919876543210\?text=/), '_blank', 'noopener,noreferrer');
     openSpy.mockRestore();
   });
 
