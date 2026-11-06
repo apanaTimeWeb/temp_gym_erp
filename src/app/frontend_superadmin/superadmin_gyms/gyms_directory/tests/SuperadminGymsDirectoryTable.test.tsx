@@ -16,7 +16,20 @@ vi.mock('@/components/ui/CopyButton', () => ({ default: () => null }));
 vi.mock('@/app/frontend_superadmin/superadmin_gyms/gyms_directory/components/SuperadminGymsDirectoryGymEditModal', () => ({ default: () => null }));
 vi.mock('@/app/frontend_superadmin/superadmin_gyms/gyms_directory/components/SuperadminGymsDirectoryGymWhatsappModal', () => ({ default: () => null }));
 vi.mock('@/app/frontend_superadmin/superadmin_gyms/gyms_directory/components/SuperadminGymsDirectoryGymDeleteModal', () => ({ default: () => null }));
-vi.mock('next-intl', async (importOriginal) => ({ ...(await importOriginal<typeof import('next-intl')>()), useLocale: () => 'en-IN' }));
+vi.mock('next-intl', () => ({
+  useLocale: () => 'en-IN',
+  useTranslations: () => (key: string) => {
+    const tableMap: Record<string, string> = {
+      'ui.members_ef53538a': 'Members',
+      'ui.mrr_35432afe': 'MRR',
+      'ui.last_active_b32a44ea': 'Last Active',
+      'ui.sort_member_count_aria': 'Sort gyms by member count',
+      'ui.sort_monthly_revenue_aria': 'Sort gyms by monthly revenue',
+      'ui.sort_last_active_time_aria': 'Sort gyms by last active date',
+    };
+    return tableMap[key] || key;
+  },
+}));
 
 const mockedUseGymsTable = vi.mocked(useSuperadminGymsDirectoryTable);
 const baseGym = {
