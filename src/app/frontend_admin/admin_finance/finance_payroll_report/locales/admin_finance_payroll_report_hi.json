@@ -21,6 +21,10 @@
     "AdminReportsDateFilterDropdown": {
       "text_12e1289bac": "सीमा चुनें"
     },
+    "AdminReportsMain": {
+      "exportPdf": "PDF के रूप में निर्यात करें",
+      "exportCsv": "CSV के रूप में निर्यात करें"
+    },
     "admin_reports_main": {
       "text_1ea6687cfe": "सभी जिम",
       "exportPdf": "PDF के रूप में निर्यात करें",

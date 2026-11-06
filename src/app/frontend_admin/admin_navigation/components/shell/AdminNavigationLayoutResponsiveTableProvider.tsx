@@ -44,10 +44,22 @@ export default function AdminNavigationLayoutResponsiveTableProvider() {
   // EFFECT: Annotates mounted tables after route changes so responsive semantics remain available without owning feature data.
   useEffect(() => {
     if (styles.responsiveTableScope) document.documentElement.classList.add(styles.responsiveTableScope);
-    annotateTables();
-    const observer = new MutationObserver(() => annotateTables());
-    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+    
+    let rafId: number | null = null;
+    const scheduleAnnotation = () => {
+      if (typeof window === 'undefined') return;
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        annotateTables();
+        rafId = null;
+      });
+    };
+
+    scheduleAnnotation();
+    const observer = new MutationObserver(() => scheduleAnnotation());
+    observer.observe(document.body, { childList: true, subtree: true });
     return () => {
+      if (rafId !== null && typeof window !== 'undefined') cancelAnimationFrame(rafId);
       observer.disconnect();
       if (styles.responsiveTableScope) document.documentElement.classList.remove(styles.responsiveTableScope);
     };
