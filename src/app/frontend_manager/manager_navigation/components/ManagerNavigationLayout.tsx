@@ -41,11 +41,14 @@ export default function ManagerNavigationLayout({ children }: ManagerNavigationL
     subtitle: currentPage ? t('TEXT_MANAGER_PORTAL_CONTEXT') : undefined,
   }), [currentPage, t]);
 
-  // Keep profile/settings/scanner routes usable even though they are intentionally outside the primary sidebar inventory.
+  // Keep profile/settings/scanner/store routes usable even though they are intentionally outside the primary sidebar inventory.
   const shellFallbackTitle = useMemo(() => {
-    if (pathname === MANAGER_HEADER_NAVIGATION.notifications) return t('NAV_NOTIFICATIONS');
+    if (pathname === MANAGER_HEADER_NAVIGATION.notifications || pathname.includes('/notifications_inbox')) return t('NAV_NOTIFICATIONS');
     if (pathname === MANAGER_HEADER_NAVIGATION.profile) return t('COPY_MY_PROFILE');
     if (pathname === MANAGER_HEADER_NAVIGATION.settings) return t('COPY_SETTINGS');
+    if (pathname.includes('/store_point_of_sale')) return t('NAV_STORE_POS');
+    if (pathname.includes('/store_order_management')) return t('NAV_STORE_ORDERS');
+    if (pathname.includes('/store_products_catalog')) return t('NAV_STORE_PRODUCTS');
     return null;
   }, [pathname, t]);
 

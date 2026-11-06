@@ -69,6 +69,7 @@ export function useManagerAttendanceTrackingLogic(): ManagerAttendanceTrackingVi
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }, [pathname, router, searchParams]);
   const setDateFilter = useCallback((value: string) => setUrlParam('date', value || null), [setUrlParam]);
+  const setRange = useCallback((value: string) => setUrlParam('range', value || null), [setUrlParam]);
   const setStatusFilter = useCallback((value: string) => setUrlParam('status', value || null), [setUrlParam]);
   const setCurrentPage = useCallback((value: number) => setUrlParam('page', String(Math.max(1, value))), [setUrlParam]);
   const setTab = useCallback((value: AttendanceTab) => setUrlParam('tab', value), [setUrlParam]);
@@ -117,7 +118,7 @@ export function useManagerAttendanceTrackingLogic(): ManagerAttendanceTrackingVi
 
   return {
     records, totalRecords, todayStats, members, staff, isPending, isError, errorMessage, saving: ui.saving, toast: ui.toast,
-    tab, setTab, search, setSearch, dateFilter, setDateFilter, statusFilter, setStatusFilter, currentPage, setCurrentPage,
+    tab, setTab, search, setSearch, dateFilter, setDateFilter, range, setRange, statusFilter, setStatusFilter, currentPage, setCurrentPage,
     showModal: ui.showModal, setShowModal: ui.setShowModal, calendarUser: ui.calendarUser, setCalendarUser: ui.setCalendarUser,
     form: ui.form, setForm: ui.setForm, showToast: ui.showToast, hideToast: ui.hideToast,
     loadAll: async () => { await refetch(); }, markAttendance, exportAttendance,

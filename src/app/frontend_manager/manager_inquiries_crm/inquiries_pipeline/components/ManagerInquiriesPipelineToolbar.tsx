@@ -18,7 +18,7 @@ import { useManagerInquiriesPipelineLogic } from '@/app/frontend_manager/manager
 export default function ManagerInquiriesPipelineToolbar() {
   const t = useTranslations('MANAGER_INQUIRIES_PIPELINE');
 
-  const { search, setSearch, statusFilter, setStatusFilter, openAdd, selectedIds, clearSelection, openBulkMsg, setCurrentPage, refresh } = useManagerInquiriesPipelineLogic();
+  const { search, setSearch, statusFilter, setStatusFilter, dateFilter, setDateFilter, openAdd, selectedIds, clearSelection, openBulkMsg, setCurrentPage, refresh } = useManagerInquiriesPipelineLogic();
   const [prevSearch, setPrevSearch] = useState(search);
   const [localSearch, setLocalSearch] = useState(search);
 
@@ -74,6 +74,22 @@ export default function ManagerInquiriesPipelineToolbar() {
                 .map(([val, labelKey]) => ({ label: t(labelKey), value: val })),
             ]}
            data-testid="manager_inquiries-managerinquiriestoolbar-searchable-dropdown-1"/>
+        </div>
+        <div className="w-44">
+          <ManagerSearchableDropdown
+            dataTestId="manager_inquiries-managerinquiriestoolbar-date-filter"
+            value={dateFilter}
+            onChange={(val) => setDateFilter(String(val))}
+            options={[
+              { label: 'All Time', value: 'all' },
+              { label: 'This Month', value: 'this_month' },
+              { label: 'Last Month', value: 'last_month' },
+              { label: 'Last 3 Months', value: 'last_3_months' },
+              { label: 'This Year', value: 'this_year' },
+            ]}
+            placeholder="Period"
+            ariaLabel="Inquiries date filter"
+          />
         </div>
         <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-w-32 flex items-center gap-2 px-3 py-2.5 text-sm border border-border rounded-xl motion-safe:transition-all text-text-secondary motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_inquiries-manager-inquiries-toolbar-button-refresh"
           onClick={() => void refresh()}

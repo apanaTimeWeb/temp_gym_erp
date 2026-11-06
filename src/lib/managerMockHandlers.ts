@@ -54,6 +54,10 @@ let currentInquiries = [...MOCK_INQUIRIES];
 let currentExpenses = [...MOCK_EXPENSES_LIST];
 let currentSettings = { ...MOCK_MANAGER_BUSINESS_SETTINGS };
 let currentProfile = { ...MOCK_PROFILE };
+let currentPtAssignments = [...MOCK_PT_ASSIGNMENTS];
+let currentExercises = [...MOCK_MANAGER_WORKOUT_EXERCISES];
+let currentWorkouts = [...MOCK_MANAGER_WORKOUT_PLANSS];
+let currentDietPlans = [...MOCK_MANAGER_DIET_PLANS];
 
 export function handleManagerMockApiRequest(
   urlPath: string,
@@ -536,10 +540,83 @@ export function handleManagerMockApiRequest(
     return buildMockSuccess(MOCK_PT_PACKAGES, 'PT Packages loaded');
   }
   if (path === 'pt/assignments') {
-    return buildMockSuccess({ assignments: MOCK_PT_ASSIGNMENTS, total: MOCK_PT_ASSIGNMENTS.length }, 'PT Assignments loaded');
+    if (method === 'POST') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const newAssignment = {
+          ...MOCK_PT_ASSIGNMENTS[0],
+          ...body,
+          id: `pa-${Date.now()}`,
+          memberName: body.memberName || 'Member',
+          trainerName: body.trainerName || 'Trainer',
+          packageName: body.packageName || 'Package',
+          completedSessions: 0,
+          totalSessions: body.totalSessions || 12,
+          startDate: body.startDate || new Date().toISOString(),
+        };
+        currentPtAssignments = [newAssignment, ...currentPtAssignments];
+        return buildMockSuccess(newAssignment, 'PT Assignment created');
+      } catch {
+        return buildMockSuccess(MOCK_PT_ASSIGNMENTS[0], 'PT Assignment created');
+      }
+    }
+    const page = Math.max(Number(searchParams.get('page') || '1'), 1);
+    const limit = Math.max(Number(searchParams.get('limit') || '10'), 1);
+    return buildMockSuccess({ assignments: currentPtAssignments, total: currentPtAssignments.length, page, limit }, 'PT Assignments loaded');
+  }
+  if (path.startsWith('pt/assignments/') && path.endsWith('/complete-session')) {
+    const id = path.split('/')[1];
+    const match = currentPtAssignments.find((a) => a.id === id) || currentPtAssignments[0];
+    const updated = { ...match, completedSessions: Math.min(match.completedSessions + 1, match.totalSessions) };
+    currentPtAssignments = currentPtAssignments.map((a) => (a.id === id ? updated : a));
+    return buildMockSuccess(updated, 'Session marked complete');
   }
   if (path === 'schedule/shifts') {
+    if (method === 'POST') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const trainer = MOCK_TRAINERS.find((t) => t.trainerId === body.trainerId) || MOCK_TRAINERS[0];
+        const newShift = {
+          id: `sh-${Date.now()}`,
+          trainerId: body.trainerId || trainer.trainerId,
+          trainerName: trainer.trainerName,
+          trainerRole: trainer.trainerRole,
+          day: body.day || 'Monday',
+          startTime: body.startTime || '06:00',
+          endTime: body.endTime || '14:00',
+          status: body.status || 'Scheduled',
+          notes: body.notes || '',
+        };
+        return buildMockSuccess(newShift, 'Shift created');
+      } catch {
+        return buildMockSuccess(MOCK_TRAINERS[0].shifts[0], 'Shift created');
+      }
+    }
     return buildMockSuccess(MOCK_TRAINERS[0]?.shifts ?? [], 'Shifts loaded');
+  }
+  if (path.startsWith('schedule/shifts/')) {
+    const id = path.split('/').pop() || 'shift-1';
+    if (method === 'DELETE') {
+      return buildMockSuccess({ id }, 'Shift deleted');
+    }
+    try {
+      const body = options.body ? JSON.parse(options.body as string) : {};
+      const trainer = MOCK_TRAINERS.find((t) => t.trainerId === body.trainerId) || MOCK_TRAINERS[0];
+      const updated = {
+        id,
+        trainerId: body.trainerId || trainer.trainerId,
+        trainerName: trainer.trainerName,
+        trainerRole: trainer.trainerRole,
+        day: body.day || 'Monday',
+        startTime: body.startTime || '06:00',
+        endTime: body.endTime || '14:00',
+        status: body.status || 'Scheduled',
+        notes: body.notes || '',
+      };
+      return buildMockSuccess(updated, 'Shift updated');
+    } catch {
+      return buildMockSuccess({ ...MOCK_TRAINERS[0].shifts[0], id }, 'Shift updated');
+    }
   }
   if (path === 'schedule') {
     return buildMockSuccess({ trainers: MOCK_TRAINERS, kpis: buildMockScheduleKpis(MOCK_TRAINERS) }, 'Schedule loaded');
@@ -547,7 +624,16 @@ export function handleManagerMockApiRequest(
 
   // 10. INQUIRIES & CRM
   if (path === 'inquiries/stats') {
-    return buildMockSuccess(MOCK_INQUIRY_STATS, 'Inquiry stats loaded');
+    const range = searchParams.get('range') || searchParams.get('date');
+    let stats = { ...MOCK_INQUIRY_STATS };
+    if (range === 'last_month') {
+      stats = { total: 42, new: 10, followUp: 14, converted: 12, lost: 6 };
+    } else if (range === 'last_3_months') {
+      stats = { total: 135, new: 35, followUp: 45, converted: 38, lost: 17 };
+    } else if (range === 'this_year') {
+      stats = { total: 480, new: 120, followUp: 160, converted: 140, lost: 60 };
+    }
+    return buildMockSuccess(stats, 'Inquiry stats loaded');
   }
   if (path === 'inquiries/plans' || path === 'inquiries/plans-snapshot') {
     return buildMockSuccess(MOCK_PLANS, 'Inquiry plans loaded');
@@ -582,13 +668,100 @@ export function handleManagerMockApiRequest(
     return buildMockSuccess(MOCK_WORKOUT_ASSIGNMENTS, 'Workout assignments loaded');
   }
   if (path === 'workouts' || path === 'workouts/') {
-    return buildMockSuccess({ workouts: MOCK_MANAGER_WORKOUT_PLANSS, total: MOCK_MANAGER_WORKOUT_PLANSS.length }, 'Workout plans loaded');
+    if (method === 'POST') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const newWorkout = {
+          ...MOCK_MANAGER_WORKOUT_PLANSS[0],
+          ...body,
+          id: `wp-${Date.now()}`,
+        };
+        currentWorkouts = [newWorkout, ...currentWorkouts];
+        return buildMockSuccess(newWorkout, 'Workout plan created');
+      } catch {
+        return buildMockSuccess(MOCK_MANAGER_WORKOUT_PLANSS[0], 'Workout plan created');
+      }
+    }
+    return buildMockSuccess({ workouts: currentWorkouts, total: currentWorkouts.length }, 'Workout plans loaded');
+  }
+  if (path.startsWith('workouts/') && !path.includes('exercises') && !path.includes('assignments')) {
+    const id = path.split('/').pop() || 'wp-1';
+    if (method === 'DELETE') {
+      currentWorkouts = currentWorkouts.filter((w) => w.id !== id);
+      return buildMockSuccess({ id }, 'Workout plan deleted');
+    }
+    try {
+      const body = options.body ? JSON.parse(options.body as string) : {};
+      const updated = { ...MOCK_MANAGER_WORKOUT_PLANSS[0], ...body, id };
+      currentWorkouts = currentWorkouts.map((w) => (w.id === id ? updated : w));
+      return buildMockSuccess(updated, 'Workout plan updated');
+    } catch {
+      return buildMockSuccess({ id }, 'Workout plan updated');
+    }
   }
   if (path === 'workouts/exercises' || path === 'library/exercises') {
-    return buildMockSuccess({ exercises: MOCK_MANAGER_WORKOUT_EXERCISES, total: MOCK_MANAGER_WORKOUT_EXERCISES.length }, 'Exercises loaded');
+    if (method === 'POST') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const newExercise = {
+          ...MOCK_MANAGER_WORKOUT_EXERCISES[0],
+          ...body,
+          id: `ex-${Date.now()}`,
+        };
+        currentExercises = [newExercise, ...currentExercises];
+        return buildMockSuccess(newExercise, 'Exercise created');
+      } catch {
+        return buildMockSuccess(MOCK_MANAGER_WORKOUT_EXERCISES[0], 'Exercise created');
+      }
+    }
+    return buildMockSuccess({ exercises: currentExercises, total: currentExercises.length }, 'Exercises loaded');
+  }
+  if (path.startsWith('workouts/exercises/') || path.startsWith('library/exercises/')) {
+    const id = path.split('/').pop() || 'ex-1';
+    if (method === 'DELETE') {
+      currentExercises = currentExercises.filter((e) => e.id !== id);
+      return buildMockSuccess({ id }, 'Exercise deleted');
+    }
+    try {
+      const body = options.body ? JSON.parse(options.body as string) : {};
+      const updated = { ...MOCK_MANAGER_WORKOUT_EXERCISES[0], ...body, id };
+      currentExercises = currentExercises.map((e) => (e.id === id ? updated : e));
+      return buildMockSuccess(updated, 'Exercise updated');
+    } catch {
+      return buildMockSuccess({ id }, 'Exercise updated');
+    }
   }
   if (path === 'library/diet-plans') {
-    return buildMockSuccess({ dietPlans: MOCK_MANAGER_DIET_PLANS, total: MOCK_MANAGER_DIET_PLANS.length }, 'Diet plans loaded');
+    if (method === 'POST') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const newDiet = {
+          ...MOCK_MANAGER_DIET_PLANS[0],
+          ...body,
+          id: `dp-${Date.now()}`,
+        };
+        currentDietPlans = [newDiet, ...currentDietPlans];
+        return buildMockSuccess(newDiet, 'Diet plan created');
+      } catch {
+        return buildMockSuccess(MOCK_MANAGER_DIET_PLANS[0], 'Diet plan created');
+      }
+    }
+    return buildMockSuccess({ dietPlans: currentDietPlans, total: currentDietPlans.length }, 'Diet plans loaded');
+  }
+  if (path.startsWith('library/diet-plans/')) {
+    const id = path.split('/').pop() || 'dp-1';
+    if (method === 'DELETE') {
+      currentDietPlans = currentDietPlans.filter((d) => d.id !== id);
+      return buildMockSuccess({ id }, 'Diet plan deleted');
+    }
+    try {
+      const body = options.body ? JSON.parse(options.body as string) : {};
+      const updated = { ...MOCK_MANAGER_DIET_PLANS[0], ...body, id };
+      currentDietPlans = currentDietPlans.map((d) => (d.id === id ? updated : d));
+      return buildMockSuccess(updated, 'Diet plan updated');
+    } catch {
+      return buildMockSuccess({ id }, 'Diet plan updated');
+    }
   }
 
   // 13. GRIEVANCES & MAINTENANCE

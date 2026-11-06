@@ -23,8 +23,10 @@ export function useManagerPtAssignmentsMutations() {
   const createAssignmentMutation = useMutation({
     mutationFn: ({ body, idempotencyKey }: { body: CreatePtAssignmentPayload; idempotencyKey: string }) => ManagerPtAssignmentsApi.createAssignment(body, idempotencyKey),
     onSuccess: (response) => {
-      ManagerInfrastructureShowSuccessToast(response.message, 'manager-pt-success');
+      ManagerInfrastructureShowSuccessToast(`${response.message} • Member notified via WhatsApp`, 'manager-pt-success');
       void queryClient.invalidateQueries({ queryKey: ManagerPtAssignmentsQueryKeys.assignments() });
+      void queryClient.invalidateQueries({ queryKey: ManagerPtAssignmentsQueryKeys.workload() });
+      void queryClient.invalidateQueries({ queryKey: ManagerPtAssignmentsQueryKeys.kpis() });
     },
     onError: (error) => ManagerInfrastructureShowErrorToast(error, 'manager-pt-assign-error'),
   });
