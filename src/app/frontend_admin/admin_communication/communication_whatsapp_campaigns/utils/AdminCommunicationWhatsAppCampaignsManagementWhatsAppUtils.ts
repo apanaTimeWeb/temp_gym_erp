@@ -21,7 +21,12 @@ export function replaceAdminCampaignVariables(body: string, recipient: AdminCamp
 function sanitizePhone(phone: string): string {
   if (!phone || !/^[+\d\s().-]+$/.test(phone.trim())) return '';
   const digits = phone.replace(/\D/g, '');
-  return digits.length >= 8 && digits.length <= 15 ? digits : '';
+  const cleanPhone = digits.startsWith('91') && digits.length === 12
+    ? digits
+    : digits.length === 10
+    ? `91${digits}`
+    : digits;
+  return cleanPhone.length >= 8 && cleanPhone.length <= 15 ? cleanPhone : '';
 }
 
 /** Builds a wa.me URL for the specified phone number and message. @description Implements buildAdminWhatsAppLink for the owning feature’s explicitly typed data. @param phone - Input used by this utility as declared by the signature. @param text - Input used by this utility as declared by the signature. @returns The typed result declared by the function signature. */

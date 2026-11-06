@@ -4,7 +4,7 @@
 
 import { CAMPAIGN_QUEUE_STATUS_VALUES } from '@/app/frontend_admin/admin_communication/communication_whatsapp_campaigns/constants/AdminCommunicationWhatsAppCampaignsManagementConstants';
 import { ADMIN_CAMPAIGNS_QUERY_KEYS } from '@/app/frontend_admin/admin_communication/communication_whatsapp_campaigns/constants/AdminCommunicationWhatsAppCampaignsManagementQueryKeys';
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { AdminCampaignsApi } from '@/app/frontend_admin/admin_communication/communication_whatsapp_campaigns/api/admin_communication_whatsapp_campaigns_api';
 import { buildAdminCampaignQueue, updateAdminCampaignQueueStatus } from '@/app/frontend_admin/admin_communication/communication_whatsapp_campaigns/utils/AdminCommunicationWhatsAppCampaignsManagementQueueUtils';
@@ -15,6 +15,7 @@ export function useAdminCampaignsLogic() {
   const [audienceId, setAudienceId] = useState('');
   const [templateId, setTemplateId] = useState('');
   const [body, setBody] = useState('');
+  const latestBodyRef = useRef('');
   const [queue, setQueue] = useState<AdminCampaignsQueueItem[]>([]);
   const [queueActionErrorKey, setQueueActionErrorKey] = useState<string | null>(null);
 
@@ -32,6 +33,11 @@ export function useAdminCampaignsLogic() {
     enabled: Boolean(audienceId),
   });
 
+  const templatesRef = useRef(templatesQuery?.data?.data);
+  if (templatesQuery?.data?.data) templatesRef.current = templatesQuery.data.data;
+  const recipientsRef = useRef(recipientsQuery?.data?.data?.recipients);
+  if (recipientsQuery?.data?.data?.recipients) recipientsRef.current = recipientsQuery.data.data.recipients;
+
   const selectAudience = useCallback((id: string) => {
     setAudienceId(id);
     setQueue([]);
@@ -43,22 +49,27 @@ export function useAdminCampaignsLogic() {
     // A queue is a snapshot of the selected template/body; discard it when that source changes.
     setQueue([]);
     setQueueActionErrorKey(null);
-    const template = templatesQuery.data?.data?.find((item) => item.id === id);
-    setBody(template?.body ?? '');
-  }, [templatesQuery.data?.data]);
+    const templateList = templatesQuery?.data?.data ?? templatesRef.current;
+    const template = templateList?.find((item) => item.id === id);
+    const newBody = template?.body ?? '';
+    latestBodyRef.current = newBody;
+    setBody(newBody);
+  }, [templatesQuery?.data?.data]);
 
   const changeBody = useCallback((value: string) => {
+    latestBodyRef.current = value;
     setBody(value);
     setQueue([]);
     setQueueActionErrorKey(null);
   }, []);
 
   const createQueue = useCallback(() => {
-    const recipients = recipientsQuery.data?.data?.recipients ?? [];
-    if (!audienceId || !body.trim() || recipients.length === 0) return false;
-    setQueue(buildAdminCampaignQueue(body, recipients));
+    const recipients = recipientsQuery?.data?.data?.recipients ?? recipientsRef.current ?? [];
+    const activeBody = latestBodyRef.current || body;
+    if (!audienceId || !activeBody.trim() || recipients.length === 0) return false;
+    setQueue(buildAdminCampaignQueue(activeBody, recipients));
     return true;
-  }, [audienceId, body, recipientsQuery.data?.data?.recipients]);
+  }, [audienceId, body, recipientsQuery?.data?.data?.recipients]);
 
   const openQueueItem = useCallback((index: number): boolean => {
     const item = queue[index];
@@ -96,9 +107,9 @@ export function useAdminCampaignsLogic() {
 
   return {
     audienceId, selectAudience, templateId, selectTemplate, body, setBody: changeBody, queue, queueActionErrorKey,
-    audiences: audiencesQuery.data?.data ?? [], audiencesStatus: audiencesQuery.status, audiencesError: audiencesQuery.error, refetchAudiences: audiencesQuery.refetch,
-    templates: templatesQuery.data?.data ?? [], templatesStatus: templatesQuery.status, templatesError: templatesQuery.error, refetchTemplates: templatesQuery.refetch,
-    recipientsStatus: recipientsQuery.status, recipientsError: recipientsQuery.error, refetchRecipients: recipientsQuery.refetch, recipientCount: recipientsQuery.data?.data?.recipients?.length ?? 0,
+    audiences: audiencesQuery?.data?.data ?? [], audiencesStatus: audiencesQuery?.status, audiencesError: audiencesQuery?.error, refetchAudiences: audiencesQuery?.refetch,
+    templates: templatesQuery?.data?.data ?? [], templatesStatus: templatesQuery?.status, templatesError: templatesQuery?.error, refetchTemplates: templatesQuery?.refetch,
+    recipientsStatus: recipientsQuery?.status, recipientsError: recipientsQuery?.error, refetchRecipients: recipientsQuery?.refetch, recipientCount: recipientsQuery?.data?.data?.recipients?.length ?? 0,
     createQueue, openQueueItem, setQueueStatus,
   };
 }
