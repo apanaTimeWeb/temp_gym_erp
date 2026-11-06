@@ -35,6 +35,22 @@ export default function AdminAttendanceDashboardKPIs() {
     return t('attendance.AdminAuditRepair.today');
   })();
 
+  const presentTitle = (() => {
+    if (dateRange === 'last_month') return "Present Last Month";
+    if (dateRange === 'this_month') return "Present This Month";
+    if (dateRange === 'this_week') return "Present This Week";
+    if (dateRange === 'yesterday') return "Present Yesterday";
+    return t('attendance.AdminAuditRepair.presentToday');
+  })();
+
+  const lateTitle = (() => {
+    if (dateRange === 'last_month') return "Late Last Month";
+    if (dateRange === 'this_month') return "Late This Month";
+    if (dateRange === 'this_week') return "Late This Week";
+    if (dateRange === 'yesterday') return "Late Yesterday";
+    return t('attendance.AdminAuditRepair.lateArrivals');
+  })();
+
   const cards = [
     {
       title: periodTitle,
@@ -46,7 +62,7 @@ export default function AdminAttendanceDashboardKPIs() {
       iconColor: 'text-primary',
     },
     {
-      title: t('attendance.AdminAuditRepair.presentToday'),
+      title: presentTitle,
       value: formatNumber(summary.todayPresent, locale),
       sub: t('attendance.AdminAuditRepair.attendanceRate', { percent: summary.todayTotal > 0 ? Math.round((summary.todayPresent / summary.todayTotal) * 100) : 0 }),
       subColor: 'text-success',
@@ -55,7 +71,7 @@ export default function AdminAttendanceDashboardKPIs() {
       iconColor: 'text-success',
     },
     {
-      title: t('attendance.AdminAuditRepair.lateArrivals'),
+      title: lateTitle,
       value: formatNumber(summary.todayLate, locale),
       sub: t('attendance.AdminAuditRepair.lateRate', { percent: summary.todayTotal > 0 ? Math.round((summary.todayLate / summary.todayTotal) * 100) : 0 }),
       subColor: 'text-warning',

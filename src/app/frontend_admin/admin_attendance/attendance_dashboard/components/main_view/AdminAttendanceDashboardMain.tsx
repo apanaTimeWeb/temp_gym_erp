@@ -9,6 +9,10 @@ import AdminAttendanceTrendChart from '@/app/frontend_admin/admin_attendance/att
 import AdminAttendanceToolbar from '@/app/frontend_admin/admin_attendance/attendance_dashboard/components/toolbar/AdminAttendanceDashboardToolbar';
 import AdminAttendanceTable from '@/app/frontend_admin/admin_attendance/attendance_dashboard/components/table/AdminAttendanceDashboardTable';
 import { useAdminAttendanceLogic } from '@/app/frontend_admin/admin_attendance/attendance_dashboard/hooks/useAdminAttendanceDashboardLogic';
+import { useAdminAttendanceStore } from '@/app/frontend_admin/admin_attendance/attendance_dashboard/state/useAdminAttendanceDashboardStore';
+import { AdminNavigationLayoutSearchableDropdown } from '@/app/frontend_admin/admin_attendance/attendance_dashboard/components/searchable_dropdown/AdminAttendanceDashboardSearchableDropdown';
+import { DATE_RANGE_OPTIONS } from '@/app/frontend_admin/admin_attendance/attendance_dashboard/constants/AdminAttendanceDashboardConstants';
+import type { DateRangeFilter } from '@/app/frontend_admin/admin_attendance/attendance_dashboard/types/AdminAttendanceDashboardTypes';
 import { RefreshCw, ShieldAlert } from 'lucide-react';
 
 /**
@@ -20,6 +24,7 @@ import { RefreshCw, ShieldAlert } from 'lucide-react';
  */
 export default function AdminAttendanceDashboardMain() {
   const t = useTranslations();
+  const { dateRange, setDateRange } = useAdminAttendanceStore();
 
   const { status, error, summaryStatus, summaryError, trendStatus, trendError, loadAll, retrySummary, retryTrend } = useAdminAttendanceLogic();
 
@@ -34,6 +39,27 @@ export default function AdminAttendanceDashboardMain() {
       </div>
 
       <div className="p-6 space-y-5">
+        {/* Top Header & Global Period Control */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-xl font-bold text-primary">
+              {t('attendance.admin_attendance_main.text_28a8490d8e') || 'Attendance Overview'}
+            </h1>
+            <p className="text-xs text-secondary mt-0.5">
+              Real-time gym attendance monitoring and analytics
+            </p>
+          </div>
+          <div className="w-full sm:w-56">
+            <AdminNavigationLayoutSearchableDropdown
+              options={DATE_RANGE_OPTIONS.map((o) => ({ value: o.value, label: t(o.labelKey) }))}
+              value={dateRange}
+              onChange={(v) => setDateRange(v as DateRangeFilter)}
+              placeholder="Select period"
+              testId="admin-attendance-global-period-select"
+            />
+          </div>
+        </div>
+
         {status === 'error' && (
           <div className="flex items-center justify-between bg-danger-bg border border-border rounded-xl px-4 py-3">
             <p className="text-sm text-danger">{error}</p>

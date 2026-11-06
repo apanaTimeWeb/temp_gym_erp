@@ -8,6 +8,8 @@ import SuperadminPlatformShellNavigationMain from '@/app/frontend_superadmin/sup
 import type { SuperadminPlatformShellLayoutProps } from '@/app/frontend_superadmin/superadmin_platform_shell/platform_shell_layout/types/superadmin_platform_shell_layout_props.types';
 
 
+export const instant = false;
+
 export const metadata = {
   title: 'GymSmart Superadmin | Gym Management System',
   description: 'Complete gym management platform superadmin dashboard.',

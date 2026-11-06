@@ -21,6 +21,10 @@
     "AdminReportsDateFilterDropdown": {
       "text_12e1289bac": "Select Range"
     },
+    "AdminReportsMain": {
+      "exportPdf": "Export as PDF",
+      "exportCsv": "Export as CSV"
+    },
     "admin_reports_main": {
       "text_1ea6687cfe": "All Gyms",
       "exportPdf": "Export as PDF",
