@@ -4,20 +4,10 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Audit & Compliance | Superadmin',
-  description: 'Superadmin audit & compliance workspace.',
+  description: 'Superadmin audit and compliance.',
 };
 
-type SearchParams = Record<string, string | string[] | undefined>;
-type DomainRootProps = { searchParams?: Promise<SearchParams> };
-
-/** Canonical business-domain entry; forwards all query values to its default leaf. */
-export default async function SuperadminDomainRoot({ searchParams }: DomainRootProps) {
-  const resolved = searchParams ? await searchParams : {};
-  const query = new URLSearchParams();
-  for (const [key, value] of Object.entries(resolved)) {
-    if (Array.isArray(value)) value.forEach((entry) => query.append(key, entry));
-    else if (typeof value === 'string') query.set(key, value);
-  }
-  const queryString = query.toString();
-  redirect(queryString ? `/frontend_superadmin/superadmin_audit_compliance/audit_compliance_dashboard?${queryString}` : '/frontend_superadmin/superadmin_audit_compliance/audit_compliance_dashboard');
+/** Canonical business-domain entry; redirects to its default leaf. */
+export default function SuperadminDomainRoot() {
+  redirect('/frontend_superadmin/superadmin_audit_compliance/audit_compliance_dashboard');
 }

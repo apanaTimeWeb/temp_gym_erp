@@ -42,8 +42,11 @@ import { MOCK_TICKETS } from '@/app/frontend_superadmin/superadmin_support/suppo
 // System Ops
 import { SUPERADMIN_SYSTEM_OPS_SUMMARY_MOCK_FIXTURE } from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_overview/mocks/SuperadminSystemOpsOverviewMockFixtures';
 import { MOCK_INFRASTRUCTURE_NODES, MOCK_REDIS_TELEMETRY } from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_infrastructure/mocks/SuperadminSystemOpsInfrastructureMockData';
+import { SUPERADMIN_INFRASTRUCTURE_API_HEALTH_MOCK_FIXTURE } from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_infrastructure/mocks/SuperadminSystemOpsInfrastructureV1MockFixtures';
+import { MOCK_SUPERADMIN_INFRASTRUCTURE_UPTIME } from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_infrastructure/mocks/SuperadminSystemOpsInfrastructureUptimeMockFixtures';
 import { MOCK_SUPERADMIN_BACKUPS } from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_backups/mocks/SuperadminSystemOpsBackupsMockFixtures';
 import { MOCK_BACKGROUND_JOBS } from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_jobs/mocks/SuperadminSystemOpsJobsMockData';
+import { SUPERADMIN_JOBS_QUEUE_HEALTH_MOCK_FIXTURE } from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_jobs/mocks/SuperadminSystemOpsJobsV1MockFixtures';
 import { MOCK_MIGRATIONS } from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_migrations/mocks/SuperadminSystemOpsMigrationsMockData';
 
 // Platform Configuration
@@ -91,6 +94,10 @@ let currentProfile = { ...MOCK_SUPERADMIN_ACCOUNT_PROFILE };
 let currentTeam = JSON.parse(JSON.stringify(SUPERADMIN_TEAM_MOCK_FIXTURE));
 let currentBroadcasts = [...MOCK_SUPERADMIN_COMMUNICATION_BROADCASTS];
 let currentNotifications = [...MOCK_SUPERADMIN_NOTIFICATIONS];
+let currentBackups = [...MOCK_SUPERADMIN_BACKUPS];
+let currentJobs = [...MOCK_BACKGROUND_JOBS];
+let currentMigrations = [...MOCK_MIGRATIONS];
+let currentBackupSchedule = { cronExpression: '0 2 * * *', retentionDays: 30, updatedAt: '2026-09-18T02:00:00Z' };
 
 export function handleSuperadminMockApiRequest(
   urlPath: string,
@@ -333,6 +340,14 @@ export function handleSuperadminMockApiRequest(
   if (urlPath === '/superadmin/system-ops/summary') {
     return buildMockSuccess(SUPERADMIN_SYSTEM_OPS_SUMMARY_MOCK_FIXTURE, 'System ops summary retrieved');
   }
+
+  // 10.1 Infrastructure & Cache
+  if (urlPath === '/superadmin/system-ops/infrastructure/api-health') {
+    return buildMockSuccess(SUPERADMIN_INFRASTRUCTURE_API_HEALTH_MOCK_FIXTURE, 'Infrastructure API health loaded');
+  }
+  if (urlPath === '/superadmin/system-ops/infrastructure/uptime-history') {
+    return buildMockSuccess(MOCK_SUPERADMIN_INFRASTRUCTURE_UPTIME, 'Historical uptime loaded');
+  }
   if (urlPath === '/superadmin/system-ops/infrastructure/redis/flush-global' || urlPath === '/superadmin/system-ops/infrastructure/redis/flush-tenant') {
     return buildMockSuccess({ flushed: true }, 'Cache flush successful');
   }
@@ -342,14 +357,129 @@ export function handleSuperadminMockApiRequest(
   if (urlPath.startsWith('/superadmin/system-ops/infrastructure')) {
     return buildMockSuccess(MOCK_INFRASTRUCTURE_NODES, 'Infrastructure telemetry retrieved');
   }
+
+  // 10.2 Backups
+  if (urlPath === '/superadmin/system-ops/backups/schedule') {
+    if (method === 'PATCH') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        currentBackupSchedule = {
+          cronExpression: body.cronExpression || currentBackupSchedule.cronExpression,
+          retentionDays: Number(body.retentionDays) || currentBackupSchedule.retentionDays,
+          updatedAt: new Date().toISOString(),
+        };
+      } catch {
+        // no-op
+      }
+    }
+    return buildMockSuccess(currentBackupSchedule, 'Backup schedule loaded');
+  }
+  if (urlPath === '/superadmin/system-ops/backups/trigger') {
+    const newBackup = {
+      id: `bk_${Date.now()}`,
+      createdAt: new Date().toISOString(),
+      sizeBytes: 154382000,
+      databaseName: 'all_tenants_prod',
+      status: 'COMPLETED',
+      triggerType: 'MANUAL',
+    };
+    currentBackups.unshift(newBackup as any);
+    return buildMockSuccess(null, 'Backup snapshot initiated');
+  }
+  if (urlPath.endsWith('/download') && urlPath.startsWith('/superadmin/system-ops/backups/')) {
+    return buildMockSuccess({ downloadUrl: 'https://downloads.smartgym360.com/backups/latest.sql.gz' }, 'Download URL generated');
+  }
+  if (urlPath.endsWith('/restore') && urlPath.startsWith('/superadmin/system-ops/backups/')) {
+    return buildMockSuccess(null, 'Restore initiated');
+  }
   if (urlPath.startsWith('/superadmin/system-ops/backups')) {
-    return buildMockSuccess(MOCK_SUPERADMIN_BACKUPS, 'Backups retrieved');
+    return buildMockSuccess(currentBackups, 'Backups retrieved');
+  }
+
+  // 10.3 Background Jobs
+  if (urlPath === '/superadmin/system-ops/jobs/queue-health') {
+    return buildMockSuccess(SUPERADMIN_JOBS_QUEUE_HEALTH_MOCK_FIXTURE, 'Queue health retrieved');
+  }
+  if (urlPath === '/superadmin/system-ops/jobs/retry-all') {
+    const failedCount = currentJobs.filter((j: any) => j.status === 'FAILED').length;
+    currentJobs = currentJobs.map((j: any) => j.status === 'FAILED' ? { ...j, status: 'PENDING', attempts: (j.attempts || 0) + 1 } : j);
+    return buildMockSuccess({ queuedCount: failedCount || 1 }, 'All failed jobs queued for retry');
+  }
+  if (urlPath === '/superadmin/system-ops/jobs/clear-completed') {
+    const completedCount = currentJobs.filter((j: any) => j.status === 'COMPLETED').length;
+    currentJobs = currentJobs.filter((j: any) => j.status !== 'COMPLETED');
+    return buildMockSuccess({ affectedCount: completedCount, count: completedCount }, 'Completed jobs cleared');
+  }
+  if (urlPath === '/superadmin/system-ops/jobs/bulk-retry') {
+    let ids: string[] = [];
+    try {
+      const body = options.body ? JSON.parse(options.body as string) : {};
+      ids = Array.isArray(body.ids) ? body.ids : [];
+    } catch {
+      // no-op
+    }
+    const count = ids.length || 1;
+    return buildMockSuccess({ affectedCount: count, count }, 'Selected jobs queued for retry');
+  }
+  if (urlPath === '/superadmin/system-ops/jobs/bulk-delete') {
+    let ids: string[] = [];
+    try {
+      const body = options.body ? JSON.parse(options.body as string) : {};
+      ids = Array.isArray(body.ids) ? body.ids : [];
+    } catch {
+      // no-op
+    }
+    const count = ids.length || 1;
+    return buildMockSuccess({ affectedCount: count, count }, 'Selected jobs deleted');
+  }
+  if (urlPath.endsWith('/retry') && urlPath.startsWith('/superadmin/system-ops/jobs/')) {
+    const jobId = urlPath.split('/')[4];
+    const job = currentJobs.find((j: any) => j.id === jobId) || currentJobs[0];
+    return buildMockSuccess({ ...job, status: 'PENDING', attempts: ((job as any)?.attempts || 0) + 1 }, 'Job queued for retry');
+  }
+  if (urlPath.endsWith('/cancel') && urlPath.startsWith('/superadmin/system-ops/jobs/')) {
+    const jobId = urlPath.split('/')[4];
+    const job = currentJobs.find((j: any) => j.id === jobId) || currentJobs[0];
+    return buildMockSuccess({ ...job, status: 'CANCELLED' }, 'Job cancelled');
+  }
+  if (urlPath.startsWith('/superadmin/system-ops/jobs') && method === 'DELETE') {
+    const jobId = urlPath.split('/')[4];
+    currentJobs = currentJobs.filter((j: any) => j.id !== jobId);
+    return buildMockSuccess(null, 'Job deleted');
   }
   if (urlPath.startsWith('/superadmin/system-ops/jobs')) {
-    return buildMockSuccess(MOCK_BACKGROUND_JOBS, 'Jobs retrieved');
+    const page = Math.max(1, Number(searchParams.get('page')) || 1);
+    const limit = Math.max(1, Number(searchParams.get('limit')) || 10);
+    const total = currentJobs.length;
+    const totalPages = Math.max(Math.ceil(total / limit), 1);
+    const paginated = currentJobs.slice((page - 1) * limit, page * limit);
+    const meta = { total, page, limit, totalPages, hasNextPage: page < totalPages, hasPrevPage: page > 1 };
+    return buildMockSuccess(paginated, 'Jobs retrieved', meta);
+  }
+
+  // 10.4 Migrations
+  if (urlPath === '/superadmin/system-ops/migrations/trigger') {
+    let targetVersion = 'v2.5.0';
+    try {
+      const body = options.body ? JSON.parse(options.body as string) : {};
+      if (body.targetVersion) targetVersion = body.targetVersion;
+    } catch {
+      // no-op
+    }
+    const newMigration = {
+      id: `migration-${Date.now()}`,
+      version: targetVersion,
+      description: 'Manual schema rollout',
+      appliedAt: null,
+      status: 'IN_PROGRESS',
+      executionTimeMs: null,
+      batch: currentMigrations.length + 1,
+    };
+    currentMigrations.unshift(newMigration as any);
+    return buildMockSuccess(newMigration, 'Migration triggered successfully');
   }
   if (urlPath.startsWith('/superadmin/system-ops/migrations')) {
-    return buildMockSuccess(MOCK_MIGRATIONS, 'Migrations retrieved');
+    return buildMockSuccess(currentMigrations, 'Migrations retrieved');
   }
 
   // 11. PLATFORM CONFIGURATION
