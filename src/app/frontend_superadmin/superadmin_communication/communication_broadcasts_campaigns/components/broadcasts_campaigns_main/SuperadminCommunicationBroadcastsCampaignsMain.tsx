@@ -38,7 +38,7 @@ export default function SuperadminCommunicationBroadcastsCampaignsMain() {
     </div>);
     if (error)
         return <section role="alert" className="flex flex-col items-center justify-center gap-3 rounded-xl border border-border bg-card p-8 text-center"><p className="text-danger">{t('ui.broadcasts_could_not_be_loaded_please_retry_5c1c1316')}</p><button type="button" onClick={() => void retryBroadcasts()} className="min-h-11 rounded-lg border border-border px-4 py-2 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">{t('ui.retry_6327b4e5')}</button></section>;
-    return (<div className="flex flex-col gap-6 w-full max-w-7xl mx-auto" data-testid="superadmin_communication_broadcasts-superadmin-broadcasts-main-page-ready">
+    return (<div className="flex flex-col gap-6 w-full" data-testid="superadmin_communication_broadcasts-superadmin-broadcasts-main-page-ready">
       <SuperadminCommunicationBroadcastsHeader searchQuery={searchQuery} onSearchChange={setSearchQuery} statusFilter={statusFilter} onStatusFilterChange={setStatusFilter} onCreateClick={openCreateModal}/>
 
       {broadcasts.length === 0 ? (<SuperadminCommunicationBroadcastsEmptyState onCreateClick={openCreateModal}/>) : (<>

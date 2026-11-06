@@ -49,7 +49,7 @@ export default function SuperadminBillingUsageMetersDashboardMain() {
 
     const displayMeters = hasInvalidCustomRange ? [] : (queryData?.data ?? []);
     const formatBillingDate = (value: string) => formatSuperadminUsageMeterBillingDate(value, locale, t('ui.date_unavailable'));
-    return (<div className="max-w-7xl mx-auto space-y-6">
+    return (<div className="space-y-6 w-full">
       {isError ? <div className="rounded-lg border border-danger bg-danger-bg p-3 text-sm text-danger" role="alert">{t('ui.failed_to_load_usage_meters')} <button type="button" onClick={() => void refetch()} className="ms-2 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary min-h-11 min-w-11">{t('ui.try_again_d876a9fe')}</button></div> : null}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div>

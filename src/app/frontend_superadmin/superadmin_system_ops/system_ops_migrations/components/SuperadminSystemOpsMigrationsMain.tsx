@@ -32,20 +32,20 @@ export default function SuperadminSystemOpsMigrationsMain() {
   const vm = useSuperadminSystemOpsMigrationsMainViewModel();
 
   if (vm.isPending) {
-    return (<div className="p-6 space-y-4" aria-busy="true" data-testid="superadmin_system_ops_migrations-superadmin-system-ops-migrations-main-page">
+    return (<div className="space-y-4" aria-busy="true" data-testid="superadmin_system_ops_migrations-superadmin-system-ops-migrations-main-page">
       {[0, 1, 2].map((row) => (<div key={row} className="h-24 rounded-xl bg-skeleton-base motion-safe:animate-pulse" />))}
     </div>);
   }
 
   if (vm.isError) {
-    return (<div className="p-6"><div className="rounded-xl border border-border bg-card p-8 text-center">
+    return (<div className="rounded-xl border border-border bg-card p-8 text-center">
       <AlertTriangle size={18} className="mx-auto mb-3 text-danger" aria-hidden="true" />
       <p className="font-semibold text-primary">{vm.t('ui.schema_rollout_history_could_not_be_loaded_dea6d68')}</p>
       <button type="button" onClick={() => void vm.refetch()} className="min-h-11 mt-4 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base ease-in-out motion-safe:active:scale-95" data-testid="superadmin_system_ops_migrations-superadmin-system-ops-migrations-main-superadmin_system_ops_migrations-migrations-main-retry">{vm.t('ui.retry_72295fa')}</button>
-    </div></div>);
+    </div>);
   }
 
-  return (<div className="p-6 max-w-7xl mx-auto space-y-6">
+  return (<div className="space-y-6 w-full">
     <div className="flex flex-col gap-4 mb-8 md:flex-row md:items-center md:justify-between">
       <div>
         <h1 className="superadmin-page-title text-primary">{vm.t('ui.schema_rollouts_af7888a')}</h1>

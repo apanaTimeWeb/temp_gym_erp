@@ -44,7 +44,7 @@ export default function SuperadminAffiliatesManagementMain() {
             <button type="button" onClick={() => router.push(SUPERADMIN_AFFILIATES_MANAGEMENT_ROUTES.DESTINATION_1)} className="min-h-11 rounded-md border border-border px-4 py-2 text-sm font-medium text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page">{t('ui.payout_history_625c04c')}</button>
           </div>
         </div>;
-    return (<div className="flex flex-col gap-6 w-full max-w-7xl mx-auto" data-testid="superadmin_affiliates-superadmin-affiliates-main-page-ready">
+    return (<div className="flex flex-col gap-6 w-full" data-testid="superadmin_affiliates-superadmin-affiliates-main-page-ready">
       <SuperadminAffiliatesHeader searchQuery={searchQuery} onSearchChange={setSearchQuery} statusFilter={statusFilter} onStatusFilterChange={setStatusFilter} onAddClick={() => setIsModalOpen(true)} startDate={startDate ?? ''} onStartDateChange={(value) => setStartDate(value)} endDate={endDate ?? ''} onEndDateChange={(value) => setEndDate(value)}/>
 
       <SuperadminAffiliatesStatsBar totalAffiliates={totalAffiliates} totalCommission={totalCommission} currency={affiliates[0]?.currency || 'INR'}/>

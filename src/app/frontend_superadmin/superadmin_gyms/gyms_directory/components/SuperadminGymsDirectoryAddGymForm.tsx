@@ -38,7 +38,7 @@ export default function SuperadminGymsDirectoryAddGymForm() {
     };
 
     const { register, handleSubmit, onSubmit, control, errors, isProvisioning, provisioningLogs, showPassword, setShowPassword, plans, loadingPlans, plansError, retryPlans, } = useSuperadminGymsDirectoryAddGymForm();
-    return (<div className="max-w-4xl mx-auto space-y-6">
+    return (<div className="max-w-4xl space-y-6">
       <div className="flex items-center gap-4">
         <Link href={SUPERADMIN_GYMS_MANAGEMENT_ROUTES.VIEW('list')} aria-label={t('ui.back_to_module')} className="min-h-11 min-w-11 p-2 bg-card border border-border rounded-lg text-secondary hover:text-on-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="superadmin_gyms-superadmin-gyms-add-gym-form-add-gym-form-link">
           <ArrowLeft size={18}/>
