@@ -18,7 +18,7 @@ export default function Error({
   const t = useTranslations();
 
   return (
-    <div className="p-6 max-w-3xl mx-auto mt-10">
+    <div className="p-6 w-full mt-10">
       <div className="bg-danger-bg border border-border rounded-2xl p-8 text-center flex flex-col items-center">
         <div className="w-16 h-16 bg-danger-bg rounded-full flex items-center justify-center mb-4" data-testid="admin_hr-error-status-1">
           <AlertTriangle size={18} strokeWidth={2} className="text-danger" />

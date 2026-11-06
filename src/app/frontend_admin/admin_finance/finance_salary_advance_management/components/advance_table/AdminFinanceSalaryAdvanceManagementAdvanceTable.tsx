@@ -24,7 +24,7 @@ export default function AdminFinanceSalaryAdvanceManagementAdvanceTable() {
   const { register, formState: { errors } } = form;
 
   return (
-    <div className="max-w-2xl mx-auto bg-card p-6 rounded-xl border border-border">
+    <div className="w-full bg-card p-6 rounded-xl border border-border">
       <h2 className="text-xl font-bold mb-6 text-primary">{t('hr.admin_hr_advance_table.text_1a794f7e6b')}</h2>
       <form onSubmit={submit} className="space-y-5" noValidate data-testid="admin_hr-admin_hr-advance-table-submit">
         <div>
