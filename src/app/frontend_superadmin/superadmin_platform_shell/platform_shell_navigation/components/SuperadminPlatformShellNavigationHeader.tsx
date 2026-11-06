@@ -12,19 +12,26 @@
 import { Menu } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
+import { Suspense } from 'react';
 
 import { ThemeToggle } from '@/components/ThemeToggle';
 
 import { SuperadminPlatformShellNavigationHeaderProfile } from '@/app/frontend_superadmin/superadmin_platform_shell/platform_shell_navigation/components/SuperadminPlatformShellNavigationHeaderProfile';
 import { getSuperadminRouteHeaderConfig } from '@/app/frontend_superadmin/superadmin_platform_shell/platform_shell_navigation/constants/superadmin_platform_shell_navigation_route_header_config.constants';
 
+function SuperadminHeaderTitle() {
+  const t = useTranslations('SuperadminPlatformShellLayoutStyles');
+  const pathname = usePathname();
+  const { titleKey, subtitleKey } = getSuperadminRouteHeaderConfig(pathname);
 
-/**
- * @description Renders the single persistent fixed Superadmin shell header. It owns shell controls only; feature business logic stays inside feature modules.
- * @dependencies Delegates domain behavior to the feature-local dependencies imported by this file.
- * @state Keeps server state in TanStack Query and module UI state in the owning feature state layer where applicable.
- * @edge-cases Preserves documented loading, empty, error, disabled, cancellation, retry, and repeated-action behavior.
- */
+  return (
+    <div className="min-w-0">
+      <h1 className="text-xl font-bold text-primary truncate">{t(titleKey)}</h1>
+      <p className="text-sm text-secondary truncate mt-0.5">{t(subtitleKey)}</p>
+    </div>
+  );
+}
+
 /**
  * @description Renders LayoutHeader within the owning Superadmin feature module.
  * @dependencies Uses only dependencies declared in this module file and documented feature infrastructure.
@@ -32,8 +39,6 @@ import { getSuperadminRouteHeaderConfig } from '@/app/frontend_superadmin/supera
  */
 export default function SuperadminPlatformShellNavigationHeader() {
   const t = useTranslations('SuperadminPlatformShellLayoutStyles');
-  const pathname = usePathname();
-  const { titleKey, subtitleKey } = getSuperadminRouteHeaderConfig(pathname);
 
   return (
     <header className="fixed inset-x-0 top-0 z-20 h-16 bg-header-translucent backdrop-blur-md border-b border-border px-6 flex items-center justify-between gap-4">
@@ -46,10 +51,9 @@ export default function SuperadminPlatformShellNavigationHeader() {
          data-testid="SuperadminPlatformShellLayoutStyles-superadmin-header-superadmin-header-toggle-sidebar">
           <Menu size={18} strokeWidth={2} aria-hidden="true" />
         </button>
-        <div className="min-w-0">
-          <h1 className="text-xl font-bold text-primary truncate">{t(titleKey)}</h1>
-          <p className="text-sm text-secondary truncate mt-0.5">{t(subtitleKey)}</p>
-        </div>
+        <Suspense fallback={<div className="min-w-0 h-10" />}>
+          <SuperadminHeaderTitle />
+        </Suspense>
       </div>
 
       <div className="flex shrink-0 items-center gap-2 lg:gap-3">
