@@ -55,7 +55,14 @@ export default function ManagerMembersDirectoryProfileDiet() {
             <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "flex items-center gap-2 px-4 py-2 bg-success text-on-success rounded-xl text-sm font-semibold hover:shadow-card hover:shadow-card motion-safe:transition-all motion-safe:active:scale-95 motion-safe:duration-200 ease-in-out focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_members-member-profile-diet-button-assign" 
               onClick={() => {
                 const text = `*DIET PLAN: ${diet?.name || 'Assigned'}*\n\n*Macros:*\nCalories: ${diet?.calories || 0} kcal\nProtein: ${diet?.protein || 0}g\nCarbs: ${diet?.carbs || 0}g\nFats: ${diet?.fats || 0}g\n\n*Meals:*\n${diet?.meals?.map(m => `*${m.time} - ${m.name}* (${m.calories || 0} kcal)\n${(m.foods || []).map((f: string) => `- ${f}`).join('\n')}`).join('\n\n')}`;
-                const popup = window.open(`${MANAGER_MEMBERS_DIRECTORY_API.INTEGRATIONS.WHATSAPP_WEB_BASE}/?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
+                const rawPhone = selectedMember.phone?.replace(/\D/g, '') || '';
+                const cleanPhone = rawPhone.startsWith('91') && rawPhone.length === 12
+                  ? rawPhone
+                  : rawPhone.length === 10
+                  ? `91${rawPhone}`
+                  : rawPhone;
+                const target = cleanPhone ? `/${cleanPhone}` : '';
+                const popup = window.open(`${MANAGER_MEMBERS_DIRECTORY_API.INTEGRATIONS.WHATSAPP_WEB_BASE}${target}?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
                 if (popup) popup.opener = null;
               }}
               

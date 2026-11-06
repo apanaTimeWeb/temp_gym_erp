@@ -102,9 +102,15 @@ export default function ManagerSalesOverviewPendingPayments() {
                     ],
                     footer: locale.startsWith('hi') ? 'कृपया सेवा में व्यवधान से बचने के लिए बकाया राशि जमा करें।' : 'Please clear the outstanding amount to avoid service interruption.'
                   });
-                  const phone = p.phone?.replace(/\D/g, '') || '';
-                  if (!phone) return;
-                  const popup = window.open(`${MANAGER_SALES_OVERVIEW_API.INTEGRATIONS.WHATSAPP_WEB_BASE}/91${phone}?text=${encodeURIComponent(waText)}`, '_blank', 'noopener,noreferrer');
+                  const rawPhone = p.phone?.replace(/\D/g, '') || '';
+                  if (!rawPhone) return;
+                  const cleanPhone = rawPhone.startsWith('91') && rawPhone.length === 12
+                    ? rawPhone
+                    : rawPhone.length === 10
+                    ? `91${rawPhone}`
+                    : rawPhone;
+                  const target = cleanPhone ? `/${cleanPhone}` : '';
+                  const popup = window.open(`${MANAGER_SALES_OVERVIEW_API.INTEGRATIONS.WHATSAPP_WEB_BASE}${target}?text=${encodeURIComponent(waText)}`, '_blank', 'noopener,noreferrer');
                   if (popup) popup.opener = null;
                 }}
                 

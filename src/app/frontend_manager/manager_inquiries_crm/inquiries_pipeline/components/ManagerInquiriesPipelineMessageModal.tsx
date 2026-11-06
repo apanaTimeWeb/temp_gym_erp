@@ -50,7 +50,11 @@ export default function ManagerInquiriesPipelineMessageModal({
   try {
    if (type === 'whatsapp') {
     const phone = contactInfo?.replace(/\D/g, '') || '';
-    const url = whatsappUrlBuilder?.(phone, message);
+    const buildUrl = whatsappUrlBuilder ?? ((p: string, m: string) => {
+      const cleanPhone = p.startsWith('91') && p.length === 12 ? p : p.length === 10 ? `91${p}` : p;
+      return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(m)}`;
+    });
+    const url = buildUrl(phone, message);
     if (!url) return;
     window.open(url, '_blank', 'noopener,noreferrer');
    } else {

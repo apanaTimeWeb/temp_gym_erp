@@ -56,11 +56,16 @@ export default function ManagerCommunicationsCampaignsBulkMessageModal({
     if (!phone) return;
 
     const personalizedMessage = personalizeMessage(message, recipient.name);
-    const url = whatsappUrlBuilder?.(phone, personalizedMessage);
+    const buildUrl = whatsappUrlBuilder ?? ((p: string, m: string) => {
+      const cleanPhone = p.startsWith('91') && p.length === 12 ? p : p.length === 10 ? `91${p}` : p;
+      return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(m)}`;
+    });
+    const url = buildUrl(phone, personalizedMessage);
     if (!url) return;
-    const openedWindow = window.open(url, '_blank');
-    if (!openedWindow) return;
-    openedWindow.opener = null;
+    const openedWindow = window.open(url, '_blank', 'noopener,noreferrer');
+    if (openedWindow) {
+      openedWindow.opener = null;
+    }
 
     const recipientKey = `${recipient.phone ?? ''}-${recipient.email ?? ''}-${recipient.name}`;
     setOpenedRecipientKeys(prev => new Set(prev).add(recipientKey));
