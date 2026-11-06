@@ -51,11 +51,16 @@ export default function ManagerMembersDirectoryMessageModal({
   try {
    if (type === 'whatsapp') {
     const phone = contactInfo?.replace(/\D/g, '') || '';
-    const url = whatsappUrlBuilder?.(phone, message);
+    const buildUrl = whatsappUrlBuilder ?? ((p: string, m: string) => {
+      const cleanPhone = p.startsWith('91') && p.length === 12 ? p : p.length === 10 ? `91${p}` : p;
+      return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(m)}`;
+    });
+    const url = buildUrl(phone, message);
     if (!url) return;
-    const openedWindow = window.open(url, '_blank');
-    if (!openedWindow) return;
-    openedWindow.opener = null;
+    const openedWindow = window.open(url, '_blank', 'noopener,noreferrer');
+    if (openedWindow) {
+      openedWindow.opener = null;
+    }
    } else {
     const url = `mailto:${contactInfo || ''}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
     window.location.href = url;

@@ -60,7 +60,15 @@ export function useManagerStoreProductsOrder(
           sections: [{ title: 'Items', items: itemsRecord }, { items: { Total: ManagerStoreProductsFormatCurrency(orderTotal, ManagerEnvConfig.currencyCode, locale), Payment: ui.orderMethod } }],
           footer: t('TEXT_THANK_YOU_VISIT_AGAIN'),
         });
-        window.open(`${MANAGER_STORE_PRODUCTS_API.INTEGRATIONS.WHATSAPP_WEB_BASE}/91${ui.customerPhone.replace(/\D/g, '')}?text=${encodeURIComponent(waText)}`, '_blank', 'noopener,noreferrer');
+        const rawPhone = ui.customerPhone.replace(/\D/g, '');
+        const cleanPhone = rawPhone.startsWith('91') && rawPhone.length === 12
+          ? rawPhone
+          : rawPhone.length === 10
+          ? `91${rawPhone}`
+          : rawPhone;
+        const target = cleanPhone ? `/${cleanPhone}` : '';
+        const popup = window.open(`${MANAGER_STORE_PRODUCTS_API.INTEGRATIONS.WHATSAPP_WEB_BASE}${target}?text=${encodeURIComponent(waText)}`, '_blank', 'noopener,noreferrer');
+        if (popup) popup.opener = null;
       } else {
         setPrintData({
           gymName: GYM_DETAILS.name,

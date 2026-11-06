@@ -21,7 +21,13 @@ export default function ManagerInquiriesPipelineConvertLeadSuccess({ successData
 
   const handleSendWhatsApp = () => {
     if (!successData || !successData.phone) return;
-    const phone = successData.phone.replace(/\D/g, '');
+    const rawPhone = successData.phone.replace(/\D/g, '');
+    const cleanPhone = rawPhone.startsWith('91') && rawPhone.length === 12
+      ? rawPhone
+      : rawPhone.length === 10
+      ? `91${rawPhone}`
+      : rawPhone;
+    const target = cleanPhone ? `/${cleanPhone}` : '';
     // Aadhaar is sensitive identity data and must never be included in an external messaging URL.
     const aadhaarLine = '';
     const message = t('TEXT_WHATSAPP_ADMISSION_MESSAGE', {
@@ -36,7 +42,7 @@ export default function ManagerInquiriesPipelineConvertLeadSuccess({ successData
       pendingAmount: ManagerInquiriesPipelineFormatCurrency(successData.pendingAmount, ManagerEnvConfig.currencyCode, locale),
     });
     
-    const popup = window.open(`${MANAGER_INQUIRIES_PIPELINE_API.INTEGRATIONS.WHATSAPP_WEB_BASE}/91${phone}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+    const popup = window.open(`${MANAGER_INQUIRIES_PIPELINE_API.INTEGRATIONS.WHATSAPP_WEB_BASE}${target}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
     if (popup) popup.opener = null;
   };
 

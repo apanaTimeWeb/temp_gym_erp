@@ -82,7 +82,15 @@ export function useManagerMembersDirectoryPrintLogic(
       footer: 'Thank you for your payment!'
     });
 
-    window.open(`${MANAGER_MEMBERS_DIRECTORY_API.INTEGRATIONS.WHATSAPP_WEB_BASE}/91${m.phone?.replace(/\D/g, '') || ''}?text=${encodeURIComponent(waText)}`, '_blank');
+    const rawPhone = m.phone?.replace(/\D/g, '') || '';
+    const cleanPhone = rawPhone.startsWith('91') && rawPhone.length === 12
+      ? rawPhone
+      : rawPhone.length === 10
+      ? `91${rawPhone}`
+      : rawPhone;
+    const target = cleanPhone ? `/${cleanPhone}` : '';
+    const popup = window.open(`${MANAGER_MEMBERS_DIRECTORY_API.INTEGRATIONS.WHATSAPP_WEB_BASE}${target}?text=${encodeURIComponent(waText)}`, '_blank', 'noopener,noreferrer');
+    if (popup) popup.opener = null;
   }, [locale, selectedMember, showToast]);
 
   return {
