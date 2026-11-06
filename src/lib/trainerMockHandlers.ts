@@ -790,26 +790,83 @@ export function handleTrainerMockApiRequest(
     if (method === 'POST') {
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
+        const memberId = String(body.memberId || '');
+        const allMembers = [
+          ...currentMembers.map((m: any) => ({ id: String(m.id), name: m.name, phone: m.phone || '' })),
+          ...TRAINER_ATTENDANCE_MOCK_MEMBERS.map((m: any) => ({ id: String(m.id), name: m.name, phone: m.phone || '' })),
+        ];
+        const matchedMember = allMembers.find((m: any) => m.id === memberId) || { id: memberId || 'm1', name: 'Member', phone: '' };
+
+        const now = new Date();
+        const dateStr = body.date || now.toISOString().split('T')[0];
+        const checkInTime = body.checkIn 
+          ? (body.checkIn.includes('T') ? body.checkIn : `${dateStr}T${body.checkIn}:00Z`)
+          : now.toISOString();
+        const checkOutTime = body.checkOut
+          ? (body.checkOut.includes('T') ? body.checkOut : `${dateStr}T${body.checkOut}:00Z`)
+          : undefined;
+
         const newRecord = {
           id: `att_${Date.now()}`,
-          memberId: body.memberId || '1',
-          memberName: body.memberName || 'Member',
-          checkIn: body.checkIn || new Date().toISOString(),
-          checkOut: null,
-          status: 'PRESENT',
-          date: new Date().toISOString().split('T')[0],
+          type: (body.type || 'MEMBER') as 'MEMBER' | 'STAFF',
+          date: dateStr,
+          checkIn: checkInTime,
+          checkOut: checkOutTime,
+          durationMinutes: checkOutTime ? 60 : undefined,
+          checkInMethod: body.checkInMethod || 'Manual',
+          notes: body.notes || undefined,
+          memberId: matchedMember.id,
+          member: {
+            id: String(matchedMember.id),
+            name: matchedMember.name,
+            phone: matchedMember.phone || undefined,
+          },
         };
+
         currentAttendance.unshift(newRecord);
+        TRAINER_ATTENDANCE_MOCK_STATS.totalCheckIns += 1;
+        TRAINER_ATTENDANCE_MOCK_STATS.memberCheckIns += 1;
+
         return buildMockSuccess(newRecord, 'Attendance check-in recorded');
-      } catch {
+      } catch (err) {
         return buildMockSuccess(currentAttendance[0], 'Attendance check-in recorded');
       }
     }
 
     const page = Math.max(1, Number(searchParams.get('page') || '1'));
     const limit = Math.max(1, Number(searchParams.get('limit') || '20'));
-    const total = currentAttendance.length;
-    const paginated = currentAttendance.slice((page - 1) * limit, page * limit);
+    const search = (searchParams.get('search') || '').trim().toLowerCase();
+    const filterDate = searchParams.get('filterDate') || searchParams.get('date');
+    const type = searchParams.get('type');
+
+    let filtered = [...currentAttendance];
+
+    if (type) {
+      filtered = filtered.filter((r: any) => r.type === type);
+    }
+
+    const todayStr = new Date().toISOString().split('T')[0];
+    if (filterDate === 'TODAY') {
+      filtered = filtered.filter((r: any) => r.date === todayStr);
+    } else if (filterDate === 'YESTERDAY') {
+      const yest = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+      filtered = filtered.filter((r: any) => r.date === yest);
+    } else if (filterDate === 'THIS_MONTH') {
+      const monthPrefix = todayStr.substring(0, 7);
+      filtered = filtered.filter((r: any) => r.date && r.date.startsWith(monthPrefix));
+    }
+
+    if (search) {
+      filtered = filtered.filter((r: any) => {
+        const name = (r.type === 'MEMBER' ? r.member?.name : r.staff?.name) || '';
+        const phone = (r.type === 'MEMBER' ? r.member?.phone : '') || '';
+        const id = r.id || '';
+        return name.toLowerCase().includes(search) || phone.toLowerCase().includes(search) || id.toLowerCase().includes(search);
+      });
+    }
+
+    const total = filtered.length;
+    const paginated = filtered.slice((page - 1) * limit, page * limit);
 
     return buildMockSuccess({
       attendance: paginated,
@@ -846,7 +903,20 @@ export function handleTrainerMockApiRequest(
   }
 
   if (trainerPath === 'trainer_attendance/members-basic' || trainerPath === 'attendance/members-basic') {
-    return buildMockSuccess(TRAINER_ATTENDANCE_MOCK_MEMBERS, 'Basic member list retrieved');
+    const allMembers = [
+      ...currentMembers.map((m: any) => ({
+        id: String(m.id),
+        name: m.name,
+        phone: m.phone || '',
+      })),
+      ...TRAINER_ATTENDANCE_MOCK_MEMBERS.map((m: any) => ({
+        id: String(m.id),
+        name: m.name,
+        phone: m.phone || '',
+      })),
+    ];
+    const unique = Array.from(new Map(allMembers.map(m => [m.id, m])).values());
+    return buildMockSuccess(unique, 'Basic member list retrieved');
   }
 
   if (trainerPath === 'trainer_attendance/today-stats' || trainerPath === 'attendance/today-stats') {
@@ -855,9 +925,15 @@ export function handleTrainerMockApiRequest(
 
   if (trainerPath.startsWith('trainer_attendance/checkout/') || trainerPath.startsWith('attendance/checkout/')) {
     const id = trainerPath.split('/')[2];
-    const rec = currentAttendance.find((r: any) => r.id === id);
-    if (rec) rec.checkOut = new Date().toISOString();
-    return buildMockSuccess(rec || null, 'Checkout recorded');
+    const rec = currentAttendance.find((r: any) => r.id === id || r.memberId === id || r.staffId === id);
+    if (rec) {
+      rec.checkOut = new Date().toISOString();
+      if (rec.checkIn) {
+        const diffMs = new Date(rec.checkOut).getTime() - new Date(rec.checkIn).getTime();
+        rec.durationMinutes = Math.max(1, Math.round(diffMs / 60000));
+      }
+    }
+    return buildMockSuccess(null, 'Checkout recorded');
   }
 
   // 9. OPERATIONS - SCHEDULE & LEAVES

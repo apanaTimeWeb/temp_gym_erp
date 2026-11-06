@@ -15,7 +15,9 @@ import { useTrainerInfrastructureFeedback } from '@/app/frontend_trainer/trainer
 
 import { useTrainerInfrastructureIdempotencyKey } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/hooks/TrainerOperationsMemberAttendanceuseTrainerInfrastructureIdempotencyKey';
 
-import type { TrainerAttendanceCreateDto } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/types/TrainerOperationsMemberAttendanceAttendanceTypes';
+import { checkOutTrainerAttendance } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/api/TrainerOperationsMemberAttendanceAttendanceApi';
+
+import type { TrainerAttendanceCreateDto, TrainerAttendanceMemberBasic } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/types/TrainerOperationsMemberAttendanceAttendanceTypes';
 
 
 
@@ -51,6 +53,17 @@ export function useTrainerAttendanceMain({ forcedTab }: { forcedTab?: 'MEMBERS' 
   const { showSuccess, showError } = useTrainerInfrastructureFeedback();
   const mutationKeys = useTrainerInfrastructureIdempotencyKey();
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [selectedMemberId, setSelectedMemberId] = useState<string>('');
+
+  const openModalForMember = (memberId: string) => {
+    setSelectedMemberId(memberId);
+    openModal();
+  };
+
+  const handleCloseModal = () => {
+    setSelectedMemberId('');
+    closeModal();
+  };
 
   const handleMarkAttendance = async (data: TrainerAttendanceCreateDto) => {
     const actionId = `record-${data.memberId ?? data.staffId ?? data.date}`;
@@ -58,10 +71,44 @@ export function useTrainerAttendanceMain({ forcedTab }: { forcedTab?: 'MEMBERS' 
     try {
       const response = await markAttendance({ dto: data, idempotencyKey: key });
       mutationKeys.clear(actionId);
-      closeModal();
+      handleCloseModal();
       showSuccess(response.message, `attendance-record-${data.memberId ?? data.staffId ?? data.date}`);
     } catch (error) {
       showError(error, `attendance-record-${data.memberId ?? data.staffId ?? data.date}`);
+    }
+  };
+
+  const handleQuickMark = async (member: TrainerAttendanceMemberBasic) => {
+    const now = new Date();
+    const dateStr = [now.getFullYear(), String(now.getMonth() + 1).padStart(2, '0'), String(now.getDate()).padStart(2, '0')].join('-');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const timeStr = `${hours}:${minutes}`;
+
+    await handleMarkAttendance({
+      type: 'MEMBER',
+      memberId: String(member.id),
+      date: dateStr,
+      checkIn: timeStr,
+      notes: 'Quick check-in',
+    });
+  };
+
+  const handleCheckOutRecord = async (recordId: string) => {
+    const actionId = `checkout-${recordId}`;
+    const key = mutationKeys.begin(actionId);
+    try {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const timeStr = `${hours}:${minutes}`;
+      const response = await checkOutTrainerAttendance(recordId, timeStr, key);
+      mutationKeys.clear(actionId);
+      void recordsQuery.refetch();
+      void statsQuery.refetch();
+      showSuccess(response.message || 'Checkout recorded successfully', `checkout-${recordId}`);
+    } catch (error) {
+      showError(error, `checkout-${recordId}`);
     }
   };
 
@@ -117,7 +164,12 @@ export function useTrainerAttendanceMain({ forcedTab }: { forcedTab?: 'MEMBERS' 
     selfCheckInPending,
     selfCheckOutPending,
     openModal,
-    closeModal,
+    closeModal: handleCloseModal,
+    selectedMemberId,
+    setSelectedMemberId,
+    openModalForMember,
+    handleQuickMark,
+    handleCheckOutRecord,
     viewMode,
     setViewMode,
     showModal,

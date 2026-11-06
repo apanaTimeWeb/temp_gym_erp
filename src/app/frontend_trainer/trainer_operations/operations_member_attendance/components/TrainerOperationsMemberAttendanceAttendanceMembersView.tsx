@@ -20,6 +20,6 @@ export default function TrainerAttendanceMembersView({ model }: { model: ReturnT
     );
   }
   return (
-    <TrainerAttendanceTable records={model.records} totalRecords={model.totalRecords} isPending={model.recordsQuery.isPending || model.recordsQuery.isFetching} search={model.search} filterDate={model.filterDate} currentPage={model.currentPage} sortBy={model.sortBy} sortDirection={model.sortDirection} onPageChange={model.filters.setCurrentPage} onSort={model.filters.setSort} />
+    <TrainerAttendanceTable records={model.records} totalRecords={model.totalRecords} isPending={model.recordsQuery.isPending || model.recordsQuery.isFetching} search={model.search} filterDate={model.filterDate} currentPage={model.currentPage} sortBy={model.sortBy} sortDirection={model.sortDirection} onPageChange={model.filters.setCurrentPage} onSort={model.filters.setSort} onCheckOut={model.handleCheckOutRecord} />
   );
 }

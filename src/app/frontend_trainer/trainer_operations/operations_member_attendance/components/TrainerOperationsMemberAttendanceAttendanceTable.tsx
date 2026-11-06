@@ -7,7 +7,7 @@
  */
 import { Fragment, useState } from 'react';
 
-import { Clock } from 'lucide-react';
+import { Clock, LogOut } from 'lucide-react';
 
 import { useLocale, useTranslations } from 'next-intl';
 
@@ -82,7 +82,7 @@ function getPersonName(record: TrainerAttendanceTableProps['records'][number]) {
  * @dependencies Uses only documented attendance module dependencies and approved global infrastructure/UI primitives.
  * @edge-case Preserves nullable-value fallbacks, keyboard access to row actions, and the documented mobile table strategy.
  */
-export default function TrainerAttendanceTable({ records, totalRecords, isPending, search, filterDate, currentPage, sortBy, sortDirection, onPageChange, onSort }: TrainerAttendanceTableProps) {
+export default function TrainerAttendanceTable({ records, totalRecords, isPending, search, filterDate, currentPage, sortBy, sortDirection, onPageChange, onSort, onCheckOut }: TrainerAttendanceTableProps) {
   const locale = useLocale();
   const t = useTranslations('TRAINER_ATTENDANCE');
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -120,7 +120,26 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
                     <td className="px-4 py-3"><span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? 'bg-info-bg text-info' : 'bg-success-bg text-success'}`} data-testid={`trainer_attendance-table-type${record.id}`}>{record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? t('TEXT_MEMBER') : t('TEXT_STAFF')}</span></td>
                     <td className="px-4 py-3 text-sm text-secondary whitespace-nowrap">{TrainerAttendanceFormatDate(record.date, locale)}</td>
                     <td className="px-4 py-3 text-sm text-secondary whitespace-nowrap"><span className="flex items-center gap-1"><Clock size={18} strokeWidth={2} className="text-secondary" aria-hidden="true" />{TrainerAttendanceFormatTime(record.checkIn, locale)}</span></td>
-                    <td className="px-4 py-3 text-sm text-secondary whitespace-nowrap">{TrainerAttendanceFormatTime(record.checkOut, locale)}</td>
+                    <td className="px-4 py-3 text-sm text-secondary whitespace-nowrap">
+                      {record.checkOut ? (
+                        TrainerAttendanceFormatTime(record.checkOut, locale)
+                      ) : onCheckOut && record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            void onCheckOut(record.id);
+                          }}
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-lg bg-warning-bg text-warning-text hover:brightness-105 border border-warning/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:active:scale-95 transition-all"
+                          title={t('TEXT_CHECK_OUT')}
+                        >
+                          <LogOut size={13} strokeWidth={2} aria-hidden="true" />
+                          <span>{t('TEXT_CHECK_OUT')}</span>
+                        </button>
+                      ) : (
+                        '—'
+                      )}
+                    </td>
                     <td className="px-4 py-3 text-sm text-secondary whitespace-nowrap">{record.durationMinutes == null ? '—' : `${TrainerAttendanceFormatNumber(record.durationMinutes, locale)} ${t('TEXT_MINUTES_SHORT')}`}</td>
                     <td className="px-4 py-3"><span className="inline-flex px-2 py-0.5 rounded-md text-xs font-medium bg-input text-secondary border border-border">{displayValue(record.checkInMethod)}</span></td>
                   </tr>
@@ -145,7 +164,23 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
               <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                 <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_DATE')}</span><span className="text-primary">{TrainerAttendanceFormatDate(record.date, locale)}</span></p>
                 <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_CHECK_IN_TIME')}</span><span className="text-primary">{TrainerAttendanceFormatTime(record.checkIn, locale)}</span></p>
-                <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_CHECK_OUT_TIME')}</span><span className="text-primary">{TrainerAttendanceFormatTime(record.checkOut, locale)}</span></p>
+                <div>
+                  <span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_CHECK_OUT_TIME')}</span>
+                  {record.checkOut ? (
+                    <span className="text-primary">{TrainerAttendanceFormatTime(record.checkOut, locale)}</span>
+                  ) : onCheckOut && record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? (
+                    <button
+                      type="button"
+                      onClick={() => void onCheckOut(record.id)}
+                      className="mt-1 inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg bg-warning-bg text-warning-text hover:brightness-105 border border-warning/30"
+                    >
+                      <LogOut size={13} strokeWidth={2} aria-hidden="true" />
+                      <span>{t('TEXT_CHECK_OUT')}</span>
+                    </button>
+                  ) : (
+                    <span className="text-primary">—</span>
+                  )}
+                </div>
                 <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_DAYS')}</span><span className="text-primary">{record.durationMinutes == null ? '—' : `${TrainerAttendanceFormatNumber(record.durationMinutes, locale)} ${t('TEXT_MINUTES_SHORT')}`}</span></p>
                 <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_CHECK_IN_METHOD')}</span><span className="text-primary">{displayValue(record.checkInMethod)}</span></p>
                 <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_RECORD_ID')}</span><span className="text-primary">{record.id}</span></p>

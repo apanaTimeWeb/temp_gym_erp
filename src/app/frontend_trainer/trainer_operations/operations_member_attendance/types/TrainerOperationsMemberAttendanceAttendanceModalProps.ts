@@ -11,4 +11,5 @@ export interface TrainerAttendanceModalProps {
   saving: boolean;
   onSubmit: (data: TrainerAttendanceCreateDto) => Promise<void>;
   testId?: string;
+  initialMemberId?: string;
 }

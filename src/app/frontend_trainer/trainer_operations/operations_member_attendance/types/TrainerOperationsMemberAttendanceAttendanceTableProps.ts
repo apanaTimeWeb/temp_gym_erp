@@ -16,4 +16,5 @@ export interface TrainerAttendanceTableProps {
   sortDirection: TrainerAttendanceSortDirection;
   onPageChange: (page: number) => void;
   onSort: (field: TrainerAttendanceSortField) => void;
+  onCheckOut?: (recordId: string) => Promise<void> | void;
 }

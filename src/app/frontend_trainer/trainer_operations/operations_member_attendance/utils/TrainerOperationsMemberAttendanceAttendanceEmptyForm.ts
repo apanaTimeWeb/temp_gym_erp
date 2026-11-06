@@ -5,14 +5,17 @@
  */
 import { TRAINER_ATTENDANCE_RECORD_TYPE } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/utils/TrainerOperationsMemberAttendanceAttendanceConstants';
 
-export function TrainerAttendanceEmptyForm() {
+export function TrainerAttendanceEmptyForm(initialMemberId = '') {
   const now = new Date();
   const localDate = [now.getFullYear(), String(now.getMonth() + 1).padStart(2, '0'), String(now.getDate()).padStart(2, '0')].join('-');
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const localTime = `${hours}:${minutes}`;
   return {
     type: TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER,
-    memberId: '',
+    memberId: initialMemberId,
     date: localDate,
-    checkIn: '06:00',
+    checkIn: localTime,
     checkOut: '',
     notes: '',
   };

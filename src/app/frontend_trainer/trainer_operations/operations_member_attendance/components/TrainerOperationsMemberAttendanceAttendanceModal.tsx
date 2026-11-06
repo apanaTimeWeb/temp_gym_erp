@@ -55,7 +55,7 @@ import type { TrainerAttendanceFormValues } from '@/app/frontend_trainer/trainer
  * @dependencies Uses only documented attendance module dependencies and approved global infrastructure/UI primitives.
  * @edge-case Preserves entered values after validation/API failure and blocks duplicate submission while pending.
  */
-export default function TrainerAttendanceModal({ isOpen, onClose, members, membersLoading, membersError, onRetryMembers, saving, onSubmit, testId = 'trainer-attendance-attendance-modal-root' }: TrainerAttendanceModalProps) {
+export default function TrainerAttendanceModal({ isOpen, onClose, members, membersLoading, membersError, onRetryMembers, saving, onSubmit, testId = 'trainer-attendance-attendance-modal-root', initialMemberId = '' }: TrainerAttendanceModalProps) {
   const t = useTranslations('TRAINER_ATTENDANCE');
   const dialogRef = useRef<HTMLDivElement>(null);
   const {
@@ -66,19 +66,18 @@ export default function TrainerAttendanceModal({ isOpen, onClose, members, membe
     formState: { errors, isDirty },
   } = useForm<TrainerAttendanceFormValues>({
     resolver: zodResolver(TrainerAttendanceFormSchema),
-    defaultValues: TrainerAttendanceEmptyForm(),
-  
-    mode: 'onTouched',});
+    defaultValues: TrainerAttendanceEmptyForm(initialMemberId),
+    mode: 'onTouched',
+  });
 
   const guardNavigation = useTrainerInfrastructureUnsavedChangesGuard(isDirty && !saving);
   const titleId = useId();
   useTrainerInfrastructureDialogFocusTrap({ isOpen, dialogRef, onEscape: () => void guardNavigation(onClose) });
 
-
-// Effect contract: reset attendance form state to the selected record when the modal opens or the record changes.
+  // Effect contract: reset attendance form state to the selected record when the modal opens or the record changes.
   useEffect(() => {
-    if (isOpen) reset(TrainerAttendanceEmptyForm());
-  }, [isOpen, reset]);
+    if (isOpen) reset(TrainerAttendanceEmptyForm(initialMemberId));
+  }, [isOpen, initialMemberId, reset]);
 
   if (!isOpen) return null;
 
