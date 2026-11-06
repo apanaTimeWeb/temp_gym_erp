@@ -149,8 +149,8 @@ export default function SuperadminPlatformShellNavigationSidebar({ isCollapsed, 
          data-testid="superadmin_platform_shell_layout-superadminsidebar-interaction-layer-1"/>
       )}
 
-      <aside aria-hidden={isMobileViewport && !isMobileOpen} inert={isMobileViewport && !isMobileOpen ? true : undefined} className={`fixed start-0 top-16 bottom-0 bg-sidebar border-e border-border z-20 flex flex-col motion-safe:transition-all motion-safe:duration-slow w-60 ${
-        isCollapsed ? 'md:w-15' : 'md:w-60'
+      <aside aria-hidden={isMobileViewport && !isMobileOpen} inert={isMobileViewport && !isMobileOpen ? true : undefined} className={`fixed start-0 top-16 bottom-0 bg-sidebar border-e border-border z-20 flex flex-col motion-safe:transition-all motion-safe:duration-slow ${
+        isCollapsed ? 'w-64 md:w-16' : 'w-64 md:w-64'
       } ${isMobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`} aria-label={t('ui.superadmin_sidebar_label')}>
 
         {isMobileOpen && (
@@ -195,20 +195,12 @@ export default function SuperadminPlatformShellNavigationSidebar({ isCollapsed, 
         )}
         
         {isCollapsed && !isMobileOpen && (
-          <div className="hidden xl:flex items-center justify-center px-4 py-3 border-b border-border shrink-0">
+          <div className="flex items-center justify-center px-4 py-3 border-b border-border shrink-0">
             <button type="button"
-              onClick={() => setIsCollapsed(false)}
+              onClick={() => { setSearchQuery(''); setIsCollapsed(false); window.requestAnimationFrame(() => searchInputRef.current?.focus()); }}
               aria-label={t('ui.search_menu_898fbc2a')}
               className="min-h-11 min-w-11 p-2 rounded-lg text-secondary hover:text-primary hover:bg-input motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:duration-base"
              data-testid="SuperadminPlatformShellLayoutStyles-superadmin-sidebar-superadmin-sidebar-search-menu">
-              <Search size={18} />
-            </button>
-          </div>
-        )}
-
-        {!isMobileOpen && (
-          <div className="hidden md:flex xl:hidden items-center justify-center px-4 py-3 border-b border-border shrink-0">
-            <button type="button" onClick={() => { setSearchQuery(''); setIsCollapsed(false); window.requestAnimationFrame(() => searchInputRef.current?.focus()); }} aria-label={t('ui.search_menu_898fbc2a')} className="min-h-11 min-w-11 p-2 rounded-lg text-secondary hover:text-primary hover:bg-input focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="SuperadminPlatformShellLayoutStyles-superadmin-sidebar-superadmin-sidebar-tablet-search">
               <Search size={18} strokeWidth={2} aria-hidden="true" />
             </button>
           </div>

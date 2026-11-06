@@ -25,7 +25,7 @@ export default function AdminNavigationLayoutSidebarBrand({
           className="object-contain min-w-11 rounded-lg"
         />
         {showBrandText && (
-          <div className={`whitespace-nowrap motion-safe:transition-opacity motion-safe:duration-slow flex flex-col ${isMobileOpen ? 'flex' : 'hidden xl:flex'}`}>
+          <div className={`whitespace-nowrap motion-safe:transition-opacity motion-safe:duration-slow flex flex-col ${isMobileOpen ? 'flex' : 'hidden md:flex'}`}>
             <span className="text-primary font-bold text-lg leading-tight tracking-tight">
               {t('admin_navigation.AdminNavigationLayoutSidebar.text_3871a45480')}
             </span>

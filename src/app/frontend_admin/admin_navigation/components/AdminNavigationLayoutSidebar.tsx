@@ -97,11 +97,11 @@ export default function AdminNavigationLayoutSidebar({ isCollapsed, setIsCollaps
         ref={sidebarRef}
         aria-label={t('admin_navigation.AdminNavigationLayoutSidebar.text_sidebarLabel')}
         data-admin-shell-sidebar
-        className={`fixed left-0 top-16 bottom-0 bg-sidebar border-r border-border z-20 flex flex-col motion-safe:transition-all motion-safe:duration-slow md:w-16 ${isCollapsed ? 'xl:w-16' : 'xl:w-60'} ${isMobileOpen ? 'w-64 left-0 z-40' : 'w-64 -left-64 md:left-0'}`}
+        className={`fixed left-0 top-16 bottom-0 bg-sidebar border-r border-border z-20 flex flex-col motion-safe:transition-all motion-safe:duration-slow ${isCollapsed ? 'w-64 md:w-16' : 'w-64 md:w-60'} ${isMobileOpen ? 'left-0 z-40' : '-left-64 md:left-0'}`}
       >
         <AdminNavigationLayoutSidebarBrand isCollapsed={isCollapsed} isMobileOpen={isMobileOpen} />
         {showSearch && (
-          <div className={`px-4 py-3 border-b border-border shrink-0 ${isMobileOpen ? 'block' : 'hidden xl:block'}`}>
+          <div className={`px-4 py-3 border-b border-border shrink-0 ${isMobileOpen ? 'block' : 'hidden md:block'}`}>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Search size={18} className="text-secondary" strokeWidth={2} aria-hidden="true" />

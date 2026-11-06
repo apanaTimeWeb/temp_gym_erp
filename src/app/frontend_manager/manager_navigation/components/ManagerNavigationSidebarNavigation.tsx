@@ -8,7 +8,7 @@ import type { ManagerNavigationTranslatedGroup } from '@/app/frontend_manager/ma
 
 type Props = {
   groups: ManagerNavigationTranslatedGroup[]; pathname: string; isCollapsed: boolean; isMobileOpen: boolean; searchQuery: string;
-  expandedGroups: Record<string, boolean>; onToggleGroup: (groupKey: string) => void;
+  expandedGroups: Record<string, boolean>; onToggleGroup: (groupKey: string, activeGroup?: boolean) => void;
 };
 export default function ManagerNavigationSidebarNavigation({ groups, pathname, isCollapsed, isMobileOpen, searchQuery, expandedGroups, onToggleGroup }: Props) {
   const t = useTranslations('MANAGER_SHELL');
@@ -66,7 +66,7 @@ export default function ManagerNavigationSidebarNavigation({ groups, pathname, i
                     aria-expanded={expanded}
                     aria-controls={`manager-nav-group-${group.groupKey}`}
                     data-testid={`manager_navigation-sidebar-group-${group.groupKey.toLowerCase()}`}
-                    onClick={() => onToggleGroup(group.groupKey)}
+                    onClick={() => onToggleGroup(group.groupKey, activeGroup)}
                     className={`shrink-0 rounded-r-xl px-3 py-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-inset ${showLabel ? '' : 'px-1'}`}
                   >
                     <ChevronDown aria-hidden="true" size={16} className={`motion-safe:transition-transform ${expanded ? 'rotate-180' : ''}`} />

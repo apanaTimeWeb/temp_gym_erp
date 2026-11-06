@@ -28,7 +28,7 @@ export default function AdminNavigationLayoutSidebarUserFooter({
         {mounted ? (userName?.charAt(0)?.toUpperCase() || 'A') : 'A'}
       </div>
       {showDetails && (
-        <div className={`whitespace-nowrap overflow-hidden flex-1 ${isMobileOpen ? 'block' : 'hidden xl:block'}`}>
+        <div className={`whitespace-nowrap overflow-hidden flex-1 ${isMobileOpen ? 'block' : 'hidden md:block'}`}>
           <div className="text-primary text-sm font-bold truncate">{displayName}</div>
           <div className="text-secondary text-xs truncate">{displayRole}</div>
         </div>

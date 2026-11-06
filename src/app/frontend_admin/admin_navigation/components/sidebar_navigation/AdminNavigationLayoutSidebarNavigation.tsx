@@ -58,7 +58,7 @@ export default function AdminNavigationLayoutSidebarNavigation({
                 data-testid={`admin_navigation-admin-sidebar-group-label-${group.groupKey}`}
                 className={`text-xs font-semibold text-secondary mb-2 px-2 uppercase tracking-wider ${
                   showGroupLabel
-                    ? (isMobileOpen ? 'block' : 'hidden xl:block')
+                    ? (isMobileOpen ? 'block' : 'hidden md:block')
                     : 'sr-only'
                 }`}
               >
@@ -79,7 +79,9 @@ export default function AdminNavigationLayoutSidebarNavigation({
                       aria-label={label}
                       title={`${groupLabel} — ${label}`}
                       aria-current={active ? 'page' : undefined}
-                      className={`flex items-center gap-3 py-2.5 rounded-xl font-medium motion-safe:transition-all motion-safe:duration-base group cursor-pointer justify-center px-0 xl:justify-start xl:px-3.5 ${
+                      className={`flex items-center gap-3 py-2.5 rounded-xl font-medium motion-safe:transition-all motion-safe:duration-base group cursor-pointer ${
+                        !showLabel ? 'justify-center px-0' : (isMobileOpen ? 'justify-start px-3.5' : 'justify-center px-0 md:justify-start md:px-3.5')
+                      } ${
                         active
                           ? 'bg-primary-subtle text-primary border-l-2 border-focus'
                           : 'text-secondary hover:text-primary hover:bg-primary-subtle border-l-2 border-transparent'
@@ -92,7 +94,7 @@ export default function AdminNavigationLayoutSidebarNavigation({
                         className={active ? 'text-primary' : 'text-secondary group-hover:text-primary motion-safe:transition-colors'}
                       />
                       {showLabel && (
-                        <span className={`text-sm whitespace-nowrap ${isMobileOpen ? 'inline' : 'hidden xl:inline'}`}>
+                        <span className={`text-sm whitespace-nowrap ${isMobileOpen ? 'inline' : 'hidden md:inline'}`}>
                           {label}
                         </span>
                       )}

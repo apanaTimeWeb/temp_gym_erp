@@ -26,7 +26,7 @@ export default function AdminNavigationLayout({ children, headerContextSlot }: A
       <div className={`${AdminShellPrint.adminShellRoot} min-h-screen bg-page text-primary`} data-admin-shell>
         <div data-admin-shell-header><AdminNavigationLayoutHeader headerContextSlot={headerContextSlot} /></div>
         <AdminNavigationLayoutSidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
-        <main data-admin-shell-main className={`min-h-screen pt-16 motion-safe:transition-all motion-safe:duration-slow ${isCollapsed ? 'md:ml-16 xl:ml-16' : 'md:ml-16 xl:ml-60'}`}>
+        <main data-admin-shell-main className={`min-h-screen pt-16 motion-safe:transition-all motion-safe:duration-slow ${isCollapsed ? 'md:ml-16' : 'md:ml-60'}`}>
           {children}
         </main>
         <AdminNavigationLayoutResponsiveTableProvider />

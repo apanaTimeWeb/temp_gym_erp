@@ -31,7 +31,12 @@ export default function ManagerNavigationSidebar({ isCollapsed, setIsCollapsed }
   const user = getUser();
 
   useEffect(() => {
-    const updateViewport = () => setIsMobileViewport(window.matchMedia('(max-width: 767px)').matches);
+    const updateViewport = () => {
+      const isMobile = typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+        ? window.matchMedia('(max-width: 767px)').matches
+        : (typeof window !== 'undefined' ? window.innerWidth < 768 : false);
+      setIsMobileViewport(isMobile);
+    };
     updateViewport();
     window.addEventListener('resize', updateViewport);
     return () => window.removeEventListener('resize', updateViewport);
@@ -118,8 +123,11 @@ export default function ManagerNavigationSidebar({ isCollapsed, setIsCollapsed }
       .filter((group) => group.items.length > 0);
   }, [searchQuery, translatedNavGroups]);
 
-  const toggleGroup = (groupKey: string) => {
-    setExpandedGroups((current) => ({ ...current, [groupKey]: !(current[groupKey] ?? false) }));
+  const toggleGroup = (groupKey: string, activeGroup = false) => {
+    setExpandedGroups((current) => {
+      const isCurrentlyExpanded = current[groupKey] ?? activeGroup;
+      return { ...current, [groupKey]: !isCurrentlyExpanded };
+    });
   };
 
   return (
@@ -132,8 +140,8 @@ export default function ManagerNavigationSidebar({ isCollapsed, setIsCollapsed }
         />
       )}
 
-      <aside ref={asideRef} aria-label={t("COPY_MANAGER_NAVIGATION")} aria-hidden={isMobileViewport && !isMobileOpen} inert={isMobileViewport && !isMobileOpen} className={`fixed left-0 top-16 bottom-0 bg-sidebar border-r border-border z-40 flex flex-col motion-safe:transition-all motion-safe:duration-300 w-60 ${
-        isCollapsed ? 'md:w-[60px]' : 'md:w-60'
+      <aside ref={asideRef} aria-label={t("COPY_MANAGER_NAVIGATION")} aria-hidden={isMobileViewport && !isMobileOpen} inert={isMobileViewport && !isMobileOpen} className={`fixed left-0 top-16 bottom-0 bg-sidebar border-r border-border z-40 flex flex-col motion-safe:transition-all motion-safe:duration-300 ${
+        isCollapsed ? 'w-64 md:w-16' : 'w-64 md:w-64'
       } ${isMobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
         
         {isMobileOpen && (
@@ -177,7 +185,7 @@ export default function ManagerNavigationSidebar({ isCollapsed, setIsCollapsed }
         )}
         
         {isCollapsed && !isMobileOpen && (
-          <div className="hidden xl:flex items-center justify-center px-4 py-3 border-b border-border shrink-0">
+          <div className="flex items-center justify-center px-4 py-3 border-b border-border shrink-0">
             <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "p-2 rounded-lg text-text-secondary hover:text-primary hover:bg-input motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_navigation-layout-button-close"
               onClick={() => setIsCollapsed(false)}
               aria-label={t("COPY_TOGGLE_SIDEBAR")}
