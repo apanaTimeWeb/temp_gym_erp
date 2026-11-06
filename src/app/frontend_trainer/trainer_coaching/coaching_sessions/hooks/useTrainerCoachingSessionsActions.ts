@@ -80,7 +80,14 @@ export function useTrainerSessionsActions({ setShowScheduleModal, setAttendanceS
         const msg = `Hi ${memberName}, your Personal Training session has been confirmed for ${dto.date} at ${dto.time} (${dto.duration}). See you at GymSmart!`;
         const whatsappUrl = TrainerMembersBuildWhatsAppUrl(memberPhone, msg);
         if (whatsappUrl && typeof window !== 'undefined') {
-          window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+          const popup = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+          if (popup) {
+            try {
+              popup.opener = null;
+            } catch {
+              // ignore restricted environments
+            }
+          }
         }
       }
 

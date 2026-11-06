@@ -109,7 +109,16 @@ export default function TrainerMembersProfileWorkout() {
       exerciseLines,
     ].join('\n');
     const handoffUrl = TrainerMembersBuildWhatsAppUrl(selectedMember.phone ?? '', text);
-    if (handoffUrl) window.open(handoffUrl, '_blank', 'noopener,noreferrer');
+    if (handoffUrl) {
+      const popup = window.open(handoffUrl, '_blank', 'noopener,noreferrer');
+      if (popup) {
+        try {
+          popup.opener = null;
+        } catch {
+          // ignore restricted environments
+        }
+      }
+    }
   };
 
   return (
