@@ -58,6 +58,13 @@ let currentPtAssignments = [...MOCK_PT_ASSIGNMENTS];
 let currentExercises = [...MOCK_MANAGER_WORKOUT_EXERCISES];
 let currentWorkouts = [...MOCK_MANAGER_WORKOUT_PLANSS];
 let currentDietPlans = [...MOCK_MANAGER_DIET_PLANS];
+let currentAttendanceRecords = [...MOCK_ATTENDANCE_RECORDS];
+let currentPlans = [...MOCK_PLANS];
+let currentProducts = [...MOCK_PRODUCTS];
+let currentReferrals = [...MOCK_REFERRALS];
+let currentPayments = [...MOCK_PAYMENTS];
+let currentCampaigns = [...MOCK_CAMPAIGNS];
+let currentAutomations = [...MOCK_AUTOMATIONS];
 
 export function handleManagerMockApiRequest(
   urlPath: string,
@@ -162,16 +169,77 @@ export function handleManagerMockApiRequest(
     }
     return buildMockSuccess(stats, 'Attendance stats loaded');
   }
+  if (path.startsWith('attendance/checkout/') || (path.startsWith('attendance/') && path.endsWith('/checkout'))) {
+    const id = path.includes('/checkout/') ? path.split('/')[2] : path.split('/')[1];
+    const rec = currentAttendanceRecords.find((r: any) => String(r.id) === String(id) || String(r.memberId) === String(id) || String(r.staffId) === String(id));
+    if (rec) {
+      const now = new Date();
+      const checkOutTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+      let durationMinutes = 60;
+      if (rec.checkIn) {
+        try {
+          const [inH, inM] = rec.checkIn.split(':').map(Number);
+          const [outH, outM] = checkOutTime.split(':').map(Number);
+          if (!isNaN(inH) && !isNaN(outH)) {
+            durationMinutes = Math.max(1, (outH * 60 + outM) - (inH * 60 + inM));
+          }
+        } catch {}
+      }
+      const updatedRec = {
+        ...rec,
+        checkOut: checkOutTime,
+        checkOutTime,
+        durationMinutes,
+      };
+      currentAttendanceRecords = currentAttendanceRecords.map((r: any) => (String(r.id) === String(rec.id) ? updatedRec : r));
+      return buildMockSuccess(updatedRec, 'Checkout recorded');
+    }
+    return buildMockSuccess(currentAttendanceRecords[0], 'Checkout recorded');
+  }
   if (path === 'attendance/members') {
-    return buildMockSuccess(MANAGER_ATTENDANCE_TRACKING_MEMBER_SNAPSHOTS, 'Attendance member snapshots loaded');
+    return buildMockSuccess({ members: MANAGER_ATTENDANCE_TRACKING_MEMBER_SNAPSHOTS }, 'Attendance member snapshots loaded');
   }
   if (path === 'attendance/staff') {
-    return buildMockSuccess(MANAGER_ATTENDANCE_TRACKING_STAFF_SNAPSHOTS, 'Attendance staff snapshots loaded');
+    return buildMockSuccess({ staff: MANAGER_ATTENDANCE_TRACKING_STAFF_SNAPSHOTS }, 'Attendance staff snapshots loaded');
   }
   if (path === 'attendance/history') {
-    return buildMockSuccess(MOCK_ATTENDANCE_RECORDS, 'Attendance history loaded');
+    return buildMockSuccess(currentAttendanceRecords, 'Attendance history loaded');
   }
   if (path === 'attendance') {
+    if (method === 'POST') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const dateStr = body.date
+          ? (typeof body.date === 'string' && body.date.includes('T') ? body.date.split('T')[0] : body.date)
+          : new Date().toISOString().split('T')[0];
+        let checkInTime = body.checkIn;
+        if (!checkInTime) {
+          const now = new Date();
+          checkInTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+        }
+        const memberObj = body.member || (body.memberId ? { name: MANAGER_ATTENDANCE_TRACKING_MEMBER_SNAPSHOTS.find((m) => String(m.id) === String(body.memberId))?.name || 'Rahul Sharma' } : undefined);
+        const staffObj = body.staff || (body.staffId ? { name: MANAGER_ATTENDANCE_TRACKING_STAFF_SNAPSHOTS.find((s) => String(s.id) === String(body.staffId))?.name || 'Amit Kumar' } : undefined);
+
+        const newRecord = {
+          id: `att_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+          memberId: body.memberId ? Number(body.memberId) || undefined : undefined,
+          staffId: body.staffId ? Number(body.staffId) || undefined : undefined,
+          date: dateStr,
+          checkIn: typeof checkInTime === 'string' && checkInTime.includes('T') ? checkInTime.split('T')[1].slice(0, 5) : String(checkInTime),
+          checkOut: body.checkOut || undefined,
+          type: (body.type || 'MEMBER').toUpperCase() as 'MEMBER' | 'STAFF',
+          status: (body.status || 'PRESENT').toUpperCase(),
+          member: memberObj,
+          staff: staffObj,
+          checkInMethod: body.checkInMethod || 'Manual',
+        };
+        currentAttendanceRecords = [newRecord as any, ...currentAttendanceRecords];
+        return buildMockSuccess(newRecord, 'Attendance marked successfully');
+      } catch {
+        return buildMockSuccess(currentAttendanceRecords[0], 'Attendance marked');
+      }
+    }
+
     const search = (searchParams.get('search') || '').trim().toLowerCase();
     const date = searchParams.get('date') || '';
     const startDate = searchParams.get('startDate') || '';
@@ -181,7 +249,7 @@ export function handleManagerMockApiRequest(
     const page = Math.max(Number(searchParams.get('page') || '1'), 1);
     const limit = Math.max(Number(searchParams.get('limit') || '10'), 1);
 
-    const filtered = MOCK_ATTENDANCE_RECORDS.filter((record) => {
+    const filtered = currentAttendanceRecords.filter((record) => {
       const name = (record.member?.name || record.staff?.name || '').toLowerCase();
       const matchesSearch = !search || name.includes(search);
       const matchesDateRange = (!startDate || record.date >= startDate) && (!endDate || record.date <= endDate);
@@ -217,8 +285,9 @@ export function handleManagerMockApiRequest(
     return buildMockSuccess(MOCK_PLANS, 'Membership plans loaded');
   }
   if (path === 'members/trainers') {
+    const trainers = hrData.staff.filter((s) => s.role.toLowerCase().includes('trainer') || s.role.toLowerCase().includes('coach'));
     return buildMockSuccess(
-      hrData.staff.filter((s) => s.role.toLowerCase().includes('trainer') || s.role.toLowerCase().includes('coach')),
+      { staff: trainers.map((t) => ({ id: t.id, name: t.name, role: t.role })) },
       'Trainers loaded'
     );
   }
@@ -228,11 +297,39 @@ export function handleManagerMockApiRequest(
   if (path === 'members/workouts') {
     return buildMockSuccess(MOCK_MANAGER_WORKOUT_PLANSS, 'Workouts loaded');
   }
+  if (path.startsWith('members/') && path.endsWith('/diet')) {
+    return buildMockSuccess({ success: true }, 'Diet plan assigned');
+  }
+  if (path.startsWith('members/') && path.endsWith('/workout')) {
+    return buildMockSuccess({ success: true }, 'Workout plan assigned');
+  }
+  if (path.startsWith('members/') && path.endsWith('/renew')) {
+    const memberId = path.split('/')[1];
+    const found = MOCK_MEMBERS.find((m) => m.id === memberId) || MOCK_MEMBERS[0];
+    return buildMockSuccess({ ...found, status: 'ACTIVE' }, 'Member renewed');
+  }
   if (path.startsWith('members/') && path.endsWith('/attendance')) {
-    return buildMockSuccess(MOCK_ATTENDANCE_RECORDS.slice(0, 5), 'Member attendance loaded');
+    return buildMockSuccess(currentAttendanceRecords.slice(0, 5), 'Member attendance loaded');
   }
   if (path.startsWith('members/') && path.endsWith('/payments')) {
-    return buildMockSuccess(MOCK_PAYMENTS.slice(0, 5), 'Member payments loaded');
+    if (method === 'POST') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const newPayment = {
+          ...currentPayments[0],
+          ...body,
+          id: `pay-${Date.now()}`,
+          paidAt: new Date().toISOString(),
+          status: 'PAID',
+          invoiceNumber: `INV-${Date.now().toString().slice(-4)}`,
+        };
+        currentPayments = [newPayment, ...currentPayments];
+        return buildMockSuccess(newPayment, 'Payment recorded');
+      } catch {
+        return buildMockSuccess(currentPayments[0], 'Payment recorded');
+      }
+    }
+    return buildMockSuccess(currentPayments.slice(0, 5), 'Member payments loaded');
   }
   if (path === 'members' || path === 'members/') {
     if (method === 'POST') {
@@ -266,6 +363,19 @@ export function handleManagerMockApiRequest(
   }
   if (path.startsWith('members/')) {
     const memberId = path.split('/')[1];
+    if (method === 'DELETE') {
+      return buildMockSuccess({ id: memberId }, 'Member deleted');
+    }
+    if (method === 'PATCH' || method === 'PUT') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const found = MOCK_MEMBERS.find((m) => m.id === memberId) || MOCK_MEMBERS[0];
+        const updated = { ...found, ...body, id: memberId };
+        return buildMockSuccess(updated, 'Member updated');
+      } catch {
+        return buildMockSuccess(MOCK_MEMBERS[0], 'Member updated');
+      }
+    }
     const found = MOCK_MEMBERS.find((m) => m.id === memberId) || MOCK_MEMBERS[0];
     return buildMockSuccess(found, 'Member retrieved');
   }
@@ -281,6 +391,11 @@ export function handleManagerMockApiRequest(
   if (path.startsWith('notifications/') && path.endsWith('/read')) {
     return buildMockSuccess(null, 'Notification marked as read');
   }
+  if (path.startsWith('notifications/') && method === 'DELETE') {
+    const id = path.split('/')[1];
+    currentNotifications = currentNotifications.filter((n) => n.id !== id);
+    return buildMockSuccess(null, 'Notification deleted');
+  }
   if (path === 'notifications') {
     return buildMockSuccess({ notifications: currentNotifications, total: currentNotifications.length }, 'Notifications loaded');
   }
@@ -295,7 +410,35 @@ export function handleManagerMockApiRequest(
     return buildMockSuccess(MOCK_COMM_KPI, 'Communications KPIs loaded');
   }
   if (path === 'communications/campaigns') {
-    return buildMockSuccess({ campaigns: MOCK_CAMPAIGNS, total: MOCK_CAMPAIGNS.length }, 'Campaigns loaded');
+    if (method === 'POST') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const newCamp = {
+          ...MOCK_CAMPAIGNS[0],
+          ...body,
+          id: `camp-${Date.now()}`,
+          status: 'SENT',
+          sentAt: new Date().toISOString(),
+        };
+        currentCampaigns = [newCamp, ...currentCampaigns];
+        return buildMockSuccess(newCamp, 'Campaign sent');
+      } catch {
+        return buildMockSuccess(MOCK_CAMPAIGNS[0], 'Campaign sent');
+      }
+    }
+    return buildMockSuccess({ campaigns: currentCampaigns, total: currentCampaigns.length }, 'Campaigns loaded');
+  }
+  if (path.startsWith('communications/automations/')) {
+    const id = path.split('/')[2];
+    const found = currentAutomations.find((a) => a.id === id) || currentAutomations[0];
+    try {
+      const body = options.body ? JSON.parse(options.body as string) : {};
+      const updated = { ...found, ...body, id };
+      currentAutomations = currentAutomations.map((a) => (a.id === id ? updated : a));
+      return buildMockSuccess(updated, 'Automation updated');
+    } catch {
+      return buildMockSuccess(found, 'Automation updated');
+    }
   }
   if (path === 'communications/automations') {
     return buildMockSuccess(MOCK_AUTOMATIONS, 'Automations loaded');
@@ -366,14 +509,31 @@ export function handleManagerMockApiRequest(
     return buildMockSuccess(summary, 'Finance summary loaded');
   }
   if (path === 'finance/payments' || path === 'finance') {
+    if (method === 'POST') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const newPay = {
+          ...currentPayments[0],
+          ...body,
+          id: `pay-${Date.now()}`,
+          paidAt: new Date().toISOString(),
+          status: 'PAID',
+          invoiceNumber: `INV-${Date.now().toString().slice(-4)}`,
+        };
+        currentPayments = [newPay, ...currentPayments];
+        return buildMockSuccess(newPay, 'Payment recorded');
+      } catch {
+        return buildMockSuccess(currentPayments[0], 'Payment recorded');
+      }
+    }
     const page = Math.max(Number(searchParams.get('page') || '1'), 1);
     const limit = Math.max(Number(searchParams.get('limit') || '10'), 1);
     const start = (page - 1) * limit;
-    const paginated = MOCK_PAYMENTS.slice(start, start + limit);
+    const paginated = currentPayments.slice(start, start + limit);
     return buildMockSuccess(
-      { payments: paginated, total: MOCK_PAYMENTS.length },
+      { payments: paginated, total: currentPayments.length },
       'Payments loaded',
-      { total: MOCK_PAYMENTS.length, page, limit, totalPages: Math.ceil(MOCK_PAYMENTS.length / limit) || 1 }
+      { total: currentPayments.length, page, limit, totalPages: Math.ceil(currentPayments.length / limit) || 1 }
     );
   }
   if (path === 'finance/export') {
@@ -439,11 +599,55 @@ export function handleManagerMockApiRequest(
   if (path === 'hr/staff') {
     return buildMockSuccess({ staff: hrData.staff, total: hrData.staff.length }, 'Staff list loaded');
   }
-  if (path === 'hr/payrolls') {
-    return buildMockSuccess({ payrolls: hrData.payrolls, total: hrData.payrolls.length }, 'Payrolls loaded');
-  }
   if (path === 'hr/payrolls/generate') {
-    return buildMockSuccess({ count: hrData.payrolls.length }, 'Payroll generation complete');
+    return buildMockSuccess({ payrolls: hrData.payrolls }, 'Payroll generation complete');
+  }
+  if (path === 'hr/ledger/advance') {
+    try {
+      const body = options.body ? JSON.parse(options.body as string) : {};
+      return buildMockSuccess({ advanceAmount: Number(body.amount) || 5000 }, 'Advance granted');
+    } catch {
+      return buildMockSuccess({ advanceAmount: 5000 }, 'Advance granted');
+    }
+  }
+  if (path === 'hr/ledger/paydue') {
+    try {
+      const body = options.body ? JSON.parse(options.body as string) : {};
+      return buildMockSuccess({ paidAmount: Number(body.amount) || 5000 }, 'Due paid');
+    } catch {
+      return buildMockSuccess({ paidAmount: 5000 }, 'Due paid');
+    }
+  }
+  if (path.startsWith('hr/payrolls/')) {
+    const parts = path.split('/');
+    const id = parts[2];
+    const isStatus = parts[3] === 'status';
+    const found = hrData.payrolls.find((p) => p.id === id) || hrData.payrolls[0];
+    try {
+      const body = options.body ? JSON.parse(options.body as string) : {};
+      const updated = { ...found, ...body };
+      return buildMockSuccess(updated, isStatus ? 'Payroll status updated' : 'Payroll updated');
+    } catch {
+      return buildMockSuccess(found, 'Payroll updated');
+    }
+  }
+  if (path === 'hr/payrolls') {
+    if (method === 'POST') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const newPayroll = {
+          ...hrData.payrolls[0],
+          ...body,
+          id: `pr-${Date.now()}`,
+          deductions: body.deductions || { tds: 0, pf: 0, esi: 0, other: 0 },
+        };
+        hrData.payrolls.push(newPayroll);
+        return buildMockSuccess(newPayroll, 'Payroll created');
+      } catch {
+        return buildMockSuccess(hrData.payrolls[0], 'Payroll created');
+      }
+    }
+    return buildMockSuccess({ payrolls: hrData.payrolls, total: hrData.payrolls.length }, 'Payrolls loaded');
   }
   if (path.startsWith('hr/ledger')) {
     return buildMockSuccess({ ledger: hrData.ledger, total: hrData.ledger.length }, 'Ledger loaded');
@@ -520,7 +724,38 @@ export function handleManagerMockApiRequest(
     return buildMockSuccess(MOCK_STORE_SUMMARY, 'Store summary loaded');
   }
   if (path === 'store/products') {
-    return buildMockSuccess({ products: MOCK_PRODUCTS, total: MOCK_PRODUCTS.length }, 'Store products loaded');
+    if (method === 'POST') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const newProd = {
+          ...MOCK_PRODUCTS[0],
+          ...body,
+          id: `prod-${Date.now()}`,
+          isActive: body.isActive ?? true,
+        };
+        currentProducts = [newProd, ...currentProducts];
+        return buildMockSuccess(newProd, 'Product created');
+      } catch {
+        return buildMockSuccess(MOCK_PRODUCTS[0], 'Product created');
+      }
+    }
+    return buildMockSuccess({ products: currentProducts, total: currentProducts.length }, 'Store products loaded');
+  }
+  if (path.startsWith('store/products/')) {
+    const id = path.split('/')[2];
+    if (method === 'DELETE') {
+      currentProducts = currentProducts.filter((p) => p.id !== id);
+      return buildMockSuccess({ id }, 'Product deleted');
+    }
+    try {
+      const body = options.body ? JSON.parse(options.body as string) : {};
+      const found = currentProducts.find((p) => p.id === id) || currentProducts[0];
+      const updated = { ...found, ...body, id };
+      currentProducts = currentProducts.map((p) => (p.id === id ? updated : p));
+      return buildMockSuccess(updated, 'Product updated');
+    } catch {
+      return buildMockSuccess({ ...MOCK_PRODUCTS[0], id }, 'Product updated');
+    }
   }
   if (path === 'store/orders') {
     if (method === 'POST') {
@@ -636,7 +871,7 @@ export function handleManagerMockApiRequest(
     return buildMockSuccess(stats, 'Inquiry stats loaded');
   }
   if (path === 'inquiries/plans' || path === 'inquiries/plans-snapshot') {
-    return buildMockSuccess(MOCK_PLANS, 'Inquiry plans loaded');
+    return buildMockSuccess(currentPlans, 'Inquiry plans loaded');
   }
   if (path === 'inquiries' || path === 'inquiries/') {
     if (method === 'POST') {
@@ -652,15 +887,78 @@ export function handleManagerMockApiRequest(
     return buildMockSuccess({ inquiries: currentInquiries, total: currentInquiries.length }, 'Inquiries loaded');
   }
   if (path.startsWith('inquiries/') && path.endsWith('/convert')) {
-    return buildMockSuccess({ success: true }, 'Inquiry converted to member');
+    const id = path.split('/')[1];
+    currentInquiries = currentInquiries.map((inq) => (inq.id === id ? { ...inq, status: 'CONVERTED' } : inq));
+    return buildMockSuccess({ memberId: `m-${Date.now()}` }, 'Inquiry converted to member');
+  }
+  if (path.startsWith('inquiries/')) {
+    const id = path.split('/')[1];
+    if (method === 'DELETE') {
+      currentInquiries = currentInquiries.filter((i) => i.id !== id);
+      return buildMockSuccess({ id }, 'Inquiry deleted');
+    }
+    if (method === 'PATCH' || method === 'PUT') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const found = currentInquiries.find((i) => i.id === id) || currentInquiries[0];
+        const updated = { ...found, ...body, id };
+        currentInquiries = currentInquiries.map((i) => (i.id === id ? updated : i));
+        return buildMockSuccess(updated, 'Inquiry updated');
+      } catch {
+        return buildMockSuccess(currentInquiries[0], 'Inquiry updated');
+      }
+    }
+    const found = currentInquiries.find((i) => i.id === id) || currentInquiries[0];
+    return buildMockSuccess(found, 'Inquiry retrieved');
   }
 
   // 11. MEMBERSHIP LIFECYCLE PLANS
   if (path === 'plans' || path === 'plans/') {
-    return buildMockSuccess({ plans: MOCK_PLANS, total: MOCK_PLANS.length }, 'Plans loaded');
+    if (method === 'POST') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const newPlan = {
+          ...MOCK_PLANS[0],
+          ...body,
+          id: `p-${Date.now()}`,
+          isActive: body.isActive ?? true,
+        };
+        currentPlans = [newPlan, ...currentPlans];
+        return buildMockSuccess(newPlan, 'Plan created');
+      } catch {
+        return buildMockSuccess(MOCK_PLANS[0], 'Plan created');
+      }
+    }
+    return buildMockSuccess({ plans: currentPlans, total: currentPlans.length }, 'Plans loaded');
+  }
+  if (path === 'plans/change-requests') {
+    return buildMockSuccess({ success: true, requestId: `cr-${Date.now()}` }, 'Change request submitted');
+  }
+  if (path.startsWith('plans/memberships/')) {
+    return buildMockSuccess({ success: true }, 'Membership updated');
   }
   if (path === 'plans/memberships' || path === 'membership-lifecycle') {
     return buildMockSuccess(MOCK_PLANS_MEMBERSHIP_OVERVIEW, 'Membership overview loaded');
+  }
+  if (path.startsWith('plans/')) {
+    const id = path.split('/')[1];
+    if (method === 'DELETE') {
+      currentPlans = currentPlans.filter((p) => p.id !== id);
+      return buildMockSuccess({ id }, 'Plan deleted');
+    }
+    if (method === 'PATCH' || method === 'PUT') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const found = currentPlans.find((p) => p.id === id) || currentPlans[0];
+        const updated = { ...found, ...body, id };
+        currentPlans = currentPlans.map((p) => (p.id === id ? updated : p));
+        return buildMockSuccess(updated, 'Plan updated');
+      } catch {
+        return buildMockSuccess({ ...MOCK_PLANS[0], id }, 'Plan updated');
+      }
+    }
+    const found = currentPlans.find((p) => p.id === id) || currentPlans[0];
+    return buildMockSuccess(found, 'Plan retrieved');
   }
 
   // 12. WORKOUT & DIET LIBRARY
@@ -804,10 +1102,33 @@ export function handleManagerMockApiRequest(
     return buildMockSuccess(MOCK_REFERRALS_KPIS, 'Referral KPIs loaded');
   }
   if (path === 'referrals') {
-    return buildMockSuccess(MOCK_REFERRALS, 'Referrals loaded', { total: MOCK_REFERRALS.length, page: 1, limit: 10, totalPages: 1 });
+    if (method === 'POST') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const newRef = {
+          ...MOCK_REFERRALS[0],
+          ...body,
+          id: `ref-${Date.now()}`,
+          dateReferred: new Date().toISOString(),
+          status: body.status || 'PENDING',
+          rewardStatus: body.rewardStatus || 'PENDING',
+          rewardAmount: Number(body.rewardAmount) || 500,
+          rewardType: body.rewardType || 'CASH',
+        };
+        currentReferrals = [newRef, ...currentReferrals];
+        return buildMockSuccess(newRef, 'Referral created');
+      } catch {
+        return buildMockSuccess(MOCK_REFERRALS[0], 'Referral created');
+      }
+    }
+    return buildMockSuccess(currentReferrals, 'Referrals loaded', { total: currentReferrals.length, page: 1, limit: 10, totalPages: 1 });
   }
   if (path.startsWith('referrals/') && path.endsWith('/claim')) {
-    return buildMockSuccess({ success: true }, 'Reward claimed');
+    const id = path.split('/')[1];
+    const found = currentReferrals.find((r) => r.id === id) || currentReferrals[0];
+    const updated = { ...found, rewardStatus: 'CLAIMED' as const };
+    currentReferrals = currentReferrals.map((r) => (r.id === id ? updated : r));
+    return buildMockSuccess(updated, 'Reward claimed');
   }
 
   if (path === 'reports/summary' || path === 'reports/overview' || path === 'reports') {

@@ -69,7 +69,20 @@ export function useManagerInquiriesPipelineConvertLeadForm() {
   const [successData, setSuccessData] = useState<ManagerInquiriesPipelineConvertLeadSuccessData | null>(null);
   const planId = form.watch('planId'); const billingCycle = form.watch('billingCycle'); const customDays = form.watch('customDays'); const joinDate = form.watch('joinDate');
 // EFFECT: Effect lifecycle and dependency list are intentionally scoped to values that control this side effect.
-  useEffect(() => { if (activeLead) form.reset({ ...EMPTY_CONVERT_FORM, name: activeLead.name, phone: activeLead.phone, email: activeLead.email || '' }); }, [activeLead, form]);
+  useEffect(() => {
+    if (activeLead) {
+      const today = new Date().toISOString().split('T')[0] || '';
+      const initialExpiry = calculateManagerInquiryExpiryDate(today, 'ONE_MONTH') || '';
+      form.reset({
+        ...EMPTY_CONVERT_FORM,
+        name: activeLead.name,
+        phone: (activeLead.phone || '').replace(/[\s-]/g, ''),
+        email: activeLead.email || '',
+        joinDate: today,
+        expiryDate: initialExpiry,
+      });
+    }
+  }, [activeLead, form]);
   useEffect(() => { if (!planId || !billingCycle) return; const selectedPlan = plans.find((plan) => String(plan.id) === String(planId)); const price = getPriceForCycleSnapshot(selectedPlan, billingCycle, Number(customDays) || 0); form.setValue('totalAmount', price, { shouldValidate: true }); form.setValue('paidAmount', price, { shouldValidate: true }); }, [billingCycle, customDays, form, planId, plans]);
 // EFFECT: Effect lifecycle and dependency list are intentionally scoped to values that control this side effect.
   useEffect(() => { if (!joinDate || !billingCycle) { form.setValue('expiryDate', '', { shouldValidate: true }); return; } const expiryDate = calculateManagerInquiryExpiryDate(joinDate, billingCycle, Number(customDays) || 0); form.setValue('expiryDate', expiryDate ?? '', { shouldValidate: true }); }, [billingCycle, customDays, form, joinDate]);

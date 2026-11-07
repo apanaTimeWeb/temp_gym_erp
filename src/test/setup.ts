@@ -16,3 +16,22 @@ vi.mock('next/navigation', () => ({
   useParams: () => ({}),
 }));
 
+import appMessages from '@/i18n/messages';
+
+vi.mock('next-intl', () => ({
+  useTranslations: (namespace?: string) => {
+    const nsObj = namespace ? appMessages[namespace] : appMessages;
+    return (key: string, values?: Record<string, any>) => {
+      let res = nsObj?.[key] ?? key;
+      if (values && typeof res === 'string') {
+        Object.entries(values).forEach(([k, v]) => {
+          res = res.replace(new RegExp(`{${k}}`, 'g'), String(v));
+        });
+      }
+      return res;
+    };
+  },
+  useLocale: () => 'en',
+  NextIntlClientProvider: ({ children }: any) => children,
+}));
+

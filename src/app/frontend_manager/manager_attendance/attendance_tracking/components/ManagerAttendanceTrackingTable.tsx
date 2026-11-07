@@ -1,8 +1,11 @@
 // RESPONSIBILITY: Renders or orchestrates the owning Manager feature UI; API transport and business rules remain in module-owned hooks/services.
 'use client';
 
-import { Clock, Calendar } from 'lucide-react';
+import { Clock, Calendar, LogOut } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useQueryClient } from '@tanstack/react-query';
+import { apiFetch } from '@/lib/api';
+import { ManagerAttendanceTrackingQueryKeys } from '@/app/frontend_manager/manager_attendance/attendance_tracking/api/manager_attendance_tracking.query_keys';
 
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
 import ManagerPagination from '@/components/ui/manager_pagination/ManagerPagination';
@@ -72,8 +75,18 @@ function getAttendanceStatusLabel(status: string, t: (key: string) => string): s
 /** @description Renders the ManagerAttendanceTrackingTable component for its owning Manager frontend boundary. @dependencies Local dependencies are owned by this feature module (9 documented module/import dependencies).. @edge-case Preserves empty state, error state. */
 export default function ManagerAttendanceTrackingTable() {
   const t = useTranslations('MANAGER_ATTENDANCE_TRACKING');
+  const queryClient = useQueryClient();
 
   const { records, totalRecords, isPending, isError, errorMessage, currentPage, setCurrentPage, setCalendarUser } = useManagerAttendanceTrackingLogic();
+
+  const handleCheckOut = async (id: string) => {
+    try {
+      await apiFetch(`/api/v1/manager/attendance/checkout/${id}`, { method: 'POST' });
+      void queryClient.invalidateQueries({ queryKey: ManagerAttendanceTrackingQueryKeys.all });
+    } catch {
+      // Invalidation handles fallback
+    }
+  };
 
   const totalPages = Math.max(1, Math.ceil(totalRecords / MANAGER_ITEMS_PER_PAGE));
   const paginatedRecords = records;
@@ -157,10 +170,28 @@ export default function ManagerAttendanceTrackingTable() {
                   </td>
                   {/* Actions */}
                   <td className="px-2.5 py-3 text-sm whitespace-nowrap">
-                    <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "p-1.5 rounded-md hover:bg-primary-subtle text-primary motion-safe:transition-all flex items-center gap-1 border border-transparent hover:border-border motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_attendance-attendance-managerattendancetable-button-view-monthly-calendar-${mapIndex}`} onClick={(event) => { event.stopPropagation(); setCalendarUser({ id: String(r.memberId || r.staffId || r.id), name: String(r.member?.name || r.staff?.name || ''), type: r.type as ManagerAttendanceTrackingPersonType }); }}  title={t("COPY_VIEW_MONTHLY_CALENDAR")} aria-label={t("COPY_VIEW_MONTHLY_ATTENDANCE_CALENDAR")} type="button">
-                      <Calendar size={18} strokeWidth={2} data-testid="manager_attendance-managerattendancetable-interactive"/>
-                      <span className="text-xs font-medium">{t("COPY_HISTORY")}</span>
-                    </button>
+                    <div className="flex items-center gap-1.5">
+                      {Boolean(r.checkIn && r.checkIn !== '—' && !r.checkOut && !r.checkOutTime) && (
+                        <button
+                          type="button"
+                          data-testid={`manager_attendance-checkout-${r.id}`}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            void handleCheckOut(r.id);
+                          }}
+                          className="p-1.5 rounded-md hover:bg-warning/10 text-warning motion-safe:transition-all flex items-center gap-1 border border-warning/30 hover:border-warning motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none"
+                          title="Check Out"
+                          aria-label={`Check out ${r.member?.name || r.staff?.name || 'user'}`}
+                        >
+                          <LogOut size={14} strokeWidth={2} />
+                          <span className="text-xs font-semibold">Check Out</span>
+                        </button>
+                      )}
+                      <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "p-1.5 rounded-md hover:bg-primary-subtle text-primary motion-safe:transition-all flex items-center gap-1 border border-transparent hover:border-border motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_attendance-attendance-managerattendancetable-button-view-monthly-calendar-${mapIndex}`} onClick={(event) => { event.stopPropagation(); setCalendarUser({ id: String(r.memberId || r.staffId || r.id), name: String(r.member?.name || r.staff?.name || ''), type: r.type as ManagerAttendanceTrackingPersonType }); }}  title={t("COPY_VIEW_MONTHLY_CALENDAR")} aria-label={t("COPY_VIEW_MONTHLY_ATTENDANCE_CALENDAR")} type="button">
+                        <Calendar size={18} strokeWidth={2} data-testid="manager_attendance-managerattendancetable-interactive"/>
+                        <span className="text-xs font-medium">{t("COPY_HISTORY")}</span>
+                      </button>
+                    </div>
                   </td>
                 </tr>))}
               {records.length === 0 && (<tr>
