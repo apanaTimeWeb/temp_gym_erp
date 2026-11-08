@@ -21,6 +21,7 @@ export interface ManagerSearchableDropdownProps {
   'data-testid'?: string;
   disabled?: boolean;
   className?: string;
+  id?: string;
 }
 
 export default function ManagerSearchableDropdown({
@@ -35,6 +36,7 @@ export default function ManagerSearchableDropdown({
   'data-testid': testIdProp,
   disabled = false,
   className = '',
+  id,
 }: ManagerSearchableDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState('');
@@ -65,6 +67,7 @@ export default function ManagerSearchableDropdown({
   return (
     <div ref={containerRef} className={`relative w-full ${className}`} data-testid={effectiveTestId}>
       <button
+        id={id}
         type="button"
         disabled={disabled}
         onClick={() => setIsOpen(!isOpen)}

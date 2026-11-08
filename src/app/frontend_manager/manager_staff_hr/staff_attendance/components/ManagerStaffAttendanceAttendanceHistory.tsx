@@ -84,6 +84,7 @@ export default function ManagerStaffPayrollAndAttendanceAttendanceHistory() {
           <div className="min-w-56">
             <label className="mb-1 block text-xs text-text-secondary" htmlFor="manager-hr-attendance-staff">{t('COPY_STAFF_MEMBER_3')}</label>
             <ManagerSearchableDropdown
+              id="manager-hr-attendance-staff"
               dataTestId="manager_hr-managerhrattendancehistory-managersearchabledropdown-1"
               value={effectiveStaffId}
               onChange={(value) => setSelectedStaffId(String(value))}
