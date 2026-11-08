@@ -14,7 +14,7 @@ import { MANAGER_MEMBER_MAX_AMOUNT_MAJOR_UNITS, MANAGER_MEMBER_MAX_CUSTOM_DAYS }
 const managerMembersFormBaseSchema = z.object({
   name: z.string().min(2, 'Name is required'),
   email: z.string().email('Invalid email address').optional().or(z.literal('')),
-  phone: z.string().regex(/^\d{10}$/, 'Phone number must be exactly 10 digits'),
+  phone: z.string().trim().regex(/^(\+?91[\s-]?)?[0-9]{10}$/, 'Phone number must be a valid 10-digit number'),
   address: z.string().optional(),
   aadhaar: z.string().regex(/^\d{12}$/, 'Aadhaar must be exactly 12 digits').optional().or(z.literal('')),
   gender: z.enum(MANAGER_MEMBERS_DIRECTORY_GENDER_VALUES),

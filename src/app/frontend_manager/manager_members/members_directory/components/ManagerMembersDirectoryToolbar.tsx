@@ -33,14 +33,6 @@ export default function ManagerMembersDirectoryToolbar() {
   } = useManagerMembersDirectoryLogic();
   const { data: plansData } = useFetchPlans();
   const plans = plansData || [];
-  const [localSearch, setLocalSearch] = useState(search);
-  const [prevSearch, setPrevSearch] = useState(search);
-
-  if (search !== prevSearch) {
-    setPrevSearch(search);
-    setLocalSearch(search);
-  }
-
 
   const handleRefresh = () => {
     void queryClient.invalidateQueries({ queryKey: ManagerMembersDirectoryQueryKeys.all });
@@ -52,8 +44,6 @@ export default function ManagerMembersDirectoryToolbar() {
     ...plans.map(p => ({ label: p.name, value: p.id })),
   ];
 
-  useManagerInfrastructureDebouncedValueCommit(localSearch, search, setSearch, 300);
-
   return (
     <div className="bg-card rounded-xl shadow-card border border-border p-4 flex flex-col gap-3">
       {/* Row 1: Search + Primary Actions */}
@@ -61,8 +51,8 @@ export default function ManagerMembersDirectoryToolbar() {
         <div className="relative w-full lg:w-72">
           <Search size={18} strokeWidth={2} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
           <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "pl-9 pr-3 py-2.5 border border-border rounded-xl text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page w-full bg-input text-text-primary"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_members-members-toolbar-input-value"
-            value={localSearch}
-            onChange={e => setLocalSearch(e.target.value)}
+            value={search}
+            onChange={e => setSearch(e.target.value)}
             placeholder={t("COPY_SEARCH_NAME_PHONE")}
             
            aria-label={t("COPY_SEARCH_NAME_PHONE")}/>

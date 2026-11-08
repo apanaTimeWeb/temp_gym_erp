@@ -1,10 +1,11 @@
 import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 describe('ManagerMembersDirectoryTable.tsx responsive table contract', () => {
   it('uses the shared density, labelled mobile-card, and existing-action adapter', () => {
-    const componentSource = readFileSync(fileURLToPath(new URL('../components/ManagerMembersDirectoryTable.tsx', import.meta.url)), 'utf8');
+    const componentPath = path.resolve(__dirname, '../components/ManagerMembersDirectoryTable.tsx');
+    const componentSource = readFileSync(componentPath, 'utf8');
     expect(componentSource).toContain('ManagerInfrastructureResponsiveTable');
     expect(componentSource).toContain('labels={');
   });

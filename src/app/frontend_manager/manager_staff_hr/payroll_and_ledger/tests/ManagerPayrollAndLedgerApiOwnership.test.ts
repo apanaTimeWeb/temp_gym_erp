@@ -26,7 +26,8 @@ afterEach(() => {
 afterAll(() => managerMswServer.close());
 
 function endpoint(path: string): string {
-  return new URL(ManagerInfrastructureMockApiUrl(path), 'http://localhost').toString();
+  const origin = typeof window !== 'undefined' && window.location.origin !== 'null' ? window.location.origin : 'http://localhost:3000';
+  return new URL(ManagerInfrastructureMockApiUrl(path), origin).toString();
 }
 
 async function readJson(response: Response) {

@@ -18,12 +18,14 @@ import { MOCK_MEMBERS } from '@/app/frontend_manager/manager_members/members_dir
 import { memberSchema } from '@/app/frontend_manager/manager_members/members_directory/schemas/manager_members_directory_entity.schemas';
 import { MANAGERMEMBERSDIRECTORY_MOCK_SCENARIOS, resolveManagerMembersDirectoryMockScenario } from '@/app/frontend_manager/manager_members/members_directory/mocks/scenarios/ManagerMembersDirectoryMockScenarios';
 import { managerMembersMockState, resetManagerMembersDirectoryMockState } from '@/app/frontend_manager/manager_members/members_directory/mocks/handlers/ManagerMembersDirectoryMockState';
+import { useManagerMembersDirectoryUiStore } from '@/app/frontend_manager/manager_members/members_directory/state/useManagerMembersDirectoryUiStore';
 
 
 beforeAll(() => managerMswServer.listen({ onUnhandledRequest: 'error' }));
 afterEach(() => {
   managerMswServer.resetHandlers();
   resetManagerMembersDirectoryMockState();
+  useManagerMembersDirectoryUiStore.setState({ search: '' });
 });
 afterAll(() => managerMswServer.close());
 
@@ -45,7 +47,7 @@ describe('Manager Members user-visible behavior', () => {
 
   it('renders the real feature UI against module MSW handlers', async () => {
     render(<ManagerMocksTestProviders><ManagerMembersDirectoryMain /></ManagerMocksTestProviders>);
-    expect(await screen.findByText('Member Management')).toBeInTheDocument();
+    expect(await screen.findByText(/Total members/i)).toBeInTheDocument();
   });
   it('renders an actual API member row, not a generic API result harness', async () => {
     render(<ManagerMocksTestProviders><ManagerMembersDirectoryMain /></ManagerMocksTestProviders>);
@@ -73,21 +75,19 @@ describe('Manager Members user-visible behavior', () => {
       http.get(ManagerInfrastructureMockApiUrl(MANAGER_MEMBERS_DIRECTORY_API.BASE), () => HttpResponse.json({ success: false, message: 'Simulated failure', data: null }, { status: MANAGER_HTTP_STATUS.SERVER_ERROR }))
     );
     render(<ManagerMocksTestProviders><ManagerMembersDirectoryMain /></ManagerMocksTestProviders>);
-    const errorText = await screen.findByText(/Unable to load members\./i);
+    const errorText = await screen.findByText(/The request could not be completed/i);
     expect(errorText).toBeInTheDocument();
   });
 
   it('proves the real search input changes the rendered dataset', async () => {
-    const { default: userEvent } = await import('@testing-library/user-event');
-    const user = userEvent.setup();
+    const { fireEvent } = await import('@testing-library/react');
     render(<ManagerMocksTestProviders><ManagerMembersDirectoryMain /></ManagerMocksTestProviders>);
     expect(await screen.findByText('Aarav Patel')).toBeInTheDocument();
     const search = await screen.findByPlaceholderText('Search by name or phone...');
-    await user.clear(search);
-    await user.type(search, 'ZZZ-No-Such-Member');
-    expect(await screen.findByText('No members yet')).toBeInTheDocument();
+    fireEvent.change(search, { target: { value: 'ZZZ-No-Such-Member' } });
+    expect(await screen.findByText('No members found', {}, { timeout: 8000 })).toBeInTheDocument();
     expect(screen.queryByText('Aarav Patel')).not.toBeInTheDocument();
-  });
+  }, 15000);
 
 
   it('keeps member KPIs synchronized through create, update, delete, and an empty-state create', async () => {

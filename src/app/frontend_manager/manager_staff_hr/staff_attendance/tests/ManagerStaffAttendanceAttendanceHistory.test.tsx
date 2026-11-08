@@ -111,7 +111,7 @@ describe('ManagerStaffPayrollAndAttendanceAttendanceHistory contract', () => {
     });
 
     renderHistory();
-    fireEvent.click(screen.getByRole('button', { name: 'Try again' }));
+    fireEvent.click(screen.getByRole('button', { name: /try again/i }));
     expect(refetch).toHaveBeenCalledTimes(1);
   });
 
@@ -126,7 +126,7 @@ describe('ManagerStaffPayrollAndAttendanceAttendanceHistory contract', () => {
     });
 
     renderHistory();
-    fireEvent.click(screen.getByRole('button', { name: 'Try again' }));
+    fireEvent.click(screen.getByRole('button', { name: /try again/i }));
     expect(loadAll).toHaveBeenCalledTimes(1);
   });
 });

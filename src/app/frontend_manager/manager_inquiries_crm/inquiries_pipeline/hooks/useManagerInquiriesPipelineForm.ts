@@ -33,7 +33,13 @@ export function useManagerInquiriesPipelineForm() {
   const form = useForm<InquiryFormValues>({ resolver: zodResolver(managerInquiriesFormSchema), defaultValues: EMPTY_INQUIRY_FORM });
   const [newNote, setNewNote] = useState('');
 // EFFECT: Effect lifecycle and dependency list are intentionally scoped to values that control this side effect.
-  useEffect(() => { if (!logic.showModal) return; form.reset((logic.editData as InquiryFormValues | null) ?? EMPTY_INQUIRY_FORM); setNewNote(''); }, [form, logic.editData, logic.showModal]);
+  useEffect(() => {
+    if (!logic.showModal) return;
+    const editLead = logic.editData as InquiryFormValues | null;
+    const normalizedPhone = editLead?.phone ? editLead.phone.replace(/[\s-+]/g, '').slice(-10) : '';
+    form.reset(editLead ? { ...editLead, ...(normalizedPhone ? { phone: normalizedPhone } : {}) } : EMPTY_INQUIRY_FORM);
+    setNewNote('');
+  }, [form, logic.editData, logic.showModal]);
   const { confirmAndClose } = useManagerInfrastructureUnsavedChangesGuard(logic.showModal && (form.formState.isDirty || newNote.trim().length > 0));
   const handleClose = () => { void confirmAndClose(() => logic.setShowModal(false)); };
   const submit = form.handleSubmit((data) => { const payload = { ...data, ...(data.email ? {} : { email: undefined }), ...(data.notes ? {} : { notes: undefined }), followUpLogs: newNote.trim() ? [...(logic.editData?.followUpLogs || []), { date: new Date(), note: newNote.trim() }] : logic.editData?.followUpLogs || [] }; logic.saveInquiry(payload); });

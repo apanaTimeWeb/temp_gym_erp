@@ -8,6 +8,7 @@ import { useManagerInfrastructureDebounce } from '@/app/frontend_manager/manager
 import { MANAGER_MEMBERS_DIRECTORY_STATUS_VALUES } from '@/app/frontend_manager/manager_members/members_directory/constants/manager_members_directory.constants';
 import { MANAGER_MEMBERS_DIRECTORY_ID_QUERY_PARAM, MANAGER_MEMBERS_DIRECTORY_LIST_VIEW, MANAGER_MEMBERS_DIRECTORY_PROFILE_VIEW, MANAGER_MEMBERS_DIRECTORY_VIEW_QUERY_PARAM } from '@/app/frontend_manager/manager_members/members_directory/constants/manager_members_directory_view.constants';
 import { resolveManagerMembersDirectoryView } from '@/app/frontend_manager/manager_members/members_directory/utils/ManagerMembersDirectoryResolveView';
+import { useManagerMembersDirectoryUiStore } from '@/app/frontend_manager/manager_members/members_directory/state/useManagerMembersDirectoryUiStore';
 import type { MemberSortColumn, SortDirection } from '@/app/frontend_manager/manager_members/members_directory/types/manager_members_directory.types';
 
 
@@ -52,7 +53,8 @@ export function useManagerMembersDirectoryUrlState() {
     router.push(query ? `${pathname}?${query}` : pathname, { scroll: false });
   }, [pathname, router, searchParams]);
 
-  const [search, setSearchDraft] = useState('');
+  const search = useManagerMembersDirectoryUiStore((state) => state.search);
+  const setSearchDraft = useManagerMembersDirectoryUiStore((state) => state.setSearch);
   const statusFilterRaw = searchParams.get('status') || MANAGER_MEMBERS_DIRECTORY_STATUS_VALUES.ALL_STATUS_FILTER;
   const statusFilter = Object.values(MANAGER_MEMBERS_DIRECTORY_STATUS_VALUES).includes(statusFilterRaw as never) ? statusFilterRaw : MANAGER_MEMBERS_DIRECTORY_STATUS_VALUES.ALL_STATUS_FILTER;
   const rawPage = Number(searchParams.get('page') || '1');

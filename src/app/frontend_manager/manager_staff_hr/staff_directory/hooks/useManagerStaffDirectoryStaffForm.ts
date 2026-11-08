@@ -34,9 +34,14 @@ export function useManagerStaffPayrollAndAttendanceStaffForm() {
   useEffect(() => {
     if (!showModal) return;
     const source = (editData as Partial<StaffFormValues> | null) ?? {};
+    const normalizedPhone = source.phone ? source.phone.replace(/[\s-+]/g, '').slice(-10) : '';
+    const rawGender = String(source.gender || '').toUpperCase();
+    const normalizedGender = (['MALE', 'FEMALE', 'OTHER'].includes(rawGender) ? rawGender : 'MALE') as StaffFormValues['gender'];
     form.reset({
       ...EMPTY_STAFF,
       ...source,
+      ...(normalizedPhone ? { phone: normalizedPhone } : {}),
+      ...(source.gender ? { gender: normalizedGender } : {}),
       salary: source.salary === undefined ? 0 : ManagerInfrastructureFromManagerMinorUnits(Number(source.salary)),
       advanceSalary: source.advanceSalary === undefined ? 0 : ManagerInfrastructureFromManagerMinorUnits(Number(source.advanceSalary)),
       joinDate: source.joinDate ? new Date(source.joinDate).toISOString().slice(0, 10) : EMPTY_STAFF.joinDate,

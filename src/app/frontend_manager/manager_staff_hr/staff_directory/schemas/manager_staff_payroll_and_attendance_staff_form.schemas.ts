@@ -10,7 +10,7 @@ import { MANAGER_STAFF_PAYROLL_AND_ATTENDANCE_GENDER_VALUES } from '@/app/fronte
 export const managerHrStaffFormSchema = z.object({
   name: z.string().min(2, 'Name is required').regex(/^[\p{L}\p{M}\s.'’-]+$/u, 'Use letters and common name punctuation'),
   email: z.string().email('Invalid email address'),
-  phone: z.string().regex(/^\d{10}$/, 'Phone number must be exactly 10 digits'),
+  phone: z.string().trim().regex(/^\d{10}$/, 'Phone number must be a valid 10-digit number'),
   role: z.string().min(2, 'Role is required'), salary: z.number().min(0, 'Salary must be positive'),
   gender: z.enum(MANAGER_STAFF_PAYROLL_AND_ATTENDANCE_GENDER_VALUES), address: z.string().optional(), joinDate: z.string(),
   temporaryPassword: z.string().optional().refine((val) => !val || val.length >= 8, { message: 'Password must be at least 8 characters' }),

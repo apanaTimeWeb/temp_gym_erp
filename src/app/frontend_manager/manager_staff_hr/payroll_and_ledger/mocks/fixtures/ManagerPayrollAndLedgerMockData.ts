@@ -40,18 +40,23 @@ function deriveSummary(staff: Staff[], payrolls: Payroll[], ledger: LedgerEntry[
  * Money values are represented in the same minor-unit integers used by the leaf API.
  */
 export function createManagerPayrollAndLedgerFixtureSet(count: number, month = MOCK_PAYROLL_AND_LEDGER_MONTH): ManagerPayrollAndLedgerFixtureSet {
+  const staffNames = [
+    'Rahul Verma', 'Anjali Desai', 'Vikram Malhotra', 'Sneha Kapoor', 'Rohan Mehta',
+    'Pooja Sharma', 'Karan Patel', 'Neha Gupta', 'Amit Singh', 'Deepika Rao',
+    'Arjun Nair', 'Priya Joshi', 'Manish Reddy', 'Kavita Iyer', 'Sanjay Kumar'
+  ];
   const roles = ['Senior Trainer', 'Receptionist', 'Fitness Coach', 'Nutritionist', 'Front Desk'];
   const staff: Staff[] = Array.from({ length: count }, (_, index) => {
     const id = `staff-${String(index + 1).padStart(4, '0')}`;
     return {
       id,
-      name: `Staff Member ${String(index + 1).padStart(3, '0')}`,
+      name: staffNames[index] || `Staff Member ${String(index + 1).padStart(3, '0')}`,
       email: `staff${index + 1}@example.test`,
       phone: `+919900${String(index + 1).padStart(6, '0')}`,
       role: roles[index % roles.length],
       salary: 2500000 + (index % 5) * 250000,
       branch: index % 2 === 0 ? 'Main Branch' : 'North Branch',
-      gender: index % 2 === 0 ? 'Female' : 'Male',
+      gender: index % 2 === 0 ? 'FEMALE' : 'MALE',
       joinDate: `202${index % 5}-01-15T10:00:00.000Z`,
       isActive: index % 11 !== 0,
       salaryType: 'Monthly',

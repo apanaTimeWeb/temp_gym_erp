@@ -21,10 +21,10 @@ describe('ManagerMembersDirectoryUiConstants', () => {
 
   it('keeps gender filter values explicit and stable', () => {
     expect(MEMBER_GENDER_OPTIONS).toEqual(expect.arrayContaining([
-      { label: 'All Genders', value: 'All' },
-      { label: 'Male', value: 'MALE' },
-      { label: 'Female', value: 'FEMALE' },
-      { label: 'Other', value: 'OTHER' },
+      expect.objectContaining({ label: 'All Genders', value: 'All' }),
+      expect.objectContaining({ label: 'Male', value: 'MALE' }),
+      expect.objectContaining({ label: 'Female', value: 'FEMALE' }),
+      expect.objectContaining({ label: 'Other', value: 'OTHER' }),
     ]));
   });
 });

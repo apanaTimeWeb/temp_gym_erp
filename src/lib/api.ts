@@ -42,10 +42,13 @@ export async function apiFetch<T = unknown>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<ApiResponse<T>> {
-  // If a mock response is available for this endpoint (dev/demo environment), return it
-  const mock = handleMockApiRequest(endpoint, options);
-  if (mock) {
-    return mock as ApiResponse<T>;
+  // If a mock response is available for this endpoint (dev/demo environment), return it.
+  // In test environment (Vitest), allow MSW to intercept real fetch requests.
+  if (process.env.NODE_ENV !== 'test') {
+    const mock = handleMockApiRequest(endpoint, options);
+    if (mock) {
+      return mock as ApiResponse<T>;
+    }
   }
 
   const defaultHeaders: Record<string, string> = {
@@ -66,7 +69,12 @@ export async function apiFetch<T = unknown>(
       : `req_${Date.now()}`);
 
   try {
-    const response = await fetch(endpoint, config);
+    const resolvedUrl = endpoint.startsWith("http")
+      ? endpoint
+      : typeof window !== "undefined" && window.location.origin && window.location.origin !== "null"
+        ? new URL(endpoint, window.location.origin).toString()
+        : `http://localhost:3000${endpoint.startsWith("/") ? "" : "/"}${endpoint}`;
+    const response = await fetch(resolvedUrl, config);
     const contentType = response.headers.get("content-type") || "";
 
     if (!contentType.includes("application/json")) {

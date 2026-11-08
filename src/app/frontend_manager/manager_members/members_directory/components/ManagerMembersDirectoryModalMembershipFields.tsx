@@ -47,7 +47,7 @@ export default function ManagerMembersDirectoryModalMembershipFields({ formState
                   <ManagerSearchableDropdown ariaLabel={t("COPY_BILLING_CYCLE_2")} dataTestId="manager_members-managermembersmodal-managersearchabledropdown-4"
                     value={field.value || ''}
                     onChange={field.onChange}
-                    options={Object.entries(MEMBERS_CYCLE_LABELS).map(([val, labelKey]) => ({ label: t(labelKey), value: val }))}
+                    options={['ONE_MONTH', 'THREE_MONTHS', 'SIX_MONTHS', 'TWELVE_MONTHS', 'CUSTOM'].map((val) => ({ label: t(MEMBERS_CYCLE_LABELS[val] || val), value: val }))}
                     disabled={!!editId}
                    data-testid="manager_members-managermembersmodal-searchable-dropdown-4"/>
                 )}

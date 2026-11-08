@@ -18,7 +18,7 @@ import type { Member, MemberStats } from '@/app/frontend_manager/manager_members
  */
 export const ManagerMembersDirectoryApi = {
   exportMembersReport: async (params?: Record<string, string>): Promise<ApiResponse<{ members: Member[]; total: number }>> => {
-    const pageSize = 250;
+    const pageSize = 1000;
     const members: Member[] = [];
     let total = 0;
     let firstResponse: ApiResponse<{ members: Member[]; total: number }> | null = null;
@@ -28,9 +28,9 @@ export const ManagerMembersDirectoryApi = {
         dataSchema: z.object({ members: z.array(populatedMemberSchema), total: z.number().int().nonnegative() })
       });
       if (!firstResponse) firstResponse = response;
-      if (!response.success) return response;
-      members.push(...response.data.members);
-      total = response.data.total;
+      if (!response.success || !response.data) return response;
+      members.push(...(response.data.members || []));
+      total = response.data.total ?? 0;
       if (members.length >= total || response.data.members.length === 0) break;
     }
     if (!firstResponse) throw new Error('Member export did not return a response');

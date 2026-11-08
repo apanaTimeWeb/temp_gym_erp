@@ -597,7 +597,43 @@ export function handleManagerMockApiRequest(
     return buildMockSuccess(hrData.summary, 'HR summary loaded');
   }
   if (path === 'hr/staff') {
+    if (method === 'POST') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const newStaff = {
+          ...hrData.staff[0],
+          ...body,
+          id: `staff-${Date.now()}`,
+          isActive: true,
+        };
+        hrData.staff.unshift(newStaff);
+        return buildMockSuccess(newStaff, 'Staff member added');
+      } catch {
+        return buildMockSuccess(hrData.staff[0], 'Staff member added');
+      }
+    }
     return buildMockSuccess({ staff: hrData.staff, total: hrData.staff.length }, 'Staff list loaded');
+  }
+  if (path.startsWith('hr/staff/')) {
+    const parts = path.split('/');
+    const id = parts[2];
+    const idx = hrData.staff.findIndex((s) => s.id === id);
+    const existing = idx >= 0 ? hrData.staff[idx] : hrData.staff[0];
+    if (method === 'DELETE') {
+      if (idx >= 0) hrData.staff.splice(idx, 1);
+      return buildMockSuccess({ id }, 'Staff member deleted');
+    }
+    if (method === 'PATCH' || method === 'PUT') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const updated = { ...existing, ...body };
+        if (idx >= 0) hrData.staff[idx] = updated;
+        return buildMockSuccess(updated, 'Staff member updated');
+      } catch {
+        return buildMockSuccess(existing, 'Staff member updated');
+      }
+    }
+    return buildMockSuccess(existing, 'Staff member loaded');
   }
   if (path === 'hr/payrolls/generate') {
     return buildMockSuccess({ payrolls: hrData.payrolls }, 'Payroll generation complete');

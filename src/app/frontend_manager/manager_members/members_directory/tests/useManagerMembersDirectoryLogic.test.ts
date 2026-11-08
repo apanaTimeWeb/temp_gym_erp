@@ -1,5 +1,7 @@
 import { renderHook } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import React from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { describe, it, expect, vi } from 'vitest';
 
 import { useManagerMembersDirectoryLogic } from '@/app/frontend_manager/manager_members/members_directory/hooks/useManagerMembersDirectoryLogic';
 
@@ -20,7 +22,10 @@ vi.mock('./useManagerMembersDirectoryMutations', () => ({
 
 describe('useManagerMembersDirectoryLogic', () => {
   it('should initialize with default state', () => {
-    const { result } = renderHook(() => useManagerMembersDirectoryLogic());
+    const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+    const wrapper = ({ children }: { children: React.ReactNode }) =>
+      React.createElement(QueryClientProvider, { client: queryClient }, children);
+    const { result } = renderHook(() => useManagerMembersDirectoryLogic(), { wrapper });
     
     expect(result.current.search).toBe('');
     expect(result.current.statusFilter).toBe('All');

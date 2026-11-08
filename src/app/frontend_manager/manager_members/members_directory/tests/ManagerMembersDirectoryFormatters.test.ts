@@ -8,7 +8,7 @@ describe('ManagerMembersDirectoryFormatters behavioral contract', () => {
     expect(formatted.replace(/[^0-9.]/g, '')).toContain('123.45');
   });
   it('ManagerMembersDirectoryFormatNumber formats a metric without decimals', () => {
-    expect(moduleUnderTest.ManagerMembersDirectoryFormatNumber(123456, 'en-IN')).toContain('123');
+    expect(moduleUnderTest.ManagerMembersDirectoryFormatNumber(123456, 'en-IN').replace(/[^0-9]/g, '')).toContain('123456');
   });
   it('ManagerMembersDirectoryFormatPercent formats percentages', () => {
     expect(moduleUnderTest.ManagerMembersDirectoryFormatPercent(12.5, 'en-IN')).toContain('%');

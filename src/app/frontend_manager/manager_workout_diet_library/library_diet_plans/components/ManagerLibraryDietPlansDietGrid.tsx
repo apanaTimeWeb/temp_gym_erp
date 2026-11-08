@@ -33,8 +33,8 @@ export default function ManagerLibraryDietPlansDietGrid() {
             <h3 className="truncate text-sm font-bold text-text-primary" title={diet.name}>{diet.name}</h3>
             <p className="mt-1 text-xs text-text-secondary">{diet.goal}</p>
             <div className="mt-auto space-y-1 border-t border-border pt-3">
-              <div className="flex items-center gap-2 text-xs text-text-secondary"><Flame size={18} strokeWidth={2} className="text-warning-text" aria-hidden="true"/><span>{ManagerLibraryDietPlansDisplayValue(diet.calories)}{t("COPY_KCAL_DAY")}</span></div>
-              <p className="text-xs text-text-secondary">{t("COPY_PROTEIN")}{ManagerLibraryDietPlansDisplayValue(diet.protein)}{t("COPY_G_CARBS")}{ManagerLibraryDietPlansDisplayValue(diet.carbs)}{t("COPY_G_FATS")}{ManagerLibraryDietPlansDisplayValue(diet.fats)}{t("COPY_G")}</p>
+              <div className="flex items-center gap-2 text-xs text-text-secondary"><Flame size={18} strokeWidth={2} className="text-warning-text" aria-hidden="true"/><span>{ManagerLibraryDietPlansDisplayValue(diet.calories)} {t("COPY_KCAL_DAY")}</span></div>
+              <p className="text-xs text-text-secondary">{t("COPY_PROTEIN")}: {ManagerLibraryDietPlansDisplayValue(diet.protein)}g · Carbs: {ManagerLibraryDietPlansDisplayValue(diet.carbs)}g · Fats: {ManagerLibraryDietPlansDisplayValue(diet.fats)}g</p>
             </div>
           </article>
         ))}

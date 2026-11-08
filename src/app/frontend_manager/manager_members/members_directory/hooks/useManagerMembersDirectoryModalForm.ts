@@ -57,7 +57,37 @@ export function useManagerMembersDirectoryModalForm(
   // EFFECT: Dependency list is limited to the values that control this effect.
   useEffect(() => {
     if (showAddModal) {
-      reset({ ...ManagerMembersDirectoryCreateDefaultForm(), ...(editData || {}), totalAmount: editData?.totalAmount ? ManagerInfrastructureFromManagerMinorUnits(editData.totalAmount) : 0, paidAmount: editData?.paidAmount ? ManagerInfrastructureFromManagerMinorUnits(editData.paidAmount) : 0, pendingAmount: editData?.pendingAmount ? ManagerInfrastructureFromManagerMinorUnits(editData.pendingAmount) : 0, advanceAmount: editData?.advanceAmount ? ManagerInfrastructureFromManagerMinorUnits(editData.advanceAmount) : 0 });
+      const normalizedPhone = editData?.phone ? editData.phone.replace(/[\s-+]/g, '').slice(-10) : '';
+      const rawGender = String(editData?.gender || '').toUpperCase();
+      const normalizedGender = (['MALE', 'FEMALE', 'OTHER'].includes(rawGender) ? rawGender : 'MALE') as MemberFormValues['gender'];
+      const cycleMap: Record<string, MemberFormValues['billingCycle']> = {
+        Monthly: 'ONE_MONTH',
+        ONE_MONTH: 'ONE_MONTH',
+        Quarterly: 'THREE_MONTHS',
+        THREE_MONTHS: 'THREE_MONTHS',
+        Semiannual: 'SIX_MONTHS',
+        SIX_MONTHS: 'SIX_MONTHS',
+        Annual: 'TWELVE_MONTHS',
+        TWELVE_MONTHS: 'TWELVE_MONTHS',
+        CUSTOM: 'CUSTOM',
+      };
+      const normalizedCycle = editData?.billingCycle ? (cycleMap[editData.billingCycle] || 'ONE_MONTH') : 'ONE_MONTH';
+      const normalizedJoinDate = editData?.joinDate ? (editData.joinDate.includes('T') ? editData.joinDate.split('T')[0] : editData.joinDate.slice(0, 10)) : '';
+      const normalizedExpiryDate = editData?.expiryDate ? (editData.expiryDate.includes('T') ? editData.expiryDate.split('T')[0] : editData.expiryDate.slice(0, 10)) : '';
+
+      reset({
+        ...ManagerMembersDirectoryCreateDefaultForm(),
+        ...(editData || {}),
+        ...(normalizedPhone ? { phone: normalizedPhone } : {}),
+        gender: editData ? normalizedGender : 'MALE',
+        billingCycle: editData ? normalizedCycle : 'ONE_MONTH',
+        joinDate: normalizedJoinDate || ManagerMembersDirectoryCreateDefaultForm().joinDate,
+        expiryDate: normalizedExpiryDate || ManagerMembersDirectoryCreateDefaultForm().expiryDate,
+        totalAmount: editData?.totalAmount ? ManagerInfrastructureFromManagerMinorUnits(editData.totalAmount) : 0,
+        paidAmount: editData?.paidAmount ? ManagerInfrastructureFromManagerMinorUnits(editData.paidAmount) : 0,
+        pendingAmount: editData?.pendingAmount ? ManagerInfrastructureFromManagerMinorUnits(editData.pendingAmount) : 0,
+        advanceAmount: editData?.advanceAmount ? ManagerInfrastructureFromManagerMinorUnits(editData.advanceAmount) : 0,
+      });
     }
   }, [showAddModal, editData, reset]);
 
