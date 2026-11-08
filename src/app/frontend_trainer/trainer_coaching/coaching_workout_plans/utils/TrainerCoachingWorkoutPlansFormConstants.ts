@@ -10,4 +10,5 @@ export const TRAINER_WORKOUT_DEFAULT_EXERCISE = {
   reps: '10',
   weight: '',
   restTime: '60s',
+  day: 'Day 1',
 } as const;

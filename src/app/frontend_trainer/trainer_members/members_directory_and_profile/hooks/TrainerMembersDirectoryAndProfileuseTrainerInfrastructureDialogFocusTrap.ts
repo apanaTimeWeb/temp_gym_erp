@@ -42,7 +42,8 @@ export function useTrainerInfrastructureDialogFocusTrap({ isOpen, dialogRef, onE
       if (event.key === 'Escape') {
         event.preventDefault();
         const dialogs = Array.from(document.querySelectorAll<HTMLElement>('[role="dialog"][aria-modal="true"]'));
-        if (dialogs[dialogs.length - 1] !== dialog) return;
+        const topmost = dialogs[dialogs.length - 1];
+        if (topmost && topmost !== dialog) return;
         onEscapeRef.current?.();
         return;
       }

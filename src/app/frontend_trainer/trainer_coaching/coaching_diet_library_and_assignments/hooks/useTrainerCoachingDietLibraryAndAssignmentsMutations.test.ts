@@ -7,8 +7,10 @@ import { useTrainerLibraryMutations } from '@/app/frontend_trainer/trainer_coach
 
 
 
-const invalidateQueries = vi.fn().mockResolvedValue(undefined);
-const api = { assignDietPlan: vi.fn().mockResolvedValue({ success: true, message: 'Assigned', data: null }) };
+const { invalidateQueries, api } = vi.hoisted(() => ({
+  invalidateQueries: vi.fn().mockResolvedValue(undefined),
+  api: { assignDietPlan: vi.fn().mockResolvedValue({ success: true, message: 'Assigned', data: null }) },
+}));
 
 vi.mock('@tanstack/react-query', () => ({
   useQueryClient: () => ({ invalidateQueries }),

@@ -5,4 +5,4 @@ import TrainerMembersLoadingSkeleton from '@/app/frontend_trainer/trainer_member
  * @dependencies Uses only documented members module dependencies and approved global infrastructure/UI primitives.
  * @edge-case Preserves documented loading, empty, error, accessibility, responsive, and recovery behavior without inventing business fallbacks.
  */
-export default function TrainerMembersLoading() { return <div data-testid="trainer_members-route-loading"><TrainerMembersLoadingSkeleton /></div>; }
+export default function TrainerMembersLoading() { return <div data-testid="trainer_members-route-loading" className="p-6"><TrainerMembersLoadingSkeleton /></div>; }

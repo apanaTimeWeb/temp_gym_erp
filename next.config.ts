@@ -58,6 +58,11 @@ const nextConfig: NextConfig = {
         permanent: false,
       },
       {
+        source: "/trainer/members",
+        destination: "/frontend_trainer/trainer_members/members_directory_and_profile",
+        permanent: false,
+      },
+      {
         source: "/frontend_trainer",
         destination: "/frontend_trainer/trainer_dashboard/dashboard_overview",
         permanent: false,

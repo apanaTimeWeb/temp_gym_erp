@@ -30,6 +30,8 @@ function readSearch(search: string): URLSearchParams {
  */
 export function TrainerMembersResolveViewUrl(search: string): TrainerMembersResolvedViewState {
   const params = readSearch(search);
+  const hadTab = params.has('tab');
+  const viewFromTab = resolveProfileTab(params.get('tab'));
   params.delete('tab');
   const rawMemberId = params.get(TRAINER_MEMBERS_QUERY_MEMBER_ID);
   const memberId = rawMemberId?.trim() || null;
@@ -45,7 +47,13 @@ export function TrainerMembersResolveViewUrl(search: string): TrainerMembersReso
   }
 
   const view = resolveProfileTab(params.get(TRAINER_MEMBERS_QUERY_VIEW))
+    ?? viewFromTab
     ?? TRAINER_MEMBERS_DEFAULT_PROFILE_VIEW;
+
+  if (hadTab) {
+    params.delete(TRAINER_MEMBERS_QUERY_VIEW);
+  }
+
   params.set(TRAINER_MEMBERS_QUERY_MEMBER_ID, memberId);
   params.set(TRAINER_MEMBERS_QUERY_VIEW, view);
 

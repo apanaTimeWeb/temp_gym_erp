@@ -7,4 +7,5 @@ export interface TrainerLibraryTabsProps {
   filterGoal: string | TrainerLibraryFilterGoal;
   setFilterGoal: (value: TrainerLibraryFilterGoal) => void;
   onRefresh: () => Promise<void>;
+  onCreate?: () => void;
 }

@@ -21,7 +21,64 @@ import type { TrainerLibraryDietPlan } from '@/app/frontend_trainer/trainer_coac
 export function useTrainerLibraryDiet() {
   const [showDietModal, setShowDietModal] = useState(false);
   const [selectedDiet, setSelectedDiet] = useState<TrainerLibraryDietPlan | null>(null);
-  const openViewDiet = useCallback((diet: TrainerLibraryDietPlan) => { setSelectedDiet(diet); setShowDietModal(true); }, []);
-  const closeDietModal = useCallback(() => { setShowDietModal(false); setSelectedDiet(null); }, []);
-  return { showDietModal, editDietId: selectedDiet?.id ?? null, editDietData: selectedDiet, openEditDiet: openViewDiet, closeDietModal };
+
+  const [showFormModal, setShowFormModal] = useState(false);
+  const [formDietPlan, setFormDietPlan] = useState<TrainerLibraryDietPlan | null>(null);
+
+  const [showDeleteRequestModal, setShowDeleteRequestModal] = useState(false);
+  const [deleteRequestPlan, setDeleteRequestPlan] = useState<TrainerLibraryDietPlan | null>(null);
+
+  const openViewDiet = useCallback((diet: TrainerLibraryDietPlan) => {
+    setSelectedDiet(diet);
+    setShowDietModal(true);
+  }, []);
+
+  const closeDietModal = useCallback(() => {
+    setShowDietModal(false);
+    setSelectedDiet(null);
+  }, []);
+
+  const openCreateDiet = useCallback(() => {
+    setFormDietPlan(null);
+    setShowFormModal(true);
+  }, []);
+
+  const openEditPlan = useCallback((diet: TrainerLibraryDietPlan) => {
+    setFormDietPlan(diet);
+    setShowFormModal(true);
+  }, []);
+
+  const closeFormModal = useCallback(() => {
+    setShowFormModal(false);
+    setFormDietPlan(null);
+  }, []);
+
+  const openDeleteRequest = useCallback((diet: TrainerLibraryDietPlan) => {
+    setDeleteRequestPlan(diet);
+    setShowDeleteRequestModal(true);
+  }, []);
+
+  const closeDeleteRequestModal = useCallback(() => {
+    setShowDeleteRequestModal(false);
+    setDeleteRequestPlan(null);
+  }, []);
+
+  return {
+    showDietModal,
+    editDietId: selectedDiet?.id ?? null,
+    editDietData: selectedDiet,
+    openEditDiet: openViewDiet,
+    closeDietModal,
+
+    showFormModal,
+    formDietPlan,
+    openCreateDiet,
+    openEditPlan,
+    closeFormModal,
+
+    showDeleteRequestModal,
+    deleteRequestPlan,
+    openDeleteRequest,
+    closeDeleteRequestModal,
+  };
 }

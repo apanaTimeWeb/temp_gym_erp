@@ -74,7 +74,14 @@ export default function TrainerLibraryDietGrid({
               <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-success-bg text-success shrink-0" data-testid={`trainer_library-diet-grid_plan_state${plan.id}`}>
                 <Apple size={18}  strokeWidth={2}/>
               </div>
-              <span className="p-1.5 rounded text-secondary" title={t("TEXT_VIEW_DIET_PLAN")} aria-hidden="true"><Eye size={18}  strokeWidth={2}/></span>
+              <div className="flex items-center gap-1.5">
+                {plan.deletionRequested && (
+                  <span className="px-2 py-0.5 text-2xs font-semibold rounded-full bg-warning-bg text-warning border border-warning/40">
+                    Pending Deletion
+                  </span>
+                )}
+                <span className="p-1.5 rounded text-secondary" title={t("TEXT_VIEW_DIET_PLAN")} aria-hidden="true"><Eye size={18}  strokeWidth={2}/></span>
+              </div>
             </div>
             <TrainerInfrastructureTooltip content={plan.name}><h4 className="font-bold text-primary truncate mb-1">{plan.name}</h4></TrainerInfrastructureTooltip>
             <TrainerInfrastructureTooltip content={plan.goal}><p className="text-xs text-secondary mb-3 truncate">{plan.goal}</p></TrainerInfrastructureTooltip>

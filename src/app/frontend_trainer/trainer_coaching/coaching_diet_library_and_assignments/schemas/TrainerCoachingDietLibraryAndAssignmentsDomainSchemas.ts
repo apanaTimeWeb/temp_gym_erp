@@ -21,4 +21,7 @@ export const TrainerLibraryDietPlanSchema = z.object({
     ])
   ),
   isActive: z.boolean(),
+  deletionRequested: z.boolean().optional(),
+  deletionReason: z.string().optional(),
+  createdBy: z.string().optional(),
 });

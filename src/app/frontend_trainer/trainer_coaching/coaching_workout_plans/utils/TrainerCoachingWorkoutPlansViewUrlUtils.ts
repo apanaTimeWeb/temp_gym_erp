@@ -19,8 +19,13 @@ export function resolveTrainerWorkoutScreenView(params: URLSearchParams): Traine
 export function canonicalizeTrainerWorkoutViewParams(params: URLSearchParams): string | null {
   const original = params.toString();
   const normalized = new URLSearchParams(original);
+  const legacyTab = params.get('tab');
   normalized.delete('tab');
-  const rawView = normalized.get(TRAINER_WORKOUT_VIEW_QUERY_PARAM);
+  let rawView = normalized.get(TRAINER_WORKOUT_VIEW_QUERY_PARAM);
+  if (!rawView && legacyTab && isTrainerWorkoutScreenView(legacyTab)) {
+    rawView = legacyTab;
+    normalized.set(TRAINER_WORKOUT_VIEW_QUERY_PARAM, legacyTab);
+  }
   const canonicalView = isTrainerWorkoutScreenView(rawView) ? rawView : null;
 
   if (rawView !== null && !isTrainerWorkoutScreenView(rawView)) normalized.delete(TRAINER_WORKOUT_VIEW_QUERY_PARAM);

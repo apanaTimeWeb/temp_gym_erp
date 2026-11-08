@@ -5,4 +5,4 @@ import TrainerNotificationsLoadingSkeleton from '@/app/frontend_trainer/trainer_
  * @dependencies Uses only documented notifications module dependencies and approved global infrastructure/UI primitives.
  * @edge-case Preserves documented loading, empty, error, accessibility, responsive, and recovery behavior without inventing business fallbacks.
  */
-export default function TrainerNotificationsLoading() { return <div data-testid="trainer_notifications-route-loading"><TrainerNotificationsLoadingSkeleton /></div>; }
+export default function TrainerNotificationsLoading() { return <div data-testid="trainer_notifications-route-loading" className="p-6"><TrainerNotificationsLoadingSkeleton /></div>; }

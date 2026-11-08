@@ -1,6 +1,6 @@
 "use client";
 // RESPONSIBILITY: Renders Diet Library search, goal filtering, and refresh controls; does not own server data.
-import { RefreshCw, Search } from 'lucide-react';
+import { Plus, RefreshCw, Search } from 'lucide-react';
 
 import { useTranslations } from 'next-intl';
 
@@ -28,7 +28,7 @@ import type { TrainerLibraryFilterGoal } from '@/app/frontend_trainer/trainer_co
  * @dependencies Uses only documented library module dependencies and approved global infrastructure/UI primitives.
  * @edge-case Preserves documented loading, empty, error, accessibility, responsive, and recovery behavior without inventing business fallbacks.
  */
-export default function TrainerLibraryTabs({ search, setSearch, filterGoal, setFilterGoal, onRefresh }: TrainerLibraryTabsProps) {
+export default function TrainerLibraryTabs({ search, setSearch, filterGoal, setFilterGoal, onRefresh, onCreate }: TrainerLibraryTabsProps) {
   const t = useTranslations('TRAINER_LIBRARY');
   return (
     <div className="border-b border-border flex flex-wrap gap-4 justify-between items-center bg-card p-2 sm:p-0 ">
@@ -62,6 +62,17 @@ export default function TrainerLibraryTabs({ search, setSearch, filterGoal, setF
          data-testid="trainer_library-trainerlibrarytabs-button_3">
           <RefreshCw size={18}  strokeWidth={2}/>
         </button>
+        {onCreate && (
+          <button
+            type="button"
+            onClick={onCreate}
+            className="min-h-11 flex items-center gap-2 px-4 py-2 text-sm bg-primary text-on-primary rounded-lg font-semibold hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+            data-testid="trainer_library-trainerlibrarytabs-button-create"
+          >
+            <Plus size={16} strokeWidth={2.5} />
+            <span>Create Diet Plan</span>
+          </button>
+        )}
       </div>
     </div>
   );

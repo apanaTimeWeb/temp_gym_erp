@@ -1,7 +1,7 @@
 // RESPONSIBILITY: Defines Manager Library domain records, view state, and UI-facing server-state contracts.
 import type { ManagerToastType } from '@/app/frontend_manager/manager_workout_diet_library/library_diet_plans/types/ManagerLibraryDietPlansLocalToastTypes';
 
-export type LibraryView = 'diet' | 'exercises';
+export type LibraryView = 'diet' | 'exercises' | 'deletion_requests';
 export type ManagerLibraryDietPlansNutrientKey = 'calories' | 'protein' | 'carbs' | 'fats';
 
 
@@ -33,6 +33,9 @@ export interface ManagerLibraryDietPlansViewModel {
   openEditDiet: (diet: DietPlan) => void;
   saveDietPlan: (data: Partial<DietPlan>) => Promise<void>;
   deleteDietPlan: (id: string) => Promise<void>;
+  pendingDeletions: DietPlan[];
+  approveDeletion: (id: string) => Promise<void>;
+  rejectDeletion: (id: string) => Promise<void>;
   showExerciseModal: boolean;
   setShowExerciseModal: (show: boolean) => void;
   editExerciseId: string | null;
@@ -61,6 +64,9 @@ export interface DietPlan {
   description?: string;
   meals: (string | DietMeal)[];
   isActive: boolean;
+  deletionRequested?: boolean;
+  deletionReason?: string;
+  createdBy?: string;
 }
 
 export interface Exercise {

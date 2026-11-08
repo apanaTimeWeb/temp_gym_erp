@@ -2,7 +2,7 @@
 // RESPONSIBILITY: Renders one workout-plan card with isolated edit/delete actions and localized metadata labels.
 // DATA FLOW: Parent query result → supplied plan props → edit/delete callbacks; parent owns server state and mutation lifecycle.
 
-import { Dumbbell, Edit2, Trash2, Loader2 } from 'lucide-react';
+import { Dumbbell, Edit2, Trash2, Loader2, UserPlus } from 'lucide-react';
 
 import { useLocale, useTranslations } from 'next-intl';
 
@@ -36,6 +36,7 @@ export default function TrainerWorkoutPlanCard({
   plan,
   onEdit,
   onDelete,
+  onAssign,
   deleting,
 }: TrainerWorkoutPlanCardProps) {
   const locale = useLocale();
@@ -61,6 +62,18 @@ export default function TrainerWorkoutPlanCard({
       <div className="flex items-start justify-between gap-2 mb-3">
         <TrainerInfrastructureTooltip content={String(displayValue(plan.name))}><h3 className="font-semibold text-primary truncate min-w-0">{displayValue(plan.name)}</h3></TrainerInfrastructureTooltip>
         <div className="flex gap-1 shrink-0">
+          {onAssign && (
+            <button
+              type="button"
+              onClick={onAssign}
+              aria-label={`Assign ${plan.name} to members`}
+              title="Assign to members"
+              className="min-w-11 min-h-11 inline-flex items-center justify-center p-1.5 text-secondary hover:text-primary hover:bg-input rounded-md motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+              data-testid="trainer_workout-trainerworkoutplancard-button_assign"
+            >
+              <UserPlus size={18} strokeWidth={2} aria-hidden="true" />
+            </button>
+          )}
           <button
             type="button"
             onClick={onEdit}

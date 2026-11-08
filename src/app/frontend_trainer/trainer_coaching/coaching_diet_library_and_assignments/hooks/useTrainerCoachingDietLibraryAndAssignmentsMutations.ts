@@ -38,10 +38,43 @@ export function useTrainerLibraryMutations() {
       ]);
     },
   });
+  const createMutation = useMutation({
+    mutationFn: ({ data, idempotencyKey }: { data: Record<string, unknown>; idempotencyKey: string }) =>
+      TrainerLibraryApi.createDietPlan(data, idempotencyKey),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: TRAINER_LIBRARY_QUERY_KEYS.dietPlansAll() });
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: ({ id, data, idempotencyKey }: { id: string; data: Record<string, unknown>; idempotencyKey: string }) =>
+      TrainerLibraryApi.updateDietPlan(id, data, idempotencyKey),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: TRAINER_LIBRARY_QUERY_KEYS.dietPlansAll() });
+    },
+  });
+
+  const requestDeletionMutation = useMutation({
+    mutationFn: ({ id, reason, idempotencyKey }: { id: string; reason: string; idempotencyKey: string }) =>
+      TrainerLibraryApi.requestDietPlanDeletion(id, reason, idempotencyKey),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: TRAINER_LIBRARY_QUERY_KEYS.dietPlansAll() });
+    },
+  });
+
   return {
     assignDietPlan: useCallback((variables: TrainerLibraryAssignDietPlanMutationVariables) => mutation.mutateAsync(variables), [mutation]),
     assignDietPlanPending: mutation.isPending,
     assignDietPlanError: mutation.error,
     assignDietPlanIsError: mutation.isError,
+
+    createDietPlan: useCallback((variables: { data: Record<string, unknown>; idempotencyKey: string }) => createMutation.mutateAsync(variables), [createMutation]),
+    createDietPlanPending: createMutation.isPending,
+
+    updateDietPlan: useCallback((variables: { id: string; data: Record<string, unknown>; idempotencyKey: string }) => updateMutation.mutateAsync(variables), [updateMutation]),
+    updateDietPlanPending: updateMutation.isPending,
+
+    requestDietPlanDeletion: useCallback((variables: { id: string; reason: string; idempotencyKey: string }) => requestDeletionMutation.mutateAsync(variables), [requestDeletionMutation]),
+    requestDietPlanDeletionPending: requestDeletionMutation.isPending,
   };
 }

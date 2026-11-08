@@ -13,6 +13,18 @@ export const TrainerProfileDataSchema = z.object({
   emergencyContact: z.object({ name: z.string(), phone: z.string(), relation: z.string() }).optional(),
   bio: z.string().optional(), experienceYears: z.number().optional(), profilePhotoUrl: z.string().url().optional(),
   languagesSpoken: z.array(z.string()).optional(),
+  bankDetails: z.object({
+    bankName: z.string().optional(),
+    accountNumber: z.string().optional(),
+    ifscCode: z.string().optional(),
+    accountHolderName: z.string().optional(),
+    upiId: z.string().optional(),
+  }).optional(),
+  bankName: z.string().optional(),
+  accountNumber: z.string().optional(),
+  ifscCode: z.string().optional(),
+  accountHolderName: z.string().optional(),
+  upiId: z.string().optional(),
 });
 
 export { TrainerProfileFormSchema };

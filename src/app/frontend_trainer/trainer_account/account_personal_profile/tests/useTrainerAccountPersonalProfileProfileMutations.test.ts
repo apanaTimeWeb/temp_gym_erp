@@ -7,11 +7,13 @@ import { useTrainerProfileMutations } from '@/app/frontend_trainer/trainer_accou
 
 
 
-const invalidateQueries = vi.fn().mockResolvedValue(undefined);
-const setQueryData = vi.fn();
-const api = {
-  updateProfile: vi.fn().mockResolvedValue({ success: true, data: { id: 'trainer-1', name: 'Updated' } }),
-};
+const { invalidateQueries, setQueryData, api } = vi.hoisted(() => ({
+  invalidateQueries: vi.fn().mockResolvedValue(undefined),
+  setQueryData: vi.fn(),
+  api: {
+    updateProfile: vi.fn().mockResolvedValue({ success: true, data: { id: 'trainer-1', name: 'Updated' } }),
+  },
+}));
 
 vi.mock('@tanstack/react-query', () => ({
   useQueryClient: () => ({ invalidateQueries, setQueryData }),

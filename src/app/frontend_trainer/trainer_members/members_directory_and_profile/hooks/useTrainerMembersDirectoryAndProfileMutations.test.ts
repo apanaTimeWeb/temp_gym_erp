@@ -7,14 +7,16 @@ import { useTrainerMembersMutations } from '@/app/frontend_trainer/trainer_membe
 
 
 
-const invalidateQueries = vi.fn();
-const api = {
-  addMemberNote: vi.fn().mockResolvedValue({ success: true, data: null }),
-  updateMember: vi.fn().mockResolvedValue({ success: true, data: null }),
-  assignDiet: vi.fn().mockResolvedValue({ success: true, data: null }),
-  assignWorkout: vi.fn().mockResolvedValue({ success: true, data: null }),
-  updateMemberAssessment: vi.fn().mockResolvedValue({ success: true, data: null }),
-};
+const { invalidateQueries, api } = vi.hoisted(() => ({
+  invalidateQueries: vi.fn(),
+  api: {
+    addMemberNote: vi.fn().mockResolvedValue({ success: true, data: null }),
+    updateMember: vi.fn().mockResolvedValue({ success: true, data: null }),
+    assignDiet: vi.fn().mockResolvedValue({ success: true, data: null }),
+    assignWorkout: vi.fn().mockResolvedValue({ success: true, data: null }),
+    updateMemberAssessment: vi.fn().mockResolvedValue({ success: true, data: null }),
+  },
+}));
 
 vi.mock('@tanstack/react-query', () => ({
   useQueryClient: () => ({ invalidateQueries }),

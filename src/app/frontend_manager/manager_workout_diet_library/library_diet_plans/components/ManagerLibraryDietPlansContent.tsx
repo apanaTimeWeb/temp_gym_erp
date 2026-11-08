@@ -9,6 +9,7 @@ import ManagerLibraryDietPlansExerciseModal from '@/app/frontend_manager/manager
 import ManagerLibraryDietPlansTabs from '@/app/frontend_manager/manager_workout_diet_library/library_diet_plans/components/ManagerLibraryDietPlansTabs';
 import ManagerLibraryDietPlansDietView from '@/app/frontend_manager/manager_workout_diet_library/library_diet_plans/components/ManagerLibraryDietPlansDietView';
 import ManagerLibraryDietPlansExercisesView from '@/app/frontend_manager/manager_workout_diet_library/library_diet_plans/components/ManagerLibraryDietPlansExercisesView';
+import ManagerLibraryDietPlansDeletionRequestsView from '@/app/frontend_manager/manager_workout_diet_library/library_diet_plans/components/ManagerLibraryDietPlansDeletionRequestsView';
 import { useManagerLibraryDietPlansLogic } from '@/app/frontend_manager/manager_workout_diet_library/library_diet_plans/hooks/useManagerLibraryDietPlansLogic';
 
 
@@ -25,7 +26,13 @@ export function ManagerLibraryDietPlansContent() {
  <ManagerLibraryDietPlansTabs  data-testid="manager_library-managerlibrarycontent-library-tabs-1"/>
  
  <div className="overflow-hidden rounded-xl border border-border bg-card p-5 shadow-card">
-   {view === 'diet' ? <ManagerLibraryDietPlansDietView /> : <ManagerLibraryDietPlansExercisesView />}
+   {view === 'diet' ? (
+     <ManagerLibraryDietPlansDietView />
+   ) : view === 'exercises' ? (
+     <ManagerLibraryDietPlansExercisesView />
+   ) : (
+     <ManagerLibraryDietPlansDeletionRequestsView />
+   )}
  </div>
  </div>
 

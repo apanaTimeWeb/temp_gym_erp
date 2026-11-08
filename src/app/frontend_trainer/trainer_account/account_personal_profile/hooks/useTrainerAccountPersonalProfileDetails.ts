@@ -26,7 +26,16 @@ export function useTrainerAccountPersonalProfileDetails() {
   });
   const form = useForm<TrainerProfileFormValues>({
     resolver: zodResolver(TrainerProfileFormSchema),
-    defaultValues: { name: '', phone: '', specialization: [] },
+    defaultValues: {
+      name: '',
+      phone: '',
+      specialization: [],
+      bankName: '',
+      accountNumber: '',
+      ifscCode: '',
+      accountHolderName: '',
+      upiId: '',
+    },
     mode: 'onTouched',
   });
   const { reset } = form;
@@ -37,8 +46,18 @@ export function useTrainerAccountPersonalProfileDetails() {
   // Do not overwrite unsubmitted edits when a background refetch arrives.
   useEffect(() => {
     if (isDirty || name === undefined || phone === undefined || specialization === undefined) return;
-    reset({ name, phone, specialization });
-  }, [isDirty, name, phone, specialization, reset]);
+    const bankDetails = profileQuery.data?.bankDetails;
+    reset({
+      name,
+      phone,
+      specialization,
+      bankName: profileQuery.data?.bankName ?? bankDetails?.bankName ?? '',
+      accountNumber: profileQuery.data?.accountNumber ?? bankDetails?.accountNumber ?? '',
+      ifscCode: profileQuery.data?.ifscCode ?? bankDetails?.ifscCode ?? '',
+      accountHolderName: profileQuery.data?.accountHolderName ?? bankDetails?.accountHolderName ?? '',
+      upiId: profileQuery.data?.upiId ?? bankDetails?.upiId ?? '',
+    });
+  }, [isDirty, name, phone, specialization, profileQuery.data, reset]);
   const mutation = useMutation({
     mutationFn: ({ values, idempotencyKey }: { values: TrainerProfileFormValues; idempotencyKey: string }) =>
       TrainerProfileApi.updateProfile(values, idempotencyKey),
@@ -52,7 +71,17 @@ export function useTrainerAccountPersonalProfileDetails() {
     try {
       const response = await mutation.mutateAsync({ values, idempotencyKey: keys.begin(actionId) });
       if (!response.success || !response.data) throw new Error(response.message);
-      reset({ name: response.data.name, phone: response.data.phone, specialization: response.data.specialization });
+      const updatedBankDetails = response.data.bankDetails;
+      reset({
+        name: response.data.name,
+        phone: response.data.phone,
+        specialization: response.data.specialization,
+        bankName: response.data.bankName ?? updatedBankDetails?.bankName ?? '',
+        accountNumber: response.data.accountNumber ?? updatedBankDetails?.accountNumber ?? '',
+        ifscCode: response.data.ifscCode ?? updatedBankDetails?.ifscCode ?? '',
+        accountHolderName: response.data.accountHolderName ?? updatedBankDetails?.accountHolderName ?? '',
+        upiId: response.data.upiId ?? updatedBankDetails?.upiId ?? '',
+      });
       keys.clear(actionId);
       showSuccess(response.message, actionId);
       return response;

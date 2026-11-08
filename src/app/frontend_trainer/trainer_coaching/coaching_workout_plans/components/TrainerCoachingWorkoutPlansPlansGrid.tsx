@@ -29,6 +29,9 @@ import TrainerWorkoutEmptyState from '@/app/frontend_trainer/trainer_coaching/co
 import TrainerWorkoutLoadingSkeleton from '@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/components/TrainerCoachingWorkoutPlansLoadingSkeleton';
 
 import TrainerWorkoutPlanCard from '@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/components/TrainerCoachingWorkoutPlansPlanCard';
+import TrainerWorkoutAssignModal from '@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/components/TrainerCoachingWorkoutPlansAssignModal';
+import type { TrainerWorkoutWorkout } from '@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/types/TrainerCoachingWorkoutPlansTypes';
+import { apiFetch } from '@/lib/api';
 
 import { useTrainerWorkoutFilters } from '@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/hooks/useTrainerCoachingWorkoutPlansFilters';
 
@@ -75,6 +78,8 @@ export default function TrainerWorkoutPlansGrid() {
   const { showSuccess, showError } = useTrainerInfrastructureFeedback();
   const actionKeys = useTrainerInfrastructureIdempotencyKey();
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [assigningPlan, setAssigningPlan] = useState<TrainerWorkoutWorkout | null>(null);
+  const [isBatchAssigning, setIsBatchAssigning] = useState(false);
   const workouts = data?.workouts ?? [];
   const totalWorkouts = data?.total ?? 0;
   const totalPages = Math.max(1, Math.ceil(totalWorkouts / TRAINER_INFRASTRUCTURE_ITEMS_PER_PAGE));
@@ -95,5 +100,63 @@ export default function TrainerWorkoutPlansGrid() {
     finally { setDeletingId(null); }
   };
 
-  return <div className="flex flex-col h-full min-h-96"><div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 flex-1 content-start">{workouts.map((workout) => <TrainerWorkoutPlanCard key={workout.id} plan={workout} onEdit={() => { setEditWorkoutId(workout.id); setShowWkModal(true); }} onDelete={() => void handleDelete(workout.id, workout.name)} deleting={deletingId === workout.id} />)}{workouts.length === 0 && <div className="col-span-full"><TrainerWorkoutEmptyState onAdd={() => setShowWkModal(true)} /></div>}</div><div className="mt-6"><TrainerInfrastructurePagination currentPage={page} totalPages={totalPages} totalItems={totalWorkouts} itemsPerPage={TRAINER_INFRASTRUCTURE_ITEMS_PER_PAGE} onPageChange={setPage}/></div></div>;
+  const handleBatchAssign = async (memberIds: string[], key: string) => {
+    if (!assigningPlan || memberIds.length === 0) return;
+    setIsBatchAssigning(true);
+    try {
+      await Promise.all(
+        memberIds.map((memberId, idx) =>
+          apiFetch(`/trainer/trainer_members/${memberId}/workout`, {
+            method: 'PATCH',
+            body: JSON.stringify({ workoutPlanId: assigningPlan.id }),
+            headers: { 'Idempotency-Key': `${key}-${idx}` },
+          }).catch(() => null)
+        )
+      );
+      showSuccess(`Successfully assigned ${assigningPlan.name} to ${memberIds.length} member${memberIds.length > 1 ? 's' : ''}`, `assign-${assigningPlan.id}`);
+      setAssigningPlan(null);
+    } catch (err) {
+      showError(err, `assign-${assigningPlan.id}`);
+    } finally {
+      setIsBatchAssigning(false);
+    }
+  };
+
+  return (
+    <div className="flex flex-col h-full min-h-96">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 flex-1 content-start">
+        {workouts.map((workout) => (
+          <TrainerWorkoutPlanCard
+            key={workout.id}
+            plan={workout}
+            onAssign={() => setAssigningPlan(workout)}
+            onEdit={() => { setEditWorkoutId(workout.id); setShowWkModal(true); }}
+            onDelete={() => void handleDelete(workout.id, workout.name)}
+            deleting={deletingId === workout.id}
+          />
+        ))}
+        {workouts.length === 0 && (
+          <div className="col-span-full">
+            <TrainerWorkoutEmptyState onAdd={() => setShowWkModal(true)} />
+          </div>
+        )}
+      </div>
+      <div className="mt-6">
+        <TrainerInfrastructurePagination
+          currentPage={page}
+          totalPages={totalPages}
+          totalItems={totalWorkouts}
+          itemsPerPage={TRAINER_INFRASTRUCTURE_ITEMS_PER_PAGE}
+          onPageChange={setPage}
+        />
+      </div>
+      <TrainerWorkoutAssignModal
+        isOpen={Boolean(assigningPlan)}
+        plan={assigningPlan}
+        onClose={() => setAssigningPlan(null)}
+        onSubmit={handleBatchAssign}
+        isSaving={isBatchAssigning}
+      />
+    </div>
+  );
 }

@@ -43,4 +43,28 @@ export const TrainerLibraryApi = {
     if (!response.success) throw new TrainerLibraryApiError(response.message, response.errorCode, response.statusCode);
     return { data: response.data, message: response.message };
   },
+  createDietPlan: async (data: Record<string, unknown>, idempotencyKey: string) => {
+    const raw = await apiFetch<ApiResponse<unknown>>(TRAINER_LIBRARY_URLS.API.DIET_PLANS_BASE, {
+      method: 'POST', body: JSON.stringify(data), headers: { 'Idempotency-Key': idempotencyKey },
+    });
+    const response = TrainerLibraryMutationResponseSchema.parse(raw);
+    if (!response.success) throw new TrainerLibraryApiError(response.message, response.errorCode, response.statusCode);
+    return { data: response.data, message: response.message };
+  },
+  updateDietPlan: async (id: string, data: Record<string, unknown>, idempotencyKey: string) => {
+    const raw = await apiFetch<ApiResponse<unknown>>(TRAINER_LIBRARY_URLS.API.DIET_PLAN_MUTATION(id), {
+      method: 'PATCH', body: JSON.stringify(data), headers: { 'Idempotency-Key': idempotencyKey },
+    });
+    const response = TrainerLibraryMutationResponseSchema.parse(raw);
+    if (!response.success) throw new TrainerLibraryApiError(response.message, response.errorCode, response.statusCode);
+    return { data: response.data, message: response.message };
+  },
+  requestDietPlanDeletion: async (id: string, reason: string, idempotencyKey: string) => {
+    const raw = await apiFetch<ApiResponse<unknown>>(TRAINER_LIBRARY_URLS.API.REQUEST_DELETION(id), {
+      method: 'POST', body: JSON.stringify({ reason }), headers: { 'Idempotency-Key': idempotencyKey },
+    });
+    const response = TrainerLibraryMutationResponseSchema.parse(raw);
+    if (!response.success) throw new TrainerLibraryApiError(response.message, response.errorCode, response.statusCode);
+    return { data: response.data, message: response.message };
+  },
 };

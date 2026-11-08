@@ -28,7 +28,7 @@ export function useTrainerMembersSelectedMember() {
   const memberId = useTrainerMembersStore((state) => state.selectedMemberId);
   const query = useQuery({
     queryKey: TRAINER_MEMBERS_QUERY_KEYS.detail(memberId ?? ''),
-    queryFn: () => {
+    queryFn: async () => {
       if (!memberId) throw new Error('A member must be selected before loading the profile.');
       return TrainerMembersApi.fetchMemberById(memberId);
     },

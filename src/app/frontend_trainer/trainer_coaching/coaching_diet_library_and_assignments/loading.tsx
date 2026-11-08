@@ -5,4 +5,4 @@ import TrainerLibraryLoadingSkeleton from '@/app/frontend_trainer/trainer_coachi
  * @dependencies Uses only documented library module dependencies and approved global infrastructure/UI primitives.
  * @edge-case Preserves documented loading, empty, error, accessibility, responsive, and recovery behavior without inventing business fallbacks.
  */
-export default function TrainerLibraryLoading() { return <div data-testid="trainer_library-route-loading"><TrainerLibraryLoadingSkeleton /></div>; }
+export default function TrainerLibraryLoading() { return <div className="p-6" data-testid="trainer_library-route-loading"><TrainerLibraryLoadingSkeleton /></div>; }

@@ -67,6 +67,7 @@ export const TrainerEarningsMockHandlers = [
         historyTotal: filteredHistory.length,
         historyPage: page,
         historyLimit: limit,
+        totalPages: Math.max(1, Math.ceil(filteredHistory.length / limit)),
       },
     });
   }),

@@ -19,12 +19,18 @@ export function resolveTrainerProfileScreenView(params: URLSearchParams): Traine
 export function canonicalizeTrainerProfileViewParams(params: URLSearchParams): string | null {
   const original = params.toString();
   const normalized = new URLSearchParams(original);
+  const hadTab = normalized.has('tab');
+  const tabView = normalized.get('tab');
   normalized.delete('tab');
   const rawView = normalized.get(TRAINER_PROFILE_VIEW_QUERY_PARAM);
-  const canonicalView = isTrainerProfileScreenView(rawView) ? rawView : null;
+  const viewToUse = isTrainerProfileScreenView(rawView) ? rawView : (isTrainerProfileScreenView(tabView) ? tabView : null);
 
-  if (rawView !== null && !isTrainerProfileScreenView(rawView)) normalized.delete(TRAINER_PROFILE_VIEW_QUERY_PARAM);
-  if (canonicalView && (rawView !== null)) normalized.set(TRAINER_PROFILE_VIEW_QUERY_PARAM, canonicalView);
+  if (hadTab && viewToUse) {
+    normalized.delete(TRAINER_PROFILE_VIEW_QUERY_PARAM);
+    normalized.set(TRAINER_PROFILE_VIEW_QUERY_PARAM, viewToUse);
+  } else if (rawView !== null && !isTrainerProfileScreenView(rawView)) {
+    normalized.delete(TRAINER_PROFILE_VIEW_QUERY_PARAM);
+  }
 
   const result = normalized.toString();
   return result === original ? null : result;

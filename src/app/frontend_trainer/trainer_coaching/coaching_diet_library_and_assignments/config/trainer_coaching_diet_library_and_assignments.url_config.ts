@@ -8,6 +8,8 @@ export const TRAINER_LIBRARY_PAGE_LIST = '/frontend_trainer/trainer_coaching/coa
 export const TRAINER_LIBRARY_API_DIET_PLANS_BASE = '/trainer/trainer_library/diet-plans' as const;
 export const TRAINER_LIBRARY_API_ASSIGNED_MEMBERS = '/trainer/trainer_library/assigned-members' as const;
 export const TRAINER_LIBRARY_API_ASSIGN_DIET = (memberId: string) => `/trainer/trainer_members/${memberId}/diet` as const;
+export const TRAINER_LIBRARY_API_DIET_PLAN_MUTATION = (id: string) => `/trainer/trainer_library/diet-plans/${id}` as const;
+export const TRAINER_LIBRARY_API_DIET_PLAN_REQUEST_DELETION = (id: string) => `/trainer/trainer_library/diet-plans/${id}/request-deletion` as const;
 
 export const TRAINER_LIBRARY_URLS = {
   ROUTES: {
@@ -18,5 +20,7 @@ export const TRAINER_LIBRARY_URLS = {
     DIET_PLANS_BASE: TRAINER_LIBRARY_API_DIET_PLANS_BASE,
     ASSIGNED_MEMBERS: TRAINER_LIBRARY_API_ASSIGNED_MEMBERS,
     ASSIGN_DIET: TRAINER_LIBRARY_API_ASSIGN_DIET,
+    DIET_PLAN_MUTATION: TRAINER_LIBRARY_API_DIET_PLAN_MUTATION,
+    REQUEST_DELETION: TRAINER_LIBRARY_API_DIET_PLAN_REQUEST_DELETION,
   } as const,
 } as const;

@@ -5,10 +5,10 @@ import { MANAGER_LIBRARY_DIET_PLANS_DEFAULT_VIEW, MANAGER_LIBRARY_DIET_PLANS_VIE
 
 describe('Manager Library view URL contract', () => {
   it('declares the complete canonical view set', () => {
-    expect(MANAGER_LIBRARY_DIET_PLANS_VIEW_IDS).toEqual(['diet', 'exercises']);
+    expect(MANAGER_LIBRARY_DIET_PLANS_VIEW_IDS).toEqual(['diet', 'exercises', 'deletion_requests']);
   });
 
-  it.each(['diet', 'exercises'])('accepts canonical view %s', (view) => {
+  it.each(['diet', 'exercises', 'deletion_requests'])('accepts canonical view %s', (view) => {
     expect(isManagerLibraryDietPlansView(view)).toBe(true);
     expect(resolveManagerLibraryDietPlansView(view)).toBe(view);
   });

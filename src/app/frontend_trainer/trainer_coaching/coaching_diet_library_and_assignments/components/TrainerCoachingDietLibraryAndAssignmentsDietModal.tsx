@@ -2,7 +2,7 @@
 // RESPONSIBILITY: Read-only modal for inspecting a Trainer Diet Library plan and opening assignment.
 import { useRef } from 'react';
 
-import { X, Utensils, Zap } from 'lucide-react';
+import { X, Utensils, Zap, Edit2, Trash2, AlertCircle } from 'lucide-react';
 
 import { useLocale, useTranslations } from 'next-intl';
 
@@ -34,7 +34,7 @@ import type { TrainerLibraryDietModalProps } from '@/app/frontend_trainer/traine
  * @dependencies Uses only documented library module dependencies and approved global infrastructure/UI primitives.
  * @edge-case Preserves entered values after validation/API failure and blocks duplicate submission while pending.
  */
-export default function TrainerLibraryDietModal({ isOpen, plan, onClose, onAssign }: TrainerLibraryDietModalProps) {
+export default function TrainerLibraryDietModal({ isOpen, plan, onClose, onAssign, onEdit, onRequestDelete }: TrainerLibraryDietModalProps) {
   const t = useTranslations('TRAINER_LIBRARY');
   const locale = useLocale();
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -58,8 +58,51 @@ export default function TrainerLibraryDietModal({ isOpen, plan, onClose, onAssig
         <div className="p-6 space-y-4">
           {plan.description ? <div><p className="text-xs font-semibold text-secondary uppercase tracking-wider mb-1">{t("TEXT_DESCRIPTION")}</p><p className="text-sm text-primary">{plan.description}</p></div> : null}
           {plan.meals?.length ? <div><p className="text-xs font-semibold text-secondary uppercase tracking-wider mb-2"><Utensils size={18} className="inline me-1"  strokeWidth={2}/>{t("TEXT_MEAL_PLAN")}</p><ul className="space-y-1.5">{plan.meals.map((meal, index) => <li key={`${typeof meal === 'string' ? meal : meal.name}-${typeof meal === 'string' ? t("TEXT_TEXT") : meal.description ?? t('TEXT_MEAL')}`} className="flex items-start gap-2 text-sm text-primary"><span className="shrink-0 mt-0.5 w-5 h-5 rounded-full bg-primary-subtle text-primary flex items-center justify-center text-xs font-bold">{index + 1}</span><div><span className="font-medium">{typeof meal === 'string' ? meal : meal.name}</span>{typeof meal !== 'string' && meal.description ? <span className="block text-xs text-secondary">{meal.description}</span> : null}</div></li>)}</ul></div> : null}
-          <div className="rounded-xl bg-warning-bg border border-border px-4 py-3" data-testid={"trainer_library-trainer_library-diet-modal-warning-state-39-1"}><p className="text-xs text-warning font-medium">{t("TEXT_DIET_PLANS_ARE_MANAGED_BY_YOUR_GYM_MANAG_ABB395EA")}</p></div>
-          <button type="button" onClick={onClose} className="min-h-11 w-full py-2.5 border border-border rounded-xl text-sm font-medium text-primary hover:bg-primary-subtle motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_library-trainerlibrarydietmodal-button_3">{t("TEXT_CLOSE")}</button>
+          {plan.deletionRequested ? (
+            <div className="rounded-xl bg-warning-bg border border-warning/40 px-4 py-3 flex items-start gap-2.5" data-testid="trainer_library-trainer_library-diet-modal-warning-state-39-1">
+              <AlertCircle size={18} className="text-warning shrink-0 mt-0.5" />
+              <div>
+                <p className="text-xs text-warning-text font-bold">Pending Deletion Approval</p>
+                <p className="text-xs text-warning-text/90 mt-0.5">Reason: {plan.deletionReason || 'Retirement requested by trainer'}</p>
+              </div>
+            </div>
+          ) : (
+            <div className="rounded-xl bg-primary-subtle/50 border border-border px-4 py-2.5" data-testid="trainer_library-trainer_library-diet-modal-warning-state-39-1">
+              <p className="text-xs text-secondary font-medium">Customizable nutrition plan. Trainers can edit details or request deletion with gym manager approval.</p>
+            </div>
+          )}
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
+            <div className="flex items-center gap-2">
+              {onEdit && (
+                <button
+                  type="button"
+                  onClick={onEdit}
+                  className="min-h-11 px-4 py-2 border border-border rounded-xl text-sm font-semibold text-primary hover:bg-primary-subtle flex items-center gap-1.5"
+                  data-testid="trainer_library-trainerlibrarydietmodal-button-edit"
+                >
+                  <Edit2 size={16} /> Edit Plan
+                </button>
+              )}
+              {onRequestDelete && !plan.deletionRequested && (
+                <button
+                  type="button"
+                  onClick={onRequestDelete}
+                  className="min-h-11 px-4 py-2 border border-danger/30 text-danger hover:bg-danger-bg rounded-xl text-sm font-semibold flex items-center gap-1.5"
+                  data-testid="trainer_library-trainerlibrarydietmodal-button-request-delete"
+                >
+                  <Trash2 size={16} /> Request Deletion
+                </button>
+              )}
+            </div>
+            <button
+              type="button"
+              onClick={onClose}
+              className="min-h-11 px-5 py-2 border border-border rounded-xl text-sm font-medium text-secondary hover:bg-primary-subtle"
+              data-testid="trainer_library-trainerlibrarydietmodal-button_3"
+            >
+              {t("TEXT_CLOSE")}
+            </button>
+          </div>
         </div>
       </div>
     </div>

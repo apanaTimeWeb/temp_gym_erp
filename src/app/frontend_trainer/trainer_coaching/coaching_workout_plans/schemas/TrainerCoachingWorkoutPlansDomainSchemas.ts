@@ -7,6 +7,7 @@ export const TrainerWorkoutWorkoutExerciseSchema = z.object({
   reps: z.union([z.string().trim().min(1, 'ERR_REPS_REQUIRED'), z.coerce.number().positive().transform(v => String(v))]),
   weight: z.string().optional().default(''),
   restTime: z.string().optional().default(''),
+  day: z.string().optional(),
   sortOrder: z.coerce.number().default(0),
 });
 

@@ -22,6 +22,8 @@ export const TRAINER_MEMBERS_MOCK_MEMBERS: TrainerMembersMember[] = [
     joinDate: '2023-01-15T00:00:00Z', expiryDate: '2024-01-15T00:00:00Z', createdAt: '2023-01-15T00:00:00Z',
     age: 28, heightCm: 175, weightKg: 70, progressStatus: TRAINER_MEMBERS_MEMBER_PROGRESS_STATUS.GOOD, fitnessGoal: 'Weight Loss', fitnessLevel: 'Intermediate',
     targetWeightKg: 65, bmi: 22.9, isPT: true, medicalRestrictions: 'None reported', daysSinceLastCheckIn: 2, membershipNumber: 'M-2023-001',
+    ptPackage: { packageName: 'Transform 24 - 1 on 1 Coaching', totalSessions: 24, completedSessions: 18, remainingSessions: 6, startDate: '2023-08-01', expiryDate: '2024-02-01' },
+    assessment: { medicalHistory: 'None', pastInjuries: 'None', vo2Max: 48, flexibility: 22, coreStrength: '3:00 plank', fitnessGoals: 'Weight loss & lean tone', parqHeartCondition: false, parqChestPainActivity: false, parqChestPainRest: false, parqDizzinessOrBalance: false, parqBoneOrJointIssue: false, parqMedicationPrescribed: false, parqOtherReason: false, parqCleared: true, medicalClearanceRequired: false },
     assignedDietId: 'DIET-01',
     assignedDiet: { id: 'DIET-01', name: 'Fat Burner (High Protein)', goal: 'Weight Loss', calories: 2200, protein: 160, carbs: 200, fats: 60,
       description: 'High-protein, low-carb diet to accelerate fat loss while preserving muscle.', complianceScore: 76,
@@ -34,6 +36,8 @@ export const TRAINER_MEMBERS_MOCK_MEMBERS: TrainerMembersMember[] = [
     joinDate: '2023-08-01T00:00:00Z', expiryDate: '2024-08-01T00:00:00Z', createdAt: '2023-08-01T00:00:00Z',
     age: 24, heightCm: 162, weightKg: 58, progressStatus: TRAINER_MEMBERS_MEMBER_PROGRESS_STATUS.NEEDS_ATTENTION, fitnessGoal: 'Muscle Gain', fitnessLevel: 'Beginner',
     targetWeightKg: 62, bmi: 22.1, isPT: true, medicalRestrictions: 'None reported', daysSinceLastCheckIn: 5, membershipNumber: 'M-2023-002',
+    ptPackage: { packageName: 'Kickstart Personal Training (12 Sessions)', totalSessions: 12, completedSessions: 11, remainingSessions: 1, startDate: '2023-09-01', expiryDate: '2023-12-01' },
+    assessment: { medicalHistory: 'None', pastInjuries: 'Mild sprain (2022)', vo2Max: 38, flexibility: 14, coreStrength: '1:45 plank', fitnessGoals: 'Gain lean mass and endurance', parqHeartCondition: false, parqChestPainActivity: false, parqChestPainRest: false, parqDizzinessOrBalance: false, parqBoneOrJointIssue: false, parqMedicationPrescribed: false, parqOtherReason: false, parqCleared: true, medicalClearanceRequired: false },
     assignedDietId: 'DIET-02',
     assignedDiet: { id: 'DIET-02', name: 'Lean Muscle Gain', goal: 'Muscle Gain', calories: 2800, protein: 180, carbs: 350, fats: 70,
       description: 'High-protein diet to support lean muscle mass building.', complianceScore: 88,
@@ -46,7 +50,8 @@ export const TRAINER_MEMBERS_MOCK_MEMBERS: TrainerMembersMember[] = [
     joinDate: '2023-03-10T00:00:00Z', expiryDate: '2024-03-10T00:00:00Z', createdAt: '2023-03-10T00:00:00Z',
     age: 32, heightCm: 180, weightKg: 90, progressStatus: TRAINER_MEMBERS_MEMBER_PROGRESS_STATUS.AVERAGE, fitnessGoal: 'Strength Training', fitnessLevel: 'Advanced',
     targetWeightKg: 82, bmi: 27.8, isPT: true, medicalRestrictions: 'Lower back - avoid heavy deadlifts', daysSinceLastCheckIn: 1, membershipNumber: 'M-2023-003',
-    assessment: { medicalHistory: 'Lower back pain (L4-L5 disc issue, 2021)', pastInjuries: 'Muscle strain - right hamstring (2022)', vo2Max: 42, flexibility: 18, coreStrength: '2:10 plank', fitnessGoals: 'Build upper body strength, improve posture' },
+    ptPackage: { packageName: 'Hypertrophy Mastery (36 Sessions)', totalSessions: 36, completedSessions: 14, remainingSessions: 22, startDate: '2023-07-01', expiryDate: '2024-07-01' },
+    assessment: { medicalHistory: 'Lower back pain (L4-L5 disc issue, 2021)', pastInjuries: 'Muscle strain - right hamstring (2022)', vo2Max: 42, flexibility: 18, coreStrength: '2:10 plank', fitnessGoals: 'Build upper body strength, improve posture', parqHeartCondition: false, parqChestPainActivity: false, parqChestPainRest: false, parqDizzinessOrBalance: false, parqBoneOrJointIssue: true, parqMedicationPrescribed: false, parqOtherReason: false, parqCleared: false, medicalClearanceRequired: true },
     workoutHistory: [{ id: 'WH-004', name: 'Power Building Phase 1', date: '2023-10-01 - 2023-11-01', level: 'Advanced', status: TRAINER_MEMBERS_WORKOUT_HISTORY_STATUS.COMPLETED }]
   },
   {

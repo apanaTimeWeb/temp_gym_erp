@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Activity, Save, Loader2 } from 'lucide-react';
+import { Activity, Save, Loader2, AlertCircle, CheckCircle2, HeartPulse, ShieldAlert } from 'lucide-react';
 
 import { useTranslations } from 'next-intl';
 
@@ -58,6 +58,7 @@ export default function TrainerMembersProfileAssessment() {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors, isDirty, isSubmitting }
   } = useForm<TrainerMembersTrainerMemberAssessment>({
     resolver: zodResolver(TrainerMembersTrainerMemberAssessmentSchema),
@@ -67,11 +68,29 @@ export default function TrainerMembersProfileAssessment() {
       vo2Max: undefined,
       flexibility: undefined,
       coreStrength: '',
-      fitnessGoals: ''
+      fitnessGoals: '',
+      parqHeartCondition: false,
+      parqChestPainActivity: false,
+      parqChestPainRest: false,
+      parqDizzinessOrBalance: false,
+      parqBoneOrJointIssue: false,
+      parqMedicationPrescribed: false,
+      parqOtherReason: false,
+      parqCleared: true,
+      medicalClearanceRequired: false,
     },
     mode: 'onTouched',
   });
   const guardNavigation = useTrainerInfrastructureUnsavedChangesGuard(isDirty && !isSubmitting && !updateAssessmentPending);
+
+  const q1 = watch('parqHeartCondition');
+  const q2 = watch('parqChestPainActivity');
+  const q3 = watch('parqChestPainRest');
+  const q4 = watch('parqDizzinessOrBalance');
+  const q5 = watch('parqBoneOrJointIssue');
+  const q6 = watch('parqMedicationPrescribed');
+  const q7 = watch('parqOtherReason');
+  const hasAnyParqRisk = Boolean(q1 || q2 || q3 || q4 || q5 || q6 || q7);
 
 // Effect contract: reconcile assessment-form defaults with the current member profile data.
   useEffect(() => {
@@ -85,13 +104,18 @@ export default function TrainerMembersProfileAssessment() {
   const handleAssessmentSubmit = async (data: TrainerMembersTrainerMemberAssessment) => {
     try {
       const actionId = `assessment-update-${member.id}`;
-      const fingerprint = JSON.stringify(data);
+      const payload: TrainerMembersTrainerMemberAssessment = {
+        ...data,
+        parqCleared: !hasAnyParqRisk,
+        medicalClearanceRequired: hasAnyParqRisk,
+      };
+      const fingerprint = JSON.stringify(payload);
       if (lastPayload.current !== null && lastPayload.current !== fingerprint) actionKeys.clear(actionId);
       lastPayload.current = fingerprint;
-      const response = await updateAssessment({ id: member.id, assessment: data, idempotencyKey: actionKeys.begin(actionId) });
+      const response = await updateAssessment({ id: member.id, assessment: payload, idempotencyKey: actionKeys.begin(actionId) });
       showSuccess(response.message, actionId);
       actionKeys.clear(actionId);
-      reset(data);
+      reset(payload);
     } catch (err) {
       showError(err, 'assessment-error');
     }
@@ -182,6 +206,63 @@ export default function TrainerMembersProfileAssessment() {
               className="w-full bg-transparent text-xl font-bold text-primary focus-visible:outline-none  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
              data-testid="trainer_members-trainermembersprofileassessment-input_8"/>
           </div>
+        </div>
+      </div>
+
+      {/* Physical Activity Readiness Questionnaire (PAR-Q) Section */}
+      <div className="bg-card border border-border rounded-xl p-5 space-y-4" data-testid="trainer_members-parq-section">
+        <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-border">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-primary-subtle text-primary flex items-center justify-center">
+              <HeartPulse size={18} strokeWidth={2} />
+            </div>
+            <div>
+              <h4 className="text-base font-semibold text-primary">Physical Activity Readiness Questionnaire (PAR-Q)</h4>
+              <p className="text-xs text-secondary">Pre-exercise screening questionnaire to determine training safety.</p>
+            </div>
+          </div>
+          {hasAnyParqRisk ? (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-danger/15 text-danger border border-danger/30" role="alert" data-testid="trainer_members-parq-risk-badge">
+              <ShieldAlert size={14} strokeWidth={2} />
+              Medical Clearance Required
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-success/15 text-success border border-success/30" data-testid="trainer_members-parq-cleared-badge">
+              <CheckCircle2 size={14} strokeWidth={2} />
+              PAR-Q Cleared (Ready for Training)
+            </span>
+          )}
+        </div>
+
+        {hasAnyParqRisk && (
+          <div className="p-3 bg-danger-bg border border-danger/30 rounded-lg text-xs text-danger flex items-start gap-2" role="alert">
+            <AlertCircle size={16} className="shrink-0 mt-0.5" strokeWidth={2} />
+            <p>
+              <strong>Notice:</strong> One or more health risk indicators checked &apos;Yes&apos;. The client must obtain physician medical clearance before participating in vigorous or high-intensity exercise routines.
+            </p>
+          </div>
+        )}
+
+        <div className="divide-y divide-border/60">
+          {[
+            { key: 'parqHeartCondition' as const, label: '1. Has your doctor ever said that you have a heart condition and should only do medically supervised exercise?' },
+            { key: 'parqChestPainActivity' as const, label: '2. Do you feel pain or heaviness in your chest when engaging in physical activity?' },
+            { key: 'parqChestPainRest' as const, label: '3. In the past 30 days, have you experienced chest pain when you were not doing physical activity?' },
+            { key: 'parqDizzinessOrBalance' as const, label: '4. Do you frequently lose balance because of dizziness or have you ever lost consciousness?' },
+            { key: 'parqBoneOrJointIssue' as const, label: '5. Do you have a bone, joint, or spine problem (e.g., lower back, knee, hip) aggravated by exercise?' },
+            { key: 'parqMedicationPrescribed' as const, label: '6. Is your physician currently prescribing prescription medications for blood pressure or heart conditions?' },
+            { key: 'parqOtherReason' as const, label: '7. Do you know of any other reason or medical concern why you should not follow an exercise program?' },
+          ].map((question) => (
+            <label key={question.key} className="flex items-start justify-between gap-4 py-3 cursor-pointer hover:bg-input/40 px-2 rounded-lg transition-colors">
+              <span className="text-xs text-primary font-medium leading-relaxed">{question.label}</span>
+              <input
+                type="checkbox"
+                {...register(question.key)}
+                className="mt-0.5 h-4 w-4 rounded border-border text-primary focus:ring-focus"
+                data-testid={`trainer_members-parq-${question.key}`}
+              />
+            </label>
+          ))}
         </div>
       </div>
     </form>

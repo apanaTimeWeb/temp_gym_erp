@@ -105,13 +105,52 @@ export function useManagerLibraryDietPlansLogic(): ManagerLibraryDietPlansViewMo
     const response = await mutations.removeExercise.mutateAsync({ id, idempotencyKey });
     deletionIdempotencyKeys.current.delete(`exercise:${id}`);
     ui.showToast(response.message, 'success');
-  }, [confirm, mutations.removeExercise, ui]);
+  }, [confirm, mutations.removeExercise, t, ui]);
 
-  const activeQuery = view === 'diet' ? dietQuery : exerciseQuery;
+  const allDietPlans = dietQuery.data?.data?.dietPlans ?? [];
+  const pendingDeletions = useMemo(() => allDietPlans.filter((p) => Boolean(p.deletionRequested)), [allDietPlans]);
+
+  const approveDeletion = useCallback(async (id: string) => {
+    const ok = await confirm({
+      title: 'Approve Plan Deletion',
+      message: 'Are you sure you want to approve this deletion request? The diet plan will be permanently removed.',
+      confirmText: 'Approve & Delete',
+      type: 'danger',
+    });
+    if (!ok) return;
+    let idempotencyKey = deletionIdempotencyKeys.current.get(`diet:${id}`);
+    if (!idempotencyKey) { idempotencyKey = ManagerInfrastructureIdempotency(); deletionIdempotencyKeys.current.set(`diet:${id}`, idempotencyKey); }
+    const response = await mutations.removeDiet.mutateAsync({ id, idempotencyKey });
+    deletionIdempotencyKeys.current.delete(`diet:${id}`);
+    ui.showToast(response.message || 'Diet plan deleted upon approval', 'success');
+  }, [confirm, mutations.removeDiet, ui]);
+
+  const rejectDeletion = useCallback(async (id: string) => {
+    const ok = await confirm({
+      title: 'Reject Deletion Request',
+      message: 'Reject this deletion request and keep the diet plan active in the library?',
+      confirmText: 'Reject Request',
+      type: 'warning',
+    });
+    if (!ok) return;
+    const targetDiet = allDietPlans.find((d) => d.id === id);
+    if (!targetDiet) return;
+    await mutations.saveDiet.mutateAsync({
+      id,
+      data: { ...targetDiet, deletionRequested: false, deletionReason: undefined },
+      idempotencyKey: ManagerInfrastructureIdempotency(),
+    });
+    ui.showToast('Deletion request rejected. Diet plan kept active.', 'info');
+  }, [allDietPlans, confirm, mutations.saveDiet, ui]);
+
+  const activeQuery = view === 'exercises' ? exerciseQuery : dietQuery;
   return {
     view, setView,
-    dietPlans: dietQuery.data?.data?.dietPlans ?? [], totalDietPlans: dietQuery.data?.data?.total ?? 0,
+    dietPlans: allDietPlans, totalDietPlans: dietQuery.data?.data?.total ?? 0,
     exercises: exerciseQuery.data?.data?.exercises ?? [], totalExercises: exerciseQuery.data?.data?.total ?? 0,
+    pendingDeletions,
+    approveDeletion,
+    rejectDeletion,
     isPending: activeQuery.isPending, isError: activeQuery.isError,
     errorMessage: activeQuery.error ? ManagerInfrastructureGetErrorMessage(activeQuery.error, t('TEXT_GENERIC_ERROR')) : '',
     saving: mutations.saveDiet.isPending || mutations.removeDiet.isPending || mutations.saveExercise.isPending || mutations.removeExercise.isPending,

@@ -273,6 +273,44 @@ export function handleTrainerMockApiRequest(
   }
 
   if (
+    trainerPath.startsWith('trainer_library/diet-plans/') ||
+    trainerPath.startsWith('diet-plans/') ||
+    trainerPath.startsWith('trainer_diet/diet-plans/')
+  ) {
+    const segments = trainerPath.split('/');
+    const isDeletionRequest = trainerPath.endsWith('/request-deletion');
+    const planId = isDeletionRequest ? segments[segments.length - 2] : segments[segments.length - 1];
+
+    if (isDeletionRequest) {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const plan = currentDietPlans.find((p: any) => p.id === planId);
+        if (plan) {
+          plan.deletionRequested = true;
+          plan.deletionReason = body.reason || 'Trainer requested deletion approval';
+          return buildMockSuccess(plan, 'Diet plan deletion requested successfully');
+        }
+        return buildMockSuccess(null, 'Diet plan deletion requested');
+      } catch {
+        return buildMockSuccess(null, 'Diet plan deletion requested');
+      }
+    }
+
+    if (method === 'PATCH' || method === 'PUT') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const idx = currentDietPlans.findIndex((p: any) => p.id === planId);
+        if (idx >= 0) {
+          currentDietPlans[idx] = { ...currentDietPlans[idx], ...body, id: planId };
+          return buildMockSuccess(currentDietPlans[idx], 'Diet plan updated successfully');
+        }
+      } catch {
+        // fallback
+      }
+    }
+  }
+
+  if (
     trainerPath === 'trainer_library/assigned-members' ||
     trainerPath === 'diet-plans/assigned-members' ||
     trainerPath === 'trainer_diet/assigned-members'
@@ -786,6 +824,7 @@ export function handleTrainerMockApiRequest(
       historyTotal: total,
       historyPage: page,
       historyLimit: limit,
+      totalPages: Math.max(1, Math.ceil(total / limit)),
     }, 'Earnings data retrieved');
   }
   if (trainerPath === 'trainer_earnings/kpis') {

@@ -28,10 +28,9 @@ export function useTrainerMembersToolbar() {
   const queryClient = useQueryClient();
   const [localSearch, setLocalSearch] = useState(search);
 
-// Effect contract: debounce the member search input before the URL/query state is updated.
+// Effect contract: synchronize the local search input with the external query/URL state.
   useEffect(() => {
-    const syncTimer = window.setTimeout(() => setLocalSearch(search), 0);
-    return () => window.clearTimeout(syncTimer);
+    setLocalSearch(search);
   }, [search]);
 
 // Effect contract: debounce the member search input before the URL/query state is updated.

@@ -7,7 +7,7 @@ describe('TrainerMembersDirectoryAndProfile focus trap', () => {
   const parent = document.createElement('div'); parent.setAttribute('role','dialog'); parent.setAttribute('aria-modal','true');
   const child = document.createElement('div'); child.setAttribute('role','dialog'); child.setAttribute('aria-modal','true');
   document.body.append(parent, child);
-  const ref = createRef<HTMLDivElement>(); Object.defineProperty(ref,'current',{value:parent,configurable:true});
+  const ref = { current: parent };
   const first = vi.fn(); const second = vi.fn();
   const {rerender,unmount} = renderHook(({callback}) => useTrainerInfrastructureDialogFocusTrap({isOpen:true,dialogRef:ref,onEscape:callback}), {initialProps:{callback:first}});
   rerender({callback:second});
@@ -24,7 +24,7 @@ describe('TrainerMembersDirectoryAndProfile focus trap', () => {
   const first = document.createElement('button');
   const last = document.createElement('button');
   dialog.append(first,last); document.body.append(trigger,dialog); trigger.focus();
-  const ref = createRef<HTMLDivElement>(); Object.defineProperty(ref,'current',{value:dialog,configurable:true});
+  const ref = { current: dialog };
   const onEscape = vi.fn();
   const {unmount} = renderHook(() => useTrainerInfrastructureDialogFocusTrap({isOpen:true,dialogRef:ref,onEscape}));
   expect(document.activeElement).toBe(first);

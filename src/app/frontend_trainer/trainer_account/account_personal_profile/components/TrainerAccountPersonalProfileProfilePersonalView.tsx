@@ -3,7 +3,7 @@ import type { TrainerProfilePersonalViewProps } from '../types/TrainerAccountAcc
 // RESPONSIBILITY: Personal details form view for the Trainer Profile feature.
 import { useTranslations } from 'next-intl';
 import { Controller, type UseFormReturn } from 'react-hook-form';
-import { Loader2, Save } from 'lucide-react';
+import { Loader2, Save, Landmark } from 'lucide-react';
 
 import { TRAINER_PROFILE_SPECIALIZATIONS } from '@/app/frontend_trainer/trainer_account/account_personal_profile/utils/TrainerAccountPersonalProfileProfileConstants';
 import type { TrainerProfileData, TrainerProfileFormValues } from '@/app/frontend_trainer/trainer_account/account_personal_profile/types/TrainerAccountPersonalProfileProfileTypes';
@@ -50,6 +50,73 @@ export default function TrainerProfilePersonalView({ profileForm, user, saveProf
             </div>
           )}
         />
+      </div>
+
+      <div className="pt-4 border-t border-border space-y-4">
+        <div className="flex items-center gap-2">
+          <Landmark size={18} className="text-primary" />
+          <h3 className="text-base font-semibold text-primary">Banking & Payout Details</h3>
+        </div>
+        <p className="text-xs text-secondary">
+          Configure your bank account and UPI details for receiving monthly payroll and personal training commissions.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="trainer-payout-holder" className="block text-sm font-medium text-secondary mb-1.5">Account Holder Name</label>
+            <input
+              id="trainer-payout-holder"
+              {...profileForm.register('accountHolderName')}
+              placeholder="e.g. John Doe"
+              className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              data-testid="trainer_profile-payout-holder"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="trainer-payout-bank" className="block text-sm font-medium text-secondary mb-1.5">Bank Name</label>
+            <input
+              id="trainer-payout-bank"
+              {...profileForm.register('bankName')}
+              placeholder="e.g. HDFC Bank, SBI, ICICI"
+              className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              data-testid="trainer_profile-payout-bank"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="trainer-payout-account" className="block text-sm font-medium text-secondary mb-1.5">Account Number</label>
+            <input
+              id="trainer-payout-account"
+              {...profileForm.register('accountNumber')}
+              placeholder="e.g. 50100234567890"
+              className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring font-mono"
+              data-testid="trainer_profile-payout-account"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="trainer-payout-ifsc" className="block text-sm font-medium text-secondary mb-1.5">IFSC Code</label>
+            <input
+              id="trainer-payout-ifsc"
+              {...profileForm.register('ifscCode')}
+              placeholder="e.g. HDFC0001234"
+              className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring uppercase font-mono"
+              data-testid="trainer_profile-payout-ifsc"
+            />
+          </div>
+
+          <div className="sm:col-span-2">
+            <label htmlFor="trainer-payout-upi" className="block text-sm font-medium text-secondary mb-1.5">UPI ID (Instant Transfers)</label>
+            <input
+              id="trainer-payout-upi"
+              {...profileForm.register('upiId')}
+              placeholder="e.g. trainer@oksbi / trainer@okhdfcbank"
+              className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring font-mono"
+              data-testid="trainer_profile-payout-upi"
+            />
+          </div>
+        </div>
       </div>
       <div className="flex justify-end">
         <button type="submit" disabled={saveProfilePending} className="min-h-11 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page min-w-32 flex items-center justify-center gap-2 px-5 py-2.5 bg-primary text-on-primary font-semibold rounded-lg disabled:opacity-60" data-testid="trainer_profile-trainerprofilemain-button_8">

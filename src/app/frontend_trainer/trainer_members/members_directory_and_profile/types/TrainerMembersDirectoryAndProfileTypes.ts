@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import { TRAINER_MEMBERS_SORT_FIELDS, TRAINER_MEMBERS_SORT_DIRECTIONS } from '@/app/frontend_trainer/trainer_members/members_directory_and_profile/config/TrainerMembersDirectoryAndProfileConstants';
 
-import { TrainerMembersTrainerMemberAssessmentSchema, TrainerMembersMemberSchema, TrainerMembersMemberStatsSchema } from '@/app/frontend_trainer/trainer_members/members_directory_and_profile/schemas/TrainerMembersDirectoryAndProfileDomainSchemas';
+import { TrainerMembersTrainerMemberAssessmentSchema, TrainerMembersMemberSchema, TrainerMembersMemberStatsSchema, TrainerMembersPtPackageSchema } from '@/app/frontend_trainer/trainer_members/members_directory_and_profile/schemas/TrainerMembersDirectoryAndProfileDomainSchemas';
 
 import { TrainerMembersFormSchema } from '@/app/frontend_trainer/trainer_members/members_directory_and_profile/schemas/TrainerMembersDirectoryAndProfileFormSchema';
 
@@ -25,6 +25,7 @@ import { TrainerMembersDietSnapshotSchema, TrainerMembersTrainerMemberWorkoutExe
 
 // RESPONSIBILITY: Owns TypeScript domain and form contracts derived from Trainer members validation schemas.
 export type TrainerMembersTrainerMemberAssessment = z.infer<typeof TrainerMembersTrainerMemberAssessmentSchema>;
+export type TrainerMembersPtPackage = z.infer<typeof TrainerMembersPtPackageSchema>;
 export type TrainerMembersMember = z.infer<typeof TrainerMembersMemberSchema>;
 export type TrainerMembersMemberStats = z.infer<typeof TrainerMembersMemberStatsSchema>;
 export type TrainerMembersFormValues = z.infer<typeof TrainerMembersFormSchema>;

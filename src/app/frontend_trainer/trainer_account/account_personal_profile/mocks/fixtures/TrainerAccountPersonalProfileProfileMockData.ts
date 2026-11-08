@@ -13,4 +13,16 @@ export const TRAINER_PROFILE_MOCK_TRAINER_PROFILE = {
   bio: 'Personal trainer focused on strength and sustainable fitness.',
   experienceYears: 6,
   languagesSpoken: ['English', 'Hindi'],
+  bankDetails: {
+    bankName: 'HDFC Bank',
+    accountNumber: '50100234567890',
+    ifscCode: 'HDFC0001234',
+    accountHolderName: 'Michael Trainer',
+    upiId: 'michael@oksbi',
+  },
+  bankName: 'HDFC Bank',
+  accountNumber: '50100234567890',
+  ifscCode: 'HDFC0001234',
+  accountHolderName: 'Michael Trainer',
+  upiId: 'michael@oksbi',
 };

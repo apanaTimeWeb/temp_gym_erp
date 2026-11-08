@@ -7,7 +7,7 @@
  */
 import { Fragment, useEffect, useState } from 'react';
 
-import { ArrowDown, ArrowUp, ArrowUpDown, Loader2, Search } from 'lucide-react';
+import { ArrowDown, ArrowUp, ArrowUpDown, Loader2, Search, Receipt } from 'lucide-react';
 
 import { useLocale, useTranslations } from 'next-intl';
 
@@ -29,6 +29,8 @@ import { useTrainerInfrastructureDebounce } from '@/app/frontend_trainer/trainer
 import TrainerInfrastructureTooltip from '@/app/frontend_trainer/trainer_earnings/earnings_overview_and_ledger/components/TrainerEarningsOverviewAndLedgerTrainerInfrastructureTooltip';
 
 import TrainerInfrastructureSkeletonBlock from '@/app/frontend_trainer/trainer_earnings/earnings_overview_and_ledger/components/TrainerEarningsOverviewAndLedgerTrainerInfrastructureSkeletonBlock';
+import TrainerEarningsOverviewAndLedgerPayslipModal from './TrainerEarningsOverviewAndLedgerPayslipModal';
+import type { TrainerEarningsHistoryRow } from '@/app/frontend_trainer/trainer_earnings/earnings_overview_and_ledger/types/TrainerEarningsOverviewAndLedgerEarningsTypes';
 
 import type { TrainerEarningsDateField } from '@/app/frontend_trainer/trainer_earnings/earnings_overview_and_ledger/types/TrainerEarningsOverviewAndLedgerEarningsDateRangeTypes';
 
@@ -71,6 +73,7 @@ export default function TrainerEarningsHistory() {
   const router = useRouter();
   const [draftSearch, setDraftSearch] = useState(searchParams.get('search') ?? '');
   const [expandedRowId, setExpandedRowId] = useState<string | null>(null);
+  const [selectedPayslipRow, setSelectedPayslipRow] = useState<TrainerEarningsHistoryRow | null>(null);
   const debouncedSearch = useTrainerInfrastructureDebounce(draftSearch, 300);
 
   const search = searchParams.get('search') ?? '';
@@ -176,7 +179,7 @@ export default function TrainerEarningsHistory() {
       <div className="flex-1 overflow-x-auto custom-scrollbar ">
         {history.length === 0 ? <TrainerEarningsEmptyState /> : (
           <>
-          <div className="md:hidden divide-y divide-border ">{history.map((row) => { const style = TRAINER_EARNINGS_PAYOUT_STATUS_STYLES[row.status]; return <article key={row.id} className="p-4 bg-card " data-testid={`trainer_earnings-history-card${row.id}`}><div className="flex items-start justify-between gap-3 "><div className="min-w-0 "><TrainerInfrastructureTooltip content={row.description}><p className="font-medium text-primary truncate ">{row.description}</p></TrainerInfrastructureTooltip><p className="text-xs text-secondary mt-1 ">{TrainerEarningsFormatDate(row.date, locale)} · {t(`TEXT_TYPE_${row.type.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`)}</p></div><span className={`shrink-0 inline-flex px-2 py-0.5 rounded-full text-xs font-semibold ${style?.bg ?? 'bg-input'} ${style?.text ?? 'text-secondary'} `} data-testid={`trainer_earnings-earnings-history-mobile-status-${row.id}`}>{style ? t(`TEXT_STATUS_${row.status.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`) : t('TEXT_STATUS_UNKNOWN')}</span></div><div className="mt-3 flex items-center justify-between gap-3 "><span className="text-xs text-secondary ">{t('TEXT_NET_PAYOUT')}</span><span className="text-sm font-semibold text-primary ">{row.netPayout == null ? displayValue(row.netPayout) : TrainerEarningsFormatCurrency(row.netPayout, row.currency, locale)}</span></div></article>})}</div>
+          <div className="md:hidden divide-y divide-border ">{history.map((row) => { const style = TRAINER_EARNINGS_PAYOUT_STATUS_STYLES[row.status]; return <article key={row.id} className="p-4 bg-card " data-testid={`trainer_earnings-history-card${row.id}`}><div className="flex items-start justify-between gap-3 "><div className="min-w-0 "><TrainerInfrastructureTooltip content={row.description}><p className="font-medium text-primary truncate ">{row.description}</p></TrainerInfrastructureTooltip><p className="text-xs text-secondary mt-1 ">{TrainerEarningsFormatDate(row.date, locale)} · {t(`TEXT_TYPE_${row.type.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`)}</p></div><span className={`shrink-0 inline-flex px-2 py-0.5 rounded-full text-xs font-semibold ${style?.bg ?? 'bg-input'} ${style?.text ?? 'text-secondary'} `} data-testid={`trainer_earnings-earnings-history-mobile-status-${row.id}`}>{style ? t(`TEXT_STATUS_${row.status.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`) : t('TEXT_STATUS_UNKNOWN')}</span></div><div className="mt-3 flex items-center justify-between gap-3 "><span className="text-xs text-secondary ">{t('TEXT_NET_PAYOUT')}</span><span className="text-sm font-semibold text-primary ">{row.netPayout == null ? displayValue(row.netPayout) : TrainerEarningsFormatCurrency(row.netPayout, row.currency, locale)}</span></div><div className="mt-2.5 pt-2 border-t border-border/60 flex justify-end"><button type="button" onClick={() => setSelectedPayslipRow(row)} className="min-h-8 inline-flex items-center gap-1.5 px-3 py-1 bg-input hover:bg-input/80 text-primary border border-border rounded-lg text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" data-testid={`trainer_earnings-mobile-view-payslip-${row.id}`}><Receipt size={13} />View Payslip</button></div></article>})}</div>
           <div className="hidden md:block overflow-x-auto custom-scrollbar "><table className="w-full min-w-full text-start border-collapse ">
             <thead>
               <tr className="bg-surface-highlight border-b border-border " data-testid="trainer_earnings-TrainerEarningsHistory-row-1">
@@ -199,7 +202,7 @@ export default function TrainerEarningsHistory() {
                       <td className="py-3 px-4 text-sm font-semibold text-primary text-end whitespace-nowrap ">{TrainerEarningsFormatCurrency(row.amount, row.currency, locale)}</td>
                       <td className="py-3 px-4 text-end "><span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider ${style?.bg ?? 'bg-input'} ${style?.text ?? 'text-secondary'} `} data-testid={`trainer_earnings-earnings-history-status-${row.id}`}>{style ? t(`TEXT_STATUS_${row.status.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`) : t('TEXT_STATUS_UNKNOWN')}</span></td>
                     </tr>
-                    {expanded && <tr id={`trainer-earnings-row-${row.id}-details`} key={`${row.id}-details`} data-testid="trainer_earnings-TrainerEarningsHistory-row-2"><td colSpan={4} className="px-4 py-3 bg-input "><div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-secondary "><span><strong className="text-primary ">{t("TEXT_SESSION_ID")}</strong> {displayValue(row.sessionId)}</span><span><strong className="text-primary ">{t("TEXT_INVOICE")}</strong> {displayValue(row.invoiceNumber)}</span><span><strong className="text-primary ">{t("TEXT_NET_PAYOUT")}</strong> {row.netPayout == null ? displayValue(row.netPayout) : TrainerEarningsFormatCurrency(row.netPayout, row.currency, locale)}</span></div></td></tr>}
+                    {expanded && <tr id={`trainer-earnings-row-${row.id}-details`} key={`${row.id}-details`} data-testid="trainer_earnings-TrainerEarningsHistory-row-2"><td colSpan={4} className="px-4 py-3 bg-input "><div className="flex flex-wrap items-center justify-between gap-3 text-xs text-secondary "><div className="flex flex-wrap gap-4"><span><strong className="text-primary ">{t("TEXT_SESSION_ID")}</strong> {displayValue(row.sessionId)}</span><span><strong className="text-primary ">{t("TEXT_INVOICE")}</strong> {displayValue(row.invoiceNumber)}</span><span><strong className="text-primary ">{t("TEXT_NET_PAYOUT")}</strong> {row.netPayout == null ? displayValue(row.netPayout) : TrainerEarningsFormatCurrency(row.netPayout, row.currency, locale)}</span></div><button type="button" onClick={(e) => { e.stopPropagation(); setSelectedPayslipRow(row); }} className="min-h-8 inline-flex items-center gap-1.5 px-3 py-1 bg-primary text-on-primary rounded-lg text-xs font-semibold hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" data-testid={`trainer_earnings-view-payslip-${row.id}`}><Receipt size={13} />View Payslip</button></div></td></tr>}
                   </Fragment>
                 );
               })}
@@ -210,6 +213,12 @@ export default function TrainerEarningsHistory() {
       </div>
 
       {totalPages > 1 && <div className="p-3 border-t border-border bg-header flex items-center justify-between gap-3 text-sm "><span className="text-secondary ">{t("TEXT_PAGE")}{TrainerEarningsFormatNumber(currentPage, locale)} {t("TEXT_OF")}{TrainerEarningsFormatNumber(totalPages, locale)}</span><div className="flex gap-2 "><button type="button" onClick={() => handlePageChange(Math.max(1, currentPage - 1))} disabled={currentPage === 1} className="min-h-11 min-w-24 px-3 rounded-lg border border-border bg-card text-primary disabled:opacity-50 hover:bg-primary-subtle hover:border-focus motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_earnings-trainerearningshistory-button_7">{t("TEXT_PREVIOUS")}</button><button type="button" onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))} disabled={currentPage === totalPages} className="min-h-11 min-w-24 px-3 rounded-lg border border-border bg-card text-primary disabled:opacity-50 hover:bg-primary-subtle hover:border-focus motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring " data-testid="trainer_earnings-trainerearningshistory-button_8">{t("TEXT_NEXT")}</button></div></div>}
+
+      <TrainerEarningsOverviewAndLedgerPayslipModal
+        isOpen={Boolean(selectedPayslipRow)}
+        row={selectedPayslipRow}
+        onClose={() => setSelectedPayslipRow(null)}
+      />
     </div>
   );
 }

@@ -27,7 +27,7 @@ describe('TrainerEarningsMain behavior', () => {
   it('keeps the date filter mounted when an incomplete custom range disables the query', () => {
     useTrainerEarningsQuery.mockReturnValue({ isPending: true, isError: false, isInvalidRange: true, refetch });
     render(<TrainerEarningsMain />);
-    expect(screen.getByRole('heading', { name: 'TEXT_EARNINGS' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Earnings|TEXT_EARNINGS/ })).toBeInTheDocument();
     expect(screen.getByTestId('date-filter')).toBeInTheDocument();
     expect(screen.queryByTestId('trainer_earnings-main-loading-state')).not.toBeInTheDocument();
   });

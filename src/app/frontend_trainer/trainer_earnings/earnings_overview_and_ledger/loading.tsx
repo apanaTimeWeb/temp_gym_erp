@@ -5,4 +5,4 @@ import TrainerEarningsLoadingSkeleton from '@/app/frontend_trainer/trainer_earni
  * @dependencies Uses only documented earnings module dependencies and approved global infrastructure/UI primitives.
  * @edge-case Preserves documented loading, empty, error, accessibility, responsive, and recovery behavior without inventing business fallbacks.
  */
-export default function TrainerEarningsLoading() { return <div data-testid="trainer_earnings-route-loading"><TrainerEarningsLoadingSkeleton /></div>; }
+export default function TrainerEarningsLoading() { return <div data-testid="trainer_earnings-route-loading" className="p-6"><TrainerEarningsLoadingSkeleton /></div>; }

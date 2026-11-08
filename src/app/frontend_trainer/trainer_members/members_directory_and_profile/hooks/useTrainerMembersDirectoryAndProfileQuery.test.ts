@@ -7,15 +7,17 @@ import { useTrainerMembersQuery } from '@/app/frontend_trainer/trainer_members/m
 
 
 
-const capturedQueries: Array<{ queryKey: readonly unknown[]; queryFn: () => Promise<unknown> }> = [];
-const api = {
-  fetchMembers: vi.fn().mockResolvedValue({ success: true, data: [{ id: 'member-1' }] }),
-  fetchMemberStats: vi.fn(),
-  fetchMemberAttendance: vi.fn(),
-  fetchDietPlans: vi.fn(),
-  fetchWorkoutPlans: vi.fn(),
-  fetchMemberProgressEntries: vi.fn(),
-};
+const { capturedQueries, api } = vi.hoisted(() => ({
+  capturedQueries: [] as Array<{ queryKey: readonly unknown[]; queryFn: () => Promise<unknown> }>,
+  api: {
+    fetchMembers: vi.fn().mockResolvedValue({ success: true, data: [{ id: 'member-1' }] }),
+    fetchMemberStats: vi.fn(),
+    fetchMemberAttendance: vi.fn(),
+    fetchDietPlans: vi.fn(),
+    fetchWorkoutPlans: vi.fn(),
+    fetchMemberProgressEntries: vi.fn(),
+  },
+}));
 
 vi.mock('@tanstack/react-query', () => ({
   useQuery: (options: { queryKey: readonly unknown[]; queryFn: () => Promise<unknown> }) => { capturedQueries.push(options); return { data: undefined }; },

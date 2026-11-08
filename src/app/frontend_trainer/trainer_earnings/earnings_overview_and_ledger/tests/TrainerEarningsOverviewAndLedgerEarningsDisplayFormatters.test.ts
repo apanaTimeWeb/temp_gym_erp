@@ -7,7 +7,7 @@ import { TrainerEarningsFormatDate, TrainerEarningsFormatNumber } from '@/app/fr
 
 describe('Trainer earnings display formatters', () => {
   it('formats earnings metrics without decimals by default', () => {
-    expect(TrainerEarningsFormatNumber(1234567, 'en-IN')).toBe('1,234,567');
+    expect(TrainerEarningsFormatNumber(1234567, 'en-IN')).toBe('12,34,567');
   });
   it('formats API ISO dates for display', () => {
     expect(TrainerEarningsFormatDate('2026-01-02T00:00:00.000Z', 'en-IN')).toMatch(/^02 Jan 2026$/);

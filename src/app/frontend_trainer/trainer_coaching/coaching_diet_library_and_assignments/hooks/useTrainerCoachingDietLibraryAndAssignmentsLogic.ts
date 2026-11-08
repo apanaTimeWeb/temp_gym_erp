@@ -18,6 +18,7 @@ import { TRAINER_LIBRARY_QUERY_KEYS } from '@/app/frontend_trainer/trainer_coach
 import { TrainerLibraryParsePage } from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/utils/TrainerCoachingDietLibraryAndAssignmentsParsePage';
 
 import { useTrainerLibraryDiet } from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/hooks/useTrainerCoachingDietLibraryAndAssignmentsDiet';
+import { useTrainerLibraryMutations } from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/hooks/useTrainerCoachingDietLibraryAndAssignmentsMutations';
 
 import type { TrainerLibraryFilterGoal, TrainerLibraryLogicReturn } from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/types/TrainerCoachingDietLibraryAndAssignmentsTypes';
 
@@ -100,9 +101,45 @@ export function useTrainerLibraryLogic(): TrainerLibraryLogicReturn {
   const setCurrentPage = useCallback((page: number) => setUrlParam('page', String(page)), [setUrlParam]);
   const loadAll = useCallback(async () => { await query.refetch(); }, [query]);
   const dietLogic = useTrainerLibraryDiet();
+  const mutations = useTrainerLibraryMutations();
+  const [saveErrorMessage, setSaveErrorMessage] = useState<string | undefined>();
+
+  const saveDietPlan = useCallback(async (data: Record<string, unknown>, idempotencyKey: string) => {
+    setSaveErrorMessage(undefined);
+    try {
+      if (dietLogic.formDietPlan?.id) {
+        await mutations.updateDietPlan({ id: dietLogic.formDietPlan.id, data, idempotencyKey });
+      } else {
+        await mutations.createDietPlan({ data, idempotencyKey });
+      }
+      dietLogic.closeFormModal();
+      await query.refetch();
+    } catch (err) {
+      setSaveErrorMessage(err instanceof Error ? err.message : 'Failed to save diet plan');
+      throw err;
+    }
+  }, [dietLogic, mutations, query]);
+
+  const requestDietPlanDeletion = useCallback(async (id: string, reason: string, idempotencyKey: string) => {
+    setSaveErrorMessage(undefined);
+    try {
+      await mutations.requestDietPlanDeletion({ id, reason, idempotencyKey });
+      dietLogic.closeDeleteRequestModal();
+      dietLogic.closeDietModal();
+      await query.refetch();
+    } catch (err) {
+      setSaveErrorMessage(err instanceof Error ? err.message : 'Failed to request deletion');
+      throw err;
+    }
+  }, [dietLogic, mutations, query]);
+
   return {
     dietPlans: query.data?.data?.dietPlans ?? [], totalDietPlans: query.data?.data?.total ?? 0, isPending: query.isPending, isError: query.isError, isSuccess: query.isSuccess,
     search, debouncedSearch, setSearch, filterGoal, setFilterGoal, currentPage, setCurrentPage,
     loadAll, ...dietLogic,
+    saveDietPlan,
+    requestDietPlanDeletion,
+    isSavingPlan: mutations.createDietPlanPending || mutations.updateDietPlanPending || mutations.requestDietPlanDeletionPending,
+    saveErrorMessage,
   };
 }

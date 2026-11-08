@@ -17,6 +17,8 @@ vi.mock('next/navigation', () => ({
 
 vi.mock('@tanstack/react-query', () => ({
   useQuery: () => ({ data: { data: { dietPlans: [], total: 0 } }, isPending: false, isError: false, isSuccess: true, refetch: vi.fn() }),
+  useQueryClient: () => ({ invalidateQueries: vi.fn() }),
+  useMutation: () => ({ mutateAsync: vi.fn(), isPending: false, error: null, isError: false }),
 }));
 
 vi.mock('@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/hooks/TrainerCoachingDietLibraryAndAssignmentsuseTrainerInfrastructureDebounce', () => ({

@@ -5,5 +5,6 @@ export interface TrainerWorkoutPlanCardProps {
   plan: TrainerWorkoutWorkout;
   onEdit: () => void;
   onDelete: () => void;
+  onAssign?: () => void;
   deleting: boolean;
 }

@@ -14,6 +14,8 @@ import TrainerLibraryAssignModal from '@/app/frontend_trainer/trainer_coaching/c
 import TrainerLibraryDietGrid from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/components/TrainerCoachingDietLibraryAndAssignmentsDietGrid';
 
 import TrainerLibraryDietModal from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/components/TrainerCoachingDietLibraryAndAssignmentsDietModal';
+import TrainerLibraryDietFormModal from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/components/TrainerCoachingDietLibraryAndAssignmentsDietFormModal';
+import TrainerLibraryDeleteRequestModal from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/components/TrainerCoachingDietLibraryAndAssignmentsDeleteRequestModal';
 
 import TrainerLibraryTabs from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/components/TrainerCoachingDietLibraryAndAssignmentsTabs';
 
@@ -62,6 +64,19 @@ export default function TrainerLibraryMain() {
     editDietData,
     openEditDiet,
     closeDietModal,
+    showFormModal,
+    formDietPlan,
+    openCreateDiet,
+    openEditPlan,
+    closeFormModal,
+    showDeleteRequestModal,
+    deleteRequestPlan,
+    openDeleteRequest,
+    closeDeleteRequestModal,
+    saveDietPlan,
+    requestDietPlanDeletion,
+    isSavingPlan,
+    saveErrorMessage,
   } = logic;
 
   return (
@@ -72,7 +87,9 @@ export default function TrainerLibraryMain() {
           setSearch={setSearch}
           filterGoal={filterGoal}
           setFilterGoal={setFilterGoal}
-          onRefresh={loadAll}/>
+          onRefresh={loadAll}
+          onCreate={openCreateDiet}
+        />
         <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden p-5">
           <TrainerLibraryDietGrid
             dietPlans={dietPlans}
@@ -82,7 +99,8 @@ export default function TrainerLibraryMain() {
             isError={isError}
             search={search}
             onPageChange={setCurrentPage}
-            onViewDiet={openEditDiet}/>
+            onViewDiet={openEditDiet}
+          />
         </div>
       </div>
       <TrainerLibraryDietModal
@@ -90,6 +108,39 @@ export default function TrainerLibraryMain() {
         plan={editDietData}
         onClose={closeDietModal}
         onAssign={() => { setAssignmentPlan(editDietData); closeDietModal(); setShowAssignModal(true); }}
+        onEdit={() => {
+          if (editDietData) {
+            closeDietModal();
+            openEditPlan(editDietData);
+          }
+        }}
+        onRequestDelete={() => {
+          if (editDietData) {
+            openDeleteRequest(editDietData);
+          }
+        }}
+      />
+      <TrainerLibraryDietFormModal
+        isOpen={showFormModal}
+        plan={formDietPlan}
+        isSaving={isSavingPlan}
+        errorMessage={saveErrorMessage}
+        onClose={closeFormModal}
+        onSubmit={async (values, idempotencyKey) => {
+          await saveDietPlan(values, idempotencyKey);
+        }}
+      />
+      <TrainerLibraryDeleteRequestModal
+        isOpen={showDeleteRequestModal}
+        plan={deleteRequestPlan}
+        isSaving={isSavingPlan}
+        errorMessage={saveErrorMessage}
+        onClose={closeDeleteRequestModal}
+        onSubmit={async (reason, idempotencyKey) => {
+          if (deleteRequestPlan) {
+            await requestDietPlanDeletion(deleteRequestPlan.id, reason, idempotencyKey);
+          }
+        }}
       />
       <TrainerLibraryAssignModal
         isOpen={showAssignModal}
@@ -101,10 +152,18 @@ export default function TrainerLibraryMain() {
         isSaving={assignment.isSaving}
         errorMessage={assignment.isError ? TrainerInfrastructureUserSafeError(assignment.error, t('TEXT_GENERIC_REQUEST_ERROR')) : undefined}
         onClose={() => { setShowAssignModal(false); setAssignmentPlan(null); }}
-        onSubmit={async (memberId, idempotencyKey) => {
-          if (!assignmentPlan) return;
+        onSubmit={async (memberIds, idempotencyKey) => {
+          if (!assignmentPlan || memberIds.length === 0) return;
           try {
-            await assignment.assignDietPlan({ memberId, dietPlanId: assignmentPlan.id, idempotencyKey });
+            await Promise.all(
+              memberIds.map((memberId, idx) =>
+                assignment.assignDietPlan({
+                  memberId,
+                  dietPlanId: assignmentPlan.id,
+                  idempotencyKey: `${idempotencyKey}-${idx}`,
+                })
+              )
+            );
             setShowAssignModal(false);
             setAssignmentPlan(null);
           } catch {
