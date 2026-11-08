@@ -35,7 +35,7 @@ export function ManagerExpenseRegisterAndReportingContent() {
   return (
     <div className="min-h-full pb-10">
       
-      <div className="p-4 sm:p-6 space-y-6 max-w-screen-2xl mx-auto w-full">
+      <div className="w-full space-y-6">
         
         <div className="flex flex-wrap gap-2 bg-card border border-border p-1 rounded-xl w-fit mb-4">
           {expenseViews.map(({ id, label }, mapIndex) => (

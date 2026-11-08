@@ -2,7 +2,7 @@
 /** @description Route-level ManagerBusinessSettingsLoading for the Manager frontend module. */
 export default function ManagerBusinessSettingsLoading() {
   return (
-    <div className="max-w-3xl mx-auto space-y-6 p-6">
+    <div className="w-full max-w-5xl space-y-6">
       <div className="h-8 w-36 bg-skeleton-base bg-skeleton-highlight motion-safe:animate-pulse rounded" />
       {[...Array(2)].map((_, i) => (
         <div key={`skeleton-${i}`} className="bg-card border border-border rounded-xl p-6 space-y-4">

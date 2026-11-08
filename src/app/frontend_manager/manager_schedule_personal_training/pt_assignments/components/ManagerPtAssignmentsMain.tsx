@@ -41,7 +41,7 @@ export default function ManagerPtAssignmentsMain() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl space-y-6 p-4 sm:p-6">
+    <div className="w-full space-y-6">
       <ManagerPtAssignmentsAssignmentForm data-testid="manager_pt-managerptmain-managerptassignmentform-1" open={isAssignModalOpen} packages={packages} trainers={workload} saving={assignmentSaving} onClose={() => setIsAssignModalOpen(false)} onSubmit={handleCreateAssignment} />
       <ManagerPtAssignmentsToolbar data-testid="manager_pt-managerptmain-managerpttoolbar-2" title={t('COPY_PERSONAL_TRAINING')} subtitle={t('COPY_MANAGE_PT_PACKAGES_MONITOR_TRAINER_WORKLOAD_TRACK_SESSIONS')} actionLabel={t('COPY_ASSIGN_TRAINER_1')} onAssign={() => setIsAssignModalOpen(true)} />
       <div className="w-full sm:max-w-sm"><label htmlFor="manager-pt-assignments-search" className="mb-1 block text-sm font-medium text-text-secondary">{t('TEXT_TAB_ASSIGNMENTS')}</label><input id="manager-pt-assignments-search" type="search" value={search} onChange={(event) => setSearch(event.target.value)} className="min-h-11 w-full rounded-lg border border-border bg-input px-3 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" /></div>

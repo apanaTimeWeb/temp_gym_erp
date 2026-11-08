@@ -24,7 +24,7 @@ export default function ManagerProfileAndSecurityMain() {
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
-  return <div className="max-w-3xl mx-auto space-y-6 p-6">
+  return <div className="w-full max-w-4xl space-y-6">
     <div><h1 className="text-2xl font-bold text-text-primary">{t("COPY_MY_PROFILE")}</h1><p className="text-text-secondary mt-1 text-sm">{t("COPY_MANAGE_ACCOUNT_DETAILS_PASSWORD")}</p></div>
     {(() => { if (profileQuery.isPending) { return <div className="h-28 bg-card rounded-xl motion-safe:animate-pulse border border-border" aria-label={t("COPY_LOADING_PROFILE")} />; } return (() => { if (profileQuery.isError) { return <div data-testid="manager_profile-manager-profile-main-status" role="alert" className="bg-danger text-on-danger border border-border rounded-xl p-4">{ManagerInfrastructureGetErrorMessage(profileQuery.error, t('TEXT_GENERIC_ERROR'))}</div>; } return <>
       <div className="bg-card border border-border rounded-xl p-6 flex items-center gap-5 shadow-card">
