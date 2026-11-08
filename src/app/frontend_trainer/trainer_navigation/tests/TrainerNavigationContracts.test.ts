@@ -16,7 +16,7 @@ describe('Trainer navigation URL contracts', () => {
     expect(client).toContain('Never disconnect the host-owned shared connection');
   });
 
-  it('retains the eleven supported destination URLs under six trainer domains', () => {
+  it('retains the seventeen supported destination URLs under six trainer domains', () => {
     const hrefs = TRAINER_NAVIGATION_GROUPS.flatMap((group) => group.items.map((item) => item.href));
     const contractHrefs = Object.values(TRAINER_NAVIGATION_URL_CONFIG.ROUTES);
 
@@ -28,8 +28,8 @@ describe('Trainer navigation URL contracts', () => {
       'TEXT_NAV_EARNINGS_DOMAIN',
       'TEXT_NAV_ACCOUNT',
     ]);
-    expect(hrefs).toHaveLength(11);
-    expect(new Set(hrefs).size).toBe(11);
+    expect(hrefs).toHaveLength(17);
+    expect(new Set(hrefs).size).toBe(17);
     expect(new Set(contractHrefs)).toEqual(new Set(hrefs));
   });
 });

@@ -5,4 +5,4 @@ import TrainerDashboardLoadingSkeleton from '@/app/frontend_trainer/trainer_dash
  * @dependencies Uses only documented dashboard module dependencies and approved global infrastructure/UI primitives.
  * @edge-case Preserves documented loading, empty, error, accessibility, responsive, and recovery behavior without inventing business fallbacks.
  */
-export default function TrainerDashboardOverviewLoading() { return <div data-testid="trainer_dashboard-route-loading"><TrainerDashboardLoadingSkeleton /></div>; }
+export default function TrainerDashboardOverviewLoading() { return <div data-testid="trainer_dashboard-route-loading" className="p-6"><TrainerDashboardLoadingSkeleton /></div>; }
