@@ -97,7 +97,8 @@ export default function TrainerSessionsMain() {
 
   const handleLiveWorkoutComplete = async (loggedData: { durationMinutes: number; notes: string }) => {
     if (liveWorkoutSession) {
-      await handleAttendanceSubmit([liveWorkoutSession.id]);
+      const memberIds = liveWorkoutSession.enrolledMembers?.map((m) => m.id) ?? [];
+      await handleAttendanceSubmit(liveWorkoutSession.id, memberIds);
     }
   };
 

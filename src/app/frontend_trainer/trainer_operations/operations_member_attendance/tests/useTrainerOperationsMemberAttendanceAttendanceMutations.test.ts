@@ -26,7 +26,7 @@ vi.mock('@/app/frontend_trainer/trainer_operations/operations_member_attendance/
 describe('useTrainerAttendanceMutations', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    useMutation.mockImplementation((options) => ({ mutateAsync: vi.fn(() => options.mutationFn({ dto: { type: 'MEMBER', memberId: 'member-1', date: '2026-10-01', checkIn: '06:00' }, idempotencyKey: 'key-1' })), isPending: false, options }));
+    useMutation.mockImplementation((options) => ({ mutateAsync: vi.fn(() => options.mutationFn({ dto: { type: 'MEMBER', memberId: 'member-1', date: '2026-10-01', checkIn: '06:00' }, idempotencyKey: 'key-1' })), isPending: false, options, mutationFn: options.mutationFn }));
   });
 
   it('builds mutation commands with caller-owned idempotency keys and invalidates attendance data', async () => {

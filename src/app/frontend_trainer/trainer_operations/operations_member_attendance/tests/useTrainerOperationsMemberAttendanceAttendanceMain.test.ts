@@ -13,6 +13,7 @@ const showSuccess = vi.fn();
 const showError = vi.fn();
 const closeModal = vi.fn();
 const refetch = vi.fn();
+const statsRefetch = vi.fn();
 const begin = vi.fn((actionId: string) => `key-${actionId}`);
 const clear = vi.fn();
 const pushSearchState = vi.fn();
@@ -27,7 +28,7 @@ vi.mock('@/app/frontend_trainer/trainer_operations/operations_member_attendance/
 }));
 vi.mock('@/app/frontend_trainer/trainer_operations/operations_member_attendance/hooks/useTrainerOperationsMemberAttendanceAttendanceQuery', () => ({
   useTrainerAttendanceRecordsQuery: () => ({ data: { records: [], total: 0, page: 1, limit: 10 }, refetch }),
-  useTrainerAttendanceStatsQuery: () => ({ data: { present: 0 } }),
+  useTrainerAttendanceStatsQuery: () => ({ data: { present: 0 }, refetch: statsRefetch }),
   useTrainerAttendanceMembersQuery: () => ({ data: [], isPending: false, isFetching: false, isError: false, refetch: vi.fn() }),
   useTrainerAttendanceMyHistoryQuery: () => ({ data: [], isPending: false, isError: false, refetch: vi.fn() }),
 }));
@@ -55,6 +56,7 @@ describe('useTrainerAttendanceMain', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     refetch.mockResolvedValue(undefined);
+    statsRefetch.mockResolvedValue(undefined);
     markAttendance.mockResolvedValue({ message: 'Attendance recorded' });
     selfCheckIn.mockResolvedValue({ message: 'Checked in' });
     selfCheckOut.mockResolvedValue({ message: 'Checked out' });
