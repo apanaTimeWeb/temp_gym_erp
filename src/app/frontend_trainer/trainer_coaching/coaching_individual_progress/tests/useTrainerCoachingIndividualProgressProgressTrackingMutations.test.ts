@@ -3,10 +3,12 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { useTrainerProgressTrackingMutations } from '@/app/frontend_trainer/trainer_coaching/coaching_individual_progress/hooks/useTrainerCoachingIndividualProgressProgressTrackingMutations';
 
-const invalidateQueries = vi.fn().mockResolvedValue(undefined);
-const createEntryApi = vi.fn().mockResolvedValue({ message: 'created' });
-const updateEntryApi = vi.fn().mockResolvedValue({ message: 'updated' });
-const deleteEntryApi = vi.fn().mockResolvedValue({ message: 'deleted' });
+const { invalidateQueries, createEntryApi, updateEntryApi, deleteEntryApi } = vi.hoisted(() => ({
+  invalidateQueries: vi.fn().mockResolvedValue(undefined),
+  createEntryApi: vi.fn().mockResolvedValue({ message: 'created' }),
+  updateEntryApi: vi.fn().mockResolvedValue({ message: 'updated' }),
+  deleteEntryApi: vi.fn().mockResolvedValue({ message: 'deleted' }),
+}));
 
 vi.mock('@tanstack/react-query', () => ({
   useQueryClient: () => ({ invalidateQueries }),

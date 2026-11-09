@@ -66,9 +66,18 @@ describe('Trainer attendance API behavior', () => {
   });
 
   it('rejects history when the server total changes between pages', async () => {
+    const makePage = (start: number, count: number) => Array.from({ length: count }, (_, index) => ({
+      ...TRAINER_ATTENDANCE_MOCK_RECORDS[0],
+      id: `history-${start + index}`,
+      type: 'STAFF' as const,
+      staffId: 's1',
+      staff: { id: 's1', name: 'Trainer Demo' },
+      memberId: undefined,
+      member: undefined,
+    }));
     apiFetch
-      .mockResolvedValueOnce({ success: true, requestId: 'req-attendance-test', message: 'OK', data: { attendance: TRAINER_ATTENDANCE_MOCK_RECORDS.slice(0, 10).map((record) => ({ ...record, id: `first-${record.id}`, type: 'STAFF', staffId: 's1' })), total: 15, page: 1, limit: 10 } })
-      .mockResolvedValueOnce({ success: true, requestId: 'req-attendance-test', message: 'OK', data: { attendance: TRAINER_ATTENDANCE_MOCK_RECORDS.slice(0, 5).map((record) => ({ ...record, id: `second-${record.id}`, type: 'STAFF', staffId: 's1' })), total: 16, page: 2, limit: 10 } });
+      .mockResolvedValueOnce({ success: true, requestId: 'req-attendance-test', message: 'OK', data: { attendance: makePage(0, 10), total: 15, page: 1, limit: 10 } })
+      .mockResolvedValueOnce({ success: true, requestId: 'req-attendance-test', message: 'OK', data: { attendance: makePage(10, 5), total: 16, page: 2, limit: 10 } });
 
     await expect(fetchAllTrainerAttendanceRecords({ type: 'STAFF', staffId: 's1' })).rejects.toThrow(/changed while it was loading/i);
   });

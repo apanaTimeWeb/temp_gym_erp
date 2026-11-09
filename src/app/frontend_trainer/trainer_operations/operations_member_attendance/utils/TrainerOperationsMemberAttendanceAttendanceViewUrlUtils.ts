@@ -27,12 +27,28 @@ export function resolveTrainerAttendanceScreenView(params: URLSearchParams): Tra
 export function canonicalizeTrainerAttendanceViewParams(params: URLSearchParams): string | null {
   const original = params.toString();
   const normalized = new URLSearchParams(original);
+  const rawTab = params.get('tab');
+  const hadTab = normalized.has('tab');
   normalized.delete('tab');
-  const rawView = normalized.get(TRAINER_ATTENDANCE_VIEW_QUERY_PARAM);
-  const canonicalView = isTrainerAttendanceScreenView(rawView) ? rawView : null;
 
-  if (rawView !== null && !isTrainerAttendanceScreenView(rawView)) normalized.delete(TRAINER_ATTENDANCE_VIEW_QUERY_PARAM);
-  if (canonicalView && (rawView !== null)) normalized.set(TRAINER_ATTENDANCE_VIEW_QUERY_PARAM, canonicalView);
+  const rawView = normalized.get(TRAINER_ATTENDANCE_VIEW_QUERY_PARAM);
+  let canonicalView = isTrainerAttendanceScreenView(rawView) ? rawView : null;
+
+  if (!canonicalView && rawTab) {
+    if (rawTab === 'MEMBERS') canonicalView = 'members';
+    else if (rawTab === 'MY_ATTENDANCE') canonicalView = 'my-attendance';
+  }
+
+  if (rawView !== null && !isTrainerAttendanceScreenView(rawView)) {
+    normalized.delete(TRAINER_ATTENDANCE_VIEW_QUERY_PARAM);
+  }
+
+  if (hadTab && canonicalView) {
+    normalized.delete(TRAINER_ATTENDANCE_VIEW_QUERY_PARAM);
+    normalized.set(TRAINER_ATTENDANCE_VIEW_QUERY_PARAM, canonicalView);
+  } else if (canonicalView) {
+    normalized.set(TRAINER_ATTENDANCE_VIEW_QUERY_PARAM, canonicalView);
+  }
 
   const result = normalized.toString();
   return result === original ? null : result;

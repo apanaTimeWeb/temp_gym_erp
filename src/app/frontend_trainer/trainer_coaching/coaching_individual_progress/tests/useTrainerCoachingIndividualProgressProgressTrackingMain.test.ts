@@ -56,6 +56,9 @@ vi.mock('@/app/frontend_trainer/trainer_coaching/coaching_individual_progress/st
 vi.mock('@/app/frontend_trainer/trainer_coaching/coaching_individual_progress/hooks/TrainerCoachingIndividualProgressuseTrainerInfrastructureFeedback', () => ({
   useTrainerInfrastructureFeedback: () => ({ showSuccess, showError }),
 }));
+vi.mock('@/app/frontend_trainer/trainer_coaching/coaching_individual_progress/hooks/TrainerCoachingIndividualProgressuseTrainerInfrastructureConfirm', () => ({
+  useTrainerInfrastructureConfirm: () => ({ confirm: vi.fn(async () => true) }),
+}));
 vi.mock('@/app/frontend_trainer/trainer_coaching/coaching_individual_progress/hooks/TrainerCoachingIndividualProgressuseTrainerInfrastructureIdempotencyKey', () => ({
   useTrainerInfrastructureIdempotencyKey: () => ({ begin, clear, current: vi.fn() }),
 }));
@@ -114,6 +117,6 @@ describe('useTrainerProgressTrackingMain', () => {
     });
 
     expect(deleteEntry).toHaveBeenCalledWith({ memberId: 'member-1', entryId: 'entry-7', idempotencyKey: 'key-delete-entry-7' });
-    expect(showError).toHaveBeenCalledWith('Delete failed', 'progress-delete-entry-7');
+    expect(showError).toHaveBeenCalledWith(expect.objectContaining({ message: 'Delete failed' }), 'progress-delete-entry-7');
   });
 });

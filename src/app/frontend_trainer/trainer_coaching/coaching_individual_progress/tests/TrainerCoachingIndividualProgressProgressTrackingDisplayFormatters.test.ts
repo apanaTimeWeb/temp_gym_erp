@@ -8,8 +8,8 @@ import { TrainerProgressTrackingFormatDate, TrainerProgressTrackingFormatNumber 
 
 describe('Trainer progress tracking display formatters', () => {
   it('renders absent values explicitly', () => {
-    expect(displayValue(undefined)).toBe('—');
-    expect(displayValue(0)).not.toBe('—');
+    expect(displayValue(undefined)).toBe('–');
+    expect(displayValue(0)).not.toBe('–');
   });
   it('formats measurements with one decimal maximum', () => {
     expect(TrainerProgressTrackingFormatNumber(1234.56, 'en-IN')).toBe('1,234.6');

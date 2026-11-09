@@ -9,7 +9,7 @@ describe('TrainerCoachingSessions focus trap', () => {
   const first = document.createElement('button');
   const last = document.createElement('button');
   dialog.append(first,last); document.body.append(trigger,dialog); trigger.focus();
-  const ref = createRef<HTMLDivElement>(); Object.defineProperty(ref,'current',{value:dialog,configurable:true});
+  const ref = { current: dialog };
   const onEscape = vi.fn();
   const {unmount} = renderHook(() => useTrainerInfrastructureDialogFocusTrap({isOpen:true,dialogRef:ref,onEscape}));
   expect(document.activeElement).toBe(first);
@@ -25,7 +25,7 @@ describe('TrainerCoachingSessions focus trap', () => {
  it('updates Escape callbacks without resetting focus during rerenders', () => {
   const dialog = document.createElement('div'); dialog.setAttribute('role', 'dialog'); dialog.setAttribute('aria-modal', 'true');
   const first = document.createElement('button'); const last = document.createElement('button'); dialog.append(first, last); document.body.append(dialog);
-  const ref = createRef<HTMLDivElement>(); Object.defineProperty(ref, 'current', { value: dialog, configurable: true });
+  const ref = { current: dialog };
   const firstEscape = vi.fn(); const latestEscape = vi.fn();
   const { rerender, unmount } = renderHook(({ onEscape }) => useTrainerInfrastructureDialogFocusTrap({ isOpen: true, dialogRef: ref, onEscape }), { initialProps: { onEscape: firstEscape } });
   last.focus();
@@ -43,7 +43,7 @@ describe('TrainerCoachingSessions focus trap', () => {
   const child = document.createElement('div'); child.setAttribute('role', 'dialog'); child.setAttribute('aria-modal', 'true');
   const childButton = document.createElement('button'); child.append(childButton);
   document.body.append(parent, child);
-  const ref = createRef<HTMLDivElement>(); Object.defineProperty(ref, 'current', { value: parent, configurable: true });
+  const ref = { current: parent };
   const onEscape = vi.fn();
   const { unmount } = renderHook(() => useTrainerInfrastructureDialogFocusTrap({ isOpen: true, dialogRef: ref, onEscape }));
   act(() => { childButton.focus(); document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true })); });

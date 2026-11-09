@@ -5,4 +5,4 @@ import TrainerAttendanceLoadingSkeleton from '@/app/frontend_trainer/trainer_ope
  * @dependencies Uses only documented attendance module dependencies and approved global infrastructure/UI primitives.
  * @edge-case Preserves documented loading, empty, error, accessibility, responsive, and recovery behavior without inventing business fallbacks.
  */
-export default function TrainerAttendanceLoading() { return <div data-testid="trainer_attendance-route-loading"><TrainerAttendanceLoadingSkeleton /></div>; }
+export default function TrainerAttendanceLoading() { return <div data-testid="trainer_attendance-route-loading" className="p-6"><TrainerAttendanceLoadingSkeleton /></div>; }

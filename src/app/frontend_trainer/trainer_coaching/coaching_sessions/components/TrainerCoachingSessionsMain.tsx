@@ -6,27 +6,51 @@
  * @edge-case Preserves keyboard-accessible controls, repeated modal use, and user-visible terminal states.
  */
 // DATA FLOW: page.tsx → useTrainerSessionsMain → Session views/modals.
-import { Calendar as CalendarIcon, CheckCircle, Clock, Loader2, Pencil, Plus, User, Users, XCircle } from 'lucide-react';
+import { useState } from 'react';
+import { Calendar as CalendarIcon, CalendarCheck, Check, CheckCircle, Clock, Dumbbell, Loader2, Pencil, Play, Plus, User, Users, X, XCircle } from 'lucide-react';
 
 import { useTranslations } from 'next-intl';
 
 import TrainerSessionsAttendanceModal from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/components/TrainerCoachingSessionsAttendanceModal';
-
 import TrainerSessionsEditModal from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/components/TrainerCoachingSessionsEditModal';
-
 import TrainerSessionsEmptyState from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/components/TrainerCoachingSessionsEmptyState';
-
 import TrainerSessionsKPIs from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/components/TrainerCoachingSessionsKPIs';
-
 import TrainerSessionsLoadingSkeleton from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/components/TrainerCoachingSessionsLoadingSkeleton';
-
 import TrainerSessionsScheduleModal from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/components/TrainerCoachingSessionsScheduleModal';
+import TrainerCoachingSessionsLiveWorkoutModal from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/components/TrainerCoachingSessionsLiveWorkoutModal';
 
 import { TRAINER_SESSIONS_SESSION_FILTER_OPTIONS, TRAINER_SESSIONS_SESSION_STATUS_STYLES, TRAINER_SESSIONS_SESSION_TYPE, TRAINER_SESSIONS_SESSION_TYPE_STYLES } from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/config/TrainerCoachingSessionsConstants';
-
 import { TRAINER_SESSIONS_SESSION_STATUS } from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/config/TrainerCoachingSessionsConstants';
-
 import { useTrainerSessionsMain } from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/hooks/useTrainerCoachingSessionsMain';
+import type { TrainerSessionsTrainerSession } from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/types/TrainerCoachingSessionsTypes';
+
+interface ClientBookingRequest {
+  id: string;
+  clientName: string;
+  preferredDate: string;
+  preferredTime: string;
+  sessionType: string;
+  notes: string;
+}
+
+const INITIAL_BOOKING_REQUESTS: ClientBookingRequest[] = [
+  {
+    id: 'req-1',
+    clientName: 'Rahul Verma',
+    preferredDate: 'Tomorrow',
+    preferredTime: '07:00 AM - 08:00 AM',
+    sessionType: '1-on-1 PT (Hypertrophy)',
+    notes: 'Focus on chest & triceps technique',
+  },
+  {
+    id: 'req-2',
+    clientName: 'Sneha Patel',
+    preferredDate: 'Thursday',
+    preferredTime: '06:00 PM - 07:00 PM',
+    sessionType: 'Fat Loss & HIIT PT',
+    notes: 'Knee injury recovery, low impact',
+  },
+];
 
 
 
@@ -57,10 +81,110 @@ export default function TrainerSessionsMain() {
     markNoShowSessionPending, cancelSessionPending, isFetching,
   } = viewModel;
 
+  const [liveWorkoutSession, setLiveWorkoutSession] = useState<TrainerSessionsTrainerSession | null>(null);
+  const [bookingRequests, setBookingRequests] = useState<ClientBookingRequest[]>(INITIAL_BOOKING_REQUESTS);
+  const [bookingBannerMessage, setBookingBannerMessage] = useState<string | null>(null);
+
+  const handleAcceptBooking = (req: ClientBookingRequest) => {
+    setBookingRequests((prev) => prev.filter((r) => r.id !== req.id));
+    setBookingBannerMessage(`Booking accepted for ${req.clientName} (${req.preferredDate} at ${req.preferredTime}).`);
+    setTimeout(() => setBookingBannerMessage(null), 5000);
+  };
+
+  const handleDeclineBooking = (reqId: string) => {
+    setBookingRequests((prev) => prev.filter((r) => r.id !== reqId));
+  };
+
+  const handleLiveWorkoutComplete = async (loggedData: { durationMinutes: number; notes: string }) => {
+    if (liveWorkoutSession) {
+      await handleAttendanceSubmit([liveWorkoutSession.id]);
+    }
+  };
+
   return (
     <div className="min-h-full pb-10 ">
       <div className="p-6 space-y-6 ">
         <TrainerSessionsKPIs />
+
+        {/* Pending Client Booking Requests */}
+        {bookingBannerMessage && (
+          <div role="status" className="p-3 bg-success-bg border border-success/30 rounded-xl text-xs font-semibold text-success flex items-center justify-between">
+            <span>{bookingBannerMessage}</span>
+            <button type="button" onClick={() => setBookingBannerMessage(null)} className="p-1 hover:opacity-75">
+              <X size={14} />
+            </button>
+          </div>
+        )}
+
+        {bookingRequests.length > 0 && (
+          <div className="bg-card rounded-xl shadow-card border border-primary/20 p-5 space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                  <CalendarCheck size={18} />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-primary flex items-center gap-2">
+                    Pending Client Booking Requests
+                    <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-primary text-on-primary">
+                      {bookingRequests.length}
+                    </span>
+                  </h3>
+                  <p className="text-xs text-secondary">
+                    Review and confirm 1-on-1 personal training requests from your assigned clients.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              {bookingRequests.map((req) => (
+                <div key={req.id} className="bg-floating border border-border rounded-xl p-3.5 space-y-2">
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <p className="text-sm font-bold text-primary">{req.clientName}</p>
+                      <p className="text-xs font-medium text-secondary">{req.sessionType}</p>
+                    </div>
+                    <span className="text-[11px] font-semibold text-warning bg-warning-bg px-2 py-0.5 rounded-full">
+                      Requested
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-3 text-xs text-secondary font-mono">
+                    <span className="flex items-center gap-1 font-sans"><CalendarIcon size={13} /> {req.preferredDate}</span>
+                    <span className="flex items-center gap-1 font-sans"><Clock size={13} /> {req.preferredTime}</span>
+                  </div>
+
+                  {req.notes && (
+                    <p className="text-xs text-secondary italic bg-card/60 p-2 rounded-lg border border-border">
+                      &quot;{req.notes}&quot;
+                    </p>
+                  )}
+
+                  <div className="flex items-center gap-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => handleAcceptBooking(req)}
+                      className="flex-1 py-1.5 px-3 bg-primary text-on-primary rounded-lg text-xs font-bold hover:bg-primary-hover transition-colors"
+                      data-testid={`accept-booking-${req.id}`}
+                    >
+                      Accept Request
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleDeclineBooking(req.id)}
+                      className="py-1.5 px-3 border border-border text-secondary hover:text-danger rounded-lg text-xs font-semibold hover:bg-input transition-colors"
+                      data-testid={`decline-booking-${req.id}`}
+                    >
+                      Decline
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="bg-card rounded-xl shadow-card border border-border p-4 flex flex-col sm:flex-row justify-between items-center gap-4 ">
           <div className="flex bg-input rounded-lg p-1 ">
             {TRAINER_SESSIONS_SESSION_FILTER_OPTIONS.map((option) => (
@@ -102,6 +226,16 @@ export default function TrainerSessionsMain() {
                 <div className="flex flex-col md:flex-row items-center justify-between md:justify-end gap-4 w-full md:w-auto mt-4 md:mt-0 pt-4 md:pt-0 border-t border-border md:border-none ">
                   {session.status === TRAINER_SESSIONS_SESSION_STATUS.UPCOMING && (
                     <div className="flex items-center gap-3 ">
+                      {session.type === TRAINER_SESSIONS_SESSION_TYPE.PT && (
+                        <button
+                          type="button"
+                          onClick={() => setLiveWorkoutSession(session)}
+                          className="min-h-11 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-floating border border-border text-primary hover:bg-input hover:border-primary motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                          data-testid={`trainer_sessions-live-workout-${session.id}`}
+                        >
+                          <Dumbbell size={15} className="text-primary" /> Track Live
+                        </button>
+                      )}
                       <button type="button" onClick={() => setEditingSession(session)} className="min-w-11 min-h-11 flex items-center gap-1 text-sm font-semibold text-secondary hover:text-primary hover:underline motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95" aria-label={t('TEXT_EDIT_SESSION_ARIA', { title: session.title })} data-testid={`trainer_sessions-sessions-edit-${session.id}`}><Pencil size={18} strokeWidth={2} />{t('TEXT_EDIT')}</button>
                       <button type="button" onClick={() => void handleNoShowSession(session.id)} disabled={markNoShowSessionPending} className="min-h-11 flex items-center gap-1 text-sm font-semibold text-danger hover:text-danger hover:underline motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95 disabled:opacity-50" data-testid={`trainer_sessions-sessions-no-show-${session.id}`}>{markNoShowSessionPending ? <><Loader2 size={18} strokeWidth={2} className="motion-safe:animate-spin" aria-hidden="true" />{t('TEXT_MARKING_NO_SHOW')}</> : t('TEXT_NO_SHOW')}</button>
                       <button type="button" onClick={() => void handleCancelSession(session.id)} disabled={cancelSessionPending} className="min-h-11 flex items-center gap-1 text-sm font-semibold text-danger hover:text-danger hover:underline motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95 disabled:opacity-50" data-testid={`trainer_sessions-sessions-cancel-${session.id}`}><XCircle size={18} strokeWidth={2} />{cancelSessionPending ? <><Loader2 size={18} strokeWidth={2} className="motion-safe:animate-spin" aria-hidden="true" />{t('TEXT_CANCELLING')}</> : t('TEXT_CANCEL_SESSION')}</button>
@@ -120,6 +254,13 @@ export default function TrainerSessionsMain() {
       {showScheduleModal && <TrainerSessionsScheduleModal onClose={() => setShowScheduleModal(false)} onSubmit={handleScheduleSubmit} memberOptions={memberOptions} memberOptionsIsPending={memberOptionsIsPending} memberOptionsIsError={memberOptionsIsError} memberOptionsIsFetching={memberOptionsIsFetching} onRetryMemberOptions={retryMemberOptions} isSubmitting={createSessionPending} testId="trainer-sessions-main-schedule-modal" />}
       {attendanceSession && <TrainerSessionsAttendanceModal session={attendanceSession} onClose={() => setAttendanceSession(null)} onSubmit={handleAttendanceSubmit} testId="trainer-sessions-main-attendance-modal" />}
       {editingSession && <TrainerSessionsEditModal session={editingSession} onClose={() => setEditingSession(null)} onSuccess={(_updatedSession, message) => handleEditSuccess(message)} />}
+      {liveWorkoutSession && (
+        <TrainerCoachingSessionsLiveWorkoutModal
+          session={liveWorkoutSession}
+          onClose={() => setLiveWorkoutSession(null)}
+          onComplete={handleLiveWorkoutComplete}
+        />
+      )}
     </div>
   );
 }

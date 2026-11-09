@@ -1,3 +1,4 @@
+import { renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 /**
@@ -30,8 +31,8 @@ describe('useTrainerAttendanceMutations', () => {
 
   it('builds mutation commands with caller-owned idempotency keys and invalidates attendance data', async () => {
     const { useTrainerAttendanceMutations } = await import('@/app/frontend_trainer/trainer_operations/operations_member_attendance/hooks/useTrainerOperationsMemberAttendanceAttendanceMutations');
-    const hook = useTrainerAttendanceMutations();
-    await hook.markAttendance({ dto: { type: 'MEMBER', memberId: 'member-1', date: '2026-10-01', checkIn: '06:00' }, idempotencyKey: 'key-1' });
+    const { result } = renderHook(() => useTrainerAttendanceMutations());
+    await result.current.markAttendance({ dto: { type: 'MEMBER', memberId: 'member-1', date: '2026-10-01', checkIn: '06:00' }, idempotencyKey: 'key-1' });
     const markMutation = useMutation.mock.results[0].value;
     expect(markMutation.mutationFn).toBeTypeOf('function');
     await markMutation.options.onSuccess();

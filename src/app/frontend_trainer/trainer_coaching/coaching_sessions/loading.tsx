@@ -5,4 +5,4 @@ import TrainerSessionsLoadingSkeleton from '@/app/frontend_trainer/trainer_coach
  * @dependencies Uses only documented sessions module dependencies and approved global infrastructure/UI primitives.
  * @edge-case Preserves documented loading, empty, error, accessibility, responsive, and recovery behavior without inventing business fallbacks.
  */
-export default function TrainerSessionsLoading() { return <div data-testid="trainer_sessions-route-loading"><TrainerSessionsLoadingSkeleton /></div>; }
+export default function TrainerSessionsLoading() { return <div data-testid="trainer_sessions-route-loading" className="p-6"><TrainerSessionsLoadingSkeleton /></div>; }

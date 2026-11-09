@@ -5,4 +5,4 @@ import TrainerScheduleLoadingSkeleton from '@/app/frontend_trainer/trainer_opera
  * @dependencies Uses only documented schedule module dependencies and approved global infrastructure/UI primitives.
  * @edge-case Preserves documented loading, empty, error, accessibility, responsive, and recovery behavior without inventing business fallbacks.
  */
-export default function TrainerScheduleLoading() { return <div data-testid="trainer_schedule-route-loading"><TrainerScheduleLoadingSkeleton /></div>; }
+export default function TrainerScheduleLoading() { return <div data-testid="trainer_schedule-route-loading" className="p-6"><TrainerScheduleLoadingSkeleton /></div>; }

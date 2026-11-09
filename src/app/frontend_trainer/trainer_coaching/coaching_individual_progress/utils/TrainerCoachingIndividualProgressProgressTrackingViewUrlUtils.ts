@@ -19,12 +19,18 @@ export function resolveTrainerProgressTrackingScreenView(params: URLSearchParams
 export function canonicalizeTrainerProgressTrackingViewParams(params: URLSearchParams): string | null {
   const original = params.toString();
   const normalized = new URLSearchParams(original);
+  const hadTab = normalized.has('tab');
   normalized.delete('tab');
   const rawView = normalized.get(TRAINER_PROGRESS_TRACKING_VIEW_QUERY_PARAM);
   const canonicalView = isTrainerProgressTrackingScreenView(rawView) ? rawView : null;
 
   if (rawView !== null && !isTrainerProgressTrackingScreenView(rawView)) normalized.delete(TRAINER_PROGRESS_TRACKING_VIEW_QUERY_PARAM);
-  if (canonicalView && (rawView !== null)) normalized.set(TRAINER_PROGRESS_TRACKING_VIEW_QUERY_PARAM, canonicalView);
+  if (hadTab && canonicalView) {
+    normalized.delete(TRAINER_PROGRESS_TRACKING_VIEW_QUERY_PARAM);
+    normalized.set(TRAINER_PROGRESS_TRACKING_VIEW_QUERY_PARAM, canonicalView);
+  } else if (canonicalView && (rawView !== null)) {
+    normalized.set(TRAINER_PROGRESS_TRACKING_VIEW_QUERY_PARAM, canonicalView);
+  }
 
   const result = normalized.toString();
   return result === original ? null : result;

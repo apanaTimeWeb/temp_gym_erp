@@ -6,10 +6,11 @@ describe('TrainerOperationsMemberAttendance focus trap', () => {
  it('loops Tab and Shift+Tab, closes on Escape and restores trigger focus', () => {
   const trigger = document.createElement('button');
   const dialog = document.createElement('div');
+  dialog.setAttribute('role', 'dialog'); dialog.setAttribute('aria-modal', 'true');
   const first = document.createElement('button');
   const last = document.createElement('button');
   dialog.append(first,last); document.body.append(trigger,dialog); trigger.focus();
-  const ref = createRef<HTMLDivElement>(); Object.defineProperty(ref,'current',{value:dialog,configurable:true});
+  const ref = { current: dialog };
   const onEscape = vi.fn();
   const {unmount} = renderHook(() => useTrainerInfrastructureDialogFocusTrap({isOpen:true,dialogRef:ref,onEscape}));
   expect(document.activeElement).toBe(first);
@@ -31,7 +32,7 @@ describe('TrainerOperationsMemberAttendance focus trap', () => {
     const first = document.createElement('button'); dialog.append(first);
     const childButton = document.createElement('button'); childDialog.append(childButton);
     document.body.append(trigger, dialog, childDialog); trigger.focus();
-    const ref = createRef<HTMLDivElement>(); Object.defineProperty(ref, 'current', { value: dialog, configurable: true });
+    const ref = { current: dialog };
     const firstEscape = vi.fn(); const latestEscape = vi.fn();
     const { rerender, unmount } = renderHook(({ onEscape }) => useTrainerInfrastructureDialogFocusTrap({ isOpen: true, dialogRef: ref, onEscape }), { initialProps: { onEscape: firstEscape } });
     first.focus();
@@ -40,10 +41,11 @@ describe('TrainerOperationsMemberAttendance focus trap', () => {
     act(() => document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true })));
     expect(firstEscape).not.toHaveBeenCalled();
     expect(latestEscape).not.toHaveBeenCalled();
-    childButton.focus();
+    childDialog.remove();
+    first.focus();
     act(() => document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true })));
     expect(latestEscape).toHaveBeenCalledOnce();
-    unmount(); childDialog.remove(); dialog.remove(); trigger.remove();
+    unmount(); dialog.remove(); trigger.remove();
   });
 
 });

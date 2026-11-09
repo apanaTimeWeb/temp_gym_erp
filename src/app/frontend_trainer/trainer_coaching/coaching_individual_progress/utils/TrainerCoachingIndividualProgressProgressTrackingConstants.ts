@@ -26,7 +26,7 @@ export const TRAINER_PROGRESS_TRACKING_COMPARISON_METRICS: readonly TrainerProgr
 ];
 
 // Max members selectable for comparison
-export const TRAINER_PROGRESS_TRACKING_COMPARISON_MAX_MEMBERS = 4;
+export const TRAINER_PROGRESS_TRACKING_COMPARISON_MAX_MEMBERS = 3;
 
 export const TRAINER_PROGRESS_TRACKING_PROGRESS_TABLE_HEADERS = [
   'Date',

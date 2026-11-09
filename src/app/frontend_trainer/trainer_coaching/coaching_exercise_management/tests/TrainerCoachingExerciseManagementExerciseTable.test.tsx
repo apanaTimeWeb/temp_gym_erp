@@ -20,7 +20,7 @@ vi.mock('next-intl', () => ({
   useTranslations: () => (key: string, values?: Record<string, string>) => values?.name ? `${key}:${values.name}` : key,
 }));
 
-vi.mock('@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/hooks/useTrainerCoachingWorkoutPlansFilters', () => ({
+vi.mock('@/app/frontend_trainer/trainer_coaching/coaching_exercise_management/hooks/useTrainerCoachingExerciseManagementFilters', () => ({
   useTrainerWorkoutFilters: () => ({
     search: '',
     category: 'All',
@@ -32,7 +32,7 @@ vi.mock('@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/hooks/us
   }),
 }));
 
-vi.mock('@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/hooks/useTrainerCoachingWorkoutPlansQuery', () => ({
+vi.mock('@/app/frontend_trainer/trainer_coaching/coaching_exercise_management/hooks/useTrainerCoachingExerciseManagementQuery', () => ({
   useTrainerWorkoutExercisesQuery: () => ({
     data: {
       exercises: [{ id: 'ex-1', name: 'Squat', muscleGroup: 'Legs', equipment: 'Barbell', difficulty: 'INTERMEDIATE' }],
@@ -46,11 +46,11 @@ vi.mock('@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/hooks/us
   }),
 }));
 
-vi.mock('@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/hooks/useTrainerCoachingWorkoutPlansMutations', () => ({
+vi.mock('@/app/frontend_trainer/trainer_coaching/coaching_exercise_management/hooks/useTrainerCoachingExerciseManagementMutations', () => ({
   useTrainerWorkoutMutations: () => ({ deleteExercise }),
 }));
 
-vi.mock('@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/state/useTrainerCoachingWorkoutPlansStore', () => ({
+vi.mock('@/app/frontend_trainer/trainer_coaching/coaching_exercise_management/state/useTrainerCoachingExerciseManagementStore', () => ({
   useTrainerWorkoutStore: () => ({ setEditExerciseId, setShowExModal }),
 }));
 
@@ -88,7 +88,7 @@ describe('TrainerWorkoutExerciseTable behavior', () => {
     render(<TrainerWorkoutExerciseTable />);
 
     expect(screen.getAllByRole('row').length).toBeGreaterThan(1);
-    expect(screen.queryByRole('button', { name: 'TEXT_EDIT_EXERCISE_ARIA:Squat' })).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: 'TEXT_EDIT_EXERCISE_ARIA:Squat' }).length).toBeGreaterThanOrEqual(1);
     fireEvent.click(screen.getByTestId('trainer_workout-exercise-table-edit-ex-1'));
 
     expect(setEditExerciseId).toHaveBeenCalledTimes(1);

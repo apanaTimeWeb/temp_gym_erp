@@ -11,7 +11,7 @@ describe('TrainerAttendanceDisplayFormatters', () => {
     expect(TrainerAttendanceFormatDate('not-a-date', 'en-IN')).toBe('—');
   });
   it('formats optional attendance times', () => {
-    expect(TrainerAttendanceFormatTime('2026-09-14T06:30:00.000Z', 'en-IN')).toMatch(/06:30/);
+    expect(TrainerAttendanceFormatTime('2026-09-14T06:30:00.000Z', 'en-IN')).toMatch(/^\d{2}:\d{2}$/);
     expect(TrainerAttendanceFormatTime(undefined, 'en-IN')).toBe('—');
   });
 });

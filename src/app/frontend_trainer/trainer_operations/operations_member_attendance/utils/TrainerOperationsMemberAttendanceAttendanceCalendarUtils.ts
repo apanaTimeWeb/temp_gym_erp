@@ -47,15 +47,16 @@ export function buildTrainerAttendanceCalendarDays(params: {
     const date = new Date(year, month, day);
     const isSunday = date.getDay() === 0;
     const isPastOrToday = isCurrentMonth ? day <= todayDate : monthIsPast;
+    const isPastWeekday = isCurrentMonth ? day < todayDate : monthIsPast;
     const existing = recordMap[day];
 
     let status: TrainerAttendanceCalendarStatus = TRAINER_ATTENDANCE_CALENDAR_STATUS.UPCOMING;
-    if (isPastOrToday) {
-      status = isSunday
-        ? TRAINER_ATTENDANCE_CALENDAR_STATUS.LEAVE
-        : existing
-          ? TRAINER_ATTENDANCE_CALENDAR_STATUS.PRESENT
-          : TRAINER_ATTENDANCE_CALENDAR_STATUS.ABSENT;
+    if (isSunday) {
+      status = TRAINER_ATTENDANCE_CALENDAR_STATUS.LEAVE;
+    } else if (existing) {
+      status = TRAINER_ATTENDANCE_CALENDAR_STATUS.PRESENT;
+    } else if (isPastWeekday) {
+      status = TRAINER_ATTENDANCE_CALENDAR_STATUS.ABSENT;
     }
 
     return {

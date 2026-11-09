@@ -48,7 +48,7 @@ export function useTrainerAttendanceRecordsQuery({ tab, search, filterDate, curr
 
   return useQuery({
     queryKey: TRAINER_ATTENDANCE_QUERY_KEYS.records(params),
-    queryFn: () => {
+    queryFn: async () => {
       if (tab === 'MY_ATTENDANCE' && user?.id == null) {
         throw new Error('Authenticated trainer identity is unavailable.');
       }
@@ -88,7 +88,7 @@ export function useTrainerAttendanceMyHistoryQuery(enabled: boolean) {
 }
 
 export function useTrainerAttendanceStatsQuery(date?: string) {
-  return useQuery({ queryKey: [...TRAINER_ATTENDANCE_QUERY_KEYS.stats(), date], queryFn: () => fetchTrainerAttendanceStats(date), staleTime: 5 * 60 * 1000 });
+  return useQuery({ queryKey: date ? [...TRAINER_ATTENDANCE_QUERY_KEYS.stats(), date] : TRAINER_ATTENDANCE_QUERY_KEYS.stats(), queryFn: () => fetchTrainerAttendanceStats(date), staleTime: 5 * 60 * 1000 });
 }
 
 /**

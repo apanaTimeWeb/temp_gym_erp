@@ -13,7 +13,12 @@ describe('useTrainerSessionsScheduleForm', () => {
 
   it('keeps the draft after a failed submission so the user can retry', async () => {
     const onSubmit = vi.fn().mockResolvedValue(false);
-    const { result } = renderHook(() => useTrainerSessionsScheduleForm(onSubmit));
+    const { result } = renderHook(() => {
+      const hook = useTrainerSessionsScheduleForm(onSubmit);
+      // Subscribe to isDirty proxy
+      void hook.form.formState.isDirty;
+      return hook;
+    });
     act(() => {
       for (const [key, value] of Object.entries(valid)) {
         result.current.form.setValue(key as keyof typeof valid, value as never, { shouldDirty: true, shouldValidate: true });

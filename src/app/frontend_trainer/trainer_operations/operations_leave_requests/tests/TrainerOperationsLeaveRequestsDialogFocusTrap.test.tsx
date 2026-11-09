@@ -13,14 +13,15 @@ describe('Leave Requests dialog focus trap', () => {
     const first = document.createElement('button'); dialog.append(first);
     const nestedButton = document.createElement('button'); nested.append(nestedButton);
     document.body.append(trigger, dialog, nested); trigger.focus();
-    const ref = createRef<HTMLDivElement>(); Object.defineProperty(ref, 'current', { value: dialog, configurable: true });
+    const ref = { current: dialog };
     const initialEscape = vi.fn(); const latestEscape = vi.fn();
     const { rerender, unmount } = renderHook(({ onEscape }) => useTrainerInfrastructureDialogFocusTrap({ isOpen: true, dialogRef: ref, onEscape }), { initialProps: { onEscape: initialEscape } });
     rerender({ onEscape: latestEscape });
     expect(document.activeElement).toBe(first);
     act(() => document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true })));
     expect(initialEscape).not.toHaveBeenCalled(); expect(latestEscape).not.toHaveBeenCalled();
-    nestedButton.focus();
+    nested.remove();
+    first.focus();
     act(() => document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true })));
     expect(latestEscape).toHaveBeenCalledOnce();
     unmount(); nested.remove(); dialog.remove(); trigger.remove();

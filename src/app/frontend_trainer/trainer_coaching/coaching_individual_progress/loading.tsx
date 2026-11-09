@@ -5,4 +5,4 @@ import TrainerProgressTrackingLoadingSkeleton from '@/app/frontend_trainer/train
  * @dependencies Uses only documented progress tracking module dependencies and approved global infrastructure/UI primitives.
  * @edge-case Preserves documented loading, empty, error, accessibility, responsive, and recovery behavior without inventing business fallbacks.
  */
-export default function TrainerProgressTrackingLoading() { return <div data-testid="trainer_progress_tracking-route-loading"><TrainerProgressTrackingLoadingSkeleton /></div>; }
+export default function TrainerProgressTrackingLoading() { return <div data-testid="trainer_progress_tracking-route-loading" className="p-6"><TrainerProgressTrackingLoadingSkeleton /></div>; }
