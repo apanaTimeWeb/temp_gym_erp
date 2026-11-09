@@ -74,7 +74,7 @@ export default function ManagerNotificationsInboxTable() {
         </ul>
       ); } return (() => { if (isError) { return (
         <div className="py-16 text-center space-y-3">
-          <p className="text-sm font-medium text-danger-text">{errorMessage}</p>
+          <p className="text-sm font-medium text-danger-text">{errorMessage ? 'Failed to load notifications' : t("TEXT_GENERIC_ERROR")}</p>
           <button data-testid="manager_notifications-manager-notifications-table-reload" type="button" onClick={reload} className="inline-flex items-center rounded-lg border border-border px-3 py-2 text-sm font-medium text-primary hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110">{t("COPY_TRY_AGAIN_1")}</button>
         </div>
       ); } return (() => { if (notifications.length === 0) { return (

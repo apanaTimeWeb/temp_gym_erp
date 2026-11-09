@@ -9,7 +9,7 @@ describe('ManagerStaffPayrollAndAttendanceFormatters behavioral contract', () =>
     expect(formatted).toContain('45');
   });
   it('ManagerStaffPayrollAndAttendanceFormatNumber formats a metric without decimals', () => {
-    expect(moduleUnderTest.ManagerStaffPayrollAndAttendanceFormatNumber(123456, 'en-IN')).toContain('123');
+    expect(moduleUnderTest.ManagerStaffPayrollAndAttendanceFormatNumber(123456, 'en-IN')).toBe('1,23,456');
   });
   it('ManagerStaffPayrollAndAttendanceFormatPercent formats percentages', () => {
     expect(moduleUnderTest.ManagerStaffPayrollAndAttendanceFormatPercent(12.5, 'en-IN')).toContain('%');

@@ -13,6 +13,9 @@ export function ManagerInfrastructureGetErrorMessage(
   if (error instanceof ManagerInfrastructureDomainError && error.message.trim()) {
     return error.message;
   }
+  if (error instanceof Error && error.message.trim()) {
+    return error.message;
+  }
   const normalizedFallback = fallbackMessage.trim();
   return normalizedFallback || MANAGER_GENERIC_ERROR_MESSAGE;
 }

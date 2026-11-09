@@ -13,7 +13,7 @@ describe('ManagerDashboardOverviewFormatters behavioral contract', () => {
     expect(formatted).toContain('1,23,456');
   });
   it('ManagerDashboardOverviewFormatNumber formats a metric without decimals', () => {
-    expect(moduleUnderTest.ManagerDashboardOverviewFormatNumber(123456, 'en-IN')).toContain('123');
+    expect(moduleUnderTest.ManagerDashboardOverviewFormatNumber(123456, 'en-IN')).toContain('1,23,456');
   });
   it('ManagerDashboardOverviewFormatPercent formats percentages', () => {
     expect(moduleUnderTest.ManagerDashboardOverviewFormatPercent(12.5, 'en-IN')).toContain('%');

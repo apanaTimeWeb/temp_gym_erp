@@ -121,7 +121,7 @@ export function ManagerTrainerScheduleContent() {
             {trainers.map(trainer => (
               <ManagerTrainerScheduleTrainerCardsView key={trainer.trainerId} trainer={trainer} />
             ))}
-            {trainers.length === 0 && <div className="col-span-full"><ManagerTrainerScheduleEmptyState /></div>}
+            {trainers.length === 0 && <div className="col-span-full"><ManagerTrainerScheduleEmptyState isSearching={Boolean(search)} /></div>}
           </div>
         )}
       </div>

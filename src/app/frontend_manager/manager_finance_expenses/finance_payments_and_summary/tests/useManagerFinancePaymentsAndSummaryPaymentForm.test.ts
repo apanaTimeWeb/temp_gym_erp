@@ -12,10 +12,10 @@ const mocks = vi.hoisted(() => ({
   createPayment: { isPending: false, mutateAsync: vi.fn() },
 }));
 
-vi.mock('@/app/frontend_manager/manager_finance_expenses/manager_finance_store/useManagerFinancePaymentsAndSummaryUiStore', () => ({
+vi.mock('@/app/frontend_manager/manager_finance_expenses/finance_payments_and_summary/state/useManagerFinancePaymentsAndSummaryUiStore', () => ({
   useManagerFinancePaymentsAndSummaryUiStore: () => ({ setShowModal: mocks.setShowModal }),
 }));
-vi.mock('@/app/frontend_manager/manager_finance_expenses/manager_finance_hooks/useManagerFinancePaymentsAndSummaryMutations', () => ({
+vi.mock('@/app/frontend_manager/manager_finance_expenses/finance_payments_and_summary/hooks/useManagerFinancePaymentsAndSummaryMutations', () => ({
   useManagerFinancePaymentsAndSummaryMutations: () => ({ createPayment: mocks.createPayment }),
 }));
 vi.mock('@/app/frontend_manager/manager_infrastructure/utils/ManagerInfrastructureIdempotency', () => ({

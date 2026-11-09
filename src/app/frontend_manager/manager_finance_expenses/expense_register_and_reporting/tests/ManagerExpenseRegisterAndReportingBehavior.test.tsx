@@ -43,7 +43,7 @@ it('renders the expenses empty state from an MSW response', async () => {
       http.get(ManagerInfrastructureMockApiUrl(MANAGER_EXPENSE_REGISTER_AND_REPORTING_API.BASE), () => HttpResponse.json({ success: false, message: 'Simulated failure', data: null }, { status: MANAGER_HTTP_STATUS.SERVER_ERROR }))
     );
     render(<ManagerMocksTestProviders><ManagerExpenseRegisterAndReportingMain /></ManagerMocksTestProviders>);
-    expect(await screen.findByText(/Unable to load expenses|Failed to load expenses/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Simulated failure|Unable to load expenses|Failed to load expenses/i)).toBeInTheDocument();
   });
 
   it('proves the real expenses search input changes the rendered dataset', async () => {

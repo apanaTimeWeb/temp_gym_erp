@@ -24,6 +24,9 @@ export function ManagerInquiriesPipelineContent() {
     <div className="min-h-full pb-10">
       
       <div className="p-6 space-y-5">
+        <div>
+          <h1 className="text-2xl font-bold text-text-primary">{t('COPY_INQUIRIES')}</h1>
+        </div>
         <ManagerInquiriesPipelineKPIs />
         <div className="space-y-4">
           <ManagerInquiriesPipelineToolbar />

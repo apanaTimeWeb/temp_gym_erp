@@ -90,7 +90,7 @@ export const managerPlansHandlers = [
     return HttpResponse.json({ success: true, message: 'Success', data: { plans: filtered.slice(start, start + limit), total: filtered.length }, requestId: 'mock-membership-plans-list' });
   }),
 
-  http.get(ManagerInfrastructureMockApiUrl(MANAGER_MEMBERSHIP_LIFECYCLE_API.GET_ONE(':id')), ({ params }) => {
+  http.get(ManagerInfrastructureMockApiUrl(`${MANAGER_MEMBERSHIP_LIFECYCLE_API.BASE}/:id`), ({ params }) => {
     const plan = mockPlans.find(p => p.id === params.id);
     if (!plan) return HttpResponse.json({ success: false, message: 'Plan not found', data: null, errorCode: 'NOT_FOUND', statusCode: MANAGER_HTTP_STATUS.NOT_FOUND, requestId: 'mock-plan-not-found' }, { status: MANAGER_HTTP_STATUS.NOT_FOUND });
     return HttpResponse.json({ success: true, message: 'Success', data: plan, requestId: `mock-plan-${plan.id}` });
@@ -104,7 +104,7 @@ export const managerPlansHandlers = [
     const result = { success: true, message: 'Created', data: newPlan, requestId: `mock-plan-created-${newPlan.id}` }; rememberIdempotency(idem.scope, idem.fingerprint, result); return HttpResponse.json(result);
   }),
 
-  http.patch(ManagerInfrastructureMockApiUrl(MANAGER_MEMBERSHIP_LIFECYCLE_API.GET_ONE(':id')), async ({ request, params }) => {
+  http.patch(ManagerInfrastructureMockApiUrl(`${MANAGER_MEMBERSHIP_LIFECYCLE_API.BASE}/:id`), async ({ request, params }) => {
     const body = await request.json() as Partial<Plan>;
     const idem = beginIdempotency(request, { id: params.id, body }); if (idem.response) return idem.response;
     const idx = mockPlans.findIndex(p => p.id === params.id);
@@ -113,7 +113,7 @@ export const managerPlansHandlers = [
     const result = { success: true, message: 'Updated', data: mockPlans[idx], requestId: `mock-plan-updated-${params.id}` }; rememberIdempotency(idem.scope, idem.fingerprint, result); return HttpResponse.json(result);
   }),
 
-  http.delete(ManagerInfrastructureMockApiUrl(MANAGER_MEMBERSHIP_LIFECYCLE_API.GET_ONE(':id')), ({ params, request }) => {
+  http.delete(ManagerInfrastructureMockApiUrl(`${MANAGER_MEMBERSHIP_LIFECYCLE_API.BASE}/:id`), ({ params, request }) => {
     const idem = beginIdempotency(request, { id: params.id }); if (idem.response) return idem.response;
     const exists = mockPlans.some((plan) => plan.id === params.id);
     if (!exists) return HttpResponse.json({ success: false, message: 'Plan not found', data: null, errorCode: 'NOT_FOUND', statusCode: MANAGER_HTTP_STATUS.NOT_FOUND, requestId: 'mock-plan-delete-not-found' }, { status: MANAGER_HTTP_STATUS.NOT_FOUND });

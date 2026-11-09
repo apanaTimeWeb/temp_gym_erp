@@ -9,7 +9,7 @@ describe('ManagerMembershipLifecycleFormatters behavioral contract', () => {
     expect(formatted).toContain('45');
   });
   it('ManagerMembershipLifecycleFormatNumber formats a metric without decimals', () => {
-    expect(moduleUnderTest.ManagerMembershipLifecycleFormatNumber(123456, 'en-IN')).toContain('123');
+    expect(moduleUnderTest.ManagerMembershipLifecycleFormatNumber(123456, 'en-IN')).toBe('1,23,456');
   });
   it('ManagerMembershipLifecycleFormatPercent formats percentages', () => {
     expect(moduleUnderTest.ManagerMembershipLifecycleFormatPercent(12.5, 'en-IN')).toContain('%');

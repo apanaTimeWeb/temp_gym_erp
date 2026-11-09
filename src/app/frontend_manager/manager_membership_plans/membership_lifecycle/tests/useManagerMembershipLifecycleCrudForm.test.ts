@@ -12,7 +12,7 @@ const mocks = vi.hoisted(() => ({
   errorToast: vi.fn(),
 }));
 
-vi.mock('@/app/frontend_manager/manager_membership_plans/manager_plans_hooks/useManagerMembershipLifecycleMutations', () => ({
+vi.mock('@/app/frontend_manager/manager_membership_plans/membership_lifecycle/hooks/useManagerMembershipLifecycleMutations', () => ({
   useManagerMembershipLifecycleMutations: () => ({ createPlan: mocks.createPlan, updatePlan: mocks.updatePlan }),
 }));
 vi.mock('@/app/frontend_manager/manager_infrastructure/utils/ManagerInfrastructureIdempotency', () => ({

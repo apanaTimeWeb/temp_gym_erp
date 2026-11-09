@@ -47,7 +47,6 @@ export function useManagerAttendanceTrackingLogic(): ManagerAttendanceTrackingVi
   const statusFilter = searchParams.get('status') || '';
   const tabParam = searchParams.get('tab') as AttendanceTab | null;
   const tab: AttendanceTab = tabParam && ATTENDANCE_TABS.includes(tabParam) ? tabParam : ATTENDANCE_TABS[0];
-  const debouncedSearch = useManagerInfrastructureDebounce(search, 300);
 
   const setUrlParam = useCallback((key: string, value: string | null) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -55,12 +54,6 @@ export function useManagerAttendanceTrackingLogic(): ManagerAttendanceTrackingVi
     if (key !== 'page') params.set('page', '1');
     router.replace(params.size ? `${pathname}?${params.toString()}` : pathname, { scroll: false });
   }, [pathname, router, searchParams]);
-
-// EFFECT: Effect lifecycle and dependency list are intentionally scoped to values that control this side effect.
-  useEffect(() => {
-    const current = searchParams.get('search') || '';
-    if (debouncedSearch !== current) setUrlParam('search', debouncedSearch || null);
-  }, [debouncedSearch, searchParams, setUrlParam]);
 
   const setSearch = useCallback((value: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -76,7 +69,7 @@ export function useManagerAttendanceTrackingLogic(): ManagerAttendanceTrackingVi
 
   const params = useMemo(() => {
     const next: Record<string, string> = { page: String(currentPage), limit: String(MANAGER_ITEMS_PER_PAGE) };
-    if (debouncedSearch) next.search = debouncedSearch;
+    if (search) next.search = search;
     if (dateFilter) next.date = dateFilter;
     if (range) next.range = range;
     if (startDate) next.startDate = startDate;
@@ -84,7 +77,7 @@ export function useManagerAttendanceTrackingLogic(): ManagerAttendanceTrackingVi
     if (statusFilter) next.status = statusFilter;
     if (tab !== 'Daily Attendance Report') next.type = tab === 'Member Attendance' ? 'MEMBER' : 'STAFF';
     return next;
-  }, [currentPage, dateFilter, debouncedSearch, endDate, range, startDate, statusFilter, tab]);
+  }, [currentPage, dateFilter, search, endDate, range, startDate, statusFilter, tab]);
 
   const { data: listData, isPending: listLoading, isError: listError, error: listErrorValue, refetch } = useAttendanceListQuery(params);
   const { data: statsData, isPending: statsLoading, isError: statsError, error: statsErrorValue } = useTodayStatsQuery(range);

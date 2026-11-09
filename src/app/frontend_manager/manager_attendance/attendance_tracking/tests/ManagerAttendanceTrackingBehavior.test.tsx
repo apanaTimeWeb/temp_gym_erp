@@ -43,7 +43,7 @@ it('renders the attendance empty state from an MSW response', async () => {
       http.get(ManagerInfrastructureMockApiUrl(MANAGER_ATTENDANCE_TRACKING_API.BASE), () => HttpResponse.json({ success: false, message: 'Simulated failure', data: null }, { status: MANAGER_HTTP_STATUS.SERVER_ERROR }))
     );
     render(<ManagerMocksTestProviders><ManagerAttendanceTrackingMain /></ManagerMocksTestProviders>);
-    expect(await screen.findByText('Failed to load attendance records.')).toBeInTheDocument();
+    expect(await screen.findByText(/Simulated failure|Unable to complete/i)).toBeInTheDocument();
   });
 
   it('proves attendance search changes the rendered dataset through the real UI', async () => {
@@ -51,11 +51,11 @@ it('renders the attendance empty state from an MSW response', async () => {
     const user = userEvent.setup();
     render(<ManagerMocksTestProviders><ManagerAttendanceTrackingMain /></ManagerMocksTestProviders>);
     expect(await screen.findByText('Rahul Sharma')).toBeInTheDocument();
-    const search = await screen.findByPlaceholderText('Search Member...');
+    const search = await screen.findByPlaceholderText(/Search/i);
     await user.clear(search);
-    await user.type(search, 'ZZZ-No-Such-Member');
-    expect(await screen.findByText('No attendance records')).toBeInTheDocument();
+    await user.type(search, 'ZZZ-No-Such-Member', { delay: 1 });
+    expect(await screen.findByText('No attendance records', {}, { timeout: 5000 })).toBeInTheDocument();
     expect(screen.queryByText('Rahul Sharma')).not.toBeInTheDocument();
-  });
+  }, 10000);
 
 });

@@ -16,6 +16,9 @@ export function ManagerMembershipLifecycleContent() {
       
 
       <div className="p-6 space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-text-primary">{t('COPY_MEMBERSHIP_PLANS')}</h1>
+        </div>
         <ManagerMembershipLifecycleTabs  data-testid="manager_plans-managerplanscontent-plans-tabs-1"/>
       </div>
 

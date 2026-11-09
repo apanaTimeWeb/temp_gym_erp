@@ -72,14 +72,21 @@ export default function ManagerNavigationCommandPalette({ requestedOpen = false,
   // EFFECT: Restores keyboard focus to the search input whenever the palette becomes visible.
   useEffect(() => {
     if (!isOpen) return;
+    searchInputRef.current?.focus();
     window.requestAnimationFrame(() => searchInputRef.current?.focus());
   }, [isOpen, openPalette]);
 
   // EFFECT: Registers the Manager shell keyboard shortcuts and removes the listener on unmount.
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      const target = event.target instanceof Element ? event.target : null;
+      const activeEl = document.activeElement instanceof Element ? document.activeElement : null;
+      const target = event.target instanceof Element && event.target !== document.body ? event.target : activeEl;
       const editable = Boolean(target?.matches('input, textarea, select, [contenteditable="true"], [contenteditable=""]'));
+      if (isOpen && event.key === 'Escape') {
+        event.preventDefault();
+        closePalette();
+        return;
+      }
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
         event.preventDefault();
         if (!isOpen) openPalette();

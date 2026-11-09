@@ -9,7 +9,7 @@ describe('ManagerWorkoutPlansFormatters behavioral contract', () => {
     expect(formatted).toContain('45');
   });
   it('ManagerWorkoutPlansFormatNumber formats a metric without decimals', () => {
-    expect(moduleUnderTest.ManagerWorkoutPlansFormatNumber(123456, 'en-IN')).toContain('123');
+    expect(moduleUnderTest.ManagerWorkoutPlansFormatNumber(123456, 'en-IN')).toBe('1,23,456');
   });
   it('ManagerWorkoutPlansFormatPercent formats percentages', () => {
     expect(moduleUnderTest.ManagerWorkoutPlansFormatPercent(12.5, 'en-IN')).toContain('%');

@@ -47,7 +47,7 @@ describe('Manager Profile user-visible behavior', () => {
       http.get(ManagerInfrastructureMockApiUrl(MANAGER_PROFILE_AND_SECURITY_API.BASE), () => HttpResponse.json({ success: false, message: 'Simulated failure', data: null }, { status: MANAGER_HTTP_STATUS.SERVER_ERROR }))
     );
     render(<ManagerMocksTestProviders><ManagerProfileAndSecurityMain /></ManagerMocksTestProviders>);
-    expect(await screen.findByRole('alert')).toHaveTextContent('Unable to load profile.');
+    expect(await screen.findByRole('alert')).toHaveTextContent('Simulated failure');
   });
 
 });

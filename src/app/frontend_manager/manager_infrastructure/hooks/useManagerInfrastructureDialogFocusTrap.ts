@@ -12,6 +12,10 @@ import type { ManagerInfrastructureDialogFocusTrapOptions } from '@/app/frontend
  */
 export function useManagerInfrastructureDialogFocusTrap({ dialogRef, isOpen, onClose }: ManagerInfrastructureDialogFocusTrapOptions): void {
   const restoreFocusRef = useRef<HTMLElement | null>(null);
+  const onCloseRef = useRef(onClose);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
 
   // EFFECT: Install and remove the dialog keyboard/focus trap exactly with the open state and close callback.
   useEffect(() => {
@@ -23,6 +27,9 @@ export function useManagerInfrastructureDialogFocusTrap({ dialogRef, isOpen, onC
     const focusableSelector = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
     const originalTabIndex = dialog.getAttribute('tabindex');
     const focusFirstElement = (): void => {
+      if (document.activeElement && dialog.contains(document.activeElement) && document.activeElement !== dialog) {
+        return;
+      }
       const first = Array.from(dialog.querySelectorAll<HTMLElement>(focusableSelector)).find((element) => { const style = window.getComputedStyle(element); return style.display !== 'none' && style.visibility !== 'hidden' && !element.hasAttribute('hidden'); });
       if (first) first.focus();
       else {
@@ -36,7 +43,7 @@ export function useManagerInfrastructureDialogFocusTrap({ dialogRef, isOpen, onC
     const handleKeyDown = (event: KeyboardEvent): void => {
       if (event.key === 'Escape') {
         event.preventDefault();
-        onClose();
+        onCloseRef.current();
         return;
       }
       if (event.key !== 'Tab') return;
@@ -67,5 +74,5 @@ export function useManagerInfrastructureDialogFocusTrap({ dialogRef, isOpen, onC
       else dialog.setAttribute('tabindex', originalTabIndex);
       if (restoreFocusRef.current?.isConnected) restoreFocusRef.current.focus();
     };
-  }, [dialogRef, isOpen, onClose]);
+  }, [dialogRef, isOpen]);
 }

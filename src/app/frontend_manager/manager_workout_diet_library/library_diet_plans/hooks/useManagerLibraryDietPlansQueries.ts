@@ -20,7 +20,14 @@ import type { ManagerLibraryDietPlansListParams } from '@/app/frontend_manager/m
  * @edge-case Preserves loading, empty, error, retry, cancellation, permission, and direct-URL behavior documented for this flow.
  */
 export function useManagerLibraryDietPlansQuery(params: ManagerLibraryDietPlansListParams) {
-  return useQuery({ queryKey: ManagerLibraryDietPlansQueryKeys.dietPlans(params), queryFn: () => ManagerLibraryDietPlansApi.fetchDietPlans(params) });
+  return useQuery({
+    queryKey: ManagerLibraryDietPlansQueryKeys.dietPlans(params),
+    queryFn: async () => {
+      const res = await ManagerLibraryDietPlansApi.fetchDietPlans(params);
+      if (!res.success) throw new Error(res.message || 'Unable to load diet plans');
+      return res;
+    }
+  });
 }
 
 /**
@@ -29,5 +36,12 @@ export function useManagerLibraryDietPlansQuery(params: ManagerLibraryDietPlansL
  * @edge-case Preserves empty result sets, request failures, and filter-specific cache identity.
  */
 export function useManagerLibraryDietPlansExercisesQuery(params: ManagerLibraryDietPlansListParams) {
-  return useQuery({ queryKey: ManagerLibraryDietPlansQueryKeys.exercises(params), queryFn: () => ManagerLibraryDietPlansApi.fetchExercises(params) });
+  return useQuery({
+    queryKey: ManagerLibraryDietPlansQueryKeys.exercises(params),
+    queryFn: async () => {
+      const res = await ManagerLibraryDietPlansApi.fetchExercises(params);
+      if (!res.success) throw new Error(res.message || 'Unable to load exercises');
+      return res;
+    }
+  });
 }

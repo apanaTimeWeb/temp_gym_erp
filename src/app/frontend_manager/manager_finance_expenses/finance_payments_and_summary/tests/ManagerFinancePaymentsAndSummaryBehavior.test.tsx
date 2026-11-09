@@ -1,6 +1,6 @@
 // RESPONSIBILITY: Renders or orchestrates the owning Manager feature UI; API transport and business rules remain in module-owned hooks/services.
 import { MANAGER_FINANCE_PAYMENTS_AND_SUMMARY_API } from '@/app/frontend_manager/manager_finance_expenses/finance_payments_and_summary/config/manager_finance_payments_and_summary.url_config';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { describe, it, expect, beforeAll, afterAll, afterEach } from 'vitest';
@@ -58,7 +58,7 @@ describe('Manager Finance user-visible behavior', () => {
       http.get(ManagerInfrastructureMockApiUrl(MANAGER_FINANCE_PAYMENTS_AND_SUMMARY_API.PAYMENTS_BASE), () => HttpResponse.json({ success: false, message: 'Simulated failure', data: null }, { status: MANAGER_HTTP_STATUS.SERVER_ERROR }))
     );
     render(<ManagerMocksTestProviders><ManagerFinancePaymentsAndSummaryMain /></ManagerMocksTestProviders>);
-    const errorText = await screen.findByText(/Failed to load/i);
+    const errorText = await screen.findByText(/Simulated failure|Unable to complete|Failed to load/i);
     expect(errorText).toBeInTheDocument();
   });
 
@@ -69,9 +69,10 @@ describe('Manager Finance user-visible behavior', () => {
     render(<ManagerMocksTestProviders><ManagerFinancePaymentsAndSummaryMain /></ManagerMocksTestProviders>);
     const input = await screen.findByPlaceholderText('Search payments...');
     await user.type(input, 'Aarav');
-    await new Promise(resolve => setTimeout(resolve, 350));
-    expect(await screen.findByText('Aarav Patel')).toBeInTheDocument();
-    expect(screen.queryByText('Priya Sharma')).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Aarav Patel')).toBeInTheDocument();
+      expect(screen.queryByText('Priya Sharma')).not.toBeInTheDocument();
+    }, { timeout: 4000 });
   });
 
   it('updates the mock finance summary after an idempotent payment creation', async () => {

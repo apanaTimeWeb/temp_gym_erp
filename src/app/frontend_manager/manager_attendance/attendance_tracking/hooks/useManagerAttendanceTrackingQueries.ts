@@ -24,6 +24,7 @@ export function useAttendanceListQuery(params?: Record<string, string>) {
     queryKey: ManagerAttendanceTrackingQueryKeys.list(params),
     queryFn: async () => {
       const res = await ManagerAttendanceTrackingApi.fetchAttendanceRecords(params);
+      if (!res.success) throw new Error(res.message || 'Unable to load attendance records');
       return res.data;
     } });
 }
@@ -39,6 +40,7 @@ export function useFetchStaff(params: Record<string, string>) {
     queryKey: ManagerAttendanceTrackingQueryKeys.staff(params),
     queryFn: async () => {
       const res = await ManagerAttendanceTrackingApi.fetchAttendanceStaff(params);
+      if (!res.success) throw new Error(res.message || 'Unable to load attendance staff');
       return res.data;
     } });
 }
@@ -52,7 +54,11 @@ export function useFetchStaff(params: Record<string, string>) {
 export function useTodayStatsQuery(range?: string) {
   return useQuery({
     queryKey: [...ManagerAttendanceTrackingQueryKeys.todayStats(), range],
-    queryFn: () => ManagerAttendanceTrackingApi.fetchAttendanceStats(range).then(res => res.data) });
+    queryFn: async () => {
+      const res = await ManagerAttendanceTrackingApi.fetchAttendanceStats(range);
+      if (!res.success) throw new Error(res.message || 'Unable to load attendance stats');
+      return res.data;
+    } });
 }
 
 /** Orchestrates the owning Manager feature behavior while preserving its documented state boundary. */
@@ -64,7 +70,11 @@ export function useTodayStatsQuery(range?: string) {
 export function useAttendanceHistoryQuery(userId: string, type: ManagerAttendanceTrackingPersonType, month: string) {
   return useQuery({
     queryKey: ManagerAttendanceTrackingQueryKeys.history(userId, type, month),
-    queryFn: () => ManagerAttendanceTrackingApi.fetchAttendanceHistory(userId, type, month).then(res => res.data),
+    queryFn: async () => {
+      const res = await ManagerAttendanceTrackingApi.fetchAttendanceHistory(userId, type, month);
+      if (!res.success) throw new Error(res.message || 'Unable to load attendance history');
+      return res.data;
+    },
     enabled: Boolean(userId) });
 }
 
@@ -78,7 +88,11 @@ export function useActiveMembersQuery() {
   const params = { limit: '1000', status: 'active' };
   return useQuery({
     queryKey: ManagerAttendanceTrackingQueryKeys.members(params),
-    queryFn: () => ManagerAttendanceTrackingApi.fetchAttendanceMembers(params).then(res => res.data) });
+    queryFn: async () => {
+      const res = await ManagerAttendanceTrackingApi.fetchAttendanceMembers(params);
+      if (!res.success) throw new Error(res.message || 'Unable to load attendance members');
+      return res.data;
+    } });
 }
 
 /** Orchestrates the owning Manager feature behavior while preserving its documented state boundary. */
@@ -90,5 +104,9 @@ export function useActiveMembersQuery() {
 export function useStaffQuery() {
   return useQuery({
     queryKey: ManagerAttendanceTrackingQueryKeys.staff(),
-    queryFn: () => ManagerAttendanceTrackingApi.fetchAttendanceStaff().then(res => res.data) });
+    queryFn: async () => {
+      const res = await ManagerAttendanceTrackingApi.fetchAttendanceStaff();
+      if (!res.success) throw new Error(res.message || 'Unable to load attendance staff');
+      return res.data;
+    } });
 }

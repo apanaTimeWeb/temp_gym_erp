@@ -13,6 +13,7 @@ export interface ManagerPtAssignmentsAssignmentFormProps {
   open: boolean;
   packages: PtPackage[];
   trainers: PtTrainerWorkload[];
+  members?: Array<{ id: string; name: string }>;
   saving: boolean;
   onClose: () => void;
   onSubmit: (values: ManagerPtAssignmentsAssignmentFormValues) => Promise<void>;

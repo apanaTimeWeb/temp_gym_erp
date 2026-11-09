@@ -62,8 +62,8 @@ export default function ManagerSalesOverviewMembershipReport() {
  </thead>
   <tbody className="divide-y divide-border">
   {paginated.length > 0 ? (
-    paginated.map((r) => (
-      <tr key={r.plan} className="hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-200 ease-in-out">
+    paginated.map((r, index) => (
+      <tr key={`${r.plan}-${index}`} className="hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-200 ease-in-out">
       <td className="px-4 py-3 text-sm font-medium text-text-primary">{r.plan || ''}</td>
       <td className="px-4 py-3 text-sm text-text-secondary">{ManagerSalesOverviewFormatCurrency(r.receivable || 0, ManagerEnvConfig.currencyCode, locale)}</td>
       <td className="px-4 py-3 text-sm font-medium text-success-text ">{ManagerSalesOverviewFormatCurrency(r.received || 0, ManagerEnvConfig.currencyCode, locale)}</td>

@@ -52,10 +52,11 @@ describe('Manager Inquiries user-visible behavior', () => {
     const { default: userEvent } = await import('@testing-library/user-event');
     const user = userEvent.setup();
     render(<ManagerMocksTestProviders><ManagerInquiriesPipelineMain /></ManagerMocksTestProviders>);
+    expect(await screen.findByText('Rahul Sharma')).toBeInTheDocument();
     const search = await screen.findByPlaceholderText('Search name or phone...');
     await user.clear(search);
     await user.type(search, 'ZZZ-No-Such-Inquiry');
-    expect(await screen.findByText('No inquiries yet. Add your first inquiry!')).toBeInTheDocument();
+    expect(await screen.findByText(/No inquiries match the filter|No inquiries yet/i)).toBeInTheDocument();
   });
 
 });

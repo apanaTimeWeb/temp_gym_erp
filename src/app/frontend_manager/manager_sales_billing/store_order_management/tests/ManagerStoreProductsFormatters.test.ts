@@ -9,7 +9,7 @@ describe('ManagerStoreProductsFormatters behavioral contract', () => {
     expect(formatted).toContain('45');
   });
   it('ManagerStoreProductsFormatNumber formats a metric without decimals', () => {
-    expect(moduleUnderTest.ManagerStoreProductsFormatNumber(123456, 'en-IN')).toContain('123');
+    expect(moduleUnderTest.ManagerStoreProductsFormatNumber(123456, 'en-IN')).toBe('1,23,456');
   });
   it('ManagerStoreProductsFormatPercent formats percentages', () => {
     expect(moduleUnderTest.ManagerStoreProductsFormatPercent(12.5, 'en-IN')).toContain('%');

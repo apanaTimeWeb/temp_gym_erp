@@ -9,7 +9,7 @@ describe('ManagerGrievanceResolutionFormatters behavioral contract', () => {
     expect(formatted).toContain('45');
   });
   it('ManagerGrievanceResolutionFormatNumber formats a metric without decimals', () => {
-    expect(moduleUnderTest.ManagerGrievanceResolutionFormatNumber(123456, 'en-IN')).toContain('123');
+    expect(moduleUnderTest.ManagerGrievanceResolutionFormatNumber(123456, 'en-IN')).toBe('1,23,456');
   });
   it('ManagerGrievanceResolutionFormatPercent formats percentages', () => {
     expect(moduleUnderTest.ManagerGrievanceResolutionFormatPercent(12.5, 'en-IN')).toContain('%');

@@ -23,18 +23,21 @@ afterAll(() => managerMswServer.close());
 
 describe('Manager Settings user-visible behavior', () => {
   it('renders real feature data through module MSW', async () => {
+    const user = userEvent.setup();
     render(<ManagerMocksTestProviders><ManagerBusinessSettingsMain /></ManagerMocksTestProviders>);
     expect(await screen.findByText('App Settings')).toBeInTheDocument();
+    await user.click(screen.getByRole('tab', { name: /Gym Profile/i }));
     expect(await screen.findByDisplayValue('Smart Gym')).toBeInTheDocument();
   });
 
   it('saves an edited setting and keeps the authoritative server response in the visible form', async () => {
     const user = userEvent.setup();
     render(<ManagerMocksTestProviders><ManagerBusinessSettingsMain /></ManagerMocksTestProviders>);
+    await user.click(await screen.findByRole('tab', { name: /Gym Profile/i }));
     const nameField = await screen.findByDisplayValue('Smart Gym');
     await user.clear(nameField);
     await user.type(nameField, 'Smart Gym Updated');
-    await user.click(screen.getByRole('button', { name: 'Save Settings' }));
+    await user.click(screen.getByRole('button', { name: /Save/i }));
     await waitFor(() => expect(screen.getByDisplayValue('Smart Gym Updated')).toBeInTheDocument());
     const response = await ManagerBusinessSettingsApi.fetchSettings();
     expect(response.data?.gymProfile.gymName).toBe('Smart Gym Updated');
@@ -50,8 +53,9 @@ describe('Manager Settings user-visible behavior', () => {
   it('supports changing the active settings tab', async () => {
     const user = userEvent.setup();
     render(<ManagerMocksTestProviders><ManagerBusinessSettingsMain /></ManagerMocksTestProviders>);
-    await screen.findByDisplayValue('Smart Gym');
-    await user.click(screen.getByRole('tab', { name: 'Membership Settings' }));
-    expect(screen.getByRole('tabpanel')).toHaveTextContent('Grace Period');
+    await user.click(await screen.findByRole('tab', { name: /Gym Profile/i }));
+    expect(await screen.findByDisplayValue('Smart Gym')).toBeInTheDocument();
+    await user.click(screen.getByRole('tab', { name: /Operating Hours/i }));
+    expect(screen.getByRole('tabpanel')).toHaveTextContent(/Operating Hours|Monday/i);
   });
 });

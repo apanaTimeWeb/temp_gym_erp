@@ -29,7 +29,7 @@ describe('useManagerInfrastructureUnsavedChangesGuard', () => {
     await act(async () => {
       await result.current.confirmAndNavigate('/manager/dashboard');
     });
-    expect(confirm).toHaveBeenCalledWith(expect.objectContaining({ title: 'Unsaved Changes', confirmText: 'Discard', cancelText: 'Keep Editing' }));
+    expect(confirm).toHaveBeenCalledWith(expect.objectContaining({ title: 'Unsaved Changes', confirmText: 'Discard Changes', cancelText: 'Keep Editing' }));
     expect(push).toHaveBeenCalledWith('/manager/dashboard');
   });
 

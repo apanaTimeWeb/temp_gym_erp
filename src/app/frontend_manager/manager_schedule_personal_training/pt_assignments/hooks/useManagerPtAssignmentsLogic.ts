@@ -1,7 +1,7 @@
 // DATA FLOW: URL/local UI state or feature input → feature hook → module-owned TanStack Query/Zustand mutation/query → observable UI result.
 'use client';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
@@ -31,17 +31,25 @@ export function useManagerPtAssignmentsLogic() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get('page') || '1');
-  const search = searchParams.get('search') || '';
-  const setSearch = useCallback((value: string) => { const params = new URLSearchParams(searchParams.toString()); if (value) params.set('search', value); else params.delete('search'); params.delete('page'); router.replace(`${pathname}?${params.toString()}`, { scroll: false }); }, [pathname, router, searchParams]);
+  const [localSearch, setLocalSearch] = useState<string | null>(null);
+  const search = localSearch ?? (searchParams.get('search') || '');
+  const setSearch = useCallback((value: string) => {
+    setLocalSearch(value);
+    const params = new URLSearchParams(searchParams.toString());
+    if (value) params.set('search', value);
+    else params.delete('search');
+    params.delete('page');
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }, [pathname, router, searchParams]);
   const debouncedSearch = useManagerInfrastructureDebounce(search, 300);
   const limit = Number(searchParams.get('limit') || '10');
   const setPage = useCallback((page: number) => { const params = new URLSearchParams(searchParams.toString()); params.set('page', String(page)); router.replace(`${pathname}?${params.toString()}`, { scroll: false }); }, [pathname, router, searchParams]);
 
-  const activeTab = useMemo(() => {
-    return resolveManagerPtAssignmentsView(searchParams.get('view') ?? searchParams.get('tab'));
-  }, [searchParams]);
+  const [localTab, setLocalTab] = useState<PtActiveTab | null>(null);
+  const activeTab = localTab ?? resolveManagerPtAssignmentsView(searchParams.get('view') ?? searchParams.get('tab'));
 
   const setActiveTab = useCallback((tab: PtActiveTab) => {
+    setLocalTab(tab);
     const params = new URLSearchParams(searchParams.toString());
     params.set('view', tab);
     params.delete('tab');

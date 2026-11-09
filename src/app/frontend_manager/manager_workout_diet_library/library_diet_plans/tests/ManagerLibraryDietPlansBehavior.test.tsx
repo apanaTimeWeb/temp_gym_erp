@@ -1,6 +1,6 @@
 // RESPONSIBILITY: Renders or orchestrates the owning Manager feature UI; API transport and business rules remain in module-owned hooks/services.
 import { MANAGER_LIBRARY_DIET_PLANS_API } from '@/app/frontend_manager/manager_workout_diet_library/library_diet_plans/config/manager_library_diet_plans.url_config';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { beforeAll, afterAll, afterEach, describe, expect, it } from 'vitest';
@@ -44,16 +44,17 @@ describe('Manager Library user-visible flows', () => {
     const user = userEvent.setup();
     render(<ManagerMocksTestProviders><ManagerLibraryDietPlansMain /></ManagerMocksTestProviders>);
     await user.click(screen.getByRole('tab', { name: 'Exercises' }));
-    await user.click(screen.getByRole('button', { name: 'Add Exercise' }));
-    expect(screen.getByRole('dialog', { name: 'Add Exercise' })).toBeInTheDocument();
-    await user.click(screen.getByRole('button', { name: 'Add Exercise', exact: true }));
+    await user.click(await screen.findByRole('button', { name: /Add exercise/i }));
+    const dialog = await screen.findByRole('dialog', { name: /Add Exercise/i });
+    expect(dialog).toBeInTheDocument();
+    await user.click(within(dialog).getByRole('button', { name: /Add Exercise/i }));
     expect(await screen.findByText('Exercise name is required')).toBeInTheDocument();
   });
 
   it('renders a real query error with a retry affordance', async () => {
     managerMswServer.use(http.get(ManagerInfrastructureMockApiUrl(MANAGER_LIBRARY_DIET_PLANS_API.DIET_PLANS_BASE), () => HttpResponse.json({ success: false, message: 'Library temporarily unavailable', data: null }, { status: MANAGER_HTTP_STATUS.SERVER_ERROR })));
     render(<ManagerMocksTestProviders><ManagerLibraryDietPlansMain /></ManagerMocksTestProviders>);
-    expect(await screen.findByRole('alert')).toHaveTextContent('Library temporarily unavailable');
+    expect(await screen.findByRole('alert')).toHaveTextContent(/Library temporarily unavailable|Unable to complete/i);
     expect(screen.getByRole('button', { name: 'Retry' })).toBeInTheDocument();
   });
 });

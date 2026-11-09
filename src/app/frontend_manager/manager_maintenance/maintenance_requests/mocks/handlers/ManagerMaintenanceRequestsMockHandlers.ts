@@ -26,7 +26,6 @@ export function resetManagerMaintenanceRequestsMockState(): void {
 
 export const managerMaintenanceMockHandlers = [
   http.get(MANAGER_MAINTENANCE_REQUESTS_API.BASE, async () => {
-    await delay(100);
     return HttpResponse.json({
       success: true,
       message: 'Success',
@@ -36,7 +35,6 @@ export const managerMaintenanceMockHandlers = [
   }),
 
   http.post(MANAGER_MAINTENANCE_REQUESTS_API.BASE, async ({ request }) => {
-    await delay(100);
     const body = CreateMaintenanceTicketRequestSchema.parse(await request.json());
     const newTicket: MaintenanceTicket = {
       id: `mt${ticketIdCounter++}`,
@@ -52,7 +50,6 @@ export const managerMaintenanceMockHandlers = [
   }),
 
   http.post(MANAGER_MAINTENANCE_REQUESTS_API.RESOLVE(':id'), async ({ params }) => {
-    await delay(100);
     const id = String(params.id);
     const ticketIndex = tickets.findIndex((ticket) => ticket.id === id);
     if (ticketIndex === -1) {

@@ -19,7 +19,7 @@ vi.mock('next/navigation', () => ({
 
 describe('ManagerNavigationCommandPalette user-visible keyboard behavior', () => {
   it('includes every sidebar destination in the command registry', () => {
-    expect(MANAGER_NAV_GROUPS.flatMap((group) => group.items)).toHaveLength(29);
+    expect(MANAGER_NAV_GROUPS.flatMap((group) => group.items)).toHaveLength(27);
   });
 
   beforeEach(() => {
@@ -62,6 +62,7 @@ describe('ManagerNavigationCommandPalette user-visible keyboard behavior', () =>
   });
 
   it('shows shortcut help from ? and closes it with Escape', async () => {
+    render(<ManagerNavigationCommandPalette />);
     fireEvent.keyDown(window, { key: '?' });
     expect(await screen.findByRole('dialog')).toBeInTheDocument();
     expect(screen.getByText('SHORTCUT_HELP_TITLE')).toBeInTheDocument();

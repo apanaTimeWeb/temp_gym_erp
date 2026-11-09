@@ -20,6 +20,6 @@ describe('Manager Attendance view URL contract', () => {
   });
   it('uses a canonical scanner view ID for the navigation shortcut', () => {
     expect(MANAGER_ATTENDANCE_TRACKING_QR_SCANNER_VIEW_ID).toBe('qr-scanner');
-    expect(MANAGER_ATTENDANCE_TRACKING_ROUTES.UI.QR_SCANNER).toBe('/frontend_manager/manager_attendance?view=qr-scanner');
+    expect(MANAGER_ATTENDANCE_TRACKING_ROUTES.UI.QR_SCANNER).toBe('/frontend_manager/manager_attendance/attendance_tracking?view=qr-scanner');
   });
 });

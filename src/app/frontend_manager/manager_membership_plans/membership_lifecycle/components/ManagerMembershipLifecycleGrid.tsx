@@ -25,12 +25,12 @@ export default function ManagerMembershipLifecycleGrid() {
   if (isError) {
     return (
       <div className="py-16 text-center space-y-3">
-        <p className="text-sm text-danger-text font-medium">{errorMessage || t("TEXT_GENERIC_ERROR")}</p>
+        <p className="text-sm text-danger-text font-medium">Failed to load plans</p>
       </div>
     );
   }
 
-  if (filteredPlans.length === 0) { return <ManagerMembershipLifecycleEmptyState />; }
+  if (filteredPlans.length === 0) { return <ManagerMembershipLifecycleEmptyState search={search} />; }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">

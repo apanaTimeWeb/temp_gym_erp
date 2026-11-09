@@ -1,7 +1,17 @@
 import { renderHook } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import React from 'react';
 
 import * as moduleUnderTest from '@/app/frontend_manager/manager_workout_diet_library/library_diet_plans/hooks/useManagerLibraryDietPlansLogic';
+
+const createWrapper = () => {
+  const queryClient = new QueryClient({
+    defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
+  });
+  return ({ children }: { children: React.ReactNode }) =>
+    React.createElement(QueryClientProvider, { client: queryClient }, children);
+};
 
 const { queryConfigs, mutationConfigs } = vi.hoisted(() => ({ queryConfigs: [] as unknown[], mutationConfigs: [] as unknown[] }));
 
@@ -23,7 +33,7 @@ describe('useManagerLibraryDietPlansLogic co-located hook contract', () => {
 
   it('can initialize its public hook contract without executing a real backend request', () => {
     const hook = moduleUnderTest.useManagerLibraryDietPlansLogic as (...args: never[]) => unknown;
-    const { result } = renderHook(() => hook('' as never));
+    const { result } = renderHook(() => hook('' as never), { wrapper: createWrapper() });
     expect(result.current).toBeDefined();
   });
 });

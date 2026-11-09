@@ -27,7 +27,6 @@ export function resetManagerGrievanceResolutionMockState(): void {
 
 export const managerGrievanceMockHandlers = [
   http.get(MANAGER_GRIEVANCE_RESOLUTION_API.BASE, async () => {
-    await delay(100);
     return HttpResponse.json({
       success: true,
       message: 'Success',
@@ -37,7 +36,6 @@ export const managerGrievanceMockHandlers = [
   }),
 
   http.post(MANAGER_GRIEVANCE_RESOLUTION_API.BASE, async ({ request }) => {
-    await delay(100);
     const body = CreateGrievanceTicketSchema.parse(await request.json());
     const newTicket: GrievanceTicket = {
       id: `gt${ticketIdCounter++}`,
@@ -51,8 +49,7 @@ export const managerGrievanceMockHandlers = [
     return HttpResponse.json({ success: true, message: 'Grievance created', data: newTicket });
   }),
 
-  http.post(MANAGER_GRIEVANCE_RESOLUTION_API.RESOLVE(':id'), async ({ params, request }) => {
-    await delay(100);
+  http.post(`${MANAGER_GRIEVANCE_RESOLUTION_API.BASE}/:id/resolve`, async ({ params, request }) => {
     const id = String(params.id);
     const body = z.object({ resolutionNote: z.string().min(1) }).parse(await request.json());
     const ticketIndex = tickets.findIndex((ticket) => ticket.id === id);

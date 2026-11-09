@@ -18,7 +18,7 @@ import type { ShiftDay, TrainerShift } from '@/app/frontend_manager/manager_sche
 export default function ManagerTrainerScheduleWeeklyGrid() {
   const t = useTranslations('MANAGER_TRAINER_SCHEDULE');
 
-  const { trainers, selectedDay, openAddShift, openEditShift, deleteShift } = useManagerTrainerScheduleLogic();
+  const { trainers, selectedDay, search, openAddShift, openEditShift, deleteShift } = useManagerTrainerScheduleLogic();
   const { confirm } = useConfirm();
 
   const days: ShiftDay[] = selectedDay === 'All' ? [...SHIFT_DAYS] : [selectedDay as ShiftDay];
@@ -34,7 +34,7 @@ export default function ManagerTrainerScheduleWeeklyGrid() {
 
   if (trainers.length === 0) {
     return (
-      <ManagerTrainerScheduleEmptyState />
+      <ManagerTrainerScheduleEmptyState isSearching={Boolean(search)} />
     );
   }
 

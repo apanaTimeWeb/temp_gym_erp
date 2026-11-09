@@ -1,7 +1,15 @@
+import React from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { renderHook } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 
 import * as moduleUnderTest from '@/app/frontend_manager/manager_communications/communications_churn_recovery/hooks/useManagerCommunicationsChurnRecoveryLogic';
+
+const createWrapper = () => {
+  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  return ({ children }: { children: React.ReactNode }) =>
+    React.createElement(QueryClientProvider, { client: queryClient }, children);
+};
 
 const { queryConfigs, mutationConfigs } = vi.hoisted(() => ({ queryConfigs: [] as unknown[], mutationConfigs: [] as unknown[] }));
 
@@ -19,7 +27,7 @@ describe('useManagerCommunicationsCampaignsChurnRecoveryLogic co-located hook co
 
   it('can initialize its public hook contract without executing a real backend request', () => {
     const hook = moduleUnderTest.useManagerCommunicationsCampaignsChurnRecoveryLogic as (...args: never[]) => unknown;
-    const { result } = renderHook(() => hook());
+    const { result } = renderHook(() => hook(), { wrapper: createWrapper() });
     expect(result.current).toBeDefined();
   });
 });

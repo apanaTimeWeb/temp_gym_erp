@@ -30,14 +30,14 @@ describe('Manager PT user-visible behavior', () => {
     expect(response.success).toBe(true);
     expect(response.data?.length ?? 0).toBeGreaterThan(0);
   });
-it('renders the PT package empty state from an MSW response', async () => {
+  it('renders the PT package empty state from an MSW response', async () => {
     managerMswServer.use(
       http.get(ManagerInfrastructureMockApiUrl(MANAGER_PT_ASSIGNMENTS_API.PACKAGES), () => HttpResponse.json({ success: true, message: 'Empty result', data: [] }))
     );
     render(<ManagerMocksTestProviders><ManagerPTMain /></ManagerMocksTestProviders>);
     const { default: userEvent } = await import('@testing-library/user-event');
     const user = userEvent.setup();
-    await user.click(await screen.findByRole('button', { name: 'Packages' }));
+    await user.click(await screen.findByRole('tab', { name: 'PT Packages' }));
     expect(await screen.findByText('No PT packages configured yet.')).toBeInTheDocument();
   });
 
@@ -46,14 +46,14 @@ it('renders the PT package empty state from an MSW response', async () => {
       http.get(ManagerInfrastructureMockApiUrl(MANAGER_PT_ASSIGNMENTS_API.KPIS), () => HttpResponse.json({ success: false, message: 'Simulated failure', data: null }, { status: MANAGER_HTTP_STATUS.SERVER_ERROR }))
     );
     render(<ManagerMocksTestProviders><ManagerPTMain /></ManagerMocksTestProviders>);
-    expect(await screen.findByText('Unable to load PT data. Retry by refreshing this route.')).toBeInTheDocument();
+    expect(await screen.findByRole('alert')).toHaveTextContent(/Simulated failure/i);
   });
 
   it('proves PT assignment search changes the rendered dataset', async () => {
     const { default: userEvent } = await import('@testing-library/user-event');
     const user = userEvent.setup();
     render(<ManagerMocksTestProviders><ManagerPTMain /></ManagerMocksTestProviders>);
-    await user.click(await screen.findByRole('button', { name: 'Active Assignments' }));
+    await user.click(await screen.findByRole('tab', { name: 'Active Assignments' }));
     const search = await screen.findByPlaceholderText('Search...');
     await user.clear(search);
     await user.type(search, 'ZZZ-No-Such-Assignment');

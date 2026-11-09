@@ -11,7 +11,14 @@ import ManagerEmptyState from '@/app/frontend_manager/manager_schedule_personal_
  * @dependencies Consumes module-owned hooks/state and approved zero-business UI primitives; no business behavior is delegated to global components.
  * @edge-case Handles the documented loading, empty, error, disabled, keyboard, responsive, and recovery states without introducing cross-feature ownership.
  */
-export default function ManagerTrainerScheduleEmptyState() {
+export default function ManagerTrainerScheduleEmptyState({ isSearching }: { isSearching?: boolean }) {
   const t = useTranslations('MANAGER_TRAINER_SCHEDULE');
-  return <ManagerEmptyState dataTestId="manager_schedule-schedule-empty-state" icon={<CalendarX size={18} strokeWidth={2} />} title={t('COPY_NO_TRAINERS_FOUND')} subtitle={t('COPY_ADD_TRAINERS_HR_MODULE_BEFORE_ASSIGNING_SHIFTS')} />;
+  return (
+    <ManagerEmptyState
+      dataTestId="manager_schedule-schedule-empty-state"
+      icon={<CalendarX size={18} strokeWidth={2} />}
+      title={isSearching ? t('COPY_NO_TRAINERS_MATCH_SEARCH') : t('COPY_NO_TRAINERS_FOUND')}
+      subtitle={isSearching ? undefined : t('COPY_ADD_TRAINERS_HR_MODULE_BEFORE_ASSIGNING_SHIFTS')}
+    />
+  );
 }

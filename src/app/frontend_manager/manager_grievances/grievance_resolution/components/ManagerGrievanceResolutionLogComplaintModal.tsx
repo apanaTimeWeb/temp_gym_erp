@@ -1,6 +1,6 @@
 // RESPONSIBILITY: Renders ManagerGrievanceResolutionLogComplaintModal's feature UI and orchestrates presentation through module-owned state/hooks; it does not own API transport or business rules.
 'use client';
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Frown, Loader2, MessageSquare, X } from 'lucide-react';
@@ -31,7 +31,10 @@ export function ManagerGrievanceResolutionLogComplaintModal({ onClose, onSubmit 
     defaultValues: { category: 'OTHER' },
   });
   const { confirmAndClose } = useManagerInfrastructureUnsavedChangesGuard(isDirty && !isSubmitting);
-  useManagerInfrastructureDialogFocusTrap({ dialogRef, isOpen: true, onClose: () => void confirmAndClose(onClose) });
+  const handleClose = useCallback(() => {
+    void confirmAndClose(onClose);
+  }, [confirmAndClose, onClose]);
+  useManagerInfrastructureDialogFocusTrap({ dialogRef, isOpen: true, onClose: handleClose });
 
 
   const handleFormSubmit = async (data: CreateGrievanceTicketPayload) => {

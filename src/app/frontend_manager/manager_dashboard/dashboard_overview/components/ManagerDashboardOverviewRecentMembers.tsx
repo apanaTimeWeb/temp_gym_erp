@@ -103,7 +103,7 @@ export default function ManagerDashboardOverviewRecentMembers() {
         })}
         {paginated.length === 0 && (
           <p className="py-8 text-center text-sm text-text-secondary">
-            {search ? t('TEXT_NO_MEMBERS_MATCHING_QUERY', { query: search }) : t('COPY_NO_MEMBERS_YET_ADD_FIRST_MEMBER')}
+            {search || debouncedSearch ? t('TEXT_NO_MEMBERS_MATCHING_QUERY', { query: search || debouncedSearch }) : t('COPY_NO_MEMBERS_YET_ADD_FIRST_MEMBER')}
           </p>
         )}
       </div>
@@ -149,7 +149,7 @@ export default function ManagerDashboardOverviewRecentMembers() {
             {paginated.length === 0 && (
               <tr>
                 <td colSpan={RECENT_MEMBERS_HEADERS.length} className="text-center py-8 text-sm text-text-secondary">
-                  {search ? t('TEXT_NO_MEMBERS_MATCHING_QUERY', { query: search }) : t('COPY_NO_MEMBERS_YET_ADD_FIRST_MEMBER')}
+                  {search || debouncedSearch ? t('TEXT_NO_MEMBERS_MATCHING_QUERY', { query: search || debouncedSearch }) : t('COPY_NO_MEMBERS_YET_ADD_FIRST_MEMBER')}
                 </td>
               </tr>
             )}

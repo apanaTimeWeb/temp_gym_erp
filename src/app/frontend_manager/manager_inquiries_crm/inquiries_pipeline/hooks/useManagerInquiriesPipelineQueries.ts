@@ -22,7 +22,8 @@ export function useInquiriesQuery(params: Record<string, string>) {
     queryKey: ManagerInquiriesPipelineQueryKeys.list(params),
     queryFn: async () => {
       const res = await ManagerInquiriesPipelineApi.fetchInquiries(params);
-      return { inquiries: res.data!.inquiries as Inquiry[], total: res.data!.total };
+      if (!res.success) throw new Error(`Failed to load inquiries: ${res.message || 'Error'}`);
+      return { inquiries: (res.data?.inquiries ?? []) as Inquiry[], total: res.data?.total ?? 0 };
     },
     staleTime: 5 * 60 * 1000 });
 }

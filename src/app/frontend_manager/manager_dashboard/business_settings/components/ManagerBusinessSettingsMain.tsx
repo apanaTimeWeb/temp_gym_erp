@@ -1,7 +1,7 @@
 // RESPONSIBILITY: Renders ManagerBusinessSettingsMain's feature UI and orchestrates presentation through module-owned state/hooks; it does not own API transport or business rules.
 'use client';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 import { Building, Clock, Globe, Loader2, Save } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -27,8 +27,10 @@ export default function ManagerBusinessSettingsMain() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const requestedView = searchParams.get('view') ?? searchParams.get('tab');
-  const activeTab: SettingsTab = resolveManagerBusinessSettingsView(requestedView);
+  const [localTab, setLocalTab] = useState<SettingsTab | null>(null);
+  const activeTab: SettingsTab = localTab ?? resolveManagerBusinessSettingsView(requestedView);
   const setActiveTab = useCallback((view: SettingsTab) => {
+    setLocalTab(view);
     const params = new URLSearchParams(searchParams.toString());
     params.set('view', view);
     params.delete('tab');

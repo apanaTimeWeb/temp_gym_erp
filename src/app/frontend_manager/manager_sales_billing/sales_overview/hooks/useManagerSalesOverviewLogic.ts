@@ -45,17 +45,18 @@ export function useManagerSalesOverviewLogic(initialData?: SalesInitialData | nu
   );
   const membershipFilter = resolveManagerSalesOverviewMembershipFilter(searchParams.get(MANAGER_SALES_OVERVIEW_ROUTES.QUERY_PARAMS.MEMBERSHIP_FILTER));
   const setMembershipFilter = useCallback((filter: ManagerSalesOverviewMembershipFilter) => { const query = ManagerSalesOverviewBuildMembershipFilterSearchParams(searchParams.toString(), filter); router.replace(`${pathname}?${query}`, { scroll: false }); }, [pathname, router, searchParams]);
-  const [search, setSearchState] = useState('');
+  const search = ui.search;
   const customStartDate = searchParams.get(MANAGER_SALES_OVERVIEW_ROUTES.QUERY_PARAMS.START_DATE) || '';
   const customEndDate = searchParams.get(MANAGER_SALES_OVERVIEW_ROUTES.QUERY_PARAMS.END_DATE) || '';
-  const currentPage = Math.max(MANAGER_SALES_OVERVIEW_FIRST_PAGE, Number(searchParams.get(MANAGER_SALES_OVERVIEW_ROUTES.QUERY_PARAMS.PAGE)) || MANAGER_SALES_OVERVIEW_FIRST_PAGE); const debouncedSearch = useManagerInfrastructureDebounce(search, 300);
+  const currentPage = Math.max(MANAGER_SALES_OVERVIEW_FIRST_PAGE, Number(searchParams.get(MANAGER_SALES_OVERVIEW_ROUTES.QUERY_PARAMS.PAGE)) || MANAGER_SALES_OVERVIEW_FIRST_PAGE);
+  const debouncedSearch = search;
   const updateUrl = useCallback((updates: Record<string, string | null>, resetPage = true) => {
     const params = new URLSearchParams(searchParams.toString());
     Object.entries(updates).forEach(([key, value]) => value ? params.set(key, value) : params.delete(key));
     if (resetPage && !Object.hasOwn(updates, MANAGER_SALES_OVERVIEW_ROUTES.QUERY_PARAMS.PAGE)) params.set(MANAGER_SALES_OVERVIEW_ROUTES.QUERY_PARAMS.PAGE, String(MANAGER_SALES_OVERVIEW_FIRST_PAGE));
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }, [pathname, router, searchParams]);
-  const setSearch = useCallback((value: string) => { setSearchState(value); updateUrl({}, true); }, [updateUrl]);
+  const setSearch = useCallback((value: string) => { ui.setSearch(value); updateUrl({ [MANAGER_SALES_OVERVIEW_ROUTES.QUERY_PARAMS.SEARCH]: value || null }, true); }, [ui, updateUrl]);
   const setView = useCallback((value: ManagerSalesOverviewViewModel['view']) => updateUrl({ [MANAGER_SALES_OVERVIEW_ROUTES.QUERY_PARAMS.VIEW]: value, [MANAGER_SALES_OVERVIEW_ROUTES.QUERY_PARAMS.LEGACY_TAB]: null }, false), [updateUrl]);
   const setCustomStartDate = useCallback((value: string) => updateUrl({ [MANAGER_SALES_OVERVIEW_ROUTES.QUERY_PARAMS.START_DATE]: value || null, [MANAGER_SALES_OVERVIEW_ROUTES.QUERY_PARAMS.RANGE]: MANAGER_SALES_OVERVIEW_CUSTOM_DATE_RANGE }), [updateUrl]);
   const setCustomEndDate = useCallback((value: string) => updateUrl({ [MANAGER_SALES_OVERVIEW_ROUTES.QUERY_PARAMS.END_DATE]: value || null, [MANAGER_SALES_OVERVIEW_ROUTES.QUERY_PARAMS.RANGE]: MANAGER_SALES_OVERVIEW_CUSTOM_DATE_RANGE }), [updateUrl]);

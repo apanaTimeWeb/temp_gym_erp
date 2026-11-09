@@ -38,7 +38,7 @@ export const managerNotificationsHandlers = [
   http.get(ManagerInfrastructureMockApiUrl(MANAGER_NOTIFICATIONS_INBOX_API.KPIS), () =>
     HttpResponse.json({ success: true, message: 'Notification KPIs fetched', data: { ...MOCK_NOTIFICATION_KPIS, total: notifications.length, unread: notifications.filter((n) => n.status === MANAGER_NOTIFICATIONS_INBOX_STATUS_VALUES.UNREAD).length } }),
   ),
-  http.patch(ManagerInfrastructureMockApiUrl(MANAGER_NOTIFICATIONS_INBOX_API.MARK_READ(':id')), ({ params }) => {
+  http.patch(ManagerInfrastructureMockApiUrl(`${MANAGER_NOTIFICATIONS_INBOX_API.BASE}/:id/read`), ({ params }) => {
     notifications = notifications.map((n) => n.id === params.id ? { ...n, status: MANAGER_NOTIFICATIONS_INBOX_STATUS_VALUES.READ, readAt: new Date().toISOString() } : n);
     return HttpResponse.json({ success: true, message: 'Notification marked as read', data: null });
   }),
@@ -46,7 +46,7 @@ export const managerNotificationsHandlers = [
     notifications = notifications.map((n) => ({ ...n, status: MANAGER_NOTIFICATIONS_INBOX_STATUS_VALUES.READ, readAt: new Date().toISOString() }));
     return HttpResponse.json({ success: true, message: 'All notifications marked as read', data: null });
   }),
-  http.delete(ManagerInfrastructureMockApiUrl(MANAGER_NOTIFICATIONS_INBOX_API.DELETE(':id')), ({ params }) => {
+  http.delete(ManagerInfrastructureMockApiUrl(`${MANAGER_NOTIFICATIONS_INBOX_API.BASE}/:id`), ({ params }) => {
     notifications = notifications.filter((n) => n.id !== params.id);
     return HttpResponse.json({ success: true, message: 'Notification dismissed', data: null });
   }),

@@ -40,7 +40,7 @@ describe('useManagerDashboardOverviewUrlState', () => {
     currentParams = new URLSearchParams('range=unexpected&campaign=autumn');
     const { result } = renderHook(() => useManagerDashboardOverviewUrlState());
 
-    expect(result.current.range).toBe('monthly');
+    expect(result.current.range).toBe('this_month');
     expect(result.current.startDate).toBe('');
     expect(result.current.endDate).toBe('');
   });

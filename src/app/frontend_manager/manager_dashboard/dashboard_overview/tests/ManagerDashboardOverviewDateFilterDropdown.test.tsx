@@ -35,10 +35,10 @@ describe('ManagerDashboardOverviewDateFilterDropdown', () => {
   it('changes to a preset without overwriting it as custom', () => {
     render(<ManagerDashboardOverviewDateFilterDropdown />);
 
-    fireEvent.change(screen.getByRole('combobox', { name: 'date range' }), { target: { value: 'weekly' } });
+    fireEvent.change(screen.getByRole('combobox', { name: 'date range' }), { target: { value: 'last_month' } });
 
     expect(state.setRange).toHaveBeenCalledTimes(1);
-    expect(state.setRange).toHaveBeenCalledWith('weekly');
+    expect(state.setRange).toHaveBeenCalledWith('last_month');
     expect(state.setCustomDateRange).not.toHaveBeenCalled();
   });
 

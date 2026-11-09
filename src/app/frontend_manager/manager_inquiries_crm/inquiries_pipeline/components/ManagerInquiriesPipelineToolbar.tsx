@@ -19,16 +19,6 @@ export default function ManagerInquiriesPipelineToolbar() {
   const t = useTranslations('MANAGER_INQUIRIES_PIPELINE');
 
   const { search, setSearch, statusFilter, setStatusFilter, dateFilter, setDateFilter, openAdd, selectedIds, clearSelection, openBulkMsg, setCurrentPage, refresh } = useManagerInquiriesPipelineLogic();
-  const [prevSearch, setPrevSearch] = useState(search);
-  const [localSearch, setLocalSearch] = useState(search);
-
-  if (search !== prevSearch) {
-    setPrevSearch(search);
-    setLocalSearch(search);
-  }
-
-
-  useManagerInfrastructureDebouncedValueCommit(localSearch, search, setSearch, 300);
 
   if (selectedIds.length > 0) {
     return (
@@ -57,8 +47,8 @@ export default function ManagerInquiriesPipelineToolbar() {
   return (
     <div className="bg-card rounded-xl shadow-card border border-border p-4 flex flex-wrap gap-3 items-center justify-between">
       <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "border border-border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page  w-full sm:w-64  bg-input text-text-primary"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_inquiries-manager-inquiries-toolbar-input-value"
-        value={localSearch}
-        onChange={e => setLocalSearch(e.target.value)}
+        value={search}
+        onChange={e => setSearch(e.target.value)}
         placeholder={t("COPY_SEARCH_NAME_PHONE")}
         
        aria-label={t("COPY_SEARCH_NAME_PHONE")}/>

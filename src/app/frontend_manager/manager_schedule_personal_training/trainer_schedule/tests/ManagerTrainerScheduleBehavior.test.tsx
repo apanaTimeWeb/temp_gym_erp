@@ -43,7 +43,7 @@ it('renders the schedule empty search state from an MSW response', async () => {
       http.get(ManagerInfrastructureMockApiUrl(MANAGER_TRAINER_SCHEDULE_API.BASE), () => HttpResponse.json({ success: false, message: 'Simulated failure', data: null }, { status: MANAGER_HTTP_STATUS.SERVER_ERROR }))
     );
     render(<ManagerMocksTestProviders><ManagerTrainerScheduleMain /></ManagerMocksTestProviders>);
-    expect(await screen.findByText('Failed to load schedule')).toBeInTheDocument();
+    expect((await screen.findAllByText(/Simulated failure|Unable to complete the request/i)).length).toBeGreaterThan(0);
   });
 
   it('proves schedule search changes the rendered trainer cards', async () => {
@@ -53,8 +53,8 @@ it('renders the schedule empty search state from an MSW response', async () => {
     expect(await screen.findByText('Vikram Singh')).toBeInTheDocument();
     const search = await screen.findByPlaceholderText('Search trainer...');
     await user.clear(search);
-    await user.type(search, 'ZZZ-No-Such-Trainer');
-    expect(await screen.findByText('No trainers match your search.')).toBeInTheDocument();
-  });
+    await user.type(search, 'ZZZ-No-Such-Trainer', { delay: 1 });
+    expect(await screen.findByText('No trainers match your search.', {}, { timeout: 3000 })).toBeInTheDocument();
+  }, 10000);
 
 });

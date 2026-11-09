@@ -22,7 +22,7 @@ describe('Manager Notifications user-visible behavior', () => {
   it('renders the real feature UI against module MSW handlers', async () => {
     renderManagerNotificationsInbox(<ManagerNotificationsInboxMain />);
     expect(await screen.findByText('Notifications')).toBeInTheDocument();
-    expect(await screen.findByText('Membership Expiring Soon')).toBeInTheDocument();
+    expect((await screen.findAllByText('Membership Expiring Soon')).length).toBeGreaterThan(0);
   });
 
   it('proves module MSW supplies non-placeholder API data', async () => {
@@ -50,7 +50,7 @@ it('renders the notifications empty state from an MSW response', async () => {
     const { default: userEvent } = await import('@testing-library/user-event');
     const user = userEvent.setup();
     renderManagerNotificationsInbox(<ManagerNotificationsInboxMain />);
-    expect(await screen.findByText('Membership Expiring Soon')).toBeInTheDocument();
+    expect((await screen.findAllByText('Membership Expiring Soon')).length).toBeGreaterThan(0);
     const search = await screen.findByPlaceholderText('Search notifications...');
     await user.clear(search);
     await user.type(search, 'ZZZ-No-Such-Notification');

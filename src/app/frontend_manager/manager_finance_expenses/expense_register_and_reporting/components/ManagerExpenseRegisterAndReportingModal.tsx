@@ -1,7 +1,7 @@
 // RESPONSIBILITY: Renders ManagerExpenseRegisterAndReportingModal's feature UI and orchestrates presentation through module-owned state/hooks; it does not own API transport or business rules.
 'use client';
-import { useEffect, useRef } from 'react';
-import { Loader2, X, Save } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Loader2, X, Save, Upload } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Controller } from 'react-hook-form';
 
@@ -17,9 +17,42 @@ export default function ManagerExpenseRegisterAndReportingModal() {
 
   const { showModal, editId, form, handleClose, submit } = useManagerExpenseRegisterAndReportingForm();
   const { register, control, formState: { errors, isSubmitting } } = form;
+  const [receiptFileName, setReceiptFileName] = useState<string | null>(null);
+  const [fileError, setFileError] = useState<string | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const handleCloseRef = useRef(handleClose);
   handleCloseRef.current = handleClose;
+
+  useEffect(() => {
+    if (!showModal) {
+      setReceiptFileName(null);
+      setFileError(null);
+    }
+  }, [showModal]);
+
+  const handleReceiptFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    setFileError(null);
+    const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
+    if (!validTypes.includes(file.type)) {
+      setFileError('Invalid file type. Please upload a PDF, PNG, JPG, or WEBP file.');
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setFileError('File size exceeds 5MB limit.');
+      return;
+    }
+    setReceiptFileName(file.name);
+    const mockStorageUrl = `https://storage.internal/receipts/${encodeURIComponent(file.name)}`;
+    form.setValue('receiptUrl', mockStorageUrl, { shouldValidate: true, shouldDirty: true });
+  };
+
+  const handleRemoveReceiptFile = () => {
+    setReceiptFileName(null);
+    setFileError(null);
+    form.setValue('receiptUrl', '', { shouldValidate: true, shouldDirty: true });
+  };
 
   useEffect(() => {
     if (!showModal) return;
@@ -140,7 +173,21 @@ export default function ManagerExpenseRegisterAndReportingModal() {
             </div>
             
             <div>
-              <label htmlFor="manager-managerexpensesmodal-field-6" className="block text-sm font-medium text-text-secondary mb-1">{t("COPY_RECEIPT_URL_OPTIONAL")}</label>
+              <div className="flex items-center justify-between mb-1">
+                <label htmlFor="manager-managerexpensesmodal-field-6" className="block text-sm font-medium text-text-secondary">{t("COPY_RECEIPT_URL_OPTIONAL")}</label>
+                <label htmlFor="manager-expense-receipt-file" className="text-xs font-semibold text-primary hover:underline cursor-pointer flex items-center gap-1">
+                  <Upload size={13} strokeWidth={2} />
+                  <span>Upload Receipt</span>
+                </label>
+                <input
+                  id="manager-expense-receipt-file"
+                  data-testid="manager_expenses-receipt-file-input"
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp,application/pdf"
+                  className="hidden"
+                  onChange={handleReceiptFileUpload}
+                />
+              </div>
               <input id="manager-managerexpensesmodal-field-6" data-testid="manager_expenses-manager-expenses-modal-input-value"
                 type="url"
                 placeholder={t("COPY_HTTPS_EXAMPLE_COM_RECEIPT_JPG")}
@@ -148,6 +195,13 @@ export default function ManagerExpenseRegisterAndReportingModal() {
                 className={[`w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-text-primary motion-safe:transition-all ${
                   errors.receiptUrl ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-focus-ring'
                 }`, "motion-safe:duration-200 ease-in-out"].filter(Boolean).join(' ')} aria-invalid={errors.receiptUrl ? 'true' : undefined} aria-describedby={errors.receiptUrl ? 'managerexpensesmodal-receiptUrl-error' : undefined} />
+              {receiptFileName && (
+                <div className="mt-2 flex items-center justify-between px-3 py-1.5 bg-card border border-border rounded-lg text-xs text-text-secondary">
+                  <span className="truncate max-w-[240px]">📎 {receiptFileName}</span>
+                  <button type="button" onClick={handleRemoveReceiptFile} className="text-danger hover:underline ml-2">Remove</button>
+                </div>
+              )}
+              {fileError && <p className="text-danger-text text-xs mt-1">{fileError}</p>}
               {errors.receiptUrl && (
                 <p className="text-danger-text text-xs mt-1">{errors.receiptUrl.message}</p>
               )}

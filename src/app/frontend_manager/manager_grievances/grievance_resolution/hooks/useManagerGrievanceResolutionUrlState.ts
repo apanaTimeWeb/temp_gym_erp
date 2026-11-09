@@ -21,20 +21,21 @@ export function useManagerGrievanceResolutionUrlState() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [search, setSearchState] = useState('');
+  const [search, setSearchState] = useState(() => searchParams.get(MANAGER_GRIEVANCE_RESOLUTION_SEARCH_QUERY_PARAM) || '');
 
   useEffect(() => {
-    if (!searchParams.has(MANAGER_GRIEVANCE_RESOLUTION_SEARCH_QUERY_PARAM)) return;
-    const nextParams = new URLSearchParams(searchParams.toString());
-    nextParams.delete(MANAGER_GRIEVANCE_RESOLUTION_SEARCH_QUERY_PARAM);
-    const nextQuery = nextParams.toString();
-    router.replace(nextQuery ? `${pathname}?${nextQuery}` : pathname, { scroll: false });
-  }, [pathname, router, searchParams]);
+    setSearchState(searchParams.get(MANAGER_GRIEVANCE_RESOLUTION_SEARCH_QUERY_PARAM) || '');
+  }, [searchParams]);
 
   const setSearch = useCallback((value: string) => {
+    const trimmed = value.trim();
     setSearchState(value);
     const nextParams = new URLSearchParams(searchParams.toString());
-    nextParams.delete(MANAGER_GRIEVANCE_RESOLUTION_SEARCH_QUERY_PARAM);
+    if (trimmed) {
+      nextParams.set(MANAGER_GRIEVANCE_RESOLUTION_SEARCH_QUERY_PARAM, trimmed);
+    } else {
+      nextParams.delete(MANAGER_GRIEVANCE_RESOLUTION_SEARCH_QUERY_PARAM);
+    }
     const nextQuery = nextParams.toString();
     router.replace(nextQuery ? `${pathname}?${nextQuery}` : pathname, { scroll: false });
   }, [pathname, router, searchParams]);

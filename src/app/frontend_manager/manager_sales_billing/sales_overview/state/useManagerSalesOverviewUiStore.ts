@@ -9,6 +9,8 @@ import type { ManagerToastType } from '@/app/frontend_manager/manager_sales_bill
 
 
 interface ManagerSalesOverviewUiState {
+  search: string;
+  setSearch: (search: string) => void;
   toast: { message: string; type: ManagerToastType } | null;
   showToast: (message: string, type: ManagerToastType) => void;
   hideToast: () => void;
@@ -20,6 +22,8 @@ interface ManagerSalesOverviewUiState {
  * @edge-case preserves documented empty, retry, and boundary states for this module.
  */
 export const useManagerSalesOverviewUiStore = create<ManagerSalesOverviewUiState>((set) => ({
+  search: '',
+  setSearch: (search) => set({ search }),
   toast: null,
   showToast: (message, type) => set({ toast: { message, type } }),
   hideToast: () => set({ toast: null }) }));

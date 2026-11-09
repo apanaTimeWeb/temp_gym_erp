@@ -35,7 +35,7 @@
     "COPY_REVENUE_ATTENDANCE_MEMBERS_LOST_EXPENSE_BREAKDOWN": "Revenue, attendance, lost members, and expense breakdown",
     "TEXT_SERIES_LOST_MEMBERS": "Lost members",
     "TEXT_SERIES_ACTIVE_MEMBERS": "Active members",
-    "TEXT_GENERIC_ERROR": "The request could not be completed. Please try again.",
+    "TEXT_GENERIC_ERROR": "Failed to load report data",
     "TEXT_KPI_TOTAL_INCOME": "Total income{suffix}",
     "TEXT_KPI_TOTAL_EXPENSES": "Total expenses{suffix}",
     "TEXT_KPI_ACTIVE_MEMBERS": "Active members{suffix}",

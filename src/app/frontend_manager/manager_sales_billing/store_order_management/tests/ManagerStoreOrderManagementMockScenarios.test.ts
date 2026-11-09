@@ -11,6 +11,7 @@ describe('store_order_management mock scenario catalog', () => {
 describe('ManagerStoreOrderManagement scenario resolution', () => {
   it('returns known scenarios and defaults unknown values to ACTIVE', () => {
     expect(resolveManagerStoreOrderManagementMockScenario('EMPTY')).toEqual(MANAGERSTOREORDERMANAGEMENT_MOCK_SCENARIOS.EMPTY);
-    expect(resolveManagerStoreOrderManagementMockScenario('invalid')).toEqual(MANAGERSTOREORDERMANAGEMENT_MOCK_SCENARIOS.ACTIVE);
+    expect(resolveManagerStoreOrderManagementMockScenario('INVALID')).toEqual(MANAGERSTOREORDERMANAGEMENT_MOCK_SCENARIOS.INVALID);
+    expect(resolveManagerStoreOrderManagementMockScenario('UNKNOWN_SCENARIO')).toEqual(MANAGERSTOREORDERMANAGEMENT_MOCK_SCENARIOS.ACTIVE);
   });
 });

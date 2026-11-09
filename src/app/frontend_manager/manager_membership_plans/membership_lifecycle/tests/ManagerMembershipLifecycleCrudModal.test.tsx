@@ -7,10 +7,10 @@ const mocks = vi.hoisted(() => ({ crudModalPlan: null as null | { id: string; na
 
 vi.mock('next-intl', () => ({ useTranslations: () => (key: string) => key }));
 vi.mock('@/app/frontend_manager/manager_infrastructure/hooks/useManagerInfrastructureDialogFocusTrap', () => ({ useManagerInfrastructureDialogFocusTrap: vi.fn() }));
-vi.mock('@/app/frontend_manager/manager_membership_plans/manager_plans_hooks/useManagerMembershipLifecycleLogic', () => ({
+vi.mock('@/app/frontend_manager/manager_membership_plans/membership_lifecycle/hooks/useManagerMembershipLifecycleLogic', () => ({
   useManagerMembershipLifecycleLogic: () => ({ crudModalOpen: true, crudModalPlan: mocks.crudModalPlan, closeCrudPlan: mocks.closeCrudPlan }),
 }));
-vi.mock('@/app/frontend_manager/manager_membership_plans/manager_plans_hooks/useManagerMembershipLifecycleCrudForm', () => ({
+vi.mock('@/app/frontend_manager/manager_membership_plans/membership_lifecycle/hooks/useManagerMembershipLifecycleCrudForm', () => ({
   useManagerMembershipLifecycleCrudForm: () => ({
     form: { register: (name: string) => ({ name }), formState: { errors: {}, isSubmitting: false } },
     submit: mocks.submit, saving: false, close: mocks.close,

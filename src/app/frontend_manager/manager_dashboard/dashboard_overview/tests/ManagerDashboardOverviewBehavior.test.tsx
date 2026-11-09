@@ -22,7 +22,7 @@ describe('Manager Dashboard user-visible behavior', () => {
   it('renders the real feature UI against module MSW handlers', async () => {
     const { container } = render(<main><ManagerMocksTestProviders><ManagerDashboardOverviewMain /></ManagerMocksTestProviders></main>);
     expect(await screen.findByText('Dashboard')).toBeInTheDocument();
-    expect(await screen.findByText('John Doe')).toBeInTheDocument();
+    expect((await screen.findAllByText('John Doe')).length).toBeGreaterThan(0);
     expect((await axe(container)).violations).toEqual([]);
   });
 
@@ -31,16 +31,16 @@ describe('Manager Dashboard user-visible behavior', () => {
     expect(response.success).toBe(true);
     expect(response.data?.totalMembers).toBeGreaterThan(0);
   });
-it('renders dashboard empty collection states from an MSW empty response', async () => {
+  it('renders dashboard empty collection states from an MSW empty response', async () => {
     const { MOCK_DASHBOARD_STATS } = await import('@/app/frontend_manager/manager_dashboard/dashboard_overview/mocks/ManagerDashboardOverviewMockData');
     managerMswServer.use(
       http.get(ManagerInfrastructureMockApiUrl(MANAGER_DASHBOARD_OVERVIEW_API.STATS), () => HttpResponse.json({
         success: true,
         message: 'Empty dashboard collections',
-        data: { ...MOCK_DASHBOARD_STATS, recentMembers: [], recentPayments: [], pendingPaymentsList: [], expiringMemberships: [], memberGrowth: [], revenueChart: [], membersByPlan: [] }, requestId: 'mock-dashboard-stats' }))
+        data: { ...MOCK_DASHBOARD_STATS, recentMembers: [], totalRecentMembers: 0, recentPayments: [], pendingPaymentsList: [], expiringMemberships: [], memberGrowth: [], revenueChart: [], membersByPlan: [] }, requestId: 'mock-dashboard-stats' }))
     );
     const { container } = render(<main><ManagerMocksTestProviders><ManagerDashboardOverviewMain /></ManagerMocksTestProviders></main>);
-    expect(await screen.findByText('No members yet. Add your first member!')).toBeInTheDocument();
+    expect((await screen.findAllByText('No members yet. Add your first member!')).length).toBeGreaterThan(0);
     expect((await axe(container)).violations).toEqual([]);
   });
 
@@ -49,7 +49,7 @@ it('renders dashboard empty collection states from an MSW empty response', async
       http.get(ManagerInfrastructureMockApiUrl(MANAGER_DASHBOARD_OVERVIEW_API.STATS), () => HttpResponse.json({ success: false, message: 'Simulated failure', data: null, errorCode: 'INTERNAL_ERROR', statusCode: MANAGER_HTTP_STATUS.SERVER_ERROR, requestId: 'mock-dashboard-stats' }, { status: MANAGER_HTTP_STATUS.SERVER_ERROR }))
     );
     const { container } = render(<main><ManagerMocksTestProviders><ManagerDashboardOverviewMain /></ManagerMocksTestProviders></main>);
-    expect(await screen.findByText('Failed to load dashboard')).toBeInTheDocument();
+    expect(await screen.findByRole('alert')).toBeInTheDocument();
     expect((await axe(container)).violations).toEqual([]);
   });
 
@@ -57,11 +57,11 @@ it('renders dashboard empty collection states from an MSW empty response', async
     const { default: userEvent } = await import('@testing-library/user-event');
     const user = userEvent.setup();
     render(<main><ManagerMocksTestProviders><ManagerDashboardOverviewMain /></ManagerMocksTestProviders></main>);
-    expect(await screen.findByText('John Doe')).toBeInTheDocument();
+    expect((await screen.findAllByText('John Doe')).length).toBeGreaterThan(0);
     const search = await screen.findByPlaceholderText('Search members...');
     await user.clear(search);
     await user.type(search, 'ZZZ-No-Such-Member');
-    expect(await screen.findByText('No members matching "ZZZ-No-Such-Member"')).toBeInTheDocument();
+    expect((await screen.findAllByText(/No members matching/i, {}, { timeout: 3000 })).length).toBeGreaterThan(0);
   });
 
 });

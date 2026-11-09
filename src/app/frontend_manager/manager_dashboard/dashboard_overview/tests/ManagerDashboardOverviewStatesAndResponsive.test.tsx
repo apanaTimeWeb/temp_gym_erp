@@ -7,7 +7,9 @@ import { renderManagerDashboardOverview } from '@/app/frontend_manager/manager_d
 
 describe('Manager Dashboard state and responsive contracts', () => {
   it('announces dashboard loading and hides decorative skeleton blocks', () => {
-    renderManagerDashboardOverview(<ManagerDashboardOverviewSkeleton />);
+    renderManagerDashboardOverview(<ManagerDashboardOverviewSkeleton />, {
+      messages: { MANAGER_DASHBOARD: { COPY_LOADING_DASHBOARD: 'Loading dashboard data' } },
+    });
     expect(screen.getByRole('status', { name: 'Loading dashboard data' })).toHaveAttribute('aria-busy', 'true');
     expect(document.querySelectorAll('[aria-hidden="true"]').length).toBeGreaterThan(0);
   });

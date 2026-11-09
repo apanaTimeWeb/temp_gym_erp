@@ -1,16 +1,17 @@
 // RESPONSIBILITY: Renders or orchestrates the owning Manager feature UI; API transport and business rules remain in module-owned hooks/services.
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 import { ManagerMocksTestProviders } from '@/app/frontend_manager/manager_infrastructure/mocks/ManagerMocksTestProviders';
 import { managerMswServer } from '@/app/frontend_manager/manager_infrastructure/mocks/ManagerMocksMswTestServer';
 
 import ManagerMaintenanceRequestsMain from '@/app/frontend_manager/manager_maintenance/maintenance_requests/components/ManagerMaintenanceRequestsMain';
 import { MANAGER_MAINTENANCE_REQUESTS_STATUS_VALUES } from '@/app/frontend_manager/manager_maintenance/maintenance_requests/constants/manager_maintenance_requests.constants';
-
+import { resetManagerMaintenanceRequestsMockState } from '@/app/frontend_manager/manager_maintenance/maintenance_requests/mocks/handlers/ManagerMaintenanceRequestsMockHandlers';
 
 beforeAll(() => managerMswServer.listen({ onUnhandledRequest: 'error' }));
+beforeEach(() => resetManagerMaintenanceRequestsMockState());
 afterEach(() => managerMswServer.resetHandlers());
 afterAll(() => managerMswServer.close());
 
@@ -19,7 +20,7 @@ describe('ManagerMaintenanceRequestsMain behavior', () => {
     const user = userEvent.setup();
     render(<ManagerMocksTestProviders><ManagerMaintenanceRequestsMain /></ManagerMocksTestProviders>);
 
-    await waitFor(() => expect(screen.getByText(/Treadmill/i)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('Treadmill wire broken')).toBeInTheDocument());
     await user.click(screen.getByRole('button', { name: 'Log Issue' }));
     await user.type(screen.getByLabelText('Issue Title'), 'Behavior Maintenance Issue');
     await user.type(screen.getByLabelText('Equipment / Area'), 'Behavior Test Area');

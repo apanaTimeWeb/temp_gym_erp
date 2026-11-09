@@ -1,5 +1,6 @@
 // RESPONSIBILITY: Renders or orchestrates the owning Manager feature UI; API transport and business rules remain in module-owned hooks/services.
 'use client';
+import { useEffect, useRef, useState } from 'react';
 import { X, ScanLine, UserCheck, AlertCircle, Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -15,6 +16,42 @@ export default function ManagerAttendanceTrackingQrScannerModal({ open, onClose 
   const t = useTranslations('MANAGER_ATTENDANCE_TRACKING');
 
   const { status, history, currentMember, scanValue, setScanValue, resolveMember, handleSimulateScan, handleCheckIn, resetStatus, demoMode } = useManagerAttendanceTrackingQrScannerLogic();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [hasCamera, setHasCamera] = useState(false);
+
+  useEffect(() => {
+    if (!open) {
+      setHasCamera(false);
+      return;
+    }
+    let stream: MediaStream | null = null;
+    let active = true;
+
+    if (typeof navigator !== 'undefined' && navigator.mediaDevices?.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+        .then((s) => {
+          if (!active) {
+            s.getTracks().forEach((track) => track.stop());
+            return;
+          }
+          stream = s;
+          if (videoRef.current) {
+            videoRef.current.srcObject = s;
+            setHasCamera(true);
+          }
+        })
+        .catch(() => {
+          setHasCamera(false);
+        });
+    }
+
+    return () => {
+      active = false;
+      if (stream) {
+        stream.getTracks().forEach((track) => track.stop());
+      }
+    };
+  }, [open]);
 
   if (!open) return null;
 
@@ -36,22 +73,34 @@ export default function ManagerAttendanceTrackingQrScannerModal({ open, onClose 
           <h2 className="absolute top-8 text-xl font-bold text-on-primary tracking-widest uppercase opacity-80" id="managerattendanceqrscannermodal-dialog-title">{t("COPY_FRONT_DESK_KIOSK")}</h2>
 
           {/* Scanner Frame — corner markers + animated scan line */}
-          <div className="relative w-64 h-64 sm:w-80 sm:h-80 mb-10">
+          <div className="relative w-64 h-64 sm:w-80 sm:h-80 mb-10 rounded-2xl overflow-hidden bg-black/40">
+            {hasCamera && (
+              <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                muted
+                aria-label="QR Camera stream"
+                className="w-full h-full object-cover"
+              />
+            )}
             {/* Corner Markers — gold accent per Design §1 primary color */}
-            <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-primary rounded-tl-xl" />
-            <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-primary rounded-tr-xl" />
-            <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-primary rounded-bl-xl" />
-            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-primary rounded-br-xl" />
+            <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-primary rounded-tl-xl z-10" />
+            <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-primary rounded-tr-xl z-10" />
+            <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-primary rounded-bl-xl z-10" />
+            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-primary rounded-br-xl z-10" />
 
             {/* Scanning Line — motion-safe guarded per Design §29 */}
             {(status === MANAGER_ATTENDANCE_TRACKING_STATUS_VALUES.IDLE || status === MANAGER_ATTENDANCE_TRACKING_STATUS_VALUES.SCANNING) && (
-              <div className="absolute top-0 left-0 w-full h-1 bg-primary-subtle motion-safe:animate-qr-scan" />
+              <div className="absolute top-0 left-0 w-full h-1 bg-primary-subtle motion-safe:animate-qr-scan z-10" />
             )}
 
             {/* Center Icon Watermark */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-20">
-              <ScanLine size={18} strokeWidth={2} className="text-on-primary"/>
-            </div>
+            {!hasCamera && (
+              <div className="absolute inset-0 flex items-center justify-center opacity-20">
+                <ScanLine size={18} strokeWidth={2} className="text-on-primary"/>
+              </div>
+            )}
           </div>
 
           <p className="text-on-primary mb-6 font-medium text-center max-w-xs">{t("COPY_ALIGN_MEMBERAPOSS_QR_CODE_WITHIN_FRAME_SCAN")}</p>

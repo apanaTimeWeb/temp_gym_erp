@@ -47,6 +47,7 @@ export const MOCK_DASHBOARD_STATS: ManagerDashboardOverviewStats = {
     { id: '2', name: 'Jane Smith', plan: 'Quarterly', status: MANAGER_DASHBOARD_OVERVIEW_STATUS_VALUES.PENDING, joinDate: '2024-05-05', paidAmount: 0 },
     { id: '3', name: 'Bob Johnson', plan: 'Monthly', status: MANAGER_DASHBOARD_OVERVIEW_STATUS_VALUES.ACTIVE, joinDate: '2024-05-10', paidAmount: 150000 },
   ],
+  totalRecentMembers: 3,
   recentPayments: [
     { id: '1', invoiceNumber: 'INV-001', amount: 1500000, method: 'UPI', paidAt: '2024-05-01T10:00:00Z', member: { name: 'John Doe' } },
     { id: '2', invoiceNumber: 'INV-002', amount: 150000, method: 'Card', paidAt: '2024-05-10T14:30:00Z', member: { name: 'Bob Johnson' } },

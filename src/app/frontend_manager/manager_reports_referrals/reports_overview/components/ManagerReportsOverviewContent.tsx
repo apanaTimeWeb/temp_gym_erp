@@ -29,6 +29,9 @@ export function ManagerReportsOverviewContent() {
   return (
     <div className="min-h-full pb-10">
       <div className="p-6 space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-text-primary">{t('COPY_REPORTS_ANALYTICS')}</h1>
+        </div>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="flex gap-1 bg-input rounded-xl p-1" role="tablist" aria-label={t('COPY_REPORTS_ANALYTICS')}>
             {REPORT_TABS.map((reportTab) => {

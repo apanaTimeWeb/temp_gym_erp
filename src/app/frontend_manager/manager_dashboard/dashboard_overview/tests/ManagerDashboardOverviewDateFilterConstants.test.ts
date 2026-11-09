@@ -7,7 +7,7 @@ import hindi from '@/app/frontend_manager/manager_dashboard/dashboard_overview/l
 describe('ManagerDashboardOverviewDateFilterConstants', () => {
   it('exposes each supported preset exactly once and in stable order', () => {
     expect(MANAGER_DASHBOARD_OVERVIEW_DATE_RANGE_OPTIONS.map(({ value }) => value)).toEqual([
-      'weekly', 'monthly', 'yearly', 'custom',
+      'this_month', 'last_month', 'last_3_months', 'this_year', 'custom',
     ]);
     expect(new Set(MANAGER_DASHBOARD_OVERVIEW_DATE_RANGE_OPTIONS.map(({ value }) => value)).size)
       .toBe(MANAGER_DASHBOARD_OVERVIEW_DATE_RANGE_OPTIONS.length);
@@ -15,7 +15,7 @@ describe('ManagerDashboardOverviewDateFilterConstants', () => {
 
   it('uses translation keys rather than hardcoded visible labels', () => {
     expect(MANAGER_DASHBOARD_OVERVIEW_DATE_RANGE_OPTIONS.map(({ labelKey }) => labelKey)).toEqual([
-      'TEXT_TIME_WEEK', 'TEXT_TIME_MONTH', 'TEXT_TIME_YEAR', 'COPY_CUSTOM_RANGE',
+      'TEXT_TIME_THIS_MONTH', 'TEXT_TIME_LAST_MONTH', 'TEXT_TIME_LAST_3_MONTHS', 'TEXT_TIME_YEAR', 'COPY_CUSTOM_RANGE',
     ]);
   });
 

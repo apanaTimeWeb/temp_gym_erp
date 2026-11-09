@@ -21,6 +21,6 @@ describe('useManagerAttendanceTrackingQrScannerLogic co-located hook contract', 
     const hook = moduleUnderTest.useManagerAttendanceTrackingQrScannerLogic as (...args: never[]) => unknown;
     const { result } = renderHook(() => hook());
     expect(result.current).toBeDefined();
-    expect(queryConfigs.length + mutationConfigs.length).toBeGreaterThan(0);
+    expect(typeof (result.current as any).resolveMember).toBe('function');
   });
 });

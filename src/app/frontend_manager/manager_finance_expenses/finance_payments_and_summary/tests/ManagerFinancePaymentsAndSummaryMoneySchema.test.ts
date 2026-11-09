@@ -4,7 +4,7 @@ import { paymentSchema, financeSummarySchema } from '@/app/frontend_manager/mana
 
 describe('Finance API money schemas', () => {
   it('rejects fractional minor-unit payment amounts', () => {
-    const payment = { id: 'p1', memberId: 'm1', amount: 12345, method: 'UPI', status: 'PAID', invoiceNumber: 'INV-1', paidAt: '2026-10-01', gstAmount: 0, discountAmount: 0, taxableAmount: 12345 };
+    const payment = { id: 'p1', memberId: 'm1', amount: 12345, method: 'UPI', status: 'PAID', invoiceNumber: 'INV-1', paidAt: '2026-10-01T10:00:00.000Z', gstAmount: 0, discountAmount: 0, taxableAmount: 12345 };
     expect(paymentSchema.safeParse(payment).success).toBe(true);
     expect(paymentSchema.safeParse({ ...payment, amount: 12345.5 }).success).toBe(false);
   });

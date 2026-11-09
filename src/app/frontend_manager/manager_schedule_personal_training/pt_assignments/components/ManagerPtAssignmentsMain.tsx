@@ -1,6 +1,6 @@
 // RESPONSIBILITY: Orchestrates the Manager PT route and delegates all visual sections to child components; it does not own API transport or business calculations.
 'use client';
-import { useRef, useState } from 'react';
+import { useRef, useState, useMemo } from 'react';
 
 import { useTranslations, useLocale } from 'next-intl';
 
@@ -31,6 +31,14 @@ export default function ManagerPtAssignmentsMain() {
   const createIntentKeyRef = useRef<{ signature: string; key: string } | null>(null);
   const { activeTab, setActiveTab, packages, assignments, kpis, workload, expiringPackages, totalAssignments, currentPage, limit, search, setSearch, setPage, isPending, isError, errorMessage, markingId, handleMarkSession, createAssignment, assignmentSaving } = useManagerPtAssignmentsLogic();
 
+  const existingMembers = useMemo(() => {
+    const map = new Map<string, string>();
+    assignments.forEach((a) => {
+      if (a.memberId && a.memberName) map.set(a.memberId, a.memberName);
+    });
+    return Array.from(map.entries()).map(([id, name]) => ({ id, name }));
+  }, [assignments]);
+
   const handleCreateAssignment = async (values: ManagerPtAssignmentsAssignmentFormValues) => {
     const signature = JSON.stringify(values);
     const idempotencyKey = createIntentKeyRef.current?.signature === signature ? createIntentKeyRef.current.key : ManagerInfrastructureIdempotency();
@@ -42,9 +50,9 @@ export default function ManagerPtAssignmentsMain() {
 
   return (
     <div className="w-full space-y-6">
-      <ManagerPtAssignmentsAssignmentForm data-testid="manager_pt-managerptmain-managerptassignmentform-1" open={isAssignModalOpen} packages={packages} trainers={workload} saving={assignmentSaving} onClose={() => setIsAssignModalOpen(false)} onSubmit={handleCreateAssignment} />
+      <ManagerPtAssignmentsAssignmentForm data-testid="manager_pt-managerptmain-managerptassignmentform-1" open={isAssignModalOpen} packages={packages} trainers={workload} members={existingMembers} saving={assignmentSaving} onClose={() => setIsAssignModalOpen(false)} onSubmit={handleCreateAssignment} />
       <ManagerPtAssignmentsToolbar data-testid="manager_pt-managerptmain-managerpttoolbar-2" title={t('COPY_PERSONAL_TRAINING')} subtitle={t('COPY_MANAGE_PT_PACKAGES_MONITOR_TRAINER_WORKLOAD_TRACK_SESSIONS')} actionLabel={t('COPY_ASSIGN_TRAINER_1')} onAssign={() => setIsAssignModalOpen(true)} />
-      <div className="w-full sm:max-w-sm"><label htmlFor="manager-pt-assignments-search" className="mb-1 block text-sm font-medium text-text-secondary">{t('TEXT_TAB_ASSIGNMENTS')}</label><input id="manager-pt-assignments-search" type="search" value={search} onChange={(event) => setSearch(event.target.value)} className="min-h-11 w-full rounded-lg border border-border bg-input px-3 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" /></div>
+      <div className="w-full sm:max-w-sm"><label htmlFor="manager-pt-assignments-search" className="mb-1 block text-sm font-medium text-text-secondary">{t('TEXT_TAB_ASSIGNMENTS')}</label><input id="manager-pt-assignments-search" type="search" placeholder="Search..." value={search} onChange={(event) => setSearch(event.target.value)} className="min-h-11 w-full rounded-lg border border-border bg-input px-3 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" /></div>
       <ManagerPtAssignmentsTabBar data-testid="manager_pt-managerptmain-managerpttabbar-3" tabs={MANAGER_PT_ASSIGNMENTS_TAB_OPTIONS} activeTab={activeTab} onChange={setActiveTab} />
 
       {isPending && <ManagerPtAssignmentsLoadingSkeleton />}

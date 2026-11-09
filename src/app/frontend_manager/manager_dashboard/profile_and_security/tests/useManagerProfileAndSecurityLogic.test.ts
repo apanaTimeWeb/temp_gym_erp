@@ -1,10 +1,18 @@
 import { renderHook } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import React from 'react';
 import { describe, it, expect } from 'vitest';
 
 import * as moduleUnderTest from '@/app/frontend_manager/manager_dashboard/profile_and_security/hooks/useManagerProfileAndSecurityLogic';
 
-
-
+const createWrapper = () => {
+  const queryClient = new QueryClient({
+    defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
+  });
+  return ({ children }: { children: React.ReactNode }) => (
+    React.createElement(QueryClientProvider, { client: queryClient }, children)
+  );
+};
 
 describe('useManagerProfileAndSecurityLogic co-located hook contract', () => {
   it('exports the expected callable hook', () => {
@@ -13,7 +21,7 @@ describe('useManagerProfileAndSecurityLogic co-located hook contract', () => {
 
   it('can initialize its public hook contract without executing a real backend request', () => {
     const hook = moduleUnderTest.useManagerProfileAndSecurityLogic as (...args: never[]) => unknown;
-    const { result } = renderHook(() => hook());
+    const { result } = renderHook(() => hook(), { wrapper: createWrapper() });
     expect(result.current).toBeDefined();
   });
 });

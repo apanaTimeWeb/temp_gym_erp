@@ -1,7 +1,7 @@
 // DATA FLOW: URL/local UI state or feature input → feature hook → module-owned TanStack Query/Zustand mutation/query → observable UI result.
 'use client';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
@@ -67,7 +67,7 @@ export function useManagerTrainerScheduleLogic(): ManagerTrainerScheduleViewMode
   const showToast = ui.showToast;
   const hideToast = ui.hideToast;
 
-  const filters = useMemo(() => ({ ...(search ? { search: debouncedSearch } : {}), ...(selectedDay !== 'All' ? { day: selectedDay } : {}) }), [debouncedSearch, selectedDay]);
+  const filters = useMemo(() => ({ ...(debouncedSearch ? { search: debouncedSearch } : {}), ...(selectedDay !== 'All' ? { day: selectedDay } : {}) }), [debouncedSearch, selectedDay]);
   const scheduleQuery = useManagerTrainerScheduleQuery(filters);
 
   const openAddShift = useCallback((trainerId: string) => {

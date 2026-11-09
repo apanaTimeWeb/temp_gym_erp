@@ -51,7 +51,8 @@ export default function ManagerDashboardOverviewMain() {
     <>
       
       <div className="min-w-0 p-4 sm:p-6 space-y-6">
-        <div className="min-w-0 flex flex-col sm:flex-row justify-end mb-2 gap-3 items-stretch sm:items-center w-full">
+        <div className="min-w-0 flex flex-col sm:flex-row justify-between mb-2 gap-3 items-stretch sm:items-center w-full">
+          <h1 className="text-2xl font-bold text-text-primary">{t('COPY_DASHBOARD')}</h1>
           <ManagerDashboardOverviewDateFilterDropdown  data-testid="manager_dashboard-managerdashboardmain-dashboard-date-filter-dropdown-1"/>
         </div>
         <ManagerDashboardOverviewKPIs />

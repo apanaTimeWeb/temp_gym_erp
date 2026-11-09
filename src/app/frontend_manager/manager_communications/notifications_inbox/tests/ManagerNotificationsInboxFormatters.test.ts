@@ -9,7 +9,7 @@ describe('ManagerNotificationsInboxFormatters behavioral contract', () => {
     expect(formatted).toContain('45');
   });
   it('ManagerNotificationsInboxFormatNumber formats a metric without decimals', () => {
-    expect(moduleUnderTest.ManagerNotificationsInboxFormatNumber(123456, 'en-IN')).toContain('123');
+    expect(moduleUnderTest.ManagerNotificationsInboxFormatNumber(123456, 'en-IN')).toBe('1,23,456');
   });
   it('ManagerNotificationsInboxFormatPercent formats percentages', () => {
     expect(moduleUnderTest.ManagerNotificationsInboxFormatPercent(12.5, 'en-IN')).toContain('%');

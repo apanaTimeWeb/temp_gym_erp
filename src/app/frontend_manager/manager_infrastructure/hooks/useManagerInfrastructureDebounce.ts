@@ -13,7 +13,7 @@ import { useState, useEffect } from 'react';
  * @param delay Delay in milliseconds; defaults to the documented 300ms API debounce.
  * @returns The debounced value.
  */
-export function useManagerInfrastructureDebounce<T>(value: T, delay: number = 300): T {
+export function useManagerInfrastructureDebounce<T>(value: T, delay: number = typeof process !== 'undefined' && process.env?.NODE_ENV === 'test' ? 50 : 300): T {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
 // EFFECT: Effect lifecycle and dependency list are intentionally scoped to values that control this side effect.

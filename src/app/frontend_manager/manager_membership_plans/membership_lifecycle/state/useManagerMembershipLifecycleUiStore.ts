@@ -12,6 +12,8 @@ interface ManagerMembershipLifecycleUiState {
   requestModalPlan: Plan | null;
   crudModalPlan: Plan | null;
   crudModalOpen: boolean;
+  search: string;
+  setSearch: (search: string) => void;
   setRequestModalPlan: (plan: Plan | null) => void;
   openCrudModal: (plan: Plan | null) => void;
   closeCrudModal: () => void;
@@ -26,6 +28,8 @@ export const useManagerMembershipLifecycleUiStore = create<ManagerMembershipLife
   requestModalPlan: null,
   crudModalPlan: null,
   crudModalOpen: false,
+  search: '',
+  setSearch: (search) => set({ search }),
   setRequestModalPlan: (requestModalPlan) => set({ requestModalPlan }),
   openCrudModal: (crudModalPlan) => set({ crudModalPlan, crudModalOpen: true }),
   closeCrudModal: () => set({ crudModalPlan: null, crudModalOpen: false }) }));

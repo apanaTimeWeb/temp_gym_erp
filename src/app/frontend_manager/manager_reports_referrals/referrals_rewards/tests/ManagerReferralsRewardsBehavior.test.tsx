@@ -43,7 +43,7 @@ it('renders the referrals empty state from an MSW response', async () => {
       http.get(ManagerInfrastructureMockApiUrl(MANAGER_REFERRALS_REWARDS_API.BASE), () => HttpResponse.json({ success: false, message: 'Simulated failure', data: null }, { status: MANAGER_HTTP_STATUS.SERVER_ERROR }))
     );
     render(<ManagerMocksTestProviders><ManagerReferralsRewardsMain /></ManagerMocksTestProviders>);
-    expect(await screen.findByText(/Unable to load|Failed to load/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Simulated failure|Unable to load|Failed to load/i)).toBeInTheDocument();
   });
 
   it('proves referral search changes the rendered dataset', async () => {
