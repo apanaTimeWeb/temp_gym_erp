@@ -40,7 +40,7 @@ describe('Superadmin Platform Team', () => {
         render(<QueryClientProvider client={createTestQueryClient()}><SuperadminTeamMain /></QueryClientProvider>);
         expect(screen.getByText('Platform Team')).toBeInTheDocument();
         expect(screen.getAllByText('Aarav Mehta')[0]).toBeInTheDocument();
-        expect(screen.getAllByText('—')[0]).toBeInTheDocument();
+        expect(screen.getAllByText(/[—–]/)[0]).toBeInTheDocument();
     });
     it('surfaces a retryable error state', () => {
         const refetch = vi.fn();

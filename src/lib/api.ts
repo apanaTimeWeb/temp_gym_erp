@@ -55,11 +55,24 @@ export async function apiFetch<T = unknown>(
     "Content-Type": "application/json",
   };
 
+  const incomingHeaders: Record<string, string> = {};
+  if (typeof Headers !== "undefined" && options.headers instanceof Headers) {
+    options.headers.forEach((value, key) => {
+      incomingHeaders[key] = value;
+    });
+  } else if (Array.isArray(options.headers)) {
+    for (const [key, value] of options.headers) {
+      incomingHeaders[key] = value;
+    }
+  } else if (options.headers && typeof options.headers === "object") {
+    Object.assign(incomingHeaders, options.headers);
+  }
+
   const config: RequestInit = {
     ...options,
     headers: {
       ...defaultHeaders,
-      ...(options.headers || {}),
+      ...incomingHeaders,
     },
   };
 

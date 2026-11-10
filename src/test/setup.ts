@@ -62,7 +62,13 @@ vi.mock('next-intl', () => ({
     const activeMessages = ctxMessages ?? appMessages;
     const nsObj = namespace ? activeMessages?.[namespace] : activeMessages;
     return (key: string, values?: Record<string, any>) => {
-      let res = nsObj?.[key] ?? key;
+      let res = nsObj?.[key];
+      if (res === undefined && nsObj && typeof nsObj === 'object' && key.includes('.')) {
+        res = key.split('.').reduce((acc: any, part: string) => (acc && typeof acc === 'object' ? acc[part] : undefined), nsObj);
+      }
+      if (res === undefined || typeof res === 'object') {
+        res = key;
+      }
       if (values && typeof res === 'string') {
         Object.entries(values).forEach(([k, v]) => {
           res = res.replace(new RegExp(`{${k}}`, 'g'), String(v));

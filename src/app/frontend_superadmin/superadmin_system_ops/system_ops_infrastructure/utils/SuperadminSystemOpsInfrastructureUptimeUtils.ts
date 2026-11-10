@@ -5,8 +5,8 @@ export function formatSuperadminInfrastructureUptimeAxisTime(timestamp: string, 
   const date = new Date(timestamp);
   if (Number.isNaN(date.getTime())) return '';
   try {
-    return new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(date);
+    return new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: 'UTC' }).format(date);
   } catch {
-    return new Intl.DateTimeFormat('en-IN', { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(date);
+    return new Intl.DateTimeFormat('en-IN', { hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: 'UTC' }).format(date);
   }
 }

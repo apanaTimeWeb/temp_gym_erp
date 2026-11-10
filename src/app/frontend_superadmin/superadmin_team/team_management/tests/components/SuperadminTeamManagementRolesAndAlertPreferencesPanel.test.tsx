@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import SuperadminTeamRolesAndAlertPreferencesPanel from '@/app/frontend_superadmin/superadmin_team/team_management/components/team_management_dashboard_widgets/SuperadminTeamManagementRolesAndAlertPreferencesPanel';
 import { useSuperadminTeamManagementAlertPreferences } from '@/app/frontend_superadmin/superadmin_team/team_management/hooks/useSuperadminTeamManagementAlertPreferences';
 import { SUPERADMIN_TEAM_MOCK_FIXTURE } from '@/app/frontend_superadmin/superadmin_team/team_management/mocks/fixtures/SuperadminTeamManagementMockFixtures';
-vi.mock('next-intl', async (importOriginal) => ({ ...(await importOriginal<typeof import('next-intl')>()), useTranslations: () => (key: string) => key }));
+vi.mock('next-intl', async (importOriginal) => ({ ...(await importOriginal<typeof import('next-intl')>()), useTranslations: () => (key: string) => key, useLocale: () => 'en' }));
 vi.mock('sonner', () => ({ toast: { success: vi.fn(), error: vi.fn() } }));
 vi.mock('@/app/frontend_superadmin/superadmin_team/team_management/hooks/useSuperadminTeamManagementAlertPreferences');
 const mockSave = vi.mocked(useSuperadminTeamManagementAlertPreferences);
