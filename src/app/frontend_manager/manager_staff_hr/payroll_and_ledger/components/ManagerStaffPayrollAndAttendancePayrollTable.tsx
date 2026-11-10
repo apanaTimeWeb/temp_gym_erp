@@ -3,7 +3,7 @@
 
 import { useRef } from 'react';
 
-import { Banknote, RefreshCw } from 'lucide-react';
+import { Banknote, RefreshCw, Printer } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
@@ -19,6 +19,7 @@ import { MANAGER_STAFF_PAYROLL_AND_ATTENDANCE_STATUS_VALUES } from '@/app/fronte
 import { PAYROLL_TABLE_HEADERS } from '@/app/frontend_manager/manager_staff_hr/payroll_and_ledger/constants/manager_staff_payroll_and_attendance_shared.constants';
 import { useManagerStaffPayrollAndAttendanceLogic } from '@/app/frontend_manager/manager_staff_hr/payroll_and_ledger/hooks/useManagerStaffPayrollAndAttendanceLogic';
 import { ManagerStaffPayrollAndAttendanceDisplayValue, ManagerStaffPayrollAndAttendanceFormatCurrency, ManagerStaffPayrollAndAttendanceFormatDate } from '@/app/frontend_manager/manager_staff_hr/payroll_and_ledger/utils/ManagerStaffPayrollAndAttendanceFormatters';
+import { printManagerStaffPayrollAndAttendancePayslip } from '@/app/frontend_manager/manager_staff_hr/payroll_and_ledger/utils/ManagerStaffPayrollAndAttendanceExportUtils';
 
 
 
@@ -156,6 +157,28 @@ export default function ManagerStaffPayrollAndAttendancePayrollTable() {
                 </td>
                 <td className="px-3 py-3 text-right whitespace-nowrap">
                   <div className="flex items-center justify-end gap-1.5">
+                    <button
+                      data-testid={`manager_hr-payroll-print-payslip-${mapIndex}`}
+                      type="button"
+                      onClick={() => {
+                        printManagerStaffPayrollAndAttendancePayslip({
+                          id: p.id,
+                          month: p.month,
+                          amount: p.amount,
+                          netPayable: p.amount,
+                          paidAmount: p.paidAmount || 0,
+                          pendingAmount: p.pendingAmount || 0,
+                          status: p.status,
+                          deductions: { tds: 0, pf: 0, esi: 0, other: 0 },
+                          staff: p.staff ? { name: p.staff.name, role: p.staff.role } : undefined,
+                        });
+                      }}
+                      aria-label={`Print payslip for ${p.staff?.name || p.staffId}`}
+                      className="flex items-center justify-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold border border-border text-text-primary rounded-lg hover:bg-input motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none"
+                    >
+                      <Printer size={14} strokeWidth={2} />
+                      <span>Payslip</span>
+                    </button>
                     {p.status !== MANAGER_STAFF_PAYROLL_AND_ATTENDANCE_STATUS_VALUES.PAID && (
                       <button data-testid={`manager_hr-hr-managerhrpayrolltable-button-payslip`}
                         onClick={() => setPaymentModal({ payrollId: p.id, staffName: p.staff?.name || `Staff #${p.staffId}`, pendingAmount: p.pendingAmount || p.amount })}

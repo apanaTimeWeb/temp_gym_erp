@@ -17,4 +17,10 @@ export const managerHrStaffFormSchema = z.object({
   isActive: z.boolean().default(true), aadhaar: z.string().regex(/^\d{12}$/, 'Aadhaar must be exactly 12 digits').optional().or(z.literal('')),
   upiId: z.string().regex(/^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/, 'Invalid UPI ID format').optional().or(z.literal('')),
   advanceSalary: z.number().min(0, 'Advance cannot be negative').optional().default(0),
+  bankName: z.string().optional().or(z.literal('')),
+  bankAccountNumber: z.string().regex(/^\d{9,18}$/, 'Account number must be 9-18 digits').optional().or(z.literal('')),
+  ifscCode: z.string().regex(/^[A-Z]{4}0[A-Z0-9]{6}$/, 'Invalid IFSC code format').optional().or(z.literal('')),
+  panNumber: z.string().regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid PAN number format').optional().or(z.literal('')),
+  emergencyContactName: z.string().optional().or(z.literal('')),
+  emergencyContactPhone: z.string().regex(/^\d{10}$/, 'Emergency phone must be 10 digits').optional().or(z.literal('')),
 });

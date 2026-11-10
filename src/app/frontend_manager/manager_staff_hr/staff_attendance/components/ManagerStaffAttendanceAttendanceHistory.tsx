@@ -1,6 +1,7 @@
 // RESPONSIBILITY: Renders read-only attendance history and distinguishes roster state from the selected staff/month query state.
 'use client';
 
+import { Download } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import ManagerStaffAttendanceEmptyState from '@/app/frontend_manager/manager_staff_hr/staff_attendance/components/ManagerStaffAttendanceEmptyState';
@@ -67,6 +68,27 @@ export default function ManagerStaffPayrollAndAttendanceAttendanceHistory() {
   } = useManagerStaffPayrollAndAttendanceStaffAttendanceQuery(effectiveStaffId, month);
   const history: ManagerStaffPayrollAndAttendanceStaffAttendanceRecord[] = data?.data?.history ?? [];
 
+  const handleExportAttendanceCsv = () => {
+    const selectedMember = staff.find((s) => String(s.id) === String(effectiveStaffId));
+    const staffName = selectedMember?.name || `Staff_${effectiveStaffId}`;
+    const header = ['Date', 'Status', 'Check-In', 'Check-Out'];
+    const rows = history.map((item) => [
+      item.date,
+      item.status,
+      item.checkIn ? String(item.checkIn) : '—',
+      item.checkOut ? String(item.checkOut) : '—',
+    ]);
+    const escapeCsv = (val: string) => `"${val.replace(/"/g, '""')}"`;
+    const csvContent = [header, ...rows].map((row) => row.map(escapeCsv).join(',')).join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = `attendance_${staffName.replace(/\s+/g, '_')}_${month || 'all'}.csv`;
+    anchor.click();
+    URL.revokeObjectURL(url);
+  };
+
   const noStaff = staff.length === 0;
   const showRosterLoading = noStaff && isRosterPending;
   const showRosterError = noStaff && isRosterError;
@@ -80,7 +102,7 @@ export default function ManagerStaffPayrollAndAttendanceAttendanceHistory() {
           <h2 className="text-lg font-bold text-text-primary">{t('COPY_TRAINER_ATTENDANCE_HISTORY')}</h2>
           <p className="text-sm text-text-secondary">{t('COPY_READ_ONLY_ATTENDANCE_RECORDS_SUPPLIED_MANAGER_STAFF_PAYROLL_AND_ATTENDANCE_ATTENDANCE_API')}</p>
         </div>
-        <div className="grid w-full gap-3 sm:w-auto sm:grid-cols-2">
+        <div className="flex flex-wrap items-end gap-3 sm:w-auto">
           <div className="min-w-56">
             <label className="mb-1 block text-xs text-text-secondary" htmlFor="manager-hr-attendance-staff">{t('COPY_STAFF_MEMBER_3')}</label>
             <ManagerSearchableDropdown
@@ -103,6 +125,17 @@ export default function ManagerStaffPayrollAndAttendanceAttendanceHistory() {
               className="w-full rounded-lg border border-border bg-card px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page"
             />
           </div>
+          <button
+            type="button"
+            onClick={handleExportAttendanceCsv}
+            disabled={history.length === 0}
+            data-testid="manager_hr-attendance-export-csv"
+            aria-label="Export Attendance Register CSV"
+            className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-lg border border-border px-3 py-2 text-sm font-semibold text-text-primary hover:bg-input disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+          >
+            <Download size={15} strokeWidth={2} />
+            <span>Export CSV</span>
+          </button>
         </div>
       </div>
 
