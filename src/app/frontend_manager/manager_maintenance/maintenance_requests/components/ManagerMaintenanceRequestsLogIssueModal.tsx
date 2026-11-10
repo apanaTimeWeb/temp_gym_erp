@@ -63,6 +63,10 @@ export function ManagerMaintenanceRequestsLogIssueModal({ onClose, onSubmit }: M
             <input data-testid="manager_maintenance-manager-maintenance-log-issue-modal-manager-maintenance-equipment" id="manager-maintenance-equipment" {...register('equipment')} aria-invalid={errors.equipment ? 'true' : 'false'} aria-describedby={errors.equipment ? 'manager-maintenance-equipment-error' : undefined} placeholder={t("COPY_E_G_CARDIO_SECTION")} className="w-full min-h-11 bg-input border border-border rounded-lg px-4 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" />
             {errors.equipment && <p data-testid="manager_maintenance-manager-maintenance-log-issue-modal-manager-maintenance-equipment-error" id="manager-maintenance-equipment-error" role="alert" className="text-danger-text text-xs mt-1">{errors.equipment.message}</p>}
           </div>
+          <div>
+            <label htmlFor="manager-maintenance-vendor" className="block text-sm font-medium text-text-secondary mb-1">{t("COPY_VENDOR")} ({t("COPY_OPTIONAL")})</label>
+            <input data-testid="manager_maintenance-manager-maintenance-log-issue-modal-manager-maintenance-vendor" id="manager-maintenance-vendor" {...register('assignedVendor')} placeholder="e.g. FitTech Repairs" className="w-full min-h-11 bg-input border border-border rounded-lg px-4 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" />
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label htmlFor="manager-maintenance-priority" className="block text-sm font-medium text-text-secondary mb-1">{t("COPY_PRIORITY_2")}</label>

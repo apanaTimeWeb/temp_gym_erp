@@ -41,6 +41,7 @@ export const managerMaintenanceMockHandlers = [
       title: body.title,
       equipment: body.equipment,
       priority: body.priority,
+      assignedVendor: body.assignedVendor,
       estimatedCost: body.estimatedCost,
       status: MANAGER_MAINTENANCE_REQUESTS_STATUS_VALUES.OPEN,
       reportedAt: new Date().toISOString(),

@@ -17,7 +17,28 @@ export default function ManagerAttendanceTrackingQrScannerModal({ open, onClose 
 
   const { status, history, currentMember, scanValue, setScanValue, resolveMember, handleSimulateScan, handleCheckIn, resetStatus, demoMode } = useManagerAttendanceTrackingQrScannerLogic();
   const videoRef = useRef<HTMLVideoElement>(null);
+  const scanInputRef = useRef<HTMLInputElement>(null);
   const [hasCamera, setHasCamera] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const focusTimer = setTimeout(() => {
+      scanInputRef.current?.focus();
+    }, 50);
+
+    const handleBarcodeScannerKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' || e.ctrlKey || e.altKey || e.metaKey) return;
+      if (document.activeElement !== scanInputRef.current && e.key.length === 1) {
+        scanInputRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', handleBarcodeScannerKey);
+
+    return () => {
+      clearTimeout(focusTimer);
+      window.removeEventListener('keydown', handleBarcodeScannerKey);
+    };
+  }, [open]);
 
   useEffect(() => {
     if (!open) {
@@ -114,6 +135,7 @@ export default function ManagerAttendanceTrackingQrScannerModal({ open, onClose 
             <div className="flex gap-2">
               <input data-testid="manager_attendance-manager-qr-scanner-manager-qr-value"
                 id="manager-qr-value"
+                ref={scanInputRef}
                 value={scanValue}
                 onChange={(event) => setScanValue(event.target.value)}
                 className="min-w-0 flex-1 rounded-xl border border-border bg-page px-4 py-3 text-sm text-on-primary placeholder:text-text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"

@@ -2,6 +2,7 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
 
+import { ManagerInfrastructureDomainError } from '@/app/frontend_manager/manager_infrastructure/utils/ManagerInfrastructureDomainError';
 import { ManagerBusinessSettingsApi } from '@/app/frontend_manager/manager_dashboard/business_settings/api/manager_business_settings.api';
 import { ManagerBusinessSettingsQueryKeys } from '@/app/frontend_manager/manager_dashboard/business_settings/api/manager_business_settings.query_keys';
 
@@ -13,6 +14,6 @@ import { ManagerBusinessSettingsQueryKeys } from '@/app/frontend_manager/manager
 export function useManagerBusinessSettingsQuery() {
   return useQuery({
     queryKey: ManagerBusinessSettingsQueryKeys.current(),
-    queryFn: async () => { const response = await ManagerBusinessSettingsApi.fetchSettings(); if (!response.success) throw new Error(response.message || 'Unable to load business settings'); return response; },
+    queryFn: async () => { const response = await ManagerBusinessSettingsApi.fetchSettings(); if (!response.success) throw new ManagerInfrastructureDomainError(response.message || 'Unable to load business settings'); return response; },
   });
 }

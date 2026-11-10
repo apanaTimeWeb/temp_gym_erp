@@ -2,6 +2,7 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
 
+import { ManagerInfrastructureDomainError } from '@/app/frontend_manager/manager_infrastructure/utils/ManagerInfrastructureDomainError';
 import { ManagerInquiriesPipelineApi } from '@/app/frontend_manager/manager_inquiries_crm/inquiries_pipeline/api/manager_inquiries_pipeline.api';
 import { ManagerInquiriesPipelineQueryKeys } from '@/app/frontend_manager/manager_inquiries_crm/inquiries_pipeline/api/manager_inquiries_pipeline.query_keys';
 import type { Inquiry, InquiryStats } from '@/app/frontend_manager/manager_inquiries_crm/inquiries_pipeline/types/manager_inquiries_pipeline.types';
@@ -22,7 +23,7 @@ export function useInquiriesQuery(params: Record<string, string>) {
     queryKey: ManagerInquiriesPipelineQueryKeys.list(params),
     queryFn: async () => {
       const res = await ManagerInquiriesPipelineApi.fetchInquiries(params);
-      if (!res.success) throw new Error(`Failed to load inquiries: ${res.message || 'Error'}`);
+      if (!res.success) throw new ManagerInfrastructureDomainError(`Failed to load inquiries: ${res.message || 'Error'}`);
       return { inquiries: (res.data?.inquiries ?? []) as Inquiry[], total: res.data?.total ?? 0 };
     },
     staleTime: 5 * 60 * 1000 });

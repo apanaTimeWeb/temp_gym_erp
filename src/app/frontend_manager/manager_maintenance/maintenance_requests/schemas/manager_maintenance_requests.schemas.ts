@@ -26,6 +26,7 @@ export const CreateMaintenanceTicketSchema = z.object({
   title: z.string().trim().min(1, 'Title is required').max(160),
   equipment: z.string().trim().min(1, 'Equipment is required').max(120),
   priority: MaintenancePrioritySchema,
+  assignedVendor: z.string().trim().max(120).optional(),
   estimatedCost: z.number().nonnegative().optional(),
 });
 
@@ -33,5 +34,6 @@ export const CreateMaintenanceTicketRequestSchema = z.object({
   title: z.string().min(1),
   equipment: z.string().min(1),
   priority: MaintenancePrioritySchema,
+  assignedVendor: z.string().optional(),
   estimatedCost: z.number().int().nonnegative().optional(),
 });
