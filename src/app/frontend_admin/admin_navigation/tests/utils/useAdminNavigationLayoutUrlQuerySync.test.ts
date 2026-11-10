@@ -28,6 +28,7 @@ describe('useAdminNavigationLayoutUrlQuerySync', () => {
     await waitFor(() => expect(router.replace).toHaveBeenCalledWith('/admin/members', { scroll: false }));
   });
   it('uses the latest setter callback when only the callback identity changes', async () => {
+    searchParams = new URLSearchParams('page=1&status=active');
     const oldSetter = vi.fn();
     const newSetter = vi.fn();
     const { rerender } = renderHook(({ setter }) => useAdminNavigationLayoutUrlQuerySync([{ key: 'page', value: 1, defaultValue: 1, setValue: setter }]), { initialProps: { setter: oldSetter } });

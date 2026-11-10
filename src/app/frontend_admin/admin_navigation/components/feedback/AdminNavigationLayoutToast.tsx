@@ -29,6 +29,7 @@ export default function AdminNavigationLayoutToast({ id, message, type, onClose 
 
 // EFFECT: Tracks both auto-dismiss and exit-animation timers and clears them when toast identity or callback changes.
   useEffect(() => {
+    setVisible(true);
     dismissTimerRef.current = setTimeout(dismiss, 4000);
     return () => {
       if (dismissTimerRef.current) clearTimeout(dismissTimerRef.current);

@@ -6,7 +6,10 @@ import { act, render, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import AdminNavigationLayoutResponsiveTableProvider from '@/app/frontend_admin/admin_navigation/components/shell/AdminNavigationLayoutResponsiveTableProvider';
 
-vi.mock('@/app/frontend_admin/admin_navigation/components/shell/AdminNavigationLayoutResponsiveTableProvider.module.css', () => ({ responsiveTableScope: 'admin-responsive-table-scope' }));
+vi.mock('@/app/frontend_admin/admin_navigation/components/shell/AdminNavigationLayoutResponsiveTableProvider.module.css', () => ({
+  default: { responsiveTableScope: 'admin-responsive-table-scope' },
+  responsiveTableScope: 'admin-responsive-table-scope',
+}));
 
 function ResponsiveTableFixture({ blankHeader = false }: { blankHeader?: boolean }) {
   return <>

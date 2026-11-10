@@ -19,7 +19,7 @@ describe('AdminNavigationLayoutHeader responsive geometry contract', () => {
     expect(header.className).toContain('bg-header-translucent');
     expect(header.className).toContain('backdrop-blur-md');
     expect(screen.getByTestId('header-context').parentElement?.className).toContain('hidden md:block');
-    expect(screen.getByRole('button', { name: 'admin_layout.AdminNavigationLayoutKeyboardShortcuts.showHelp' }).className).toContain('hidden sm:inline-flex');
-    expect(header.querySelector('button[aria-label="admin_layout.AdminNavigationLayoutHeader.text_8b9b1bbd66"]')?.className).toContain('min-w-11');
+    expect(screen.getByRole('button', { name: 'admin_navigation.AdminNavigationLayoutKeyboardShortcuts.showHelp' }).className).toContain('hidden sm:inline-flex');
+    expect(header.querySelector('button[aria-label="admin_navigation.AdminNavigationLayoutHeader.text_8b9b1bbd66"]')?.className).toContain('min-w-11');
   });
 });

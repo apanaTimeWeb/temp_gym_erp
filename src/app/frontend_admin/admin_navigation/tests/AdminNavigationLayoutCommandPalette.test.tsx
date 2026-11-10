@@ -10,7 +10,11 @@ import { ADMIN_NAV_GROUPS } from '@/app/frontend_admin/admin_navigation/config/a
 const router = vi.hoisted(() => ({ push: vi.fn() }));
 vi.mock('next-intl', () => ({ useTranslations: () => (key: string) => key }));
 vi.mock('next/navigation', () => ({ useRouter: () => router }));
-vi.mock('@/app/frontend_admin/admin_navigation/components/command_palette/AdminNavigationLayoutCommandPalette.module.css', () => ({ palette: 'admin-command-palette', results: 'admin-command-results' }));
+vi.mock('@/app/frontend_admin/admin_navigation/components/command_palette/AdminNavigationLayoutCommandPalette.module.css', () => ({
+  default: { palette: 'admin-command-palette', results: 'admin-command-results' },
+  palette: 'admin-command-palette',
+  results: 'admin-command-results',
+}));
 
 describe('AdminNavigationLayoutCommandPalette keyboard listbox', () => {
   beforeEach(() => router.push.mockReset());
