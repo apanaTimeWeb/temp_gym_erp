@@ -18,6 +18,7 @@ const translations: Record<string, string> = {
   NAV_COMMUNICATIONS_HISTORY: 'History', NAV_COMMUNICATIONS_AUTOMATIONS: 'Automations', NAV_CHURN_RECOVERY: 'Churn Recovery',
   NAV_STAFF_DIRECTORY: 'Staff Directory', NAV_STAFF_ATTENDANCE: 'Staff Attendance', NAV_REFERRALS_REWARDS: 'Referrals & Rewards', NAV_DIET_LIBRARY: 'Diet Library', NAV_EXERCISE_LIBRARY: 'Exercise Library', NAV_REPORTS_OVERVIEW: 'Business Reports',
   NAV_PAYROLL_LEDGER: 'Payroll & Ledger',
+  NAV_DOMAIN_HELP_SUPPORT: 'Help & Support',
 };
 vi.mock('next-intl', () => ({ useTranslations: () => (key: string) => translations[key] ?? key }));
 vi.mock('next/navigation', () => ({ usePathname: () => mockPathname.value }));
@@ -26,17 +27,18 @@ vi.mock('next/image', () => ({ default: (props: ImgHTMLAttributes<HTMLImageEleme
 vi.mock('@/lib/api', () => ({ getUser: () => ({ name: 'Manager', role: 'Manager' }) }));
 vi.mock('@/app/frontend_manager/manager_infrastructure/hooks/useManagerInfrastructureMounted', () => ({ useManagerInfrastructureMounted: () => true }));
 
-describe('ManagerNavigationSidebar uses the approved 14-domain structure', () => {
-  it('defines 14 top-level domain rows and exposes 27 leaf destinations with seven expandable domains', () => {
-    expect(MANAGER_NAV_GROUPS).toHaveLength(14);
-    expect(MANAGER_NAV_GROUPS.flatMap((group) => group.items)).toHaveLength(27);
+describe('ManagerNavigationSidebar uses the approved 15-domain structure', () => {
+  it('defines 15 top-level domain rows and exposes 28 leaf destinations with seven expandable domains', () => {
+    expect(MANAGER_NAV_GROUPS).toHaveLength(15);
+    expect(MANAGER_NAV_GROUPS.flatMap((group) => group.items)).toHaveLength(28);
     expect(MANAGER_NAV_GROUPS.filter((group) => group.collapsible)).toHaveLength(7);
-    expect(new Set(MANAGER_NAV_GROUPS.flatMap((group) => group.items.map((item) => item.href))).size).toBe(27);
+    expect(new Set(MANAGER_NAV_GROUPS.flatMap((group) => group.items.map((item) => item.href))).size).toBe(28);
     expect(MANAGER_NAV_GROUPS.map((group) => group.groupKey)).toEqual([
       'NAV_DOMAIN_DASHBOARD', 'NAV_DOMAIN_INQUIRIES_CRM', 'NAV_DOMAIN_MEMBERS', 'NAV_DOMAIN_ATTENDANCE',
       'NAV_DOMAIN_MEMBERSHIP_PLANS', 'NAV_DOMAIN_SALES_BILLING', 'NAV_DOMAIN_FINANCE_EXPENSES',
       'NAV_DOMAIN_MAINTENANCE', 'NAV_DOMAIN_GRIEVANCES', 'NAV_DOMAIN_STAFF_HR', 'NAV_DOMAIN_SCHEDULE_PT',
       'NAV_DOMAIN_WORKOUT_DIET_LIBRARY', 'NAV_DOMAIN_COMMUNICATIONS', 'NAV_DOMAIN_REPORTS_REFERRALS',
+      'NAV_DOMAIN_HELP_SUPPORT',
     ]);
   });
 

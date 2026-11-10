@@ -8,7 +8,7 @@ Own Manager navigation metadata and shell presentation: sidebar, header, breadcr
 
 ## 2. Domain structure
 
-Render 14 domain rows and 27 secondary leaf destinations from one typed registry.
+Render 15 domain rows and 28 secondary leaf destinations from one typed registry.
 
 ## 3. Expandable groups
 

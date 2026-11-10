@@ -16,6 +16,7 @@ const REPORT_TAB_LABELS: Record<ReportTab, { en: string; hi: string }> = {
   Attendance: { en: 'Attendance', hi: 'उपस्थिति' },
   Members: { en: 'Members', hi: 'सदस्य' },
   Expenses: { en: 'Expenses', hi: 'खर्च' },
+  Trainers: { en: 'Trainer Performance', hi: 'ट्रेनर प्रदर्शन' },
 };
 
 /** @description Renders the Manager Reports overview with consistent query states and accessible report navigation. */

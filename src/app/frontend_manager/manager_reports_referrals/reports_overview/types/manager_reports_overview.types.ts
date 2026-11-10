@@ -1,6 +1,18 @@
 // RESPONSIBILITY: All TypeScript types for the Manager Reports module.
 
-export type ReportTab = 'Revenue' | 'Attendance' | 'Members' | 'Expenses';
+export type ReportTab = 'Revenue' | 'Attendance' | 'Members' | 'Expenses' | 'Trainers';
+
+export interface TrainerPerformanceItem {
+  id: string;
+  trainerName: string;
+  specialization: string;
+  activeClients: number;
+  sessionsCompleted: number;
+  completionRate: number;
+  avgRating: number;
+  revenueGenerated: number;
+  retentionRate: number;
+}
 
 export interface ReportKPIData {
   totalRevenue: number;
@@ -46,6 +58,7 @@ export interface ReportSummary {
   attendanceData: AttendanceDataPoint[];
   memberChurnData: MemberChurnDataPoint[];
   expenseBreakdown: ExpenseBreakdownItem[];
+  trainerPerformance?: TrainerPerformanceItem[];
 }
 
 export type ManagerReportsOverviewDateRange = 'this_month' | 'last_month' | 'last_3_months' | 'last_6_months' | 'this_year' | 'monthly' | 'yearly';

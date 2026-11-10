@@ -39,5 +39,11 @@ export const MOCK_REPORT_SUMMARY: ReportSummary = {
     { category: 'Salaries', amount: 9000000, percentage: 36 },
     { category: 'Equipment Maintenance', amount: 3500000, percentage: 14 },
     { category: 'Utilities', amount: 2500000, percentage: 10 },
+  ],
+  trainerPerformance: [
+    { id: 'tr-1', trainerName: 'Vikram Singh', specialization: 'Strength & Conditioning', activeClients: 14, sessionsCompleted: 48, completionRate: 98, avgRating: 4.9, revenueGenerated: 145000, retentionRate: 92 },
+    { id: 'tr-2', trainerName: 'Ananya Sharma', specialization: 'Pilates & Mobility', activeClients: 12, sessionsCompleted: 42, completionRate: 95, avgRating: 4.8, revenueGenerated: 128000, retentionRate: 89 },
+    { id: 'tr-3', trainerName: 'Rahul Verma', specialization: 'CrossFit & HIIT', activeClients: 10, sessionsCompleted: 36, completionRate: 92, avgRating: 4.7, revenueGenerated: 110000, retentionRate: 85 },
+    { id: 'tr-4', trainerName: 'Priya Patel', specialization: 'Functional & Weight Loss', activeClients: 15, sessionsCompleted: 52, completionRate: 97, avgRating: 4.9, revenueGenerated: 160000, retentionRate: 94 },
   ]
 };

@@ -1,7 +1,7 @@
 // RESPONSIBILITY: Renders or orchestrates the owning Manager feature UI; API transport and business rules remain in module-owned hooks/services.
 'use client';
 
-import { Edit, MessageCircle, Mail, Trash2, Banknote, Ban } from 'lucide-react';
+import { Edit, MessageCircle, Mail, Trash2, Banknote, Ban, User } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
@@ -132,11 +132,45 @@ export default function ManagerMembersDirectoryTable() {
                           <div className="min-w-0">
                             <p className="text-sm font-semibold text-text-primary truncate">{ManagerMembersDirectoryDisplayValue(m.name)}</p>
                             <p className="text-xs text-text-secondary font-mono">{ManagerMembersDirectoryMaskSensitiveData(m.phone || '', 'phone')}</p>
+                            <div className="flex items-center gap-1.5 mt-0.5 text-xs text-text-secondary">
+                              <span className="text-text-muted text-[11px]">Trainer:</span>
+                              <span className="font-medium text-text-primary text-[11px]">{m.assignedTrainerName || 'Unassigned'}</span>
+                              {m.isPT && <span className="px-1 py-0.2 rounded text-[9px] font-bold bg-amber-500/15 text-amber-600 border border-amber-500/30">PT</span>}
+                            </div>
                           </div>
                         </div>
                       </td>
                       <td className="px-4 py-3.5 text-xs text-text-secondary whitespace-nowrap">{ManagerMembersDirectoryDisplayValue(m.gender)}</td>
-                      <td className="px-4 py-3.5 text-xs font-medium text-text-primary whitespace-nowrap">{ManagerMembersDirectoryDisplayValue(m.plan?.name)}</td>
+                      <td className="px-4 py-3.5 text-xs whitespace-nowrap">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-semibold text-text-primary">{ManagerMembersDirectoryDisplayValue(m.plan?.name)}</span>
+                            <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider bg-primary-subtle text-primary border border-primary/20">
+                              {m.billingCycle ? m.billingCycle.toUpperCase() : 'MONTHLY'}
+                            </span>
+                          </div>
+                          <div className="flex flex-wrap items-center gap-1">
+                            {m.assignedDiet || m.dietPlan ? (
+                              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-emerald-500/10 text-emerald-600 border border-emerald-500/20" title="Diet Assigned">
+                                Diet Plan
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-input text-text-muted border border-border/40">
+                                No Diet
+                              </span>
+                            )}
+                            {m.assignedWorkout || m.workoutPlan ? (
+                              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-blue-500/10 text-blue-600 border border-blue-500/20" title="Workout Assigned">
+                                Workout Plan
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-input text-text-muted border border-border/40">
+                                No Workout
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </td>
                       <td className="px-4 py-3.5 whitespace-nowrap">
                         <span
                           data-testid={`manager_members-members-managermemberstable-status-${m.id}`}

@@ -19,11 +19,13 @@ interface ManagerInquiriesPipelineUiState {
   showModal: boolean; editId: string | null; editData: InquiryFormValues | null;
   msgModal: ManagerInquiriesPipelineMessageModal | null; bulkMsgModal: ManagerInquiriesPipelineBulkMessageModal | null;
   convertLead: Inquiry | null; selectedIds: string[];
+  selectedLead: Inquiry | null;
   search: string;
   showToast: (message: string, type: ManagerToastType) => void; hideToast: () => void;
   setShowModal: (show: boolean) => void; setEditId: (id: string | null) => void; setEditData: (data: InquiryFormValues | null) => void;
   setMsgModal: (value: ManagerInquiriesPipelineMessageModal | null) => void; setBulkMsgModal: (value: ManagerInquiriesPipelineBulkMessageModal | null) => void;
   setConvertLead: (value: Inquiry | null) => void; setSelectedIds: (ids: string[] | ((current: string[]) => string[])) => void;
+  setSelectedLead: (lead: Inquiry | null) => void;
   setSearch: (search: string) => void;
 }
 /**
@@ -32,11 +34,12 @@ interface ManagerInquiriesPipelineUiState {
  * @edge-case preserves documented empty, retry, and boundary states for this module.
  */
 export const useManagerInquiriesPipelineUiStore = create<ManagerInquiriesPipelineUiState>((set) => ({
-  toast: null, showModal: false, editId: null, editData: null, msgModal: null, bulkMsgModal: null, convertLead: null, selectedIds: [],
+  toast: null, showModal: false, editId: null, editData: null, msgModal: null, bulkMsgModal: null, convertLead: null, selectedIds: [], selectedLead: null,
   search: '',
   showToast: (message, type) => set({ toast: { message, type } }), hideToast: () => set({ toast: null }),
   setShowModal: (showModal) => set({ showModal }), setEditId: (editId) => set({ editId }), setEditData: (editData) => set({ editData }),
   setMsgModal: (msgModal) => set({ msgModal }), setBulkMsgModal: (bulkMsgModal) => set({ bulkMsgModal }), setConvertLead: (convertLead) => set({ convertLead }),
   setSelectedIds: (next) => set((state) => ({ selectedIds: typeof next === "function" ? next(state.selectedIds) : next })),
+  setSelectedLead: (selectedLead) => set({ selectedLead }),
   setSearch: (search) => set({ search }),
 }));

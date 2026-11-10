@@ -12,7 +12,10 @@ export const managerFinancePaymentFormSchema = z.object({
   amount: z.coerce.number().positive(),
   method: z.enum(FINANCE_PAYMENT_METHOD_VALUES),
   notes: z.string().trim().max(500).default(''),
-  paidAt: z.string().min(1)
+  paidAt: z.string().min(1),
+  paymentType: z.enum(['FULL', 'PARTIAL', 'DUE_SETTLEMENT']).optional().default('FULL'),
+  remainingDue: z.coerce.number().min(0).optional().default(0),
+  nextDueDate: z.string().optional().or(z.literal('')),
 });
 export type ManagerFinancePaymentsAndSummaryPaymentFormInput = z.input<typeof managerFinancePaymentFormSchema>;
 export type ManagerFinancePaymentsAndSummaryPaymentFormOutput = z.output<typeof managerFinancePaymentFormSchema>;

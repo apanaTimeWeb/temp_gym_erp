@@ -3,4 +3,5 @@ export interface ManagerPtAssignmentsToolbarProps {
   subtitle: string;
   actionLabel: string;
   onAssign: () => void;
+  onScheduleSession?: () => void;
 }

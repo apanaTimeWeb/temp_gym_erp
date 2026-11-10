@@ -1,5 +1,5 @@
-// RESPONSIBILITY: Owns the Manager sidebar's 14 domain rows and secondary leaf destinations. Store stays routable under Sales & Billing but outside the sidebar; profile/settings/notifications remain header-owned.
-import { LayoutDashboard, Users, CalendarCheck, Tags, Wrench, Frown, FileBarChart, Receipt, UserCog, CalendarClock, Dumbbell, Megaphone, Mail, History, Repeat, UserRoundX, ClipboardList, Settings, ShieldCheck, ClipboardCheck, BookOpen, Utensils, Gift, UserCheck } from 'lucide-react';
+// RESPONSIBILITY: Owns the Manager sidebar's 15 domain rows and secondary leaf destinations. Store stays routable under Sales & Billing but outside the sidebar; profile/settings/notifications remain header-owned.
+import { LayoutDashboard, Users, CalendarCheck, Tags, Wrench, Frown, FileBarChart, Receipt, UserCog, CalendarClock, Dumbbell, Megaphone, Mail, History, Repeat, UserRoundX, ClipboardList, Settings, ShieldCheck, ClipboardCheck, BookOpen, Utensils, Gift, UserCheck, LifeBuoy } from 'lucide-react';
 import type { ManagerNavGroup } from '@/app/frontend_manager/manager_navigation/types/ManagerNavigationConfigTypes';
 import { MANAGER_BUSINESS_SETTINGS_ROUTES } from '@/app/frontend_manager/manager_dashboard/business_settings/config/manager_business_settings.url_config';
 import { MANAGER_PROFILE_AND_SECURITY_ROUTES } from '@/app/frontend_manager/manager_dashboard/profile_and_security/config/manager_profile_and_security.url_config';
@@ -28,6 +28,7 @@ import { MANAGER_COMMUNICATIONS_CAMPAIGNS_ROUTES as AUTOMATIONS_ROUTES } from '@
 import { MANAGER_COMMUNICATIONS_CAMPAIGNS_ROUTES as CHURN_ROUTES } from '@/app/frontend_manager/manager_communications/communications_churn_recovery/config/manager_communications_communications_churn_recovery.url_config';
 import { MANAGER_REFERRALS_REWARDS_ROUTES } from '@/app/frontend_manager/manager_reports_referrals/referrals_rewards/config/manager_referrals_rewards.url_config';
 import { MANAGER_REPORTS_OVERVIEW_ROUTES } from '@/app/frontend_manager/manager_reports_referrals/reports_overview/config/manager_reports_overview.url_config';
+import { MANAGER_SUPPORT_TICKETS_ROUTES } from '@/app/frontend_manager/manager_help_support/support_tickets/config/manager_support_tickets.url_config';
 
 export const MANAGER_NAV_GROUPS: ManagerNavGroup[] = [
   { groupKey: 'NAV_DOMAIN_DASHBOARD', domainHref: '/frontend_manager/manager_dashboard', collapsible: true, items: [{ href: MANAGER_DASHBOARD_OVERVIEW_ROUTES.PATHS.LEAF, labelKey: 'NAV_DOMAIN_DASHBOARD', icon: LayoutDashboard }, { href: MANAGER_BUSINESS_SETTINGS_ROUTES.PATHS.LEAF, labelKey: 'NAV_BUSINESS_SETTINGS', icon: Settings }, { href: MANAGER_PROFILE_AND_SECURITY_ROUTES.PATHS.LEAF, labelKey: 'NAV_PROFILE_SECURITY', icon: ShieldCheck }] },
@@ -56,6 +57,7 @@ export const MANAGER_NAV_GROUPS: ManagerNavGroup[] = [
     { href: CHURN_ROUTES.PATHS.LEAF, labelKey: 'NAV_CHURN_RECOVERY', icon: UserRoundX },
   ] },
   { groupKey: 'NAV_DOMAIN_REPORTS_REFERRALS', domainHref: '/frontend_manager/manager_reports_referrals', collapsible: true, items: [{ href: MANAGER_REPORTS_OVERVIEW_ROUTES.PATHS.LEAF, labelKey: 'NAV_REPORTS_OVERVIEW', icon: FileBarChart }, { href: MANAGER_REFERRALS_REWARDS_ROUTES.PATHS.LEAF, labelKey: 'NAV_REFERRALS_REWARDS', icon: Gift }] },
+  { groupKey: 'NAV_DOMAIN_HELP_SUPPORT', domainHref: '/frontend_manager/manager_help_support', collapsible: false, items: [{ href: MANAGER_SUPPORT_TICKETS_ROUTES.PATHS.LEAF, labelKey: 'NAV_DOMAIN_HELP_SUPPORT', icon: LifeBuoy }] },
 ];
 
 export const MANAGER_DEFAULT_HOME = MANAGER_DASHBOARD_OVERVIEW_ROUTES.PATHS.LEAF;

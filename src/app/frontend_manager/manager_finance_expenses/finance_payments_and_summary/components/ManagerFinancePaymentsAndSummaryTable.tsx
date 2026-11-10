@@ -1,7 +1,7 @@
 // RESPONSIBILITY: Renders ManagerFinancePaymentsAndSummaryTable's feature UI and orchestrates presentation through module-owned state/hooks; it does not own API transport or business rules.
 'use client';
 
-import { Printer } from 'lucide-react';
+import { Printer, Banknote } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
@@ -15,6 +15,7 @@ import { MANAGER_FINANCE_PAYMENTS_AND_SUMMARY_PAYMENT_STATUS_PAID, MANAGER_FINAN
 import { PAYMENTS_TABLE_HEADERS } from '@/app/frontend_manager/manager_finance_expenses/finance_payments_and_summary/constants/manager_finance_payments_and_summary_shared.constants';
 import { MANAGER_FINANCE_PAYMENTS_AND_SUMMARY_METHOD_STYLES } from '@/app/frontend_manager/manager_finance_expenses/finance_payments_and_summary/constants/manager_finance_payments_and_summary_shared.constants';
 import { useManagerFinancePaymentsAndSummaryLogic } from '@/app/frontend_manager/manager_finance_expenses/finance_payments_and_summary/hooks/useManagerFinancePaymentsAndSummaryLogic';
+import { useManagerFinancePaymentsAndSummaryUiStore } from '@/app/frontend_manager/manager_finance_expenses/finance_payments_and_summary/state/useManagerFinancePaymentsAndSummaryUiStore';
 import { ManagerFinancePaymentsAndSummaryDisplayValue, ManagerFinancePaymentsAndSummaryFormatCurrency, ManagerFinancePaymentsAndSummaryFormatDate, ManagerFinancePaymentsAndSummaryMaskSensitiveData } from '@/app/frontend_manager/manager_finance_expenses/finance_payments_and_summary/utils/ManagerFinancePaymentsAndSummaryFormatters';
 
 
@@ -30,6 +31,7 @@ export default function ManagerFinancePaymentsAndSummaryTable() {
   const locale = useLocale();
 
   const { payments, totalPayments, currentPage, setCurrentPage, printReceipt } = useManagerFinancePaymentsAndSummaryLogic();
+  const setShowModal = useManagerFinancePaymentsAndSummaryUiStore((s) => s.setShowModal);
   const totalPages = Math.ceil(totalPayments / MANAGER_ITEMS_PER_PAGE);
 
   return (
@@ -69,13 +71,30 @@ export default function ManagerFinancePaymentsAndSummaryTable() {
                     {ManagerFinancePaymentsAndSummaryFormatDate(p.paidAt)}
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap">
-                    <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 min-w-11 md:min-h-8 md:min-w-8 p-1.5 flex items-center justify-center rounded-lg bg-input text-text-secondary hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_finance-finance-managerfinancetable-button-print-receipt-${mapIndex}`} 
-                      onClick={(event) => { event.stopPropagation(); printReceipt(p.id); }}
-                       
-                      title={t("COPY_PRINT_RECEIPT")} aria-label={t("TEXT_PRINT_RECEIPT_FOR_INVOICE", { value: p.invoiceNumber })}
-                     type="button">
-                      <Printer size={16} strokeWidth={2}/>
-                    </button>
+                    <div className="flex items-center gap-1.5">
+                      {(p.status === 'DUE' || p.status === 'PARTIAL' || p.status === 'PENDING') && (
+                        <button
+                          className="min-h-11 min-w-11 md:min-h-8 md:min-w-8 p-1.5 flex items-center justify-center rounded-lg bg-warning-bg text-warning-text hover:bg-warning hover:text-on-warning border border-warning/30 motion-safe:transition-all motion-safe:duration-200 ease-in-out active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none"
+                          data-testid={`manager_finance-managerfinancetable-button-collect-due-${p.id}`}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            setShowModal(true);
+                          }}
+                          title="Collect Due Payment"
+                          aria-label={`Collect Due for Invoice ${p.invoiceNumber}`}
+                          type="button"
+                        >
+                          <Banknote size={16} strokeWidth={2} />
+                        </button>
+                      )}
+                      <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 min-w-11 md:min-h-8 md:min-w-8 p-1.5 flex items-center justify-center rounded-lg bg-input text-text-secondary hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_finance-finance-managerfinancetable-button-print-receipt-${mapIndex}`} 
+                        onClick={(event) => { event.stopPropagation(); printReceipt(p.id); }}
+                         
+                        title={t("COPY_PRINT_RECEIPT")} aria-label={t("TEXT_PRINT_RECEIPT_FOR_INVOICE", { value: p.invoiceNumber })}
+                       type="button">
+                        <Printer size={16} strokeWidth={2}/>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               );

@@ -6,6 +6,7 @@ import { ManagerReportsOverviewAttendanceTable } from '@/app/frontend_manager/ma
 import { ManagerReportsOverviewExpensesTable } from '@/app/frontend_manager/manager_reports_referrals/reports_overview/components/ManagerReportsOverviewExpensesTable';
 import { ManagerReportsOverviewMembersTable } from '@/app/frontend_manager/manager_reports_referrals/reports_overview/components/ManagerReportsOverviewMembersTable';
 import { ManagerReportsOverviewRevenueTable } from '@/app/frontend_manager/manager_reports_referrals/reports_overview/components/ManagerReportsOverviewRevenueTable';
+import { ManagerReportsOverviewTrainersTable } from '@/app/frontend_manager/manager_reports_referrals/reports_overview/components/ManagerReportsOverviewTrainersTable';
 import { useManagerReportsOverviewLogic } from '@/app/frontend_manager/manager_reports_referrals/reports_overview/hooks/useManagerReportsOverviewLogic';
 
 
@@ -27,6 +28,7 @@ export default function ManagerReportsOverviewTable() {
         {tab === 'Attendance' && <ManagerReportsOverviewAttendanceTable />}
         {tab === 'Members'    && <ManagerReportsOverviewMembersTable    />}
         {tab === 'Expenses'   && <ManagerReportsOverviewExpensesTable   />}
+        {tab === 'Trainers'   && <ManagerReportsOverviewTrainersTable   />}
       </div>
     </div>
   );

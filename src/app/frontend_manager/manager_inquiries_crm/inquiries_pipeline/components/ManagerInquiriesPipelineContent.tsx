@@ -9,6 +9,7 @@ import ManagerInquiriesPipelineConvertLeadModal from '@/app/frontend_manager/man
 import ManagerInquiriesPipelineKPIs from '@/app/frontend_manager/manager_inquiries_crm/inquiries_pipeline/components/ManagerInquiriesPipelineKPIs';
 import ManagerInquiriesPipelineMessageModal from '@/app/frontend_manager/manager_inquiries_crm/inquiries_pipeline/components/ManagerInquiriesPipelineMessageModal';
 import ManagerInquiriesPipelineModal from '@/app/frontend_manager/manager_inquiries_crm/inquiries_pipeline/components/ManagerInquiriesPipelineModal';
+import ManagerInquiriesPipelineLeadDetailsDrawer from '@/app/frontend_manager/manager_inquiries_crm/inquiries_pipeline/components/ManagerInquiriesPipelineLeadDetailsDrawer';
 import ManagerInquiriesPipelineTable from '@/app/frontend_manager/manager_inquiries_crm/inquiries_pipeline/components/ManagerInquiriesPipelineTable';
 import ManagerInquiriesPipelineToolbar from '@/app/frontend_manager/manager_inquiries_crm/inquiries_pipeline/components/ManagerInquiriesPipelineToolbar';
 import { useManagerInquiriesPipelineLogic } from '@/app/frontend_manager/manager_inquiries_crm/inquiries_pipeline/hooks/useManagerInquiriesPipelineLogic';
@@ -36,6 +37,7 @@ export function ManagerInquiriesPipelineContent() {
 
       <ManagerInquiriesPipelineModal />
       <ManagerInquiriesPipelineConvertLeadModal />
+      <ManagerInquiriesPipelineLeadDetailsDrawer />
 
       {msgModal?.open && (
         <ManagerInquiriesPipelineMessageModal data-testid="manager_inquiries-managerinquiriescontent-managerinquiriesmessagemodal-2"
