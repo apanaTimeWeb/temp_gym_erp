@@ -2,9 +2,11 @@
 
 
 
+import { Suspense } from 'react';
 import { getTranslations } from 'next-intl/server';
 
 import SuperadminAuditComplianceGlobalAuditMain from '@/app/frontend_superadmin/superadmin_audit_compliance/audit_compliance_global_audit_overview/components/global_audit_overview_main/SuperadminAuditComplianceGlobalAuditOverviewMain';
+import Loading from '@/app/frontend_superadmin/superadmin_audit_compliance/audit_compliance_global_audit_overview/loading';
 
 import type { Metadata } from 'next';
 
@@ -19,5 +21,9 @@ export async function generateMetadata(): Promise<Metadata> {
  * @edge-cases Preserves documented loading, empty, error, disabled, cancellation, retry, and repeated-action behavior.
  */
 export default function SuperadminAuditComplianceGlobalAuditPage() {
-  return <SuperadminAuditComplianceGlobalAuditMain />;
+  return (
+    <Suspense fallback={<Loading />}>
+      <SuperadminAuditComplianceGlobalAuditMain />
+    </Suspense>
+  );
 }
