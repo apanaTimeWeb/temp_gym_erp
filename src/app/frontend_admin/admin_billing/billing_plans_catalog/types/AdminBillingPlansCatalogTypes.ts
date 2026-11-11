@@ -49,6 +49,19 @@ export interface Plan {
 }
 
 
-export type PlanFormValues = { name: string; tier: 'Bronze' | 'Silver' | 'Gold'; price1Month: string; price3Month: string; price6Month: string; price12Month: string; priceCustom: string; features: string };
+export type PlanFormValues = {
+  name: string;
+  tier: 'Bronze' | 'Silver' | 'Gold';
+  price1Month: string;
+  price3Month: string;
+  price6Month: string;
+  price12Month: string;
+  priceCustom?: string;
+  features: string;
+  freezeAllowed?: boolean;
+  joiningFee?: string;
+  ptSessionsIncluded?: string;
+  taxRate?: string;
+};
 
 export type AdminPlansUrlUpdate = { search?: string | null; tier?: string | null; page?: number };

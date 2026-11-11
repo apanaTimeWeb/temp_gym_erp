@@ -124,10 +124,10 @@ export default function AdminSalesAnalyticsMembershipReport() {
           {sortedRows.map((row) => (
             <tr key={row.id ?? row.plan ?? row.name} className="bg-card motion-safe:transition-colors hover:bg-surface-highlight motion-safe:duration-base">
               <td className="px-4 py-3 text-sm font-medium text-primary">{displayValue(row.plan ?? row.name)}</td>
-              <td className="px-4 py-3 text-sm text-secondary"><span>{AdminSalesFormatCurrency(row.receivable, undefined, locale)}</span></td>
-              <td className="px-4 py-3 text-sm font-medium text-success"><span>{AdminSalesFormatCurrency(row.received, undefined, locale)}</span></td>
-              <td className="px-4 py-3 text-sm font-medium text-warning"><span>{AdminSalesFormatCurrency(row.remaining, undefined, locale)}</span></td>
-              <td className="px-4 py-3 text-sm text-danger"><span>{AdminSalesFormatCurrency(row.refund, undefined, locale)}</span></td>
+              <td className="px-4 py-3 text-sm text-secondary"><span>{AdminSalesFormatCurrency(row.receivable ?? 0, undefined, locale)}</span></td>
+              <td className="px-4 py-3 text-sm font-medium text-success"><span>{AdminSalesFormatCurrency(row.received ?? 0, undefined, locale)}</span></td>
+              <td className="px-4 py-3 text-sm font-medium text-warning"><span>{AdminSalesFormatCurrency(row.remaining ?? 0, undefined, locale)}</span></td>
+              <td className="px-4 py-3 text-sm text-danger"><span>{AdminSalesFormatCurrency(row.refund ?? 0, undefined, locale)}</span></td>
             </tr>
           ))}
           <tr className="border-t-2 border-border bg-input font-semibold">

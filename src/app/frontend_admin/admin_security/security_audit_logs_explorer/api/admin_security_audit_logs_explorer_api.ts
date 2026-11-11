@@ -42,8 +42,8 @@ export const AdminAuditLogsApi = {
         entityType: params.entityType,
       });
       const records = (logs?.data as unknown as AuditLog[]) ?? [];
-      const headers = ['Timestamp', 'Actor', 'Action', 'Entity', 'EntityID', 'IPAddress'];
-      const lines = [headers.join(','), ...records.map(l => `"${l.timestamp || ''}","${l.actor || ''}","${l.action || ''}","${l.entity || ''}","${l.entityId || ''}","${l.ipAddress || ''}"`)];
+      const headers = ['Timestamp', 'Actor', 'Action', 'EntityType', 'EntityID', 'BranchID', 'Details'];
+      const lines = [headers.join(','), ...records.map((l) => `"${l.timestamp || ''}","${l.actor || ''}","${l.action || ''}","${l.entityType || ''}","${l.entityId || ''}","${l.branchId || ''}","${l.details || ''}"`)];
       return new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
     } catch {
       const fallback = `Report,AuditLogs\nActor,${params.actor || 'All'}\nAction,${params.action || 'All'}\nFrom,${params.from || ''}\nTo,${params.to || ''}\n`;
