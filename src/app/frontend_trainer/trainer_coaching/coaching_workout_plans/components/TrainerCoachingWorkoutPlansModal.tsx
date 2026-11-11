@@ -129,8 +129,8 @@ export default function TrainerWorkoutModal() {
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay-backdrop p-4 " role="presentation">
-      <div className="flex max-h-dialog-desktop w-full max-w-md flex-col overflow-hidden rounded-2xl bg-overlay shadow-dialog " ref={dialogRef} role="dialog" aria-modal={true} aria-labelledby="trainer-workout-modal-title">
-        <div className="flex justify-between items-center p-5 border-b border-border ">
+      <div className="my-auto flex max-h-dialog-desktop w-full max-w-md flex-col overflow-hidden rounded-2xl bg-overlay shadow-dialog " ref={dialogRef} role="dialog" aria-modal={true} aria-labelledby="trainer-workout-modal-title">
+        <div className="flex justify-between items-center p-5 border-b border-border shrink-0 bg-overlay ">
           <h3 id="trainer-workout-modal-title" className="font-bold text-lg text-primary ">
             {editWorkout ? t("TEXT_EDIT_WORKOUT_PLAN") : t("TEXT_ADD_WORKOUT_PLAN")}
           </h3>
@@ -141,7 +141,7 @@ export default function TrainerWorkoutModal() {
             <X size={18}  strokeWidth={2}/>
           </button>
         </div>
-        <form onSubmit={handleSubmit(handleWorkoutFormSubmit)} className="min-h-0 space-y-4 overflow-y-auto p-5 " data-testid="trainer_workout-trainerworkoutmodal-form_2">
+        <form onSubmit={handleSubmit(handleWorkoutFormSubmit)} className="min-h-0 flex-1 space-y-4 overflow-y-auto p-5 custom-scrollbar " data-testid="trainer_workout-trainerworkoutmodal-form_2">
           <div>
             <label htmlFor="trainer-workout-name" className="block text-sm font-medium text-secondary mb-1 ">{t("TEXT_PLAN_NAME")}</label>
             <input id="trainer-workout-name" 
@@ -267,7 +267,7 @@ export default function TrainerWorkoutModal() {
 
           <TrainerWorkoutExerciseFields control={control} register={register} />
           {errors.exercises && <p role="alert" className="text-danger text-xs" data-testid="trainer_workout-modal-exercise-count-error">{t(errors.exercises.message ?? 'ERR_POSITIVE_NUMBER')}</p>}
-          <div className="pt-2 flex justify-end gap-3 ">
+          <div className="sticky bottom-0 bg-overlay border-t border-border pt-3 flex justify-end gap-3 z-10 shrink-0 ">
             <button 
               type="button" 
               onClick={() => void guardNavigation(() => { setEditWorkoutId(null); setShowWkModal(false); })} 

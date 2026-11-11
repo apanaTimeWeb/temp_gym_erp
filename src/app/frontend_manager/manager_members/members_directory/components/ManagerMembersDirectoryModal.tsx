@@ -31,9 +31,9 @@ export default function ManagerMembersDirectoryModal() {
   if (!showAddModal) return null;
 
   return (
-    <div className="fixed inset-0 bg-overlay-backdrop z-40 flex items-center justify-center p-4">
-      <div className="bg-overlay rounded-2xl shadow-dialog w-full max-w-2xl max-h-full overflow-y-auto border-2 border-warning" role="dialog" aria-modal="true" aria-labelledby="managermembersmodal-dialog-title">
-        <div className="sticky top-0 px-8 py-5 border-b border-border bg-overlay flex items-center justify-between z-20">
+    <div className="fixed inset-0 bg-overlay-backdrop z-40 flex items-center justify-center p-4 overflow-y-auto">
+      <div className="my-auto bg-overlay rounded-2xl shadow-dialog w-full max-w-2xl max-h-dialog-desktop flex flex-col overflow-hidden border-2 border-warning" role="dialog" aria-modal="true" aria-labelledby="managermembersmodal-dialog-title">
+        <div className="sticky top-0 px-8 py-5 border-b border-border bg-overlay flex items-center justify-between z-20 shrink-0">
           <h3 className="text-xl font-bold text-text-primary" id="managermembersmodal-dialog-title">{editId ? t("TEXT_EDIT_MEMBER") : t("TEXT_ADD_NEW_MEMBER")}</h3>
           <button data-testid="manager_members-manager-members-modal-close-1"
             type="button"
@@ -44,7 +44,7 @@ export default function ManagerMembersDirectoryModal() {
             <X size={18} strokeWidth={2} />
           </button>
         </div>
-        <form data-testid="manager_members-managermembersmodal-form-1" onSubmit={handleSubmit} className="p-6">
+        <form data-testid="manager_members-managermembersmodal-form-1" onSubmit={handleSubmit} className="p-6 overflow-y-auto custom-scrollbar flex-1 min-h-0">
           
           {/* Profile Picture Upload — extracted component (Rule 1: file size ceiling) */}
           <ManagerMembersDirectoryMemberProfilePictureUpload />
@@ -54,7 +54,7 @@ export default function ManagerMembersDirectoryModal() {
             <ManagerMembersDirectoryModalMembershipFields formState={formState} editId={editId} plans={plans} />
           </div>
           
-          <div className="flex justify-end gap-3 mt-8 pt-6 border-t border-border">
+          <div className="sticky bottom-0 bg-overlay border-t border-border pt-4 pb-2 flex justify-end gap-3 z-10 shrink-0 mt-4">
             <button data-testid="manager_members-manager-members-modal-close-2"
               type="button"
               onClick={handleClose}

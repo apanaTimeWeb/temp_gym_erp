@@ -30,8 +30,8 @@ export default function AdminHrManagementStaffModal() {
 
 
   return (
- <div data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-hr-staff-modal-title" tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay" data-testid="admin_hr-admin_hr-staff-modal-control">
-  <div className="rounded-2xl shadow-dialog w-full max-w-md max-h-screen overflow-y-auto bg-overlay motion-safe:transition-all motion-safe:duration-base ease-in-out border-2 border-border">
+ <div data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-hr-staff-modal-title" tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay overflow-y-auto" data-testid="admin_hr-admin_hr-staff-modal-control">
+  <div className="my-auto rounded-2xl shadow-dialog w-full max-w-md max-h-dialog-desktop overflow-y-auto custom-scrollbar bg-overlay motion-safe:transition-all motion-safe:duration-base ease-in-out border-2 border-border">
   <div className="sticky top-0 px-8 py-5 border-b border-border bg-card flex items-center justify-between z-10">
   <h3 id="admin-hr-staff-modal-title" className="text-xl font-bold text-primary">{editId ? t('hr.admin_hr_staff_modal.auto_6185ab8940') : t('hr.admin_hr_staff_modal.auto_b76695b470')}</h3>
   <button 

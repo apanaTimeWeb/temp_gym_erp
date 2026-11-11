@@ -28,9 +28,9 @@ export default function AdminBillingCouponsManagementModal() {
 
 
   return (
-    <div ref={dialogRef} data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-coupons-dialog-title" tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center p-4" data-testid="admin_coupons-admin_coupons-modal-control">
+    <div ref={dialogRef} data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-coupons-dialog-title" tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center p-4 overflow-y-auto" data-testid="admin_coupons-admin_coupons-modal-control">
       <div className="absolute inset-0 bg-overlay backdrop-blur-sm" onClick={() => void handleClose()}  data-testid="admin_coupons-admin_coupons-modal-click"/>
-      <div className="relative bg-overlay border border-border rounded-2xl shadow-dialog w-full max-w-md max-h-screen overflow-y-auto custom-scrollbar">
+      <div className="relative my-auto bg-overlay border border-border rounded-2xl shadow-dialog w-full max-w-md max-h-dialog-desktop overflow-y-auto custom-scrollbar">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-border sticky top-0 bg-overlay z-10">
           <h2 id="admin-coupons-dialog-title" className="text-lg font-bold text-primary">{editId ? t('coupons.admin_coupons_modal.auto_f637f1087c') : t('coupons.admin_coupons_modal.auto_1ef60f7612')}</h2>

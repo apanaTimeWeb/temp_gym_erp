@@ -20,9 +20,9 @@ export default function ManagerAttendanceTrackingModal() {
   if (!showModal) return null;
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop p-4">
-      <div className="bg-overlay rounded-2xl shadow-dialog w-full max-w-md border border-border" role="dialog" aria-modal="true" aria-labelledby="managerattendancemodal-dialog-title">
-        <div className="flex justify-between items-center p-5 border-b border-border">
+    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop p-4 overflow-y-auto">
+      <div className="my-auto bg-overlay rounded-2xl shadow-dialog w-full max-w-md max-h-dialog-desktop flex flex-col overflow-hidden border border-border" role="dialog" aria-modal="true" aria-labelledby="managerattendancemodal-dialog-title">
+        <div className="flex justify-between items-center p-5 border-b border-border shrink-0 bg-overlay">
           <h3 className="font-bold text-lg text-text-primary" id="managerattendancemodal-dialog-title">{t("COPY_RECORD_ATTENDANCE")}</h3>
           <button data-testid="manager_attendance-attendance-modal-close-1" 
             type="button"
@@ -33,7 +33,7 @@ export default function ManagerAttendanceTrackingModal() {
             <X size={18} strokeWidth={2}/>
           </button>
         </div>
-        <form data-testid="manager_attendance-managerattendancemodal-form-1" onSubmit={submit} className="p-5 space-y-4">
+        <form data-testid="manager_attendance-managerattendancemodal-form-1" onSubmit={submit} className="p-5 space-y-4 overflow-y-auto custom-scrollbar flex-1 min-h-0">
           
           {tab === 'Daily Attendance Report' && (
             <div>
@@ -143,7 +143,7 @@ export default function ManagerAttendanceTrackingModal() {
             )}
           </div>
 
-          <div className="pt-2 flex justify-end gap-3">
+          <div className="sticky bottom-0 bg-overlay border-t border-border pt-3 flex justify-end gap-3 z-10 shrink-0">
             <button data-testid="manager_attendance-attendance-modal-close-2" 
               type="button" 
               onClick={handleClose} 

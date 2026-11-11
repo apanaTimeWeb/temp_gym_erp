@@ -73,16 +73,16 @@ export default function TrainerSessionsAttendanceModal({ session, onClose, onSub
   };
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop p-4" data-testid={testId ?? "trainer_sessions-attendance-modal"}>
+    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop p-4 overflow-y-auto" data-testid={testId ?? "trainer_sessions-attendance-modal"}>
       <div
         ref={dialogRef}
         role="dialog"
         aria-modal={true}
         aria-labelledby="trainer-session-attendance-title"
         tabIndex={-1}
-        className="bg-overlay w-full max-w-lg rounded-2xl shadow-dialog border border-border flex flex-col max-h-screen overflow-hidden motion-safe:transition-opacity motion-safe:duration-base"
+        className="bg-overlay w-full max-w-lg rounded-2xl shadow-dialog border border-border flex flex-col max-h-dialog-desktop overflow-hidden motion-safe:transition-opacity motion-safe:duration-base my-auto"
       >
-        <div className="flex items-center justify-between gap-4 p-5 border-b border-border bg-header">
+        <div className="flex items-center justify-between gap-4 p-5 border-b border-border bg-header shrink-0">
           <div className="min-w-0">
             <h3 id="trainer-session-attendance-title" className="text-lg font-bold text-primary truncate">{t("TEXT_MARK_ATTENDANCE")}</h3>
             <p className="text-sm text-secondary mt-0.5 truncate">{session.title} — {session.time}</p>

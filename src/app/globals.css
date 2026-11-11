@@ -240,6 +240,19 @@
   }
 }
 
+/* ── 4b. SEMANTIC DIALOG & ACCESSIBILITY UTILITIES ─────────── */
+@utility max-h-dialog-desktop {
+  max-height: min(calc(100dvh - 2rem), 85vh);
+}
+
+@utility max-h-dialog-mobile {
+  max-height: min(calc(100dvh - 1.5rem), 90vh);
+}
+
+@utility z-skip-link {
+  z-index: 100;
+}
+
 /* ── 5. PREMIUM SCROLLBAR ──────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }

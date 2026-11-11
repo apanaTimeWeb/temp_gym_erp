@@ -43,16 +43,16 @@ export default function TrainerLibraryDeleteRequestModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-overlay-backdrop z-50 flex items-center justify-center p-4" role="presentation">
+    <div className="fixed inset-0 bg-overlay-backdrop z-50 flex items-center justify-center p-4 overflow-y-auto" role="presentation">
       <div
         ref={dialogRef}
-        className="bg-card border border-border rounded-2xl shadow-dialog w-full max-w-md overflow-hidden"
+        className="my-auto bg-card border border-border rounded-2xl shadow-dialog w-full max-w-md max-h-dialog-desktop flex flex-col overflow-hidden"
         role="dialog"
         aria-modal="true"
         aria-labelledby="delete-request-title"
         tabIndex={-1}
       >
-        <div className="px-6 py-4 border-b border-border flex items-center justify-between">
+        <div className="px-6 py-4 border-b border-border flex items-center justify-between shrink-0 bg-card">
           <div className="flex items-center gap-2 text-warning">
             <AlertTriangle size={20} />
             <h3 id="delete-request-title" className="text-base font-bold text-primary">
@@ -70,7 +70,7 @@ export default function TrainerLibraryDeleteRequestModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-6 space-y-4 overflow-y-auto custom-scrollbar flex-1 min-h-0">
           {errorMessage && (
             <div className="p-3 bg-danger-bg border border-danger rounded-xl text-danger text-xs" role="alert">
               {errorMessage}

@@ -117,7 +117,7 @@ export default function TrainerNavigationConfirmModal({
         aria-modal="true"
         aria-labelledby={titleId}
         aria-describedby={descriptionId}
-        className="flex max-h-dialog-mobile sm:max-h-dialog-desktop w-full max-w-sm flex-col overflow-hidden rounded-xl bg-overlay shadow-dialog motion-safe:transition-opacity motion-safe:duration-base"
+        className="my-auto flex max-h-dialog-mobile sm:max-h-dialog-desktop w-full max-w-sm flex-col overflow-hidden rounded-xl bg-overlay shadow-dialog motion-safe:transition-opacity motion-safe:duration-base"
       >
         <div className="flex items-center justify-between gap-4 px-6 py-4 border-b border-border ">
           <div className="flex items-center gap-3 min-w-0 ">

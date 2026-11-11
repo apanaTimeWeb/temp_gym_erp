@@ -69,9 +69,9 @@ export default function TrainerSessionsScheduleModal({
   useTrainerInfrastructureDialogFocusTrap({ isOpen: true, dialogRef, onEscape: () => void guardNavigation(onClose) });
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-4 " role="presentation" data-testid={testId ?? "trainer_sessions-schedule-modal"}>
-      <div ref={dialogRef} className="bg-overlay w-full max-w-md rounded-2xl shadow-dialog border border-border overflow-hidden motion-safe:transition-opacity motion-safe:duration-base" role="dialog" aria-modal="true" aria-labelledby="trainer-session-schedule-title">
-        <div className="flex items-center justify-between p-5 border-b border-border ">
+    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-4 overflow-y-auto " role="presentation" data-testid={testId ?? "trainer_sessions-schedule-modal"}>
+      <div ref={dialogRef} className="my-auto bg-overlay w-full max-w-md max-h-dialog-desktop flex flex-col rounded-2xl shadow-dialog border border-border overflow-hidden motion-safe:transition-opacity motion-safe:duration-base" role="dialog" aria-modal="true" aria-labelledby="trainer-session-schedule-title">
+        <div className="flex items-center justify-between p-5 border-b border-border shrink-0 bg-overlay ">
           <h3 id="trainer-session-schedule-title" className="text-lg font-bold text-primary ">{t("TEXT_SCHEDULE_PT_SESSION")}</h3>
           <button type="button"
             onClick={() => void guardNavigation(onClose)}
@@ -80,7 +80,7 @@ export default function TrainerSessionsScheduleModal({
             <X size={18}  strokeWidth={2}/>
           </button>
         </div>
-        <form onSubmit={handleSubmit} className="p-5 space-y-4 " data-testid="trainer_sessions-trainersessionsschedulemodal-form_2">
+        <form onSubmit={handleSubmit} className="p-5 space-y-4 overflow-y-auto custom-scrollbar flex-1 min-h-0 " data-testid="trainer_sessions-trainersessionsschedulemodal-form_2">
           <div>
             <label className="block text-sm font-semibold text-secondary mb-1 ">{t("TEXT_SESSION_TYPE")}</label>
             <TrainerInfrastructureSearchableDropdown
@@ -146,7 +146,7 @@ export default function TrainerSessionsScheduleModal({
              testId="trainer-sessions-schedule-modal-duration"/>
             {errors.duration && <p id="trainer-session-duration-error" role="alert" className="text-xs text-danger mt-1 " data-testid={"trainer_sessions-schedule_modal-error_state_102_5"}>{t(errors.duration?.message || '')}</p>}
           </div>
-          <div className="pt-4 flex justify-end gap-2 border-t border-border mt-4 ">
+          <div className="sticky bottom-0 bg-overlay border-t border-border pt-3 flex justify-end gap-2 shrink-0 z-10 mt-4 ">
             <button
               type="button"
               onClick={() => void guardNavigation(onClose)}

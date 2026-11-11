@@ -33,8 +33,8 @@ export default function AdminBillingPlansCatalogModal({ logic }: AdminPlansModal
 
 
   return (
-    <div ref={dialogRef} data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-plans-modal-title" tabIndex={-1} className="fixed inset-0 bg-overlay z-40 flex items-center justify-center p-4" data-testid="admin_plans-admin_plans-modal-control">
-      <div className="bg-overlay rounded-2xl shadow-dialog shadow-dialog w-full max-w-md max-h-full overflow-y-auto border border-border">
+    <div ref={dialogRef} data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-plans-modal-title" tabIndex={-1} className="fixed inset-0 bg-overlay z-40 flex items-center justify-center p-4 overflow-y-auto" data-testid="admin_plans-admin_plans-modal-control">
+      <div className="my-auto bg-overlay rounded-2xl shadow-dialog shadow-dialog w-full max-w-md max-h-dialog-desktop overflow-y-auto border border-border">
         <div className="sticky top-0 bg-card px-6 py-4 border-b border-border flex items-center justify-between">
           <h3 id="admin-plans-modal-title" className="text-lg font-bold text-primary">
             {editId ? t('plans.admin_plans_modal.remaining_editPlan') : t('plans.admin_plans_modal.remaining_createNewPlan')}

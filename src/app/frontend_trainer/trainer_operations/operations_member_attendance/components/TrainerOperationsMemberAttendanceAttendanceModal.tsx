@@ -95,9 +95,9 @@ export default function TrainerAttendanceModal({ isOpen, onClose, members, membe
   };
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-4 " ref={dialogRef} role="dialog" aria-modal={true} aria-labelledby={titleId} data-testid={testId}>
-      <div className="bg-overlay rounded-2xl shadow-dialog w-full max-w-md overflow-hidden border border-border motion-safe:transition-opacity motion-safe:duration-base">
-        <div className="flex justify-between items-center p-5 border-b border-border ">
+    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-4 overflow-y-auto " ref={dialogRef} role="dialog" aria-modal={true} aria-labelledby={titleId} data-testid={testId}>
+      <div className="my-auto bg-overlay rounded-2xl shadow-dialog w-full max-w-md max-h-dialog-desktop flex flex-col overflow-hidden border border-border motion-safe:transition-opacity motion-safe:duration-base">
+        <div className="flex justify-between items-center p-5 border-b border-border shrink-0 bg-overlay ">
           <h3 id={titleId} className="font-bold text-lg text-primary ">{t("TEXT_RECORD_ATTENDANCE")}</h3>
           <button
             type="button"
@@ -108,7 +108,7 @@ export default function TrainerAttendanceModal({ isOpen, onClose, members, membe
           </button>
         </div>
 
-        <form onSubmit={handleSubmit(handleFormSubmit)} className="p-5 space-y-4 " data-testid="trainer_attendance-trainerattendancemodal-form_2">
+        <form onSubmit={handleSubmit(handleFormSubmit)} className="p-5 space-y-4 overflow-y-auto custom-scrollbar flex-1 min-h-0 " data-testid="trainer_attendance-trainerattendancemodal-form_2">
           <input type="hidden" {...register('type')} value={TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER} />
 
           <div>
@@ -193,7 +193,7 @@ export default function TrainerAttendanceModal({ isOpen, onClose, members, membe
             </div>
           </div>
 
-          <div className="pt-2 flex justify-end gap-3 ">
+          <div className="sticky bottom-0 bg-overlay border-t border-border pt-3 flex justify-end gap-3 z-10 shrink-0 ">
             <button
               type="button"
               onClick={handleClose}

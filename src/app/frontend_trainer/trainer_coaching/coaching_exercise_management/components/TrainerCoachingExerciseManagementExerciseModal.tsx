@@ -112,8 +112,8 @@ export default function TrainerWorkoutExerciseModal() {
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay-backdrop p-4 " role="presentation">
-      <div className="flex max-h-dialog-desktop w-full max-w-md flex-col overflow-hidden rounded-2xl bg-overlay shadow-dialog " ref={dialogRef} role="dialog" aria-modal={true} aria-labelledby="trainer-workout-exercise-modal-title">
-        <div className="flex justify-between items-center p-5 border-b border-border ">
+      <div className="my-auto flex max-h-dialog-desktop w-full max-w-md flex-col overflow-hidden rounded-2xl bg-overlay shadow-dialog " ref={dialogRef} role="dialog" aria-modal={true} aria-labelledby="trainer-workout-exercise-modal-title">
+        <div className="flex justify-between items-center p-5 border-b border-border shrink-0 bg-overlay ">
           <h3 id="trainer-workout-exercise-modal-title" className="font-bold text-lg text-primary ">
             {editExercise ? t("TEXT_EDIT_EXERCISE") : t("TEXT_ADD_EXERCISE")}
           </h3>
@@ -124,7 +124,7 @@ export default function TrainerWorkoutExerciseModal() {
             <X size={18} strokeWidth={2} />
           </button>
         </div>
-        <form onSubmit={submitForm(handleSubmit)} className="min-h-0 space-y-4 overflow-y-auto p-5 " data-testid="trainer_workout-trainerworkoutexercisemodal-form_2">
+        <form onSubmit={submitForm(handleSubmit)} className="min-h-0 flex-1 space-y-4 overflow-y-auto p-5 custom-scrollbar " data-testid="trainer_workout-trainerworkoutexercisemodal-form_2">
           <div>
             <label htmlFor="trainer-workout-exercise-name" className="block text-sm font-medium text-secondary mb-1 ">{t("TEXT_EXERCISE_NAME")}</label>
             <input id="trainer-workout-exercise-name"
@@ -198,7 +198,7 @@ export default function TrainerWorkoutExerciseModal() {
               className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-primary custom-scrollbar  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_workout-trainerworkoutexercisemodal-textarea_8"/>
           </div>
           
-          <div className="pt-2 flex justify-end gap-3 ">
+          <div className="sticky bottom-0 bg-overlay border-t border-border pt-3 flex justify-end gap-3 z-10 shrink-0 ">
             <button 
               type="button" 
               onClick={() => void guardNavigation(() => { setEditExerciseId(null); setShowExModal(false); })} 
