@@ -14,7 +14,7 @@ export const AdminPlansApi = {
     const suffix = query.toString() ? `?${query.toString()}` : '';
     return apiFetch<Plan[]>(`${ADMIN_PLANS_API.getAll}${suffix}`, { method: 'GET', dataSchema: z.array(planSchema) });
   },
-  fetchPlanById: async (id: string) => apiFetch<Plan>(ADMIN_PLANS_API.getOneContract, { method: 'GET', body: JSON.stringify({ id }), dataSchema: planSchema }),
+  fetchPlanById: async (id: string) => apiFetch<Plan>(ADMIN_PLANS_API.getOne(id), { method: 'GET', dataSchema: planSchema }),
   createPlan: async (body: Partial<Plan>, idempotencyKey: string) => apiFetch<Plan>(ADMIN_PLANS_API.create, { method: 'POST', body: JSON.stringify(body), dataSchema: planSchema,
       headers: { 'Idempotency-Key': idempotencyKey }
 }),

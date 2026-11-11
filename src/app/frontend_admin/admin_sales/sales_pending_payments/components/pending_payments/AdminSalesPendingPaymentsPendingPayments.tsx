@@ -86,7 +86,7 @@ export default function AdminSalesAnalyticsPendingPayments() {
             </div>
             <div className="flex items-center gap-4">
               <div className="text-right">
-                <p className="font-bold text-danger"><span aria-label={t('AdminAuditRepair.financialAmountHidden')}>{maskAdminSalesListAmount()}</span></p>
+                <p className="font-bold text-danger"><span>{AdminSalesFormatCurrency(p.pendingAmount ?? 0, 'INR', locale)}</span></p>
                 <p className="text-xs text-secondary opacity-80">{p.daysOverdue || 0} {t('sales.admin_sales_pending_payments.text_acb1814fce')}</p>
               </div>
               <button type="button"
@@ -103,7 +103,7 @@ export default function AdminSalesAnalyticsPendingPayments() {
                       {
                         title: t('sales.admin_sales_pending_payments.whatsappOutstandingDues'),
                         items: {
-                          [t('sales.admin_sales_pending_payments.whatsappPendingAmount')]: t('AdminAuditRepair.amountAvailableOnRequest'),
+                          [t('sales.admin_sales_pending_payments.whatsappPendingAmount')]: AdminSalesFormatCurrency(p.pendingAmount ?? 0, 'INR', locale),
                           [t('sales.admin_sales_pending_payments.whatsappOverdueBy')]: `${p.daysOverdue || 0} ${t('sales.admin_sales_pending_payments.text_acb1814fce')}`,
                         }
                       }

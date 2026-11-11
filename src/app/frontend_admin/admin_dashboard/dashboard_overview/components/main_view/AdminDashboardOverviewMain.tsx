@@ -3,6 +3,7 @@
 // DATA FLOW: feature data/state and user input → AdminDashboardOverviewMain → accessible UI/events routed to owning hooks (admin_dashboard/dashboard_overview/components/main_view/AdminDashboardOverviewMain.tsx)
 
 import { useTranslations } from 'next-intl';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useAdminDashboardLogic } from '@/app/frontend_admin/admin_dashboard/dashboard_overview/hooks/useAdminDashboardOverviewLogic';
 import AdminDashboardKPIs from '@/app/frontend_admin/admin_dashboard/dashboard_overview/components/kpis/AdminDashboardOverviewKPIs';
 import AdminDashboardBranchLeaderboard from '@/app/frontend_admin/admin_dashboard/dashboard_overview/components/branch_leaderboard/AdminDashboardOverviewBranchLeaderboard';
@@ -23,7 +24,24 @@ import AdminDashboardSkeleton from '@/app/frontend_admin/admin_dashboard/dashboa
  */
 export default function AdminDashboardOverviewMain() {
   const t = useTranslations();
-  const { status, error, retry, isDateRangeValid } = useAdminDashboardLogic();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const { status, error, retry, isDateRangeValid, stats } = useAdminDashboardLogic();
+
+  const selectedBranchId = searchParams.get('branchId') || 'all';
+  const branchOptions = [
+    { label: t('dashboard.admin_dashboard_branch_leaderboard.allBranches') || 'All Branches', value: 'all' },
+    ...(stats?.branchLeaderboard ?? []).map((b) => ({ label: b.name, value: b.id })),
+  ];
+
+  const handleBranchChange = (value: string | number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (value === 'all') params.delete('branchId');
+    else params.set('branchId', String(value));
+    params.delete('page');
+    router.replace(`${pathname}${params.toString() ? `?${params.toString()}` : ''}`, { scroll: false });
+  };
 
   if (status === 'pending') return <div className="min-h-full"><AdminDashboardSkeleton /></div>;
 
@@ -43,8 +61,17 @@ export default function AdminDashboardOverviewMain() {
     <div className="min-h-full">
       <div className="p-6 space-y-6">
 
-        {/* Time Range Selector */}
-        <div className="flex justify-end items-center">
+        {/* Toolbar: Branch Filter + Time Range Selector */}
+        <div className="flex flex-wrap justify-between items-center gap-4">
+          <div className="w-64">
+            <AdminNavigationLayoutSearchableDropdown
+              options={branchOptions}
+              value={selectedBranchId}
+              onChange={handleBranchChange}
+              placeholder={t('branches.admin_branches_header_selector.text_fcf716ea9b') || 'Filter by branch'}
+              testId="admin-dashboard-branch-filter-dropdown"
+            />
+          </div>
           <AdminDashboardDateFilterDropdown />
         </div>
 

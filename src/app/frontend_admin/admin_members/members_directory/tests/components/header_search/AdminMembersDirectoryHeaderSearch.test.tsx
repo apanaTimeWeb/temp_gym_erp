@@ -36,7 +36,7 @@ describe('AdminMembersHeaderSearch accessible autocomplete', () => {
     expect(screen.getByRole('option', { name: /Ari Member/ })).toHaveAttribute('aria-selected', 'true');
 
     fireEvent.keyDown(input, { key: 'Enter' });
-    expect(mockPush).toHaveBeenCalledWith('/admin/members?memberId=member-1');
+    expect(mockPush).toHaveBeenCalledWith('/frontend_admin/admin_members/members_directory?memberId=member-1');
     expect(input).toHaveValue('');
   });
 

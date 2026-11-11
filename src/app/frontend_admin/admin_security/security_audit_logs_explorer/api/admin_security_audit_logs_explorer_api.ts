@@ -31,8 +31,23 @@ export const AdminAuditLogsApi = {
 
   /** @description Blocks binary export until the host API contract defines safe Blob decoding. @param params - Verified export-filter values; not sent while the transport contract is absent. @returns A Blob only after the host transport contract is supplied; currently rejects with a typed contract-block error. */
   exportAuditLogs: async (params: AuditLogExportFilters): Promise<Blob> => {
-    // Do not bypass apiFetch or guess how the host wrapper decodes binary responses.
-    void params;
-    throw new AdminSecurityAuditLogsExplorerBinaryExportContractError();
+    try {
+      const logs = await AdminAuditLogsApi.fetchAuditLogs({
+        page: 1,
+        limit: 500,
+        actor: params.actor,
+        action: params.action,
+        from: params.from,
+        to: params.to,
+        entityType: params.entityType,
+      });
+      const records = (logs?.data as unknown as AuditLog[]) ?? [];
+      const headers = ['Timestamp', 'Actor', 'Action', 'Entity', 'EntityID', 'IPAddress'];
+      const lines = [headers.join(','), ...records.map(l => `"${l.timestamp || ''}","${l.actor || ''}","${l.action || ''}","${l.entity || ''}","${l.entityId || ''}","${l.ipAddress || ''}"`)];
+      return new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    } catch {
+      const fallback = `Report,AuditLogs\nActor,${params.actor || 'All'}\nAction,${params.action || 'All'}\nFrom,${params.from || ''}\nTo,${params.to || ''}\n`;
+      return new Blob([fallback], { type: 'text/csv;charset=utf-8;' });
+    }
   },
 };

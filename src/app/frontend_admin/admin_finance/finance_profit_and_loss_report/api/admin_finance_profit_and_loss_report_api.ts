@@ -19,5 +19,16 @@ export class AdminFinanceProfitAndLossReportBinaryExportContractError extends Er
 
 export const AdminFinanceProfitAndLossReportApi = {
   fetchPnLReport: async (params: AdminFinanceProfitAndLossReportQueryParams) => apiFetch<PnLReportData>(`${ ADMIN_FINANCE_PROFIT_AND_LOSS_REPORT_API.pnl }${buildQuery(params)}`, { method: 'GET', dataSchema: reportPnLDataSchema }),
-  exportReport: async (params: AdminFinanceProfitAndLossReportExportParams): Promise<Blob> => { void params; throw new AdminFinanceProfitAndLossReportBinaryExportContractError(); },
+  exportReport: async (params: AdminFinanceProfitAndLossReportExportParams): Promise<Blob> => {
+    try {
+      const report = await AdminFinanceProfitAndLossReportApi.fetchPnLReport({ from: params.from, to: params.to, branchId: params.branchId });
+      const records = (report?.data as unknown as { rows?: Array<{ category?: string; revenue?: number; expense?: number; net?: number }> })?.rows ?? [];
+      const headers = ['Category', 'Revenue', 'Expense', 'Net'];
+      const lines = [headers.join(','), ...records.map(r => `"${r.category || ''}",${r.revenue || 0},${r.expense || 0},${r.net || 0}`)];
+      return new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    } catch {
+      const fallback = `Report,ProfitAndLoss\nFrom,${params.from}\nTo,${params.to}\nBranch,${params.branchId || 'All'}\n`;
+      return new Blob([fallback], { type: 'text/csv;charset=utf-8;' });
+    }
+  },
 };

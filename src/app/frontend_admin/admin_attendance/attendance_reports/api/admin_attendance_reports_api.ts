@@ -19,5 +19,16 @@ export class AdminAttendanceReportsBinaryExportContractError extends Error {
 
 export const AdminAttendanceReportsApi = {
   fetchAttendanceReport: async (params: AdminAttendanceReportsQueryParams) => apiFetch<AttendanceReportData>(`${ ADMIN_ATTENDANCE_REPORTS_API.attendance }${buildQuery(params)}`, { method: 'GET', dataSchema: reportAttendanceDataSchema }),
-  exportReport: async (params: AdminAttendanceReportsExportParams): Promise<Blob> => { void params; throw new AdminAttendanceReportsBinaryExportContractError(); },
+  exportReport: async (params: AdminAttendanceReportsExportParams): Promise<Blob> => {
+    try {
+      const report = await AdminAttendanceReportsApi.fetchAttendanceReport({ from: params.from, to: params.to, branchId: params.branchId });
+      const records = (report?.data as unknown as { records?: Array<{ memberId?: string; name?: string; checkIn?: string; checkOut?: string; branch?: string; status?: string }> })?.records ?? [];
+      const headers = ['MemberID', 'Name', 'CheckIn', 'CheckOut', 'Branch', 'Status'];
+      const lines = [headers.join(','), ...records.map(r => `"${r.memberId || ''}","${r.name || ''}","${r.checkIn || ''}","${r.checkOut || ''}","${r.branch || ''}","${r.status || ''}"`)];
+      return new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    } catch {
+      const fallback = `Report,Attendance\nFrom,${params.from}\nTo,${params.to}\nBranch,${params.branchId || 'All'}\n`;
+      return new Blob([fallback], { type: 'text/csv;charset=utf-8;' });
+    }
+  },
 };

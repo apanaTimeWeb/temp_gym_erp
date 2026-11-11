@@ -7,7 +7,7 @@
       "text_35cf82f9d2": "Revenue",
       "text_badd385121": "View details",
       "text_8d437dbf95": "Expenses",
-      "text_fcfac3efb6": "Students",
+      "text_fcfac3efb6": "Members",
       "text_a4730a22cf": "Staff",
       "text_d789a1e992": "ID:"
     },
@@ -49,7 +49,7 @@
       "text_loading_branch_details": "Loading branch details"
     },
     "admin_branches_detail_content": {
-      "auto_bdbd7c154c": "No student records found.",
+      "auto_bdbd7c154c": "No member records found.",
       "auto_5ebf3ca704": "No staff records found.",
       "auto_9fe77cb956": "No expense records found.",
       "auto_71b0df7a57": "No revenue records found."
@@ -72,7 +72,7 @@
       "revenue_breakdown": "Revenue Breakdown",
       "expense_breakdown": "Expense Breakdown",
       "staff_list": "Staff List",
-      "students": "Students",
+      "students": "Members",
       "on_leave": "On Leave",
       "expired": "Expired"
     },

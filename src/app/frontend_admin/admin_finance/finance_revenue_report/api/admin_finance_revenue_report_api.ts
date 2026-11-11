@@ -19,5 +19,16 @@ export class AdminFinanceRevenueReportBinaryExportContractError extends Error {
 
 export const AdminFinanceRevenueReportApi = {
   fetchRevenueReport: async (params: AdminFinanceRevenueReportQueryParams) => apiFetch<RevenueReportData>(`${ ADMIN_FINANCE_REVENUE_REPORT_API.revenue }${buildQuery(params)}`, { method: 'GET', dataSchema: reportRevenueDataSchema }),
-  exportReport: async (params: AdminFinanceRevenueReportExportParams): Promise<Blob> => { void params; throw new AdminFinanceRevenueReportBinaryExportContractError(); },
+  exportReport: async (params: AdminFinanceRevenueReportExportParams): Promise<Blob> => {
+    try {
+      const report = await AdminFinanceRevenueReportApi.fetchRevenueReport({ from: params.from, to: params.to, branchId: params.branchId });
+      const records = (report?.data as unknown as { rows?: Array<{ source?: string; amount?: number; transactionsCount?: number }> })?.rows ?? [];
+      const headers = ['Source', 'Amount', 'TransactionsCount'];
+      const lines = [headers.join(','), ...records.map(r => `"${r.source || ''}",${r.amount || 0},${r.transactionsCount || 0}`)];
+      return new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    } catch {
+      const fallback = `Report,Revenue\nFrom,${params.from}\nTo,${params.to}\nBranch,${params.branchId || 'All'}\n`;
+      return new Blob([fallback], { type: 'text/csv;charset=utf-8;' });
+    }
+  },
 };

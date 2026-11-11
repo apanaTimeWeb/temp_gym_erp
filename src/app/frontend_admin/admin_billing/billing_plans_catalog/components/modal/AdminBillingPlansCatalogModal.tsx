@@ -60,7 +60,7 @@ export default function AdminBillingPlansCatalogModal({ logic }: AdminPlansModal
                 aria-describedby={errors.name ? 'admin-plan-name-error' : undefined}
                 {...register('name')}
                 className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-primary motion-safe:transition-colors ${
-                  errors.name ? 'border-border focus-visible:ring-primary' : 'border-border focus-visible:ring-primary'
+                  errors.name ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-primary'
                 }`}
                data-testid="admin_plans-admin_plans-modal-control-2"/>
               {errors.name && <p id="admin-plan-name-error" role="alert" className="text-danger text-xs mt-1">{getValidationMessage(errors.name.message)}</p>}
@@ -105,7 +105,7 @@ export default function AdminBillingPlansCatalogModal({ logic }: AdminPlansModal
                   onKeyDown={(e) => { if (e.key === '-' || e.key === 'e' || e.key === '+') e.preventDefault(); }}
                   {...register(f.key as keyof PlanFormValues)}
                   className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-primary motion-safe:transition-colors ${
-                    errors[f.key as keyof PlanFormValues] ? 'border-border focus-visible:ring-primary' : 'border-border focus-visible:ring-primary'
+                    errors[f.key as keyof PlanFormValues] ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-primary'
                   }`}
                  data-testid={`admin_plans-admin_plans-modal-control-3-map82-${__testIdIndex82}-1`}/>
                 {errors[f.key as keyof PlanFormValues] && (

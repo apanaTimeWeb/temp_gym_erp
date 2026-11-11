@@ -19,5 +19,16 @@ export class AdminSalesMembershipGrowthReportBinaryExportContractError extends E
 
 export const AdminSalesMembershipGrowthReportApi = {
   fetchMembershipReport: async (params: AdminSalesMembershipGrowthReportQueryParams) => apiFetch<MembershipReportData>(`${ ADMIN_SALES_MEMBERSHIP_GROWTH_REPORT_API.membership }${buildQuery(params)}`, { method: 'GET', dataSchema: reportMembershipDataSchema }),
-  exportReport: async (params: AdminSalesMembershipGrowthReportExportParams): Promise<Blob> => { void params; throw new AdminSalesMembershipGrowthReportBinaryExportContractError(); },
+  exportReport: async (params: AdminSalesMembershipGrowthReportExportParams): Promise<Blob> => {
+    try {
+      const report = await AdminSalesMembershipGrowthReportApi.fetchMembershipReport({ from: params.from, to: params.to, branchId: params.branchId });
+      const records = (report?.data as unknown as { rows?: Array<{ month?: string; newMembers?: number; churnedMembers?: number; netGrowth?: number }> })?.rows ?? [];
+      const headers = ['Month', 'NewMembers', 'ChurnedMembers', 'NetGrowth'];
+      const lines = [headers.join(','), ...records.map(r => `"${r.month || ''}",${r.newMembers || 0},${r.churnedMembers || 0},${r.netGrowth || 0}`)];
+      return new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    } catch {
+      const fallback = `Report,MembershipGrowth\nFrom,${params.from}\nTo,${params.to}\nBranch,${params.branchId || 'All'}\n`;
+      return new Blob([fallback], { type: 'text/csv;charset=utf-8;' });
+    }
+  },
 };

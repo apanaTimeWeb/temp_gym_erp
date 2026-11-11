@@ -42,9 +42,10 @@ export default function AdminSecurityAuditLogsExplorerToolbar() {
           <input
             type="text"
             placeholder={t('audit_logs.admin_audit_logs_toolbar.text_70dcc312af')}
-            disabled
+            value={actorFilter === 'all' ? '' : actorFilter}
+            onChange={(e) => setActorFilter(e.target.value.trim() ? e.target.value : 'all')}
             aria-label={t('audit_logs.admin_audit_logs_toolbar.text_30c9e16a86')}
-            className="min-h-11 w-full rounded-lg border border-border bg-input pl-10 pr-3 text-sm text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out"
+            className="min-h-11 w-full rounded-lg border border-border bg-input pl-10 pr-3 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out"
             data-testid="admin_audit_logs-admin_audit_logs-toolbar-search"
           />
         </div>

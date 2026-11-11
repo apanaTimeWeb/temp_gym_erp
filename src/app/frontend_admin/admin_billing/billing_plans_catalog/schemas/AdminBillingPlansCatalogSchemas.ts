@@ -41,6 +41,12 @@ const planMoneyFormSchema = z.string().trim()
     (value.split('.')[1]?.length ?? 0) <= 2 && Number.isSafeInteger(Math.round(Number(value) * 100)),
     '__i18n:plans.validation.maxTwoDecimals');
 
+const optionalPlanMoneyFormSchema = z.string().trim()
+  .refine(value => !value || (/^\d+(?:\.\d{1,2})?$/.test(value) && Number.isFinite(Number(value)) && Number(value) >= 0),
+    '__i18n:plans.validation.validPrice')
+  .optional()
+  .or(z.literal(''));
+
 export const planFormSchema = z.object({
   name: z.string().min(2, '__i18n:plans.validation.nameRequired'),
   tier: z.enum(TIERS),
@@ -48,6 +54,10 @@ export const planFormSchema = z.object({
   price3Month: planMoneyFormSchema,
   price6Month: planMoneyFormSchema,
   price12Month: planMoneyFormSchema,
-  priceCustom: planMoneyFormSchema,
-  features: z.string().min(2, '__i18n:plans.validation.featuresRequired')
+  priceCustom: optionalPlanMoneyFormSchema,
+  features: z.string().min(2, '__i18n:plans.validation.featuresRequired'),
+  freezeAllowed: z.boolean().optional(),
+  joiningFee: optionalPlanMoneyFormSchema,
+  ptSessionsIncluded: z.string().optional().or(z.literal('')),
+  taxRate: z.string().optional().or(z.literal('')),
 });

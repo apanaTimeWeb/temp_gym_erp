@@ -93,7 +93,6 @@ export default function AdminFinanceStaffDuesManagementDueTable() {
                 {...register('amount', { valueAsNumber: true })}
                 aria-invalid={errors.amount ? 'true' : 'false'}
                 aria-describedby={errors.amount ? 'admin_hr-due-amount-error' : undefined}
-                value={Number.isFinite(amount) ? amount : ''}
                 className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-card text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
                 data-testid="admin_hr-admin_hr-due-table-control-4"
               />

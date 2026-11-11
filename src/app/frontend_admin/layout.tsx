@@ -13,6 +13,7 @@ import { AdminNavigationLayoutToastProvider } from '@/app/frontend_admin/admin_n
 import AdminNavigationLayoutDialogAccessibilityProvider from '@/app/frontend_admin/admin_navigation/components/feedback/AdminNavigationLayoutDialogAccessibilityProvider';
 import AdminNavigationLayoutToastBridge from '@/app/frontend_admin/admin_navigation/components/feedback/AdminNavigationLayoutToastBridge';
 import AdminNavigationLayoutWebSocketProvider from '@/app/frontend_admin/admin_navigation/components/AdminNavigationLayoutWebSocketProvider';
+import AdminGymsBranchesDirectoryHeaderSelector from '@/app/frontend_admin/admin_gyms/gyms_branches_directory/components/header_selector/AdminGymsBranchesDirectoryHeaderSelector';
 import type { AdminRootLayoutProps } from '@/app/frontend_admin/admin_navigation/types/AdminNavigationLayoutTypes';
 
 
@@ -40,7 +41,7 @@ export default function ADMINLayout({ children }: AdminRootLayoutProps) {
             <AdminNavigationLayoutToastProvider />
             <AdminNavigationLayoutDialogAccessibilityProvider />
             <AdminNavigationLayoutToastBridge />
-            <AdminNavigationLayout>{children}</AdminNavigationLayout>
+            <AdminNavigationLayout headerContextSlot={<AdminGymsBranchesDirectoryHeaderSelector />}>{children}</AdminNavigationLayout>
           </AdminNavigationLayoutConfirmProvider>
         </AdminNavigationLayoutWebSocketProvider>
       </AdminNavigationLayoutI18nProvider>

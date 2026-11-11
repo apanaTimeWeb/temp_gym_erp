@@ -127,9 +127,10 @@ export function useAdminFinanceLogic() {
   const status = activeEntityQuery.status;
 
   const loadAll = useCallback(async () => {
-    const refetches: Array<Promise<unknown>> = [];
-    if (ADMIN_FINANCE_LEAF_SCOPE === 'payments') refetches.push(paymentsQuery.refetch());
-    if (ADMIN_FINANCE_LEAF_SCOPE === 'expenses') refetches.push(expensesQuery.refetch());
+    const refetches: Array<Promise<unknown>> = [
+      paymentsQuery.refetch(),
+      expensesQuery.refetch(),
+    ];
     if (!customRangeInvalid) refetches.push(summaryQuery.refetch());
     await Promise.all(refetches);
   }, [customRangeInvalid, expensesQuery, paymentsQuery, summaryQuery]);

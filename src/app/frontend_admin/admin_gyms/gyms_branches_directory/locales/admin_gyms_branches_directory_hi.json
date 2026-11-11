@@ -7,7 +7,7 @@
       "text_35cf82f9d2": "राजस्व",
       "text_badd385121": "विवरण देखें",
       "text_8d437dbf95": "खर्च",
-      "text_fcfac3efb6": "छात्र",
+      "text_fcfac3efb6": "सदस्य",
       "text_a4730a22cf": "स्टाफ",
       "text_d789a1e992": "आईडी:"
     },
@@ -49,7 +49,7 @@
       "text_loading_branch_details": "ब्रांच विवरण लोड हो रहा है।"
     },
     "admin_branches_detail_content": {
-      "auto_bdbd7c154c": "कोई छात्र रिकॉर्ड नहीं मिला।",
+      "auto_bdbd7c154c": "कोई सदस्य रिकॉर्ड नहीं मिला।",
       "auto_5ebf3ca704": "कोई स्टाफ रिकॉर्ड नहीं मिला।",
       "auto_9fe77cb956": "कोई व्यय रिकॉर्ड नहीं मिला।",
       "auto_71b0df7a57": "कोई राजस्व रिकॉर्ड नहीं मिला।"
@@ -72,7 +72,7 @@
       "revenue_breakdown": "राजस्व विवरण",
       "expense_breakdown": "व्यय विवरण",
       "staff_list": "स्टाफ सूची",
-      "students": "छात्र",
+      "students": "सदस्य",
       "on_leave": "छुट्टी पर",
       "expired": "समाप्त"
     },

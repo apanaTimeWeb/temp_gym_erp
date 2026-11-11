@@ -17,9 +17,12 @@ export const GymProfileSchema = z.object({
 });
 
 export const NotificationsSettingsSchema = z.object({
-  smssms: z.boolean(),
-  emailsms: z.boolean(),
-  whatsappsms: z.boolean(),
+  sms: z.boolean().optional(),
+  email: z.boolean().optional(),
+  whatsapp: z.boolean().optional(),
+  smssms: z.boolean().optional(),
+  emailsms: z.boolean().optional(),
+  whatsappsms: z.boolean().optional(),
   smsonJoin: z.boolean(),
   emailonJoin: z.boolean(),
   whatsapponJoin: z.boolean(),
@@ -51,7 +54,7 @@ export const AppIntegrationSettingsSchema = z.object({
 });
 
 export const GstTaxSettingsSchema = z.object({
-  gstNumber: z.string().max(15, '__i18n:settings.validation.gstNumberMax').optional().or(z.literal('')),
+  gstNumber: z.string().length(15, '__i18n:settings.validation.gstNumberLength').optional().or(z.literal('')),
   businessLegalName: z.string().optional().or(z.literal('')),
   taxRate: z.string().refine((value) => isAllowed(value, TAX_RATE_OPTIONS), '__i18n:settings.validation.taxRateUnsupported'),
   stateCode: z.string().refine((value) => isAllowed(value, GST_STATE_CODES), '__i18n:settings.validation.stateCodeUnsupported'),
@@ -117,7 +120,7 @@ export const AdminSettingsResponseSchema = z.object({
 });
 
 export const AdminSettingsRolePermissionSchema = z.object({
-  role: z.enum(['manager', 'trainer']),
+  role: z.enum(['manager', 'trainer', 'receptionist']),
   permissions: z.record(z.string(), z.boolean()),
 });
 
@@ -126,7 +129,7 @@ export const AdminSettingsRolePermissionReferenceSchema = z.object({
   gymOverrides: z.array(z.object({
     gymId: z.string(),
     gymName: z.string(),
-    role: z.enum(['manager', 'trainer']),
+    role: z.enum(['manager', 'trainer', 'receptionist']),
     overrides: z.record(z.string(), z.boolean()),
   })),
 });

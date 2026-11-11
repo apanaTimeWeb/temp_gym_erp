@@ -3,8 +3,9 @@
 // DATA FLOW: Next.js route/lifecycle or owning module entry → feature-local components/hooks/contracts → host integration boundary (admin_navigation/components/AdminNavigationLayoutHeader.tsx)
 
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { CircleHelp, Menu, Search } from 'lucide-react';
+import { Bell, CircleHelp, Menu, Search } from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import AdminNavigationLayoutDensityToggle from '@/app/frontend_admin/admin_navigation/components/AdminNavigationLayoutDensityToggle';
 import type { AdminNavigationLayoutProps } from '@/app/frontend_admin/admin_navigation/types/AdminNavigationLayoutPropsTypes';
@@ -31,6 +32,9 @@ export default function AdminNavigationLayoutHeader({ headerContextSlot }: Pick<
       </div>
       <div className="flex min-w-0 shrink-0 items-center gap-1 sm:gap-2 lg:gap-3"><div className="hidden md:block">{headerContextSlot}</div>
         <button type="button" onClick={() => window.dispatchEvent(new Event('open-admin-command-palette'))} className="min-h-11 min-w-11 inline-flex items-center justify-center rounded-lg border border-border bg-input text-secondary hover:bg-surface-hover hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-colors motion-safe:duration-base focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out motion-safe:active:scale-95" aria-label={t('admin_navigation.AdminNavigationLayoutKeyboardShortcuts.openCommandPalette')} title={t('admin_navigation.AdminNavigationLayoutKeyboardShortcuts.openCommandPalette')} data-testid="admin_navigation-admin-header-command-palette-open"><Search size={18} strokeWidth={2} aria-hidden="true" /></button>
+        <Link href="/frontend_admin/admin_communication/communication_notifications_center" className="min-h-11 min-w-11 inline-flex items-center justify-center rounded-lg border border-border bg-input text-secondary hover:bg-surface-hover hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-colors motion-safe:duration-base focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out motion-safe:active:scale-95" aria-label={t('admin_navigation.AdminRouteHeaders.notifications_center') || 'Notifications'} title={t('admin_navigation.AdminRouteHeaders.notifications_center') || 'Notifications'} data-testid="admin_navigation-admin-header-notifications-link">
+          <Bell size={18} strokeWidth={2} aria-hidden="true" />
+        </Link>
         <div className="hidden sm:block"><AdminNavigationLayoutDensityToggle /></div>
         <button type="button" onClick={() => window.dispatchEvent(new Event('open-admin-shortcut-help'))} className="hidden sm:inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-border bg-input text-secondary hover:bg-surface-hover hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-colors motion-safe:duration-base focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out motion-safe:active:scale-95" aria-label={t('admin_navigation.AdminNavigationLayoutKeyboardShortcuts.showHelp')} title={t('admin_navigation.AdminNavigationLayoutKeyboardShortcuts.showHelp')} data-testid="admin_navigation-admin-header-shortcut-help-open"><CircleHelp size={18} strokeWidth={2} aria-hidden="true" /></button>
         <ThemeToggle />

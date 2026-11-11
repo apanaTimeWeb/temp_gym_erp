@@ -37,7 +37,7 @@ export const staffSchema = z.object({
 });
 
 export const staffFormSchema = z.object({
-  name: z.string().min(2, '__i18n:hr.validation.nameRequired').regex(/^[A-Za-z\s]+$/, '__i18n:hr.validation.alphabetsOnly'),
+  name: z.string().min(2, '__i18n:hr.validation.nameRequired').regex(/^[\p{L}\s.'-]+$/u, '__i18n:hr.validation.alphabetsOnly'),
   email: z.string().email('__i18n:hr.validation.emailInvalid'),
   phone: z.string().regex(/^\d{10}$/, '__i18n:hr.validation.phoneInvalid'),
   role: z.string().min(2, '__i18n:hr.validation.roleRequired'),
@@ -50,6 +50,12 @@ export const staffFormSchema = z.object({
   isActive: z.boolean().default(true),
   aadhaar: z.string().regex(/^\d{12}$/, '__i18n:hr.validation.aadhaarDigits').optional().or(z.literal('')),
   upiId: z.string().regex(/^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/, '__i18n:hr.validation.upiInvalid').optional().or(z.literal('')),
+  bankAccountNumber: z.string().optional().or(z.literal('')),
+  emergencyContactName: z.string().optional().or(z.literal('')),
+  emergencyContactPhone: z.string().optional().or(z.literal('')),
+  certifications: z.array(z.string()).optional(),
+  contractType: z.string().optional().or(z.literal('')),
+  department: z.string().optional().or(z.literal('')),
   assignedBranches: z.array(z.string()).optional(),
   primaryBranchId: z.string().optional(),
 });

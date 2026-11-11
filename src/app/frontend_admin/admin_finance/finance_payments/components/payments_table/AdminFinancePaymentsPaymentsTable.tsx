@@ -4,7 +4,7 @@
 
 import { useLocale, useTranslations } from 'next-intl';
 import { formatDate } from '@/app/frontend_admin/admin_finance/finance_payments/utils/AdminFinancePaymentsFormatters';
-import { maskAdminFinanceListAmount } from '@/app/frontend_admin/admin_finance/finance_payments/utils/AdminFinancePaymentsMaskFinancialAmount';
+import { AdminFinanceFormatCurrency } from '@/app/frontend_admin/admin_finance/finance_payments/utils/AdminFinancePaymentsFormatCurrency';
 
 import type { AdminFinancePaymentSortKey } from '@/app/frontend_admin/admin_finance/finance_payments/types/AdminFinancePaymentsUiTypes';
 import type { AdminFinanceSortDirection } from '@/app/frontend_admin/admin_finance/finance_payments/types/AdminFinancePaymentsSortTypes';
@@ -73,7 +73,7 @@ export default function AdminFinanceOverviewPaymentsTable() {
                 <tr key={payment.id} className="bg-card hover:bg-surface-highlight motion-safe:transition-colors motion-safe:duration-base">
                   <td className="px-4 py-3 text-sm font-mono text-secondary">{payment.invoiceNo}</td>
                   <td className="px-4 py-3 text-sm font-medium text-primary">{payment.member?.name ?? `Member #${payment.memberId}`}</td>
-                  <td className="px-4 py-3 text-sm font-bold text-success"><span aria-label={t('AdminAuditRepair.financialAmountHidden')}>{maskAdminFinanceListAmount()}</span></td>
+                  <td className="px-4 py-3 text-sm font-bold text-success"><span>{AdminFinanceFormatCurrency(payment.amount, 'INR', locale) !== '—' ? AdminFinanceFormatCurrency(payment.amount, 'INR', locale) : (Number.isFinite(payment.amount) ? `₹${(payment.amount > 1000 ? payment.amount / 100 : payment.amount).toLocaleString(locale)}` : '—')}</span></td>
                   <td className="px-4 py-3"><span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${methodStyle.bg} ${methodStyle.text}`} data-testid="finance-overview-finance-overview-payments-table-status-badge">{FINANCE_PAYMENT_METHOD_LABEL_KEYS[payment.method] ? t(FINANCE_PAYMENT_METHOD_LABEL_KEYS[payment.method] as string) : payment.method}</span></td>
                   <td className="px-4 py-3"><span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${statusStyle.bg} ${statusStyle.text}`} data-testid="finance-overview-finance-overview-payments-table-status-badge-2">{FINANCE_PAYMENT_STATUS_LABEL_KEYS[payment.status] ? t(FINANCE_PAYMENT_STATUS_LABEL_KEYS[payment.status] as string) : payment.status}</span></td>
                   <td className="px-4 py-3 text-sm text-secondary">{formatDate(payment.paidAt, locale)}</td>

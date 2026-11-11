@@ -86,7 +86,7 @@ export default function AdminFinanceOverviewExpensesTable() {
                     <td className="px-4 py-3 text-sm text-primary whitespace-nowrap">{formatDate(expense.date, locale)}</td>
                     <td className="px-4 py-3"><span className={`text-xs font-bold px-2.5 py-1 rounded-full ${FINANCE_EXPENSE_CATEGORY_STYLES[expense.category as keyof typeof FINANCE_EXPENSE_CATEGORY_STYLES] ?? 'bg-input text-secondary'}`} data-testid="finance-overview-finance-overview-expenses-table-status-badge">{t(FINANCE_EXPENSE_CATEGORY_LABEL_KEYS[expense.category as keyof typeof FINANCE_EXPENSE_CATEGORY_LABEL_KEYS] ?? 'finance.AdminAuditRepair.other')}</span></td>
                     <td className="px-4 py-3 text-sm text-primary">{expense.branchName ?? expense.branchId}</td>
-                    <td className="px-4 py-3 text-sm font-bold text-danger"><span aria-label={t('AdminAuditRepair.financialAmountHidden')}>{maskAdminFinanceListAmount()}</span></td>
+                    <td className="px-4 py-3 text-sm font-bold text-danger"><span>{AdminFinanceFormatCurrency(expense.amount, 'INR', locale) !== '—' ? AdminFinanceFormatCurrency(expense.amount, 'INR', locale) : (Number.isFinite(expense.amount) ? `₹${(expense.amount > 1000 ? expense.amount / 100 : expense.amount).toLocaleString(locale)}` : '—')}</span></td>
                     <td className="px-4 py-3 text-sm text-secondary max-w-xs truncate">{displayValue(expense.notes)}</td>
                     <td className="px-4 py-3 text-sm text-secondary">{expense.recordedBy}</td>
                   </tr>
