@@ -57,7 +57,7 @@ export default function ManagerPtAssignmentsTable({ assignments, totalAssignment
               </tr>
             ); } return (
               assignments.map((a, mapIndex) => {
-                const pct = Math.round((a.completedSessions / a.totalSessions) * 100);
+                const pct = a.totalSessions > 0 ? Math.round((a.completedSessions / a.totalSessions) * 100) : 0;
                 const isMarking = markingId === a.id;
                 const isDone = a.completedSessions >= a.totalSessions;
                 
