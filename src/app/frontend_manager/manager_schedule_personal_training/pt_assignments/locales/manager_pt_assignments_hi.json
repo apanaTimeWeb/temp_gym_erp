@@ -66,7 +66,7 @@
     "TEXT_TAB_DASHBOARD": "PT डैशबोर्ड",
     "TEXT_TAB_ASSIGNMENTS": "सक्रिय असाइनमेंट",
     "TEXT_TAB_WORKLOAD": "ट्रेनर कार्यभार",
-    "TEXT_TAB_PACKAGES": "PT पैकेज"
-  },
-  "COPY_PAGE_SIZE": "प्रति पृष्ठ {count}"
+    "TEXT_TAB_PACKAGES": "PT पैकेज",
+    "COPY_PAGE_SIZE": "प्रति पृष्ठ {count}"
+  }
 }

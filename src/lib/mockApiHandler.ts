@@ -16,6 +16,50 @@ function getStoredUser() {
   return null;
 }
 
+function getSessionUser() {
+  const stored = getStoredUser();
+  if (stored) return stored;
+
+  if (typeof window !== 'undefined') {
+    const path = window.location.pathname;
+    if (path.startsWith('/frontend_superadmin') || path.startsWith('/superadmin')) {
+      return {
+        id: 'superadmin_demo_user',
+        name: 'Alex Superadmin',
+        email: 'superadmin@smartgym360.com',
+        role: 'SUPERADMIN',
+        tenantId: 'gym_demo_superadmin',
+      };
+    }
+    if (path.startsWith('/frontend_admin') || path.startsWith('/admin')) {
+      return {
+        id: 'usr_admin_01',
+        name: 'Sarah Admin',
+        email: 'admin@smartgym360.com',
+        role: 'ADMIN',
+        tenantId: 'gym_demo_01',
+      };
+    }
+    if (path.startsWith('/frontend_manager') || path.startsWith('/manager')) {
+      return {
+        id: 'usr_manager_01',
+        name: 'David Manager',
+        email: 'manager@smartgym360.com',
+        role: 'MANAGER',
+        tenantId: 'gym_demo_01',
+      };
+    }
+  }
+
+  return {
+    id: 'usr_trainer_01',
+    name: 'Michael Trainer',
+    email: 'trainer@smartgym360.com',
+    role: 'TRAINER',
+    tenantId: 'gym_demo_01',
+  };
+}
+
 function buildMockSuccess<T>(data: T, message = 'Success', meta?: any): ApiResponse<T> {
   const requestId = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `req_${Date.now()}`;
   const envelope = {
@@ -166,26 +210,12 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
     }
 
     // GET session check: prioritize active stored user
-    const stored = getStoredUser();
-    const user = stored || {
-      id: 'usr_trainer_01',
-      name: 'Michael Trainer',
-      email: 'trainer@smartgym360.com',
-      role: 'TRAINER',
-      tenantId: 'gym_demo_01',
-    };
+    const user = getSessionUser();
     return buildMockSuccess(user, 'Session active');
   }
 
   if (urlPath === '/auth/me' || urlPath === '/frontend_auth/auth/me') {
-    const stored = getStoredUser();
-    const user = stored || {
-      id: 'usr_trainer_01',
-      name: 'Michael Trainer',
-      email: 'trainer@smartgym360.com',
-      role: 'TRAINER',
-      tenantId: 'gym_demo_01',
-    };
+    const user = getSessionUser();
     return buildMockSuccess(user, 'Current user retrieved');
   }
 

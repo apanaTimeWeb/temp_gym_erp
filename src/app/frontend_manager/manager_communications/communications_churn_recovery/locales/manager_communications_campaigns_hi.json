@@ -117,6 +117,7 @@
       "TEXT_RECIPIENT_PLURAL": "{count} प्राप्तकर्ता"
     },
     "TEXT_CHANNEL_WHATSAPP": "WhatsApp",
-    "TEXT_CHANNEL_EMAIL": "ईमेल"
+    "TEXT_CHANNEL_EMAIL": "ईमेल",
+    "COPY_RETRY": "पुनः प्रयास करें"
   }
 }

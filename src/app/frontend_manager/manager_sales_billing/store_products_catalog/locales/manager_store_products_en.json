@@ -104,7 +104,8 @@
     "TEXT_THANK_YOU_VISIT_AGAIN": "Thank You! Visit Again",
     "TEXT_WALK_IN": "Walk-in",
     "TEXT_PENDING": "PENDING",
-    "COPY_CUSTOMER": "Customer"
+    "COPY_CUSTOMER": "Customer",
+    "COPY_RETRY": "Retry"
   },
   "COPY_OTHERS": "Others"
 }

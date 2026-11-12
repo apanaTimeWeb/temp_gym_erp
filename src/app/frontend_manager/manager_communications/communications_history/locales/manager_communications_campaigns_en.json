@@ -121,6 +121,7 @@
     "TEXT_CHANNEL_WHATSAPP": "WhatsApp",
     "TEXT_CHANNEL_EMAIL": "Email",
     "COPY_NO_CAMPAIGNS_MATCH_FILTERS": "No campaigns match these filters",
-    "COPY_ADJUST_SEARCH_OR_CHANNEL_FILTER": "Try a different search or channel."
+    "COPY_ADJUST_SEARCH_OR_CHANNEL_FILTER": "Try a different search or channel.",
+    "COPY_RETRY": "Retry"
   }
 }

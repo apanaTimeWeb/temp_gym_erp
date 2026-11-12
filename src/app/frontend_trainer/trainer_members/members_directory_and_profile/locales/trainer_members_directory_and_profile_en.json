@@ -226,7 +226,8 @@
     "TEXT_MEMBER_PROFILE_UNAVAILABLE": "This member profile is unavailable.",
     "TEXT_NO_MEMBER_SELECTED": "Select a member from the directory to view trainer notes.",
     "TEXT_REQUIRED": "is required.",
-    "TEXT_CONTACT_HANDOFF_ERROR": "Unable to open message: verify the recipient contact and allow external links."
+    "TEXT_CONTACT_HANDOFF_ERROR": "Unable to open message: verify the recipient contact and allow external links.",
+    "TEXT_THIS_SECTION_COULD_NOT_BE_LOADED_YOU_CAN_AB1ACB89": "This section could not be loaded. You can retry without leaving the page."
   },
   "TEXT_FOLLOW_BALANCED_NUTRITION": "Follow balanced nutrition as advised.",
   "TEXT_NUTRITIONAL_ITEMS_AS_PLANNED": "Nutritional items as planned",
@@ -254,7 +255,8 @@
     "TEXT_GO_TO_PAGE": "Go to page",
     "TEXT_UNSAVED_CHANGES_MESSAGE": "You have unsaved changes. Are you sure you want to leave? Your changes will be lost.",
     "TEXT_LEAVE": "Leave",
-    "TEXT_STAY": "Stay"
+    "TEXT_STAY": "Stay",
+    "TEXT_THIS_SECTION_COULD_NOT_BE_LOADED_YOU_CAN_AB1ACB89": "This section could not be loaded. You can retry without leaving the page."
   },
   "TRAINER_SHELL": {
     "TEXT_GYMSMART_TRAINER": "GymSmart TRAINER",

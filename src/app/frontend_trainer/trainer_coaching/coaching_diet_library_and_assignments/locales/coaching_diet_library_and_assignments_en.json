@@ -22,6 +22,8 @@
     "TEXT_TEXT": "text",
     "TEXT_TRAINER_DIET_PLAN_TITLE": "Diet Plan",
     "TEXT_ASSIGN_TO_MEMBER": "Assign to Member",
+    "TEXT_EDIT_DIET_PLAN": "Edit Diet Plan",
+    "TEXT_CREATE_CUSTOM_DIET_PLAN": "Create Custom Diet Plan",
     "TEXT_MEAL_PLAN": "Meal Plan",
     "TEXT_DESCRIPTION": "Description",
     "TEXT_CLOSE": "Close",

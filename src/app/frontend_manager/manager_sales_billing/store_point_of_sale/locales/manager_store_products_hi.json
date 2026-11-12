@@ -103,6 +103,7 @@
     "TEXT_THANK_YOU_VISIT_AGAIN": "धन्यवाद! फिर आएं",
     "TEXT_WALK_IN": "वॉक-इन",
     "TEXT_PENDING": "लंबित",
-    "COPY_CUSTOMER": "ग्राहक"
+    "COPY_CUSTOMER": "ग्राहक",
+    "COPY_RETRY": "पुनः प्रयास करें"
   }
 }

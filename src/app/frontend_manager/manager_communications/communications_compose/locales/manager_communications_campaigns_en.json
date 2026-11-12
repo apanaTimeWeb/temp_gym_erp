@@ -119,6 +119,7 @@
       "TEXT_RECIPIENT_PLURAL": "{count} recipients"
     },
     "TEXT_CHANNEL_WHATSAPP": "WhatsApp",
-    "TEXT_CHANNEL_EMAIL": "Email"
+    "TEXT_CHANNEL_EMAIL": "Email",
+    "COPY_RETRY": "Retry"
   }
 }

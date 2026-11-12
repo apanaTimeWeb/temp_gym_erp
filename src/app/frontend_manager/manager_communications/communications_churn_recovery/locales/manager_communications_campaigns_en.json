@@ -121,6 +121,7 @@
     "TEXT_CHANNEL_WHATSAPP": "WhatsApp",
     "TEXT_CHANNEL_EMAIL": "Email",
     "COPY_CHURN_RECOVERY_TITLE": "Churn Recovery",
-    "COPY_CHURN_RECOVERY_DESCRIPTION": "Identify churn-risk members and manage win-back outreach."
+    "COPY_CHURN_RECOVERY_DESCRIPTION": "Identify churn-risk members and manage win-back outreach.",
+    "COPY_RETRY": "Retry"
   }
 }

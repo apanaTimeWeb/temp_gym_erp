@@ -226,7 +226,8 @@
     "TEXT_MEMBER_PROFILE_UNAVAILABLE": "यह सदस्य प्रोफ़ाइल उपलब्ध नहीं है।",
     "TEXT_NO_MEMBER_SELECTED": "ट्रेनर नोट देखने के लिए पहले डायरेक्टरी से सदस्य चुनें।",
     "TEXT_REQUIRED": "आवश्यक है।",
-    "TEXT_CONTACT_HANDOFF_ERROR": "संदेश नहीं खोल सके: संपर्क विवरण जाँचें और बाहरी लिंक की अनुमति दें।"
+    "TEXT_CONTACT_HANDOFF_ERROR": "संदेश नहीं खोल सके: संपर्क विवरण जाँचें और बाहरी लिंक की अनुमति दें।",
+    "TEXT_THIS_SECTION_COULD_NOT_BE_LOADED_YOU_CAN_AB1ACB89": "यह सेक्शन लोड नहीं हो सका। आप पेज छोड़े बिना फिर प्रयास कर सकते हैं।"
   },
   "TEXT_FOLLOW_BALANCED_NUTRITION": "संतुलित पोषण योजना के अनुसार पालन करें।",
   "TEXT_NUTRITIONAL_ITEMS_AS_PLANNED": "योजना के अनुसार पोषण सामग्री",
@@ -254,7 +255,8 @@
     "TEXT_GO_TO_PAGE": "पृष्ठ पर जाएँ",
     "TEXT_UNSAVED_CHANGES_MESSAGE": "आपके बदलाव अभी सहेजे नहीं गए हैं। क्या आप बाहर जाना चाहते हैं? आपके बदलाव खो जाएंगे।",
     "TEXT_LEAVE": "बाहर जाएँ",
-    "TEXT_STAY": "यहीं रहें"
+    "TEXT_STAY": "यहीं रहें",
+    "TEXT_THIS_SECTION_COULD_NOT_BE_LOADED_YOU_CAN_AB1ACB89": "यह सेक्शन लोड नहीं हो सका। आप पेज छोड़े बिना फिर प्रयास कर सकते हैं।"
   },
   "TRAINER_SHELL": {
     "TEXT_GYMSMART_TRAINER": "GymSmart ट्रेनर",

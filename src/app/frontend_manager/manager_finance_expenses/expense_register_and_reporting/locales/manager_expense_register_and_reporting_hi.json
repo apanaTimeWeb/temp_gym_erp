@@ -3,6 +3,7 @@
     "COPY_EXPENSES_UNAVAILABLE": "खर्च मॉड्यूल उपलब्ध नहीं है",
     "COPY_WE_COULDN_T_LOAD_EXPENSES_MODULE_TRY_AGAIN": "खर्च मॉड्यूल लोड नहीं हो सका। कृपया फिर से प्रयास करें।",
     "COPY_TRY_AGAIN": "फिर से प्रयास करें",
+    "COPY_RETRY": "पुनः प्रयास करें",
     "COPY_LOADING_EXPENSE_CHART": "खर्च का चार्ट लोड हो रहा है",
     "COPY_NO_EXPENSE_DATA_AVAILABLE_CHART": "चार्ट दिखाने के लिए खर्च का कोई डेटा उपलब्ध नहीं है।",
     "COPY_TOTAL_TRACKED_EXPENSES": "कुल दर्ज खर्च",

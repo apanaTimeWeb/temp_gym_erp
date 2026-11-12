@@ -3,6 +3,7 @@
     "COPY_EXPENSES_UNAVAILABLE": "Expenses Unavailable",
     "COPY_WE_COULDN_T_LOAD_EXPENSES_MODULE_TRY_AGAIN": "We couldn't load the expenses module. Please try again.",
     "COPY_TRY_AGAIN": "Try Again",
+    "COPY_RETRY": "Retry",
     "COPY_LOADING_EXPENSE_CHART": "Loading expense chart",
     "COPY_NO_EXPENSE_DATA_AVAILABLE_CHART": "No expense data available to chart.",
     "COPY_TOTAL_TRACKED_EXPENSES": "Total Tracked Expenses",

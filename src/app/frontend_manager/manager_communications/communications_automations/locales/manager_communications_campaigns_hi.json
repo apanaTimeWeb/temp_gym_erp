@@ -118,6 +118,7 @@
     },
     "TEXT_CHANNEL_WHATSAPP": "WhatsApp",
     "TEXT_CHANNEL_EMAIL": "ईमेल",
-    "COPY_NO_AUTOMATIONS_CONFIGURED": "अभी तक कोई ऑटोमेशन कॉन्फ़िगर नहीं किया गया है।"
+    "COPY_NO_AUTOMATIONS_CONFIGURED": "अभी तक कोई ऑटोमेशन कॉन्फ़िगर नहीं किया गया है।",
+    "COPY_RETRY": "पुनः प्रयास करें"
   }
 }

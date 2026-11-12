@@ -119,6 +119,7 @@
     "TEXT_CHANNEL_WHATSAPP": "WhatsApp",
     "TEXT_CHANNEL_EMAIL": "ईमेल",
     "COPY_NO_CAMPAIGNS_MATCH_FILTERS": "इन फ़िल्टर से कोई अभियान नहीं मिला",
-    "COPY_ADJUST_SEARCH_OR_CHANNEL_FILTER": "कोई दूसरा खोज शब्द या चैनल चुनें।"
+    "COPY_ADJUST_SEARCH_OR_CHANNEL_FILTER": "कोई दूसरा खोज शब्द या चैनल चुनें।",
+    "COPY_RETRY": "पुनः प्रयास करें"
   }
 }
