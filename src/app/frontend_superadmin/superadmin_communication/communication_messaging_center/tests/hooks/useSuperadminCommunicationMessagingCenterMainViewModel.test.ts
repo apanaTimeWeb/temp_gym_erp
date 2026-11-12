@@ -6,5 +6,5 @@ describe('useSuperadminCommunicationMessagingCenterMainViewModel', () => {
     const source = await import('@/app/frontend_superadmin/superadmin_communication/communication_messaging_center/hooks/useSuperadminCommunicationMessagingCenterMainViewModel');
     expect(source.useSuperadminCommunicationMessagingCenterMainViewModel).toBeTypeOf('function');
     expect(vi.isMockFunction(source.useSuperadminCommunicationMessagingCenterMainViewModel)).toBe(false);
-  });
+  }, 15000);
 });

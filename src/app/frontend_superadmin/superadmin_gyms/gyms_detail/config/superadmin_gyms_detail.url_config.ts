@@ -22,8 +22,8 @@ export const SUPERADMIN_GYMS_DETAIL_ROUTES = {
     if (view === 'detail' && gymId) return SUPERADMIN_GYMS_PHYSICAL_ROUTES.DETAIL_LEAF(gymId);
     return SUPERADMIN_GYMS_PHYSICAL_ROUTES.DIRECTORY_LEAF;
   },
-  BILLING_PLANS: '/superadmin/saas-billing/plans',
-  ADMIN_DASHBOARD: '/admin/dashboard',
+  BILLING_PLANS: '/frontend_superadmin/superadmin_billing/billing_plans_management',
+  ADMIN_DASHBOARD: '/frontend_admin/admin_dashboard/dashboard_overview',
 } as const),
 
 } as const;
@@ -38,7 +38,7 @@ export const SUPERADMIN_GYMS_DETAIL_API = {
   STATS: '/superadmin/gyms/stats',
   PROVISION: '/superadmin/gyms/provision',
   MOCK_EXPORT_FILE: '/__mocks__/superadmin/gyms/export.csv',
-  SUBSCRIPTION_PLANS: '/superadmin/saas-billing/plans',
+  SUBSCRIPTION_PLANS: '/frontend_superadmin/superadmin_billing/billing_plans_management',
   GHOST_LOGIN: {
     SET_COOKIE_PROXY: '/auth/set-cookie',
     EXIT_GHOST_LOGIN_PROXY: '/auth/exit-ghost-login',

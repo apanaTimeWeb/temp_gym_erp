@@ -8,6 +8,15 @@ export const metadata: Metadata = {
 };
 
 /** Canonical business-domain entry; forwards all users to its default leaf. */
-export default function SuperadminDomainRoot() {
+export default async function SuperadminDomainRoot({
+  searchParams,
+}: {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const params = searchParams ? await searchParams : {};
+  const id = typeof params.id === 'string' ? params.id : undefined;
+  if (id) {
+    redirect(`/frontend_superadmin/superadmin_gyms/gyms_detail/${encodeURIComponent(id)}`);
+  }
   redirect('/frontend_superadmin/superadmin_gyms/gyms_directory');
 }

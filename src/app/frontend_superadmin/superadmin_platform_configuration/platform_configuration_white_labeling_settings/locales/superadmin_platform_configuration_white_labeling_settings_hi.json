@@ -64,6 +64,7 @@
       "status_active": "सक्रिय",
       "status_failed": "विफल",
       "status_issued": "जारी किया गया",
+      "status_not_configured": "कॉन्फ़िगर नहीं किया गया",
       "dns_propagation_guidance": "DNS प्रसार में 48 घंटे तक लग सकते हैं।",
       "open_domain_details": "{gymName} के डोमेन का विवरण खोलें",
       "route_loading": "पृष्ठ लोड हो रहा है",

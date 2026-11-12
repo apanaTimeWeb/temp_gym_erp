@@ -25,5 +25,15 @@ export function useSuperadminGymsDirectoryUrlState() {
     router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
   }, [pathname, router, searchParams]);
 
-  return { getParam, setParam };
+  const setParams = useCallback((updates: Record<string, string | null>): void => {
+    const next = new URLSearchParams(searchParams.toString());
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value === null) next.delete(key);
+      else next.set(key, value);
+    });
+    const query = next.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+  }, [pathname, router, searchParams]);
+
+  return { getParam, setParam, setParams };
 }

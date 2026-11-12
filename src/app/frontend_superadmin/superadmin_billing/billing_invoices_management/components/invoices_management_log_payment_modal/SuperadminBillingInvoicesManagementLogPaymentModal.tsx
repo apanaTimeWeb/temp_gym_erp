@@ -90,10 +90,10 @@ export default function SuperadminBillingInvoicesManagementLogPaymentModal({
   };
 
   return (
-    <div ref={dialogRef} className="fixed inset-0 z-40 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="superadmin-invoices-log-payment-title" data-testid="superadmin_billing_invoices-log-payment-dialog">
-      <button type="button" aria-label={t('ui.close_manual_payment_dialog_8fcf0aba')} className="absolute inset-0 bg-overlay-backdrop focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11" onClick={() => { void requestClose(); }}  data-testid="superadmin_billing_invoices-superadmin-invoices-log-payment-modal-close-manual-payment-dialog"/>
-      <div className="relative w-full max-w-md overflow-hidden rounded-xl border border-border bg-overlay shadow-dialog motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in-95 motion-safe:duration-base">
-        <div className="flex items-center justify-between border-b border-border p-5">
+    <div ref={dialogRef} className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto p-4" role="dialog" aria-modal="true" aria-labelledby="superadmin-invoices-log-payment-title" data-testid="superadmin_billing_invoices-log-payment-dialog">
+      <button type="button" aria-label={t('ui.close_manual_payment_dialog_8fcf0aba')} className="fixed inset-0 bg-overlay-backdrop focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11" onClick={() => { void requestClose(); }}  data-testid="superadmin_billing_invoices-superadmin-invoices-log-payment-modal-close-manual-payment-dialog"/>
+      <div className="relative my-auto flex max-h-dialog-desktop w-full max-w-md flex-col overflow-hidden rounded-xl border border-border bg-overlay shadow-dialog motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in-95 motion-safe:duration-base">
+        <div className="flex shrink-0 items-center justify-between border-b border-border p-5">
           <div>
             <h2 id="superadmin-invoices-log-payment-title" className="text-xl font-bold text-primary">{t('ui.log_manual_payment_e15e5207')}</h2>
             <p className="mt-1 text-xs text-secondary">{t('ui.record_the_amount_for_the_selected_gym_ed2152aa')}</p>
@@ -103,8 +103,8 @@ export default function SuperadminBillingInvoicesManagementLogPaymentModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} noValidate data-testid="superadmin_billing_invoices-superadmininvoiceslogpaymentmodal-form-1">
-          <div className="space-y-4 p-5">
+        <form onSubmit={handleSubmit} noValidate className="min-h-0 flex-1 flex flex-col" data-testid="superadmin_billing_invoices-superadmininvoiceslogpaymentmodal-form-1">
+          <div className="min-h-0 flex-1 overflow-y-auto custom-scrollbar space-y-4 p-5">
             {errors.root?.server?.message ? <p role="alert" className="rounded-md border border-danger bg-danger-bg p-3 text-sm text-danger">{String(errors.root.server.message)}</p> : null}
             <div className="relative">
               <label htmlFor="superadmin-invoices-gym" className="mb-1.5 block text-sm font-medium text-secondary">{t('ui.select_gym_e1eeb492')}</label>
@@ -147,7 +147,7 @@ export default function SuperadminBillingInvoicesManagementLogPaymentModal({
             </div>
           </div>
 
-          <div className="flex justify-end gap-3 border-t border-border bg-header p-5">
+          <div className="flex shrink-0 justify-end gap-3 border-t border-border bg-header p-5">
             <button type="button" onClick={() => { void requestClose(); }} disabled={isSaving} className="min-h-11 rounded-lg border border-border bg-input px-4 py-2 text-sm font-medium text-primary hover:bg-surface-hover motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-50" data-testid="superadmin_billing_invoices-superadmin-invoices-log-payment-modal-log-payment-modal-cancel">
               {t('ui.cancel_ea478870')}</button>
             <button type="submit" disabled={submitDisabled} className="flex min-h-11 min-w-36 items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-on-primary hover:bg-primary-hover motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50" data-testid="superadmin_billing_invoices-superadmin-invoices-log-payment-modal-log-payment-modal-submit">

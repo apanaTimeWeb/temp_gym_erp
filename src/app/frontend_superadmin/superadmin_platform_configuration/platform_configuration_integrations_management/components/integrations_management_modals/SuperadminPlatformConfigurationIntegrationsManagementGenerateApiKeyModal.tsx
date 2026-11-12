@@ -55,9 +55,9 @@ export default function SuperadminPlatformConfigurationIntegrationsManagementGen
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay p-4 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in" role="dialog" aria-modal="true" aria-labelledby="superadmin-generate-api-key-title" data-testid="superadmin_platform_configuration_integrations-superadmin-integrations-generate-api-key-modal-key-modal-dialog-1" ref={dialogRef}>
-      <div className="flex w-full max-w-md flex-col overflow-hidden rounded-xl border border-border bg-overlay shadow-dialog motion-safe:animate-in motion-safe:zoom-in-95">
-        <div className="flex items-center justify-between border-b border-border px-6 py-5">
+    <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay p-4 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in" role="dialog" aria-modal="true" aria-labelledby="superadmin-generate-api-key-title" data-testid="superadmin_platform_configuration_integrations-superadmin-integrations-generate-api-key-modal-key-modal-dialog-1" ref={dialogRef}>
+      <div className="my-auto flex max-h-dialog-desktop w-full max-w-md flex-col overflow-hidden rounded-xl border border-border bg-overlay shadow-dialog motion-safe:animate-in motion-safe:zoom-in-95">
+        <div className="flex shrink-0 items-center justify-between border-b border-border px-6 py-5">
           <div className="flex items-center gap-3">
             <div className="rounded-lg bg-primary-subtle p-2 text-primary"><KeyRound size={18} aria-hidden="true"/></div>
             <div>
@@ -71,7 +71,7 @@ export default function SuperadminPlatformConfigurationIntegrationsManagementGen
         </div>
 
         {generatedSecret ? (
-          <div ref={secretResultRef} tabIndex={-1} role="status" aria-live="polite" className="space-y-5 p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+          <div ref={secretResultRef} tabIndex={-1} role="status" aria-live="polite" className="min-h-0 flex-1 overflow-y-auto custom-scrollbar space-y-5 p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
             <div className="rounded-lg border border-border bg-success-bg p-4">
               <div className="mb-2 flex items-center gap-2 text-success"><Check size={18} aria-hidden="true"/>  {t('ui.api_key_generated_bdaad62')}</div>
               <p className="text-sm text-secondary">{t('ui.this_secret_is_shown_only_in_this_dialog_store_i_d0ceb38')}</p>
@@ -85,8 +85,8 @@ export default function SuperadminPlatformConfigurationIntegrationsManagementGen
             </div>
           </div>
         ) : (
-          <form onSubmit={handleSubmit(submitApiKey)} className="flex flex-col" data-testid="superadmin_platform_configuration_integrations-superadmin-integrations-generate-api-key-modal-superadmingenerateapikeymodal-form-submit-1">
-            <div className="flex flex-col gap-4 p-6">
+          <form onSubmit={handleSubmit(submitApiKey)} className="flex min-h-0 flex-1 flex-col" data-testid="superadmin_platform_configuration_integrations-superadmin-integrations-generate-api-key-modal-superadmingenerateapikeymodal-form-submit-1">
+            <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto custom-scrollbar p-6">
               {(() => { if (errors.root?.server?.message) { return (<p role="alert" className="rounded-lg border border-danger bg-danger-bg p-3 text-sm text-danger">{String(errors.root.server.message)}</p>); } if (mutation.error) { return (<p role="alert" className="rounded-lg border border-danger bg-danger-bg p-3 text-sm text-danger">{t('ui.action_failed_retry')}</p>); } return (null); })()}
               <div>
                 <label htmlFor="superadmin-api-key-label" className="mb-1 block text-sm font-medium text-secondary">{t('ui.key_label_dd9cb71')}</label>
@@ -129,7 +129,7 @@ export default function SuperadminPlatformConfigurationIntegrationsManagementGen
               </div>
             </div>
 
-            <div className="flex justify-end gap-3 border-t border-border bg-sidebar px-6 py-5">
+            <div className="flex shrink-0 justify-end gap-3 border-t border-border bg-sidebar px-6 py-5">
               <button  type="button" onClick={() => void requestClose()} disabled={mutation.isPending} className="min-h-11 rounded-lg border border-border bg-transparent px-5 py-2.5 text-sm font-medium text-primary motion-safe:transition-colors hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page disabled:cursor-not-allowed disabled:opacity-50 motion-safe:active:scale-95" data-testid="superadmin_platform_configuration_integrations-superadmin-integrations-generate-api-key-modal-key-modal-cancel-1">{t('ui.cancel_a272158')}</button>
               <button type="submit" disabled={mutation.isPending} className="flex min-h-11 min-w-36 items-center justify-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-on-primary motion-safe:transition-all motion-safe:duration-base motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page disabled:cursor-not-allowed disabled:opacity-50" data-testid="superadmin_platform_configuration_integrations-superadmin-integrations-generate-api-key-modal-key-modal-action4-1">
                 {mutation.isPending && <Loader2 size={18} className="motion-safe:animate-spin" aria-hidden="true"/>}

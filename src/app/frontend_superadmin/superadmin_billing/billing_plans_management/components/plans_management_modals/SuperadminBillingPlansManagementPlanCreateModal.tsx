@@ -98,16 +98,16 @@ export default function SuperadminBillingPlansManagementPlanCreateModal() {
           applySuperadminBillingPlansManagementFormApiErrors(error, setError, ['name', 'priceMonthly', 'priceAnnual', 'maxMembers', 'maxStaff', 'dbLimitGb', 'binaryLimitGb', 'features.*.value']);
         }
     };
-    return (<div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-labelledby="superadmin-plans-create-title" tabIndex={-1} ref={dialogRef} data-testid="superadmin_billing_plans-plan-create-modal-dialog">
-      <div className="bg-overlay border border-border rounded-xl w-full max-w-2xl max-h-screen overflow-hidden flex flex-col shadow-dialog">
-        <div className="flex items-center justify-between p-6 border-b border-border">
+    return (<div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-labelledby="superadmin-plans-create-title" tabIndex={-1} ref={dialogRef} data-testid="superadmin_billing_plans-plan-create-modal-dialog">
+      <div className="bg-overlay border border-border rounded-xl w-full max-w-2xl my-auto max-h-dialog-desktop overflow-hidden flex flex-col shadow-dialog">
+        <div className="flex shrink-0 items-center justify-between p-6 border-b border-border">
           <h2 id="superadmin-plans-create-title" className="text-xl font-bold text-primary">{t('ui.create_new_subscription_plan_0c6c6b65')}</h2>
           <button type="button" onClick={handleClose} className="min-h-11 min-w-11 p-2 hover:bg-input rounded-full motion-safe:transition-colors text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" aria-label={t('ui.close_modal_a2071564')} data-testid="superadmin_billing_plans-superadmin-plans-plan-create-modal-create-modal-close-modal">
             <X size={18}/>
           </button>
         </div>
 
-        <form id="superadmin-plans-create-form" onSubmit={handleSubmit(handleSubmitForm)} className="flex-1 overflow-y-auto p-6 space-y-6" data-testid="superadmin_billing_plans-superadminplansplancreatemodal-form-1">
+        <form id="superadmin-plans-create-form" onSubmit={handleSubmit(handleSubmitForm)} className="min-h-0 flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6" data-testid="superadmin_billing_plans-superadminplansplancreatemodal-form-1">
           {errors.root?.server?.message ? <p role="alert" className="rounded-md border border-danger bg-danger-bg p-3 text-sm text-danger">{String(errors.root.server.message)}</p> : null}
           <div className="space-y-2">
             <label htmlFor="plan-create-name" className="block text-sm font-medium text-secondary">{t('ui.plan_name_b356b614')}<span className="text-danger">{t('ui.text_3389dae3')}</span></label>
@@ -158,7 +158,7 @@ export default function SuperadminBillingPlansManagementPlanCreateModal() {
           </div>
         </form>
 
-        <div className="p-6 border-t border-border bg-sidebar flex justify-end gap-3">
+        <div className="shrink-0 p-6 border-t border-border bg-sidebar flex justify-end gap-3">
           <button type="button" onClick={handleClose} disabled={isCreating} className="min-h-11 px-6 py-2.5 rounded-xl font-medium text-secondary hover:bg-input motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="superadmin_billing_plans-superadmin-plans-plan-create-modal-plan-create-modal-cancel">{t('ui.cancel_ea478870')}</button>
           <button type="submit" form="superadmin-plans-create-form" disabled={isCreating} className="min-h-11 px-6 py-2.5 rounded-xl font-medium bg-primary text-on-primary hover:bg-primary-hover motion-safe:transition-colors disabled:opacity-50 flex items-center gap-2 motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="superadmin_billing_plans-superadmin-plans-plan-create-modal-plan-create-modal-button">
             {isCreating ? <><Loader2 size={18} strokeWidth={2} className="motion-safe:animate-spin"/> {t('ui.creating_d930f445')}</> : t('ui.create_plan_submit')}

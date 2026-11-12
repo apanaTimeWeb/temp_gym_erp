@@ -2,7 +2,7 @@
 /** Feature-owned navigation and frozen wire endpoints. Only these two contracts are exported. */
 export const SUPERADMIN_PLATFORM_SHELL_NAVIGATION_ROUTES = {
   ...({
-  DASHBOARD: '/superadmin/dashboard',
+  DASHBOARD: '/frontend_superadmin/superadmin_dashboard',
 } as const),
   SUPERADMIN_PLATFORM_SHELL_NAVIGATION_DESTINATION_ROUTES: ({
   // Primary domain entry points (one clickable sidebar destination per business domain).

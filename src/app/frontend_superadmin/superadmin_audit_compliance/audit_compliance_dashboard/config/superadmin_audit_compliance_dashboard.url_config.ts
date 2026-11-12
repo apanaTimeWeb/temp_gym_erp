@@ -6,6 +6,6 @@
 
 export const SUPERADMIN_AUDIT_COMPLIANCE_DASHBOARD_ROUTES = { MAIN: '/frontend_superadmin/superadmin_audit_compliance/audit_compliance_dashboard' } as const;
 
-export const SUPERADMIN_AUDIT_COMPLIANCE_DASHBOARD_API = { BASE: '/frontend_superadmin/superadmin_compliance' } as const;
+export const SUPERADMIN_AUDIT_COMPLIANCE_DASHBOARD_API = { BASE: '/superadmin/compliance' } as const;
 
 

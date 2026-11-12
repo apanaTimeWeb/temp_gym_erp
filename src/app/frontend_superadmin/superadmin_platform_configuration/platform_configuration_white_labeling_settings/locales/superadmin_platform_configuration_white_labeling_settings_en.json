@@ -64,6 +64,7 @@
       "status_active": "Active",
       "status_failed": "Failed",
       "status_issued": "Issued",
+      "status_not_configured": "Not Configured",
       "dns_propagation_guidance": "DNS propagation may take up to 48 hours.",
       "open_domain_details": "Open domain details for {gymName}",
       "route_loading": "Loading page",

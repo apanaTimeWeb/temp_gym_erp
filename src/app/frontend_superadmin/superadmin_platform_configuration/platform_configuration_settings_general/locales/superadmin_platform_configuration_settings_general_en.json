@@ -41,7 +41,11 @@
       "secret_write_only_placeholder": "Enter a new secret; the existing value is never displayed.",
       "route_loading": "Loading page",
       "boundary_title": "Unable to load this section",
-      "boundary_retry": "Try again"
+      "boundary_retry": "Try again",
+      "unsaved_settings_changes_title": "Unsaved settings changes",
+      "unsaved_settings_changes_message": "You have unsaved platform settings changes. Leave this page and discard them?",
+      "leave_settings_action": "Leave page",
+      "stay_on_settings_action": "Stay on page"
     },
     "actions": {
       "retry": "Retry",
@@ -55,11 +59,5 @@
       "export": "Export",
       "search": "Search"
     }
-  },
-  "ui": {
-    "unsaved_settings_changes_title": "Unsaved settings changes",
-    "unsaved_settings_changes_message": "You have unsaved platform settings changes. Leave this page and discard them?",
-    "leave_settings_action": "Leave page",
-    "stay_on_settings_action": "Stay on page"
   }
 }

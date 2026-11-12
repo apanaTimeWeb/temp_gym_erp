@@ -12,6 +12,8 @@ const LEGACY_TO_CANONICAL_ROUTE = {
   backups: SUPERADMIN_SYSTEM_OPS_ROUTES.CANONICAL_BACKUPS,
   jobs: SUPERADMIN_SYSTEM_OPS_ROUTES.CANONICAL_JOBS,
   migrations: SUPERADMIN_SYSTEM_OPS_ROUTES.CANONICAL_MIGRATIONS,
+  cache_management: '/frontend_superadmin/superadmin_system_ops/system_ops_cache_management',
+  cache: '/frontend_superadmin/superadmin_system_ops/system_ops_cache_management',
 } as const;
 type LegacyLeafView = keyof typeof LEGACY_TO_CANONICAL_ROUTE;
 

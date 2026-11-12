@@ -6,6 +6,6 @@
 
 export const SUPERADMIN_TEAM_MANAGEMENT_ROUTES = { MAIN: '/frontend_superadmin/superadmin_team/team_management' } as const;
 
-export const SUPERADMIN_TEAM_MANAGEMENT_API = { BASE: '/frontend_superadmin/superadmin_team', ALERT_PREFERENCES: '/superadmin/team/alerts' } as const;
+export const SUPERADMIN_TEAM_MANAGEMENT_API = { BASE: '/superadmin/team', ALERT_PREFERENCES: '/superadmin/team/alerts' } as const;
 
 

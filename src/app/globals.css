@@ -175,6 +175,8 @@
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-text-disabled: var(--text-disabled);
+  --color-secondary: var(--text-secondary);
+  --color-disabled: var(--text-disabled);
   --color-on-primary: var(--text-on-primary);
   --color-on-danger: var(--text-on-danger);
   --color-on-warning: var(--text-on-warning);

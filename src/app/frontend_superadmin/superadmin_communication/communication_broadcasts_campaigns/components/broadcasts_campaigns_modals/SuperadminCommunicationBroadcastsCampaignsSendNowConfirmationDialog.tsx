@@ -57,20 +57,22 @@ export default function SuperadminCommunicationBroadcastsCampaignsSendNowConfirm
     : t('ui.send_now_confirmation_audience_all');
   const canSend = phrase === 'SEND' && !isPending;
 
-  return <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay p-4" data-testid="superadmin_communication_broadcasts-send-now-dialog-backdrop">
-    <section ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="superadmin-broadcast-send-now-title" aria-describedby="superadmin-broadcast-send-now-description" className="w-full max-w-lg rounded-xl border border-border bg-overlay p-6 shadow-dialog">
-      <div className="mb-4 flex items-start gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-warning-bg text-warning"><AlertTriangle size={20} aria-hidden="true" /></span>
-        <div className="min-w-0 flex-1">
-          <h2 id="superadmin-broadcast-send-now-title" className="text-lg font-semibold text-primary">{t('ui.send_now_confirmation_title')}</h2>
-          <p id="superadmin-broadcast-send-now-description" className="mt-2 text-sm text-secondary">{t('ui.send_now_confirmation_description', { title: broadcast.title, audience })}</p>
+  return <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay p-4" data-testid="superadmin_communication_broadcasts-send-now-dialog-backdrop">
+    <section ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="superadmin-broadcast-send-now-title" aria-describedby="superadmin-broadcast-send-now-description" className="my-auto flex max-h-dialog-desktop w-full max-w-lg flex-col rounded-xl border border-border bg-overlay shadow-dialog">
+      <div className="min-h-0 flex-1 overflow-y-auto custom-scrollbar p-6">
+        <div className="mb-4 flex items-start gap-3">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-warning-bg text-warning"><AlertTriangle size={20} aria-hidden="true" /></span>
+          <div className="min-w-0 flex-1">
+            <h2 id="superadmin-broadcast-send-now-title" className="text-lg font-semibold text-primary">{t('ui.send_now_confirmation_title')}</h2>
+            <p id="superadmin-broadcast-send-now-description" className="mt-2 text-sm text-secondary">{t('ui.send_now_confirmation_description', { title: broadcast.title, audience })}</p>
+          </div>
         </div>
+        <label htmlFor="superadmin-broadcast-send-now-phrase" className="block text-sm font-semibold text-primary">{t('ui.send_now_confirmation_phrase_label')}</label>
+        <input ref={phraseRef} id="superadmin-broadcast-send-now-phrase" value={phrase} onChange={(event) => setPhrase(event.target.value)} autoComplete="off" aria-describedby="superadmin-broadcast-send-now-instruction" aria-invalid={phrase.length > 0 && phrase !== 'SEND'} className="mt-2 min-h-11 w-full rounded-lg border border-border bg-input px-3 py-2 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="superadmin_communication_broadcasts-send-now-phrase" />
+        <p id="superadmin-broadcast-send-now-instruction" className="mt-2 text-xs text-secondary">{t('ui.send_now_confirmation_instruction')}</p>
+        {phrase.length > 0 && phrase !== 'SEND' ? <p role="status" className="mt-1 text-xs text-danger">{t('ui.send_now_confirmation_phrase_invalid')}</p> : null}
       </div>
-      <label htmlFor="superadmin-broadcast-send-now-phrase" className="block text-sm font-semibold text-primary">{t('ui.send_now_confirmation_phrase_label')}</label>
-      <input ref={phraseRef} id="superadmin-broadcast-send-now-phrase" value={phrase} onChange={(event) => setPhrase(event.target.value)} autoComplete="off" aria-describedby="superadmin-broadcast-send-now-instruction" aria-invalid={phrase.length > 0 && phrase !== 'SEND'} className="mt-2 min-h-11 w-full rounded-lg border border-border bg-input px-3 py-2 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="superadmin_communication_broadcasts-send-now-phrase" />
-      <p id="superadmin-broadcast-send-now-instruction" className="mt-2 text-xs text-secondary">{t('ui.send_now_confirmation_instruction')}</p>
-      {phrase.length > 0 && phrase !== 'SEND' ? <p role="status" className="mt-1 text-xs text-danger">{t('ui.send_now_confirmation_phrase_invalid')}</p> : null}
-      <div className="mt-6 flex flex-wrap justify-end gap-3 border-t border-border pt-4">
+      <div className="shrink-0 flex flex-wrap justify-end gap-3 border-t border-border p-6">
         <button type="button" disabled={isPending} onClick={onCancel} className="min-h-11 rounded-lg border border-border px-4 py-2 text-sm font-medium text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-50">{t('ui.send_now_confirmation_cancel')}</button>
         <button type="button" disabled={!canSend} onClick={() => void onConfirm(phrase)} className="flex min-h-11 min-w-40 items-center justify-center gap-2 rounded-lg bg-danger px-4 py-2 text-sm font-semibold text-on-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50" data-testid="superadmin_communication_broadcasts-send-now-submit">
           {isPending ? <><Loader2 size={16} className="motion-safe:animate-spin" aria-hidden="true"/>{t('ui.delivering_eb32871c')}</> : t('ui.send_now_confirmation_submit')}

@@ -36,9 +36,9 @@ export default function SuperadminCommunicationBroadcastsCampaignsBroadcastQueue
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay backdrop-blur-sm" role="dialog" aria-modal="true" ref={dialogRef} aria-labelledby="superadmin-broadcast-queue-title" data-testid="superadmin_communication_broadcasts-broadcast-queue-modal-dialog">
-      <div className="bg-overlay rounded-xl shadow-dialog w-full max-w-lg border border-border flex flex-col overflow-hidden">
-        <div className="px-6 py-4 bg-primary-subtle flex items-center justify-between">
+    <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto p-4 bg-overlay backdrop-blur-sm" role="dialog" aria-modal="true" ref={dialogRef} aria-labelledby="superadmin-broadcast-queue-title" data-testid="superadmin_communication_broadcasts-broadcast-queue-modal-dialog">
+      <div className="bg-overlay rounded-xl shadow-dialog w-full max-w-lg my-auto max-h-dialog-desktop border border-border flex flex-col overflow-hidden">
+        <div className="shrink-0 px-6 py-4 bg-primary-subtle flex items-center justify-between">
           <div className="min-w-0">
             <h2 id="superadmin-broadcast-queue-title" className="truncate text-on-primary font-bold text-lg">{t('ui.automated_broadcast_ff617205')}</h2>
             <p className="text-on-primary text-xs">{t('ui.processing_delivery_for_e271e10b')}{recipients.length} {t('ui.selected_tenants_49a95cf7')}</p>
@@ -48,7 +48,7 @@ export default function SuperadminCommunicationBroadcastsCampaignsBroadcastQueue
           </button>
         </div>
 
-        <div className="p-6 max-h-96 overflow-y-auto space-y-3 custom-scrollbar" aria-live="polite" data-testid="superadmin_communication_broadcasts-broadcast-queue-list">
+        <div className="min-h-0 flex-1 p-6 overflow-y-auto space-y-3 custom-scrollbar" aria-live="polite" data-testid="superadmin_communication_broadcasts-broadcast-queue-list">
           <p className="text-sm text-secondary mb-4">{broadcastTitle}</p>
           {recipients.length === 0 ? <div role="alert" className="rounded-lg border border-danger bg-danger-bg p-4 text-sm text-danger" data-testid="superadmin_communication_broadcasts-queue-empty-error">{t('ui.no_recipients_to_deliver')}</div> : null}
           {recipients.map((recipient) => {

@@ -44,6 +44,14 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
     if (superadminResponse) return superadminResponse;
   }
 
+  // GLOBAL EXPORT & AUTH PROXIES
+  if (urlPath === '/export-data' || urlPath.endsWith('/export-data')) {
+    return buildMockSuccess({ downloadUrl: '/__mocks__/superadmin/export.csv', jobId: `job_${Date.now()}` }, 'Export generated successfully');
+  }
+  if (urlPath === '/auth/set-cookie' || urlPath.endsWith('/auth/set-cookie')) {
+    return buildMockSuccess({ authenticated: true }, 'Session authenticated');
+  }
+
   // MANAGER ENDPOINTS
   if (urlPath.startsWith('/api/v1/manager') || urlPath.startsWith('/manager')) {
     const managerResponse = handleManagerMockApiRequest(urlPath, method, searchParams, options);

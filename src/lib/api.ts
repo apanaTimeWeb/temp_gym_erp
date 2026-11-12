@@ -207,6 +207,33 @@ export function getUser(): UserProfile | null {
     // Ignore parse error
   }
 
+  if (window.location.pathname.startsWith("/frontend_superadmin")) {
+    return {
+      id: "superadmin_demo_user",
+      name: "Alex Superadmin",
+      email: "superadmin@smartgym360.com",
+      role: "superadmin",
+    };
+  }
+
+  if (window.location.pathname.startsWith("/frontend_admin")) {
+    return {
+      id: "admin_demo_user",
+      name: "Sarah Admin",
+      email: "admin@smartgym360.com",
+      role: "admin",
+    };
+  }
+
+  if (window.location.pathname.startsWith("/frontend_manager")) {
+    return {
+      id: "manager_demo_user",
+      name: "David Manager",
+      email: "manager@smartgym360.com",
+      role: "manager",
+    };
+  }
+
   return {
     id: "trainer_demo_user",
     name: "Michael Trainer",

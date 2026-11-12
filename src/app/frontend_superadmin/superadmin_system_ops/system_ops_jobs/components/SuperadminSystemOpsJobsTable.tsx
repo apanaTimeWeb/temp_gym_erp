@@ -2,7 +2,7 @@
 'use client';
 
 
-import { Trash2, RefreshCw, XCircle } from 'lucide-react';
+import { Trash2, RefreshCw, XCircle, Eye } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import Tooltip from '@/components/ui/Tooltip';
@@ -51,7 +51,7 @@ export default function SuperadminSystemOpsJobsTable({ jobs, allJobsFiltered, se
         <tbody className="divide-y divide-border">
           {jobs.length === 0 ? <SuperadminSystemOpsJobsEmptyState isFiltered={allJobsFiltered}/> : jobs.map((job, index) => {
             const statusKey = job.status as keyof typeof SUPERADMIN_JOBS_STATUS_STYLES;
-            return (<tr key={job.id} tabIndex={0} aria-label={t('ui.a11y_inspect_job', { id: job.id })} data-testid={`superadmin_system_ops_jobs-table-${job.id}-inspect`}  onKeyDown={(event) => { if (event.target !== event.currentTarget) return; if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onInspect(job); } }} className="hover:bg-card motion-safe:transition-colors group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset">
+            return (<tr key={job.id} tabIndex={0} aria-label={t('ui.a11y_inspect_job', { id: job.id })} data-testid={`superadmin_system_ops_jobs-table-${job.id}-inspect`} onClick={() => onInspect(job)} onKeyDown={(event) => { if (event.target !== event.currentTarget) return; if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onInspect(job); } }} className="hover:bg-card motion-safe:transition-colors group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset">
                 <td className="p-4 text-center" onClick={(e) => e.stopPropagation()} data-testid={`superadmin_system_ops_jobs-superadminjobstable-click-action-${index}`} data-mobile-label={t('ui.mobile_select_all_visible_jobs')}>
                   <input  type="checkbox" aria-label={t('ui.a11y_select_job', { id: job.id })} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page rounded border-border text-primary cursor-pointer w-4 h-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11 motion-safe:transition-all motion-safe:duration-base ease-in-out" checked={selectedJobIds.has(job.id)} onChange={() => toggleSelection(job.id)} data-testid={`superadmin_system_ops_jobs-jobs-table-control-${index}`}/>
                 </td>
@@ -76,6 +76,9 @@ export default function SuperadminSystemOpsJobsTable({ jobs, allJobsFiltered, se
                 </td>
                 <td className="p-4 text-end" onClick={(e) => e.stopPropagation()} data-testid={`superadmin_system_ops_jobs-superadminjobstable-click-action-2-${index}`} data-mobile-label={t('ui.mobile_actions')}>
                   <div className="flex items-center justify-end gap-1 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100 motion-safe:transition-opacity">
+                    <button  type="button" onClick={() => onInspect(job)} className="min-w-11 min-h-11 p-1.5 text-secondary hover:text-primary hover:bg-page rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" title={t('ui.a11y_inspect_job', { id: job.id })} aria-label={t('ui.a11y_inspect_job', { id: job.id })} data-testid={`superadmin_system_ops_jobs-jobs-table-inspect-btn-${index}`}>
+                      <Eye size={18} strokeWidth={2}/>
+                    </button>
                     {job.status === SUPERADMIN_JOBS_STATUS_CODES.FAILED && (<button  type="button" onClick={() => onRetry(job.id)} className="min-w-11 min-h-11 p-1.5 text-secondary hover:text-success hover:bg-success-bg rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" title={t('ui.retry_job_d0ee807')} aria-label={t('ui.a11y_retry_job', { id: job.id })} data-testid={`superadmin_system_ops_jobs-jobs-table-retry-${index}`}>
                         <RefreshCw size={18} strokeWidth={2}/>
                       </button>)}

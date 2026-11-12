@@ -23,6 +23,7 @@ import { MOCK_SUPERADMIN_BILLING_USAGE_METERS } from '@/app/frontend_superadmin/
 
 // Affiliates
 import { MOCK_SUPERADMIN_AFFILIATES } from '@/app/frontend_superadmin/superadmin_affiliates/affiliates_management/mocks/fixtures/SuperadminAffiliatesManagementMockFixtures';
+import { MOCK_SUPERADMIN_AFFILIATE_PAYOUT_HISTORY } from '@/app/frontend_superadmin/superadmin_affiliates/affiliates_payout_history/mocks/fixtures/SuperadminAffiliatesPayoutHistoryTableMockFixtures';
 
 // Team
 import { SUPERADMIN_TEAM_MOCK_FIXTURE } from '@/app/frontend_superadmin/superadmin_team/team_management/mocks/fixtures/SuperadminTeamManagementMockFixtures';
@@ -141,15 +142,19 @@ export function handleSuperadminMockApiRequest(
     }
 
     const search = searchParams.get('search') || '';
-    const status = searchParams.get('status') || '';
+    const status = searchParams.get('status') || searchParams.get('statusFilter') || '';
+    const plan = searchParams.get('plan') || searchParams.get('planFilter') || '';
     let filtered = currentGyms;
 
     if (search) {
       const q = search.toLowerCase();
       filtered = filtered.filter(g => g.name.toLowerCase().includes(q) || g.ownerName.toLowerCase().includes(q) || g.adminEmail.toLowerCase().includes(q));
     }
-    if (status && status !== 'ALL') {
-      filtered = filtered.filter(g => g.status === status);
+    if (status && status !== 'ALL' && status !== 'All') {
+      filtered = filtered.filter(g => g.status?.toUpperCase() === status.toUpperCase());
+    }
+    if (plan && plan !== 'ALL' && plan !== 'All') {
+      filtered = filtered.filter(g => g.plan?.toUpperCase() === plan.toUpperCase());
     }
 
     const page = parseInt(searchParams.get('page') || '1', 10);
@@ -237,13 +242,37 @@ export function handleSuperadminMockApiRequest(
   }
 
   // 4. SAAS BILLING
-  if (urlPath === '/superadmin/saas-billing/invoices') {
-    return buildMockSuccess(currentInvoices, 'Invoices retrieved successfully');
-  }
-  if (urlPath === '/superadmin/saas-billing/invoices/manual-payment') {
-    return buildMockSuccess({ recorded: true, id: `inv_pay_${Date.now()}` }, 'Payment recorded successfully');
+  if (urlPath.startsWith('/superadmin/saas-billing/invoices')) {
+    if (urlPath.includes('/download')) {
+      return buildMockSuccess({ downloadUrl: '/__mocks__/superadmin/invoices/sample.pdf' }, 'Download ready');
+    }
+    if (urlPath.includes('/resend')) {
+      return buildMockSuccess({ sent: true }, 'Invoice resent successfully');
+    }
+    if (urlPath.includes('/export')) {
+      return buildMockSuccess({ downloadUrl: '/__mocks__/superadmin/invoices/export.csv' }, 'Export ready');
+    }
+    if (urlPath.endsWith('/manual-payment')) {
+      return buildMockSuccess({ recorded: true, id: `inv_pay_${Date.now()}` }, 'Payment recorded successfully');
+    }
+    const search = searchParams.get('search')?.toLowerCase() || '';
+    const status = searchParams.get('status') || '';
+    let filtered = currentInvoices.filter((inv) => {
+      const matchSearch = !search || inv.id.toLowerCase().includes(search) || inv.tenantName.toLowerCase().includes(search);
+      const matchStatus = !status || status === 'ALL' || inv.status === status;
+      return matchSearch && matchStatus;
+    });
+    return buildMockSuccess(filtered, 'Invoices retrieved successfully');
   }
   if (urlPath.startsWith('/superadmin/saas-billing/coupons')) {
+    if (urlPath.includes('/redemptions')) {
+      const redemptions = [
+        { id: 'red-1', tenantName: 'Iron Peak Fitness', planName: 'Pro Tier', discountApplied: 50000, currency: 'INR', redeemedAt: '2026-09-15T12:00:00.000Z' },
+        { id: 'red-2', tenantName: 'FitZone Studio', planName: 'Basic Tier', discountApplied: 25000, currency: 'INR', redeemedAt: '2026-08-20T10:30:00.000Z' },
+        { id: 'red-3', tenantName: 'Muscle Factory', planName: 'Enterprise Tier', discountApplied: 100000, currency: 'INR', redeemedAt: '2026-08-01T09:15:00.000Z' },
+      ];
+      return buildMockSuccess(redemptions, 'Redemption history retrieved');
+    }
     if (method === 'POST') {
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
@@ -264,7 +293,14 @@ export function handleSuperadminMockApiRequest(
         return buildMockSuccess(currentCoupons[0], 'Coupon created');
       }
     }
-    return buildMockSuccess(currentCoupons, 'Coupons retrieved');
+    const search = searchParams.get('search')?.toLowerCase() || '';
+    const status = searchParams.get('status') || '';
+    let filtered = currentCoupons.filter((c) => {
+      const matchSearch = !search || c.code.toLowerCase().includes(search);
+      const matchStatus = !status || status === 'ALL' || c.status === status;
+      return matchSearch && matchStatus;
+    });
+    return buildMockSuccess(filtered, 'Coupons retrieved');
   }
   if (urlPath.startsWith('/superadmin/saas-billing/plans')) {
     return buildMockSuccess(currentPlans, 'Plans retrieved');
@@ -274,8 +310,18 @@ export function handleSuperadminMockApiRequest(
   }
 
   // 5. AFFILIATES
+  if (urlPath === '/superadmin/affiliates/payout-history' || urlPath.startsWith('/superadmin/affiliates/payout-history')) {
+    return buildMockSuccess(MOCK_SUPERADMIN_AFFILIATE_PAYOUT_HISTORY, 'Payout history retrieved');
+  }
   if (urlPath.startsWith('/superadmin/affiliates')) {
-    return buildMockSuccess(currentAffiliates, 'Affiliates retrieved');
+    const search = searchParams.get('search')?.toLowerCase() || '';
+    const status = searchParams.get('status') || '';
+    let filtered = currentAffiliates.filter((a) => {
+      const matchSearch = !search || a.name.toLowerCase().includes(search) || a.referralCode.toLowerCase().includes(search);
+      const matchStatus = !status || status === 'ALL' || a.status === status;
+      return matchSearch && matchStatus;
+    });
+    return buildMockSuccess(filtered, 'Affiliates retrieved');
   }
 
   // 6. TEAM MANAGEMENT
@@ -283,7 +329,7 @@ export function handleSuperadminMockApiRequest(
     return buildMockSuccess(currentTeam, 'Team data retrieved');
   }
   if (urlPath === '/superadmin/team/alerts') {
-    return buildMockSuccess(currentTeam.alerts, 'Alert preferences updated');
+    return buildMockSuccess(null, 'Alert preferences updated');
   }
 
   // 7. COMMUNICATION
@@ -300,6 +346,17 @@ export function handleSuperadminMockApiRequest(
     return buildMockSuccess(MOCK_SUPERADMIN_COMMUNICATION_MESSAGING_MESSAGES, 'Messages retrieved');
   }
   if (urlPath.startsWith('/superadmin/messaging/notifications')) {
+    if (urlPath.includes('/read-all') && method === 'PATCH') {
+      currentNotifications.forEach((n: any) => { n.read = true; });
+      return buildMockSuccess(currentNotifications, 'All notifications marked as read');
+    }
+    const matchId = urlPath.match(/\/notifications\/([^/]+)\/read/);
+    if (matchId && method === 'PATCH') {
+      const nId = matchId[1];
+      const notif = currentNotifications.find((n: any) => n.id === nId);
+      if (notif) (notif as any).read = true;
+      return buildMockSuccess(notif || currentNotifications, 'Notification marked as read');
+    }
     return buildMockSuccess(currentNotifications, 'Notifications retrieved');
   }
 
@@ -333,7 +390,61 @@ export function handleSuperadminMockApiRequest(
 
   // 9. SUPPORT TICKETS
   if (urlPath.startsWith('/superadmin/tickets')) {
-    return buildMockSuccess(currentTickets, 'Tickets retrieved');
+    const ticketIdMatch = urlPath.match(/^\/superadmin\/tickets\/([^/?#]+)/);
+    if (ticketIdMatch && ticketIdMatch[1] && ticketIdMatch[1] !== 'undefined') {
+      const ticketId = decodeURIComponent(ticketIdMatch[1]);
+      const ticket = currentTickets.find((t) => t.id === ticketId) || currentTickets[0];
+      if (urlPath.endsWith('/reply') && method === 'POST') {
+        try {
+          const body = options.body ? JSON.parse(options.body as string) : {};
+          const msg = {
+            id: `msg_${Date.now()}`,
+            senderId: 'superadmin_1',
+            senderName: 'SuperAdmin Support',
+            senderRole: 'SUPERADMIN' as const,
+            content: String(body.message || body.content || ''),
+            createdAt: new Date().toISOString(),
+          };
+          if (ticket) {
+            ticket.messages = [...(ticket.messages || []), msg];
+            ticket.lastUpdated = new Date().toISOString();
+          }
+          return buildMockSuccess(ticket, 'Reply submitted successfully');
+        } catch {
+          return buildMockSuccess(ticket, 'Reply submitted');
+        }
+      }
+      if (method === 'PATCH') {
+        try {
+          const body = options.body ? JSON.parse(options.body as string) : {};
+          if (ticket) {
+            if (body.status) ticket.status = body.status;
+            if (body.priority) ticket.priority = body.priority;
+            if (body.assignedTo !== undefined) ticket.assignedTo = body.assignedTo;
+            ticket.lastUpdated = new Date().toISOString();
+          }
+          return buildMockSuccess(ticket, 'Ticket updated successfully');
+        } catch {
+          return buildMockSuccess(ticket, 'Ticket updated');
+        }
+      }
+      return buildMockSuccess(ticket, 'Ticket details retrieved');
+    }
+
+    const search = searchParams.get('search')?.toLowerCase() || '';
+    const priority = searchParams.get('priority') || '';
+    const status = searchParams.get('status') || '';
+    let filtered = currentTickets.filter((t) => {
+      const matchSearch =
+        !search ||
+        t.subject.toLowerCase().includes(search) ||
+        (t.tenantName ? t.tenantName.toLowerCase().includes(search) : false) ||
+        t.id.toLowerCase().includes(search);
+      const matchPriority = !priority || priority === 'ALL' || t.priority === priority;
+      const matchStatus = !status || status === 'ALL' || t.status === status;
+      return matchSearch && matchPriority && matchStatus;
+    });
+    return buildMockSuccess(filtered, 'Tickets retrieved');
   }
 
   // 10. SYSTEM OPS

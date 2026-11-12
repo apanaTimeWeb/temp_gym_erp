@@ -19,7 +19,7 @@ export const MOCK_SUPERADMIN_DASHBOARD_DATA: SuperadminDashboardApiData = {
         suspendedGyms: 5,
         trialGyms: 10,
         totalEndUsers: 15400,
-        monthlyRecurringRevenue: 250000,
+        monthlyRecurringRevenue: 25000000,
         overdueInvoicesCount: 12,
         pendingRevenue: 1500000,
         recentOnboards: [
@@ -37,7 +37,7 @@ export const MOCK_SUPERADMIN_DASHBOARD_DATA: SuperadminDashboardApiData = {
         trialsExpiringIn7Days: 3,
         mrrDeltaPercent: 12.5,
         arrDeltaPercent: 24.0,
-        arpu: 2380,
+        arpu: 238000,
         revenueByTier: [
             { plan: 'Basic', amount: 5000000, tenantCount: 50, currency: 'INR' },
             { plan: 'Pro', amount: 15000000, tenantCount: 55, currency: 'INR' },

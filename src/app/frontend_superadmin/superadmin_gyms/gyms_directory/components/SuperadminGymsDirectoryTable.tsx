@@ -3,7 +3,7 @@
 // RESPONSIBILITY: Renders and composes SuperadminGymsTable for the owning feature module; business logic and API transport remain in module-owned hooks/services.
 
 
-import { Ban, LogIn, PlayCircle, MessageCircle, Trash2, Loader2 } from 'lucide-react';
+import { Ban, LogIn, PlayCircle, MessageCircle, Trash2, Loader2, Pencil } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 
 import CopyButton from '@/components/ui/CopyButton';
@@ -17,6 +17,7 @@ import SuperadminGymsGymWhatsappModal from '@/app/frontend_superadmin/superadmin
 import SuperadminGymsTableSortIcon from '@/app/frontend_superadmin/superadmin_gyms/gyms_directory/components/SuperadminGymsDirectoryTableSortIcon';
 import { GYMS_PLAN_COLORS, SUPERADMIN_GYM_STATUS_CODES, getSuperadminGymStatusBadgeClasses } from '@/app/frontend_superadmin/superadmin_gyms/gyms_directory/constants/superadmin_gyms_directory.constants';
 import { useSuperadminGymsDirectoryTable } from '@/app/frontend_superadmin/superadmin_gyms/gyms_directory/hooks/useSuperadminGymsDirectoryTable';
+import { useSuperadminGymsDirectoryStore } from '@/app/frontend_superadmin/superadmin_gyms/gyms_directory/state/useSuperadminGymsDirectoryStore';
 import { formatCurrency as SuperadminGymsFormatCurrency } from '@/app/frontend_superadmin/superadmin_gyms/gyms_directory/utils/SuperadminGymsDirectoryFormatCurrency';
 import { formatSuperadminGymsDate } from '@/app/frontend_superadmin/superadmin_gyms/gyms_directory/utils/SuperadminGymsDirectoryFormatDate';
 
@@ -41,6 +42,7 @@ function getPlanBadgeClasses(plan: string | undefined): string {
 export default function SuperadminGymsDirectoryTable() {
   const t = useTranslations('superadmin_gyms');
     const locale = useLocale();
+    const openEditModal = useSuperadminGymsDirectoryStore((state) => state.openEditModal);
 
     const { filteredGyms, isPending, isError, total, actionLoadingId, handleRowClick, onGhostLoginClick, onSuspendClick, onDeleteClick, openWhatsappModal, currentPage, pageLimit, setCurrentPage, setSortBy, setSortOrder, sortBy, sortOrder, refetch } = useSuperadminGymsDirectoryTable();
     const totalPages = Math.ceil(total / pageLimit) || 1;
@@ -173,6 +175,10 @@ export default function SuperadminGymsDirectoryTable() {
                         </button>
                         <button type="button" onClick={(e) => { e.stopPropagation(); openWhatsappModal(gym); }} className="min-h-11 min-w-11 p-2 text-secondary hover:bg-success-bg hover:text-success rounded-lg motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" title={t('ui.whatsapp_owner_d88ef9f0')} aria-label={t('ui.whatsapp_owner_aria', { name: gym.name })} data-testid="superadmin_gyms-superadmin-gyms-table-table-whats-app-owner">
                           <MessageCircle size={18}/>
+                        </button>
+
+                        <button type="button" onClick={(e) => { e.stopPropagation(); openEditModal(gym); }} className="min-h-11 min-w-11 p-2 text-secondary hover:bg-primary-subtle hover:text-primary rounded-lg motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" title="Edit Gym" aria-label={`Edit ${gym.name}`} data-testid="superadmin_gyms-table-edit-gym">
+                          <Pencil size={18}/>
                         </button>
 
                         <button type="button" onClick={(e) => onDeleteClick(e, gym)} className="min-h-11 min-w-11 p-2 text-secondary hover:bg-danger-bg hover:text-danger rounded-lg motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" title={t('ui.delete_gym_326630c6')} aria-label={t('ui.delete_gym_aria', { name: gym.name })} data-testid="superadmin_gyms-superadmin-gyms-table-gyms-table-delete-gym">

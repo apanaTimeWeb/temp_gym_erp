@@ -30,7 +30,7 @@ export function SuperadminDashboardOverviewRecentOnboards({ recentOnboards }: Su
         {recentOnboards.map((tenant) => {
             const planUpper = tenant.plan?.trim().toUpperCase() ?? 'UNKNOWN';
             const planClass = getDashboardPlanBadgeClass(tenant.plan);
-            return (<button type="button" key={tenant.id} onClick={() => router.push(`${SUPERADMIN_DASHBOARD_OVERVIEW_ROUTES.GYMS}?id=${tenant.id}`)} data-testid={`superadmin_dashboard-recent-onboards-${tenant.id}-open`} className="flex w-full items-center justify-between rounded-lg border border-border bg-page p-4 text-start hover:bg-surface-hover motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page">
+            return (<button type="button" key={tenant.id} onClick={() => router.push(SUPERADMIN_DASHBOARD_OVERVIEW_ROUTES.GYM_DETAIL(tenant.id))} data-testid={`superadmin_dashboard-recent-onboards-${tenant.id}-open`} className="flex w-full items-center justify-between rounded-lg border border-border bg-page p-4 text-start hover:bg-surface-hover motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page">
               <div className="min-w-0 flex-1">
                 <Tooltip content={tenant.name}><h3 className="text-sm font-semibold text-primary truncate">{tenant.name}</h3></Tooltip>
                 <Tooltip content={tenant.ownerName}><p className="text-xs text-secondary mt-1 truncate">{tenant.ownerName}</p></Tooltip>

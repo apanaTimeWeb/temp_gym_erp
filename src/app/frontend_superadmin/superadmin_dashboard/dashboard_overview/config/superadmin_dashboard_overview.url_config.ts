@@ -7,6 +7,7 @@
 export const SUPERADMIN_DASHBOARD_OVERVIEW_ROUTES = {
           MAIN: "/frontend_superadmin/superadmin_dashboard/dashboard_overview",
           GYMS: "/frontend_superadmin/superadmin_gyms",
+          GYM_DETAIL: (id: string) => `/frontend_superadmin/superadmin_gyms?id=${id}`,
       } as const;
 
 export const SUPERADMIN_DASHBOARD_OVERVIEW_API = { BASE: '/superadmin/dashboard', METRICS: '/superadmin/dashboard/metrics' } as const;

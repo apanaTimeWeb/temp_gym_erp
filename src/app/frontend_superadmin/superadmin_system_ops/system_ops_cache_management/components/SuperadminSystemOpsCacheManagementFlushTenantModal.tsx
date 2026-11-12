@@ -42,5 +42,20 @@ export default function SuperadminSystemOpsCacheManagementFlushTenantModal({ isO
   if (!isOpen) return null;
   const toggleTenant = (tenantId: string) => setSelectedTenantIds((previous) => previous.includes(tenantId) ? previous.filter((id) => id !== tenantId) : [...previous, tenantId]);
   const selectVisibleTenants = () => setSelectedTenantIds((previous) => [...new Set([...previous, ...filteredTenants.map((tenant) => tenant.id)])]);
-  return <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay p-4 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in" role="dialog" aria-modal="true" aria-labelledby="superadmin-flush-tenant-title" data-testid="superadmin_system_ops_cache_management-superadmin-system-ops-infrastructure-flush-tenant-modal-flush-tenant-modal-dialog" ref={dialogRef}><div className="flex w-full max-w-md flex-col overflow-hidden rounded-xl border border-border bg-overlay shadow-dialog motion-safe:animate-in motion-safe:zoom-in-95"><SuperadminSystemOpsCacheManagementFlushTenantModalHeader isPending={flushMutation.isPending} onClose={handleClose}/><SuperadminSystemOpsCacheManagementFlushTenantModalSelectionControls search={search} filteredCount={filteredTenants.length} onSearchChange={setSearch} onSelectAll={selectVisibleTenants} onClear={() => setSelectedTenantIds([])}/><div className="px-6 pb-6"><SuperadminSystemOpsCacheManagementFlushTenantModalTenantList isPending={tenantsQuery.isPending} isError={tenantsQuery.isError} tenants={tenants} filteredTenants={filteredTenants} selectedTenantIds={selectedTenantIds} onRetry={() => void tenantsQuery.refetch()} onToggle={toggleTenant}/></div><SuperadminSystemOpsCacheManagementFlushTenantModalFooter isPending={flushMutation.isPending} isTenantQueryPending={tenantsQuery.isPending} selectedCount={selectedTenantIds.length} onClose={handleClose} onFlush={() => { void flushMutation.mutateAsync().catch(() => false); }}/></div></div>;
+  return (
+    <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay p-4 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in" role="dialog" aria-modal="true" aria-labelledby="superadmin-flush-tenant-title" data-testid="superadmin_system_ops_cache_management-superadmin-system-ops-infrastructure-flush-tenant-modal-flush-tenant-modal-dialog" ref={dialogRef}>
+      <div className="my-auto flex max-h-dialog-desktop w-full max-w-md flex-col overflow-hidden rounded-xl border border-border bg-overlay shadow-dialog motion-safe:animate-in motion-safe:zoom-in-95">
+        <div className="shrink-0">
+          <SuperadminSystemOpsCacheManagementFlushTenantModalHeader isPending={flushMutation.isPending} onClose={handleClose}/>
+          <SuperadminSystemOpsCacheManagementFlushTenantModalSelectionControls search={search} filteredCount={filteredTenants.length} onSearchChange={setSearch} onSelectAll={selectVisibleTenants} onClear={() => setSelectedTenantIds([])}/>
+        </div>
+        <div className="min-h-0 flex-1 overflow-y-auto custom-scrollbar px-6 pb-6">
+          <SuperadminSystemOpsCacheManagementFlushTenantModalTenantList isPending={tenantsQuery.isPending} isError={tenantsQuery.isError} tenants={tenants} filteredTenants={filteredTenants} selectedTenantIds={selectedTenantIds} onRetry={() => void tenantsQuery.refetch()} onToggle={toggleTenant}/>
+        </div>
+        <div className="shrink-0">
+          <SuperadminSystemOpsCacheManagementFlushTenantModalFooter isPending={flushMutation.isPending} isTenantQueryPending={tenantsQuery.isPending} selectedCount={selectedTenantIds.length} onClose={handleClose} onFlush={() => { void flushMutation.mutateAsync().catch(() => false); }}/>
+        </div>
+      </div>
+    </div>
+  );
 }

@@ -20,5 +20,121 @@ export default function SuperadminSupportTicketsManagementDetailModal({ ticketId
   const query = useSuperadminSupportTicketsManagementDetail(ticketId);
   if (!ticketId) return null;
   const ticket = query.data?.data;
-  return <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="superadmin-ticket-detail-title" data-testid="superadmin_support_tickets-ticket-detail-dialog" ref={dialogRef}><section className="w-full max-w-2xl overflow-hidden rounded-xl border border-border bg-card shadow-dialog"><header className="flex items-start justify-between gap-4 border-b border-border p-6"><div><h2 id="superadmin-ticket-detail-title" className="text-lg font-bold text-primary">{t('ui.ticket_details')} · {ticketId}</h2>{ticket ? <p className="mt-1 text-sm text-secondary">{ticket.subject}</p> : null}</div><button type="button" onClick={onClose} aria-label={t('ui.close_ticket_details')} className="min-h-11 min-w-11 rounded-md text-secondary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"><X aria-hidden="true"/></button></header>{(() => { if (query.isPending) { return (<div className="flex min-h-40 items-center justify-center gap-2 text-secondary" role="status" aria-busy="true"><Loader2 className="motion-safe:animate-spin" aria-hidden="true"/>{t('ui.loading_ticket_details')}</div>); } if (query.isError || !ticket) { return (<div className="space-y-3 p-6" role="alert"><p className="text-sm text-danger">{t('ui.failed_to_load_ticket_details')}</p><button type="button" onClick={() => void query.refetch()} className="min-h-11 rounded-md border border-border px-4 py-2 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">{t('actions.retry')}</button></div>); } return (<div className="space-y-5 p-6"><dl className="grid grid-cols-1 gap-4 sm:grid-cols-2"><div><dt className="text-xs font-semibold uppercase text-secondary">{t('ui.tenant')}</dt><dd className="mt-1 text-sm text-primary">{ticket.tenantName}</dd></div><div><dt className="text-xs font-semibold uppercase text-secondary">{t('ui.status')}</dt><dd className="mt-1 text-sm text-primary">{t(`ui.status_${ticket.status.toLowerCase()}`)}</dd></div><div><dt className="text-xs font-semibold uppercase text-secondary">{t('ui.priority')}</dt><dd className="mt-1 text-sm text-primary">{t(`ui.priority_${ticket.priority.toLowerCase()}`)}</dd></div><div><dt className="text-xs font-semibold uppercase text-secondary">{t('ui.assigned_to')}</dt><dd className="mt-1 text-sm text-primary">{ticket.assignedTo || t('ui.unassigned')}</dd></div></dl><div><h3 className="text-sm font-semibold text-primary">{t('ui.description')}</h3><p className="mt-2 whitespace-pre-wrap text-sm text-secondary">{ticket.description || t('ui.no_description')}</p></div>{ticket.messages?.length ? <div><h3 className="text-sm font-semibold text-primary">{t('ui.conversation')}</h3><ol className="mt-2 max-h-48 space-y-3 overflow-y-auto">{ticket.messages.map((message) => <li key={message.id} className="rounded-lg border border-border bg-page p-3"><p className="text-xs font-semibold text-primary">{message.senderName}</p><p className="mt-1 whitespace-pre-wrap text-sm text-secondary">{message.content}</p></li>)}</ol></div> : null}</div>); })()}<footer className="flex justify-end gap-3 border-t border-border p-6"><button type="button" onClick={onClose} className="min-h-11 rounded-md border border-border px-4 py-2 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">{t('ui.close')}</button>{ticket ? <button type="button" onClick={() => onReply(ticket.id)} className="inline-flex min-h-11 items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"><MessageSquare size={16} aria-hidden="true"/>{t('ui.reply_to_ticket_d555f35')}</button> : null}</footer></section></div>;
+  return (
+    <div
+      className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop p-4 overflow-y-auto backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="superadmin-ticket-detail-title"
+      data-testid="superadmin_support_tickets-ticket-detail-dialog"
+      ref={dialogRef}
+    >
+      <section className="my-auto flex max-h-dialog-desktop w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-border bg-card shadow-dialog">
+        <header className="shrink-0 flex items-start justify-between gap-4 border-b border-border p-6 bg-card">
+          <div>
+            <h2 id="superadmin-ticket-detail-title" className="text-lg font-bold text-primary">
+              {t('ui.ticket_details')} · {ticketId}
+            </h2>
+            {ticket && typeof ticket === 'object' && 'subject' in ticket ? (
+              <p className="mt-1 text-sm text-secondary">{ticket.subject}</p>
+            ) : null}
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label={t('ui.close_ticket_details')}
+            className="min-h-11 min-w-11 rounded-md text-secondary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          >
+            <X aria-hidden="true" />
+          </button>
+        </header>
+        {(() => {
+          if (query.isPending) {
+            return (
+              <div className="flex min-h-40 items-center justify-center gap-2 text-secondary p-6" role="status" aria-busy="true">
+                <Loader2 className="motion-safe:animate-spin" aria-hidden="true" />
+                {t('ui.loading_ticket_details')}
+              </div>
+            );
+          }
+          if (query.isError || !ticket || typeof ticket !== 'object' || Array.isArray(ticket)) {
+            return (
+              <div className="space-y-3 p-6" role="alert">
+                <p className="text-sm text-danger">{t('ui.failed_to_load_ticket_details')}</p>
+                <button
+                  type="button"
+                  onClick={() => void query.refetch()}
+                  className="min-h-11 rounded-md border border-border px-4 py-2 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                >
+                  {t('actions.retry')}
+                </button>
+              </div>
+            );
+          }
+          return (
+            <div className="min-h-0 flex-1 overflow-y-auto custom-scrollbar space-y-5 p-6">
+              <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                  <dt className="text-xs font-semibold uppercase text-secondary">{t('ui.tenant')}</dt>
+                  <dd className="mt-1 text-sm text-primary">{ticket.tenantName}</dd>
+                </div>
+                <div>
+                  <dt className="text-xs font-semibold uppercase text-secondary">{t('ui.status')}</dt>
+                  <dd className="mt-1 text-sm text-primary">
+                    {ticket.status ? t(`ui.status_${String(ticket.status).toLowerCase()}`) : '—'}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-xs font-semibold uppercase text-secondary">{t('ui.priority')}</dt>
+                  <dd className="mt-1 text-sm text-primary">
+                    {ticket.priority ? t(`ui.priority_${String(ticket.priority).toLowerCase()}`) : '—'}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-xs font-semibold uppercase text-secondary">{t('ui.assigned_to')}</dt>
+                  <dd className="mt-1 text-sm text-primary">{ticket.assignedTo || t('ui.unassigned')}</dd>
+                </div>
+              </dl>
+              <div>
+                <h3 className="text-sm font-semibold text-primary">{t('ui.description')}</h3>
+                <p className="mt-2 whitespace-pre-wrap text-sm text-secondary">{ticket.description || t('ui.no_description')}</p>
+              </div>
+              {ticket.messages?.length ? (
+                <div>
+                  <h3 className="text-sm font-semibold text-primary">{t('ui.conversation')}</h3>
+                  <ol className="mt-2 max-h-48 space-y-3 overflow-y-auto">
+                    {ticket.messages.map((message) => (
+                      <li key={message.id} className="rounded-lg border border-border bg-page p-3">
+                        <p className="text-xs font-semibold text-primary">{message.senderName}</p>
+                        <p className="mt-1 whitespace-pre-wrap text-sm text-secondary">{message.content}</p>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              ) : null}
+            </div>
+          );
+        })()}
+        <footer className="shrink-0 sticky bottom-0 flex justify-end gap-3 border-t border-border p-6 bg-card">
+          <button
+            type="button"
+            onClick={onClose}
+            className="min-h-11 rounded-md border border-border px-4 py-2 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          >
+            {t('ui.close')}
+          </button>
+          {ticket && typeof ticket === 'object' && !Array.isArray(ticket) ? (
+            <button
+              type="button"
+              onClick={() => onReply(ticket.id)}
+              className="inline-flex min-h-11 items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              <MessageSquare size={16} aria-hidden="true" />
+              {t('ui.reply_to_ticket_d555f35')}
+            </button>
+          ) : null}
+        </footer>
+      </section>
+    </div>
+  );
 }

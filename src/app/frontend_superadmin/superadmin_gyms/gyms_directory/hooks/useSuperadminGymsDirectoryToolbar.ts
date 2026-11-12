@@ -34,16 +34,16 @@ import { resolveSuperadminGymsDirectoryFeedback } from '@/app/frontend_superadmi
 export function useSuperadminGymsDirectoryToolbar() {
  const feedback = useFeedbackTranslations('superadmin_gyms');
 
-    const { getParam, setParam } = useSuperadminGymsDirectoryUrlState();
+    const { getParam, setParam, setParams } = useSuperadminGymsDirectoryUrlState();
     const search = getParam('search', '');
     const statusFilter = getParam('statusFilter', 'All');
     const planFilter = getParam('planFilter', 'All');
-    const debouncedSearchChange = useMemo(() => debounce((value: string) => { setParam('search', value); setParam('page', '1'); }, 300), [setParam]);
+    const debouncedSearchChange = useMemo(() => debounce((value: string) => { setParams({ search: value || null, page: '1' }); }, 300), [setParams]);
 // EFFECT INTENT: synchronizes this client-side side effect with the dependency list; changes to captured values intentionally re-run it.
     useEffect(() => () => debouncedSearchChange.cancel(), [debouncedSearchChange]);
     const handleSearchChange = (value: string) => debouncedSearchChange(value);
-    const setStatusFilter = (value: string) => { setParam('statusFilter', value); setParam('page', '1'); };
-    const setPlanFilter = (value: string) => { setParam('planFilter', value); setParam('page', '1'); };
+    const setStatusFilter = (value: string) => { setParams({ statusFilter: value === 'All' ? null : value, page: '1' }); };
+    const setPlanFilter = (value: string) => { setParams({ planFilter: value === 'All' ? null : value, page: '1' }); };
     const viewMode = useSuperadminGymsDirectoryStore(state => state.viewMode);
     const setViewMode = useSuperadminGymsDirectoryStore(state => state.setViewMode);
     const handleExportGyms = async () => {

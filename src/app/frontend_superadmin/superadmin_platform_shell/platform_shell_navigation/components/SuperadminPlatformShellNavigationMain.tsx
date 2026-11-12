@@ -10,22 +10,12 @@
  */
 // RESPONSIBILITY: Root Superadmin shell. Owns only sidebar collapse, persistent header, global Superadmin feedback, and shell-level alerts.
 import { useState, Suspense } from 'react';
-import { usePathname } from 'next/navigation';
 
 import SuperadminPlatformShellNavigationHeader from '@/app/frontend_superadmin/superadmin_platform_shell/platform_shell_navigation/components/SuperadminPlatformShellNavigationHeader';
-import SuperadminSaaSBillingNavigation from '@/app/frontend_superadmin/superadmin_platform_shell/platform_shell_navigation/components/SuperadminPlatformShellNavigationSaaSBillingNavigation';
 import SuperadminPlatformShellNavigationSidebar from '@/app/frontend_superadmin/superadmin_platform_shell/platform_shell_navigation/components/SuperadminPlatformShellNavigationSidebar';
 import { SuperadminPlatformShellNavigationTopLoader } from '@/app/frontend_superadmin/superadmin_platform_shell/platform_shell_navigation/components/SuperadminPlatformShellNavigationTopLoader';
-import { SUPERADMIN_SAAS_BILLING_NAVIGATION_ITEMS } from '@/app/frontend_superadmin/superadmin_platform_shell/platform_shell_navigation/constants/superadmin_platform_shell_navigation_saa_s_billing.constants';
 
 import type { SuperadminPlatformShellLayoutProps } from '@/app/frontend_superadmin/superadmin_platform_shell/platform_shell_navigation/types/superadmin_platform_shell_navigation_main_props.types';
-
-function SuperadminSaaSBillingNavigationWrapper() {
-  const pathname = usePathname();
-  const showBillingNavigation = SUPERADMIN_SAAS_BILLING_NAVIGATION_ITEMS.some(({ href }) => pathname === href || pathname.startsWith(`${href}/`));
-  if (!showBillingNavigation) return null;
-  return <SuperadminSaaSBillingNavigation />;
-}
 
 /** @description Provides the authenticated Superadmin shell composition around role-owned feature content. @dependencies Uses role layout infrastructure and zero-business UI primitives only. @edge-case Preserves responsive sidebar/header behavior across collapsed and expanded states. */
 export default function SuperadminPlatformShellNavigationMain({ children }: SuperadminPlatformShellLayoutProps) {
@@ -42,9 +32,6 @@ export default function SuperadminPlatformShellNavigationMain({ children }: Supe
           <SuperadminPlatformShellNavigationSidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
         </Suspense>
         <main className={`min-h-screen pt-16 motion-safe:transition-all motion-safe:duration-slow ms-0 ${isCollapsed ? 'md:ms-16' : 'md:ms-64'}`}>
-          <Suspense fallback={null}>
-            <SuperadminSaaSBillingNavigationWrapper />
-          </Suspense>
           {children}
         </main>
       </div>

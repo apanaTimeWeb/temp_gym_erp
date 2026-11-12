@@ -43,14 +43,14 @@ export default function SuperadminBillingCouponsManagementRedemptionDrawer({ cou
     <>
       <div className="fixed inset-0 z-30 bg-overlay backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in" onClick={onClose} aria-hidden="true"  data-testid="superadmin_coupons-superadmincouponsredemptiondrawer-interaction-layer-1" />
       <div ref={drawerRef} tabIndex={-1} role="dialog" aria-modal="true" aria-label={t('ui.redemption_history_aria', { code: coupon.code })} className="fixed end-0 top-0 z-40 flex h-full w-full max-w-md flex-col border-s border-border bg-card shadow-popover" data-testid="superadmin_coupons-redemption-drawer-dialog">
-        <div className="flex items-center justify-between border-b border-border p-6">
+        <div className="flex shrink-0 items-center justify-between border-b border-border p-6">
           <div>
             <div className="mb-1 flex items-center gap-3"><h2 className="text-xl font-bold text-primary">{t('ui.redemption_history_b5003d96')}</h2><SuperadminBillingCouponsStatusBadge status={coupon.status} /></div>
             <p className="text-sm font-mono text-primary">{coupon.code}</p>
           </div>
           <button type="button" onClick={onClose} aria-label={t('ui.close_redemption_history_4e217641')} className="min-h-11 min-w-11 rounded-lg p-2 text-secondary hover:bg-input hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="superadmin_coupons-superadmin-coupons-redemption-drawer-drawer-close-redemption-history"><X size={18} strokeWidth={2}/></button>
         </div>
-        <div className="flex-1 overflow-y-auto p-6">
+        <div className="flex-1 overflow-y-auto custom-scrollbar p-6">
           <div className="mb-6 grid grid-cols-2 gap-3">
             <div className="rounded-lg border border-border bg-input p-3"><p className="text-xs text-secondary">{t('ui.redemptions_a1be0b61')}</p><p className="mt-1 text-lg font-bold text-primary">{redemptions.length}</p></div>
             <div className="rounded-lg border border-border bg-input p-3"><p className="text-xs text-secondary">{t('ui.discount_applied_d89d5239')}</p><p className="mt-1 text-lg font-bold text-primary">{SuperadminBillingCouponsFormatCurrency(totalDiscount, 'INR', locale)}</p></div>

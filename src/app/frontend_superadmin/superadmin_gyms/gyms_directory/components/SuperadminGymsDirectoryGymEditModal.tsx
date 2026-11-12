@@ -48,16 +48,19 @@ export default function SuperadminGymsDirectoryGymEditModal() {
     const [showPassword, setShowPassword] = React.useState(false);
     if (!isEditModalOpen || !selectedGym)
         return null;
-    return (<div ref={dialogRef} tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center bg-overlay p-4" role="dialog" aria-modal="true" aria-labelledby="superadmin-gyms-edit-dialog-title" data-testid="superadmin_gyms-gym-edit-modal-dialog">
-      <div className="bg-overlay rounded-xl p-7 max-w-md w-full border border-border shadow-dialog relative">
+    return (<div ref={dialogRef} tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay p-4" role="dialog" aria-modal="true" aria-labelledby="superadmin-gyms-edit-dialog-title" data-testid="superadmin_gyms-gym-edit-modal-dialog">
+      <div className="my-auto flex max-h-dialog-desktop w-full max-w-md flex-col rounded-xl border border-border bg-overlay p-7 shadow-dialog relative">
         <button type="button" onClick={closeEditModal} aria-label={t('ui.close_dialog')} className="absolute top-5 end-5 min-h-11 min-w-11 text-secondary hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="superadmin_gyms-superadmin-gyms-gym-edit-modal-gym-edit-modal-button">
           <X size={18}/>
         </button>
 
-        <h2 id="superadmin-gyms-edit-dialog-title" className="text-lg font-bold text-primary mb-1">{t('ui.edit_gym_details_13d512aa')}</h2>
-        <p className="text-sm text-secondary mb-6">{t('ui.update_the_information_for_527d24e4')}{selectedGym.name}{t('ui.text_5058f1af')}</p>
+        <div className="shrink-0 mb-4 pe-8">
+          <h2 id="superadmin-gyms-edit-dialog-title" className="text-lg font-bold text-primary mb-1">{t('ui.edit_gym_details_13d512aa')}</h2>
+          <p className="text-sm text-secondary">{t('ui.update_the_information_for_527d24e4')}{selectedGym.name}{t('ui.text_5058f1af')}</p>
+        </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" data-testid="superadmin_gyms-superadmingymsgymeditmodal-form-1">
+        <form onSubmit={handleSubmit(onSubmit)} className="min-h-0 flex-1 flex flex-col" data-testid="superadmin_gyms-superadmingymsgymeditmodal-form-1">
+          <div className="min-h-0 flex-1 overflow-y-auto custom-scrollbar space-y-4 pe-1">
           {errors.root?.server?.message ? <p role="alert" className="rounded-md border border-danger bg-danger-bg p-3 text-sm text-danger">{String(errors.root.server.message)}</p> : null}
           <div>
             <label htmlFor="superadmin-gyms-edit-name" className="block text-sm font-bold text-secondary mb-1">{t('ui.gym_name_4ad76c40')}<span className="text-danger">{t('ui.text_3389dae3')}</span></label>
@@ -100,8 +103,9 @@ export default function SuperadminGymsDirectoryGymEditModal() {
             {errors.plan && <p id="superadmin-gyms-edit-plan-error" role="alert" className="text-xs text-danger mt-1">{validationMessage(errors.plan.message)}</p>}
             {plansError && <div role="alert" className="mt-2 flex items-center gap-2 text-xs text-danger"><span>{t('ui.failed_to_load_view_f0191174')}</span><button type="button" onClick={() => void retryPlans()} className="min-h-11 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">{t('ui.retry_6327b4e5')}</button></div>}
           </div>
+          </div>
 
-          <div className="flex justify-end gap-3 pt-4 mt-6">
+          <div className="flex shrink-0 justify-end gap-3 pt-4 border-t border-border mt-4">
             <button type="button" onClick={closeEditModal} className="min-h-11 px-5 py-2.5 rounded-lg text-sm font-medium text-primary border border-border hover:bg-page motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" disabled={isSubmitting} data-testid="superadmin_gyms-superadmin-gyms-gym-edit-modal-gym-edit-modal-cancel">
               {t('ui.cancel_ea478870')}</button>
             <button type="submit" className="min-h-11 px-5 py-2.5 rounded-lg text-sm font-medium text-on-primary bg-primary hover:bg-primary-hover motion-safe:transition-colors disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" disabled={isSubmitting} data-testid="superadmin_gyms-superadmin-gyms-gym-edit-modal-gym-edit-modal-submit">

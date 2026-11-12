@@ -41,7 +41,11 @@
       "secret_write_only_placeholder": "नया गुप्त मान दर्ज करें; मौजूदा मान कभी प्रदर्शित नहीं होगा।",
       "route_loading": "पृष्ठ लोड हो रहा है",
       "boundary_title": "अनुभाग लोड नहीं हो सका",
-      "boundary_retry": "पुनः प्रयास करें"
+      "boundary_retry": "पुनः प्रयास करें",
+      "unsaved_settings_changes_title": "सेटिंग में बिना सहेजे बदलाव",
+      "unsaved_settings_changes_message": "प्लेटफ़ॉर्म सेटिंग में बदलाव सहेजे नहीं गए हैं। क्या आप उन्हें छोड़कर पेज से जाना चाहते हैं?",
+      "leave_settings_action": "पेज छोड़ें",
+      "stay_on_settings_action": "पेज पर रहें"
     },
     "actions": {
       "retry": "पुनः प्रयास करें",
@@ -55,11 +59,5 @@
       "export": "निर्यात करें",
       "search": "खोजें"
     }
-  },
-  "ui": {
-    "unsaved_settings_changes_title": "सेटिंग में बिना सहेजे बदलाव",
-    "unsaved_settings_changes_message": "प्लेटफ़ॉर्म सेटिंग में बदलाव सहेजे नहीं गए हैं। क्या आप उन्हें छोड़कर पेज से जाना चाहते हैं?",
-    "leave_settings_action": "पेज छोड़ें",
-    "stay_on_settings_action": "पेज पर रहें"
   }
 }

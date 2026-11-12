@@ -153,6 +153,7 @@
       "status_failed": "विफल",
       "status_delayed": "विलंबित",
       "status_cancelled": "रद्द",
+      "status_pending": "लंबित",
       "queue_export": "निर्यात",
       "queue_maintenance": "रखरखाव",
       "metrics_scope_note": "ये गणनाएँ केवल वर्तमान में लोड किए गए पृष्ठ की हैं। सभी जॉब के कुल आँकड़ों के लिए aggregate API contract आवश्यक है।",

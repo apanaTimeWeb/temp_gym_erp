@@ -153,6 +153,7 @@
       "status_failed": "Failed",
       "status_delayed": "Delayed",
       "status_cancelled": "Cancelled",
+      "status_pending": "Pending",
       "queue_export": "Export",
       "queue_maintenance": "Maintenance",
       "metrics_scope_note": "Counts reflect the currently loaded page only. Global totals require an aggregate API contract.",

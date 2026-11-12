@@ -97,9 +97,9 @@ export default function SuperadminPlatformConfigurationFeaturesManagementFeature
   if (!isOpen || !flag) return null;
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay p-4 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in" role="dialog" aria-modal="true" aria-labelledby="superadmin-feature-rollout-title" data-testid="superadmin_platform_configuration_features-superadmin-features-feature-rollout-modal-feature-rollout-modal-dialog" ref={dialogRef}>
-      <div className="flex w-full max-w-md flex-col overflow-hidden rounded-xl border border-border bg-overlay shadow-dialog motion-safe:animate-in motion-safe:zoom-in-95">
-        <div className="flex items-center justify-between border-b border-border px-6 py-5">
+    <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay p-4 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in" role="dialog" aria-modal="true" aria-labelledby="superadmin-feature-rollout-title" data-testid="superadmin_platform_configuration_features-superadmin-features-feature-rollout-modal-feature-rollout-modal-dialog" ref={dialogRef}>
+      <div className="my-auto flex max-h-dialog-desktop w-full max-w-md flex-col overflow-hidden rounded-xl border border-border bg-overlay shadow-dialog motion-safe:animate-in motion-safe:zoom-in-95">
+        <div className="flex shrink-0 items-center justify-between border-b border-border px-6 py-5">
           <div>
             <h2 id="superadmin-feature-rollout-title" className="text-xl font-bold text-primary">{t('ui.canary_rollout_6a7afe3')}</h2>
             <p className="text-sm text-secondary">{t('ui.select_superadmin_gyms_to_enable_c2505fc')} <span className="font-semibold text-primary">{flag.name}</span></p>
@@ -109,14 +109,14 @@ export default function SuperadminPlatformConfigurationFeaturesManagementFeature
           </button>
         </div>
 
-        <div className="flex flex-col gap-4 p-6">
-          <div className="relative">
+        <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto p-6 custom-scrollbar">
+          <div className="relative shrink-0">
             <label htmlFor="superadmin-feature-rollout-search" className="sr-only">{t('ui.search_by_gym_name_or_id_1d26f03')}</label>
             <Search size={18} aria-hidden="true" className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary" />
             <input  id="superadmin-feature-rollout-search" type="search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder={t('ui.search_by_gym_name_or_id_1d26f03')} className="min-h-11 w-full rounded-lg border border-border bg-input ps-10 pe-4 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base ease-in-out"  data-testid="superadmin_platform_configuration_features-superadmin-features-feature-rollout-modal-feature-rollout-modal-search"/>
           </div>
 
-          <div className="flex items-center justify-between px-1">
+          <div className="flex shrink-0 items-center justify-between px-1">
             <span className="text-sm font-semibold text-secondary">{t('ui.found_d2cf1f1')} {filteredGyms.length}  {t('ui.superadmin_gyms_38e723d')}</span>
             <div className="flex items-center gap-3">
               <button  type="button" onClick={() => setSelectedTenantIds(filteredGyms.map((gym) => gym.id))} className="min-h-11 px-1 text-xs font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base ease-in-out motion-safe:active:scale-95" data-testid="superadmin_platform_configuration_features-superadmin-features-feature-rollout-modal-rollout-modal-select-all">{t('ui.select_all_7a01238')}</button>
@@ -124,7 +124,7 @@ export default function SuperadminPlatformConfigurationFeaturesManagementFeature
             </div>
           </div>
 
-          <div className="flex h-64 flex-col overflow-hidden rounded-lg border border-border bg-card">
+          <div className="flex h-64 shrink-0 flex-col overflow-hidden rounded-lg border border-border bg-card">
             {(() => { if (isLoadingTenants) { return (<div className="flex flex-1 items-center justify-center" aria-busy="true" data-testid="superadmin_platform_configuration_features-feature-rollout-loading-state"><Loader2 size={18} className="motion-safe:animate-spin text-primary" aria-hidden="true" /><span className="sr-only">{t('ui.loading_superadmin_gyms_1d04321')}</span></div>); } if (hasTenantLoadError) { return (<div role="alert" className="flex flex-1 flex-col items-center justify-center gap-3 px-6 text-center text-sm text-danger">
                 <span>{t('ui.gyms_could_not_be_loaded')}</span>
                 <button type="button" onClick={() => void refetchTenants()} className="min-h-11 rounded-md border border-border px-3 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">{t('ui.retry_3a73ca1')}</button>
@@ -143,12 +143,12 @@ export default function SuperadminPlatformConfigurationFeaturesManagementFeature
         </div>
 
         {rolloutMutation.isError ? (
-          <div role="alert" aria-live="assertive" className="mx-6 mt-4 rounded-lg border border-danger bg-danger-bg px-4 py-3 text-sm text-danger" data-testid="superadmin_platform_configuration_features-feature-rollout-save-error">
+          <div role="alert" aria-live="assertive" className="mx-6 mt-4 shrink-0 rounded-lg border border-danger bg-danger-bg px-4 py-3 text-sm text-danger" data-testid="superadmin_platform_configuration_features-feature-rollout-save-error">
             {t('ui.action_failed_retry')}
           </div>
         ) : null}
 
-        <div className="flex justify-end gap-3 border-t border-border bg-sidebar px-6 py-5">
+        <div className="flex shrink-0 justify-end gap-3 border-t border-border bg-sidebar px-6 py-5">
           <button type="button" onClick={onClose} disabled={rolloutMutation.isPending} className="min-h-11 rounded-md border border-border px-5 py-2.5 text-sm font-medium text-primary hover:bg-surface-hover motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-50 motion-safe:active:scale-95" data-testid="superadmin_platform_configuration_features-superadmin-features-feature-rollout-modal-feature-rollout-modal-cancel">{t('ui.cancel_9818bac')}</button>
           <button  type="button" onClick={() => { void rolloutMutation.mutateAsync().catch(() => undefined); }} disabled={rolloutMutation.isPending} className="inline-flex min-h-11 min-w-44 items-center justify-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-on-primary hover:bg-primary-hover motion-safe:transition-colors motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50" data-testid="superadmin_platform_configuration_features-superadmin-features-feature-rollout-modal-feature-rollout-modal-save">
             {rolloutMutation.isPending ? <><Loader2 size={18} className="motion-safe:animate-spin" aria-hidden="true" />{t('ui.saving_dc97212')}</> : t('ui.save_rollout_gyms', { count: selectedTenantIds.length })}
