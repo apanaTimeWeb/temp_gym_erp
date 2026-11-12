@@ -116,7 +116,7 @@ export default function ManagerNavigationCommandPalette({ requestedOpen = false,
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-40 flex items-start justify-center bg-overlay-backdrop p-4 pt-24" role="presentation">
+    <div className="fixed inset-0 z-40 flex items-start justify-center bg-overlay-backdrop p-4 overflow-y-auto" role="presentation">
       <div
         aria-hidden="true"
         data-testid="manager_navigation-command-palette-backdrop-close"
@@ -137,7 +137,7 @@ export default function ManagerNavigationCommandPalette({ requestedOpen = false,
         role="dialog"
         aria-modal="true"
         aria-labelledby="manager-navigation-command-palette-title"
-        className="relative z-10 w-full max-w-2xl overflow-hidden rounded-2xl border border-border bg-overlay shadow-dialog"
+        className="relative z-10 my-auto w-full max-w-2xl overflow-hidden rounded-2xl border border-border bg-overlay shadow-dialog"
         data-testid="manager_navigation-command-palette-dialog"
       >
         <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-3">

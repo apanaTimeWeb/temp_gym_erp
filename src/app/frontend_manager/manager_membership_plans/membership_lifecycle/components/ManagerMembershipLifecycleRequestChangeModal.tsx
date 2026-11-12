@@ -52,9 +52,9 @@ export default function ManagerMembershipLifecycleRequestChangeModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay-backdrop backdrop-blur-sm">
-      <div ref={dialogRef} tabIndex={-1} className="bg-overlay border border-border rounded-2xl shadow-dialog w-full max-w-md" role="dialog" aria-modal="true" aria-labelledby="managerplansrequestchangemodal-dialog-title">
-        <div className="flex items-center justify-between p-5 border-b border-border">
+    <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay-backdrop backdrop-blur-sm overflow-y-auto">
+      <div ref={dialogRef} tabIndex={-1} className="my-auto bg-overlay border border-border rounded-2xl shadow-dialog w-full max-w-md max-h-dialog-desktop flex flex-col overflow-hidden" role="dialog" aria-modal="true" aria-labelledby="managerplansrequestchangemodal-dialog-title">
+        <div className="flex items-center justify-between p-5 border-b border-border shrink-0 bg-overlay">
           <div>
             <h3 className="text-base font-bold text-text-primary" id="managerplansrequestchangemodal-dialog-title">{t("COPY_REQUEST_PLAN_CHANGE")}</h3>
             <p className="text-xs text-text-secondary mt-0.5">{requestModalPlan.name} — {requestModalPlan.tier}</p>
@@ -63,7 +63,7 @@ export default function ManagerMembershipLifecycleRequestChangeModal() {
             <X size={18} strokeWidth={2}/>
           </button>
         </div>
-        <form data-testid="manager_plans-managerplansrequestchangemodal-form-1" onSubmit={handleSubmit} className="p-5 space-y-4">
+        <form data-testid="manager_plans-managerplansrequestchangemodal-form-1" onSubmit={handleSubmit} className="min-h-0 flex-1 space-y-4 overflow-y-auto p-5 custom-scrollbar">
           <div>
             <label htmlFor="manager-managerplansrequestchangemodal-field-1" className="block text-xs font-semibold text-text-secondary uppercase tracking-wider mb-1.5">{t("COPY_DESCRIBE_CHANGE_NEEDED")}</label>
             <textarea id="manager-managerplansrequestchangemodal-field-1" className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "w-full px-3 py-2.5 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:border-primary resize-none"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_plans-manager-plans-main-textarea-message-input"
@@ -74,7 +74,7 @@ export default function ManagerMembershipLifecycleRequestChangeModal() {
               
             />
           </div>
-          <div className="flex gap-3 pt-1">
+          <div className="sticky bottom-0 bg-overlay border-t border-border pt-3 flex gap-3 shrink-0">
             <button data-testid="manager_plans-manager-plans-main-close-2" type="button" onClick={handleClose}
               className="flex-1 py-2.5 text-sm font-medium rounded-xl border border-border text-text-secondary hover:text-primary motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110">{t("COPY_CANCEL")}</button>
             <button data-testid="manager_plans-manager-plans-main-button-submit" type="submit" disabled={saving || !note.trim()}

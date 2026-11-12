@@ -124,8 +124,8 @@ export default function TrainerMembersTrainerNotesMain() {
       <h1 id="trainer-notes-title" className="text-page-title font-bold">{t('TEXT_TRAINER_NOTES')}</h1>
       <Link className="inline-flex min-h-11 items-center rounded-lg border border-border px-4 text-primary focus-visible:ring-2 focus-visible:ring-focus-ring" href={TRAINER_NOTES_ROUTES.DIRECTORY} onClick={(event) => { if (isDirty && !addNote.isPending) { event.preventDefault(); setPendingDestination(TRAINER_NOTES_ROUTES.DIRECTORY); setConfirmNavigation(true); } }}>{t('TEXT_BACK_TO_MEMBERS')}</Link>
     </div>
-    {confirmNavigation && <div role="presentation" className="fixed inset-0 z-50 flex items-center justify-center bg-overlay-backdrop p-4">
-      <div ref={dialogRef} role="alertdialog" aria-modal="true" aria-labelledby="trainer-notes-unsaved-title" aria-describedby="trainer-notes-unsaved-description" className="w-full max-w-md rounded-xl border border-border bg-overlay p-6 shadow-dialog">
+    {confirmNavigation && <div role="presentation" className="fixed inset-0 z-50 flex items-center justify-center bg-overlay-backdrop p-4 overflow-y-auto">
+      <div ref={dialogRef} role="alertdialog" aria-modal="true" aria-labelledby="trainer-notes-unsaved-title" aria-describedby="trainer-notes-unsaved-description" className="my-auto w-full max-w-md rounded-xl border border-border bg-overlay p-6 shadow-dialog">
         <h2 id="trainer-notes-unsaved-title" className="text-lg font-semibold">{t('TEXT_UNSAVED_NOTES_TITLE')}</h2>
         <p id="trainer-notes-unsaved-description" className="mt-2 text-sm text-secondary">{t('TEXT_UNSAVED_NOTES_DESCRIPTION')}</p>
         <div className="mt-6 flex flex-wrap justify-end gap-3">

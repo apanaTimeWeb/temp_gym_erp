@@ -58,16 +58,16 @@ export default function ManagerMembersDirectoryAddPaymentModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-4">
-      <div className="bg-overlay w-full max-w-md rounded-2xl shadow-dialog overflow-hidden flex flex-col" role="dialog" aria-modal="true" aria-labelledby="managermembersaddpaymentmodal-dialog-title">
-        <div className="px-6 py-4 border-b border-border flex items-center justify-between">
+    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-4 overflow-y-auto">
+      <div className="my-auto bg-overlay w-full max-w-md max-h-dialog-desktop rounded-2xl shadow-dialog overflow-hidden flex flex-col" role="dialog" aria-modal="true" aria-labelledby="managermembersaddpaymentmodal-dialog-title">
+        <div className="px-6 py-4 border-b border-border flex items-center justify-between shrink-0 bg-overlay">
           <h2 className="text-xl font-bold text-text-primary" id="managermembersaddpaymentmodal-dialog-title">{t("COPY_RECORD_PAYMENT_2")}</h2>
           <button data-testid="manager_members-manager-add-payment-modal-close-1" aria-label={t("COPY_CLOSE_PAYMENT_MODAL")} onClick={handleClose} className="p-2 text-text-secondary hover:text-primary rounded-full hover:bg-input motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110" type="button">
             <X size={18} strokeWidth={2} />
           </button>
         </div>
         
-        <form data-testid="manager_members-managermembersaddpaymentmodal-form-1" onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form data-testid="manager_members-managermembersaddpaymentmodal-form-1" onSubmit={handleSubmit} className="min-h-0 flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar">
           {(selectedMember.pendingAmount > 0 || (selectedMember.advanceAmount && selectedMember.advanceAmount > 0)) && (
             <div className={`p-3 rounded-lg border mb-4 ${selectedMember.pendingAmount > 0 ? 'bg-danger-bg border-border' : 'bg-success-bg border-success'}`}>
               <p className={`text-sm font-semibold ${selectedMember.pendingAmount > 0 ? 'text-danger-text' : 'text-success-text'}`}>
@@ -104,7 +104,7 @@ export default function ManagerMembersDirectoryAddPaymentModal() {
             </select>
           </div>
 
-          <div className="pt-4 flex gap-3">
+          <div className="sticky bottom-0 bg-overlay border-t border-border pt-4 flex gap-3 shrink-0">
             <button data-testid="manager_members-manager-add-payment-modal-close-2"
               type="button"
               onClick={handleClose}

@@ -398,8 +398,8 @@ export default function TrainerMembersProfileProgress() {
 
       {/* Photo Upload Modal */}
       {isUploadOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-labelledby="upload-photo-title">
-          <div className="bg-card border border-border rounded-xl w-full max-w-md p-5 space-y-4 shadow-xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="upload-photo-title">
+          <div className="bg-card border border-border rounded-xl w-full max-w-md p-5 space-y-4 shadow-xl my-auto">
             <div className="flex items-center justify-between pb-3 border-b border-border">
               <h3 id="upload-photo-title" className="text-base font-semibold text-primary">Add Transformation Photo</h3>
               <button type="button" onClick={() => setIsUploadOpen(false)} className="text-secondary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring rounded-lg p-1">
@@ -480,8 +480,8 @@ export default function TrainerMembersProfileProgress() {
 
       {/* Lightbox Preview Modal */}
       {selectedPhoto && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4" role="dialog" aria-modal="true" aria-label="Expanded Photo View" onClick={() => setSelectedPhoto(null)}>
-          <div className="relative max-w-2xl w-full max-h-[85vh] flex flex-col items-center" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-label="Expanded Photo View" onClick={() => setSelectedPhoto(null)}>
+          <div className="relative max-w-2xl w-full max-h-[85vh] my-auto flex flex-col items-center" onClick={(e) => e.stopPropagation()}>
             <button
               type="button"
               onClick={() => setSelectedPhoto(null)}

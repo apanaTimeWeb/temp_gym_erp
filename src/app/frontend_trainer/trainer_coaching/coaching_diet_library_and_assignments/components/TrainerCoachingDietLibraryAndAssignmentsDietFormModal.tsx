@@ -124,14 +124,14 @@ export default function TrainerLibraryDietFormModal({
     <div className="fixed inset-0 bg-overlay-backdrop z-50 flex items-center justify-center p-4 overflow-y-auto" role="presentation">
       <div
         ref={dialogRef}
-        className="bg-card border border-border rounded-2xl shadow-dialog w-full max-w-2xl max-h-[90vh] flex flex-col"
+        className="my-auto bg-card border border-border rounded-2xl shadow-dialog w-full max-w-2xl max-h-dialog-desktop flex flex-col overflow-hidden"
         role="dialog"
         aria-modal="true"
         aria-labelledby="diet-form-title"
         tabIndex={-1}
       >
         {/* Modal Header */}
-        <div className="sticky top-0 z-10 bg-card px-6 py-4 border-b border-border flex items-center justify-between rounded-t-2xl">
+        <div className="shrink-0 bg-card px-6 py-4 border-b border-border flex items-center justify-between rounded-t-2xl">
           <div>
             <h3 id="diet-form-title" className="text-lg font-bold text-primary">
               {isEdit ? t('TEXT_EDIT_DIET_PLAN') ?? 'Edit Diet Plan' : t('TEXT_CREATE_CUSTOM_DIET_PLAN') ?? 'Create Custom Diet Plan'}
@@ -154,7 +154,7 @@ export default function TrainerLibraryDietFormModal({
         </div>
 
         {/* Modal Body */}
-        <form onSubmit={handleSubmit(handleFormSubmit)} className="flex-1 overflow-y-auto p-6 space-y-5">
+        <form onSubmit={handleSubmit(handleFormSubmit)} className="min-h-0 flex-1 overflow-y-auto p-6 space-y-5 custom-scrollbar">
           {errorMessage && (
             <div className="p-3 bg-danger-bg border border-danger rounded-xl text-danger text-sm" role="alert">
               {errorMessage}
@@ -344,7 +344,7 @@ export default function TrainerLibraryDietFormModal({
           </div>
 
           {/* Action Buttons */}
-          <div className="pt-4 border-t border-border flex items-center justify-end gap-3">
+          <div className="pt-4 border-t border-border flex items-center justify-end gap-3 sticky bottom-0 bg-card shrink-0">
             <button
               type="button"
               onClick={onClose}

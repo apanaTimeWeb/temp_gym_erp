@@ -48,7 +48,7 @@ export default function ManagerSupportTicketsThreadDrawer({ ticket, onClose, onS
         onClick={(e) => e.stopPropagation()}
       >
         {/* Drawer Header */}
-        <div className="p-5 border-b border-border bg-overlay flex items-center justify-between gap-3">
+        <div className="shrink-0 p-5 border-b border-border bg-overlay flex items-center justify-between gap-3">
           <div className="min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <span className="font-mono text-xs font-bold text-primary">{ticket.ticketNumber}</span>
@@ -78,7 +78,7 @@ export default function ManagerSupportTicketsThreadDrawer({ ticket, onClose, onS
         </div>
 
         {/* Conversation Stream */}
-        <div className="flex-1 overflow-y-auto p-5 space-y-4 bg-surface/30">
+        <div className="min-h-0 flex-1 overflow-y-auto custom-scrollbar p-5 space-y-4 bg-surface/30">
           {ticket.messages.map((m) => {
             const isManager = m.senderRole === 'MANAGER';
 
@@ -116,7 +116,7 @@ export default function ManagerSupportTicketsThreadDrawer({ ticket, onClose, onS
         </div>
 
         {/* Reply Box */}
-        <form onSubmit={handleSend} className="p-4 border-t border-border bg-overlay flex items-center gap-2">
+        <form onSubmit={handleSend} className="shrink-0 p-4 border-t border-border bg-overlay flex items-center gap-2">
           <input
             type="text"
             value={replyText}

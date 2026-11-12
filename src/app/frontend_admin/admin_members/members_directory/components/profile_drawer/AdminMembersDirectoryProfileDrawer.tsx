@@ -49,7 +49,7 @@ export default function AdminMembersDirectoryProfileDrawer({ member, status, err
     <>
       <div aria-hidden="true" className="fixed inset-0 bg-overlay backdrop-blur-sm z-40" onClick={onClose}  data-testid="admin_members-admin_members-profile-drawer-control"/>
       <div ref={dialogRef} data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-members-profile-drawer-title" tabIndex={-1} className="fixed right-0 top-0 h-full w-full max-w-md bg-overlay border-l border-border z-40 flex flex-col shadow-dialog" data-testid="admin_members-admin_members-profile-drawer-control-2">
-        <div className="flex items-center justify-between p-5 border-b border-border">
+        <div className="shrink-0 flex items-center justify-between p-5 border-b border-border">
           <h2 id="admin-members-profile-drawer-title" className="font-bold text-primary text-lg">{t('members.admin_members_profile_drawer.text_75caff26c6')}</h2>
           <button ref={closeRef} type="button" data-admin-dialog-close="true"
             onClick={onClose}
@@ -60,7 +60,7 @@ export default function AdminMembersDirectoryProfileDrawer({ member, status, err
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-5 space-y-5">
+        <div className="min-h-0 flex-1 overflow-y-auto custom-scrollbar p-5 space-y-5">
           {status === 'pending' && !member ? (
             <div aria-busy="true" aria-label={t('members.AdminAuditRepair.profileLoading')} data-testid="admin_members-admin_members-profile-drawer-loading" className="space-y-4">
               <div className="h-16 w-16 rounded-2xl bg-skeleton-base motion-safe:animate-pulse" />

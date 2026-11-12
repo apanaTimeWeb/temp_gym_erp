@@ -27,9 +27,9 @@ export default function AdminNavigationLayoutConfirmModal({ isOpen, title, messa
   }, [isOpen]);
   if (!isOpen) return null;
   const canConfirm = !requireTyping || typedValue.trim().toUpperCase() === confirmationPhrase.toUpperCase();
-  return <div data-admin-dialog-overlay="true" className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-4 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-base" role="presentation" data-testid="admin_navigation-admin-confirm-modal-overlay" onMouseDown={(event) => { if (event.target === event.currentTarget) onCancel(); }}>
-    <div ref={dialogRef} data-admin-dialog="true" tabIndex={-1} className="bg-overlay backdrop-blur-xl rounded-2xl shadow-dialog border border-border w-full max-w-md overflow-hidden" role="dialog" aria-modal="true" aria-labelledby="admin-confirm-title" aria-describedby="admin-confirm-message" data-testid="admin_navigation-admin-confirm-modal-open">
-      <div className="p-6">
+  return <div data-admin-dialog-overlay="true" className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-4 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-base overflow-y-auto" role="presentation" data-testid="admin_navigation-admin-confirm-modal-overlay" onMouseDown={(event) => { if (event.target === event.currentTarget) onCancel(); }}>
+    <div ref={dialogRef} data-admin-dialog="true" tabIndex={-1} className="my-auto bg-overlay backdrop-blur-xl rounded-2xl shadow-dialog border border-border w-full max-w-md max-h-dialog-desktop flex flex-col overflow-hidden" role="dialog" aria-modal="true" aria-labelledby="admin-confirm-title" aria-describedby="admin-confirm-message" data-testid="admin_navigation-admin-confirm-modal-open">
+      <div className="p-6 overflow-y-auto custom-scrollbar">
         <div className="flex items-start gap-4">
           <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${type === 'danger' ? 'bg-danger text-on-danger' : type === 'warning' ? 'bg-warning-bg text-warning' : 'bg-info text-on-info'}`} data-testid="admin_navigation-adminfeedback-status-1"><AlertTriangle size={18}  strokeWidth={2}/></div>
           <div className="min-w-0"><h3 id="admin-confirm-title" className="text-lg font-bold text-primary">{title}</h3><p id="admin-confirm-message" className="text-sm text-secondary mt-1 leading-relaxed">{message}</p></div>

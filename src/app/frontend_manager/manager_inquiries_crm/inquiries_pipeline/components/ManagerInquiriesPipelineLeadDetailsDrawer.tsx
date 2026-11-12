@@ -48,7 +48,7 @@ export default function ManagerInquiriesPipelineLeadDetailsDrawer() {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="p-6 border-b border-border bg-overlay flex items-center justify-between gap-4">
+        <div className="shrink-0 p-6 border-b border-border bg-overlay flex items-center justify-between gap-4">
           <div className="flex items-center gap-4 min-w-0">
             <div className="w-14 h-14 rounded-full flex items-center justify-center font-bold text-xl bg-primary-subtle text-primary shrink-0 ring-2 ring-primary/20">
               {selectedLead.name.charAt(0).toUpperCase()}
@@ -82,7 +82,7 @@ export default function ManagerInquiriesPipelineLeadDetailsDrawer() {
         </div>
 
         {/* Content Body */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        <div className="min-h-0 flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6">
           {/* Quick Contact Info */}
           <div className="bg-surface rounded-xl p-4 border border-border space-y-3">
             <h3 className="text-xs font-bold uppercase tracking-wider text-text-secondary">Contact Information</h3>
@@ -145,7 +145,7 @@ export default function ManagerInquiriesPipelineLeadDetailsDrawer() {
         </div>
 
         {/* Drawer Footer Actions */}
-        <div className="p-4 border-t border-border bg-overlay flex flex-wrap items-center justify-between gap-2">
+        <div className="shrink-0 p-4 border-t border-border bg-overlay flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <button
               type="button"

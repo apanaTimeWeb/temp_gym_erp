@@ -69,16 +69,16 @@ export default function ManagerStaffPayrollAndAttendanceStaffModal() {
   if (!showModal) return null;
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop p-4">
+    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop p-4 overflow-y-auto">
       <div
         ref={dialogRef}
-        className="max-h-full w-full max-w-2xl overflow-y-auto rounded-2xl border-2 border-warning bg-overlay shadow-dialog"
+        className="my-auto flex max-h-dialog-desktop w-full max-w-2xl flex-col overflow-hidden rounded-2xl border-2 border-warning bg-overlay shadow-dialog"
         role="dialog"
         aria-modal="true"
         aria-labelledby="manager-staff-directory-dialog-title"
         tabIndex={-1}
       >
-        <div className="sticky top-0 z-20 flex items-center justify-between border-b border-border bg-overlay px-8 py-5">
+        <div className="shrink-0 z-20 flex items-center justify-between border-b border-border bg-overlay px-8 py-5">
           <h3 id="manager-staff-directory-dialog-title" className="text-xl font-bold text-text-primary">
             {editId ? t('TEXT_HR_EDIT_STAFF_TITLE') : t('TEXT_HR_ADD_STAFF_TITLE')}
           </h3>
@@ -93,7 +93,7 @@ export default function ManagerStaffPayrollAndAttendanceStaffModal() {
           </button>
         </div>
 
-        <form data-testid="manager_hr-managerhrstaffmodal-form-1" onSubmit={submit} className="p-8">
+        <form data-testid="manager_hr-managerhrstaffmodal-form-1" onSubmit={submit} className="min-h-0 flex-1 overflow-y-auto p-8 custom-scrollbar">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             {STAFF_MODAL_FIELDS.map((field, mapIndex) => {
               const fieldId = `manager-staff-directory-field-${field.key}`;
@@ -352,7 +352,7 @@ export default function ManagerStaffPayrollAndAttendanceStaffModal() {
             </div>
           </div>
 
-          <div className="mt-8 flex justify-end gap-3 border-t border-border pt-6">
+          <div className="sticky bottom-0 bg-overlay mt-8 flex justify-end gap-3 border-t border-border pt-6 shrink-0">
             <button
               data-testid="manager_hr-manager-hr-staff-modal-close-2"
               type="button"

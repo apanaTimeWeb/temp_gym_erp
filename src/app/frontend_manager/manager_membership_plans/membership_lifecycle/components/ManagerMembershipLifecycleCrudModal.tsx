@@ -42,10 +42,9 @@ export default function ManagerMembershipLifecycleCrudModal() {
   const fieldClassName = 'mt-1 w-full rounded-lg border border-border bg-input px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page';
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop p-4" data-testid="manager_plans-managerplanscrudmodal-backdrop" role="presentation">
-      {/* design-exception: viewport-relative max height prevents overflow on short screens; the supplied host theme contract defines modal width but no modal max-height token. */}
-      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="manager-plans-crud-title" data-testid="manager_plans-managerplanscrudmodal-dialog" className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-border bg-overlay p-6 shadow-dialog">
-        <div className="mb-5 flex items-center justify-between gap-3 border-b border-border pb-4">
+    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop p-4 overflow-y-auto" data-testid="manager_plans-managerplanscrudmodal-backdrop" role="presentation">
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="manager-plans-crud-title" data-testid="manager_plans-managerplanscrudmodal-dialog" className="my-auto flex max-h-dialog-desktop w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-border bg-overlay shadow-dialog">
+        <div className="flex items-center justify-between gap-3 border-b border-border p-6 pb-4 shrink-0 bg-overlay">
           <h2 id="manager-plans-crud-title" className="text-lg font-bold text-text-primary">
             {t(crudModalPlan ? 'CRUD_EDIT_PLAN_TITLE' : 'CRUD_ADD_PLAN_TITLE')}
           </h2>
@@ -54,7 +53,7 @@ export default function ManagerMembershipLifecycleCrudModal() {
           </button>
         </div>
 
-        <form onSubmit={submit} className="space-y-5" data-testid="manager_plans-managerplanscrudmodal-form">
+        <form onSubmit={submit} className="min-h-0 flex-1 space-y-5 overflow-y-auto p-6 pt-4 custom-scrollbar" data-testid="manager_plans-managerplanscrudmodal-form">
           <div>
             <label htmlFor="manager-plans-crud-name" className="block text-sm font-medium text-text-secondary">{t('CRUD_PLAN_NAME')}</label>
             <input id="manager-plans-crud-name" {...register('name')} data-testid="manager_plans-managerplanscrudmodal-input-name" autoComplete="off" aria-invalid={errors.name ? 'true' : undefined} aria-describedby={errors.name ? 'manager-plans-crud-name-error' : undefined} className={fieldClassName} />
@@ -99,7 +98,7 @@ export default function ManagerMembershipLifecycleCrudModal() {
             {t('CRUD_PLAN_ACTIVE')}
           </label>
 
-          <div className="flex flex-wrap justify-end gap-3 border-t border-border pt-4">
+          <div className="sticky bottom-0 bg-overlay flex flex-wrap justify-end gap-3 border-t border-border pt-4 shrink-0">
             <button type="button" onClick={close} disabled={submitPending} data-testid="manager_plans-managerplanscrudmodal-button-cancel" className="min-h-11 rounded-lg border border-border px-4 py-2 text-sm font-medium text-text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring disabled:cursor-not-allowed disabled:opacity-60">{t('COPY_CANCEL')}</button>
             <button type="submit" disabled={submitPending} data-testid="manager_plans-managerplanscrudmodal-button-submit" className="inline-flex min-h-11 min-w-36 items-center justify-center gap-2 rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring disabled:cursor-not-allowed disabled:opacity-60">
               {submitPending && <Loader2 size={18} strokeWidth={2} className="motion-safe:animate-spin" aria-hidden="true" />}

@@ -22,9 +22,9 @@ export default function ManagerStaffPayrollAndAttendanceStaffProfileModal() {
   const s = viewProfileData;
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay-backdrop backdrop-blur-sm">
-      <div className="rounded-2xl shadow-dialog w-full max-w-lg overflow-hidden bg-overlay border-2 border-border" role="dialog" aria-modal="true" aria-labelledby="managerhrstaffprofilemodal-dialog-title">
-        <div className="relative h-24 bg-primary text-on-primary">
+    <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay-backdrop backdrop-blur-sm overflow-y-auto">
+      <div className="my-auto rounded-2xl shadow-dialog w-full max-w-lg max-h-dialog-desktop flex flex-col overflow-hidden bg-overlay border-2 border-border" role="dialog" aria-modal="true" aria-labelledby="managerhrstaffprofilemodal-dialog-title">
+        <div className="relative h-24 bg-primary text-on-primary shrink-0">
           <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "absolute top-4 right-4 p-2 rounded-full bg-overlay-backdrop hover:bg-overlay-backdrop motion-safe:transition-all text-on-primary motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_hr-manager-hr-staff-profile-modal-button-action" 
             type="button"
             aria-label={t("COPY_CLOSE_STAFF_FORM")}
@@ -35,7 +35,7 @@ export default function ManagerStaffPayrollAndAttendanceStaffProfileModal() {
           </button>
         </div>
         
-        <div className="px-8 pb-8 relative">
+        <div className="px-8 pb-8 relative min-h-0 flex-1 overflow-y-auto custom-scrollbar">
           <div className="flex justify-between items-end -mt-10 mb-6">
             <div className="w-24 h-24 rounded-2xl flex items-center justify-center font-bold text-4xl bg-overlay border-4 border-card text-text-primary shadow-card">
               {(s.name || '?').charAt(0).toUpperCase()}

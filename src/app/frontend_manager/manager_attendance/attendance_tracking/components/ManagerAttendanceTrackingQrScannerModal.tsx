@@ -78,11 +78,11 @@ export default function ManagerAttendanceTrackingQrScannerModal({ open, onClose 
 
   return (
     // z-40 = Modal layer per Design §12 Z-Index Scale
-    <div className="fixed inset-0 z-40 flex items-center justify-center p-4 sm:p-6 bg-overlay-backdrop backdrop-blur-sm motion-safe:transition-all motion-safe:duration-200 ease-in-out">
-      <div className="w-full max-w-5xl max-h-screen bg-overlay rounded-3xl shadow-dialog overflow-hidden flex flex-col md:flex-row border border-border motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in-95" role="dialog" aria-modal="true" aria-labelledby="managerattendanceqrscannermodal-dialog-title">
+    <div className="fixed inset-0 z-40 flex items-center justify-center p-4 sm:p-6 bg-overlay-backdrop backdrop-blur-sm motion-safe:transition-all motion-safe:duration-200 ease-in-out overflow-y-auto">
+      <div className="my-auto w-full max-w-5xl max-h-dialog-desktop bg-overlay rounded-3xl shadow-dialog overflow-hidden flex flex-col md:flex-row border border-border motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in-95" role="dialog" aria-modal="true" aria-labelledby="managerattendanceqrscannermodal-dialog-title">
 
         {/* Left Side — The Scanner Viewport */}
-        <div className="flex-1 bg-overlay-backdrop relative flex flex-col items-center justify-center p-8 border-b md:border-b-0 md:border-r border-border min-h-96">
+        <div className="flex-1 bg-overlay-backdrop relative flex flex-col items-center justify-center p-8 border-b md:border-b-0 md:border-r border-border min-h-96 overflow-y-auto custom-scrollbar">
           <button data-testid="manager_attendance-manager-qr-scanner-close"
             onClick={onClose}
             aria-label={t("COPY_CLOSE_SCANNER")}
@@ -166,7 +166,7 @@ export default function ManagerAttendanceTrackingQrScannerModal({ open, onClose 
         </div>
 
         {/* Right Side — Verification Panel + History */}
-        <div className="w-full md:w-96 flex flex-col overflow-hidden">
+        <div className="w-full md:w-96 flex flex-col overflow-y-auto custom-scrollbar">
 
           {/* Verification Panel */}
           <div className="p-6 border-b border-border flex flex-col justify-center min-h-72">

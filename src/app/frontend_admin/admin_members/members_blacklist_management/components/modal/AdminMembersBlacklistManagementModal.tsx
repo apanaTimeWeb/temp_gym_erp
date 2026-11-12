@@ -26,16 +26,16 @@ export default function AdminMembersBlacklistManagementModal() {
 
 
   return (
-    <div data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-blacklist-dialog-title" tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center p-4" data-testid="admin_blacklist-admin_blacklist-modal-control">
+    <div data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-blacklist-dialog-title" tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center p-4 overflow-y-auto" data-testid="admin_blacklist-admin_blacklist-modal-control">
       <div aria-hidden="true" className="absolute inset-0 bg-overlay backdrop-blur-sm" data-testid="admin_blacklist-admin_blacklist-modal-backdrop"/>
-      <div className="relative bg-overlay border border-border rounded-2xl shadow-dialog w-full max-w-md max-h-screen overflow-y-auto custom-scrollbar">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-border sticky top-0 bg-overlay z-10">
+      <div className="relative my-auto bg-overlay border border-border rounded-2xl shadow-dialog w-full max-w-md max-h-dialog-desktop flex flex-col overflow-hidden">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-border shrink-0 bg-overlay z-10">
           <h2 id="admin-blacklist-dialog-title" className="text-lg font-bold text-primary">{t('blacklist.admin_blacklist_modal.text_e0b464e57f')}</h2>
           <button type="button" onClick={() => void handleClose()} className="min-h-11 min-w-11 p-1.5 rounded-lg hover:bg-input text-secondary hover:text-primary motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out motion-safe:active:scale-95" aria-label={t('blacklist.admin_blacklist_modal.text_bbfa773e5a')} data-testid="admin_blacklist-admin_blacklist-modal-click-2">
             <X size={18}  strokeWidth={2}/>
           </button>
         </div>
-        <form onSubmit={handleSubmit(saveBlacklist)} className="p-6 space-y-4" data-testid="admin_blacklist-admin_blacklist-modal-submit">
+        <form onSubmit={handleSubmit(saveBlacklist)} className="min-h-0 flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar" data-testid="admin_blacklist-admin_blacklist-modal-submit">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label htmlFor="admin-blacklist-member-id" className="block text-sm font-medium text-secondary mb-1">{t('blacklist.admin_blacklist_modal.text_7a88b2371d')}<span className="text-danger">*</span></label>
@@ -93,7 +93,7 @@ export default function AdminMembersBlacklistManagementModal() {
               {errors.assignedGyms && <p id="admin-blacklist-gyms-error" role="alert" className="text-xs text-danger mt-1">{getValidationMessage(errors.assignedGyms.message)}</p>}
             </div>
           )}
-          <div className="flex justify-end gap-3 pt-2 border-t border-border">
+          <div className="sticky bottom-0 bg-overlay flex justify-end gap-3 pt-4 border-t border-border shrink-0">
             <button type="button" onClick={() => void handleClose()} className="px-4 py-2 bg-input border border-border rounded-lg text-sm font-medium text-secondary hover:text-primary motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95" data-testid="admin_blacklist-admin_blacklist-modal-click-5">
               {t('blacklist.admin_blacklist_modal.text_77dfd2135f')}</button>
             <button type="submit" disabled={saving} className="px-5 py-2 bg-danger text-on-danger rounded-lg text-sm font-semibold hover:opacity-90 motion-safe:transition-opacity disabled:opacity-60 disabled:cursor-not-allowed motion-safe:active:scale-95 min-w-32 motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 min-w-11" data-testid="admin_blacklist-admin_blacklist-modal-submit-2">

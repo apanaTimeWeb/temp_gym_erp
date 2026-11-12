@@ -49,16 +49,16 @@ export default function ManagerPtAssignmentsScheduleSessionModal({ open, assignm
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-overlay-backdrop p-4 backdrop-blur-xs" role="presentation">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-overlay-backdrop p-4 backdrop-blur-xs overflow-y-auto" role="presentation">
       <div
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="schedule-pt-session-title"
         data-testid="manager_pt-schedule-session-dialog"
-        className="w-full max-w-lg rounded-2xl border border-border bg-card p-6 shadow-2xl"
+        className="my-auto flex max-h-dialog-desktop w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
       >
-        <div className="flex items-center justify-between border-b border-border pb-4">
+        <div className="flex items-center justify-between border-b border-border p-6 pb-4 shrink-0 bg-card">
           <div className="flex items-center gap-2">
             <div className="p-2 rounded-lg bg-primary-subtle text-primary">
               <Dumbbell size={20} strokeWidth={2} aria-hidden="true" />
@@ -78,7 +78,7 @@ export default function ManagerPtAssignmentsScheduleSessionModal({ open, assignm
           </button>
         </div>
 
-        <form onSubmit={handleSubmit(handleFormSubmit)} className="mt-5 space-y-4">
+        <form onSubmit={handleSubmit(handleFormSubmit)} className="min-h-0 flex-1 space-y-4 overflow-y-auto p-6 pt-4 custom-scrollbar">
           {/* Assignment selection */}
           <div>
             <label htmlFor="pt-session-assignment" className="block text-xs font-semibold text-text-secondary uppercase tracking-wider mb-1">
@@ -181,7 +181,7 @@ export default function ManagerPtAssignmentsScheduleSessionModal({ open, assignm
             />
           </div>
 
-          <div className="flex justify-end gap-3 border-t border-border pt-4">
+          <div className="sticky bottom-0 bg-card flex justify-end gap-3 border-t border-border pt-4 shrink-0">
             <button
               type="button"
               onClick={onClose}

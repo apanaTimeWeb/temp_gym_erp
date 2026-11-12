@@ -27,8 +27,8 @@ export default function AdminCommunicationNoticesAndAnnouncementsModal() {
   return (
     <>
       <div aria-hidden="true" className="fixed inset-0 bg-overlay backdrop-blur-sm z-40" onClick={() => void handleClose()} data-testid="admin_announcements-admin_announcements-modal-click"/>
-      <div data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-announcements-dialog-title" tabIndex={-1} onMouseDown={(event) => { if (event.target === event.currentTarget) void handleClose(); }} className="fixed inset-0 z-40 flex items-center justify-center p-4">
-        <div className="bg-overlay border border-border rounded-2xl shadow-dialog w-full max-w-md max-h-screen flex flex-col">
+      <div data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-announcements-dialog-title" tabIndex={-1} onMouseDown={(event) => { if (event.target === event.currentTarget) void handleClose(); }} className="fixed inset-0 z-40 flex items-center justify-center p-4 overflow-y-auto">
+        <div className="my-auto bg-overlay border border-border rounded-2xl shadow-dialog w-full max-w-md max-h-dialog-desktop flex flex-col overflow-hidden">
 
           {/* Header */}
           <div className="flex items-center justify-between p-5 border-b border-border shrink-0">
@@ -47,7 +47,7 @@ export default function AdminCommunicationNoticesAndAnnouncementsModal() {
           </div>
 
           {/* Body */}
-          <form onSubmit={handleSubmit(saveAnnouncement)} className="flex-1 overflow-y-auto p-5 space-y-4" data-testid="admin_announcements-admin_announcements-modal-submit">
+          <form onSubmit={handleSubmit(saveAnnouncement)} className="min-h-0 flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar" data-testid="admin_announcements-admin_announcements-modal-submit">
 
             {/* Title */}
             <div>
@@ -194,7 +194,7 @@ export default function AdminCommunicationNoticesAndAnnouncementsModal() {
             </div>
 
             {/* Footer */}
-            <div className="flex gap-3 pt-2">
+            <div className="sticky bottom-0 bg-overlay border-t border-border pt-3 flex gap-3 shrink-0">
               <button
                 type="button"
                 onClick={() => void handleClose()}

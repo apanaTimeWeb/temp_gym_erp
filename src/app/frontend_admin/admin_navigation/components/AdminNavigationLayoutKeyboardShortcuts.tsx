@@ -51,8 +51,8 @@ export default function AdminNavigationLayoutKeyboardShortcuts() {
   if (!helpOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop p-4" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setHelpOpen(false); }} data-testid="admin_navigation-admin-keyboard-shortcuts-overlay">
-      <section ref={dialogRef} tabIndex={-1} role="dialog" aria-modal="true" aria-labelledby="admin-keyboard-shortcuts-title" className="w-full max-w-md rounded-xl border border-border bg-overlay p-6 shadow-dialog" data-testid="admin_navigation-admin-keyboard-shortcuts-dialog">
+    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop p-4 overflow-y-auto" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setHelpOpen(false); }} data-testid="admin_navigation-admin-keyboard-shortcuts-overlay">
+      <section ref={dialogRef} tabIndex={-1} role="dialog" aria-modal="true" aria-labelledby="admin-keyboard-shortcuts-title" className="my-auto w-full max-w-md rounded-xl border border-border bg-overlay p-6 shadow-dialog" data-testid="admin_navigation-admin-keyboard-shortcuts-dialog">
         <div className="flex items-start justify-between gap-4">
           <h2 id="admin-keyboard-shortcuts-title" className="text-lg font-semibold text-primary">{t('title')}</h2>
           <button type="button" onClick={() => setHelpOpen(false)} className="min-h-11 min-w-11 rounded-lg border border-border bg-input text-secondary hover:bg-surface-hover hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" aria-label={t('close')} data-testid="admin_navigation-admin-keyboard-shortcuts-close">

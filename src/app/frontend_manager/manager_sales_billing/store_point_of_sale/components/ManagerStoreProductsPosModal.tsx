@@ -34,9 +34,9 @@ export default function ManagerStoreProductsPosModal() {
   if (!showOrderModal) return null;
 
  return (
- <div className="fixed inset-0 bg-overlay-backdrop z-40 flex items-center justify-center p-4">
- <div ref={dialogRef} tabIndex={-1} className="bg-overlay rounded-2xl shadow-dialog w-full max-w-2xl max-h-full overflow-y-auto border-2 border-warning" role="dialog" aria-modal="true" aria-labelledby="managerstoreposmodal-dialog-title">
- <div className="sticky top-0 bg-overlay px-6 py-4 border-b border-border flex items-center justify-between">
+ <div className="fixed inset-0 bg-overlay-backdrop z-40 flex items-center justify-center p-4 overflow-y-auto">
+ <div ref={dialogRef} tabIndex={-1} className="my-auto bg-overlay rounded-2xl shadow-dialog w-full max-w-2xl max-h-dialog-desktop flex flex-col overflow-hidden border-2 border-warning" role="dialog" aria-modal="true" aria-labelledby="managerstoreposmodal-dialog-title">
+ <div className="shrink-0 bg-overlay px-6 py-4 border-b border-border flex items-center justify-between">
  <h3 className="text-lg font-bold text-text-primary" id="managerstoreposmodal-dialog-title">{t("COPY_NEW_SALE_POS")}</h3>
  <button data-testid="manager_store-manager-store-pos-modal-order-modal" 
  type="button"
@@ -47,7 +47,7 @@ export default function ManagerStoreProductsPosModal() {
  <X size={18} strokeWidth={2} aria-hidden="true"/>
  </button>
  </div>
-          <div className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="min-h-0 flex-1 overflow-y-auto p-6 grid grid-cols-1 sm:grid-cols-2 gap-4 custom-scrollbar">
  
  {/* Product Grid */}
   <div>

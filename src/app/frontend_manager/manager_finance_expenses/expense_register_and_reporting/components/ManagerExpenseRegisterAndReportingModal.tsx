@@ -79,9 +79,9 @@ export default function ManagerExpenseRegisterAndReportingModal() {
   if (!showModal) return null;
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay-backdrop">
-      <div ref={dialogRef} tabIndex={-1} className="bg-overlay rounded-2xl shadow-dialog w-full max-w-md overflow-visible border border-border max-h-full flex flex-col outline-none" role="dialog" aria-modal="true" aria-labelledby="managerexpensesmodal-dialog-title">
-        <div className="sticky top-0 bg-overlay px-6 py-4 border-b border-border flex items-center justify-between z-20 rounded-t-2xl">
+    <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay-backdrop overflow-y-auto">
+      <div ref={dialogRef} tabIndex={-1} className="my-auto bg-overlay rounded-2xl shadow-dialog w-full max-w-md border border-border max-h-dialog-desktop flex flex-col outline-none overflow-hidden" role="dialog" aria-modal="true" aria-labelledby="managerexpensesmodal-dialog-title">
+        <div className="shrink-0 bg-overlay px-6 py-4 border-b border-border flex items-center justify-between z-20 rounded-t-2xl">
           <h3 className="text-lg font-bold text-text-primary" id="managerexpensesmodal-dialog-title">{editId ? t('COPY_EDIT_EXPENSE') : t('COPY_ADD_EXPENSE')}</h3>
           <button data-testid="manager_expenses-manager-expenses-modal-close-1"
             type="button"
@@ -92,8 +92,8 @@ export default function ManagerExpenseRegisterAndReportingModal() {
             <X size={18} strokeWidth={2}/>
           </button>
         </div>
-        <div className="overflow-y-auto flex-1">
-          <form data-testid="manager_expenses-managerexpensesmodal-form-1" onSubmit={submit} className="p-6 space-y-4 pb-32">
+        <div className="overflow-y-auto flex-1 min-h-0 custom-scrollbar">
+          <form data-testid="manager_expenses-managerexpensesmodal-form-1" onSubmit={submit} className="p-6 space-y-4">
             <div>
               <label htmlFor="manager-managerexpensesmodal-field-1" className="block text-sm font-medium text-text-secondary mb-1">{t("COPY_TITLE")}</label>
               <input id="manager-managerexpensesmodal-field-1" data-testid="manager_expenses-manager-expenses-modal-input-text-1"
@@ -217,7 +217,7 @@ export default function ManagerExpenseRegisterAndReportingModal() {
               />
             </div>
 
-            <div className="flex gap-3 pt-2">
+            <div className="sticky bottom-0 bg-overlay pt-3 pb-1 border-t border-border flex gap-3 z-10">
               <button data-testid="manager_expenses-manager-expenses-modal-close-2"
                 type="button"
                 onClick={handleClose}

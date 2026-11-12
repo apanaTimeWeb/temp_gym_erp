@@ -42,7 +42,7 @@ export default function AdminGymsBranchesDirectoryDetailDrawer() {
     <>
       <button type="button" aria-label={t('branches.admin_branches_detail_drawer.text_cf7fcd62b8')} className="min-h-11 min-w-11 motion-safe:transition-all motion-safe:duration-base ease-in-out fixed inset-0 z-40 cursor-default bg-overlay backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" onClick={closeDetail}  data-testid="admin_branches-admin_branches-detail-drawer-control"/>
       <aside role="dialog" aria-modal="true" aria-labelledby="admin_branches-detail-title" className="fixed right-0 top-0 z-40 flex h-full w-full max-w-lg flex-col border-l border-border bg-overlay shadow-dialog" data-testid="admin_branches-admin_branches-detail-drawer-control-2">
-        <div className="flex items-center justify-between border-b border-border p-5">
+        <div className="shrink-0 flex items-center justify-between border-b border-border p-5">
           <div className="min-w-0">
             <h2 id="admin_branches-detail-title" className="text-lg font-bold text-primary">{t(BRANCH_DETAIL_TITLES[detailView].labelKey)}</h2>
             <p className="mt-0.5 flex items-center gap-1.5 truncate text-sm text-secondary"><Building2 size={18} aria-hidden="true"  strokeWidth={2}/> {branch.name}</p>
@@ -52,7 +52,7 @@ export default function AdminGymsBranchesDirectoryDetailDrawer() {
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-5">
+        <div className="min-h-0 flex-1 overflow-y-auto custom-scrollbar p-5">
           {detailStatus === 'pending' && <AdminBranchesDetailLoading />}
           {detailStatus === 'error' && (
             <div className="flex flex-col items-center justify-center rounded-xl border border-border bg-input px-6 py-12 text-center">

@@ -117,10 +117,10 @@ export default function TrainerLibraryAssignModal({
   };
 
   return (
-    <div className="fixed inset-0 z-40 bg-overlay-backdrop flex items-center justify-center p-4" role="presentation" data-testid={testId ?? "trainer_library-assign-modal"}>
-      <div ref={dialogRef} tabIndex={-1} className="w-full max-w-lg bg-overlay border border-border rounded-2xl shadow-dialog p-6 max-h-[90vh] flex flex-col" role="dialog" aria-modal="true" aria-labelledby={titleId}>
+    <div className="fixed inset-0 z-40 bg-overlay-backdrop flex items-center justify-center overflow-y-auto p-4" role="presentation" data-testid={testId ?? "trainer_library-assign-modal"}>
+      <div ref={dialogRef} tabIndex={-1} className="my-auto w-full max-w-lg bg-overlay border border-border rounded-2xl shadow-dialog p-6 max-h-dialog-desktop flex flex-col overflow-hidden" role="dialog" aria-modal="true" aria-labelledby={titleId}>
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-border">
+        <div className="flex items-center justify-between pb-4 border-b border-border shrink-0">
           <div>
             <h3 id={titleId} className="text-lg font-bold text-primary flex items-center gap-2">
               <Users size={20} className="text-primary" />
@@ -139,145 +139,147 @@ export default function TrainerLibraryAssignModal({
           </button>
         </div>
 
-        {/* Selected Members Chips Tray */}
-        {selectedMemberIds.length > 0 && (
-          <div className="py-3 border-b border-border">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-secondary uppercase tracking-wider">
-                Selected ({selectedMemberIds.length})
-              </span>
-              <button
-                type="button"
-                onClick={() => { setValue('memberIds', [], { shouldDirty: true, shouldValidate: true }); setValue('memberId', ''); }}
-                className="text-xs text-danger hover:underline font-medium"
-              >
-                Clear all
-              </button>
-            </div>
-            <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto custom-scrollbar p-1">
-              {selectedMemberIds.map((id) => {
-                const member = members.find((m) => m.id === id);
-                return (
-                  <span
-                    key={id}
-                    className="inline-flex items-center gap-1.5 bg-primary-subtle border border-border text-primary text-xs font-medium px-2.5 py-1 rounded-full"
-                  >
-                    <span>{member?.name ?? id}</span>
-                    <button
-                      type="button"
-                      onClick={() => removeMember(id)}
-                      aria-label={`Remove ${member?.name ?? id}`}
-                      className="hover:text-danger rounded-full p-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring"
+        <div className="min-h-0 flex-1 overflow-y-auto custom-scrollbar py-2 space-y-3">
+          {/* Selected Members Chips Tray */}
+          {selectedMemberIds.length > 0 && (
+            <div className="py-2 border-b border-border">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-semibold text-secondary uppercase tracking-wider">
+                  Selected ({selectedMemberIds.length})
+                </span>
+                <button
+                  type="button"
+                  onClick={() => { setValue('memberIds', [], { shouldDirty: true, shouldValidate: true }); setValue('memberId', ''); }}
+                  className="text-xs text-danger hover:underline font-medium"
+                >
+                  Clear all
+                </button>
+              </div>
+              <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto custom-scrollbar p-1">
+                {selectedMemberIds.map((id) => {
+                  const member = members.find((m) => m.id === id);
+                  return (
+                    <span
+                      key={id}
+                      className="inline-flex items-center gap-1.5 bg-primary-subtle border border-border text-primary text-xs font-medium px-2.5 py-1 rounded-full"
                     >
-                      <X size={12} strokeWidth={2.5} />
-                    </button>
-                  </span>
-                );
-              })}
+                      <span>{member?.name ?? id}</span>
+                      <button
+                        type="button"
+                        onClick={() => removeMember(id)}
+                        aria-label={`Remove ${member?.name ?? id}`}
+                        className="hover:text-danger rounded-full p-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring"
+                      >
+                        <X size={12} strokeWidth={2.5} />
+                      </button>
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Member Search & Selection Toolbar */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between gap-2">
+              <label htmlFor="trainer-library-member-search" className="text-xs font-semibold text-secondary uppercase tracking-wider">
+                {t("TEXT_MEMBER")} Checklist
+              </label>
+              {filteredMembers.length > 0 && (
+                <button
+                  type="button"
+                  onClick={toggleSelectAll}
+                  className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring"
+                >
+                  {isAllFilteredSelected ? <CheckSquare size={14} /> : <Square size={14} />}
+                  {isAllFilteredSelected ? 'Deselect All' : 'Select All'}
+                </button>
+              )}
+            </div>
+            <div className="relative">
+              <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" />
+              <input
+                id="trainer-library-member-search"
+                type="text"
+                value={memberSearch}
+                onChange={(e) => setMemberSearch(e.target.value)}
+                placeholder="Search member by name..."
+                className="w-full ps-9 pe-3 py-2 text-sm bg-input border border-border rounded-lg text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              />
             </div>
           </div>
-        )}
 
-        {/* Member Search & Selection Toolbar */}
-        <div className="pt-3 pb-2 space-y-2">
-          <div className="flex items-center justify-between gap-2">
-            <label htmlFor="trainer-library-member-search" className="text-xs font-semibold text-secondary uppercase tracking-wider">
-              {t("TEXT_MEMBER")} Checklist
-            </label>
-            {filteredMembers.length > 0 && (
-              <button
-                type="button"
-                onClick={toggleSelectAll}
-                className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring"
-              >
-                {isAllFilteredSelected ? <CheckSquare size={14} /> : <Square size={14} />}
-                {isAllFilteredSelected ? 'Deselect All' : 'Select All'}
-              </button>
+          {/* Members List */}
+          <div className="overflow-y-auto border border-border rounded-xl p-2 min-h-[160px] max-h-[240px] space-y-1 custom-scrollbar">
+            {membersLoading ? (
+              <div className="py-8 text-center text-sm text-secondary flex items-center justify-center gap-2">
+                <Loader2 size={16} className="motion-safe:animate-spin" />
+                {t("TEXT_LOADING_MEMBERS")}
+              </div>
+            ) : membersError ? (
+              <div className="py-6 text-center">
+                <p className="text-sm text-danger">{t("TEXT_MEMBER_LOOKUP_FAILED")}</p>
+                <button
+                  type="button"
+                  onClick={onRetryMembers}
+                  className="mt-2 min-h-9 px-3 rounded-lg border border-border text-xs text-primary hover:bg-primary-subtle"
+                >
+                  {t("TEXT_RETRY")}
+                </button>
+              </div>
+            ) : filteredMembers.length === 0 ? (
+              <div className="py-8 text-center text-xs text-secondary">
+                {memberSearch ? 'No matching members found' : t("TEXT_NO_MEMBERS_AVAILABLE")}
+              </div>
+            ) : (
+              filteredMembers.map((member) => {
+                const isSelected = selectedMemberIds.includes(member.id);
+                return (
+                  <label
+                    key={member.id}
+                    className={`flex items-center justify-between p-2.5 rounded-lg border cursor-pointer motion-safe:transition-all ${
+                      isSelected
+                        ? 'bg-primary-subtle border-focus text-primary'
+                        : 'bg-card border-transparent text-secondary hover:bg-input hover:text-primary'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => toggleMember(member.id)}
+                        className="rounded border-border text-primary focus:ring-focus-ring w-4 h-4 cursor-pointer"
+                      />
+                      <div className="truncate">
+                        <span className="text-sm font-medium block truncate text-primary">{member.name}</span>
+                        {member.assignedDietPlanId && (
+                          <span className="text-xs text-secondary opacity-75">
+                            {t("TEXT_CURRENT_PLAN_ASSIGNED")}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    {isSelected && (
+                      <span className="text-xs font-semibold text-primary px-2 py-0.5 rounded-full bg-input">
+                        Selected
+                      </span>
+                    )}
+                  </label>
+                );
+              })
             )}
           </div>
-          <div className="relative">
-            <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" />
-            <input
-              id="trainer-library-member-search"
-              type="text"
-              value={memberSearch}
-              onChange={(e) => setMemberSearch(e.target.value)}
-              placeholder="Search member by name..."
-              className="w-full ps-9 pe-3 py-2 text-sm bg-input border border-border rounded-lg text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
-            />
-          </div>
-        </div>
 
-        {/* Members List */}
-        <div className="flex-1 overflow-y-auto border border-border rounded-xl p-2 min-h-[160px] max-h-[240px] space-y-1 custom-scrollbar">
-          {membersLoading ? (
-            <div className="py-8 text-center text-sm text-secondary flex items-center justify-center gap-2">
-              <Loader2 size={16} className="motion-safe:animate-spin" />
-              {t("TEXT_LOADING_MEMBERS")}
-            </div>
-          ) : membersError ? (
-            <div className="py-6 text-center">
-              <p className="text-sm text-danger">{t("TEXT_MEMBER_LOOKUP_FAILED")}</p>
-              <button
-                type="button"
-                onClick={onRetryMembers}
-                className="mt-2 min-h-9 px-3 rounded-lg border border-border text-xs text-primary hover:bg-primary-subtle"
-              >
-                {t("TEXT_RETRY")}
-              </button>
-            </div>
-          ) : filteredMembers.length === 0 ? (
-            <div className="py-8 text-center text-xs text-secondary">
-              {memberSearch ? 'No matching members found' : t("TEXT_NO_MEMBERS_AVAILABLE")}
-            </div>
-          ) : (
-            filteredMembers.map((member) => {
-              const isSelected = selectedMemberIds.includes(member.id);
-              return (
-                <label
-                  key={member.id}
-                  className={`flex items-center justify-between p-2.5 rounded-lg border cursor-pointer motion-safe:transition-all ${
-                    isSelected
-                      ? 'bg-primary-subtle border-focus text-primary'
-                      : 'bg-card border-transparent text-secondary hover:bg-input hover:text-primary'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <input
-                      type="checkbox"
-                      checked={isSelected}
-                      onChange={() => toggleMember(member.id)}
-                      className="rounded border-border text-primary focus:ring-focus-ring w-4 h-4 cursor-pointer"
-                    />
-                    <div className="truncate">
-                      <span className="text-sm font-medium block truncate text-primary">{member.name}</span>
-                      {member.assignedDietPlanId && (
-                        <span className="text-xs text-secondary opacity-75">
-                          {t("TEXT_CURRENT_PLAN_ASSIGNED")}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  {isSelected && (
-                    <span className="text-xs font-semibold text-primary px-2 py-0.5 rounded-full bg-input">
-                      Selected
-                    </span>
-                  )}
-                </label>
-              );
-            })
+          {errors.memberIds && (
+            <p role="alert" className="mt-2 text-xs text-danger">{errors.memberIds.message ?? t('TEXT_SELECT_A_MEMBER')}</p>
+          )}
+          {errorMessage && (
+            <p role="alert" className="text-xs text-danger bg-danger-bg px-3 py-2 rounded-lg mt-3" data-testid="trainer_library-library-assign_modal_control">{errorMessage}</p>
           )}
         </div>
 
-        {errors.memberIds && (
-          <p role="alert" className="mt-2 text-xs text-danger">{errors.memberIds.message ?? t('TEXT_SELECT_A_MEMBER')}</p>
-        )}
-        {errorMessage && (
-          <p role="alert" className="text-xs text-danger bg-danger-bg px-3 py-2 rounded-lg mt-3" data-testid="trainer_library-library-assign_modal_control">{errorMessage}</p>
-        )}
-
         {/* Modal Actions */}
-        <div className="flex flex-col sm:flex-row justify-end gap-2 pt-4 mt-2 border-t border-border">
+        <div className="flex flex-col sm:flex-row justify-end gap-2 pt-4 border-t border-border shrink-0">
           <button
             type="button"
             onClick={() => void guardNavigation(handleClose)}

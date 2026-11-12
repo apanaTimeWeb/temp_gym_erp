@@ -31,10 +31,10 @@ export default function AdminFinancePayrollManagementPayrollModal() {
 
 
   return (
-    <div ref={dialogRef} data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-hr-payroll-title" tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay" data-testid="admin_hr-admin_hr-payroll-modal-control">
-      <div className="w-full max-w-md rounded-2xl shadow-dialog flex flex-col max-h-screen bg-overlay border-2 border-border">
+    <div ref={dialogRef} data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-hr-payroll-title" tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay overflow-y-auto" data-testid="admin_hr-admin_hr-payroll-modal-control">
+      <div className="my-auto w-full max-w-md rounded-2xl shadow-dialog flex flex-col max-h-dialog-desktop overflow-hidden bg-overlay border-2 border-border">
         
-        <div className="flex items-center justify-between px-8 py-5 border-b border-border">
+        <div className="flex items-center justify-between px-8 py-5 border-b border-border shrink-0 bg-overlay">
           <h2 id="admin-hr-payroll-title" className="text-xl font-bold text-primary">
             {t('hr.admin_hr_payroll_modal.text_998b7ddeda')}</h2>
           <button type="button" onClick={() => void handleClose()} className="p-2 rounded-full hover:bg-primary-subtle motion-safe:transition-colors text-secondary hover:text-primary motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95" data-testid="admin_hr-admin_hr-payroll-modal-click">
@@ -42,7 +42,7 @@ export default function AdminFinancePayrollManagementPayrollModal() {
           </button>
         </div>
 
-        <div className="p-8 overflow-y-auto flex-1 custom-scrollbar">
+        <div className="p-8 overflow-y-auto flex-1 min-h-0 custom-scrollbar">
           <form id="payroll-form" onSubmit={handleSubmit((data) => savePayroll({ ...data, staffId: data.staffId }))} className="space-y-6" data-testid="admin_hr-admin_hr-payroll-modal-submit">
             
             <div className="space-y-1.5">
@@ -101,7 +101,7 @@ export default function AdminFinancePayrollManagementPayrollModal() {
           </form>
         </div>
 
-        <div className="px-8 py-5 border-t border-border flex justify-end gap-3 bg-card">
+        <div className="px-8 py-5 border-t border-border flex justify-end gap-3 bg-card shrink-0">
           <button 
             type="button" 
             onClick={() => void handleClose()}

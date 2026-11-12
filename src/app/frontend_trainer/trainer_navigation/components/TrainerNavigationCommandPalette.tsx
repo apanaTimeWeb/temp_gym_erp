@@ -86,8 +86,8 @@ export default function TrainerNavigationCommandPalette() {
   if (mode === 'closed') return null;
 
   return (
-    <div className="fixed inset-0 z-40 flex items-start justify-center bg-overlay-backdrop p-3 sm:p-6 trainer-navigation-command-palette-offset " role="presentation">
-      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="trainer-command-palette-title" className="w-full max-w-2xl bg-popover border border-border rounded-xl shadow-dialog overflow-hidden ">
+    <div className="fixed inset-0 z-40 flex items-start justify-center bg-overlay-backdrop p-3 sm:p-6 overflow-y-auto trainer-navigation-command-palette-offset " role="presentation">
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="trainer-command-palette-title" className="my-auto w-full max-w-2xl bg-popover border border-border rounded-xl shadow-dialog overflow-hidden ">
         <div className="flex items-center gap-3 border-b border-border px-4 py-3 ">
           {mode === 'search' ? <Search size={18} className="text-secondary " aria-hidden="true"  strokeWidth={2}/> : <HelpCircle size={18} className="text-primary " aria-hidden="true"  strokeWidth={2}/>}
           <h2 id="trainer-command-palette-title" className="sr-only ">{mode === 'search' ? t('TEXT_COMMAND_PALETTE') : t('TEXT_KEYBOARD_SHORTCUTS')}</h2>

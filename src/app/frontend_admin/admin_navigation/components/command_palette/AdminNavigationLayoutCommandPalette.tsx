@@ -91,7 +91,7 @@ export default function AdminNavigationLayoutCommandPalette() {
 
   return (
     <div
-      className="fixed inset-0 z-40 flex items-start justify-center bg-overlay-backdrop p-3"
+      className="fixed inset-0 z-40 flex items-start justify-center bg-overlay-backdrop p-3 overflow-y-auto"
       role="presentation"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) close();
@@ -99,7 +99,7 @@ export default function AdminNavigationLayoutCommandPalette() {
      data-testid="admin_navigation-admin-command-palette-control">
       <section
         ref={dialogRef}
-        className={`${styles.palette} overflow-hidden rounded-xl border border-border bg-popover shadow-dialog`}
+        className={`${styles.palette} my-auto overflow-hidden rounded-xl border border-border bg-popover shadow-dialog`}
         role="dialog"
         aria-modal="true"
         aria-label={t('admin_navigation.components/admin_layout_command_palette.text_7b6b539e73')}

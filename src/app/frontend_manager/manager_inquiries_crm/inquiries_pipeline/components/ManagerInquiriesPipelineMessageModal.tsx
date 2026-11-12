@@ -78,13 +78,13 @@ export default function ManagerInquiriesPipelineMessageModal({
  };
 
  return (
- <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay-backdrop backdrop-blur-sm">
+ <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay-backdrop backdrop-blur-sm overflow-y-auto">
  <div
- role="dialog" aria-modal="true" aria-label={t("TEXT_MESSAGE_DIALOG_LABEL")} className="bg-overlay rounded-2xl shadow-dialog w-full max-w-lg relative overflow-hidden border border-border"
+ role="dialog" aria-modal="true" aria-label={t("TEXT_MESSAGE_DIALOG_LABEL")} className="my-auto bg-overlay rounded-2xl shadow-dialog w-full max-w-lg relative overflow-hidden border border-border max-h-dialog-desktop flex flex-col"
 
  >
  <div
- className={`px-6 py-4 flex items-center justify-between ${type === 'whatsapp' ? 'bg-social-whatsapp' : 'bg-info-bg'}`}
+ className={`shrink-0 px-6 py-4 flex items-center justify-between ${type === 'whatsapp' ? 'bg-social-whatsapp' : 'bg-info-bg'}`}
  
  >
  <div className="flex flex-wrap items-center gap-3">
@@ -106,6 +106,7 @@ export default function ManagerInquiriesPipelineMessageModal({
  </button>
  </div>
 
+ <div className="min-h-0 flex-1 overflow-y-auto custom-scrollbar">
  <div className="px-6 pt-4 pb-2">
  <div className="flex items-center gap-3 p-3 bg-input rounded-xl border border-border">
  <div
@@ -153,8 +154,9 @@ export default function ManagerInquiriesPipelineMessageModal({
  />
  <p className="text-right text-xs text-text-secondary mt-1">{message.length}{t("COPY_CHARS")}</p>
  </div>
+ </div>
 
- <div className="px-6 pb-5 flex gap-3">
+ <div className="sticky bottom-0 bg-overlay border-t border-border pt-4 px-6 pb-5 flex gap-3 shrink-0">
  <button data-testid="manager_inquiries-manager-inquiries-message-modal-close-2"
  aria-label={t("COPY_CLOSE_MESSAGE_DIALOG_2")}
  onClick={handleClose}

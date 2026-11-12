@@ -47,10 +47,10 @@ export default function AdminHrManagementStaffProfileModal() {
   if (!showProfileModal || !editData) return null;
 
   return (
-    <div data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-hr-staff-profile-title" tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay backdrop-blur-sm" data-testid="admin_hr-admin_hr-staff-profile-modal-control">
-      <div className="bg-overlay w-full max-w-md rounded-2xl shadow-dialog border border-border overflow-hidden flex flex-col max-h-screen">
+    <div data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-hr-staff-profile-title" tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay backdrop-blur-sm overflow-y-auto" data-testid="admin_hr-admin_hr-staff-profile-modal-control">
+      <div className="my-auto bg-overlay w-full max-w-md rounded-2xl shadow-dialog border border-border overflow-hidden flex flex-col max-h-dialog-desktop">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-input">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-input shrink-0">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-primary-subtle text-primary rounded-xl">
               <User size={18}  strokeWidth={2}/>
@@ -66,7 +66,7 @@ export default function AdminHrManagementStaffProfileModal() {
         </div>
 
         {/* Content */}
-        <div className="overflow-y-auto p-6 space-y-8 flex-1">
+        <div className="overflow-y-auto p-6 space-y-8 flex-1 min-h-0 custom-scrollbar">
           
           {/* Top Profile Section */}
           <div className="flex flex-col md:flex-row items-start gap-6">

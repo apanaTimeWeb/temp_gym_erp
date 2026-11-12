@@ -77,8 +77,8 @@ export default function ManagerCommunicationsCampaignsBulkMessageModal({
   const handleDone = () => { setOpenedRecipientKeys(new Set()); setMessage(defaultMessage); setSubject(initialSubject); onClose(); };
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay-backdrop backdrop-blur-sm">
-      <div ref={dialogRef} tabIndex={-1} className="bg-overlay rounded-2xl shadow-dialog w-full max-w-2xl relative overflow-hidden border border-border max-h-full flex flex-col motion-safe:animate-in motion-safe:zoom-in-95 motion-safe:duration-200" role="dialog" aria-modal="true" aria-label={t("TEXT_BULK_MESSAGE_DIALOG_LABEL")}>
+    <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay-backdrop backdrop-blur-sm overflow-y-auto">
+      <div ref={dialogRef} tabIndex={-1} className="my-auto bg-overlay rounded-2xl shadow-dialog w-full max-w-2xl relative overflow-hidden border border-border max-h-dialog-desktop flex flex-col motion-safe:animate-in motion-safe:zoom-in-95 motion-safe:duration-200" role="dialog" aria-modal="true" aria-label={t("TEXT_BULK_MESSAGE_DIALOG_LABEL")}>
         <div
           className={`px-6 py-4 flex items-center justify-between shrink-0 ${type === 'whatsapp' ? 'bg-social-whatsapp' : 'bg-info-bg'}`}
           

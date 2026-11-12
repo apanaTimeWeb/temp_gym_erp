@@ -69,11 +69,11 @@ export default function ManagerAttendanceTrackingCalendar() {
   });
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop p-4 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-200">
-      <div role="dialog" aria-modal="true" aria-labelledby="manager-attendance-calendar-dialog-title" className="w-full max-w-md bg-card shadow-card flex flex-col max-h-full rounded-2xl border-2 border-primary overflow-hidden">
+    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop p-4 overflow-y-auto motion-safe:animate-in motion-safe:fade-in motion-safe:duration-200">
+      <div role="dialog" aria-modal="true" aria-labelledby="manager-attendance-calendar-dialog-title" className="my-auto w-full max-w-md bg-card shadow-card flex flex-col max-h-dialog-desktop rounded-2xl border-2 border-primary overflow-hidden">
         
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-border">
+        <div className="shrink-0 flex items-center justify-between p-4 border-b border-border">
           <div>
             <h2 id="manager-attendance-calendar-dialog-title" className="text-lg font-semibold text-text-primary">{t("COPY_ATTENDANCE_HISTORY")}</h2>
             <p className="text-sm text-text-secondary">
@@ -91,7 +91,7 @@ export default function ManagerAttendanceTrackingCalendar() {
         </div>
 
         {/* Controls */}
-        <div className="p-4 pb-2 flex items-center justify-between">
+        <div className="shrink-0 p-4 pb-2 flex items-center justify-between">
           <button data-testid="manager_attendance-attendance-calendar-prev-month" type="button" aria-label={t("COPY_PREVIOUS_MONTH")} onClick={prevMonth} className="min-h-11 min-w-11 flex items-center justify-center p-2 rounded-md hover:bg-page border border-border motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 hover:brightness-110">
             <ChevronLeft size={18} strokeWidth={2}/>
           </button>
@@ -104,7 +104,7 @@ export default function ManagerAttendanceTrackingCalendar() {
         </div>
         
         {/* Stats */}
-        <div className={`px-4 pb-2 grid ${calendarUser.type === 'STAFF' ? 'grid-cols-3' : 'grid-cols-2 gap-4 max-w-3/4'} text-xs font-bold text-text-secondary`}>
+        <div className={`shrink-0 px-4 pb-2 grid ${calendarUser.type === 'STAFF' ? 'grid-cols-3' : 'grid-cols-2 gap-4 max-w-3/4'} text-xs font-bold text-text-secondary`}>
           <div className="flex items-center gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-success text-on-success" data-testid="manager_attendance-managerattendancecalendar-status-badge-1"></div>{t("COPY_PRESENT_1")}{totalP}</div>
           <div className="flex items-center gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-danger text-on-danger" data-testid="manager_attendance-managerattendancecalendar-status-badge-2"></div>{t("COPY_ABSENT_1")}{totalA}</div>
           {calendarUser.type === 'STAFF' && (
@@ -113,7 +113,7 @@ export default function ManagerAttendanceTrackingCalendar() {
         </div>
 
         {/* Calendar Grid */}
-        <div className="p-4 overflow-y-auto">
+        <div className="p-4 min-h-0 flex-1 overflow-y-auto custom-scrollbar">
           {(() => { if (loading) { return (
             <div>
               <div className="grid grid-cols-7 gap-1.5 mb-2 text-center text-xs font-bold text-text-secondary">

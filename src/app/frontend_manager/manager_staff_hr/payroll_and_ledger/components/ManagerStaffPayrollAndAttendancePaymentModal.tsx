@@ -50,14 +50,14 @@ export default function ManagerStaffPayrollAndAttendancePaymentModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-4 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-200">
-      <div className="bg-overlay backdrop-blur-xl rounded-2xl shadow-dialog w-full max-w-sm overflow-hidden motion-safe:animate-in motion-safe:zoom-in-95 motion-safe:duration-200 border border-border" role="dialog" aria-modal="true" aria-labelledby="managerhrpaymentmodal-dialog-title">
-        <div className="p-5 flex justify-between items-center border-b border-border">
+    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-4 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-200 overflow-y-auto">
+      <div className="my-auto bg-overlay backdrop-blur-xl rounded-2xl shadow-dialog w-full max-w-sm max-h-dialog-desktop flex flex-col overflow-hidden motion-safe:animate-in motion-safe:zoom-in-95 motion-safe:duration-200 border border-border" role="dialog" aria-modal="true" aria-labelledby="managerhrpaymentmodal-dialog-title">
+        <div className="p-5 flex justify-between items-center border-b border-border shrink-0 bg-overlay">
           <h3 className="font-bold text-text-primary" id="managerhrpaymentmodal-dialog-title">{t("COPY_PAY_SALARY_2")}</h3>
           <button data-testid="manager_hr-manager-hr-payment-modal-close" aria-label={t("COPY_CLOSE_SALARY_PAYMENT_MODAL")} type="button" onClick={handleClose} className="p-1.5 text-text-secondary min-h-11 min-w-11 inline-flex items-center justify-center hover:text-primary hover:bg-primary-subtle rounded-md motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"><X size={18} strokeWidth={2}/></button>
         </div>
         
-        <form data-testid="manager_hr-managerhrpaymentmodal-form-1" onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form data-testid="manager_hr-managerhrpaymentmodal-form-1" onSubmit={handleSubmit} className="min-h-0 flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar">
           <div className="p-4 rounded-xl bg-primary-subtle border border-border mb-2">
             <p className="text-sm text-text-secondary mb-1">{t("COPY_STAFF")}<strong className="text-text-primary">{paymentModal.staffName}</strong>
             </p>
@@ -95,7 +95,7 @@ export default function ManagerStaffPayrollAndAttendancePaymentModal() {
             </div>
           </div>
 
-          <div className="mt-6">
+          <div className="sticky bottom-0 bg-overlay border-t border-border pt-4 mt-6 shrink-0">
             <button data-testid="manager_hr-manager-hr-payment-modal-button-submit"
               aria-label={isSubmitting ? t("COPY_RECORDING") : t("CONFIRM_PAYMENT")}
               type="submit"

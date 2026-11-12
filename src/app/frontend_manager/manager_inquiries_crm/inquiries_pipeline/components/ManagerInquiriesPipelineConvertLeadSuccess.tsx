@@ -47,8 +47,8 @@ export default function ManagerInquiriesPipelineConvertLeadSuccess({ successData
   };
 
   return (
-    <div className="fixed inset-0 bg-overlay-backdrop z-40 flex items-center justify-center p-4">
-      <div role="dialog" aria-modal="true" aria-labelledby="manager-inquiries-convert-lead-success-title" className="bg-card rounded-2xl shadow-card w-full max-w-md overflow-hidden border-2 border-success motion-safe:animate-in motion-safe:zoom-in-95 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+    <div className="fixed inset-0 bg-overlay-backdrop z-40 flex items-center justify-center p-4 overflow-y-auto">
+      <div role="dialog" aria-modal="true" aria-labelledby="manager-inquiries-convert-lead-success-title" className="my-auto bg-card rounded-2xl shadow-card w-full max-w-md overflow-hidden border-2 border-success motion-safe:animate-in motion-safe:zoom-in-95 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
         <div className="px-8 py-8 flex flex-col items-center text-center">
           <div data-testid="manager_inquiries-convert-lead-modal-status-success" className="w-20 h-20 bg-success-bg text-success-text rounded-full flex items-center justify-center mb-5 border border-success">
             <CheckCircle2 size={18} strokeWidth={2} aria-hidden="true" />
