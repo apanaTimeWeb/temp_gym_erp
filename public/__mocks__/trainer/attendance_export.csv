@@ -1,0 +1,8 @@
+Record ID,Date,Type,Name,Staff/Member ID,Check-In Time,Check-Out Time,Duration (Mins),Method,Notes
+att-001,2026-11-12,STAFF,Michael Trainer,trainer_demo_user,07:45:00,16:30:00,525,Biometric,Shift Completed
+att-002,2026-11-12,MEMBER,Rahul Sharma,MEM-001,08:00:00,09:15:00,75,Biometric,Morning PT Session
+att-003,2026-11-12,MEMBER,Priya Patel,MEM-002,09:30:00,10:30:00,60,Manual,Upper Body PT
+att-004,2026-11-11,STAFF,Michael Trainer,trainer_demo_user,07:50:00,16:45:00,535,Biometric,On-Time Shift
+att-005,2026-11-11,MEMBER,Arjun Mehta,MEM-003,17:00:00,18:15:00,75,Biometric,Strength Assessment
+att-006,2026-11-10,STAFF,Michael Trainer,trainer_demo_user,08:00:00,16:30:00,510,Biometric,Shift Completed
+att-007,2026-11-10,MEMBER,Sneha Joshi,MEM-004,08:15:00,09:00:00,45,Manual,Cardio Routine

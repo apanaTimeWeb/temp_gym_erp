@@ -141,7 +141,7 @@ export async function checkOutTrainerAttendance(staffId: string, checkOutTime: s
     body: JSON.stringify({ checkOutTime }),
     headers: { 'Idempotency-Key': idempotencyKey },
   });
-  const response = TrainerInfrastructureApiResponseSchema(z.null()).parse(raw);
+  const response = TrainerInfrastructureApiResponseSchema(z.unknown()).parse(raw);
   return { message: response.message };
 }
 
@@ -156,7 +156,7 @@ export async function selfCheckInTrainerAttendance(staffId: string, idempotencyK
     body: JSON.stringify({ staffId, isSelfCheckIn: true }),
     headers: { 'Idempotency-Key': idempotencyKey },
   });
-  const response = TrainerInfrastructureApiResponseSchema(z.null()).parse(raw);
+  const response = TrainerInfrastructureApiResponseSchema(z.unknown()).parse(raw);
   return { message: response.message };
 }
 

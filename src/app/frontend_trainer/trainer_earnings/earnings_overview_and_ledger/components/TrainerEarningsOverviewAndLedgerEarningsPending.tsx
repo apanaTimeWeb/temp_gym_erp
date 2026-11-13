@@ -1,6 +1,7 @@
 "use client";
 // RESPONSIBILITY: Renders the TrainerEarningsPending UI for the owning Trainer feature; data access remains in the feature API/query layer.
-import { CalendarClock } from 'lucide-react';
+import { CalendarClock, IndianRupee } from 'lucide-react';
+import { useState } from 'react';
 
 import { useLocale, useTranslations } from 'next-intl';
 
@@ -13,14 +14,7 @@ import { TrainerEarningsFormatDate } from '@/app/frontend_trainer/trainer_earnin
 import { TrainerEarningsFormatCurrency } from '@/app/frontend_trainer/trainer_earnings/earnings_overview_and_ledger/utils/TrainerEarningsOverviewAndLedgerEarningsFormatCurrency';
 
 import TrainerInfrastructureSkeletonBlock from '@/app/frontend_trainer/trainer_earnings/earnings_overview_and_ledger/components/TrainerEarningsOverviewAndLedgerTrainerInfrastructureSkeletonBlock';
-
-
-
-
-
-
-
-
+import TrainerEarningsAdvanceModal from './TrainerEarningsAdvanceModal';
 
 /**
  * @description Renders the TrainerEarningsPending UI for the owning Trainer feature; data access remains in the feature API/query layer.
@@ -35,7 +29,8 @@ import TrainerInfrastructureSkeletonBlock from '@/app/frontend_trainer/trainer_e
 export default function TrainerEarningsPending() {
   const t = useTranslations('TRAINER_EARNINGS');
   const locale = useLocale();
-  const { data } = useTrainerEarningsQuery();
+  const { data, refetch } = useTrainerEarningsQuery();
+  const [showAdvanceModal, setShowAdvanceModal] = useState(false);
   const pendingPayouts = data?.pendingPayouts || [];
 
   if (!data) {
@@ -46,6 +41,15 @@ export default function TrainerEarningsPending() {
     <div className="bg-card border border-border rounded-xl overflow-hidden flex flex-col h-full">
       <div className="px-5 py-4 border-b border-border flex items-center justify-between bg-header">
         <h2 className="text-section-title font-semibold text-primary">{t("TEXT_UPCOMING_PAYOUTS")}</h2>
+        <button
+          type="button"
+          onClick={() => setShowAdvanceModal(true)}
+          className="min-h-8 inline-flex items-center gap-1.5 px-3 py-1 bg-primary text-on-primary rounded-lg text-xs font-semibold hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+          data-testid="trainer_earnings-request-advance-button"
+        >
+          <IndianRupee size={13} />
+          Request Advance
+        </button>
       </div>
       <div className="p-5 flex-1 overflow-y-auto custom-scrollbar space-y-4">
         {pendingPayouts.length === 0 ? (
@@ -77,6 +81,12 @@ export default function TrainerEarningsPending() {
           })
         )}
       </div>
+
+      <TrainerEarningsAdvanceModal
+        isOpen={showAdvanceModal}
+        onClose={() => setShowAdvanceModal(false)}
+        onSuccess={() => void refetch()}
+      />
     </div>
   );
 }

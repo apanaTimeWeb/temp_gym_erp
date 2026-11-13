@@ -3,7 +3,7 @@
 // DATA FLOW: props (from TrainerAttendanceMain) → URL state via useTrainerAttendanceFilters setters
 import { useEffect, useState } from 'react';
 
-import { RefreshCw, Search, Calendar as CalendarIcon, List, Plus, LogIn, LogOut, Loader2 } from 'lucide-react';
+import { RefreshCw, Search, Calendar as CalendarIcon, List, Plus, LogIn, LogOut, Loader2, Download } from 'lucide-react';
 
 import { useTranslations } from 'next-intl';
 
@@ -111,6 +111,17 @@ export default function TrainerAttendanceToolbar({
           aria-label={t("TEXT_REFRESH_ATTENDANCE_RECORDS")} data-testid="trainer_attendance-attendance-toolbar_refresh">
           {isRefreshing ? <Loader2 size={18} className="motion-safe:animate-spin"  strokeWidth={2}/> : <RefreshCw size={18} strokeWidth={2} />}
         </button>
+
+        {/* Export Log */}
+        <a
+          href="/__mocks__/trainer/attendance_export.csv"
+          download="trainer_attendance_report.csv"
+          className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 inline-flex items-center justify-center gap-1.5 px-3 py-2 text-sm border border-border rounded-lg hover:bg-input text-primary font-medium motion-safe:transition-colors"
+          data-testid="trainer_attendance-toolbar-export-csv"
+        >
+          <Download size={15} />
+          Export
+        </a>
 
         {/* Self Check-in / Check-out (My Attendance tab only) */}
         {tab === 'MY_ATTENDANCE' && (

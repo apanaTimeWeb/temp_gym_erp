@@ -7,7 +7,7 @@
  */
 // DATA FLOW: page.tsx → useTrainerSessionsMain → Session views/modals.
 import { useState } from 'react';
-import { Calendar as CalendarIcon, CalendarCheck, Check, CheckCircle, Clock, Dumbbell, Loader2, Pencil, Play, Plus, User, Users, X, XCircle } from 'lucide-react';
+import { Calendar as CalendarIcon, CalendarCheck, Check, CheckCircle, Clock, Dumbbell, Loader2, Pencil, Play, Plus, User, Users, X, XCircle, Download } from 'lucide-react';
 
 import { useTranslations } from 'next-intl';
 
@@ -198,6 +198,15 @@ export default function TrainerSessionsMain() {
               <label htmlFor="trainer-sessions-date" className="sr-only ">{t('TEXT_SESSION_DATE')}</label>
               <input id="trainer-sessions-date" type="date" value={date} onChange={(event) => setDate(event.target.value)} className="bg-input border border-border text-primary text-sm rounded-lg px-3 py-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_sessions-trainersessionsmain-input_2" />
             </div>
+            <a
+              href="/__mocks__/trainer/sessions_export.csv"
+              download="trainer_sessions_schedule.csv"
+              className="min-h-11 inline-flex items-center gap-1.5 px-3 py-2 border border-border rounded-lg text-sm font-semibold hover:bg-input text-primary motion-safe:transition-colors"
+              data-testid="trainer_sessions-export-csv"
+            >
+              <Download size={15} />
+              Export
+            </a>
             <button type="button" onClick={() => setShowScheduleModal(true)} className="min-h-11 flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg text-sm font-semibold hover:bg-primary-hover motion-safe:transition-opacity ms-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_sessions-main-schedule"><Plus size={18} strokeWidth={2} />{t('TEXT_SCHEDULE_PT')}</button>
           </div>
         </div>

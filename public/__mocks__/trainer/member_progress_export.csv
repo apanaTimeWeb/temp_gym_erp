@@ -1,0 +1,14 @@
+Member ID,Member Name,Date,Weight (kg),Height (cm),BMI,Body Fat %,Muscle Mass (kg),Chest (cm),Waist (cm),Target Status,Recorded By
+MEM-001,Rahul Sharma,2026-08-01,85.0,175,27.8,24.5,35.2,105,95,Starting Baseline,Michael Trainer
+MEM-001,Rahul Sharma,2026-09-01,83.5,175,27.3,23.0,35.8,103,92,Progressing,Michael Trainer
+MEM-001,Rahul Sharma,2026-10-01,81.0,175,26.4,21.5,36.5,102,89,On Track,Michael Trainer
+MEM-001,Rahul Sharma,2026-11-01,79.2,175,25.9,20.0,37.0,101,86,Goal Achieved,Michael Trainer
+MEM-002,Priya Patel,2026-08-15,65.0,162,24.8,28.0,22.5,90,75,Starting Baseline,Michael Trainer
+MEM-002,Priya Patel,2026-09-15,63.5,162,24.2,26.5,23.0,88,72,On Track,Michael Trainer
+MEM-002,Priya Patel,2026-10-15,62.0,162,23.6,25.0,23.8,87,70,On Track,Michael Trainer
+MEM-003,Arjun Mehta,2026-08-01,92.0,180,28.4,26.0,38.0,110,98,Baseline Assessment,Michael Trainer
+MEM-003,Arjun Mehta,2026-09-01,90.5,180,27.9,24.5,38.8,109,95,Progressing,Michael Trainer
+MEM-003,Arjun Mehta,2026-10-01,88.0,180,27.2,23.0,39.5,108,92,On Track,Michael Trainer
+MEM-004,Sneha Joshi,2026-08-15,55.0,158,22.0,24.0,20.5,86,72,Baseline,Michael Trainer
+MEM-004,Sneha Joshi,2026-09-15,53.8,158,21.5,22.8,21.0,85,70,On Track,Michael Trainer
+MEM-004,Sneha Joshi,2026-10-15,52.4,158,21.0,21.5,21.6,84,68,Goal Met,Michael Trainer

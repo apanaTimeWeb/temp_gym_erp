@@ -138,7 +138,7 @@ export async function checkOutTrainerAttendance(staffId: string, checkOutTime: s
     body: JSON.stringify({ checkOutTime }),
     headers: { 'Idempotency-Key': idempotencyKey },
   });
-  const response = TrainerInfrastructureApiResponseSchema(z.null()).parse(raw);
+  const response = TrainerInfrastructureApiResponseSchema(z.unknown()).parse(raw);
   if (!response.success) {
     const error = Object.assign(new Error(response.message), { errorCode: response.errorCode, statusCode: response.statusCode });
     throw error;
@@ -157,7 +157,7 @@ export async function selfCheckInTrainerAttendance(staffId: string, idempotencyK
     body: JSON.stringify({ staffId, isSelfCheckIn: true }),
     headers: { 'Idempotency-Key': idempotencyKey },
   });
-  const response = TrainerInfrastructureApiResponseSchema(z.null()).parse(raw);
+  const response = TrainerInfrastructureApiResponseSchema(z.unknown()).parse(raw);
   if (!response.success) {
     const error = Object.assign(new Error(response.message), { errorCode: response.errorCode, statusCode: response.statusCode });
     throw error;

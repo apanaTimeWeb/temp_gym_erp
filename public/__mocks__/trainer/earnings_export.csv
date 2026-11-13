@@ -1,0 +1,8 @@
+Date,Invoice Number,Type,Description,Gross Amount (INR),TDS Deducted (INR),Net Payout (INR),Status
+2026-11-12,INV-2026-089,Commission,PT Sessions Commission - November Batch 1,45000.00,2250.00,42750.00,settled
+2026-11-05,INV-2026-077,Base Salary,Monthly Base Remuneration - November,35000.00,1750.00,33250.00,settled
+2026-10-31,INV-2026-065,Commission,October Final PT Performance Bonus,28000.00,1400.00,26600.00,settled
+2026-10-15,INV-2026-052,Commission,PT Sessions Commission - October Batch 2,38000.00,1900.00,36100.00,settled
+2026-10-01,INV-2026-041,Base Salary,Monthly Base Remuneration - October,35000.00,1750.00,33250.00,settled
+2026-09-30,INV-2026-030,Bonus,Quarterly High-Retention Incentive,15000.00,750.00,14250.00,settled
+2026-09-15,INV-2026-019,Commission,PT Sessions Commission - September Batch 2,32000.00,1600.00,30400.00,settled

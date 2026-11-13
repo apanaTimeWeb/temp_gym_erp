@@ -1,6 +1,7 @@
 "use client";
 // RESPONSIBILITY: Dashboard view composition only. Each child owns its own server-state query via the canonical dashboard query key.
 import { useTranslations } from 'next-intl';
+import { MapPin, Award, Users, Percent } from 'lucide-react';
 
 import { useTrainerDashboardQuery } from '@/app/frontend_trainer/trainer_dashboard/dashboard_overview/hooks/useTrainerDashboardOverviewQuery';
 
@@ -71,6 +72,28 @@ export default function TrainerDashboardMain() {
             <p className="text-sm text-secondary mt-1">{t("TEXT_TRAINER_OPERATIONAL_OVERVIEW")}</p>
           </div>
           <TrainerDashboardDateFilterDropdown />
+        </div>
+
+        <div className="flex flex-wrap items-center gap-3 p-3 bg-card border border-border rounded-xl text-xs" data-testid="trainer_dashboard-quota-bar">
+          <div className="flex items-center gap-1.5 font-medium text-secondary">
+            <MapPin size={14} className="text-primary" />
+            <span>Branch: <strong className="text-primary font-semibold">Andheri East</strong></span>
+          </div>
+          <span className="text-border">|</span>
+          <div className="flex items-center gap-1.5 font-medium text-secondary">
+            <Award size={14} className="text-warning" />
+            <span>Tier: <strong className="text-primary font-semibold">Master Trainer (Tier 3)</strong></span>
+          </div>
+          <span className="text-border">|</span>
+          <div className="flex items-center gap-1.5 font-medium text-secondary">
+            <Users size={14} className="text-info" />
+            <span>Capacity Quota: <strong className="text-primary font-semibold">10 / 15 Trainees (67%)</strong></span>
+          </div>
+          <span className="text-border">|</span>
+          <div className="flex items-center gap-1.5 font-medium text-secondary">
+            <Percent size={14} className="text-success" />
+            <span>PT Commission: <strong className="text-success font-semibold">40% Session Retainer</strong></span>
+          </div>
         </div>
         <TrainerDashboardKPIs />
         <div className="grid grid-cols-1 xl:grid-cols-4 gap-5">

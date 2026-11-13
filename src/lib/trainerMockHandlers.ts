@@ -766,6 +766,36 @@ export function handleTrainerMockApiRequest(
   }
 
   // 7. EARNINGS
+  if (trainerPath === 'trainer_earnings/export' || trainerPath === 'earnings/export') {
+    return buildMockSuccess({ downloadUrl: '/__mocks__/trainer/earnings_export.csv', fileName: 'trainer_earnings_statement.csv' }, 'Export generated successfully');
+  }
+
+  if (trainerPath === 'trainer_earnings/advance-request' || trainerPath === 'earnings/advance-request') {
+    if (method === 'POST') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const amount = Number(body.amount) || 1000000;
+        const advanceEntry = {
+          id: `ADV-${Date.now()}`,
+          date: new Date().toISOString().split('T')[0],
+          type: 'Commission' as const,
+          description: body.reason ? `Advance Commission: ${body.reason}` : 'Salary & Commission Advance',
+          amount: amount,
+          currency: 'INR',
+          status: 'settled' as const,
+          tdsDeducted: 0,
+          netPayout: amount,
+          invoiceNumber: `ADV-${Date.now().toString().slice(-4)}`,
+        };
+        TRAINER_EARNINGS_MOCK_EARNINGS_DATA.history.unshift(advanceEntry);
+        TRAINER_EARNINGS_MOCK_EARNINGS_DATA.kpis.pendingPayouts = Math.max(0, TRAINER_EARNINGS_MOCK_EARNINGS_DATA.kpis.pendingPayouts - amount);
+        return buildMockSuccess(advanceEntry, 'Advance request submitted successfully');
+      } catch {
+        return buildMockSuccess(null, 'Advance request processed');
+      }
+    }
+  }
+
   if (trainerPath === 'earnings' || trainerPath === 'trainer_earnings') {
     const page = Math.max(1, Number(searchParams.get('page') || searchParams.get('historyPage') || '1'));
     const limit = Math.max(1, Number(searchParams.get('limit') || searchParams.get('historyLimit') || '10'));
@@ -838,10 +868,15 @@ export function handleTrainerMockApiRequest(
   }
 
   // 8. OPERATIONS - ATTENDANCE
+  if (trainerPath === 'trainer_attendance/export' || trainerPath === 'attendance/export') {
+    return buildMockSuccess({ downloadUrl: '/__mocks__/trainer/attendance_export.csv', fileName: 'trainer_attendance_report.csv' }, 'Export generated successfully');
+  }
+
   if (trainerPath === 'attendance' || trainerPath === 'trainer_attendance') {
     if (method === 'POST') {
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
+        const isStaff = Boolean(body.isSelfCheckIn || body.staffId || body.type === 'STAFF');
         const memberId = String(body.memberId || '');
         const allMembers = [
           ...currentMembers.map((m: any) => ({ id: String(m.id), name: m.name, phone: m.phone || '' })),
@@ -858,28 +893,43 @@ export function handleTrainerMockApiRequest(
           ? (body.checkOut.includes('T') ? body.checkOut : `${dateStr}T${body.checkOut}:00Z`)
           : undefined;
 
+        const staffId = body.staffId || 'trainer_demo_user';
         const newRecord = {
           id: `att_${Date.now()}`,
-          type: (body.type || 'MEMBER') as 'MEMBER' | 'STAFF',
+          type: (isStaff ? 'STAFF' : (body.type || 'MEMBER')) as 'MEMBER' | 'STAFF',
           date: dateStr,
           checkIn: checkInTime,
           checkOut: checkOutTime,
           durationMinutes: checkOutTime ? 60 : undefined,
-          checkInMethod: body.checkInMethod || 'Manual',
-          notes: body.notes || undefined,
-          memberId: matchedMember.id,
-          member: {
-            id: String(matchedMember.id),
-            name: matchedMember.name,
-            phone: matchedMember.phone || undefined,
-          },
+          checkInMethod: body.checkInMethod || (isStaff ? 'Biometric' : 'Manual'),
+          notes: body.notes || (isStaff ? 'Trainer Self Check-in' : undefined),
+          ...(isStaff
+            ? {
+                staffId,
+                staff: {
+                  id: staffId,
+                  name: 'Michael Trainer',
+                },
+              }
+            : {
+                memberId: matchedMember.id,
+                member: {
+                  id: String(matchedMember.id),
+                  name: matchedMember.name,
+                  phone: matchedMember.phone || undefined,
+                },
+              }),
         };
 
         currentAttendance.unshift(newRecord);
         TRAINER_ATTENDANCE_MOCK_STATS.totalCheckIns += 1;
-        TRAINER_ATTENDANCE_MOCK_STATS.memberCheckIns += 1;
+        if (isStaff) {
+          TRAINER_ATTENDANCE_MOCK_STATS.staffCheckIns = (TRAINER_ATTENDANCE_MOCK_STATS.staffCheckIns || 0) + 1;
+        } else {
+          TRAINER_ATTENDANCE_MOCK_STATS.memberCheckIns += 1;
+        }
 
-        return buildMockSuccess(newRecord, 'Attendance check-in recorded');
+        return buildMockSuccess(newRecord, isStaff ? 'Trainer check-in recorded successfully' : 'Attendance check-in recorded');
       } catch (err) {
         return buildMockSuccess(currentAttendance[0], 'Attendance check-in recorded');
       }
@@ -977,12 +1027,15 @@ export function handleTrainerMockApiRequest(
 
   if (trainerPath.startsWith('trainer_attendance/checkout/') || trainerPath.startsWith('attendance/checkout/')) {
     const id = trainerPath.split('/')[2];
-    const rec = currentAttendance.find((r: any) => r.id === id || r.memberId === id || r.staffId === id);
+    const rec = currentAttendance.find((r: any) => (r.id === id || r.memberId === id || r.staffId === id || (id && id.includes('trainer') && r.staffId)) && !r.checkOut)
+      || currentAttendance.find((r: any) => r.id === id || r.memberId === id || r.staffId === id);
     if (rec) {
       rec.checkOut = new Date().toISOString();
       if (rec.checkIn) {
         const diffMs = new Date(rec.checkOut).getTime() - new Date(rec.checkIn).getTime();
         rec.durationMinutes = Math.max(1, Math.round(diffMs / 60000));
+      } else {
+        rec.durationMinutes = 60;
       }
     }
     return buildMockSuccess(null, 'Checkout recorded');

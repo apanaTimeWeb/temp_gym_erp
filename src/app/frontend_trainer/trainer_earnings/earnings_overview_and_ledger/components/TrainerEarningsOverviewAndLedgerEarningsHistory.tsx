@@ -7,7 +7,7 @@
  */
 import { Fragment, useEffect, useState } from 'react';
 
-import { ArrowDown, ArrowUp, ArrowUpDown, Loader2, Search, Receipt } from 'lucide-react';
+import { ArrowDown, ArrowUp, ArrowUpDown, Loader2, Search, Receipt, Download, FileText } from 'lucide-react';
 
 import { useLocale, useTranslations } from 'next-intl';
 
@@ -172,6 +172,24 @@ export default function TrainerEarningsHistory() {
             <label htmlFor="trainer-earnings-history-end-date" className="sr-only ">{t("TEXT_END_DATE_89D10C")}</label>
             <input id="trainer-earnings-history-end-date" type="date" value={endDate} onChange={(event) => handleDateChange('endDate', event.target.value)} className="min-h-11 px-2 bg-input border border-border rounded-lg text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"  data-testid="trainer_earnings-earnings-history_end_date"/>
             
+            <a
+              href="/__mocks__/trainer/earnings_export.csv"
+              download="trainer_earnings_statement.csv"
+              className="min-h-11 inline-flex items-center gap-1.5 px-3 py-2 bg-input hover:bg-input/80 text-primary border border-border rounded-lg text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all"
+              data-testid="trainer_earnings-export-csv-button"
+            >
+              <Download size={14} />
+              CSV
+            </a>
+            <a
+              href="/__mocks__/trainer/earnings_statement.pdf"
+              download="trainer_earnings_statement.pdf"
+              className="min-h-11 inline-flex items-center gap-1.5 px-3 py-2 bg-input hover:bg-input/80 text-primary border border-border rounded-lg text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all"
+              data-testid="trainer_earnings-export-pdf-button"
+            >
+              <FileText size={14} />
+              PDF
+            </a>
           </div>
         </div>
       </div>
