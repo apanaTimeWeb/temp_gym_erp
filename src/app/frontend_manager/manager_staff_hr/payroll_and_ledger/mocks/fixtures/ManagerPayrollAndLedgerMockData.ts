@@ -87,15 +87,21 @@ export function createManagerPayrollAndLedgerFixtureSet(count: number, month = M
   const ledger: LedgerEntry[] = [];
   for (const [index, payroll] of payrolls.entries()) {
     if (payroll.paidAmount > 0) {
-      ledger.push({ id: `ledger-salary-${payroll.staffId}`, staffId: payroll.staffId, date: `${month}-28T10:00:00.000Z`, type: 'Salary Paid', credit: 0, debit: payroll.paidAmount, balance: 0, notes: `${month} salary`, paymentMode: 'Bank Transfer' });
+      ledger.push({ id: `ledger-salary-${payroll.staffId}`, staffId: payroll.staffId, date: `${month}-28T10:00:00.000Z`, type: 'Salary Paid', credit: 0, debit: payroll.paidAmount, balance: 0, notes: `${month} salary payout`, paymentMode: 'Bank Transfer' });
     }
-    if (index % 17 === 0) {
-      ledger.push({ id: `ledger-advance-${payroll.staffId}`, staffId: payroll.staffId, date: `${month}-15T10:00:00.000Z`, type: 'Advance Given', credit: 0, debit: 25000, balance: -25000, notes: 'Fixture advance', paymentMode: 'Bank Transfer' });
+    if (index % 3 === 0) {
+      const advAmount = (index + 1) * 200000; // ₹2,000 to ₹10,000 in paise
+      ledger.push({ id: `ledger-advance-${payroll.staffId}`, staffId: payroll.staffId, date: `${month}-12T10:00:00.000Z`, type: 'Advance Given', credit: 0, debit: advAmount, balance: -advAmount, notes: 'Mid-month staff salary advance', paymentMode: 'Bank Transfer' });
+    }
+    if (index % 4 === 1) {
+      const duePaid = 1500000; // ₹15,000 in paise
+      ledger.push({ id: `ledger-duepaid-${payroll.staffId}`, staffId: payroll.staffId, date: `${month}-05T10:00:00.000Z`, type: 'Due Paid', credit: duePaid, debit: 0, balance: 0, notes: 'Previous month arrears cleared', paymentMode: 'UPI' });
     }
   }
 
   for (const member of staff) {
-    member.currentDue = payrolls.filter((payroll) => payroll.staffId === member.id).reduce((total, payroll) => total + payroll.pendingAmount, 0);
+    const pendingDue = payrolls.filter((payroll) => payroll.staffId === member.id).reduce((total, payroll) => total + payroll.pendingAmount, 0);
+    member.currentDue = pendingDue > 0 ? pendingDue : (staff.indexOf(member) % 3 === 1 ? 1500000 : 0);
     member.advanceSalary = ledger.filter((entry) => entry.staffId === member.id && entry.type === 'Advance Given').reduce((total, entry) => total + entry.debit, 0);
   }
 

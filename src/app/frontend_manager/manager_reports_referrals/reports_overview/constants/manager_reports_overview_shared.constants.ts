@@ -6,7 +6,7 @@ import { MANAGER_REPORTS_OVERVIEW_DATE_RANGE_OPTIONS } from '@/app/frontend_mana
  * @dependencies Only local module configuration and approved framework primitives.
  * @edge-case Preserves loading, empty, error, disabled, retry, and cancellation behavior defined by the owning module contract; does not introduce cross-feature business ownership.
  */
-export const REPORT_TABS = ['Revenue', 'Attendance', 'Members', 'Expenses', 'Trainers'] as const;
+export const REPORT_TABS = ['Revenue', 'Attendance', 'Members', 'Expenses', 'Trainers', 'Benchmarking'] as const;
 
 export const REPORT_DATE_RANGE_OPTIONS = MANAGER_REPORTS_OVERVIEW_DATE_RANGE_OPTIONS;
 

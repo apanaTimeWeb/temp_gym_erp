@@ -7,7 +7,7 @@ import type { Member, MemberStats } from '@/app/frontend_manager/manager_members
  * @edge-case Preserves loading, empty, error, disabled, retry, and cancellation behavior defined by the owning module contract; does not introduce cross-feature business ownership.
  */
 export const MOCK_MEMBER_STATS: MemberStats = {
-  total: 12,
+  total: 14,
   active: 6,
   expired: 2,
   pending: 3 };
@@ -97,6 +97,13 @@ export const MOCK_MEMBERS: Member[] = [
   {
     id: 'm12', name: 'Isha Malhotra', email: 'isha.m@example.com', phone: '+919876543221', status: MANAGER_MEMBERS_DIRECTORY_STATUS_VALUES.ACTIVE, joinDate: '2024-03-11T10:00:00Z', planId: 'p3', branch: 'Main Branch', billingCycle: 'Monthly', createdAt: '2024-03-11T10:00:00Z',
     plan: { id: 'p3', name: 'Monthly Basic', price1Month: 200000, price3Month: 550000, price6Month: 1000000, price12Month: 1800000 }, expiryDate: '2024-06-11T10:00:00Z', paidAmount: 200000, pendingAmount: 0, gender: 'Female'
+  },
+  {
+    id: 'm13', name: 'Kabir Mehra', email: 'kabir.m@example.com', phone: '+919876543222', status: MANAGER_MEMBERS_DIRECTORY_STATUS_VALUES.BANNED, joinDate: '2023-04-10T10:00:00Z', planId: 'p2', branch: 'Main Branch', billingCycle: 'Quarterly', createdAt: '2023-04-10T10:00:00Z',
+    plan: { id: 'p2', name: 'Quarterly Starter', price1Month: 200000, price3Month: 500000, price6Month: 900000, price12Month: 1600000 }, expiryDate: '2023-07-10T10:00:00Z', paidAmount: 500000, pendingAmount: 0, gender: 'Male'
+  },
+  {
+    id: 'm14', name: 'Sameer Sheikh', email: 'sameer.s@example.com', phone: '+919876543223', status: MANAGER_MEMBERS_DIRECTORY_STATUS_VALUES.SUSPENDED, joinDate: '2023-11-05T10:00:00Z', planId: 'p1', branch: 'Main Branch', billingCycle: 'Annual', createdAt: '2023-11-05T10:00:00Z',
+    plan: { id: 'p1', name: 'Annual Pro', price1Month: 150000, price3Month: 400000, price6Month: 750000, price12Month: 1500000 }, expiryDate: '2024-11-05T10:00:00Z', paidAmount: 1500000, pendingAmount: 0, gender: 'Male'
   }
-
 ];

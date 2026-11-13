@@ -281,6 +281,9 @@ export function handleManagerMockApiRequest(
   if (path === 'members/stats') {
     return buildMockSuccess(MOCK_MEMBER_STATS, 'Member stats loaded');
   }
+  if (path === 'members/export') {
+    return buildMockSuccess({ members: MOCK_MEMBERS, total: MOCK_MEMBERS.length }, 'Members exported');
+  }
   if (path === 'members/plans') {
     return buildMockSuccess(MOCK_PLANS, 'Membership plans loaded');
   }
@@ -537,7 +540,20 @@ export function handleManagerMockApiRequest(
     );
   }
   if (path === 'finance/export') {
-    return buildMockSuccess({ url: '#' }, 'Finance export generated');
+    const format = searchParams.get('format') || 'pdf';
+    const downloadUrl = format === 'csv' ? '/__mocks__/manager/finance_export.csv' : '/__mocks__/manager/finance_export.pdf';
+    return buildMockSuccess({ url: downloadUrl }, 'Finance export generated');
+  }
+  if (path === 'export' || path === 'data-export' || path === 'reports/export') {
+    const type = (searchParams.get('type') || 'full_report').toLowerCase();
+    const format = (searchParams.get('format') || 'csv').toLowerCase();
+    let fileUrl = '/__mocks__/manager/reports_export.csv';
+    if (type.includes('member')) fileUrl = '/__mocks__/manager/members_export.csv';
+    else if (type.includes('payment') || type.includes('finance')) fileUrl = format === 'pdf' ? '/__mocks__/manager/finance_export.pdf' : '/__mocks__/manager/finance_export.csv';
+    else if (type.includes('attend')) fileUrl = '/__mocks__/manager/attendance_export.csv';
+    else if (type.includes('staff')) fileUrl = '/__mocks__/manager/staff_export.csv';
+    else if (format === 'pdf') fileUrl = '/__mocks__/manager/finance_export.pdf';
+    return buildMockSuccess({ url: fileUrl, status: 'SUCCESS' }, 'Export generated successfully');
   }
 
   if (path === 'expenses/stats') {
@@ -614,6 +630,18 @@ export function handleManagerMockApiRequest(
     }
     return buildMockSuccess({ staff: hrData.staff, total: hrData.staff.length }, 'Staff list loaded');
   }
+  if (path.startsWith('hr/staff/') && path.endsWith('/attendance')) {
+    const parts = path.split('/');
+    const staffId = parts[2];
+    const month = searchParams.get('month') || new Date().toISOString().slice(0, 7);
+    const records = Array.from({ length: 28 }, (_, i) => ({
+      date: `${month}-${String(i + 1).padStart(2, '0')}`,
+      status: i % 7 === 0 ? 'LEAVE' : (i % 11 === 0 ? 'ABSENT' : 'PRESENT'),
+      checkIn: i % 7 === 0 || i % 11 === 0 ? undefined : '09:00 AM',
+      checkOut: i % 7 === 0 || i % 11 === 0 ? undefined : '06:00 PM',
+    }));
+    return buildMockSuccess({ history: records }, 'Staff attendance history loaded');
+  }
   if (path.startsWith('hr/staff/')) {
     const parts = path.split('/');
     const id = parts[2];
@@ -641,7 +669,26 @@ export function handleManagerMockApiRequest(
   if (path === 'hr/ledger/advance') {
     try {
       const body = options.body ? JSON.parse(options.body as string) : {};
-      return buildMockSuccess({ advanceAmount: Number(body.amount) || 5000 }, 'Advance granted');
+      const amountMajor = Number(body.amount) || 5000;
+      const amountMinor = amountMajor * 100;
+      const staffId = body.staffId || hrData.staff[0]?.id;
+      const staffMember = hrData.staff.find((s) => s.id === staffId);
+      if (staffMember) {
+        staffMember.advanceSalary = (staffMember.advanceSalary || 0) + amountMinor;
+      }
+      const newLedgerEntry = {
+        id: `ledger-adv-${Date.now()}`,
+        staffId: staffId || 'staff-0001',
+        date: new Date().toISOString(),
+        type: 'Advance Given' as const,
+        notes: body.notes || 'Staff salary advance disbursed',
+        credit: 0,
+        debit: amountMinor,
+        balance: staffMember ? -(staffMember.advanceSalary || 0) : -amountMinor,
+        paymentMode: body.paymentMode || 'Cash',
+      };
+      hrData.ledger = [newLedgerEntry, ...hrData.ledger];
+      return buildMockSuccess({ advanceAmount: amountMajor }, 'Advance granted');
     } catch {
       return buildMockSuccess({ advanceAmount: 5000 }, 'Advance granted');
     }
@@ -649,7 +696,26 @@ export function handleManagerMockApiRequest(
   if (path === 'hr/ledger/paydue') {
     try {
       const body = options.body ? JSON.parse(options.body as string) : {};
-      return buildMockSuccess({ paidAmount: Number(body.amount) || 5000 }, 'Due paid');
+      const amountMajor = Number(body.amount) || 5000;
+      const amountMinor = amountMajor * 100;
+      const staffId = body.staffId || hrData.staff[0]?.id;
+      const staffMember = hrData.staff.find((s) => s.id === staffId);
+      if (staffMember) {
+        staffMember.currentDue = Math.max(0, (staffMember.currentDue || 0) - amountMinor);
+      }
+      const newLedgerEntry = {
+        id: `ledger-due-${Date.now()}`,
+        staffId: staffId || 'staff-0001',
+        date: new Date().toISOString(),
+        type: 'Due Paid' as const,
+        notes: body.notes || 'Pending staff dues settled',
+        credit: amountMinor,
+        debit: 0,
+        balance: staffMember?.currentDue || 0,
+        paymentMode: body.paymentMode || 'Bank Transfer',
+      };
+      hrData.ledger = [newLedgerEntry, ...hrData.ledger];
+      return buildMockSuccess({ paidAmount: amountMajor }, 'Due paid');
     } catch {
       return buildMockSuccess({ paidAmount: 5000 }, 'Due paid');
     }
@@ -686,7 +752,15 @@ export function handleManagerMockApiRequest(
     return buildMockSuccess({ payrolls: hrData.payrolls, total: hrData.payrolls.length }, 'Payrolls loaded');
   }
   if (path.startsWith('hr/ledger')) {
-    return buildMockSuccess({ ledger: hrData.ledger, total: hrData.ledger.length }, 'Ledger loaded');
+    const parts = path.split('/');
+    const staffIdParam = parts[2] || searchParams.get('staffId');
+    const filteredLedger = staffIdParam
+      ? hrData.ledger.filter((entry) => entry.staffId === staffIdParam)
+      : hrData.ledger;
+    return buildMockSuccess(
+      { ledger: filteredLedger.length > 0 ? filteredLedger : hrData.ledger, total: filteredLedger.length || hrData.ledger.length },
+      'Ledger loaded'
+    );
   }
   if (path.includes('attendance')) {
     const records = Array.from({ length: 28 }, (_, i) => ({
@@ -1182,6 +1256,19 @@ export function handleManagerMockApiRequest(
           churnRate: 2.1,
           avgAttendanceRate: 68,
         },
+        revenueData: [
+          { month: 'Wk 1', revenue: 3200000, expenses: 500000, profit: 2700000 },
+          { month: 'Wk 2', revenue: 3500000, expenses: 550000, profit: 2950000 },
+          { month: 'Wk 3', revenue: 3600000, expenses: 600000, profit: 3000000 },
+          { month: 'Wk 4', revenue: 3500000, expenses: 550000, profit: 2950000 },
+        ],
+        attendanceData: [
+          { date: 'Mon', present: 165, absent: 35, rate: 82 },
+          { date: 'Tue', present: 155, absent: 45, rate: 77 },
+          { date: 'Wed', present: 170, absent: 30, rate: 85 },
+          { date: 'Thu', present: 145, absent: 55, rate: 72 },
+          { date: 'Fri', present: 180, absent: 20, rate: 90 },
+        ],
       };
     } else if (range === 'last_3_months') {
       summary = {
@@ -1195,6 +1282,37 @@ export function handleManagerMockApiRequest(
           churnRate: 2.4,
           avgAttendanceRate: 67,
         },
+        revenueData: [
+          { month: 'Aug', revenue: 13200000, expenses: 2200000, profit: 11000000 },
+          { month: 'Sep', revenue: 13800000, expenses: 2300000, profit: 11500000 },
+          { month: 'Oct', revenue: 14000000, expenses: 2300000, profit: 11700000 },
+        ],
+        attendanceData: [
+          { date: 'Aug', present: 3900, absent: 900, rate: 81 },
+          { date: 'Sep', present: 4100, absent: 850, rate: 83 },
+          { date: 'Oct', present: 4250, absent: 800, rate: 84 },
+        ],
+      };
+    } else if (range === 'last_6_months' || range === 'monthly') {
+      summary = {
+        ...summary,
+        kpis: {
+          ...summary.kpis,
+          totalRevenue: 82500000,
+          totalExpenses: 1350000,
+          netProfit: 6900000,
+          newMembersThisMonth: 135,
+          churnRate: 2.2,
+          avgAttendanceRate: 69,
+        },
+        revenueData: [
+          { month: 'Jun', revenue: 12500000, expenses: 2100000, profit: 10400000 },
+          { month: 'Jul', revenue: 13000000, expenses: 2200000, profit: 10800000 },
+          { month: 'Aug', revenue: 13500000, expenses: 2200000, profit: 11300000 },
+          { month: 'Sep', revenue: 14200000, expenses: 2300000, profit: 11900000 },
+          { month: 'Oct', revenue: 14500000, expenses: 2350000, profit: 12150000 },
+          { month: 'Nov', revenue: 14800000, expenses: 2350000, profit: 12450000 },
+        ],
       };
     } else if (range === 'this_year' || range === 'yearly') {
       summary = {
@@ -1208,6 +1326,20 @@ export function handleManagerMockApiRequest(
           churnRate: 2.3,
           avgAttendanceRate: 66,
         },
+        revenueData: [
+          { month: 'Jan', revenue: 11000000, expenses: 2000000, profit: 9000000 },
+          { month: 'Feb', revenue: 11500000, expenses: 2200000, profit: 9300000 },
+          { month: 'Mar', revenue: 12000000, expenses: 2100000, profit: 9900000 },
+          { month: 'Apr', revenue: 12800000, expenses: 2300000, profit: 10500000 },
+          { month: 'May', revenue: 13200000, expenses: 2250000, profit: 10950000 },
+          { month: 'Jun', revenue: 13500000, expenses: 2300000, profit: 11200000 },
+          { month: 'Jul', revenue: 13800000, expenses: 2350000, profit: 11450000 },
+          { month: 'Aug', revenue: 14200000, expenses: 2400000, profit: 11800000 },
+          { month: 'Sep', revenue: 14500000, expenses: 2400000, profit: 12100000 },
+          { month: 'Oct', revenue: 15000000, expenses: 2450000, profit: 12550000 },
+          { month: 'Nov', revenue: 15400000, expenses: 2500000, profit: 12900000 },
+          { month: 'Dec', revenue: 15800000, expenses: 2500000, profit: 13300000 },
+        ],
       };
     }
     return buildMockSuccess(summary, 'Reports summary loaded');

@@ -1,6 +1,6 @@
 // RESPONSIBILITY: All TypeScript types for the Manager Reports module.
 
-export type ReportTab = 'Revenue' | 'Attendance' | 'Members' | 'Expenses' | 'Trainers';
+export type ReportTab = 'Revenue' | 'Attendance' | 'Members' | 'Expenses' | 'Trainers' | 'Benchmarking';
 
 export interface TrainerPerformanceItem {
   id: string;

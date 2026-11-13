@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Search, RefreshCw, Plus, Download, Calendar } from 'lucide-react';
+import { Search, RefreshCw, Plus, Download, Calendar, ShieldAlert } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import ManagerSearchableDropdown from '@/components/ui/manager_searchable_dropdown/ManagerSearchableDropdown';
@@ -92,6 +92,21 @@ export default function ManagerMembersDirectoryToolbar() {
           options={MEMBER_STATUS_OPTIONS.map((option) => ({ ...option, label: t(option.labelKey) }))}
           placeholder={t("COPY_FILTER_STATUS")}
          data-testid="manager_members-managermemberstoolbar-searchable-dropdown-1"/>
+        {/* Blacklist / Suspended Quick Filter Button */}
+        <button
+          type="button"
+          onClick={() => setStatusFilter(statusFilter === 'SUSPENDED' ? 'All' : 'SUSPENDED')}
+          data-testid="manager_members-toolbar-blacklist-toggle"
+          className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold border transition-all ${
+            statusFilter === 'SUSPENDED' || statusFilter === 'BANNED'
+              ? 'bg-danger text-on-danger border-danger shadow-sm'
+              : 'bg-danger-bg text-danger-text border-danger/30 hover:border-danger'
+          }`}
+          aria-label="Filter blacklisted or suspended members"
+        >
+          <ShieldAlert size={15} strokeWidth={2.2} />
+          <span>Blacklisted (3)</span>
+        </button>
         {/* Gender filter — CRITICAL FIX */}
         <ManagerSearchableDropdown dataTestId="manager_members-managermemberstoolbar-managersearchabledropdown-2"
           value={genderFilter}

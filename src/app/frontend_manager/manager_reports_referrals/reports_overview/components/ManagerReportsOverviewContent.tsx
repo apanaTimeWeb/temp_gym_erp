@@ -1,12 +1,14 @@
 // RESPONSIBILITY: Renders ManagerReportsOverviewContent's feature UI and orchestrates presentation through module-owned state/hooks; it does not own API transport or business rules.
 'use client';
-import { RefreshCw } from 'lucide-react';
+import { useState } from 'react';
+import { RefreshCw, Download } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import ManagerReportsOverviewCharts from '@/app/frontend_manager/manager_reports_referrals/reports_overview/components/ManagerReportsOverviewCharts';
 import ManagerReportsOverviewDateFilterDropdown from '@/app/frontend_manager/manager_reports_referrals/reports_overview/components/ManagerReportsOverviewDateFilterDropdown';
 import ManagerReportsOverviewKPIs from '@/app/frontend_manager/manager_reports_referrals/reports_overview/components/ManagerReportsOverviewKPIs';
 import ManagerReportsOverviewTable from '@/app/frontend_manager/manager_reports_referrals/reports_overview/components/ManagerReportsOverviewTable';
+import ManagerReportsOverviewExportModal from '@/app/frontend_manager/manager_reports_referrals/reports_overview/components/ManagerReportsOverviewExportModal';
 import { REPORT_TABS } from '@/app/frontend_manager/manager_reports_referrals/reports_overview/constants/manager_reports_overview_shared.constants';
 import { useManagerReportsOverviewLogic } from '@/app/frontend_manager/manager_reports_referrals/reports_overview/hooks/useManagerReportsOverviewLogic';
 import type { ReportTab } from '@/app/frontend_manager/manager_reports_referrals/reports_overview/types/manager_reports_overview.types';
@@ -17,6 +19,7 @@ const REPORT_TAB_LABELS: Record<ReportTab, { en: string; hi: string }> = {
   Members: { en: 'Members', hi: 'सदस्य' },
   Expenses: { en: 'Expenses', hi: 'खर्च' },
   Trainers: { en: 'Trainer Performance', hi: 'ट्रेनर प्रदर्शन' },
+  Benchmarking: { en: 'Gym Benchmarking', hi: 'जिम बेंचमार्किंग' },
 };
 
 /** @description Renders the Manager Reports overview with consistent query states and accessible report navigation. */
@@ -24,6 +27,7 @@ export function ManagerReportsOverviewContent() {
   const t = useTranslations('MANAGER_REPORTS_OVERVIEW');
   const locale = useLocale();
   const { tab, setTab, isPending, isError, reload } = useManagerReportsOverviewLogic();
+  const [showExportModal, setShowExportModal] = useState<boolean>(false);
   const isHindi = locale.toLowerCase().startsWith('hi');
   const activeTabId = `manager-reports-tab-${tab.toLowerCase()}`;
 
@@ -34,7 +38,7 @@ export function ManagerReportsOverviewContent() {
           <h1 className="text-2xl font-bold text-text-primary">{t('COPY_REPORTS_ANALYTICS')}</h1>
         </div>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <div className="flex gap-1 bg-input rounded-xl p-1" role="tablist" aria-label={t('COPY_REPORTS_ANALYTICS')}>
+          <div className="flex gap-1 bg-input rounded-xl p-1 overflow-x-auto" role="tablist" aria-label={t('COPY_REPORTS_ANALYTICS')}>
             {REPORT_TABS.map((reportTab) => {
               const selected = tab === reportTab;
               const tabId = `manager-reports-tab-${reportTab.toLowerCase()}`;
@@ -58,11 +62,11 @@ export function ManagerReportsOverviewContent() {
                     else return;
                     event.preventDefault();
                     const nextTab = REPORT_TABS[nextIndex] ?? REPORT_TABS[0];
-                    const nextElement = event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>('[role=\"tab\"]')[nextIndex];
+                    const nextElement = event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>('[role="tab"]')[nextIndex];
                     nextElement?.focus();
                     setTab(nextTab);
                   }}
-                  className={`min-h-11 px-4 py-2 text-sm font-medium rounded-lg motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page hover:brightness-110 ${selected ? 'bg-card text-primary shadow-card' : 'text-text-secondary hover:text-primary'}`}
+                  className={`min-h-11 px-4 py-2 text-sm font-medium rounded-lg motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page hover:brightness-110 whitespace-nowrap ${selected ? 'bg-card text-primary shadow-card' : 'text-text-secondary hover:text-primary'}`}
                 >
                   {REPORT_TAB_LABELS[reportTab][isHindi ? 'hi' : 'en']}
                 </button>
@@ -74,6 +78,15 @@ export function ManagerReportsOverviewContent() {
             <div className="w-48 min-h-11">
               <ManagerReportsOverviewDateFilterDropdown data-testid="manager_reports-managerreportscontent-reports-date-filter-dropdown-1" />
             </div>
+            <button
+              onClick={() => setShowExportModal(true)}
+              aria-label="Export Reports"
+              className="min-h-11 flex items-center justify-center gap-2 px-4 text-sm font-semibold rounded-lg bg-primary text-on-primary shadow-sm motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"
+              type="button"
+            >
+              <Download size={18} strokeWidth={2} />
+              <span>Export</span>
+            </button>
             <button
               data-testid="manager_reports-manager-reports-content-reload-1"
               onClick={() => void reload()}
@@ -117,6 +130,10 @@ export function ManagerReportsOverviewContent() {
           )}
         </div>
       </div>
+      <ManagerReportsOverviewExportModal
+        isOpen={showExportModal}
+        onClose={() => setShowExportModal(false)}
+      />
     </div>
   );
 }

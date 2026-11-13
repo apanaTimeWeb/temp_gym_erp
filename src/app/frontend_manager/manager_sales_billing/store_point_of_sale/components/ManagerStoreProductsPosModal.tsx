@@ -1,8 +1,8 @@
 // RESPONSIBILITY: Renders ManagerStoreProductsPosModal's feature UI and orchestrates presentation through module-owned state/hooks; it does not own API transport or business rules.
 'use client';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useManagerInfrastructureDialogFocusTrap } from '@/app/frontend_manager/manager_infrastructure/hooks/useManagerInfrastructureDialogFocusTrap';
-import { Loader2, X, Printer, Plus, Minus, Send } from 'lucide-react';
+import { Loader2, X, Printer, Plus, Minus, Send, Tag, Check } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 
 import ManagerSearchableDropdown from '@/components/ui/manager_searchable_dropdown/ManagerSearchableDropdown';
@@ -15,7 +15,7 @@ import { useManagerStoreProductsLogic } from '@/app/frontend_manager/manager_sal
 import { ManagerStoreProductsFormatCurrency } from '@/app/frontend_manager/manager_sales_billing/store_point_of_sale/utils/ManagerStoreProductsFormatters';
 
 
-/** @description Renders the ManagerStoreProductsPosModal component for its owning Manager frontend boundary. @dependencies Local dependencies are owned by this feature module (5 documented module/import dependencies).. @edge-case Preserves modal lifecycle. */
+/** @description Renders the ManagerStoreProductsPosModal component for its owning Manager frontend boundary. */
 export default function ManagerStoreProductsPosModal() {
   const t = useTranslations('MANAGER_STORE_PRODUCTS');
   const locale = useLocale();
@@ -28,6 +28,41 @@ export default function ManagerStoreProductsPosModal() {
  customerPhone, setCustomerPhone, sendViaWhatsapp, setSendViaWhatsapp,
  saving, placeOrder 
  } = useManagerStoreProductsLogic();
+
+  const [couponCode, setCouponCode] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
+  const [couponDiscount, setCouponDiscount] = useState<number>(0);
+  const [couponError, setCouponError] = useState<string>('');
+
+  const handleApplyCoupon = () => {
+    setCouponError('');
+    const code = couponCode.trim().toUpperCase();
+    if (!code) return;
+    if (code === 'WELCOME10') {
+      const discount = Math.round(orderTotal * 0.1);
+      setAppliedCoupon('WELCOME10 (10% OFF)');
+      setCouponDiscount(discount);
+    } else if (code === 'FIT20') {
+      const discount = Math.round(orderTotal * 0.2);
+      setAppliedCoupon('FIT20 (20% OFF)');
+      setCouponDiscount(discount);
+    } else if (code === 'FLAT500') {
+      const discount = Math.min(orderTotal, 50000);
+      setAppliedCoupon('FLAT500 (₹500 OFF)');
+      setCouponDiscount(discount);
+    } else {
+      setCouponError('Invalid coupon. Try WELCOME10, FIT20, or FLAT500');
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponDiscount(0);
+    setCouponCode('');
+    setCouponError('');
+  };
+
+  const finalTotal = Math.max(0, orderTotal - couponDiscount);
   const dialogRef = useRef<HTMLDivElement>(null);
   useManagerInfrastructureDialogFocusTrap({ dialogRef, isOpen: showOrderModal, onClose: closeOrderModal });
 
@@ -115,10 +150,66 @@ export default function ManagerStoreProductsPosModal() {
  ))}
  </div>
  
- <div className="mt-4 pt-4 border-t border-border">
+ {/* Coupon Code Section */}
+ <div className="mt-4 pt-3 border-t border-border space-y-2">
+   <div className="flex items-center gap-1.5 text-xs font-semibold text-text-secondary uppercase">
+     <Tag size={13} className="text-primary" />
+     <span>Apply Coupon Code</span>
+   </div>
+   {!appliedCoupon ? (
+     <div className="flex gap-2">
+       <input
+         type="text"
+         value={couponCode}
+         onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+         placeholder="WELCOME10, FIT20, FLAT500"
+         className="flex-1 px-3 py-1.5 text-xs bg-input border border-border rounded-lg text-text-primary uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+       />
+       <button
+         type="button"
+         onClick={handleApplyCoupon}
+         disabled={!couponCode.trim()}
+         className="px-3 py-1.5 text-xs font-semibold bg-primary text-on-primary rounded-lg hover:brightness-110 disabled:opacity-50 transition-all"
+       >
+         Apply
+       </button>
+     </div>
+   ) : (
+     <div className="flex items-center justify-between p-2 bg-success-bg/20 border border-success/30 rounded-lg text-xs">
+       <div className="flex items-center gap-1.5 text-success-text font-semibold">
+         <Check size={14} />
+         <span>{appliedCoupon}</span>
+       </div>
+       <button
+         type="button"
+         onClick={handleRemoveCoupon}
+         className="text-text-secondary hover:text-danger-text text-xs underline"
+       >
+         Remove
+       </button>
+     </div>
+   )}
+   {couponError && (
+     <p className="text-[11px] text-danger-text">{couponError}</p>
+   )}
+ </div>
+
+ <div className="mt-4 pt-3 border-t border-border space-y-1.5">
+ {couponDiscount > 0 && (
+   <>
+     <div className="flex justify-between text-xs text-text-secondary">
+       <span>Subtotal</span>
+       <span>{ManagerStoreProductsFormatCurrency(orderTotal, ManagerEnvConfig.currencyCode, locale)}</span>
+     </div>
+     <div className="flex justify-between text-xs text-success-text font-semibold">
+       <span>Coupon Discount</span>
+       <span>-{ManagerStoreProductsFormatCurrency(couponDiscount, ManagerEnvConfig.currencyCode, locale)}</span>
+     </div>
+   </>
+ )}
  <div className="flex justify-between mb-3">
  <span className="font-semibold text-text-primary">{t("COPY_TOTAL_1")}</span>
- <span className="font-bold text-lg text-success-text ">{ManagerStoreProductsFormatCurrency(orderTotal, ManagerEnvConfig.currencyCode, locale)}</span>
+ <span className="font-bold text-lg text-success-text ">{ManagerStoreProductsFormatCurrency(finalTotal, ManagerEnvConfig.currencyCode, locale)}</span>
  </div>
  
  <ManagerSearchableDropdown dataTestId="manager_store-managerstoreposmodal-managersearchabledropdown-2"

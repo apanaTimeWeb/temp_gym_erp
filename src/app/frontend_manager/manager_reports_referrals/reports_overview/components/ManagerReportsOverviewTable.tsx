@@ -7,16 +7,19 @@ import { ManagerReportsOverviewExpensesTable } from '@/app/frontend_manager/mana
 import { ManagerReportsOverviewMembersTable } from '@/app/frontend_manager/manager_reports_referrals/reports_overview/components/ManagerReportsOverviewMembersTable';
 import { ManagerReportsOverviewRevenueTable } from '@/app/frontend_manager/manager_reports_referrals/reports_overview/components/ManagerReportsOverviewRevenueTable';
 import { ManagerReportsOverviewTrainersTable } from '@/app/frontend_manager/manager_reports_referrals/reports_overview/components/ManagerReportsOverviewTrainersTable';
+import { ManagerReportsOverviewBenchmarkingTable } from '@/app/frontend_manager/manager_reports_referrals/reports_overview/components/ManagerReportsOverviewBenchmarkingTable';
 import { useManagerReportsOverviewLogic } from '@/app/frontend_manager/manager_reports_referrals/reports_overview/hooks/useManagerReportsOverviewLogic';
 
-
-
-/** @description Renders the ManagerReportsOverviewTable component for its owning Manager frontend boundary. @dependencies Local dependencies are owned by this feature module (5 documented module/import dependencies).. @edge-case Preserves the documented interaction and boundary states. */
+/** @description Renders the ManagerReportsOverviewTable component for its owning Manager frontend boundary. */
 export default function ManagerReportsOverviewTable() {
   const t = useTranslations('MANAGER_REPORTS_OVERVIEW');
 
   const { tab, summary } = useManagerReportsOverviewLogic();
   if (!summary) return null;
+
+  if (tab === 'Benchmarking') {
+    return <ManagerReportsOverviewBenchmarkingTable />;
+  }
 
   return (
     <div className="bg-card border border-border rounded-xl overflow-hidden shadow-card">

@@ -22,6 +22,7 @@ export const MANAGER_BUSINESS_SETTINGS_TABS: ReadonlyArray<{ id: SettingsTab; la
   { id: 'region', label: 'Region & Notifications', labelKey: 'TEXT_TAB_REGION' },
   { id: 'gym_profile', label: 'Gym Profile', labelKey: 'TEXT_TAB_GYM_PROFILE' },
   { id: 'operating_hours', label: 'Operating Hours', labelKey: 'TEXT_TAB_OPERATING_HOURS' },
+  { id: 'subscription', label: 'SaaS Subscription & Quota', labelKey: 'TEXT_TAB_SUBSCRIPTION' },
 ];
 
 export const MANAGER_BUSINESS_SETTINGS_WEEKDAY_VALUES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as const;
