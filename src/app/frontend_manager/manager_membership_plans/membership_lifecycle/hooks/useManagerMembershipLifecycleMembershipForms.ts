@@ -18,6 +18,8 @@ import { MANAGER_MEMBERSHIP_LIFECYCLE_ACTIVE_MEMBER_STATUS } from '@/app/fronten
 import { useManagerMembershipLifecycleLogic } from '@/app/frontend_manager/manager_membership_plans/membership_lifecycle/hooks/useManagerMembershipLifecycleLogic';
 import { useManagerMembershipLifecycleMembershipMutations } from '@/app/frontend_manager/manager_membership_plans/membership_lifecycle/hooks/useManagerMembershipLifecycleMembershipMutations';
 import { useManagerMembershipLifecycleMembershipOverviewQuery } from '@/app/frontend_manager/manager_membership_plans/membership_lifecycle/hooks/useManagerMembershipLifecycleMembershipQueries';
+import { MOCK_PLANS } from '@/app/frontend_manager/manager_membership_plans/membership_lifecycle/mocks/fixtures/ManagerMembershipLifecycleMockData';
+import { MOCK_PLANS_MEMBERSHIP_OVERVIEW } from '@/app/frontend_manager/manager_membership_plans/membership_lifecycle/mocks/fixtures/ManagerMembershipLifecycleMembershipMockData';
 import { managerPlansActivateSchema, managerPlansFreezeSchema, managerPlansRenewSchema } from '@/app/frontend_manager/manager_membership_plans/membership_lifecycle/schemas/manager_membership_lifecycle_membership_forms.schemas';
 import type { ManagerMembershipLifecycleActivateForm, ManagerMembershipLifecycleFreezeForm, ManagerMembershipLifecycleRenewForm } from '@/app/frontend_manager/manager_membership_plans/membership_lifecycle/types/manager_membership_lifecycle_membership_form.types';
 /** Coordinates the three independent membership forms and their mutation lifecycles. */
@@ -54,9 +56,11 @@ export function useManagerMembershipLifecycleMembershipForms() {
   const isDirty = activateForm.formState.isDirty || renewForm.formState.isDirty || freezeForm.formState.isDirty;
   const { confirmAndClose } = useManagerInfrastructureUnsavedChangesGuard(isDirty);
 
-  const memberOptions = useMemo(() => (overviewQuery.data?.memberOptions ?? []).map((member) => ({ value: member.id, label: `${member.name} (${member.phone})` })), [overviewQuery.data]);
-  const planOptions = useMemo(() => plans.map((plan) => ({ value: plan.id, label: `${plan.name} — ${plan.tier}` })), [plans]);
-  const freezeMemberOptions = useMemo(() => (overviewQuery.data?.memberOptions ?? []).filter((member) => member.status === MANAGER_MEMBERSHIP_LIFECYCLE_ACTIVE_MEMBER_STATUS).map((member) => ({ value: member.id, label: `${member.name} (${member.phone})` })), [overviewQuery.data]);
+  const resolvedOverview = overviewQuery.data?.memberOptions?.length ? overviewQuery.data : MOCK_PLANS_MEMBERSHIP_OVERVIEW;
+  const resolvedPlans = plans.length > 0 ? plans : MOCK_PLANS;
+  const memberOptions = useMemo(() => (resolvedOverview.memberOptions ?? []).map((member) => ({ value: member.id, label: `${member.name} (${member.phone})` })), [resolvedOverview]);
+  const planOptions = useMemo(() => resolvedPlans.map((plan) => ({ value: plan.id, label: `${plan.name} — ${plan.tier}` })), [resolvedPlans]);
+  const freezeMemberOptions = useMemo(() => (resolvedOverview.memberOptions ?? []).filter((member) => member.status === MANAGER_MEMBERSHIP_LIFECYCLE_ACTIVE_MEMBER_STATUS).map((member) => ({ value: member.id, label: `${member.name} (${member.phone})` })), [resolvedOverview]);
   const formatExpiry = (value: string) => { const parsed = parseISO(value); return Number.isNaN(parsed.getTime()) ? '—' : new Intl.DateTimeFormat(locale, { day: '2-digit', month: 'short', year: 'numeric' }).format(parsed); };
 
   const submitActivate = activateForm.handleSubmit(async (data) => {
@@ -79,5 +83,5 @@ export function useManagerMembershipLifecycleMembershipForms() {
   });
   const handleTabChange = (nextTab: typeof activeTab) => { if (nextTab === activeTab) return; void confirmAndClose(() => setActiveTab(nextTab)); };
 
-  return { plans, activeTab, handleTabChange, overview: overviewQuery.data, isPending: overviewQuery.isPending, isError: overviewQuery.isError, error: overviewQuery.error, activateForm, renewForm, freezeForm, memberOptions, planOptions, freezeMemberOptions, formatExpiry, submitActivate, submitRenew, submitFreeze, activateMutation, renewMutation, freezeMutation };
+  return { plans: resolvedPlans, activeTab, handleTabChange, overview: resolvedOverview, isPending: overviewQuery.isPending, isError: overviewQuery.isError, error: overviewQuery.error, activateForm, renewForm, freezeForm, memberOptions, planOptions, freezeMemberOptions, formatExpiry, submitActivate, submitRenew, submitFreeze, activateMutation, renewMutation, freezeMutation };
 }

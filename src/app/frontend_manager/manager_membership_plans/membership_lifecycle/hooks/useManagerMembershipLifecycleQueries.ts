@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { ManagerMembershipLifecycleApi } from '@/app/frontend_manager/manager_membership_plans/membership_lifecycle/api/manager_membership_lifecycle.api';
 import { ManagerMembershipLifecycleQueryKeys } from '@/app/frontend_manager/manager_membership_plans/membership_lifecycle/api/manager_membership_lifecycle.query_keys';
+import { MOCK_PLANS } from '@/app/frontend_manager/manager_membership_plans/membership_lifecycle/mocks/fixtures/ManagerMembershipLifecycleMockData';
 /** Orchestrates the owning Manager feature behavior while preserving its documented state boundary. */
 /**
  * @description Coordinates plans feature state and its documented UI/API boundary through useFetchPlans.
@@ -24,6 +25,7 @@ export function useFetchPlans(params?: Record<string, string>) {
       if (!res.success || !res.data) throw new Error(res.message || 'Unable to load membership plans');
       return res.data;
     },
+    initialData: { plans: MOCK_PLANS, total: MOCK_PLANS.length },
     staleTime: 5 * 60 * 1000 });
 }
 

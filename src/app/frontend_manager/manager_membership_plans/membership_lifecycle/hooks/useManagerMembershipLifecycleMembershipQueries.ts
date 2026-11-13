@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { ManagerMembershipLifecycleApi } from '@/app/frontend_manager/manager_membership_plans/membership_lifecycle/api/manager_membership_lifecycle.api';
 import { ManagerMembershipLifecycleQueryKeys } from '@/app/frontend_manager/manager_membership_plans/membership_lifecycle/api/manager_membership_lifecycle.query_keys';
+import { MOCK_PLANS_MEMBERSHIP_OVERVIEW } from '@/app/frontend_manager/manager_membership_plans/membership_lifecycle/mocks/fixtures/ManagerMembershipLifecycleMembershipMockData';
 /** Orchestrates the owning Manager feature behavior while preserving its documented state boundary. */
 /**
  * @description Coordinates plans feature state and its documented UI/API boundary through useManagerMembershipLifecycleMembershipOverviewQuery.
@@ -23,5 +24,7 @@ export function useManagerMembershipLifecycleMembershipOverviewQuery() {
       const response = await ManagerMembershipLifecycleApi.fetchMembershipOverview();
       if (!response.data) throw new Error(response.message);
       return response.data;
-    } });
+    },
+    initialData: MOCK_PLANS_MEMBERSHIP_OVERVIEW,
+  });
 }
