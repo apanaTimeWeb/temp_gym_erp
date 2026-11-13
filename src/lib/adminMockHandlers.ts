@@ -1,4 +1,5 @@
 import type { ApiResponse } from '@/lib/api';
+import type { Staff } from '@/app/frontend_admin/admin_hr/hr_staff_management/types/AdminHrStaffManagementTypes';
 
 // Admin Fixture Imports
 import { getAdminDashboardFixture } from '@/app/frontend_admin/admin_dashboard/dashboard_overview/mocks/fixtures/AdminDashboardOverviewMockFixtures';
@@ -63,6 +64,9 @@ let currentAdminLedger = structuredClone(MOCK_ADMIN_LEDGER);
 let currentAdminPermissionOverrides = structuredClone(MOCK_ADMIN_PERMISSION_OVERRIDES);
 let currentAdminNotifications = [...MOCK_ADMIN_NOTIFICATIONS];
 let currentAdminPendingPayments = [...MOCK_ADMIN_PENDING_PAYMENTS];
+let currentAdminPlans = structuredClone(MOCK_ADMIN_PLANS);
+let currentAdminProfile = structuredClone(MOCK_ADMIN_PROFILE);
+let currentAdminSettings = structuredClone(MOCK_ADMIN_SETTINGS);
 
 export function handleAdminMockApiRequest(
   urlPath: string,
@@ -130,10 +134,16 @@ export function handleAdminMockApiRequest(
     });
   }
 
-  if (urlPath.startsWith('/admin/members/')) {
+  if (urlPath === '/admin/members/export' || urlPath.startsWith('/admin/members/')) {
     const memberId = urlPath.replace('/admin/members/', '');
-    if (memberId === 'export') {
-      return buildMockSuccess('id,name,email,phone\nm1,Rahul,rahul@example.com,9876543210', 'Member export ready');
+    if (urlPath === '/admin/members/export' || memberId === 'export') {
+      const csvRows = [
+        'id,name,email,phone,branchName,planName,status,joinDate',
+        ...MOCK_ADMIN_MEMBERS_EXPANDED.map(
+          (m) => `${m.id},"${m.name}",${m.email},"${m.phone}","${m.branchName || 'Andheri East'}","${m.planName || 'Gold'}","${m.status}","${m.joinDate || '2026-01-15'}"`
+        ),
+      ];
+      return buildMockSuccess(csvRows.join('\n'), 'Member export ready');
     }
     const member = MOCK_ADMIN_MEMBERS_EXPANDED.find((m) => m.id === memberId) || MOCK_ADMIN_MEMBERS_EXPANDED[0];
     return buildMockSuccess(member, 'Member retrieved');
@@ -508,6 +518,17 @@ export function handleAdminMockApiRequest(
       hasPrevPage: safePage > 1,
     });
   }
+  if (urlPath === '/admin/finance/pending-dues') {
+    return buildMockSuccess({
+      dues: [
+        { id: 'due_1', memberName: 'Rahul Verma', phone: '9876543210', amount: 3500, dueDate: '2026-11-20', plan: 'Gold Annual', branchName: 'Andheri East' },
+        { id: 'due_2', memberName: 'Simran Kaur', phone: '9876543211', amount: 1500, dueDate: '2026-11-22', plan: 'Silver Pro', branchName: 'Bandra West' },
+        { id: 'due_3', memberName: 'Amit Shah', phone: '9876543212', amount: 2000, dueDate: '2026-11-25', plan: 'Quarterly Flex', branchName: 'Powai' },
+      ],
+      totalPendingAmount: 7000,
+      count: 3,
+    });
+  }
   if (urlPath === '/admin/finance/summary') {
     const range = searchParams.get('range');
     let summary = { ...MOCK_ADMIN_FINANCE_SUMMARY };
@@ -594,7 +615,39 @@ export function handleAdminMockApiRequest(
     if (urlPath.endsWith('/ledger')) {
       return buildMockSuccess(currentAdminLedger);
     }
+    if (urlPath === '/admin/hr/staff/bulk-deactivate') {
+      let body: any = {};
+      try { body = typeof options?.body === 'string' ? JSON.parse(options.body) : {}; } catch {}
+      const ids: string[] = Array.isArray(body.ids) ? body.ids : [];
+      currentAdminStaff.forEach((s) => {
+        if (ids.includes(s.id)) {
+          s.isActive = false;
+        }
+      });
+      return buildMockSuccess(null, 'Staff members deactivated successfully');
+    }
     if (urlPath === '/admin/hr/staff') {
+      if (method === 'POST') {
+        let body: any = {};
+        try { body = typeof options?.body === 'string' ? JSON.parse(options.body) : {}; } catch {}
+        const newStaff: Staff = {
+          id: `staff_${Date.now()}`,
+          name: body.name || 'New Staff Member',
+          role: body.role || 'Trainer',
+          email: body.email || 'staff@smartgym.com',
+          phone: body.phone || '9876543210',
+          branch: body.branch || 'Andheri East',
+          gender: body.gender || 'Male',
+          salary: Number(body.salary) || 30000,
+          isActive: body.isActive !== undefined ? body.isActive : true,
+          joinDate: new Date().toISOString().slice(0, 10),
+          department: body.department || 'Fitness',
+          ...body,
+        };
+        currentAdminStaff.unshift(newStaff);
+        return buildMockSuccess(newStaff, 'Staff created successfully');
+      }
+
       const page = parseInt(searchParams.get('page') || '1', 10) || 1;
       const limit = parseInt(searchParams.get('limit') || '10', 10) || 10;
       const totalPages = Math.max(1, Math.ceil(currentAdminStaff.length / limit));
@@ -613,7 +666,22 @@ export function handleAdminMockApiRequest(
         hasPrevPage: safePage > 1,
       });
     }
+
     const staffId = urlPath.replace('/admin/hr/staff/', '');
+    if (method === 'PATCH') {
+      let body: any = {};
+      try { body = typeof options?.body === 'string' ? JSON.parse(options.body) : {}; } catch {}
+      const idx = currentAdminStaff.findIndex((s) => s.id === staffId);
+      if (idx !== -1) {
+        currentAdminStaff[idx] = { ...currentAdminStaff[idx], ...body };
+        return buildMockSuccess(currentAdminStaff[idx], 'Staff updated successfully');
+      }
+      return buildMockSuccess(currentAdminStaff[0], 'Staff updated');
+    }
+    if (method === 'DELETE') {
+      currentAdminStaff = currentAdminStaff.filter((s) => s.id !== staffId);
+      return buildMockSuccess(null, 'Staff deleted successfully');
+    }
     const found = currentAdminStaff.find((s) => s.id === staffId) || currentAdminStaff[0];
     return buildMockSuccess(found);
   }
@@ -692,7 +760,50 @@ export function handleAdminMockApiRequest(
 
   // 11. Plans & Coupons Catalog
   if (urlPath === '/admin/plans/fetchAllPlans' || urlPath === '/admin/plans') {
-    return buildMockSuccess(MOCK_ADMIN_PLANS);
+    return buildMockSuccess(currentAdminPlans);
+  }
+  if (urlPath === '/admin/plans/fetchPlanById') {
+    const id = searchParams.get('id');
+    const found = currentAdminPlans.find((p) => p.id === id) || currentAdminPlans[0];
+    return buildMockSuccess(found);
+  }
+  if (urlPath === '/admin/plans/createPlan') {
+    let body: any = {};
+    try { body = typeof options?.body === 'string' ? JSON.parse(options.body) : {}; } catch {}
+    const newPlan: any = {
+      id: `p_${Date.now()}`,
+      name: body.name || 'New Membership Plan',
+      tier: body.tier || 'Silver',
+      price1Month: Number(body.price1Month) || 1500,
+      price3Month: Number(body.price3Month) || 4000,
+      price6Month: Number(body.price6Month) || 7500,
+      price12Month: Number(body.price12Month) || 14000,
+      features: Array.isArray(body.features) && body.features.length > 0 ? body.features : ['All equipment access', 'Locker room'],
+      isActive: body.isActive !== undefined ? body.isActive : true,
+      freezeAllowed: Boolean(body.freezeAllowed),
+      joiningFee: Number(body.joiningFee) || 500,
+      ptSessionsIncluded: Number(body.ptSessionsIncluded) || 0,
+      taxRate: Number(body.taxRate) || 18,
+    };
+    currentAdminPlans.push(newPlan);
+    return buildMockSuccess(newPlan, 'Plan created successfully');
+  }
+  if (urlPath === '/admin/plans/updatePlan') {
+    let body: any = {};
+    try { body = typeof options?.body === 'string' ? JSON.parse(options.body) : {}; } catch {}
+    const idx = currentAdminPlans.findIndex((p) => p.id === body.id);
+    if (idx !== -1) {
+      currentAdminPlans[idx] = { ...currentAdminPlans[idx], ...body };
+      return buildMockSuccess(currentAdminPlans[idx], 'Plan updated successfully');
+    }
+    return buildMockSuccess(currentAdminPlans[0], 'Plan updated');
+  }
+  if (urlPath === '/admin/plans/deletePlan') {
+    let body: any = {};
+    try { body = typeof options?.body === 'string' ? JSON.parse(options.body) : {}; } catch {}
+    const id = body.id || searchParams.get('id');
+    currentAdminPlans = currentAdminPlans.filter((p) => p.id !== id);
+    return buildMockSuccess(null, 'Plan deleted successfully');
   }
   if (urlPath.startsWith('/admin/coupons')) {
     if (urlPath === '/admin/coupons/kpis') {
@@ -727,7 +838,11 @@ export function handleAdminMockApiRequest(
   }
 
   // 13. Security Permissions & Audit Logs
-  if (urlPath === '/frontend_admin/admin_security/security_permissions_management') {
+  if (
+    urlPath === '/frontend_admin/admin_security/security_permissions_management' ||
+    urlPath === '/admin/permissions' ||
+    urlPath === '/admin/permissions/fetchPermissions'
+  ) {
     return buildMockSuccess(MOCK_ADMIN_PERMISSIONS);
   }
   if (urlPath === '/admin/permissions/overrides') {
@@ -791,10 +906,52 @@ export function handleAdminMockApiRequest(
 
   // 14. Settings & Profile
   if (urlPath === '/admin/settings/fetchSettings' || urlPath === '/admin/settings') {
-    return buildMockSuccess(MOCK_ADMIN_SETTINGS);
+    return buildMockSuccess(currentAdminSettings);
   }
+  if (urlPath === '/admin/settings/updateSettings') {
+    let body: any = {};
+    try { body = typeof options?.body === 'string' ? JSON.parse(options.body) : {}; } catch {}
+    currentAdminSettings = {
+      ...currentAdminSettings,
+      ...body,
+    };
+    return buildMockSuccess(currentAdminSettings, 'Settings saved successfully');
+  }
+  if (urlPath === '/admin/settings/2fa/status') {
+    return buildMockSuccess({ enabled: (currentAdminSettings as any).general?.twoFactorAuth ?? false });
+  }
+  if (urlPath === '/admin/settings/2fa/enable' || urlPath === '/admin/settings/2fa/verify') {
+    if ((currentAdminSettings as any).general) {
+      (currentAdminSettings as any).general.twoFactorAuth = true;
+    }
+    return buildMockSuccess({ enabled: true }, '2FA enabled successfully');
+  }
+  if (urlPath === '/admin/settings/2fa/disable') {
+    if ((currentAdminSettings as any).general) {
+      (currentAdminSettings as any).general.twoFactorAuth = false;
+    }
+    return buildMockSuccess({ enabled: false }, '2FA disabled successfully');
+  }
+  if (urlPath === '/admin/settings/notifications') {
+    return buildMockSuccess(currentAdminSettings.notifications, 'Notification preferences updated');
+  }
+
   if (urlPath === '/admin/adminProfile/fetchProfile' || urlPath === '/admin/profile') {
-    return buildMockSuccess(MOCK_ADMIN_PROFILE);
+    return buildMockSuccess(currentAdminProfile);
+  }
+  if (urlPath === '/admin/adminProfile/updateProfile') {
+    let body: any = {};
+    try { body = typeof options?.body === 'string' ? JSON.parse(options.body) : {}; } catch {}
+    currentAdminProfile = {
+      ...currentAdminProfile,
+      name: body.name || currentAdminProfile.name,
+      phone: body.phone || currentAdminProfile.phone,
+      avatarInitial: (body.name || currentAdminProfile.name).charAt(0).toUpperCase(),
+    };
+    return buildMockSuccess(currentAdminProfile, 'Profile updated successfully');
+  }
+  if (urlPath === '/admin/adminProfile/updatePassword') {
+    return buildMockSuccess(null, 'Password updated successfully');
   }
 
   return null;
