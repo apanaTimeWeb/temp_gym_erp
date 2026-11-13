@@ -44,9 +44,9 @@ export default function TrainerAttendanceToolbar({
 
 
   return (
-    <div className="border-b border-border flex flex-col sm:flex-row justify-between items-start sm:items-center ">
+    <div className="border-b border-border flex flex-col sm:flex-row justify-between items-start sm:items-center flex-wrap">
       {/* Tabs */}
-      <div className="flex ">
+      <div className="flex flex-wrap">
         {TRAINER_ATTENDANCE_TABS.map((tabOption) => (
           <button type="button"
             key={tabOption}

@@ -159,7 +159,7 @@ export default function TrainerEarningsHistory() {
     <div className="bg-card border border-border rounded-xl flex flex-col h-full overflow-hidden ">
       <div className="p-4 border-b border-border bg-header flex flex-col xl:flex-row gap-3 items-start xl:items-center justify-between ">
         <h2 className="text-section-title font-semibold text-primary ">{t("TEXT_EARNINGS_LEDGER")}</h2>
-        <div className="flex flex-col sm:flex-row gap-3 w-full xl:w-auto xl:items-center ">
+        <div className="flex flex-col sm:flex-row gap-3 w-full xl:w-auto xl:items-center flex-wrap">
           <div className="relative w-full sm:w-64 ">
             <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary " aria-hidden="true"  strokeWidth={2}/>
             <label htmlFor="trainer-earnings-search" className="sr-only ">{t("TEXT_SEARCH_EARNINGS_DESCRIPTIONS")}</label>

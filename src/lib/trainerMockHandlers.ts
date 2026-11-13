@@ -858,7 +858,18 @@ export function handleTrainerMockApiRequest(
     }, 'Earnings data retrieved');
   }
   if (trainerPath === 'trainer_earnings/kpis') {
-    return buildMockSuccess(TRAINER_EARNINGS_MOCK_EARNINGS_DATA.kpis, 'Earnings KPIs retrieved');
+    const range = searchParams.get('range');
+    let kpis = { ...TRAINER_EARNINGS_MOCK_EARNINGS_DATA.kpis };
+    if (range === 'last_month') {
+      kpis = { ...kpis, totalEarnings: 3820000, pendingPayouts: 0, sessionsCompleted: 118, taxDeduction: 191000 };
+    } else if (range === 'last_3_months') {
+      kpis = { ...kpis, totalEarnings: 11450000, pendingPayouts: 840000, sessionsCompleted: 356, taxDeduction: 572500 };
+    } else if (range === 'this_year') {
+      kpis = { ...kpis, totalEarnings: 38400000, pendingPayouts: 2090000, sessionsCompleted: 1120, taxDeduction: 1920000 };
+    } else if (range === 'custom') {
+      kpis = { ...kpis, totalEarnings: 2200000, pendingPayouts: 0, sessionsCompleted: 68, taxDeduction: 110000 };
+    }
+    return buildMockSuccess(kpis, 'Earnings KPIs retrieved');
   }
   if (trainerPath === 'trainer_earnings/pending') {
     return buildMockSuccess(TRAINER_EARNINGS_MOCK_EARNINGS_DATA.pendingPayouts, 'Pending payouts retrieved');
@@ -939,6 +950,9 @@ export function handleTrainerMockApiRequest(
     const limit = Math.max(1, Number(searchParams.get('limit') || '20'));
     const search = (searchParams.get('search') || '').trim().toLowerCase();
     const filterDate = searchParams.get('filterDate') || searchParams.get('date');
+    const range = searchParams.get('range');
+    const startDate = searchParams.get('startDate');
+    const endDate = searchParams.get('endDate');
     const type = searchParams.get('type');
 
     let filtered = [...currentAttendance];
@@ -953,9 +967,23 @@ export function handleTrainerMockApiRequest(
     } else if (filterDate === 'YESTERDAY') {
       const yest = new Date(Date.now() - 86400000).toISOString().split('T')[0];
       filtered = filtered.filter((r: any) => r.date === yest);
-    } else if (filterDate === 'THIS_MONTH') {
+    } else if (filterDate === 'THIS_MONTH' || range === 'this_month') {
       const monthPrefix = todayStr.substring(0, 7);
       filtered = filtered.filter((r: any) => r.date && r.date.startsWith(monthPrefix));
+    } else if (filterDate === 'LAST_MONTH' || range === 'last_month') {
+      const d = new Date();
+      d.setMonth(d.getMonth() - 1);
+      const lastMonthPrefix = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+      filtered = filtered.filter((r: any) => r.date && r.date.startsWith(lastMonthPrefix));
+    } else if (filterDate === 'THIS_YEAR' || range === 'this_year') {
+      const yearPrefix = todayStr.substring(0, 4);
+      filtered = filtered.filter((r: any) => r.date && r.date.startsWith(yearPrefix));
+    } else if (startDate || endDate) {
+      filtered = filtered.filter((r: any) => (!startDate || r.date >= startDate) && (!endDate || r.date <= endDate));
+    }
+
+    if (filtered.length === 0 && currentAttendance.length > 0 && !search) {
+      filtered = currentAttendance.filter((r: any) => !type || r.type === type).slice(0, 10);
     }
 
     if (search) {

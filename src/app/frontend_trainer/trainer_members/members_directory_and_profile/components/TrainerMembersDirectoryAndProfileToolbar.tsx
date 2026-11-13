@@ -46,7 +46,7 @@ export default function TrainerMembersToolbar() {
           placeholder={t("TEXT_SEARCH_BY_NAME_OR_PHONE")} 
           className="ps-9 pe-3 py-2.5 border border-border rounded-xl text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none w-full sm:w-64 bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_members-trainermemberstoolbar-input_1"/>
       </div>
-      <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto items-center">
+      <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto items-center flex-wrap">
         <TrainerInfrastructureSearchableDropdown
           value={statusFilter}
           onChange={(val: string | number) => setStatusFilter(String(val))}
