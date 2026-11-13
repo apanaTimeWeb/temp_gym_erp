@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
+import { useConfirm } from '@/components/ui/Feedback/ConfirmProvider';
 import { useSuperadminSupportTicketsManagement } from '@/app/frontend_superadmin/superadmin_support/support_tickets_management/hooks/useSuperadminSupportTicketsManagement';
 import { useSuperadminSupportTicketsManagementDialogA11y } from '@/app/frontend_superadmin/superadmin_support/support_tickets_management/hooks/useSuperadminSupportTicketsManagementDialogA11y';
 import { useSuperadminSupportTicketsManagementTicketMutations } from '@/app/frontend_superadmin/superadmin_support/support_tickets_management/hooks/useSuperadminSupportTicketsManagementTicketMutations';
@@ -25,6 +26,7 @@ import { useSuperadminSupportTicketsManagementStore } from '@/app/frontend_super
  */
 export function useSuperadminSupportTicketsManagementMainViewModel() {
   const t = useTranslations('superadmin_support_tickets');
+  const { confirm } = useConfirm();
   const [assigneeInput, setAssigneeInput] = useState('');
   const query = useSuperadminSupportTicketsManagement();
   const mutations = useSuperadminSupportTicketsManagementTicketMutations();
@@ -36,6 +38,15 @@ export function useSuperadminSupportTicketsManagementMainViewModel() {
   });
 
   const handleCloseTicket = async (ticketId: string): Promise<void> => {
+    const ok = await confirm({
+      title: t('ui.close_ticket_94a4dc0'),
+      message: t('ui.close_ticket_confirm_message'),
+      type: 'warning',
+      confirmText: t('ui.close_ticket_94a4dc0'),
+      cancelText: t('actions.cancel'),
+    });
+    if (!ok) return;
+
     try {
       await mutations.closeTicket(ticketId);
     } catch {

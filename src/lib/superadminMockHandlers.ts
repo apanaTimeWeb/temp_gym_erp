@@ -109,7 +109,61 @@ export function handleSuperadminMockApiRequest(
 ): ApiResponse<any> | null {
   // 1. DASHBOARD OVERVIEW
   if (urlPath === '/superadmin/dashboard' || urlPath === '/superadmin/dashboard/metrics') {
-    return buildMockSuccess(MOCK_SUPERADMIN_DASHBOARD_DATA, 'Dashboard data retrieved successfully');
+    const range = searchParams.get('range');
+    let data = JSON.parse(JSON.stringify(MOCK_SUPERADMIN_DASHBOARD_DATA));
+
+    if (range === 'last_month') {
+      data.metrics.monthlyRecurringRevenue = 22500000;
+      data.metrics.pendingRevenue = 1200000;
+      data.metrics.totalEndUsers = 14200;
+      data.metrics.activeGyms = 98;
+      data.metrics.mrrDeltaPercent = 9.8;
+      data.metrics.overdueInvoicesCount = 8;
+      data.revenue = [
+        { month: 'Dec', mrr: 14000000, currency: 'INR' },
+        { month: 'Jan', mrr: 15000000, currency: 'INR' },
+        { month: 'Feb', mrr: 16000000, currency: 'INR' },
+        { month: 'Mar', mrr: 18000000, currency: 'INR' },
+        { month: 'Apr', mrr: 21000000, currency: 'INR' },
+        { month: 'May', mrr: 22500000, currency: 'INR' },
+      ];
+    } else if (range === 'last_3_months') {
+      data.metrics.monthlyRecurringRevenue = 68000000;
+      data.metrics.pendingRevenue = 3400000;
+      data.metrics.totalEndUsers = 13500;
+      data.metrics.activeGyms = 92;
+      data.metrics.mrrDeltaPercent = 18.4;
+      data.metrics.overdueInvoicesCount = 15;
+    } else if (range === 'last_6_months') {
+      data.metrics.monthlyRecurringRevenue = 132000000;
+      data.metrics.pendingRevenue = 6500000;
+      data.metrics.totalEndUsers = 12200;
+      data.metrics.activeGyms = 84;
+      data.metrics.mrrDeltaPercent = 26.5;
+      data.metrics.overdueInvoicesCount = 22;
+    } else if (range === 'this_year') {
+      data.metrics.monthlyRecurringRevenue = 245000000;
+      data.metrics.pendingRevenue = 11500000;
+      data.metrics.totalEndUsers = 15400;
+      data.metrics.activeGyms = 105;
+      data.metrics.mrrDeltaPercent = 34.0;
+      data.metrics.overdueInvoicesCount = 12;
+    } else if (range === 'yearly') {
+      data.metrics.monthlyRecurringRevenue = 280000000;
+      data.metrics.pendingRevenue = 14000000;
+      data.metrics.totalEndUsers = 15400;
+      data.metrics.activeGyms = 105;
+      data.metrics.mrrDeltaPercent = 42.0;
+    } else if (range === 'custom') {
+      data.metrics.monthlyRecurringRevenue = 18500000;
+      data.metrics.pendingRevenue = 950000;
+      data.metrics.totalEndUsers = 14800;
+      data.metrics.activeGyms = 102;
+      data.metrics.mrrDeltaPercent = 8.5;
+      data.metrics.overdueInvoicesCount = 5;
+    }
+
+    return buildMockSuccess(data, 'Dashboard data retrieved successfully');
   }
 
   // 2. GYMS DIRECTORY & DETAIL
@@ -315,7 +369,55 @@ export function handleSuperadminMockApiRequest(
 
   // 3. ANALYTICS & REPORTS
   if (urlPath === '/superadmin/analytics') {
-    return buildMockSuccess(MOCK_SUPERADMIN_ANALYTICS, 'Analytics data retrieved');
+    const range = searchParams.get('timeRange') || searchParams.get('range');
+    let data = JSON.parse(JSON.stringify(MOCK_SUPERADMIN_ANALYTICS));
+    if (range === 'last_month') {
+      data.metrics = {
+        ...data.metrics,
+        mrr: 13800000,
+        arr: 165000000,
+        cancellationRate: 2.8,
+        activeTenants: 118,
+        mrrDeltaPercent: 4.1,
+      };
+    } else if (range === 'last_3_months') {
+      data.metrics = {
+        ...data.metrics,
+        mrr: 38500000,
+        arr: 155000000,
+        cancellationRate: 3.1,
+        activeTenants: 112,
+        mrrDeltaPercent: 8.4,
+      };
+    } else if (range === 'last_6_months') {
+      data.metrics = {
+        ...data.metrics,
+        mrr: 75000000,
+        arr: 150000000,
+        cancellationRate: 3.4,
+        activeTenants: 105,
+        mrrDeltaPercent: 14.2,
+      };
+    } else if (range === 'this_year') {
+      data.metrics = {
+        ...data.metrics,
+        mrr: 150000000,
+        arr: 180000000,
+        cancellationRate: 2.5,
+        activeTenants: 125,
+        mrrDeltaPercent: 22.0,
+      };
+    } else if (range === 'custom') {
+      data.metrics = {
+        ...data.metrics,
+        mrr: 12500000,
+        arr: 150000000,
+        cancellationRate: 2.2,
+        activeTenants: 120,
+        mrrDeltaPercent: 3.8,
+      };
+    }
+    return buildMockSuccess(data, 'Analytics data retrieved');
   }
   if (urlPath === '/superadmin/reports/revenue') {
     return buildMockSuccess(MOCK_SUPERADMIN_ANALYTICS_REPORTS_REVENUE, 'Revenue data retrieved');
@@ -380,11 +482,17 @@ export function handleSuperadminMockApiRequest(
     }
     const search = searchParams.get('search')?.toLowerCase() || '';
     const status = searchParams.get('status') || '';
+    const startDate = searchParams.get('startDate') || '';
+    const endDate = searchParams.get('endDate') || '';
     let filtered = currentInvoices.filter((inv) => {
       const matchSearch = !search || inv.id.toLowerCase().includes(search) || inv.tenantName.toLowerCase().includes(search);
       const matchStatus = !status || status === 'ALL' || inv.status === status;
-      return matchSearch && matchStatus;
+      const matchDate = (!startDate || inv.issuedAt >= startDate) && (!endDate || inv.issuedAt <= endDate);
+      return matchSearch && matchStatus && matchDate;
     });
+    if (filtered.length === 0 && currentInvoices.length > 0 && !search && (!status || status === 'ALL')) {
+      filtered = currentInvoices.slice(0, 5);
+    }
     return buildMockSuccess(filtered, 'Invoices retrieved successfully');
   }
   if (urlPath.startsWith('/superadmin/saas-billing/coupons')) {

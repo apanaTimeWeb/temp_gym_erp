@@ -26,7 +26,7 @@ export default function SuperadminSupportTicketsManagementHeader({ search, setSe
         </div>
       </div>
 
-      <div className="p-4 border-b border-border flex gap-4">
+      <div className="p-4 border-b border-border flex gap-4 flex-wrap">
         <div className="relative flex-1 max-w-md">
           <label htmlFor="superadmin_support_tickets-search" className="sr-only">{t('ui.search_tickets_or_superadmin_gyms_bf66cf1')}</label>
           <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary"/>

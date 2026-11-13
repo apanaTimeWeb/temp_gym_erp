@@ -109,6 +109,7 @@
       "reply_to_ticket_d555f35": "Reply to ticket",
       "assign_to_4306f8c": "Assign To",
       "close_ticket_94a4dc0": "Close Ticket",
+      "close_ticket_confirm_message": "Are you sure you want to close and resolve this support ticket?",
       "operator_workload_ed91300": "Operator workload",
       "open_work_and_overdue_service_targets_by_support_118d47c": "Open work and overdue service targets by support operator.",
       "operator_0eef9ff": "Operator",

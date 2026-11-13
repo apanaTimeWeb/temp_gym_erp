@@ -25,7 +25,7 @@ import { useSuperadminGymsDirectoryToolbar } from '@/app/frontend_superadmin/sup
 export default function SuperadminGymsDirectoryToolbar() {
   const t = useTranslations('superadmin_gyms');
     const { search, handleSearchChange, statusFilter, setStatusFilter, planFilter, setPlanFilter, viewMode, setViewMode, handleExportGyms } = useSuperadminGymsDirectoryToolbar();
-    return (<div className="p-4 border-b border-border flex items-center gap-4">
+    return (<div className="p-4 border-b border-border flex items-center gap-4 flex-wrap">
       <div className="relative flex-1 max-w-md">
         <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-disabled"/>
         <input type="text" placeholder={t('ui.search_gyms_by_name_or_owner_2dbd814f')} value={search} onChange={(e) => handleSearchChange(e.target.value)} className="min-h-11 w-full bg-card border border-border text-primary rounded-lg ps-10 pe-4 py-2 motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" aria-label={t('ui.search_gyms_a5d3597f')} data-testid="superadmin_gyms-superadmin-gyms-toolbar-gyms-toolbar-search-gyms"/>

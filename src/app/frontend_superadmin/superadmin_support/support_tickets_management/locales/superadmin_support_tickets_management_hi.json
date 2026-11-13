@@ -77,6 +77,7 @@
       "reply_to_ticket_d555f35": "टिकट का उत्तर दें",
       "assign_to_4306f8c": "इन्हें असाइन करें",
       "close_ticket_94a4dc0": "टिकट बंद करें",
+      "close_ticket_confirm_message": "क्या आप वाकई इस सहायता टिकट को बंद और हल करना चाहते हैं?",
       "operator_workload_ed91300": "ऑपरेटर का कार्यभार",
       "open_work_and_overdue_service_targets_by_support_118d47c": "सहायता ऑपरेटर के खुले कार्य और समय-सीमा से आगे निकले सेवा लक्ष्य।",
       "operator_0eef9ff": "ऑपरेटर",
