@@ -14,6 +14,9 @@ export interface AdminMembersStoreState {
   setBranchFilter: (s: string) => void;
   expiryFilter: AdminMembersExpiryFilter;
   setExpiryFilter: (s: AdminMembersExpiryFilter) => void;
+  expiryFrom: string;
+  expiryTo: string;
+  setExpiryRange: (from: string, to: string) => void;
   genderFilter: string;
   setGenderFilter: (s: string) => void;
   planFilter: string;

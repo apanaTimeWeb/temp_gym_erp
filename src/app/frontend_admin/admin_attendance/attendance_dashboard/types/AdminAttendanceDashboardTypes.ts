@@ -4,7 +4,7 @@
 export type AttendanceStatus = 'present' | 'absent' | 'late';
 export type AdminAttendanceStatusFilter = AttendanceStatus | 'all';
 export type AdminAttendanceSessionType = 'General' | 'PT' | 'Class';
-export type DateRangeFilter = 'today' | 'yesterday' | 'this_week' | 'this_month' | 'last_month';
+export type DateRangeFilter = 'today' | 'yesterday' | 'this_week' | 'this_month' | 'last_month' | 'this_year' | 'custom';
 
 export interface AdminAttendanceRecord {
   id: string;

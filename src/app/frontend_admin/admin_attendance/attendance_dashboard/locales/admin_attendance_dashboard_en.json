@@ -55,6 +55,8 @@
       "this_week": "This Week",
       "this_month": "This Month",
       "last_month": "Last Month",
+      "this_year": "This Year (2026)",
+      "custom": "Custom Range",
       "all_status": "All Status",
       "present": "Present",
       "late": "Late",

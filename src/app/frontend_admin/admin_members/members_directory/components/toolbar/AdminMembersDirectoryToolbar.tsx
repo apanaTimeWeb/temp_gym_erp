@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 import type { AdminMembersExpiryFilter } from '@/app/frontend_admin/admin_members/members_directory/types/AdminMembersDirectoryUiTypes';
 import type { AdminMembersStatusFilter } from '@/app/frontend_admin/admin_members/members_directory/types/AdminMembersDirectoryTypes';
-import { Search, Download, ShieldAlert } from 'lucide-react';
+import { Search, Download, ShieldAlert, Calendar } from 'lucide-react';
 import { useAdminMembersLogic } from '@/app/frontend_admin/admin_members/members_directory/hooks/useAdminMembersDirectoryLogic';
 import { useAdminMembersStore } from '@/app/frontend_admin/admin_members/members_directory/state/useAdminMembersDirectoryStore';
 import { useAdminMembersBranchReference } from '@/app/frontend_admin/admin_members/members_directory/hooks/useAdminMembersDirectoryBranchReference';
@@ -30,9 +30,36 @@ export default function AdminMembersDirectoryToolbar() {
   const t = useTranslations();
   const { exportMembers, isExporting } = useAdminMembersLogic();
 
-  const { search, setSearch, statusFilter, setStatusFilter, branchFilter, setBranchFilter, expiryFilter, setExpiryFilter, genderFilter, setGenderFilter, planFilter, setPlanFilter } = useAdminMembersStore();
+  const { search, setSearch, statusFilter, setStatusFilter, branchFilter, setBranchFilter, expiryFilter, setExpiryFilter, expiryFrom, expiryTo, setExpiryRange, genderFilter, setGenderFilter, planFilter, setPlanFilter } = useAdminMembersStore();
   const branchQuery = useAdminMembersBranchReference();
   const branches = branchQuery.data ?? [];
+
+  const handleExpiryPreset = (preset: AdminMembersExpiryFilter) => {
+    setExpiryFilter(preset);
+    const now = new Date();
+    const formatYMD = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    if (preset === 'all') {
+      setExpiryRange('', '');
+    } else if (preset === 'this_week') {
+      const dayOfWeek = now.getDay();
+      const diffToMonday = (dayOfWeek + 6) % 7;
+      const startOfWeek = new Date(now);
+      startOfWeek.setDate(now.getDate() - diffToMonday);
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(startOfWeek.getDate() + 6);
+      setExpiryRange(formatYMD(startOfWeek), formatYMD(endOfWeek));
+    } else if (preset === 'this_month') {
+      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+      const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+      setExpiryRange(formatYMD(startOfMonth), formatYMD(endOfMonth));
+    } else if (preset === 'next_month') {
+      const startOfNextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+      const endOfNextMonth = new Date(now.getFullYear(), now.getMonth() + 2, 0);
+      setExpiryRange(formatYMD(startOfNextMonth), formatYMD(endOfNextMonth));
+    } else if (preset === 'expired') {
+      setExpiryRange('2020-01-01', formatYMD(now));
+    }
+  };
 
   const branchOptions = [
     { value: 'all', label: t('members.AdminAuditRepair.allBranches') },
@@ -85,14 +112,36 @@ export default function AdminMembersDirectoryToolbar() {
           placeholder={t('members.admin_members_toolbar.text_0bf51d9a45')}
          testId="admin_members-admin_members-toolbar-change-2"/>
       </div>
-      <div className="w-full sm:w-52 flex gap-2">
+      <div className="w-full sm:w-52">
         <AdminNavigationLayoutSearchableDropdown
           options={EXPIRY_FILTER_OPTIONS.map((o) => ({ value: o.value, label: t(o.labelKey) }))}
           value={expiryFilter}
-          onChange={(v) => setExpiryFilter(v as AdminMembersExpiryFilter)}
+          onChange={(v) => handleExpiryPreset(v as AdminMembersExpiryFilter)}
           placeholder={t('members.admin_members_toolbar.text_5a8d375693')}
          testId="admin_members-admin_members-toolbar-change-3"/>
       </div>
+      {(expiryFilter === 'custom' || (expiryFrom && expiryTo)) && (
+        <div className="flex items-center gap-1.5 border border-border rounded-xl px-3 py-1.5 bg-input text-sm w-full sm:w-auto">
+          <Calendar size={18} strokeWidth={2} className="text-secondary shrink-0" />
+          <input
+            type="date"
+            value={expiryFrom}
+            onChange={(e) => setExpiryRange(e.target.value, expiryTo)}
+            className="bg-transparent text-secondary focus-visible:outline-none text-xs"
+            aria-label="Expiry From Date"
+            data-testid="admin_members-toolbar-expiry-from"
+          />
+          <span className="text-secondary text-xs">to</span>
+          <input
+            type="date"
+            value={expiryTo}
+            onChange={(e) => setExpiryRange(expiryFrom, e.target.value)}
+            className="bg-transparent text-secondary focus-visible:outline-none text-xs"
+            aria-label="Expiry To Date"
+            data-testid="admin_members-toolbar-expiry-to"
+          />
+        </div>
+      )}
       <div className="w-full sm:w-40">
         <AdminNavigationLayoutSearchableDropdown
           options={MEMBER_GENDER_OPTIONS.map((o) => ({ value: o.value, label: t(o.labelKey) }))}

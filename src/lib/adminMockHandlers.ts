@@ -103,6 +103,9 @@ export function handleAdminMockApiRequest(
     const search = searchParams.get('search')?.toLowerCase() || '';
     const branch = searchParams.get('branch') || 'all';
     const status = searchParams.get('status') || 'all';
+    const expiryFilter = searchParams.get('expiryFilter') || searchParams.get('expiry') || 'all';
+    const expiryFrom = searchParams.get('expiryFrom');
+    const expiryTo = searchParams.get('expiryTo');
 
     let filtered = [...MOCK_ADMIN_MEMBERS_EXPANDED];
     if (search) {
@@ -117,6 +120,46 @@ export function handleAdminMockApiRequest(
     }
     if (status !== 'all') {
       filtered = filtered.filter(m => m.status.toLowerCase() === status.toLowerCase());
+    }
+
+    if (expiryFrom && expiryTo) {
+      const fromTime = new Date(expiryFrom).getTime();
+      const toTime = new Date(expiryTo).setHours(23, 59, 59, 999);
+      filtered = filtered.filter(m => {
+        if (!m.expiryDate) return false;
+        const expTime = new Date(m.expiryDate).getTime();
+        return expTime >= fromTime && expTime <= toTime;
+      });
+    } else if (expiryFilter && expiryFilter !== 'all') {
+      const now = new Date();
+      if (expiryFilter === 'this_week') {
+        const nextWeek = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+        filtered = filtered.filter(m => {
+          if (!m.expiryDate) return false;
+          const expTime = new Date(m.expiryDate).getTime();
+          return expTime >= now.getTime() && expTime <= nextWeek.getTime();
+        });
+      } else if (expiryFilter === 'this_month') {
+        const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+        filtered = filtered.filter(m => {
+          if (!m.expiryDate) return false;
+          const expTime = new Date(m.expiryDate).getTime();
+          return expTime >= now.getTime() && expTime <= endOfMonth.getTime();
+        });
+      } else if (expiryFilter === 'next_month') {
+        const startOfNextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+        const endOfNextMonth = new Date(now.getFullYear(), now.getMonth() + 2, 0, 23, 59, 59);
+        filtered = filtered.filter(m => {
+          if (!m.expiryDate) return false;
+          const expTime = new Date(m.expiryDate).getTime();
+          return expTime >= startOfNextMonth.getTime() && expTime <= endOfNextMonth.getTime();
+        });
+      } else if (expiryFilter === 'expired') {
+        filtered = filtered.filter(m => {
+          if (!m.expiryDate) return false;
+          return new Date(m.expiryDate).getTime() < now.getTime() || m.status?.toLowerCase() === 'expired';
+        });
+      }
     }
 
     const totalPages = Math.max(1, Math.ceil(filtered.length / limit));
@@ -237,6 +280,10 @@ export function handleAdminMockApiRequest(
       summary = { ...summary, todayTotal: 68500, todayPresent: 61000, todayLate: 3400, weeklyAverage: 2280 };
     } else if (range === 'last_month') {
       summary = { ...summary, todayTotal: 64200, todayPresent: 58000, todayLate: 3200, weeklyAverage: 2140 };
+    } else if (range === 'this_year' || range === 'yearly') {
+      summary = { ...summary, todayTotal: 785000, todayPresent: 710000, todayLate: 38000, weeklyAverage: 2350 };
+    } else if (range === 'custom') {
+      summary = { ...summary, todayTotal: 12400, todayPresent: 11200, todayLate: 650, weeklyAverage: 2200 };
     }
     return buildMockSuccess(summary);
   }

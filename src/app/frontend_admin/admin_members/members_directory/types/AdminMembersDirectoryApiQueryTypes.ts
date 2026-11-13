@@ -11,6 +11,8 @@ export interface FetchMembersParams {
   status?: MemberStatus;
   branchId?: string;
   expiryFilter?: AdminMembersExpiryFilter;
+  expiryFrom?: string;
+  expiryTo?: string;
   gender?: 'Male' | 'Female' | 'Other';
   plan?: 'basic' | 'pro' | 'classic';
   page?: number;

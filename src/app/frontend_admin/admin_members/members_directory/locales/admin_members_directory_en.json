@@ -80,7 +80,10 @@
       "expiry": {
         "all": "All Members",
         "thisWeek": "Expiring This Week",
-        "thisMonth": "Expiring This Month"
+        "thisMonth": "Expiring This Month",
+        "nextMonth": "Expiring Next Month",
+        "expired": "Already Expired",
+        "custom": "Custom Range"
       },
       "table": {
         "member": "Member",

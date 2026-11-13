@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
 import ManagerPtAssignmentsEmptyState from '@/app/frontend_manager/manager_schedule_personal_training/pt_assignments/components/ManagerPtAssignmentsEmptyState';
+import { useConfirm } from '@/components/ui/manager_confirm_provider/ManagerConfirmProvider';
 import type { ManagerPtAssignmentsTableProps } from '@/app/frontend_manager/manager_schedule_personal_training/pt_assignments/types/manager_pt_assignments_table.types';
 
 
@@ -21,7 +22,20 @@ const PT_ASSIGNMENTS_COLUMN_COUNT = 5;
 /** @description Renders the ManagerPtAssignmentsTable component for its owning Manager frontend boundary. @dependencies Local dependencies are owned by this feature module (2 documented module/import dependencies).. @edge-case Preserves empty state. */
 export default function ManagerPtAssignmentsTable({ assignments, totalAssignments = assignments.length, currentPage = 1, totalPages = 1, pageSize: pageSizeProp = 10, onPageChange = () => undefined, markingId, onMarkSession, isPending }: ManagerPtAssignmentsTableProps) {
   const t = useTranslations('MANAGER_PT_ASSIGNMENTS');
+  const { confirm } = useConfirm();
   const pageSize = Number.isSafeInteger(pageSizeProp) && pageSizeProp > 0 ? pageSizeProp : Math.max(1, assignments.length);
+
+  const handleMarkSessionWithConfirm = async (a: (typeof assignments)[0]) => {
+    const ok = await confirm({
+      title: 'Log Completed PT Session',
+      message: `Are you sure you want to log a completed session for ${a.memberName} with trainer ${a.trainerName}? (${a.completedSessions + 1}/${a.totalSessions} sessions)`,
+      confirmText: 'Confirm Session',
+      type: 'info',
+    });
+    if (ok) {
+      onMarkSession(a.id);
+    }
+  };
 
   return (
     <div className="bg-card border border-border rounded-xl flex flex-col overflow-hidden">
@@ -83,7 +97,7 @@ export default function ManagerPtAssignmentsTable({ assignments, totalAssignment
                     </td>
                     <td className="py-3 px-4 text-right">
                       <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-w-32 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-input hover:bg-primary-subtle hover:text-primary hover:border-primary border border-transparent text-primary rounded-lg motion-safe:transition-all disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_pt-pt-managerptassignmentstable-button-completed-${a.id}`}
-                        onClick={() => onMarkSession(a.id)}
+                        onClick={() => void handleMarkSessionWithConfirm(a)}
                         disabled={isMarking || isDone}
                         
                        type="button">

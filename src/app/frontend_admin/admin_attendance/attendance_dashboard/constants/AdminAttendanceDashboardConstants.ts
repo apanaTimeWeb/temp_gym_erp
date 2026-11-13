@@ -12,6 +12,8 @@ export const DATE_RANGE_OPTIONS: { value: DateRangeFilter; labelKey: string }[] 
   { value: 'this_week',  labelKey: 'attendance.static.this_week' },
   { value: 'this_month', labelKey: 'attendance.static.this_month' },
   { value: 'last_month', labelKey: 'attendance.static.last_month' },
+  { value: 'this_year',  labelKey: 'attendance.static.this_year' },
+  { value: 'custom',     labelKey: 'attendance.static.custom' },
 ];
 
 export const ATTENDANCE_STATUS_VALUES = { PRESENT: 'present', ABSENT: 'absent', LATE: 'late' } as const;

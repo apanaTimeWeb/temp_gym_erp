@@ -17,6 +17,9 @@ export const MEMBER_EXPIRY_FILTER_OPTIONS = [
   { value: 'all', labelKey: 'members.AdminMembersCatalog.expiry.all' },
   { value: 'this_week', labelKey: 'members.AdminMembersCatalog.expiry.thisWeek' },
   { value: 'this_month', labelKey: 'members.AdminMembersCatalog.expiry.thisMonth' },
+  { value: 'next_month', labelKey: 'members.AdminMembersCatalog.expiry.nextMonth' },
+  { value: 'expired', labelKey: 'members.AdminMembersCatalog.expiry.expired' },
+  { value: 'custom', labelKey: 'members.AdminMembersCatalog.expiry.custom' },
 ] as const;
 
 export const MEMBER_STATUS_STYLES: Record<string, string> = {

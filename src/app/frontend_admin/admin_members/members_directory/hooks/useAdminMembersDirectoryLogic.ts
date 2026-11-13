@@ -22,12 +22,14 @@ import { useSearchParams } from 'next/navigation';
 export function useAdminMembersLogic() {
   const t = useTranslations();
   const searchParams = useSearchParams();
-  const { search, statusFilter, branchFilter, expiryFilter, genderFilter, planFilter, currentPage, setCurrentPage } = useAdminMembersStore();
+  const { search, statusFilter, branchFilter, expiryFilter, expiryFrom, expiryTo, genderFilter, planFilter, currentPage, setCurrentPage } = useAdminMembersStore();
   useAdminNavigationLayoutUrlQuerySync([
     { key: 'search', value: search, defaultValue: '', setValue: (val) => useAdminMembersStore.getState().setSearch(val as string) },
     { key: 'status', value: statusFilter, defaultValue: 'all', setValue: (val) => { if (val === 'all' || Object.values(MEMBER_STATUS_VALUES).some((status) => status === val)) useAdminMembersStore.getState().setStatusFilter(val as AdminMembersStatusFilter); } },
     { key: 'branch', value: branchFilter, defaultValue: 'all', setValue: (val) => useAdminMembersStore.getState().setBranchFilter(val as string) },
-    { key: 'expiry', value: expiryFilter, defaultValue: 'all', setValue: (val) => { if (val === 'all' || val === 'this_week' || val === 'this_month') useAdminMembersStore.getState().setExpiryFilter(val as import('@/app/frontend_admin/admin_members/members_directory/types/AdminMembersDirectoryUiTypes').AdminMembersExpiryFilter); } },
+    { key: 'expiry', value: expiryFilter, defaultValue: 'all', setValue: (val) => { if (['all', 'this_week', 'this_month', 'next_month', 'expired', 'custom'].includes(val as any)) useAdminMembersStore.getState().setExpiryFilter(val as any); } },
+    { key: 'expiryFrom', value: expiryFrom, defaultValue: '', setValue: (val) => useAdminMembersStore.getState().setExpiryRange(val as string, useAdminMembersStore.getState().expiryTo) },
+    { key: 'expiryTo', value: expiryTo, defaultValue: '', setValue: (val) => useAdminMembersStore.getState().setExpiryRange(useAdminMembersStore.getState().expiryFrom, val as string) },
     { key: 'page', value: currentPage, defaultValue: 1, setValue: (value) => setCurrentPage(normalizeAdminMembersDirectoryUrlPage(value)) },
   ]);
   const memberId = searchParams.get('memberId');
@@ -46,6 +48,8 @@ export function useAdminMembersLogic() {
     status: statusFilter !== 'all' ? statusFilter : undefined,
     branchId: activeBranch,
     expiryFilter: expiryFilter !== 'all' ? expiryFilter : undefined,
+    expiryFrom: expiryFrom || undefined,
+    expiryTo: expiryTo || undefined,
     gender: selectedGender,
     plan: selectedPlan,
     page: currentPage,
