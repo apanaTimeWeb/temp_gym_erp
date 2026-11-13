@@ -1093,12 +1093,14 @@ export function handleTrainerMockApiRequest(
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
         const newLeave = {
-          id: `leave_${Date.now()}`,
-          startDate: body.startDate || '2026-10-01',
-          endDate: body.endDate || '2026-10-05',
+          id: body.id || `LR-${Date.now().toString().slice(-4)}`,
+          trainerId: body.trainerId || 'TR-101',
+          startDate: body.startDate || '2026-11-20',
+          endDate: body.endDate || '2026-11-22',
           reason: body.reason || 'Personal leave',
-          leaveType: body.leaveType || 'CASUAL',
+          leaveType: body.leaveType || 'Casual Leave',
           status: 'PENDING',
+          createdAt: new Date().toISOString(),
         };
         currentLeaves.unshift(newLeave);
         return buildMockSuccess(newLeave, 'Leave request submitted');
