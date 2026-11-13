@@ -25,13 +25,32 @@ export function useManagerGrievanceResolutionLogic() {
   const resolveKeyByIdRef = useRef(new Map<string, { signature: string; key: string }>());
   const { data: tickets = [], isPending, isError, error, refetch } = useManagerGrievanceResolutionTickets();
   const { createGrievanceTicket, resolveGrievanceTicket } = useManagerGrievanceResolutionMutations();
-  const { search, setSearch } = useManagerGrievanceResolutionUrlState();
+  const { search, setSearch, status, setStatus, category, setCategory, date, setDate } = useManagerGrievanceResolutionUrlState();
   const normalizedSearch = search.trim().toLowerCase();
-  const filteredTickets = useMemo(() => tickets.filter((ticket) => (
-    !normalizedSearch
+  const filteredTickets = useMemo(() => tickets.filter((ticket) => {
+    const matchesSearch = !normalizedSearch
       || ticket.memberName.toLowerCase().includes(normalizedSearch)
-      || ticket.issue.toLowerCase().includes(normalizedSearch)
-  )), [normalizedSearch, tickets]);
+      || ticket.issue.toLowerCase().includes(normalizedSearch);
+    const matchesStatus = status === 'ALL' || ticket.status === status;
+    const matchesCategory = category === 'ALL' || ticket.category === category;
+    let matchesDate = true;
+    if (date && date !== 'all' && ticket.loggedAt) {
+      const ticketTime = new Date(ticket.loggedAt).getTime();
+      const now = new Date();
+      if (date === 'this_month') {
+        const start = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+        matchesDate = ticketTime >= start;
+      } else if (date === 'last_month') {
+        const start = new Date(now.getFullYear(), now.getMonth() - 1, 1).getTime();
+        const end = new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59, 999).getTime();
+        matchesDate = ticketTime >= start && ticketTime <= end;
+      } else if (date === 'this_year') {
+        const start = new Date(now.getFullYear(), 0, 1).getTime();
+        matchesDate = ticketTime >= start;
+      }
+    }
+    return matchesSearch && matchesStatus && matchesCategory && matchesDate;
+  }), [normalizedSearch, status, category, date, tickets]);
 
   const handleCreateTicket = async (payload: CreateGrievanceTicketPayload) => {
     try {
@@ -68,6 +87,12 @@ export function useManagerGrievanceResolutionLogic() {
     tickets: filteredTickets,
     search,
     setSearch,
+    status,
+    setStatus,
+    category,
+    setCategory,
+    date,
+    setDate,
     isPending,
     isError,
     error,

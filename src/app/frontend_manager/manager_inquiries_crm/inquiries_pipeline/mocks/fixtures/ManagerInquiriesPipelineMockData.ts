@@ -67,6 +67,83 @@ export const MOCK_INQUIRIES: Inquiry[] = [
     source: 'Facebook',
     createdAt: new Date(Date.now() - 3600000 * 5).toISOString(),
     followUpLogs: []
+  },
+  {
+    id: 'inq-006',
+    name: 'Rohan Joshi',
+    phone: '+91 9876543215',
+    email: 'rohan.j@example.com',
+    interest: 'Cardio & Strength',
+    status: MANAGER_INQUIRIES_PIPELINE_STATUS_VALUES.NEW,
+    source: 'Website',
+    createdAt: '2026-11-10T09:30:00.000Z',
+    followUpLogs: []
+  },
+  {
+    id: 'inq-007',
+    name: 'Kavita Menon',
+    phone: '+91 9876543216',
+    email: 'kavita.m@example.com',
+    interest: 'Zumba Dance',
+    status: MANAGER_INQUIRIES_PIPELINE_STATUS_VALUES.FOLLOW_UP,
+    source: 'Instagram',
+    createdAt: '2026-11-05T14:15:00.000Z',
+    followUpLogs: [{ date: '2026-11-06T10:00:00.000Z', note: 'Interested in evening batch.' }]
+  },
+  {
+    id: 'inq-008',
+    name: 'Suresh Raina',
+    phone: '+91 9876543217',
+    email: 'suresh.r@example.com',
+    interest: 'Personal Training',
+    status: MANAGER_INQUIRIES_PIPELINE_STATUS_VALUES.CONVERTED,
+    source: 'Walk-in',
+    createdAt: '2026-10-24T11:00:00.000Z',
+    followUpLogs: []
+  },
+  {
+    id: 'inq-009',
+    name: 'Neha Kapoor',
+    phone: '+91 9876543218',
+    email: 'neha.k@example.com',
+    interest: 'Pilates Group',
+    status: MANAGER_INQUIRIES_PIPELINE_STATUS_VALUES.FOLLOW_UP,
+    source: 'Referral',
+    createdAt: '2026-10-18T16:45:00.000Z',
+    followUpLogs: []
+  },
+  {
+    id: 'inq-010',
+    name: 'Aditya Roy',
+    phone: '+91 9876543219',
+    email: 'aditya.r@example.com',
+    interest: 'Annual Gold Plan',
+    status: MANAGER_INQUIRIES_PIPELINE_STATUS_VALUES.LOST,
+    source: 'Website',
+    createdAt: '2026-09-12T10:30:00.000Z',
+    followUpLogs: [{ date: '2026-09-15T12:00:00.000Z', note: 'Relocating to another city.' }]
+  },
+  {
+    id: 'inq-011',
+    name: 'Pooja Bhatt',
+    phone: '+91 9876543220',
+    email: 'pooja.b@example.com',
+    interest: 'Weight Loss Program',
+    status: MANAGER_INQUIRIES_PIPELINE_STATUS_VALUES.CONVERTED,
+    source: 'Facebook',
+    createdAt: '2026-08-20T08:00:00.000Z',
+    followUpLogs: []
+  },
+  {
+    id: 'inq-012',
+    name: 'Manish Malhotra',
+    phone: '+91 9876543221',
+    email: 'manish.m@example.com',
+    interest: 'Bodybuilding & Diet',
+    status: MANAGER_INQUIRIES_PIPELINE_STATUS_VALUES.NEW,
+    source: 'Walk-in',
+    createdAt: '2026-05-14T17:20:00.000Z',
+    followUpLogs: []
   }
 ];
 

@@ -43,14 +43,16 @@ export function useManagerInquiriesPipelineLogic(): ManagerInquiriesPipelineView
   const deleteKeyByIdRef = useRef(new Map<string, string>());
   const t = useTranslations('MANAGER_INQUIRIES_PIPELINE');
   const router = useRouter(); const pathname = usePathname(); const searchParams = useSearchParams(); const ui = useManagerInquiriesPipelineUiStore();
-  const search = ui.search; const setSearch = ui.setSearch; const statusFilter = searchParams.get("status") || MANAGER_INQUIRIES_PIPELINE_STATUS_VALUES.ALL_FILTER; const dateFilter = searchParams.get("date") || "all"; const parsedPage = Number(searchParams.get("page") || "1"); const currentPage = Number.isSafeInteger(parsedPage) && parsedPage > 0 ? parsedPage : 1;
+  const search = ui.search; const setSearch = ui.setSearch; const statusFilter = searchParams.get("status") || MANAGER_INQUIRIES_PIPELINE_STATUS_VALUES.ALL_FILTER; const dateFilter = searchParams.get("date") || "all"; const startDate = searchParams.get("startDate") || ""; const endDate = searchParams.get("endDate") || ""; const parsedPage = Number(searchParams.get("page") || "1"); const currentPage = Number.isSafeInteger(parsedPage) && parsedPage > 0 ? parsedPage : 1;
   const debouncedSearch = useManagerInfrastructureDebounce(search, 300);
   const setUrlParam = useCallback((key: string, value: string | null) => {
     const params = new URLSearchParams(searchParams.toString()); if (value && !(key === "status" && value === MANAGER_INQUIRIES_PIPELINE_STATUS_VALUES.ALL_FILTER) && !(key === "date" && value === "all")) params.set(key, value); else params.delete(key); if (key !== "page") params.set("page", "1");
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }, [pathname, router, searchParams]);
-  const queryParams = ManagerInquiriesPipelineBuildQueryParams({ currentPage, debouncedSearch, statusFilter, dateFilter });
-  const listQuery = useInquiriesQuery(queryParams); const statsQuery = useInquiryStatsQuery();
+  const queryParams = ManagerInquiriesPipelineBuildQueryParams({ currentPage, debouncedSearch, statusFilter, dateFilter, startDate, endDate });
+  const listQuery = useInquiriesQuery(queryParams);
+  const statsParams = (dateFilter !== 'all' || startDate || endDate) ? { range: dateFilter, ...(startDate ? { startDate } : {}), ...(endDate ? { endDate } : {}) } : undefined;
+  const statsQuery = useInquiryStatsQuery(statsParams);
   const refresh = useCallback(async () => { await Promise.all([listQuery.refetch(), statsQuery.refetch()]); }, [listQuery.refetch, statsQuery.refetch]);
   const inquiries = listQuery.data?.inquiries ?? [];
   useEffect(() => {
@@ -70,7 +72,7 @@ export function useManagerInquiriesPipelineLogic(): ManagerInquiriesPipelineView
   const openConvert = useCallback((inq: Inquiry) => ui.setConvertLead(inq), [ui]);
   return {
     inquiries, stats: statsQuery.data ?? null, isPending: listQuery.isPending, isError: listQuery.isError, errorMessage: errorMessage || (statsQuery.isError ? ManagerInfrastructureGetErrorMessage(statsQuery.error, t('TEXT_GENERIC_ERROR')) : ''), totalInquiries: listQuery.data?.total ?? 0, toast: ui.toast, showToast: ui.showToast, hideToast: ui.hideToast,
-    search, debouncedSearch, setSearch: (value) => { ui.setSearch(value); setUrlParam("page", "1"); }, statusFilter, setStatusFilter: (value) => setUrlParam("status", value), dateFilter, setDateFilter: (value) => setUrlParam("date", value), currentPage, setCurrentPage: (value) => setUrlParam("page", String(value)),
+    search, debouncedSearch, setSearch: (value) => { ui.setSearch(value); setUrlParam("page", "1"); }, statusFilter, setStatusFilter: (value) => setUrlParam("status", value), dateFilter, setDateFilter: (value) => setUrlParam("date", value), startDate, endDate, setStartDate: (value: string) => setUrlParam("startDate", value), setEndDate: (value: string) => setUrlParam("endDate", value), currentPage, setCurrentPage: (value) => setUrlParam("page", String(value)),
     selectedIds: ui.selectedIds, toggleSelectAll, toggleSelectOne, clearSelection: () => ui.setSelectedIds([]), showModal: ui.showModal, setShowModal: ui.setShowModal, editId: ui.editId, editData: ui.editData, saving: isCreating || isUpdating, openAdd, openEdit, saveInquiry, deleteInquiry, updateStatus,
     msgModal: ui.msgModal, openMsg, closeMsg: () => ui.setMsgModal(null), bulkMsgModal: ui.bulkMsgModal, openBulkMsg, closeBulkMsg: () => ui.setBulkMsgModal(null), convertLead: ui.convertLead, openConvert, closeConvert: () => ui.setConvertLead(null), convertLeadMutation: async (args: { id: string; data: Record<string, unknown> }) => convertLeadMutation({ ...args, idempotencyKey: ManagerInfrastructureIdempotency() }), isConverting, refresh };
 }

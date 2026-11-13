@@ -62,7 +62,34 @@ export function useManagerAttendanceTrackingLogic(): ManagerAttendanceTrackingVi
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }, [pathname, router, searchParams]);
   const setDateFilter = useCallback((value: string) => setUrlParam('date', value || null), [setUrlParam]);
-  const setRange = useCallback((value: string) => setUrlParam('range', value || null), [setUrlParam]);
+  const setRange = useCallback((value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (value) params.set('range', value); else params.delete('range');
+    if (value === 'this_year') {
+      const year = new Date().getFullYear();
+      params.set('startDate', `${year}-01-01`);
+      params.set('endDate', `${year}-12-31`);
+    } else if (value === 'this_month') {
+      const now = new Date();
+      const ym = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+      params.set('startDate', `${ym}-01`);
+      params.set('endDate', `${ym}-${new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate()}`);
+    } else if (value === 'last_month') {
+      const now = new Date();
+      const prevM = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+      const ym = `${prevM.getFullYear()}-${String(prevM.getMonth() + 1).padStart(2, '0')}`;
+      params.set('startDate', `${ym}-01`);
+      params.set('endDate', `${ym}-${new Date(prevM.getFullYear(), prevM.getMonth() + 1, 0).getDate()}`);
+    } else if (value === 'last_3_months') {
+      const now = new Date();
+      const threeMAgo = new Date(now.getTime() - 90 * 86400000);
+      const fmt = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      params.set('startDate', fmt(threeMAgo));
+      params.set('endDate', fmt(now));
+    }
+    params.set('page', '1');
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }, [pathname, router, searchParams]);
   const setStatusFilter = useCallback((value: string) => setUrlParam('status', value || null), [setUrlParam]);
   const setCurrentPage = useCallback((value: number) => setUrlParam('page', String(Math.max(1, value))), [setUrlParam]);
   const setTab = useCallback((value: AttendanceTab) => setUrlParam('tab', value), [setUrlParam]);

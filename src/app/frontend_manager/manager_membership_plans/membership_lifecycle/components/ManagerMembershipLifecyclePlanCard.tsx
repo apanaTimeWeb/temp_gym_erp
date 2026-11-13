@@ -29,6 +29,7 @@ export default function ManagerMembershipLifecyclePlanCard({ plan }: ManagerMemb
             ) : (
               <span className="rounded-full bg-input px-2.5 py-0.5 text-xs font-semibold text-text-secondary">{plan.tier}</span>
             )}
+            <span className="rounded-full bg-info-bg border border-info/30 px-2 py-0.5 text-xs font-semibold text-info-text">Master Plan (Admin)</span>
             {plan.isActive ? (
               <span data-testid={`manager_plans-manager-plans-main-status-active-${plan.id}`} className="flex items-center gap-1 rounded-full bg-success-bg px-2 py-0.5 text-xs font-semibold text-success-text"><CheckCircle size={18} strokeWidth={2} aria-hidden="true" />{t('COPY_ACTIVE_1')}</span>
             ) : (

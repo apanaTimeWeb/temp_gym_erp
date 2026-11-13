@@ -65,7 +65,19 @@ export default function ManagerInquiriesPipelineTableRow({ inq, mapIndex, select
                     <div className="w-32">
                       <ManagerSearchableDropdown dataTestId="manager_inquiries-managerinquiriestable-managersearchabledropdown-1"
                         value={inq.status}
-                        onChange={(val) => updateStatus(inq.id, String(val))}
+                        onChange={async (val) => {
+                          const newStatus = String(val);
+                          if (newStatus === inq.status) return;
+                          const ok = await confirm({
+                            title: 'Confirm Status Change',
+                            message: `Are you sure you want to change status of "${inq.name}" from ${inq.status} to ${newStatus}?`,
+                            type: 'warning',
+                            confirmText: 'Update Status'
+                          });
+                          if (ok) {
+                            void updateStatus(inq.id, newStatus);
+                          }
+                        }}
                         options={Object.entries(INQUIRIES_STATUS_LABEL_KEYS).map(([val, labelKey]) => ({ label: t(labelKey), value: val }))}
                        data-testid="manager_inquiries-managerinquiriestable-searchable-dropdown-1"/>
                     </div>
@@ -74,7 +86,7 @@ export default function ManagerInquiriesPipelineTableRow({ inq, mapIndex, select
                     {ManagerInquiriesPipelineFormatDate(inq.createdAt)}
                   </td>
                   <td className={`px-5 py-3.5 ${cellBaseClass}`} data-label={t(INQUIRIES_TABLE_HEADER_KEYS[5])} data-mobile-actions="true" onClick={(e) => e.stopPropagation()}><span className="sr-only md:hidden">{t(INQUIRIES_TABLE_HEADER_KEYS[5])}</span>
-                    <ManagerInfrastructureTableRowActionMenu label={t(INQUIRIES_TABLE_HEADER_KEYS[5])} testId={`manager_inquiries-inquiries-managerinquiriestable-row-${inq.id}-actions-menu`}>
+                    <ManagerInfrastructureTableRowActionMenu label={t(INQUIRIES_TABLE_HEADER_KEYS[5])} testId={`manager_inquiries-inquiries-managerinquiriestable-row-${inq.id}-actions-menu`} hideTriggerOnDesktop={true}>
                     <div className="flex items-center gap-2">
                       <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "p-1.5 rounded-lg bg-success text-on-success motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_inquiries-inquiries-managerinquiriestable-button-whatsapp-${mapIndex}`}
                         onClick={(e) => { e.stopPropagation(); openMsg(inq, 'whatsapp'); }}

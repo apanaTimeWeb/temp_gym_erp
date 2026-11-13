@@ -45,9 +45,14 @@ export default function ManagerMembershipLifecycleCrudModal() {
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop p-4 overflow-y-auto" data-testid="manager_plans-managerplanscrudmodal-backdrop" role="presentation">
       <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="manager-plans-crud-title" data-testid="manager_plans-managerplanscrudmodal-dialog" className="my-auto flex max-h-dialog-desktop w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-border bg-overlay shadow-dialog">
         <div className="flex items-center justify-between gap-3 border-b border-border p-6 pb-4 shrink-0 bg-overlay">
-          <h2 id="manager-plans-crud-title" className="text-lg font-bold text-text-primary">
-            {t(crudModalPlan ? 'CRUD_EDIT_PLAN_TITLE' : 'CRUD_ADD_PLAN_TITLE')}
-          </h2>
+          <div>
+            <h2 id="manager-plans-crud-title" className="text-lg font-bold text-text-primary">
+              {t(crudModalPlan ? 'CRUD_EDIT_PLAN_TITLE' : 'CRUD_ADD_PLAN_TITLE')}
+            </h2>
+            <p className="text-xs text-text-secondary mt-0.5">
+              Master Plan Policy: Plan templates are governed by Organization Admin. Edits will sync across branches upon admin confirmation.
+            </p>
+          </div>
           <button type="button" onClick={close} aria-label={t('CRUD_CLOSE_PLAN_FORM')} data-testid="manager_plans-managerplanscrudmodal-button-close" className="min-h-11 min-w-11 rounded-lg text-text-secondary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring">
             <X size={18} strokeWidth={2} aria-hidden="true" />
           </button>

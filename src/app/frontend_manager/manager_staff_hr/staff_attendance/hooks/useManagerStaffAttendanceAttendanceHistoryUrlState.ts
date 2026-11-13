@@ -18,8 +18,8 @@ export function useManagerStaffPayrollAndAttendanceAttendanceHistoryUrlState() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const month = searchParams.get(MANAGER_STAFF_PAYROLL_AND_ATTENDANCE_ROUTES.QUERY_PARAMS.ATTENDANCE_HISTORY_MONTH) ?? getCurrentMonth();
-  const selectedStaffId = searchParams.get(MANAGER_STAFF_PAYROLL_AND_ATTENDANCE_ROUTES.QUERY_PARAMS.ATTENDANCE_HISTORY_STAFF_ID) ?? '';
+  const month = searchParams.get(MANAGER_STAFF_PAYROLL_AND_ATTENDANCE_ROUTES.QUERY_PARAMS.ATTENDANCE_HISTORY_MONTH) || searchParams.get('month') || getCurrentMonth();
+  const selectedStaffId = searchParams.get(MANAGER_STAFF_PAYROLL_AND_ATTENDANCE_ROUTES.QUERY_PARAMS.ATTENDANCE_HISTORY_STAFF_ID) || searchParams.get('staffId') || '';
   const update = useCallback((key: 'month' | 'staffId', value: string | null) => {
     const query = ManagerStaffPayrollAndAttendanceBuildAttendanceHistorySearchParams(searchParams.toString(), key, value);
     router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });

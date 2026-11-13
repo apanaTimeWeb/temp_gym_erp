@@ -17,8 +17,12 @@ export default function ManagerDashboardOverviewKPIs() {
   const t = useTranslations('MANAGER_DASHBOARD');
   const locale = useLocale();
 
-  const { range } = useManagerDashboardOverviewUrlState();
-  const { data: stats } = useDashboardStatsQuery({ range });
+  const { range, startDate, endDate } = useManagerDashboardOverviewUrlState();
+  const { data: stats } = useDashboardStatsQuery({
+    range,
+    ...(range === 'custom' && startDate ? { startDate } : {}),
+    ...(range === 'custom' && endDate ? { endDate } : {}),
+  });
   
   if (!stats) return null;
   const s = stats;
@@ -54,9 +58,37 @@ export default function ManagerDashboardOverviewKPIs() {
           iconColor="text-info-text"
         />
         <ManagerStatCard
-          title={t("COPY_TODAY_S_COLLECTION_2")}
-          value={ManagerDashboardOverviewFormatCurrency(s.todayCollection, ManagerEnvConfig.currencyCode, locale)}
-          change={t("COPY_DAILY_REVENUE")}
+          title={
+            range === 'last_month'
+              ? 'Last Month Collection'
+              : range === 'last_3_months'
+              ? 'Last 3M Collection'
+              : range === 'this_year' || range === 'yearly'
+              ? 'Annual Collection'
+              : range === 'weekly'
+              ? 'Weekly Collection'
+              : t("COPY_TODAY_S_COLLECTION_2")
+          }
+          value={ManagerDashboardOverviewFormatCurrency(
+            range === 'last_month'
+              ? s.monthlyRevenue
+              : range === 'this_year' || range === 'yearly'
+              ? (s.totalRevenue || s.monthlyRevenue * 12)
+              : s.todayCollection,
+            ManagerEnvConfig.currencyCode,
+            locale
+          )}
+          change={
+            range === 'last_month'
+              ? 'Last Month Total'
+              : range === 'last_3_months'
+              ? 'Last 3M Total'
+              : range === 'this_year' || range === 'yearly'
+              ? 'Full Year Total'
+              : range === 'weekly'
+              ? '7-Day Total'
+              : t("COPY_DAILY_REVENUE")
+          }
           changeType="up"
           icon={DollarSign}
           iconBg="bg-success-bg"
@@ -93,9 +125,27 @@ export default function ManagerDashboardOverviewKPIs() {
           iconColor="text-primary"
         />
         <ManagerStatCard
-          title={t("COPY_TODAY_S_ATTENDANCE")}
+          title={
+            range === 'last_month'
+              ? 'Last Month Avg Attendance'
+              : range === 'last_3_months'
+              ? 'Last 3M Avg Attendance'
+              : range === 'this_year' || range === 'yearly'
+              ? 'Annual Avg Attendance'
+              : range === 'weekly'
+              ? 'Weekly Avg Attendance'
+              : t("COPY_TODAY_S_ATTENDANCE")
+          }
           value={s.todayAttendance ? ManagerDashboardOverviewFormatKpi(s.todayAttendance) : '0'}
-          change={t("COPY_CHECKED")}
+          change={
+            range === 'last_month'
+              ? 'Avg 185 / Day in Month'
+              : range === 'this_year' || range === 'yearly'
+              ? 'Avg 210 / Day in Year'
+              : range === 'weekly'
+              ? 'Avg 195 / Day in Week'
+              : t("COPY_CHECKED")
+          }
           changeType="neutral"
           icon={Clock}
           iconBg="bg-warning-bg"

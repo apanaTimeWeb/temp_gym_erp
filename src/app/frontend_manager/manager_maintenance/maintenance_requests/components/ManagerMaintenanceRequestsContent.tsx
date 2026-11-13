@@ -2,6 +2,7 @@
 'use client';
 import { AlertCircle, CheckCircle, Clock, Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useConfirm } from '@/components/ui/manager_confirm_provider/ManagerConfirmProvider';
 import ManagerMaintenanceRequestsEmptyState from '@/app/frontend_manager/manager_maintenance/maintenance_requests/components/ManagerMaintenanceRequestsEmptyState';
 
 import { ManagerEnvConfig } from '@/app/frontend_manager/manager_infrastructure/constants/ManagerInfrastructureEnvConfig';
@@ -36,6 +37,7 @@ function getMaintenanceStatusIcon(status: MaintenanceStatus) {
  */
 export default function ManagerMaintenanceRequestsContent({ tickets, isPending, isError, error, reload, resolveTicket, isResolving, locale }: ManagerMaintenanceRequestsContentProps) {
   const t = useTranslations('MANAGER_MAINTENANCE_REQUESTS');
+  const { confirm } = useConfirm();
   if (isPending) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" aria-label={t("COPY_LOADING_MAINTENANCE_ISSUES")}>
@@ -81,8 +83,24 @@ export default function ManagerMaintenanceRequestsContent({ tickets, isPending, 
             {ticket.assignedVendor && <div className="flex justify-between gap-3"><span>{t("COPY_VENDOR")}</span><span className="font-medium text-text-primary text-right truncate" title={ticket.assignedVendor}>{ticket.assignedVendor}</span></div>}
             {ticket.estimatedCost !== undefined && <div className="flex justify-between gap-3"><span>{t("COPY_EST_COST")}</span><span className="font-medium text-text-primary text-right">{ManagerMaintenanceRequestsFormatCurrency(ticket.estimatedCost, ManagerEnvConfig.currencyCode, locale)}</span></div>}
           </div>
+          <div className="mt-3 pt-2 border-t border-border">
+            <p className="text-[11px] text-text-secondary italic">
+              Floor Verification: Manager confirms physical repair readiness. Admin approves final vendor billing.
+            </p>
+          </div>
           {ticket.status !== MANAGER_MAINTENANCE_REQUESTS_RESOLVED_STATUS && (
-            <button className="w-full min-h-11 mt-5 rounded-lg bg-success text-on-success font-semibold text-sm motion-safe:transition-all disabled:opacity-70 inline-flex items-center justify-center gap-2 motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid={`manager_maintenance-manager-maintenance-content-button-resolve-${ticket.id}`} type="button" onClick={() => { if (!isResolving) void resolveTicket(ticket.id); }} disabled={isResolving}>
+            <button className="w-full min-h-11 mt-3 rounded-lg bg-success text-on-success font-semibold text-sm motion-safe:transition-all disabled:opacity-70 inline-flex items-center justify-center gap-2 motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid={`manager_maintenance-manager-maintenance-content-button-resolve-${ticket.id}`} type="button" onClick={async () => {
+              if (isResolving) return;
+              const ok = await confirm({
+                title: 'Confirm Physical Repair Verification',
+                message: `Have you verified that "${ticket.equipment}" is fully repaired and safe on the gym floor? Resolving notifies Admin for vendor settlement.`,
+                type: 'info',
+                confirmText: 'Verify & Mark Operational'
+              });
+              if (ok) {
+                void resolveTicket(ticket.id);
+              }
+            }} disabled={isResolving}>
               {isResolving && <Loader2 size={18} strokeWidth={2} className="motion-safe:animate-spin" aria-hidden="true"/>}{isResolving ? t('COPY_RESOLVING') : t('COPY_MARK_AS_RESOLVED')}
             </button>
           )}

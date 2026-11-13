@@ -4,6 +4,7 @@ import { Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 
+import ManagerFinancePaymentsAndSummaryDateFilterDropdown from '@/app/frontend_manager/manager_finance_expenses/finance_payments_and_summary/components/ManagerFinancePaymentsAndSummaryDateFilterDropdown';
 import ManagerFinancePaymentsAndSummaryKpiCards from '@/app/frontend_manager/manager_finance_expenses/finance_payments_and_summary/components/ManagerFinancePaymentsAndSummaryKpiCards';
 import ManagerFinancePaymentsAndSummaryPaymentModal from '@/app/frontend_manager/manager_finance_expenses/finance_payments_and_summary/components/ManagerFinancePaymentsAndSummaryPaymentModal';
 import { FINANCE_TABS } from '@/app/frontend_manager/manager_finance_expenses/finance_payments_and_summary/constants/manager_finance_payments_and_summary_shared.constants';
@@ -29,7 +30,10 @@ export function ManagerFinancePaymentsAndSummaryContent() {
           <div>
             <h1 className="text-2xl font-bold text-text-primary">{t('COPY_BRANCH_FINANCE')}</h1>
           </div>
-          <button type="button" onClick={() => ui.setShowModal(true)} data-testid="manager_finance-managerfinancecontent-button-record-payment" className="inline-flex min-h-11 min-w-11 items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"> <Plus size={18} strokeWidth={2} aria-hidden="true" />{t('TEXT_RECORD_PAYMENT')}</button>
+          <div className="flex flex-wrap items-center gap-3">
+            <ManagerFinancePaymentsAndSummaryDateFilterDropdown />
+            <button type="button" onClick={() => ui.setShowModal(true)} data-testid="manager_finance-managerfinancecontent-button-record-payment" className="inline-flex min-h-11 min-w-11 items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"> <Plus size={18} strokeWidth={2} aria-hidden="true" />{t('TEXT_RECORD_PAYMENT')}</button>
+          </div>
         </div>
         {/* KPIs */}
         <ManagerFinancePaymentsAndSummaryKpiCards />

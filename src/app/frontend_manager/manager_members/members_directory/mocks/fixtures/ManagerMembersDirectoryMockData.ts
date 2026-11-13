@@ -25,7 +25,7 @@ export const MOCK_MEMBERS: Member[] = [
     billingCycle: 'Annual',
     createdAt: '2023-01-15T10:00:00Z',
     plan: { id: 'p1', name: 'Annual Pro', price1Month: 150000, price3Month: 400000, price6Month: 750000, price12Month: 1500000 },
-    expiryDate: '2024-01-15T10:00:00Z',
+    expiryDate: '2026-11-20T10:00:00Z',
     paidAmount: 1500000,
     pendingAmount: 0,
     gender: 'Male' },
@@ -41,7 +41,7 @@ export const MOCK_MEMBERS: Member[] = [
     billingCycle: 'Quarterly',
     createdAt: '2023-05-10T10:00:00Z',
     plan: { id: 'p2', name: 'Quarterly Starter', price1Month: 200000, price3Month: 500000, price6Month: 900000, price12Month: 1600000 },
-    expiryDate: '2023-08-10T10:00:00Z',
+    expiryDate: '2026-11-16T10:00:00Z',
     paidAmount: 200000,
     pendingAmount: 300000,
     gender: 'Female' },
@@ -57,18 +57,18 @@ export const MOCK_MEMBERS: Member[] = [
     billingCycle: 'Monthly',
     createdAt: '2022-11-01T10:00:00Z',
     plan: { id: 'p3', name: 'Monthly Basic', price1Month: 200000, price3Month: 550000, price6Month: 1000000, price12Month: 1800000 },
-    expiryDate: '2022-12-01T10:00:00Z',
+    expiryDate: '2026-11-10T10:00:00Z',
     paidAmount: 200000,
     pendingAmount: 0,
     gender: 'Male' }
 ,
   {
     id: 'm4', name: 'Neha Gupta', email: 'neha.g@example.com', phone: '+919876543213', status: MANAGER_MEMBERS_DIRECTORY_STATUS_VALUES.ACTIVE, joinDate: '2023-06-18T10:00:00Z', planId: 'p1', branch: 'Main Branch', billingCycle: 'Annual', createdAt: '2023-06-18T10:00:00Z',
-    plan: { id: 'p1', name: 'Annual Pro', price1Month: 150000, price3Month: 400000, price6Month: 750000, price12Month: 1500000 }, expiryDate: '2024-06-18T10:00:00Z', paidAmount: 1500000, pendingAmount: 0, gender: 'Female'
+    plan: { id: 'p1', name: 'Annual Pro', price1Month: 150000, price3Month: 400000, price6Month: 750000, price12Month: 1500000 }, expiryDate: '2026-12-18T10:00:00Z', paidAmount: 1500000, pendingAmount: 0, gender: 'Female'
   },
   {
     id: 'm5', name: 'Rohit Mehta', email: 'rohit.m@example.com', phone: '+919876543214', status: MANAGER_MEMBERS_DIRECTORY_STATUS_VALUES.ACTIVE, joinDate: '2023-07-22T10:00:00Z', planId: 'p2', branch: 'Main Branch', billingCycle: 'Quarterly', createdAt: '2023-07-22T10:00:00Z',
-    plan: { id: 'p2', name: 'Quarterly Starter', price1Month: 200000, price3Month: 500000, price6Month: 900000, price12Month: 1600000 }, expiryDate: '2024-07-22T10:00:00Z', paidAmount: 500000, pendingAmount: 0, gender: 'Male'
+    plan: { id: 'p2', name: 'Quarterly Starter', price1Month: 200000, price3Month: 500000, price6Month: 900000, price12Month: 1600000 }, expiryDate: '2026-12-25T10:00:00Z', paidAmount: 500000, pendingAmount: 0, gender: 'Male'
   },
   {
     id: 'm6', name: 'Kavya Singh', email: 'kavya.s@example.com', phone: '+919876543215', status: MANAGER_MEMBERS_DIRECTORY_STATUS_VALUES.PENDING, joinDate: '2023-08-14T10:00:00Z', planId: 'p3', branch: 'Main Branch', billingCycle: 'Monthly', createdAt: '2023-08-14T10:00:00Z',

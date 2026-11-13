@@ -93,6 +93,9 @@ export function handleManagerMockApiRequest(
         ...stats,
         newMembersThisMonth: 38,
         monthlyRevenue: 7800000,
+        todayCollection: 7800000,
+        todayAttendance: 185,
+        pendingPayments: 18500,
         newInquiries: 29,
         revenueGrowthPercent: 8.4,
         totalPTRevenue: 22000,
@@ -117,6 +120,9 @@ export function handleManagerMockApiRequest(
         ...stats,
         newMembersThisMonth: 122,
         monthlyRevenue: 24500000,
+        todayCollection: 24500000,
+        todayAttendance: 195,
+        pendingPayments: 24000,
         newInquiries: 98,
         revenueGrowthPercent: 15.2,
         totalPTRevenue: 71000,
@@ -127,6 +133,10 @@ export function handleManagerMockApiRequest(
         ...stats,
         newMembersThisMonth: 480,
         monthlyRevenue: 95000000,
+        totalRevenue: 95000000,
+        todayCollection: 95000000,
+        todayAttendance: 210,
+        pendingPayments: 45000,
         newInquiries: 380,
         revenueGrowthPercent: 24.0,
         totalPTRevenue: 285000,
@@ -137,6 +147,9 @@ export function handleManagerMockApiRequest(
         ...stats,
         newMembersThisMonth: 12,
         monthlyRevenue: 1950000,
+        todayCollection: 1950000,
+        todayAttendance: 195,
+        pendingPayments: 8000,
         newInquiries: 8,
         revenueGrowthPercent: 5.0,
         totalPTRevenue: 6000,
@@ -346,13 +359,26 @@ export function handleManagerMockApiRequest(
     }
     const search = (searchParams.get('search') || '').trim().toLowerCase();
     const status = (searchParams.get('status') || '').trim().toUpperCase();
+    const gender = (searchParams.get('gender') || '').trim().toUpperCase();
+    const plan = (searchParams.get('plan') || '').trim();
+    const expiryFrom = searchParams.get('expiryFrom') || '';
+    const expiryTo = searchParams.get('expiryTo') || '';
     const page = Math.max(Number(searchParams.get('page') || '1'), 1);
     const limit = Math.max(Number(searchParams.get('limit') || '10'), 1);
 
     const filtered = MOCK_MEMBERS.filter((m) => {
       const matchesSearch = !search || m.name.toLowerCase().includes(search) || m.phone.includes(search) || (m.email && m.email.toLowerCase().includes(search));
       const matchesStatus = !status || status === 'ALL' || m.status?.toUpperCase() === status;
-      return matchesSearch && matchesStatus;
+      const matchesGender = !gender || gender === 'ALL' || m.gender?.toUpperCase() === gender;
+      const matchesPlan = !plan || plan === 'All' || m.planId === plan || (m.plan && m.plan.id === plan) || (m.plan && m.plan.name === plan);
+      let matchesExpiry = true;
+      if (expiryFrom && m.expiryDate) {
+        matchesExpiry = matchesExpiry && new Date(m.expiryDate) >= new Date(expiryFrom);
+      }
+      if (expiryTo && m.expiryDate) {
+        matchesExpiry = matchesExpiry && new Date(m.expiryDate) <= new Date(expiryTo);
+      }
+      return matchesSearch && matchesStatus && matchesGender && matchesPlan && matchesExpiry;
     });
 
     const start = (page - 1) * limit;
@@ -612,7 +638,7 @@ export function handleManagerMockApiRequest(
   if (path === 'hr/summary') {
     return buildMockSuccess(hrData.summary, 'HR summary loaded');
   }
-  if (path === 'hr/staff') {
+  if (path === 'hr/staff' || path === 'hr/staff/') {
     if (method === 'POST') {
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
@@ -628,12 +654,21 @@ export function handleManagerMockApiRequest(
         return buildMockSuccess(hrData.staff[0], 'Staff member added');
       }
     }
-    return buildMockSuccess({ staff: hrData.staff, total: hrData.staff.length }, 'Staff list loaded');
+    const search = (searchParams.get('search') || '').trim().toLowerCase();
+    const role = (searchParams.get('role') || '').trim();
+    let staffList = [...hrData.staff];
+    if (search) {
+      staffList = staffList.filter((s) => s.name.toLowerCase().includes(search) || s.phone.includes(search) || s.email.toLowerCase().includes(search));
+    }
+    if (role && role !== 'All' && role !== 'all') {
+      staffList = staffList.filter((s) => s.role.toLowerCase() === role.toLowerCase());
+    }
+    return buildMockSuccess({ staff: staffList, total: staffList.length }, 'Staff list loaded');
   }
   if (path.startsWith('hr/staff/') && path.endsWith('/attendance')) {
     const parts = path.split('/');
     const staffId = parts[2];
-    const month = searchParams.get('month') || new Date().toISOString().slice(0, 7);
+    const month = searchParams.get('month') || searchParams.get('attendanceMonth') || new Date().toISOString().slice(0, 7);
     const records = Array.from({ length: 28 }, (_, i) => ({
       date: `${month}-${String(i + 1).padStart(2, '0')}`,
       status: i % 7 === 0 ? 'LEAVE' : (i % 11 === 0 ? 'ABSENT' : 'PRESENT'),
@@ -970,8 +1005,22 @@ export function handleManagerMockApiRequest(
   // 10. INQUIRIES & CRM
   if (path === 'inquiries/stats') {
     const range = searchParams.get('range') || searchParams.get('date');
+    const startDate = searchParams.get('startDate');
+    const endDate = searchParams.get('endDate');
     let stats = { ...MOCK_INQUIRY_STATS };
-    if (range === 'last_month') {
+    if (startDate && endDate) {
+      const s = new Date(startDate).getTime();
+      const e = new Date(endDate).setHours(23, 59, 59, 999);
+      const filtered = currentInquiries.filter((i) => {
+        const t = new Date(i.createdAt).getTime();
+        return t >= s && t <= e;
+      });
+      const newCount = filtered.filter((i) => i.status === 'NEW').length;
+      const followUpCount = filtered.filter((i) => i.status === 'FOLLOW_UP').length;
+      const convertedCount = filtered.filter((i) => i.status === 'CONVERTED').length;
+      const lostCount = filtered.filter((i) => i.status === 'LOST').length;
+      stats = { total: filtered.length, new: newCount, followUp: followUpCount, converted: convertedCount, lost: lostCount };
+    } else if (range === 'last_month') {
       stats = { total: 42, new: 10, followUp: 14, converted: 12, lost: 6 };
     } else if (range === 'last_3_months') {
       stats = { total: 135, new: 35, followUp: 45, converted: 38, lost: 17 };
@@ -994,7 +1043,51 @@ export function handleManagerMockApiRequest(
         return buildMockSuccess(MOCK_INQUIRIES[0], 'Inquiry logged');
       }
     }
-    return buildMockSuccess({ inquiries: currentInquiries, total: currentInquiries.length }, 'Inquiries loaded');
+    const search = (searchParams.get('search') || '').trim().toLowerCase();
+    const status = (searchParams.get('status') || '').trim();
+    const date = searchParams.get('date') || searchParams.get('range');
+    const startDate = searchParams.get('startDate');
+    const endDate = searchParams.get('endDate');
+
+    let list = [...currentInquiries];
+    if (search) {
+      list = list.filter((i) =>
+        i.name.toLowerCase().includes(search) ||
+        i.phone.includes(search) ||
+        (i.email && i.email.toLowerCase().includes(search)) ||
+        (i.interest && i.interest.toLowerCase().includes(search))
+      );
+    }
+    if (status && status !== 'ALL' && status !== 'all') {
+      list = list.filter((i) => i.status === status);
+    }
+    if (startDate && endDate) {
+      const s = new Date(startDate).getTime();
+      const e = new Date(endDate).setHours(23, 59, 59, 999);
+      list = list.filter((i) => {
+        const t = new Date(i.createdAt).getTime();
+        return t >= s && t <= e;
+      });
+    } else if (date === 'last_month') {
+      const now = new Date();
+      const firstDayPrevMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1).getTime();
+      const lastDayPrevMonth = new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59, 999).getTime();
+      list = list.filter((i) => {
+        const t = new Date(i.createdAt).getTime();
+        return t >= firstDayPrevMonth && t <= lastDayPrevMonth;
+      });
+    } else if (date === 'this_month') {
+      const now = new Date();
+      const firstDayThisMonth = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+      list = list.filter((i) => new Date(i.createdAt).getTime() >= firstDayThisMonth);
+    } else if (date === 'last_3_months') {
+      const threeMonthsAgo = Date.now() - 90 * 86400000;
+      list = list.filter((i) => new Date(i.createdAt).getTime() >= threeMonthsAgo);
+    } else if (date === 'this_year') {
+      const firstDayThisYear = new Date(new Date().getFullYear(), 0, 1).getTime();
+      list = list.filter((i) => new Date(i.createdAt).getTime() >= firstDayThisYear);
+    }
+    return buildMockSuccess({ inquiries: list, total: list.length }, 'Inquiries loaded');
   }
   if (path.startsWith('inquiries/') && path.endsWith('/convert')) {
     const id = path.split('/')[1];
@@ -1044,10 +1137,10 @@ export function handleManagerMockApiRequest(
   if (path === 'plans/change-requests') {
     return buildMockSuccess({ success: true, requestId: `cr-${Date.now()}` }, 'Change request submitted');
   }
-  if (path.startsWith('plans/memberships/')) {
-    return buildMockSuccess({ success: true }, 'Membership updated');
+  if (path.startsWith('plans/memberships/') || path === 'plans/membership-activate' || path === 'plans/membership-renew' || path === 'plans/membership-freeze') {
+    return buildMockSuccess({ success: true, message: 'Membership updated successfully' }, 'Membership updated');
   }
-  if (path === 'plans/memberships' || path === 'membership-lifecycle') {
+  if (path === 'plans/memberships' || path === 'membership-lifecycle' || path === 'plans/membership-overview') {
     return buildMockSuccess(MOCK_PLANS_MEMBERSHIP_OVERVIEW, 'Membership overview loaded');
   }
   if (path.startsWith('plans/')) {

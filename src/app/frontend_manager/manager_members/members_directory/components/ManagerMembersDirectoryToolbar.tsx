@@ -38,6 +38,46 @@ export default function ManagerMembersDirectoryToolbar() {
     void queryClient.invalidateQueries({ queryKey: ManagerMembersDirectoryQueryKeys.all });
   };
 
+  const handleExpiryPreset = (preset: string) => {
+    const now = new Date();
+    const formatYMD = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    if (preset === 'all') {
+      setExpiryRange('', '');
+    } else if (preset === 'this_week') {
+      const dayOfWeek = now.getDay();
+      const diffToMonday = (dayOfWeek + 6) % 7;
+      const startOfWeek = new Date(now);
+      startOfWeek.setDate(now.getDate() - diffToMonday);
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(startOfWeek.getDate() + 6);
+      setExpiryRange(formatYMD(startOfWeek), formatYMD(endOfWeek));
+    } else if (preset === 'this_month') {
+      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+      const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+      setExpiryRange(formatYMD(startOfMonth), formatYMD(endOfMonth));
+    } else if (preset === 'next_month') {
+      const startOfNextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+      const endOfNextMonth = new Date(now.getFullYear(), now.getMonth() + 2, 0);
+      setExpiryRange(formatYMD(startOfNextMonth), formatYMD(endOfNextMonth));
+    } else if (preset === 'expired') {
+      setExpiryRange('2020-01-01', formatYMD(now));
+    }
+  };
+
+  const currentExpiryPreset = (() => {
+    if (!expiryFrom && !expiryTo) return 'all';
+    const now = new Date();
+    const formatYMD = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    if (expiryTo === formatYMD(now) && expiryFrom === '2020-01-01') return 'expired';
+    const startOfMonth = formatYMD(new Date(now.getFullYear(), now.getMonth(), 1));
+    const endOfMonth = formatYMD(new Date(now.getFullYear(), now.getMonth() + 1, 0));
+    if (expiryFrom === startOfMonth && expiryTo === endOfMonth) return 'this_month';
+    const startOfNextMonth = formatYMD(new Date(now.getFullYear(), now.getMonth() + 1, 1));
+    const endOfNextMonth = formatYMD(new Date(now.getFullYear(), now.getMonth() + 2, 0));
+    if (expiryFrom === startOfNextMonth && expiryTo === endOfNextMonth) return 'next_month';
+    return 'custom';
+  })();
+
   // Build plan options dynamically from live plan list (Rule 3B — no hardcoded plans)
   const planOptions = [
     { label: t("COPY_ALL_PLANS"), value: 'All' },
@@ -123,6 +163,24 @@ export default function ManagerMembersDirectoryToolbar() {
           options={planOptions}
           placeholder={t("COPY_FILTER_PLAN")}
          data-testid="manager_members-managermemberstoolbar-searchable-dropdown-3"/>
+        {/* Expiry Preset dropdown */}
+        <div className="w-full sm:w-44">
+          <ManagerSearchableDropdown
+            dataTestId="manager_members-managermemberstoolbar-expiry-preset"
+            value={currentExpiryPreset}
+            onChange={(val) => handleExpiryPreset(String(val))}
+            options={[
+              { label: 'All Expiries', value: 'all' },
+              { label: 'This Week', value: 'this_week' },
+              { label: 'This Month', value: 'this_month' },
+              { label: 'Next Month', value: 'next_month' },
+              { label: 'Expired / Past Due', value: 'expired' },
+              { label: 'Custom Range', value: 'custom' },
+            ]}
+            placeholder="Expiry Filter"
+            ariaLabel="Expiry Preset Filter"
+          />
+        </div>
         {/* Expiry Date Range — CRITICAL FIX */}
         <div className="flex items-center gap-1.5 border border-border rounded-xl px-3 py-1.5 bg-input text-sm w-full sm:w-auto">
           <Calendar size={18} strokeWidth={2} className="text-text-secondary shrink-0" data-testid="manager_members-managermemberstoolbar-interactive"/>

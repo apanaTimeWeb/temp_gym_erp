@@ -8,6 +8,8 @@ export interface ManagerInquiriesPipelineQueryState {
   debouncedSearch: string;
   statusFilter: string;
   dateFilter: string;
+  startDate?: string;
+  endDate?: string;
 }
 
 /** Builds the server-side inquiry query parameters from the debounced URL state. */
@@ -18,5 +20,7 @@ export function ManagerInquiriesPipelineBuildQueryParams(state: ManagerInquiries
   if (state.debouncedSearch) params.search = state.debouncedSearch;
   if (state.statusFilter !== MANAGER_INQUIRIES_PIPELINE_STATUS_VALUES.ALL_FILTER) params.status = state.statusFilter;
   if (state.dateFilter !== 'all') params.date = state.dateFilter;
+  if (state.startDate) params.startDate = state.startDate;
+  if (state.endDate) params.endDate = state.endDate;
   return params;
 }

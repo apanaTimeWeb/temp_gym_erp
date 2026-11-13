@@ -1,5 +1,5 @@
 // RESPONSIBILITY: Owns the Manager sidebar's 15 domain rows and secondary leaf destinations. Store stays routable under Sales & Billing but outside the sidebar; profile/settings/notifications remain header-owned.
-import { LayoutDashboard, Users, CalendarCheck, Tags, Wrench, Frown, FileBarChart, Receipt, UserCog, CalendarClock, Dumbbell, Megaphone, Mail, History, Repeat, UserRoundX, ClipboardList, Settings, ShieldCheck, ClipboardCheck, BookOpen, Utensils, Gift, UserCheck, LifeBuoy } from 'lucide-react';
+import { LayoutDashboard, Users, CalendarCheck, Tags, Wrench, Frown, FileBarChart, Receipt, UserCog, CalendarClock, Dumbbell, Megaphone, Mail, History, Repeat, UserRoundX, ClipboardList, Settings, ShieldCheck, ClipboardCheck, BookOpen, Utensils, Gift, UserCheck, LifeBuoy, ShoppingCart, Package, Snowflake, Clock, AlertCircle, CheckCircle } from 'lucide-react';
 import type { ManagerNavGroup } from '@/app/frontend_manager/manager_navigation/types/ManagerNavigationConfigTypes';
 import { MANAGER_BUSINESS_SETTINGS_ROUTES } from '@/app/frontend_manager/manager_dashboard/business_settings/config/manager_business_settings.url_config';
 import { MANAGER_PROFILE_AND_SECURITY_ROUTES } from '@/app/frontend_manager/manager_dashboard/profile_and_security/config/manager_profile_and_security.url_config';
@@ -34,9 +34,40 @@ export const MANAGER_NAV_GROUPS: ManagerNavGroup[] = [
   { groupKey: 'NAV_DOMAIN_DASHBOARD', domainHref: '/frontend_manager/manager_dashboard', collapsible: true, items: [{ href: MANAGER_DASHBOARD_OVERVIEW_ROUTES.PATHS.LEAF, labelKey: 'NAV_DOMAIN_DASHBOARD', icon: LayoutDashboard }, { href: MANAGER_BUSINESS_SETTINGS_ROUTES.PATHS.LEAF, labelKey: 'NAV_BUSINESS_SETTINGS', icon: Settings }, { href: MANAGER_PROFILE_AND_SECURITY_ROUTES.PATHS.LEAF, labelKey: 'NAV_PROFILE_SECURITY', icon: ShieldCheck }] },
   { groupKey: 'NAV_DOMAIN_INQUIRIES_CRM', domainHref: '/frontend_manager/manager_inquiries_crm', collapsible: false, items: [{ href: MANAGER_INQUIRIES_PIPELINE_ROUTES.PATHS.LEAF, labelKey: 'NAV_DOMAIN_INQUIRIES_CRM', icon: Users }] },
   { groupKey: 'NAV_DOMAIN_MEMBERS', domainHref: '/frontend_manager/manager_members', collapsible: false, items: [{ href: MANAGER_MEMBERS_DIRECTORY_ROUTES.PATHS.LEAF, labelKey: 'NAV_DOMAIN_MEMBERS', icon: Users }] },
-  { groupKey: 'NAV_DOMAIN_ATTENDANCE', domainHref: '/frontend_manager/manager_attendance', collapsible: false, items: [{ href: MANAGER_ATTENDANCE_TRACKING_ROUTES.PATHS.LEAF, labelKey: 'NAV_DOMAIN_ATTENDANCE', icon: CalendarCheck }] },
-  { groupKey: 'NAV_DOMAIN_MEMBERSHIP_PLANS', domainHref: '/frontend_manager/manager_membership_plans', collapsible: false, items: [{ href: MANAGER_MEMBERSHIP_LIFECYCLE_ROUTES.PATHS.LEAF, labelKey: 'NAV_DOMAIN_MEMBERSHIP_PLANS', icon: Tags }] },
-  { groupKey: 'NAV_DOMAIN_SALES_BILLING', domainHref: '/frontend_manager/manager_sales_billing', collapsible: false, items: [{ href: MANAGER_SALES_OVERVIEW_ROUTES.PATHS.LEAF, labelKey: 'NAV_DOMAIN_SALES_BILLING', icon: FileBarChart }] },
+  {
+    groupKey: 'NAV_DOMAIN_ATTENDANCE',
+    domainHref: '/frontend_manager/manager_attendance',
+    collapsible: true,
+    items: [
+      { href: MANAGER_ATTENDANCE_TRACKING_ROUTES.PATHS.LEAF, labelKey: 'NAV_ATTENDANCE_OVERVIEW', icon: CalendarCheck },
+      { href: `${MANAGER_ATTENDANCE_TRACKING_ROUTES.PATHS.LEAF}?tab=Member+Attendance`, labelKey: 'NAV_MEMBER_ATTENDANCE', icon: Users },
+      { href: `${MANAGER_ATTENDANCE_TRACKING_ROUTES.PATHS.LEAF}?tab=Trainer+Attendance`, labelKey: 'NAV_TRAINER_ATTENDANCE', icon: UserCheck },
+      { href: STAFF_ATTENDANCE_ROUTES.PATHS.LEAF, labelKey: 'NAV_STAFF_ATTENDANCE', icon: Clock },
+    ],
+  },
+  {
+    groupKey: 'NAV_DOMAIN_MEMBERSHIP_PLANS',
+    domainHref: '/frontend_manager/manager_membership_plans',
+    collapsible: true,
+    items: [
+      { href: `${MANAGER_MEMBERSHIP_LIFECYCLE_ROUTES.PATHS.LEAF}?view=VIEW_PLANS`, labelKey: 'NAV_PLANS_CATALOG', icon: Tags },
+      { href: `${MANAGER_MEMBERSHIP_LIFECYCLE_ROUTES.PATHS.LEAF}?view=MEMBERSHIP_ACTIVATE`, labelKey: 'NAV_PLANS_ACTIVATE', icon: CheckCircle },
+      { href: `${MANAGER_MEMBERSHIP_LIFECYCLE_ROUTES.PATHS.LEAF}?view=MEMBERSHIP_RENEW`, labelKey: 'NAV_PLANS_RENEW', icon: Repeat },
+      { href: `${MANAGER_MEMBERSHIP_LIFECYCLE_ROUTES.PATHS.LEAF}?view=MEMBERSHIP_FREEZE`, labelKey: 'NAV_PLANS_FREEZE', icon: Snowflake },
+      { href: `${MANAGER_MEMBERSHIP_LIFECYCLE_ROUTES.PATHS.LEAF}?view=EXPIRY_CHECK`, labelKey: 'NAV_PLANS_EXPIRY', icon: AlertCircle },
+    ],
+  },
+  {
+    groupKey: 'NAV_DOMAIN_SALES_BILLING',
+    domainHref: '/frontend_manager/manager_sales_billing',
+    collapsible: true,
+    items: [
+      { href: MANAGER_SALES_OVERVIEW_ROUTES.PATHS.LEAF, labelKey: 'NAV_SALES_OVERVIEW', icon: FileBarChart },
+      { href: '/frontend_manager/manager_sales_billing/store_point_of_sale', labelKey: 'NAV_STORE_POS', icon: ShoppingCart },
+      { href: '/frontend_manager/manager_sales_billing/store_products_catalog', labelKey: 'NAV_STORE_PRODUCTS', icon: Package },
+      { href: '/frontend_manager/manager_sales_billing/store_order_management', labelKey: 'NAV_STORE_ORDERS', icon: Receipt },
+    ],
+  },
   { groupKey: 'NAV_DOMAIN_FINANCE_EXPENSES', domainHref: '/frontend_manager/manager_finance_expenses', collapsible: true, items: [
     { href: MANAGER_FINANCE_PAYMENTS_AND_SUMMARY_ROUTES.PATHS.LEAF, labelKey: 'NAV_FINANCE_SUMMARY', icon: Receipt },
     { href: MANAGER_EXPENSE_REGISTER_AND_REPORTING_ROUTES.PATHS.LEAF, labelKey: 'NAV_EXPENSE_REGISTER', icon: ClipboardList },

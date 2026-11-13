@@ -42,7 +42,21 @@ export default function ManagerBusinessSettingsMain() {
 
   return (
     <div className="w-full max-w-5xl space-y-6 bg-page text-text-primary">
-      <div><h1 className="text-page-title font-bold text-text-primary">{t("COPY_APP_SETTINGS")}</h1><p className="mt-1 text-sm text-text-secondary">{t("COPY_MANAGE_PREFERENCES_APP_BEHAVIOUR")}</p></div>
+      <div>
+        <h1 className="text-page-title font-bold text-text-primary">{t("COPY_APP_SETTINGS")}</h1>
+        <p className="mt-1 text-sm text-text-secondary">{t("COPY_MANAGE_PREFERENCES_APP_BEHAVIOUR")}</p>
+      </div>
+
+      <div className="flex items-center gap-3 rounded-xl border border-info/40 bg-info-bg/30 p-4 text-sm text-text-primary shadow-sm">
+        <ShieldCheck className="h-5 w-5 text-info-text shrink-0" />
+        <div>
+          <span className="font-semibold text-info-text">Organization Configuration — View-Only Mode (Managed by Admin)</span>
+          <p className="text-xs text-text-secondary mt-0.5">
+            Master gym profile, operating hours, and subscription license quotas are managed centrally by your Gym Administrator. Branch managers have read-only access to review operational guidelines.
+          </p>
+        </div>
+      </div>
+
       <div data-testid="manager_settings-managersettingsmain-tablist" className="flex max-w-full overflow-x-auto rounded-xl bg-input p-1"role="tablist" aria-label={t("COPY_MANAGER_BUSINESS_SETTINGS_SECTIONS")}>
         {MANAGER_BUSINESS_SETTINGS_TABS.map((tab, mapIndex) => <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", (`min-h-11 whitespace-nowrap rounded-lg px-4 text-sm font-medium motion-safe:transition-all motion-safe:duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring ${activeTab === tab.id ? 'bg-card text-primary shadow-card' : 'text-text-secondary hover:bg-surface-hover hover:text-primary'} ease-in-out motion-safe:active:scale-95 hover:brightness-110`)].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_settings-settings-managersettingsmain-button-app-settings-${mapIndex}`} key={tab.id} id={`manager-settings-tab-${tab.id}`} type="button" role="tab" aria-selected={activeTab === tab.id} aria-controls={`manager-settings-panel-${tab.id}`} onClick={() => setActiveTab(tab.id)} >{t(tab.labelKey)}</button>)}
       </div>
@@ -176,7 +190,17 @@ export default function ManagerBusinessSettingsMain() {
 
 
 
-        <div className="flex justify-end pt-2"><button data-testid="manager_settings-manager-settings-main-button-submit" type="submit" disabled={isSubmitting} className="flex min-h-11 min-w-32 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-sm font-semibold text-on-primary shadow-card motion-safe:transition-all motion-safe:duration-200 motion-safe:active:scale-95 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page ease-in-out hover:brightness-110">{isSubmitting ? <Loader2 size={18} strokeWidth={2} className="motion-safe:animate-spin" aria-hidden="true"/> : <Save size={18} strokeWidth={2} aria-hidden="true"/>}{isSubmitting ? t("TEXT_SAVING") : t("TEXT_SAVE_SETTINGS")}</button></div>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-3 border-t border-border">
+          <p className="text-xs text-text-secondary">
+            Master settings are controlled by Gym Administrator. To modify legal entity or operating hours, please contact Admin.
+          </p>
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-highlight border border-border text-xs font-semibold text-text-secondary">
+              <ShieldCheck size={14} className="text-primary" />
+              <span>Watch-Only Mode (Admin Controlled)</span>
+            </span>
+          </div>
+        </div>
       </form>
     </div>
   );

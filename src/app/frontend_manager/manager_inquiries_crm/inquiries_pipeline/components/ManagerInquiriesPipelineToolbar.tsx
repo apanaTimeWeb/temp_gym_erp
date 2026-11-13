@@ -18,7 +18,7 @@ import { useManagerInquiriesPipelineLogic } from '@/app/frontend_manager/manager
 export default function ManagerInquiriesPipelineToolbar() {
   const t = useTranslations('MANAGER_INQUIRIES_PIPELINE');
 
-  const { search, setSearch, statusFilter, setStatusFilter, dateFilter, setDateFilter, openAdd, selectedIds, clearSelection, openBulkMsg, setCurrentPage, refresh } = useManagerInquiriesPipelineLogic();
+  const { search, setSearch, statusFilter, setStatusFilter, dateFilter, setDateFilter, startDate, endDate, setStartDate, setEndDate, openAdd, selectedIds, clearSelection, openBulkMsg, setCurrentPage, refresh } = useManagerInquiriesPipelineLogic();
 
   if (selectedIds.length > 0) {
     return (
@@ -76,11 +76,33 @@ export default function ManagerInquiriesPipelineToolbar() {
               { label: 'Last Month', value: 'last_month' },
               { label: 'Last 3 Months', value: 'last_3_months' },
               { label: 'This Year', value: 'this_year' },
+              { label: 'Custom Range', value: 'custom' },
             ]}
             placeholder="Period"
             ariaLabel="Inquiries date filter"
           />
         </div>
+        {dateFilter === 'custom' && (
+          <div className="flex items-center gap-1.5 border border-border rounded-xl px-3 py-1.5 bg-input text-sm">
+            <input
+              type="date"
+              value={startDate || ''}
+              onChange={(e) => setStartDate?.(e.target.value)}
+              className="bg-transparent text-text-primary text-xs focus-visible:outline-none"
+              aria-label="Start date"
+              data-testid="manager_inquiries-toolbar-start-date"
+            />
+            <span className="text-text-secondary text-xs">–</span>
+            <input
+              type="date"
+              value={endDate || ''}
+              onChange={(e) => setEndDate?.(e.target.value)}
+              className="bg-transparent text-text-primary text-xs focus-visible:outline-none"
+              aria-label="End date"
+              data-testid="manager_inquiries-toolbar-end-date"
+            />
+          </div>
+        )}
         <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-w-32 flex items-center gap-2 px-3 py-2.5 text-sm border border-border rounded-xl motion-safe:transition-all text-text-secondary motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_inquiries-manager-inquiries-toolbar-button-refresh"
           onClick={() => void refresh()}
           

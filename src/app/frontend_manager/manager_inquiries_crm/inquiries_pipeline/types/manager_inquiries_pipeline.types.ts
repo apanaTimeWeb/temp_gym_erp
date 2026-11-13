@@ -24,6 +24,10 @@ export interface ManagerInquiriesPipelineViewModel {
   setStatusFilter: (s: string) => void;
   dateFilter: string;
   setDateFilter: (s: string) => void;
+  startDate?: string;
+  endDate?: string;
+  setStartDate?: (s: string) => void;
+  setEndDate?: (s: string) => void;
   currentPage: number;
   setCurrentPage: (p: number) => void;
   refresh: () => Promise<void>;

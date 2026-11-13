@@ -39,8 +39,9 @@ export const ManagerInquiriesPipelineApi = {
     return apiFetch(MANAGER_INQUIRIES_PIPELINE_API.GET_ONE(id), { dataSchema: inquirySchema });
   },
   
-  fetchInquiryStats: async (): Promise<ApiResponse<InquiryStats>> => {
-    return apiFetch(MANAGER_INQUIRIES_PIPELINE_API.STATS, { dataSchema: inquiryStatsSchema });
+  fetchInquiryStats: async (params?: Record<string, string>): Promise<ApiResponse<InquiryStats>> => {
+    const query = params && Object.keys(params).length ? '?' + new URLSearchParams(params).toString() : '';
+    return apiFetch(`${MANAGER_INQUIRIES_PIPELINE_API.STATS}${query}`, { dataSchema: inquiryStatsSchema });
   },
   
   createInquiry: async (body: ManagerInquiriesPipelineWritePayload, idempotencyKey: string): Promise<ApiResponse<Inquiry>> => {

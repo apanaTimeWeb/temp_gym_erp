@@ -45,7 +45,7 @@ function collectInlineActions(node: ReactNode): ReactElement[] {
  * @param children Existing inline action controls from the feature row.
  * @returns The unchanged inline actions plus an overflow menu that invokes the same original handlers.
  */
-export default function ManagerInfrastructureTableContextMenu({ label, testId, children }: ManagerInfrastructureTableRowActionMenuProps) {
+export default function ManagerInfrastructureTableContextMenu({ label, testId, children, hideTriggerOnDesktop }: ManagerInfrastructureTableRowActionMenuProps) {
   const [open, setOpen] = useState(false);
   const actions = collectInlineActions(children);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -88,7 +88,7 @@ export default function ManagerInfrastructureTableContextMenu({ label, testId, c
         aria-expanded={open}
         data-row-action-menu-trigger="true"
         data-testid={testId}
-        className="inline-flex min-h-11 min-w-11 md:min-h-8 md:min-w-8 items-center justify-center rounded-lg border border-border bg-input text-text-secondary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shrink-0"
+        className={hideTriggerOnDesktop ? "inline-flex md:hidden min-h-11 min-w-11 items-center justify-center rounded-lg border border-border bg-input text-text-secondary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shrink-0" : "inline-flex min-h-11 min-w-11 md:min-h-8 md:min-w-8 items-center justify-center rounded-lg border border-border bg-input text-text-secondary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shrink-0"}
         onClick={(event) => { event.stopPropagation(); setOpen((value) => !value); }}
       >
         <MoreHorizontal size={18} aria-hidden="true" />

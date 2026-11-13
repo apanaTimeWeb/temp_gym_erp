@@ -13,6 +13,7 @@ export interface ManagerInfrastructureTableRowActionMenuProps {
   label: string;
   testId: string;
   children: ReactNode;
+  hideTriggerOnDesktop?: boolean;
 }
 
 export type ManagerInfrastructureTableElementWithChildren = ReactElement<{

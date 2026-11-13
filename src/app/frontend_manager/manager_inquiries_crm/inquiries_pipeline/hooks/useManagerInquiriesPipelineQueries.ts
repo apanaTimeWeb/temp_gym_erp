@@ -35,11 +35,11 @@ export function useInquiriesQuery(params: Record<string, string>) {
  * @dependencies Uses feature-owned APIs, query keys, schemas, types, constants, stores, and approved global infrastructure only.
  * @edge-case Preserves loading, empty, error, retry, cancellation, permission, and direct-URL behavior defined by the feature contract.
  */
-export function useInquiryStatsQuery() {
+export function useInquiryStatsQuery(params?: Record<string, string>) {
   return useQuery({
-    queryKey: ManagerInquiriesPipelineQueryKeys.stats(),
+    queryKey: ManagerInquiriesPipelineQueryKeys.stats(params),
     queryFn: async () => {
-      const res = await ManagerInquiriesPipelineApi.fetchInquiryStats();
+      const res = await ManagerInquiriesPipelineApi.fetchInquiryStats(params);
       return res.data! as InquiryStats;
     },
     staleTime: 5 * 60 * 1000 });

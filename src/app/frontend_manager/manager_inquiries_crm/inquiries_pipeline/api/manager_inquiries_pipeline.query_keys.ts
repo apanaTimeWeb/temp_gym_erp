@@ -8,7 +8,7 @@ export const MANAGER_INQUIRIES_PIPELINE_QUERY_KEYS = {
   all: ['manager_inquiries'] as const,
   detail: (id: string) => [...MANAGER_INQUIRIES_PIPELINE_QUERY_KEYS.all, 'detail', id] as const,
   list: <T extends object>(params: T) => [...MANAGER_INQUIRIES_PIPELINE_QUERY_KEYS.all, 'list', params] as const,
-  stats: () => [...MANAGER_INQUIRIES_PIPELINE_QUERY_KEYS.all, 'stats'] as const,
+  stats: <T extends object>(params?: T) => [...MANAGER_INQUIRIES_PIPELINE_QUERY_KEYS.all, 'stats', params ?? {}] as const,
   plans: () => [...MANAGER_INQUIRIES_PIPELINE_QUERY_KEYS.all, 'plans'] as const,
   plansSnapshot: () => [...MANAGER_INQUIRIES_PIPELINE_QUERY_KEYS.all, 'plans-snapshot'] as const,
 } as const;
