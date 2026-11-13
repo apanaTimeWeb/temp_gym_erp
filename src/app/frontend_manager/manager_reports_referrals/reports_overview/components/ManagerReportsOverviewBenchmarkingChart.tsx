@@ -123,3 +123,4 @@ export function ManagerReportsOverviewBenchmarkingChart() {
 }
 
 export default ManagerReportsOverviewBenchmarkingChart;
+

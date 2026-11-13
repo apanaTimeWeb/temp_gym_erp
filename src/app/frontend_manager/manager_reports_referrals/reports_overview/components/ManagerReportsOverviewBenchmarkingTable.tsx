@@ -114,3 +114,4 @@ export function ManagerReportsOverviewBenchmarkingTable() {
 }
 
 export default ManagerReportsOverviewBenchmarkingTable;
+

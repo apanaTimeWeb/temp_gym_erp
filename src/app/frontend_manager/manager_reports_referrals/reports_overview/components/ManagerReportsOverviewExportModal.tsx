@@ -270,3 +270,4 @@ export default function ManagerReportsOverviewExportModal({ isOpen, onClose }: M
     </div>
   );
 }
+
