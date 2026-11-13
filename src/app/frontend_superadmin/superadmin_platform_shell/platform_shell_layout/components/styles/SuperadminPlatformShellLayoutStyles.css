@@ -1,17 +1,37 @@
 .superadmin-page-title {
-  font-size: var(--font-size-page-title);
+  font-size: var(--font-size-page-title, 1.5rem);
   line-height: 1.2;
   font-weight: 700;
 }
 
 .superadmin-section-title {
-  font-size: var(--font-size-section-title);
+  font-size: var(--font-size-section-title, 1.125rem);
   line-height: 1.4;
   font-weight: 600;
 }
 
 .superadmin-kpi-number {
-  font-size: var(--font-size-kpi);
+  font-size: var(--font-size-kpi, 1.75rem);
   line-height: 1.2;
   font-weight: 700;
 }
+
+.modal-scroll-area {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.custom-date-input {
+  border-radius: 0.5rem;
+  border: 1px solid var(--border, #374151);
+  padding: 0.375rem 0.625rem;
+}
+

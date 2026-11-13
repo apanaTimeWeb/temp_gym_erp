@@ -5,6 +5,7 @@ import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
+import { featuresApi } from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_features_management/api/superadmin_platform_configuration_features_management.api';
 import { useSuperadminPlatformConfigurationFeaturesManagementActions } from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_features_management/hooks/useSuperadminPlatformConfigurationFeaturesManagementActions';
 import { useSuperadminPlatformConfigurationFeaturesManagementData } from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_features_management/hooks/useSuperadminPlatformConfigurationFeaturesManagementData';
 import { useSuperadminPlatformConfigurationFeaturesManagementFilteredFlags } from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_features_management/hooks/useSuperadminPlatformConfigurationFeaturesManagementFilteredFlags';
@@ -51,12 +52,20 @@ export function useSuperadminPlatformConfigurationFeaturesManagementMainViewMode
     const idempotencyKey = metadataIntentRef.current?.key;
     if (!idempotencyKey) return;
     try {
+      if (!id) {
+        await featuresApi.createFeatureFlag({ name: name.trim(), description: description.trim(), isGlobalEnabled: false, enabledTenantIds: [] }, idempotencyKey);
+        await dataState.refetch();
+        metadataIntentRef.current = null;
+        setEditingFlag(null);
+        toast.success(t('ui.feature_metadata_saved') || 'Feature flag created successfully', { id: 'feature-flag-created' });
+        return;
+      }
       const response = await dataState.updateFlag({ id, body: { name: name.trim(), description: description.trim() }, idempotencyKey });
       metadataIntentRef.current = null;
       setEditingFlag(null);
       toast.success(response.message || t('ui.feature_metadata_saved'), { id: `feature-metadata-saved-${id}` });
     } catch (error: unknown) {
-      toast.error(t('ui.action_failed_retry'), { id: `feature-metadata-failed-${id}` });
+      toast.error(t('ui.action_failed_retry'), { id: `feature-metadata-failed-${id || 'new'}` });
       throw error;
     }
   };

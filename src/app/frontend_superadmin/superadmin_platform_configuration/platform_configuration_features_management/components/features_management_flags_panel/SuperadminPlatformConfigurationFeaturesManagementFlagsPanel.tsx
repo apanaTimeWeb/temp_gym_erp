@@ -1,7 +1,7 @@
 // RESPONSIBILITY: Renders/orchestrates SuperadminPlatformConfigurationFeaturesFlagsPanel within its owning Superadmin feature module; no direct backend implementation.
 'use client';
 // RESPONSIBILITY: Renders feature-flag search, status rows, rollout actions, history actions, and toggle controls from parent-owned state.
-import { Clock, Edit3, Search, ToggleLeft, Users } from 'lucide-react';
+import { Clock, Edit3, Plus, Search, ToggleLeft, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import type { SuperadminPlatformConfigurationFeaturesFlagsPanelProps } from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_features_management/types/superadmin_platform_configuration_features_management_flags_panel.types';
@@ -13,10 +13,12 @@ import type { SuperadminPlatformConfigurationFeaturesFlagsPanelProps } from '@/a
  * @dependencies Receives server data and handlers from the feature view-model; owns no API or business state.
  * @edge-case Empty search results remain explicit, toggle actions retain stable identity via flag.id, and touch actions are always visible.
  */
-export default function SuperadminPlatformConfigurationFeaturesManagementFlagsPanel({ flags, searchQuery, onSearchQueryChange, onManageRollout, onViewHistory, onEditMetadata, onToggle }: SuperadminPlatformConfigurationFeaturesFlagsPanelProps) {
+export default function SuperadminPlatformConfigurationFeaturesManagementFlagsPanel({ flags, searchQuery, onSearchQueryChange, onManageRollout, onViewHistory, onEditMetadata, onCreateFlag, onToggle }: SuperadminPlatformConfigurationFeaturesFlagsPanelProps) {
   const t = useTranslations('superadmin_platform_configuration_features');
   const normalizedQuery = searchQuery.trim().toLowerCase();
   const filteredFlags = flags.filter((flag) => flag.name.toLowerCase().includes(normalizedQuery) || flag.description.toLowerCase().includes(normalizedQuery));
+
+  const handleCreate = onCreateFlag || (() => onEditMetadata({ id: '', name: '', description: '', isGlobalEnabled: false, enabledTenantIds: [] }));
 
   return (
     <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card" aria-labelledby="superadmin_platform_configuration_features-flags-title">
@@ -25,18 +27,29 @@ export default function SuperadminPlatformConfigurationFeaturesManagementFlagsPa
           <ToggleLeft size={18} strokeWidth={2} aria-hidden="true" />
           {t('ui.global_feature_flags_92beef0')}
         </h2>
-        <div className="relative w-full max-w-xs">
-          <label htmlFor="superadmin_platform_configuration_features-search" className="sr-only">{t('ui.search_flags_5d0e8a0')}</label>
-          <Search size={18} strokeWidth={2} aria-hidden="true" className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary" />
-          <input 
-            id="superadmin_platform_configuration_features-search"
-            type="search"
-            placeholder={t('ui.search_flags_5d0e8a0')}
-            className="min-h-11 w-full rounded-lg border border-border bg-input py-2 ps-9 pe-4 text-sm text-primary focus:border-focus focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base"
-            value={searchQuery}
-            onChange={(event) => onSearchQueryChange(event.target.value)}
-            data-testid="superadmin_platform_configuration_features-superadmin-features-flags-panel-flags-panel-search-input"
-          />
+        <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+          <div className="relative w-full max-w-xs">
+            <label htmlFor="superadmin_platform_configuration_features-search" className="sr-only">{t('ui.search_flags_5d0e8a0')}</label>
+            <Search size={18} strokeWidth={2} aria-hidden="true" className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary" />
+            <input 
+              id="superadmin_platform_configuration_features-search"
+              type="search"
+              placeholder={t('ui.search_flags_5d0e8a0')}
+              className="min-h-11 w-full rounded-lg border border-border bg-input py-2 ps-9 pe-4 text-sm text-primary focus:border-focus focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base"
+              value={searchQuery}
+              onChange={(event) => onSearchQueryChange(event.target.value)}
+              data-testid="superadmin_platform_configuration_features-superadmin-features-flags-panel-flags-panel-search-input"
+            />
+          </div>
+          <button
+            type="button"
+            onClick={handleCreate}
+            className="flex min-h-11 w-full sm:w-auto items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary shadow-sm hover:opacity-90 motion-safe:transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            data-testid="superadmin_platform_configuration_features-create-flag-button"
+          >
+            <Plus size={18} strokeWidth={2} aria-hidden="true" />
+            <span>{t('ui.create_feature_flag')}</span>
+          </button>
         </div>
       </div>
 

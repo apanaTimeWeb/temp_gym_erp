@@ -7,5 +7,6 @@ export interface SuperadminPlatformConfigurationFeaturesFlagsPanelProps {
   onManageRollout: (flag: FeatureFlag) => void;
   onViewHistory: (flag: FeatureFlag) => void;
   onEditMetadata: (flag: FeatureFlag) => void;
+  onCreateFlag?: () => void;
   onToggle: (flag: FeatureFlag) => Promise<void>;
 }

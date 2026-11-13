@@ -24,7 +24,7 @@ export default function SuperadminPlatformShellNavigationMain({ children }: Supe
   return (
     <>
       <SuperadminPlatformShellNavigationTopLoader />
-      <div className="min-h-screen bg-page text-primary">
+      <div className="min-h-screen bg-page text-text-primary">
         <Suspense fallback={<div className="h-16 border-b border-border bg-header-translucent" />}>
           <SuperadminPlatformShellNavigationHeader />
         </Suspense>

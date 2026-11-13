@@ -159,7 +159,8 @@
       "stay_on_page": "यहीं रहें",
       "route_loading": "पृष्ठ लोड हो रहा है",
       "boundary_title": "अनुभाग लोड नहीं हो सका",
-      "boundary_retry": "पुनः प्रयास करें"
+      "boundary_retry": "पुनः प्रयास करें",
+      "create_feature_flag": "सुविधा ध्वज बनाएँ"
     },
     "actions": {
       "retry": "पुनः प्रयास करें",

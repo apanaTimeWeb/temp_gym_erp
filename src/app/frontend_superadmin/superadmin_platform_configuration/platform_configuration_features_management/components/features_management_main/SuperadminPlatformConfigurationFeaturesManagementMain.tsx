@@ -83,6 +83,7 @@ export default function SuperadminPlatformConfigurationFeaturesManagementMain() 
           onManageRollout={setRolloutFlag}
           onViewHistory={setHistoryFlag}
           onEditMetadata={setEditingFlag}
+          onCreateFlag={() => setEditingFlag({ id: '', name: '', description: '', isGlobalEnabled: false, enabledTenantIds: [] })}
           onToggle={handleToggle}
         />
       ) : null}

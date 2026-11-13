@@ -5,7 +5,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { ShieldCheck } from 'lucide-react';
+import { Camera, ShieldCheck } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
@@ -21,22 +21,81 @@ import type { SuperadminAccountProfileAvatarCardProps } from '@/app/frontend_sup
 export default function SuperadminAccountProfileOverviewAvatarCard({ profile }: SuperadminAccountProfileAvatarCardProps) {
   const t = useTranslations('superadmin_account_profile');
   const [avatarFailed, setAvatarFailed] = useState(false);
+  const [localAvatar, setLocalAvatar] = useState<string | null>(null);
+
   useEffect(() => setAvatarFailed(false), [profile?.avatarUrl]);
-    if (!profile)
-        return null;
-    const initials = (profile.name?.trim() || 'SA')
-        .split(' ')
-        .map((n) => n[0])
-        .join('')
-        .toUpperCase()
-        .slice(0, 2);
-    const lastLogin = profile.lastLoginAt
-        ? formatDateTime(profile.lastLoginAt)
-        : '—';
-    return (<div className="bg-card border border-border rounded-xl p-6 flex flex-col items-center text-center gap-4 shadow-card">
-      <div className="relative w-20 h-20 overflow-hidden rounded-full bg-primary-subtle border-2 border-focus flex items-center justify-center">
-        {profile.avatarUrl && !avatarFailed ? <Image src={profile.avatarUrl} alt={t('ui.profile_avatar_alt', { name: profile.name })} width={80} height={80} unoptimized onError={() => setAvatarFailed(true)} className="h-full w-full object-cover" /> : <span className="superadmin-page-title text-primary">{initials}</span>}
+
+  if (!profile)
+    return null;
+
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setLocalAvatar(reader.result as string);
+        setAvatarFailed(false);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const initials = (profile.name?.trim() || 'SA')
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
+  const lastLogin = profile.lastLoginAt
+    ? formatDateTime(profile.lastLoginAt)
+    : '—';
+
+  const currentAvatarSrc = localAvatar || profile.avatarUrl;
+
+  return (
+    <div className="bg-card border border-border rounded-xl p-6 flex flex-col items-center text-center gap-4 shadow-card">
+      <div className="group relative w-20 h-20 overflow-hidden rounded-full bg-primary-subtle border-2 border-focus flex items-center justify-center">
+        {currentAvatarSrc && !avatarFailed ? (
+          <Image
+            src={currentAvatarSrc}
+            alt={t('ui.profile_avatar_alt', { name: profile.name })}
+            width={80}
+            height={80}
+            unoptimized
+            onError={() => setAvatarFailed(true)}
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <span className="superadmin-page-title text-primary">{initials}</span>
+        )}
+        <label
+          className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 motion-safe:transition-opacity cursor-pointer text-white"
+          title="Change Avatar"
+        >
+          <Camera size={20} aria-hidden="true" />
+          <span className="text-[10px] font-semibold mt-0.5">Upload</span>
+          <input
+            type="file"
+            accept="image/*"
+            className="sr-only"
+            onChange={handleAvatarChange}
+            aria-label="Upload new avatar image"
+          />
+        </label>
       </div>
+
+      <label className="text-xs text-primary font-medium cursor-pointer hover:underline flex items-center gap-1.5 focus-within:ring-2 focus-within:ring-primary rounded px-1.5 py-0.5">
+        <Camera size={14} aria-hidden="true" />
+        <span>Change Avatar</span>
+        <input
+          type="file"
+          accept="image/*"
+          className="sr-only"
+          onChange={handleAvatarChange}
+          aria-label="Change Avatar"
+        />
+      </label>
+
       <div>
         <h2 className="text-lg font-bold text-primary">{profile.name}</h2>
         <p className="text-sm text-secondary">{profile.email}</p>

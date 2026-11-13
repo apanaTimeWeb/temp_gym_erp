@@ -38,15 +38,27 @@ export type ApiResponse<T> = (ApiSuccess<T> | ApiFailure) & {
 
 import { handleMockApiRequest } from "@/lib/mockApiHandler";
 
+export type ApiFetchOptions = RequestInit & {
+  dataSchema?: { safeParse: (data: unknown) => { success: boolean; data?: any; error?: any } };
+  responseSchema?: { safeParse: (data: unknown) => { success: boolean; data?: any; error?: any } };
+  schema?: { safeParse: (data: unknown) => { success: boolean; data?: any; error?: any } };
+};
+
 export async function apiFetch<T = unknown>(
   endpoint: string,
-  options: RequestInit = {}
+  options: ApiFetchOptions = {}
 ): Promise<ApiResponse<T>> {
   // If a mock response is available for this endpoint (dev/demo environment), return it.
   // In test environment (Vitest), allow MSW to intercept real fetch requests.
   if (process.env.NODE_ENV !== 'test') {
     const mock = handleMockApiRequest(endpoint, options);
     if (mock) {
+      if (options.dataSchema && typeof options.dataSchema.safeParse === 'function' && 'data' in mock && mock.data !== null && mock.data !== undefined) {
+        const parsed = options.dataSchema.safeParse(mock.data);
+        if (parsed.success) {
+          (mock as any).data = parsed.data;
+        }
+      }
       return mock as ApiResponse<T>;
     }
   }
@@ -157,6 +169,18 @@ export async function apiFetch<T = unknown>(
       json: async () => json,
       text: async () => JSON.stringify(json),
     };
+    if (options.dataSchema && typeof options.dataSchema.safeParse === 'function' && success.data !== null && success.data !== undefined) {
+      const parsed = options.dataSchema.safeParse(success.data);
+      if (parsed.success) {
+        success.data = parsed.data;
+      }
+    }
+    if (options.responseSchema && typeof options.responseSchema.safeParse === 'function') {
+      const parsed = options.responseSchema.safeParse(json);
+      if (parsed.success && parsed.data?.data !== undefined) {
+        success.data = parsed.data.data;
+      }
+    }
     return success;
   } catch (error) {
     const networkFailure: ApiFailure & { status: number; ok: boolean; json: () => Promise<unknown>; text: () => Promise<string> } = {

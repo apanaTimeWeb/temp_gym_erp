@@ -197,7 +197,8 @@
       "stay_on_page": "Stay on page",
       "route_loading": "Loading page",
       "boundary_title": "Unable to load this section",
-      "boundary_retry": "Try again"
+      "boundary_retry": "Try again",
+      "create_feature_flag": "Create Feature Flag"
     },
     "save_rollout_gyms": "Save Rollout ({count} Gyms)",
     "published_on_date": "Published on {date}"
