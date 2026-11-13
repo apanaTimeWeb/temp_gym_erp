@@ -35,17 +35,18 @@ export default function AdminFinanceDomainLayout({ children }: { children: React
       <div className="grid gap-2 lg:grid-cols-3">
         {NAV_GROUPS.map((group) => {
           const groupActive = group.items.some((item) => pathname === item.href || pathname.startsWith(`${item.href}/`));
-          return <details key={group.key} className="min-w-0 rounded-xl border border-border bg-card" open={groupActive || undefined}>
-            <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 rounded-xl px-3 py-2 text-sm font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
-              <span>{t(group.labelKey)}</span><ChevronDown aria-hidden="true" size={16} className="shrink-0 text-secondary" />
-            </summary>
-            <div className="flex flex-wrap gap-2 border-t border-border p-3">
+          return <section key={group.key} aria-label={t(group.labelKey)} className="min-w-0 rounded-xl border border-border bg-card">
+            <h2 className="border-b border-border px-3 py-2 text-xs font-semibold uppercase tracking-wide text-secondary flex items-center justify-between">
+              <span>{t(group.labelKey)}</span>
+            </h2>
+            <div className="flex flex-wrap gap-2 p-3">
               {group.items.map((item) => {
                 const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
                 return <Link key={item.href} href={item.href} aria-current={active ? 'page' : undefined} className={`inline-flex min-h-11 shrink-0 items-center rounded-lg border px-3 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-colors ${active ? 'border-focus bg-surface-highlight text-primary' : 'border-transparent text-secondary hover:bg-surface-hover hover:text-primary'}`}>{t(item.labelKey)}</Link>;
               })}
             </div>
-          </details>;
+            {groupActive ? <span className="sr-only">{t('admin_navigation.AdminNavigation.activeDomain')}</span> : null}
+          </section>;
         })}
       </div>
     </nav>

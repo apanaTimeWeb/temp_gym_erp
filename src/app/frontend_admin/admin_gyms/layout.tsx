@@ -10,7 +10,8 @@ type NavigationGroup = { key: string; labelKey: string; items: readonly Navigati
 
 const NAV_GROUPS: readonly NavigationGroup[] = [
   { key: 'branchOperations', labelKey: 'admin_navigation.AdminNavigation.gymsGroups.branchOperations', items: [
-      { href: '/frontend_admin/admin_gyms/gyms_branches_directory', labelKey: 'admin_navigation.AdminNavigation.gymsTabs.branchesDirectory' }
+      { href: '/frontend_admin/admin_gyms/gyms_branches_directory', labelKey: 'admin_navigation.AdminNavigation.gymsTabs.branchesDirectory' },
+      { href: '/frontend_admin/admin_gyms/gyms_comparison', labelKey: 'admin_navigation.AdminNavigation.gymsTabs.gymsComparison' }
   ] },
   { key: 'healthMonitoring', labelKey: 'admin_navigation.AdminNavigation.gymsGroups.healthMonitoring', items: [
       { href: '/frontend_admin/admin_gyms/gyms_health_alerts_monitoring', labelKey: 'admin_navigation.AdminNavigation.gymsTabs.healthAlerts' }

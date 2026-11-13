@@ -147,6 +147,7 @@
       },
       "gymsTabs": {
         "branchesDirectory": "Branches Directory",
+        "gymsComparison": "Gym Comparison",
         "healthAlerts": "Gym Health Alerts"
       },
       "securityNavigation": "Security navigation",

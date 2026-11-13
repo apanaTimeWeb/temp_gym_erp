@@ -591,6 +591,9 @@ export function handleAdminMockApiRequest(
     return buildMockSuccess(filtered);
   }
   if (urlPath.startsWith('/admin/hr/staff')) {
+    if (urlPath.endsWith('/ledger')) {
+      return buildMockSuccess(currentAdminLedger);
+    }
     if (urlPath === '/admin/hr/staff') {
       const page = parseInt(searchParams.get('page') || '1', 10) || 1;
       const limit = parseInt(searchParams.get('limit') || '10', 10) || 10;
@@ -741,9 +744,49 @@ export function handleAdminMockApiRequest(
       return buildMockSuccess(MOCK_AUDIT_KPI);
     }
     if (urlPath === '/admin/audit-logs/actors') {
-      return buildMockSuccess(MOCK_AUDIT_ACTORS);
+      return buildMockSuccess({ actors: MOCK_AUDIT_ACTORS });
     }
-    return buildMockSuccess(MOCK_AUDIT_LOGS);
+    if (urlPath === '/admin/audit-logs/export') {
+      return buildMockSuccess({ downloadUrl: '/__mocks__/admin/audit.csv' }, 'Export generated');
+    }
+    const logId = urlPath.replace('/admin/audit-logs/', '');
+    if (logId && logId !== '/admin/audit-logs') {
+      const found = MOCK_AUDIT_LOGS.find((l) => l.id === logId);
+      if (found) {
+        return buildMockSuccess(found);
+      }
+      return buildMockSuccess({
+        ...MOCK_AUDIT_LOGS[0],
+        id: logId,
+      });
+    }
+
+    const search = searchParams.get('search')?.toLowerCase() || '';
+    const actor = searchParams.get('actor') || 'all';
+    const action = searchParams.get('action') || 'all';
+    const severity = searchParams.get('severity') || 'all';
+
+    let filtered = [...MOCK_AUDIT_LOGS];
+    if (search) {
+      filtered = filtered.filter(
+        (l) =>
+          l.details.toLowerCase().includes(search) ||
+          l.action.toLowerCase().includes(search) ||
+          l.actor.toLowerCase().includes(search) ||
+          l.entityType.toLowerCase().includes(search)
+      );
+    }
+    if (actor !== 'all') {
+      filtered = filtered.filter((l) => l.actor === actor);
+    }
+    if (action !== 'all') {
+      filtered = filtered.filter((l) => l.action === action);
+    }
+    if (severity !== 'all') {
+      filtered = filtered.filter((l) => l.severity === severity);
+    }
+
+    return buildMockSuccess(filtered);
   }
 
   // 14. Settings & Profile

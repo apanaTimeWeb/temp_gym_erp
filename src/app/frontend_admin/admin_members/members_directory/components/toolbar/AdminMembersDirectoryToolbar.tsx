@@ -3,10 +3,11 @@
 // DATA FLOW: feature data/state and user input → AdminMembersDirectoryToolbar → accessible UI/events routed to owning hooks (admin_members/members_directory/components/toolbar/AdminMembersDirectoryToolbar.tsx)
 
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 
 import type { AdminMembersExpiryFilter } from '@/app/frontend_admin/admin_members/members_directory/types/AdminMembersDirectoryUiTypes';
 import type { AdminMembersStatusFilter } from '@/app/frontend_admin/admin_members/members_directory/types/AdminMembersDirectoryTypes';
-import { Search, Download } from 'lucide-react';
+import { Search, Download, ShieldAlert } from 'lucide-react';
 import { useAdminMembersLogic } from '@/app/frontend_admin/admin_members/members_directory/hooks/useAdminMembersDirectoryLogic';
 import { useAdminMembersStore } from '@/app/frontend_admin/admin_members/members_directory/state/useAdminMembersDirectoryStore';
 import { useAdminMembersBranchReference } from '@/app/frontend_admin/admin_members/members_directory/hooks/useAdminMembersDirectoryBranchReference';
@@ -51,10 +52,20 @@ export default function AdminMembersDirectoryToolbar() {
           aria-label={t('members.admin_members_toolbar.text_a1d97aee95')}
          data-testid="admin_members-admin_members-toolbar-control"/>
       </div>
-      <div className="w-full sm:w-auto">
+      <div className="w-full sm:w-auto flex items-center gap-2">
         <button type="button" onClick={() => void exportMembers()} disabled={isExporting} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 py-2 text-sm font-semibold text-primary hover:bg-surface-hover disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="admin_members-admin_members-toolbar-export">
           <Download size={18} aria-hidden="true" strokeWidth={2} />{isExporting ? t('members.AdminAuditRepair.exportingCsv') : t('members.AdminAuditRepair.exportCsv')}
         </button>
+        <Link
+          href="/frontend_admin/admin_members/members_blacklist_management"
+          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-danger-border bg-danger-bg px-3.5 py-2 text-sm font-semibold text-danger-text hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+          title="Direct Blacklist Management — 12 Blacklisted Members"
+          data-testid="admin_members-admin_members-toolbar-blacklist-quicklink"
+        >
+          <ShieldAlert size={18} aria-hidden="true" strokeWidth={2} />
+          <span>Blacklist</span>
+          <span className="px-1.5 py-0.2 rounded-full text-xs font-bold bg-danger-text text-white">12</span>
+        </Link>
       </div>
       <div className="w-full sm:w-44">
         <AdminNavigationLayoutSearchableDropdown

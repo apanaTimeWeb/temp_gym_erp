@@ -2,12 +2,14 @@
 // RESPONSIBILITY: Root client orchestrator for Admin Attendance. Composes KPIs, trend chart, toolbar, and table.
 // DATA FLOW: feature data/state and user input → AdminAttendanceDashboardMain → accessible UI/events routed to owning hooks (admin_attendance/attendance_dashboard/components/main_view/AdminAttendanceDashboardMain.tsx)
 
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 // No manual check-in button — this is a read-only view for the gym owner (Admin role).
 import AdminAttendanceKPIs from '@/app/frontend_admin/admin_attendance/attendance_dashboard/components/kpis/AdminAttendanceDashboardKPIs';
 import AdminAttendanceTrendChart from '@/app/frontend_admin/admin_attendance/attendance_dashboard/components/trend_chart/AdminAttendanceDashboardTrendChart';
 import AdminAttendanceToolbar from '@/app/frontend_admin/admin_attendance/attendance_dashboard/components/toolbar/AdminAttendanceDashboardToolbar';
 import AdminAttendanceTable from '@/app/frontend_admin/admin_attendance/attendance_dashboard/components/table/AdminAttendanceDashboardTable';
+import AdminAttendanceStaffManagerTable from '@/app/frontend_admin/admin_attendance/attendance_dashboard/components/table/AdminAttendanceStaffManagerTable';
 import { useAdminAttendanceLogic } from '@/app/frontend_admin/admin_attendance/attendance_dashboard/hooks/useAdminAttendanceDashboardLogic';
 import { useAdminAttendanceStore } from '@/app/frontend_admin/admin_attendance/attendance_dashboard/state/useAdminAttendanceDashboardStore';
 import { AdminNavigationLayoutSearchableDropdown } from '@/app/frontend_admin/admin_attendance/attendance_dashboard/components/searchable_dropdown/AdminAttendanceDashboardSearchableDropdown';
@@ -25,6 +27,7 @@ import { RefreshCw, ShieldAlert } from 'lucide-react';
 export default function AdminAttendanceDashboardMain() {
   const t = useTranslations();
   const { dateRange, setDateRange } = useAdminAttendanceStore();
+  const [attendanceView, setAttendanceView] = useState<'members' | 'staff'>('members');
 
   const { status, error, summaryStatus, summaryError, trendStatus, trendError, loadAll, retrySummary, retryTrend } = useAdminAttendanceLogic();
 
@@ -89,12 +92,46 @@ export default function AdminAttendanceDashboardMain() {
 
         <AdminAttendanceTrendChart />
 
-        <div className="bg-card rounded-xl border border-border p-4 space-y-4">
-          <div className="flex items-center justify-between">
-            <p className="text-sm font-semibold text-primary">{t('attendance.admin_attendance_main.text_28a8490d8e')}</p>
+        <div className="bg-card rounded-xl border border-border p-5 space-y-4 shadow-card">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border pb-4">
+            <div>
+              <p className="text-base font-bold text-primary">
+                {attendanceView === 'members' ? (t('attendance.admin_attendance_main.text_28a8490d8e') || 'Member Attendance Records') : 'Staff & Manager Attendance Logs'}
+              </p>
+              <p className="text-xs text-secondary mt-0.5">
+                {attendanceView === 'members' ? 'Live member check-ins, plan verification, and session durations' : 'Track daily manager and trainer shifts, check-in timestamps, and presence'}
+              </p>
+            </div>
+            <div className="flex items-center gap-1 border border-border rounded-xl p-1 bg-surface-highlight">
+              <button
+                type="button"
+                onClick={() => setAttendanceView('members')}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold motion-safe:transition-colors ${
+                  attendanceView === 'members' ? 'bg-card text-primary shadow-sm' : 'text-secondary hover:text-primary'
+                }`}
+              >
+                Member Attendance
+              </button>
+              <button
+                type="button"
+                onClick={() => setAttendanceView('staff')}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold motion-safe:transition-colors ${
+                  attendanceView === 'staff' ? 'bg-card text-primary shadow-sm' : 'text-secondary hover:text-primary'
+                }`}
+              >
+                Staff & Manager Attendance
+              </button>
+            </div>
           </div>
-          <AdminAttendanceToolbar />
-          <AdminAttendanceTable />
+
+          {attendanceView === 'members' ? (
+            <>
+              <AdminAttendanceToolbar />
+              <AdminAttendanceTable />
+            </>
+          ) : (
+            <AdminAttendanceStaffManagerTable />
+          )}
         </div>
       </div>
     </div>
