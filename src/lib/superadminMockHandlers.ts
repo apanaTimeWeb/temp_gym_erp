@@ -613,6 +613,9 @@ export function handleSuperadminMockApiRequest(
   if (urlPath.startsWith('/superadmin/messaging/messages') || urlPath === '/superadmin/messaging') {
     return buildMockSuccess(MOCK_SUPERADMIN_COMMUNICATION_MESSAGING_MESSAGES, 'Messages retrieved');
   }
+  if (urlPath.startsWith('/superadmin/messaging/whatsapp')) {
+    return buildMockSuccess([], 'WhatsApp messages retrieved');
+  }
   if (urlPath.startsWith('/superadmin/messaging/notifications')) {
     if (urlPath.includes('/read-all') && method === 'PATCH') {
       currentNotifications.forEach((n: any) => { n.read = true; });
