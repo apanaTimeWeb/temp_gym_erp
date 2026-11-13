@@ -5,6 +5,7 @@ import { MOCK_SUPERADMIN_DASHBOARD_DATA } from '@/app/frontend_superadmin/supera
 
 // Gyms
 import { MOCK_GYMS, MOCK_SUBSCRIPTION_PLANS } from '@/app/frontend_superadmin/superadmin_gyms/gyms_directory/mocks/SuperadminGymsDirectoryMockFixtures';
+import { SUPERADMIN_GYMS_BUSINESS_CONTROLS_MOCK_FIXTURE } from '@/app/frontend_superadmin/superadmin_gyms/gyms_directory/mocks/SuperadminGymsDirectoryV1MockFixtures';
 import { SUPERADMIN_GYM_DETAIL_BUSINESS_OVERVIEW_MOCK_FIXTURES } from '@/app/frontend_superadmin/superadmin_gyms/gyms_detail/mocks/SuperadminGymsDetailMockFixtures';
 
 // Analytics
@@ -170,9 +171,87 @@ export function handleSuperadminMockApiRequest(
     });
   }
 
+  // Ghost Login cookie handlers for Superadmin proxies
+  if (urlPath === '/auth/set-cookie') {
+    return buildMockSuccess(null, 'Ghost login cookie set');
+  }
+  if (urlPath === '/auth/exit-ghost-login') {
+    return buildMockSuccess(null, 'Ghost login session cleared');
+  }
+
+  // 2.1 GYM SPECIAL ENDPOINTS (MUST BE BEFORE /superadmin/gyms/)
+  if (urlPath === '/superadmin/gyms/stats') {
+    const stats = {
+      total: currentGyms.length,
+      active: currentGyms.filter(g => g.status === 'ACTIVE').length,
+      trial: currentGyms.filter(g => g.status === 'TRIAL').length,
+      suspended: currentGyms.filter(g => g.status === 'SUSPENDED').length,
+      cancelled: currentGyms.filter(g => g.status === 'CANCELLED' || g.status === 'EXPIRED').length,
+    };
+    return buildMockSuccess(stats, 'Gym stats retrieved successfully');
+  }
+
+  if (urlPath === '/superadmin/gyms/export') {
+    return buildMockSuccess({ downloadUrl: '/__mocks__/superadmin/gyms/export.csv' }, 'Export generated successfully');
+  }
+
+  if (urlPath === '/superadmin/gyms/provision' && method === 'POST') {
+    try {
+      const body = options.body ? JSON.parse(options.body as string) : {};
+      const newGym = {
+        id: `t_${Date.now()}`,
+        name: body.name || body.gymName || 'Provisioned Gym',
+        ownerName: body.ownerName || 'Gym Owner',
+        adminEmail: body.adminEmail || 'owner@gym.com',
+        phone: body.phone || '9876543210',
+        status: 'ACTIVE',
+        plan: body.plan || 'Starter',
+        createdAt: new Date().toISOString().split('T')[0],
+        memberCount: 0,
+        monthlyRevenue: 0,
+        currency: 'INR',
+        databaseName: 'gym_db',
+        databaseVersion: 'v1.2',
+        city: body.city || 'Mumbai',
+        state: body.state || 'MH',
+        staffCount: 1,
+      };
+      currentGyms.unshift(newGym as any);
+      return buildMockSuccess(newGym, 'Gym provisioned successfully');
+    } catch {
+      return buildMockSuccess(currentGyms[0], 'Gym provisioned');
+    }
+  }
+
+  if (urlPath === '/superadmin/gyms/business-controls') {
+    if (method === 'POST') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const action = body.action;
+        const gymIds: string[] = Array.isArray(body.gymIds) ? body.gymIds : [];
+        const selected = new Set(gymIds);
+        const updatedFixture = {
+          ...SUPERADMIN_GYMS_BUSINESS_CONTROLS_MOCK_FIXTURE,
+          rows: SUPERADMIN_GYMS_BUSINESS_CONTROLS_MOCK_FIXTURE.rows.map((row) => {
+            if (!selected.has(row.id)) return row;
+            if (action === 'Suspend selected') return { ...row, status: 'SUSPENDED', lastAction: 'Tenant suspended' };
+            if (action === 'Extend trial') return { ...row, trialDays: row.trialDays + 7, lastAction: 'Trial extended by 7 days' };
+            if (action === 'Move plan') return { ...row, plan: body.targetPlan ?? row.plan, lastAction: `Plan moved to ${body.targetPlan ?? row.plan}` };
+            if (action === 'Send message') return { ...row, lastAction: 'Message queued' };
+            return row;
+          }),
+        };
+        return buildMockSuccess(updatedFixture as any, 'Bulk action applied successfully');
+      } catch {
+        return buildMockSuccess(SUPERADMIN_GYMS_BUSINESS_CONTROLS_MOCK_FIXTURE, 'Bulk action applied');
+      }
+    }
+    return buildMockSuccess(SUPERADMIN_GYMS_BUSINESS_CONTROLS_MOCK_FIXTURE, 'Tenant business-control data loaded');
+  }
+
   if (urlPath.startsWith('/superadmin/gyms/')) {
     const parts = urlPath.split('/');
-    const gymId = parts[3];
+    const gymId = decodeURIComponent(parts[3] || '');
     const action = parts[4];
 
     if (action === 'impersonate' || action === 'ghost-login') {
@@ -185,6 +264,29 @@ export function handleSuperadminMockApiRequest(
         gym.status = gym.status === 'SUSPENDED' ? 'ACTIVE' : 'SUSPENDED';
       }
       return buildMockSuccess(gym || { id: gymId, status: 'SUSPENDED' }, 'Status updated');
+    }
+
+    if (action === 'email') {
+      return buildMockSuccess(null, 'Owner notification email dispatched');
+    }
+
+    if (method === 'DELETE') {
+      currentGyms = currentGyms.filter(g => g.id !== gymId);
+      return buildMockSuccess(null, 'Gym deleted successfully');
+    }
+
+    if (method === 'PATCH') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const gymIndex = currentGyms.findIndex(g => g.id === gymId);
+        if (gymIndex >= 0) {
+          currentGyms[gymIndex] = { ...currentGyms[gymIndex], ...body };
+          return buildMockSuccess(currentGyms[gymIndex], 'Gym updated successfully');
+        }
+        return buildMockSuccess({ id: gymId, ...body }, 'Gym updated successfully');
+      } catch {
+        return buildMockSuccess(currentGyms[0], 'Gym updated');
+      }
     }
 
     const detailFixture = SUPERADMIN_GYM_DETAIL_BUSINESS_OVERVIEW_MOCK_FIXTURES[gymId] || SUPERADMIN_GYM_DETAIL_BUSINESS_OVERVIEW_MOCK_FIXTURES['t1'] || {
@@ -247,13 +349,34 @@ export function handleSuperadminMockApiRequest(
       return buildMockSuccess({ downloadUrl: '/__mocks__/superadmin/invoices/sample.pdf' }, 'Download ready');
     }
     if (urlPath.includes('/resend')) {
-      return buildMockSuccess({ sent: true }, 'Invoice resent successfully');
+      return buildMockSuccess(null, 'Invoice resent successfully');
     }
     if (urlPath.includes('/export')) {
       return buildMockSuccess({ downloadUrl: '/__mocks__/superadmin/invoices/export.csv' }, 'Export ready');
     }
     if (urlPath.endsWith('/manual-payment')) {
-      return buildMockSuccess({ recorded: true, id: `inv_pay_${Date.now()}` }, 'Payment recorded successfully');
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const tenant = currentGyms.find(g => g.id === body.gymId) || currentGyms[0];
+        const newInvoice = {
+          id: `inv_${Date.now()}`,
+          tenantId: body.gymId || tenant?.id || 't1',
+          tenantName: tenant?.name || 'Iron Paradise',
+          amount: Math.round((Number(body.amount) || 1000) * 100),
+          currency: body.currency || 'INR',
+          status: 'PAID' as const,
+          issuedAt: new Date().toISOString(),
+          dueDate: new Date().toISOString().split('T')[0],
+          paidAt: new Date().toISOString(),
+          paymentMethod: 'CASH / MANUAL',
+          invoiceType: 'ONE_TIME' as const,
+          planName: body.planName || 'Pro Plan',
+        };
+        currentInvoices.unshift(newInvoice as any);
+        return buildMockSuccess(newInvoice, 'Payment recorded successfully');
+      } catch {
+        return buildMockSuccess(currentInvoices[0], 'Payment recorded');
+      }
     }
     const search = searchParams.get('search')?.toLowerCase() || '';
     const status = searchParams.get('status') || '';
@@ -272,6 +395,40 @@ export function handleSuperadminMockApiRequest(
         { id: 'red-3', tenantName: 'Muscle Factory', planName: 'Enterprise Tier', discountApplied: 100000, currency: 'INR', redeemedAt: '2026-08-01T09:15:00.000Z' },
       ];
       return buildMockSuccess(redemptions, 'Redemption history retrieved');
+    }
+    const matchCouponId = urlPath.match(/\/coupons\/([^/?#]+)/);
+    if (matchCouponId) {
+      const couponId = decodeURIComponent(matchCouponId[1]);
+      const couponIndex = currentCoupons.findIndex(c => c.id === couponId);
+      const coupon = currentCoupons[couponIndex] || currentCoupons[0];
+      if (method === 'PATCH' && urlPath.endsWith('/status')) {
+        try {
+          const body = options.body ? JSON.parse(options.body as string) : {};
+          if (coupon) coupon.status = body.status || 'ACTIVE';
+          return buildMockSuccess(coupon, 'Coupon status updated successfully');
+        } catch {
+          return buildMockSuccess(coupon, 'Coupon status updated');
+        }
+      }
+      if (method === 'POST' && urlPath.endsWith('/restore')) {
+        if (coupon) (coupon as any).isDeleted = false;
+        return buildMockSuccess(coupon, 'Coupon restored successfully');
+      }
+      if (method === 'PATCH') {
+        try {
+          const body = options.body ? JSON.parse(options.body as string) : {};
+          const updated = { ...coupon, ...body };
+          if (couponIndex >= 0) currentCoupons[couponIndex] = updated;
+          return buildMockSuccess(updated, 'Coupon updated successfully');
+        } catch {
+          return buildMockSuccess(coupon, 'Coupon updated');
+        }
+      }
+      if (method === 'DELETE') {
+        currentCoupons = currentCoupons.filter(c => c.id !== couponId);
+        return buildMockSuccess(null, 'Coupon deleted successfully');
+      }
+      return buildMockSuccess(coupon, 'Coupon retrieved');
     }
     if (method === 'POST') {
       try {
@@ -303,6 +460,57 @@ export function handleSuperadminMockApiRequest(
     return buildMockSuccess(filtered, 'Coupons retrieved');
   }
   if (urlPath.startsWith('/superadmin/saas-billing/plans')) {
+    if (method === 'POST') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const newPlan = {
+          id: `plan-${Date.now()}`,
+          name: body.name || 'Custom Plan',
+          priceMonthly: Number(body.priceMonthly) || 999900,
+          priceAnnual: Number(body.priceAnnual) || 9999000,
+          maxMembers: Number(body.maxMembers) || 500,
+          maxStaff: Number(body.maxStaff) || 20,
+          dbLimitGb: Number(body.dbLimitGb) || 10,
+          binaryLimitGb: Number(body.binaryLimitGb) || 25,
+          features: Array.isArray(body.features) ? body.features : ['Core App'],
+          activeTenants: 0,
+          isPublic: Boolean(body.isPublic),
+          trialDays: Number(body.trialDays) || 14,
+          setupFee: Number(body.setupFee) || 0,
+          currency: body.currency || 'INR',
+          isArchived: false,
+        };
+        currentPlans.unshift(newPlan as any);
+        return buildMockSuccess(newPlan, 'Plan created successfully');
+      } catch {
+        return buildMockSuccess(currentPlans[0], 'Plan created');
+      }
+    }
+    const matchPlanId = urlPath.match(/\/plans\/([^/?#]+)/);
+    if (matchPlanId) {
+      const planId = decodeURIComponent(matchPlanId[1]);
+      const planIndex = currentPlans.findIndex(p => p.id === planId);
+      const plan = currentPlans[planIndex] || currentPlans[0];
+      if (method === 'PATCH' && urlPath.endsWith('/archive')) {
+        if (plan) plan.isArchived = !plan.isArchived;
+        return buildMockSuccess(plan, 'Plan archived status updated');
+      }
+      if (method === 'PATCH') {
+        try {
+          const body = options.body ? JSON.parse(options.body as string) : {};
+          const updated = { ...plan, ...body };
+          if (planIndex >= 0) currentPlans[planIndex] = updated;
+          return buildMockSuccess(updated, 'Plan updated successfully');
+        } catch {
+          return buildMockSuccess(plan, 'Plan updated');
+        }
+      }
+      if (method === 'DELETE') {
+        currentPlans = currentPlans.filter(p => p.id !== planId);
+        return buildMockSuccess(null, 'Plan deleted successfully');
+      }
+      return buildMockSuccess(plan, 'Plan retrieved');
+    }
     return buildMockSuccess(currentPlans, 'Plans retrieved');
   }
   if (urlPath === '/superadmin/usage-meters') {
@@ -314,6 +522,66 @@ export function handleSuperadminMockApiRequest(
     return buildMockSuccess(MOCK_SUPERADMIN_AFFILIATE_PAYOUT_HISTORY, 'Payout history retrieved');
   }
   if (urlPath.startsWith('/superadmin/affiliates')) {
+    const matchAffiliateId = urlPath.match(/\/affiliates\/([^/?#]+)/);
+    if (matchAffiliateId) {
+      const affiliateId = decodeURIComponent(matchAffiliateId[1]);
+      const affiliateIndex = currentAffiliates.findIndex(a => a.id === affiliateId);
+      const affiliate = currentAffiliates[affiliateIndex] || currentAffiliates[0];
+      if (method === 'PATCH' && urlPath.endsWith('/status')) {
+        try {
+          const body = options.body ? JSON.parse(options.body as string) : {};
+          if (affiliate) affiliate.status = body.status || 'ACTIVE';
+          return buildMockSuccess(affiliate, 'Affiliate status updated successfully');
+        } catch {
+          return buildMockSuccess(affiliate, 'Affiliate status updated');
+        }
+      }
+      if (method === 'POST' && urlPath.endsWith('/pay')) {
+        if (affiliate) affiliate.pendingPayout = 0;
+        return buildMockSuccess(affiliate, 'Commission payout processed successfully');
+      }
+      if (method === 'PATCH') {
+        try {
+          const body = options.body ? JSON.parse(options.body as string) : {};
+          const updated = { ...affiliate, ...body };
+          if (affiliateIndex >= 0) currentAffiliates[affiliateIndex] = updated;
+          return buildMockSuccess(updated, 'Affiliate updated successfully');
+        } catch {
+          return buildMockSuccess(affiliate, 'Affiliate updated');
+        }
+      }
+      if (method === 'DELETE') {
+        currentAffiliates = currentAffiliates.filter(a => a.id !== affiliateId);
+        return buildMockSuccess(null, 'Affiliate deleted successfully');
+      }
+      return buildMockSuccess(affiliate, 'Affiliate retrieved');
+    }
+    if (method === 'POST') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const newAffiliate = {
+          id: `a_${Date.now()}`,
+          name: body.name || 'New Affiliate',
+          email: body.email || 'affiliate@domain.com',
+          phone: body.phone || '9876543210',
+          referralCode: body.referralCode || `REF${Date.now().toString().slice(-4)}`,
+          totalReferred: 0,
+          commissionEarned: 0,
+          commissionRate: Number(body.commissionRate) || 15,
+          pendingPayout: 0,
+          bankDetails: body.bankDetails || 'Bank Details',
+          currency: 'INR',
+          status: 'ACTIVE' as const,
+          joinedAt: new Date().toISOString().split('T')[0],
+          referralCount: 0,
+          conversionRate: 0,
+        };
+        currentAffiliates.unshift(newAffiliate as any);
+        return buildMockSuccess(newAffiliate, 'Affiliate registered successfully');
+      } catch {
+        return buildMockSuccess(currentAffiliates[0], 'Affiliate registered');
+      }
+    }
     const search = searchParams.get('search')?.toLowerCase() || '';
     const status = searchParams.get('status') || '';
     let filtered = currentAffiliates.filter((a) => {

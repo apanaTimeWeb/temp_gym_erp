@@ -1,0 +1,4 @@
+Audit ID,Action,Actor,Actor Type,Resource,Details,Timestamp,Severity
+aud_01,TENANT_CREATE,SuperAdmin,SUPERADMIN,Tenant,Created gym Iron Paradise,2026-09-15T10:00:00Z,LOW
+aud_02,PLAN_UPDATE,SuperAdmin,SUPERADMIN,Plan,Updated Pro Plan pricing,2026-09-14T12:30:00Z,MEDIUM
+aud_03,AUTH_FAIL,Unknown,ANONYMOUS,Session,Failed login attempt detected,2026-09-13T22:15:00Z,HIGH

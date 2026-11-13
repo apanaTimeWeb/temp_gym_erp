@@ -93,7 +93,10 @@ export function handleMockApiRequest(endpoint: string, options: RequestInit = {}
     return buildMockSuccess({ downloadUrl: '/__mocks__/superadmin/export.csv', jobId: `job_${Date.now()}` }, 'Export generated successfully');
   }
   if (urlPath === '/auth/set-cookie' || urlPath.endsWith('/auth/set-cookie')) {
-    return buildMockSuccess({ authenticated: true }, 'Session authenticated');
+    return buildMockSuccess(null, 'Session authenticated');
+  }
+  if (urlPath === '/auth/exit-ghost-login' || urlPath.endsWith('/auth/exit-ghost-login')) {
+    return buildMockSuccess(null, 'Ghost login session cleared');
   }
 
   // MANAGER ENDPOINTS

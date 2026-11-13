@@ -22,8 +22,8 @@ export const SUPERADMIN_GYMS_DIRECTORY_ROUTES = {
     if (view === 'detail' && gymId) return SUPERADMIN_GYMS_PHYSICAL_ROUTES.DETAIL_LEAF(gymId);
     return SUPERADMIN_GYMS_PHYSICAL_ROUTES.DIRECTORY_LEAF;
   },
-  BILLING_PLANS: '/superadmin/saas-billing/plans',
-  ADMIN_DASHBOARD: '/admin/dashboard',
+  BILLING_PLANS: '/frontend_superadmin/superadmin_billing/billing_plans_management',
+  ADMIN_DASHBOARD: '/frontend_admin/admin_dashboard/dashboard_overview',
 } as const),
 
 } as const;

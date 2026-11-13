@@ -1,0 +1,5 @@
+Invoice ID,Tenant ID,Tenant Name,Plan,Amount,Currency,Status,Issued Date,Due Date,Paid Date
+inv_001,t1,Iron Paradise,Pro Plan,1999900,INR,PAID,2026-09-01,2026-09-15,2026-09-02
+inv_002,t2,Fit Life Studio,Basic Plan,999900,INR,PENDING,2026-09-05,2026-09-20,
+inv_003,t3,Power Gym,Enterprise Plan,5999900,INR,OVERDUE,2026-08-15,2026-08-30,
+inv_004,t4,Zenith Fitness,Starter Plan,499900,INR,PAID,2026-09-10,2026-09-25,2026-09-11

@@ -11,6 +11,14 @@ export const SuperadminAffiliatesFormatCurrency = (
   currency: string,
   locale: string
 ): string => {
+  if (typeof amount !== 'number' || Number.isNaN(amount)) {
+    return new Intl.NumberFormat(locale, {
+      style: 'currency',
+      currency: currency || 'INR',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(0);
+  }
   const subunitMap: Record<string, number> = {
     JPY: 1,
     KWD: 1000,

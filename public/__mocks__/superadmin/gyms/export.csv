@@ -1,0 +1,5 @@
+Gym ID,Gym Name,Owner Name,Email,Phone,Plan,Status,Members,Monthly Revenue,City,State
+t1,Iron Paradise,John Doe,john@iron.com,9876543210,Pro,ACTIVE,200,500000,Mumbai,MH
+t2,Fit Life Studio,Jane Smith,jane@fitlife.com,9876543211,Basic,TRIAL,50,0,Pune,MH
+t3,Power Gym,Bob Builder,bob@powergym.com,9876543212,Enterprise,SUSPENDED,800,1200000,Delhi,DL
+t4,Zenith Fitness,Alice Wonderland,alice@zenith.com,9876543213,Starter,ACTIVE,80,120000,Bengaluru,KA
