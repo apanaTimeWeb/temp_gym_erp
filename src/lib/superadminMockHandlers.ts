@@ -18,8 +18,10 @@ import {
 
 // Billing
 import { MOCK_SUPERADMIN_BILLING_INVOICES } from '@/app/frontend_superadmin/superadmin_billing/billing_invoices_management/mocks/fixtures/SuperadminBillingInvoicesManagementMockFixtures';
+import { SUPERADMIN_BILLING_INVOICES_RECOVERY_CENTER_MOCK_FIXTURE } from '@/app/frontend_superadmin/superadmin_billing/billing_invoices_management/mocks/fixtures/SuperadminBillingInvoicesManagementV1MockFixtures';
 import { MOCK_SUPERADMIN_BILLING_COUPONS } from '@/app/frontend_superadmin/superadmin_billing/billing_coupons_management/mocks/fixtures/SuperadminBillingCouponsManagementMockFixtures';
 import { INITIAL_PLANS } from '@/app/frontend_superadmin/superadmin_billing/billing_plans_management/mocks/fixtures/SuperadminBillingPlansManagementMockFixtures';
+import { SUPERADMIN_BILLING_PLANS_BUSINESS_CONTROLS_MOCK_FIXTURE } from '@/app/frontend_superadmin/superadmin_billing/billing_plans_management/mocks/fixtures/SuperadminBillingPlansManagementV1MockFixtures';
 import { MOCK_SUPERADMIN_BILLING_USAGE_METERS } from '@/app/frontend_superadmin/superadmin_billing/billing_usage_meters_dashboard/mocks/fixtures/SuperadminBillingUsageMetersDashboardMockFixtures';
 
 // Affiliates
@@ -47,6 +49,7 @@ import { MOCK_INFRASTRUCTURE_NODES, MOCK_REDIS_TELEMETRY } from '@/app/frontend_
 import { SUPERADMIN_INFRASTRUCTURE_API_HEALTH_MOCK_FIXTURE } from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_infrastructure/mocks/SuperadminSystemOpsInfrastructureV1MockFixtures';
 import { MOCK_SUPERADMIN_INFRASTRUCTURE_UPTIME } from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_infrastructure/mocks/SuperadminSystemOpsInfrastructureUptimeMockFixtures';
 import { MOCK_SUPERADMIN_BACKUPS } from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_backups/mocks/SuperadminSystemOpsBackupsMockFixtures';
+import { SUPERADMIN_BACKUPS_HEALTH_MOCK_FIXTURE } from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_backups/mocks/SuperadminSystemOpsBackupsV1MockFixtures';
 import { MOCK_BACKGROUND_JOBS } from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_jobs/mocks/SuperadminSystemOpsJobsMockData';
 import { SUPERADMIN_JOBS_QUEUE_HEALTH_MOCK_FIXTURE } from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_jobs/mocks/SuperadminSystemOpsJobsV1MockFixtures';
 import { MOCK_MIGRATIONS } from '@/app/frontend_superadmin/superadmin_system_ops/system_ops_migrations/mocks/SuperadminSystemOpsMigrationsMockData';
@@ -60,6 +63,7 @@ import {
 } from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_features_management/mocks/fixtures/SuperadminPlatformConfigurationFeaturesManagementMockFixtures';
 import { SUPERADMIN_PLATFORM_CONFIGURATION_INTEGRATIONS_MOCK_FIXTURE } from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_integrations_management/mocks/fixtures/SuperadminPlatformConfigurationIntegrationsManagementMockFixtures';
 import { MOCK_PLATFORM_SETTINGS } from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_settings_general/mocks/fixtures/SuperadminPlatformConfigurationSettingsGeneralMockData';
+import { SUPERADMIN_PLATFORM_CONFIGURATION_SETTINGS_GOVERNANCE_MOCK_FIXTURE } from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_settings_general/mocks/fixtures/SuperadminPlatformConfigurationSettingsGeneralV1MockFixtures';
 import { mockWhiteLabelDomains } from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_white_labeling_settings/mocks/fixtures/SuperadminPlatformConfigurationWhiteLabelingSettingsMockFixtures';
 
 // Account Profile & Security
@@ -447,6 +451,9 @@ export function handleSuperadminMockApiRequest(
 
   // 4. SAAS BILLING
   if (urlPath.startsWith('/superadmin/saas-billing/invoices')) {
+    if (urlPath === '/superadmin/saas-billing/invoices/recovery-center' || urlPath.endsWith('/recovery-center')) {
+      return buildMockSuccess(SUPERADMIN_BILLING_INVOICES_RECOVERY_CENTER_MOCK_FIXTURE, 'Invoice recovery center retrieved');
+    }
     if (urlPath.includes('/download')) {
       return buildMockSuccess({ downloadUrl: '/__mocks__/superadmin/invoices/sample.pdf' }, 'Download ready');
     }
@@ -568,6 +575,9 @@ export function handleSuperadminMockApiRequest(
     return buildMockSuccess(filtered, 'Coupons retrieved');
   }
   if (urlPath.startsWith('/superadmin/saas-billing/plans')) {
+    if (urlPath === '/superadmin/saas-billing/plans/business-controls' || urlPath.endsWith('/business-controls')) {
+      return buildMockSuccess(SUPERADMIN_BILLING_PLANS_BUSINESS_CONTROLS_MOCK_FIXTURE, 'Plans business controls retrieved');
+    }
     if (method === 'POST') {
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
@@ -710,8 +720,62 @@ export function handleSuperadminMockApiRequest(
 
   // 7. COMMUNICATION
   if (urlPath.startsWith('/superadmin/broadcasts')) {
+    if (urlPath === '/superadmin/broadcasts/recipient-count' || urlPath.endsWith('/recipient-count')) {
+      return buildMockSuccess({ count: 120 }, 'Recipient count retrieved');
+    }
+    if (urlPath.includes('/deliveries/')) {
+      const parts = urlPath.split('/');
+      const broadcastId = parts[3] || 'b1';
+      const recipientId = parts[5] || 'r1';
+      return buildMockSuccess({
+        broadcastId,
+        recipientId,
+        deliveredAt: new Date().toISOString(),
+        status: 'DELIVERED',
+      }, 'Delivered');
+    }
+    const matchBcId = urlPath.match(/\/broadcasts\/([^/?#]+)/);
+    if (matchBcId) {
+      const bcId = decodeURIComponent(matchBcId[1]);
+      if (bcId !== 'recipient-count') {
+        const bcIndex = currentBroadcasts.findIndex(b => b.id === bcId);
+        if (method === 'PATCH') {
+          try {
+            const body = options.body ? JSON.parse(options.body as string) : {};
+            const updated = { ...(currentBroadcasts[bcIndex] || currentBroadcasts[0]), ...body };
+            if (bcIndex >= 0) currentBroadcasts[bcIndex] = updated;
+            return buildMockSuccess(updated, 'Broadcast updated');
+          } catch {
+            return buildMockSuccess(currentBroadcasts[0], 'Broadcast updated');
+          }
+        }
+        if (method === 'DELETE') {
+          currentBroadcasts = currentBroadcasts.filter(b => b.id !== bcId);
+          return buildMockSuccess({}, 'Broadcast deleted');
+        }
+      }
+    }
     if (method === 'POST') {
-      return buildMockSuccess({ id: `bc_${Date.now()}` }, 'Broadcast scheduled');
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const newBc = {
+          id: `bc_${Date.now()}`,
+          title: body.title || 'Broadcast Title',
+          content: body.content || 'Broadcast Content',
+          status: body.status || 'SENT',
+          targetGymIds: Array.isArray(body.targetGymIds) ? body.targetGymIds : ['t1', 't2'],
+          scheduledDate: body.scheduledDate || null,
+          sentDate: body.status === 'SENT' ? new Date().toISOString() : null,
+          totalRecipients: 120,
+          deliveredCount: body.status === 'SENT' ? 118 : 0,
+          failedCount: body.status === 'SENT' ? 2 : 0,
+          audience: body.audience || 'ALL_TENANTS',
+        };
+        currentBroadcasts.unshift(newBc as any);
+        return buildMockSuccess(newBc, 'Broadcast scheduled');
+      } catch {
+        return buildMockSuccess(currentBroadcasts[0], 'Broadcast scheduled');
+      }
     }
     return buildMockSuccess(currentBroadcasts, 'Broadcasts retrieved');
   }
@@ -882,6 +946,9 @@ export function handleSuperadminMockApiRequest(
   if (urlPath.endsWith('/restore') && urlPath.startsWith('/superadmin/system-ops/backups/')) {
     return buildMockSuccess(null, 'Restore initiated');
   }
+  if (urlPath === '/superadmin/system-ops/backups/health' || urlPath.endsWith('/backups/health')) {
+    return buildMockSuccess(SUPERADMIN_BACKUPS_HEALTH_MOCK_FIXTURE, 'Backups health retrieved');
+  }
   if (urlPath.startsWith('/superadmin/system-ops/backups')) {
     return buildMockSuccess(currentBackups, 'Backups retrieved');
   }
@@ -991,6 +1058,25 @@ export function handleSuperadminMockApiRequest(
     return buildMockSuccess(currentFeatureFlags[0], 'Flag toggled');
   }
   if (urlPath.startsWith('/superadmin/features/flags')) {
+    const matchFlagId = urlPath.match(/\/flags\/([^/?#]+)/);
+    if (matchFlagId) {
+      const flagId = decodeURIComponent(matchFlagId[1]);
+      const flagIndex = currentFeatureFlags.findIndex(f => f.id === flagId);
+      if (method === 'PATCH') {
+        try {
+          const body = options.body ? JSON.parse(options.body as string) : {};
+          const updated = { ...(currentFeatureFlags[flagIndex] || currentFeatureFlags[0]), ...body };
+          if (flagIndex >= 0) currentFeatureFlags[flagIndex] = updated;
+          return buildMockSuccess(updated, 'Flag updated');
+        } catch {
+          return buildMockSuccess(currentFeatureFlags[0], 'Flag updated');
+        }
+      }
+      if (method === 'DELETE') {
+        currentFeatureFlags = currentFeatureFlags.filter(f => f.id !== flagId);
+        return buildMockSuccess(null, 'Flag deleted');
+      }
+    }
     if (method === 'POST') {
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
@@ -1010,6 +1096,25 @@ export function handleSuperadminMockApiRequest(
     return buildMockSuccess(currentFeatureFlags, 'Flags retrieved');
   }
   if (urlPath.startsWith('/superadmin/features/notes')) {
+    const matchNoteId = urlPath.match(/\/notes\/([^/?#]+)/);
+    if (matchNoteId) {
+      const noteId = decodeURIComponent(matchNoteId[1]);
+      const noteIndex = currentReleaseNotes.findIndex(n => n.id === noteId);
+      if (method === 'PATCH') {
+        try {
+          const body = options.body ? JSON.parse(options.body as string) : {};
+          const updated = { ...(currentReleaseNotes[noteIndex] || currentReleaseNotes[0]), ...body };
+          if (noteIndex >= 0) currentReleaseNotes[noteIndex] = updated;
+          return buildMockSuccess(updated, 'Release note updated');
+        } catch {
+          return buildMockSuccess(currentReleaseNotes[0], 'Release note updated');
+        }
+      }
+      if (method === 'DELETE') {
+        currentReleaseNotes = currentReleaseNotes.filter(n => n.id !== noteId);
+        return buildMockSuccess(null, 'Release note deleted');
+      }
+    }
     if (method === 'POST') {
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
@@ -1035,10 +1140,41 @@ export function handleSuperadminMockApiRequest(
   if (urlPath.startsWith('/superadmin/platform-configuration/features')) {
     return buildMockSuccess({ flags: currentFeatureFlags, notes: currentReleaseNotes }, 'Features loaded successfully');
   }
+  if (urlPath === '/superadmin/integrations/keys' && method === 'POST') {
+    try {
+      const body = options.body ? JSON.parse(options.body as string) : {};
+      const newKey = {
+        key: {
+          id: `key_${Date.now()}`,
+          tenant: body.tenantId || 'All Tenants',
+          label: body.label || 'API Key',
+          status: 'ACTIVE',
+          lastUsed: null,
+          rateLimit: '1000 req/min',
+        },
+        secretKey: `sk_live_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`,
+      };
+      return buildMockSuccess(newKey, 'API Key generated');
+    } catch {
+      return buildMockSuccess({ key: { id: 'key_1', tenant: 'All Tenants', label: 'Key', status: 'ACTIVE', lastUsed: null, rateLimit: '1000 req/min' }, secretKey: 'sk_live_sample' }, 'Key generated');
+    }
+  }
   if (urlPath.startsWith('/superadmin/integrations')) {
     return buildMockSuccess(SUPERADMIN_PLATFORM_CONFIGURATION_INTEGRATIONS_MOCK_FIXTURE, 'Integrations retrieved');
   }
+  if (urlPath === '/superadmin/settings/governance' || urlPath.endsWith('/settings/governance')) {
+    return buildMockSuccess(SUPERADMIN_PLATFORM_CONFIGURATION_SETTINGS_GOVERNANCE_MOCK_FIXTURE, 'Settings governance retrieved');
+  }
   if (urlPath.startsWith('/superadmin/settings')) {
+    if (method === 'PATCH') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        currentSettings = { ...currentSettings, ...body };
+        return buildMockSuccess(currentSettings, 'Settings updated');
+      } catch {
+        return buildMockSuccess(currentSettings, 'Settings updated');
+      }
+    }
     return buildMockSuccess(currentSettings, 'Settings retrieved');
   }
   if (urlPath.startsWith('/superadmin/white-labeling/domains')) {

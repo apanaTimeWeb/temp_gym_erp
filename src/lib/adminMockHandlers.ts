@@ -604,6 +604,11 @@ export function handleAdminMockApiRequest(
       hasPrevPage: safePage > 1,
     });
   }
+  if (urlPath.startsWith('/admin/finance/payments/member/')) {
+    const memberId = decodeURIComponent(urlPath.split('/admin/finance/payments/member/')[1] || '');
+    const memberPayments = MOCK_ADMIN_PAYMENTS_EXPANDED.filter(p => p.memberId === memberId);
+    return buildMockSuccess(memberPayments.length > 0 ? memberPayments : MOCK_ADMIN_PAYMENTS_EXPANDED.slice(0, 3));
+  }
   if (urlPath === '/admin/finance/payments/fetchExpenses' || urlPath === '/admin/finance/expenses') {
     return buildMockSuccess(MOCK_ADMIN_EXPENSES);
   }
