@@ -2,9 +2,9 @@
 // RESPONSIBILITY: Side-by-side performance benchmarking across all gym branches.
 // DATA FLOW: Branch fixtures → comparative metrics calculation → side-by-side benchmark table & charts.
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { Building2, TrendingUp, Users, ArrowUpRight, Award, BarChart3, Download, Printer, ShieldCheck, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { Building2, TrendingUp, Users, ArrowUpRight, Award, BarChart3, Download, Printer, ShieldCheck, CheckCircle2, AlertTriangle, Search, X } from 'lucide-react';
 import { MOCK_BRANCHES } from '@/app/frontend_admin/admin_gyms/gyms_branches_directory/mocks/fixtures/AdminGymsBranchesDirectoryMockFixtures';
 
 export default function GymsComparisonPage() {
@@ -13,6 +13,13 @@ export default function GymsComparisonPage() {
 
   const [selectedBranches, setSelectedBranches] = useState<string[]>(['b1', 'b2', 'b3', 'b4']);
   const [metricFilter, setMetricFilter] = useState<'all' | 'financial' | 'operations'>('all');
+  const [branchSearch, setBranchSearch] = useState('');
+
+  const filteredBranchesList = useMemo(() => {
+    const q = branchSearch.trim().toLowerCase();
+    if (!q) return MOCK_BRANCHES;
+    return MOCK_BRANCHES.filter(b => b.name.toLowerCase().includes(q) || b.location.toLowerCase().includes(q));
+  }, [branchSearch]);
 
   const branches = MOCK_BRANCHES.filter((b) => selectedBranches.includes(b.id));
 
@@ -139,57 +146,97 @@ export default function GymsComparisonPage() {
       </section>
 
       {/* Branch Filter Selector */}
-      <section className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-card p-4">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs font-bold uppercase tracking-wider text-secondary mr-2">Compare Gyms:</span>
-          {MOCK_BRANCHES.map((b) => {
-            const isChecked = selectedBranches.includes(b.id);
-            return (
+      <section className="rounded-2xl border border-border bg-card p-4 space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-secondary">Compare Gyms:</span>
+            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-input text-secondary border border-border">
+              {selectedBranches.length} selected (min 2)
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2 flex-wrap">
+            {/* Quick search for branches */}
+            <div className="relative min-w-[180px]">
+              <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" />
+              <input
+                type="text"
+                value={branchSearch}
+                onChange={(e) => setBranchSearch(e.target.value)}
+                placeholder="Search gyms..."
+                className="w-full pl-8 pr-7 py-1 bg-input border border-border rounded-lg text-xs text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+              />
+              {branchSearch && (
+                <button
+                  type="button"
+                  onClick={() => setBranchSearch('')}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-secondary hover:text-primary p-0.5"
+                  aria-label="Clear search"
+                >
+                  <X size={12} />
+                </button>
+              )}
+            </div>
+
+            {/* Metric Filter Tabs */}
+            <div className="flex items-center gap-1 border border-border rounded-xl p-1 bg-surface-highlight">
               <button
-                key={b.id}
                 type="button"
-                onClick={() => toggleBranch(b.id)}
-                className={`inline-flex min-h-11 items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold border motion-safe:transition-all ${
-                  isChecked
-                    ? 'border-primary bg-primary text-on-primary shadow-sm'
-                    : 'border-border bg-surface-highlight text-secondary hover:text-primary'
+                onClick={() => setMetricFilter('all')}
+                className={`px-3 py-1 rounded-lg text-xs font-semibold motion-safe:transition-colors ${
+                  metricFilter === 'all' ? 'bg-card text-primary shadow-sm' : 'text-secondary hover:text-primary'
                 }`}
               >
-                <Building2 size={13} />
-                <span>{b.name}</span>
+                All Metrics
               </button>
-            );
-          })}
+              <button
+                type="button"
+                onClick={() => setMetricFilter('financial')}
+                className={`px-3 py-1 rounded-lg text-xs font-semibold motion-safe:transition-colors ${
+                  metricFilter === 'financial' ? 'bg-card text-primary shadow-sm' : 'text-secondary hover:text-primary'
+                }`}
+              >
+                Financials
+              </button>
+              <button
+                type="button"
+                onClick={() => setMetricFilter('operations')}
+                className={`px-3 py-1 rounded-lg text-xs font-semibold motion-safe:transition-colors ${
+                  metricFilter === 'operations' ? 'bg-card text-primary shadow-sm' : 'text-secondary hover:text-primary'
+                }`}
+              >
+                Operations
+              </button>
+            </div>
+          </div>
         </div>
 
-        <div className="flex items-center gap-1 border border-border rounded-xl p-1 bg-surface-highlight">
-          <button
-            type="button"
-            onClick={() => setMetricFilter('all')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold motion-safe:transition-colors ${
-              metricFilter === 'all' ? 'bg-card text-primary shadow-sm' : 'text-secondary hover:text-primary'
-            }`}
-          >
-            All Metrics
-          </button>
-          <button
-            type="button"
-            onClick={() => setMetricFilter('financial')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold motion-safe:transition-colors ${
-              metricFilter === 'financial' ? 'bg-card text-primary shadow-sm' : 'text-secondary hover:text-primary'
-            }`}
-          >
-            Financials
-          </button>
-          <button
-            type="button"
-            onClick={() => setMetricFilter('operations')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold motion-safe:transition-colors ${
-              metricFilter === 'operations' ? 'bg-card text-primary shadow-sm' : 'text-secondary hover:text-primary'
-            }`}
-          >
-            Operations
-          </button>
+        {/* Scrollable Gym Chips container */}
+        <div className="max-h-28 overflow-y-auto custom-scrollbar flex flex-wrap items-center gap-2 pt-1 border-t border-border/60">
+          {filteredBranchesList.length === 0 ? (
+            <p className="text-xs text-secondary py-2">No gyms matching "{branchSearch}"</p>
+          ) : (
+            filteredBranchesList.map((b) => {
+              const isChecked = selectedBranches.includes(b.id);
+              const cannotDeselect = isChecked && selectedBranches.length <= 2;
+              return (
+                <button
+                  key={b.id}
+                  type="button"
+                  onClick={() => toggleBranch(b.id)}
+                  title={cannotDeselect ? 'Minimum 2 gyms required for comparison' : undefined}
+                  className={`inline-flex min-h-10 items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-semibold border motion-safe:transition-all ${
+                    isChecked
+                      ? 'border-primary bg-primary text-on-primary shadow-sm'
+                      : 'border-border bg-surface-highlight text-secondary hover:text-primary hover:border-primary/50'
+                  }`}
+                >
+                  <Building2 size={13} />
+                  <span>{b.name}</span>
+                </button>
+              );
+            })
+          )}
         </div>
       </section>
 

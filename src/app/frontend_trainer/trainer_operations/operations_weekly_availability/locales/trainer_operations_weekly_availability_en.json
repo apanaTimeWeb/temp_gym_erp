@@ -32,7 +32,7 @@
     "TEXT_UNABLE_TO_LOAD_LEAVE_REQUESTS": "Unable to load leave requests.",
     "TEXT_TIME_OFF_REQUESTS": "Time Off Requests",
     "TEXT_REQUEST_DETAILS": "Request details:",
-    "TEXT_LEAVE_HISTORY_IS_DELIVERED_AS_PART_OF_TH_EA5A742B": "Leave history is delivered as part of the Schedule response and is intentionally a bounded embedded view; pagination, filtering, and sorting are not separate backend controls for this section.",
+    "TEXT_LEAVE_HISTORY_IS_DELIVERED_AS_PART_OF_TH_EA5A742B": "Track your submitted leave requests, approval history, and manager feedback.",
     "TEXT_WEEKLY_AVAILABILITY": "Weekly Availability",
     "TEXT_LEAVE_REQUESTS": "Leave Requests",
     "TEXT_PAGE_NOT_FOUND": "Page Not Found",
