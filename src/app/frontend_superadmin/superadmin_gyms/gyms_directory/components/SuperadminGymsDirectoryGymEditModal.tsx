@@ -9,7 +9,7 @@
  * REPAIR CONSTRAINT: Cross-feature business dependencies require explicit documentation; do not move business logic into global UI infrastructure.
  */
 // RESPONSIBILITY: Renders the modal UI for editing Gym details. Purely a view component.
-import React, { useState } from 'react';
+import React from 'react';
 
 import { X, Eye, EyeOff } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';

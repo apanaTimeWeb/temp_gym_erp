@@ -76,7 +76,7 @@ export const superadminGymsHandlers = [
             return segmentIndex > 0 && ((index + segmentIndex) % 4 === 0);
         };
         const order = url.searchParams.get('order') === 'asc' ? 'asc' : 'desc';
-        let rows = mockGymsList.filter((gym) => {
+        const rows = mockGymsList.filter((gym) => {
             const matchesSearch = !search || [gym.id, gym.name, gym.ownerName, gym.adminEmail, gym.city || '', gym.state || ''].some((value) => value.toLowerCase().includes(search));
             const matchesStatus = !status || status === 'All' || gym.status === status;
             const matchesPlan = !plan || plan === 'All' || gym.plan.toUpperCase() === plan.toUpperCase();

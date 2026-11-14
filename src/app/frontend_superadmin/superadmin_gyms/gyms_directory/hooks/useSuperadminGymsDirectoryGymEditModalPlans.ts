@@ -11,12 +11,12 @@ export function useSuperadminGymsDirectoryGymEditModalPlans() {
     queryFn: async () => {
       const response = await gymsApi.fetchSubscriptionPlans();
       if (!response.success) throw new Error(response.message || 'Failed to load subscription plans');
-      return response;
+      return response.data;
     },
   });
 
   return {
-    plans: plansQuery.data?.data ?? [],
+    plans: plansQuery.data ?? [],
     loadingPlans: plansQuery.isPending,
     plansError: plansQuery.isError,
     retryPlans: plansQuery.refetch,
