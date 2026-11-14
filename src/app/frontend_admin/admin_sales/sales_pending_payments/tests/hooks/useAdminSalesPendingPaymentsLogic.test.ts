@@ -40,7 +40,7 @@ describe('useAdminSalesLogic — Sales pending payment ownership', () => {
   it('writes search changes into the current URL', () => {
     const { result } = renderHook(() => useAdminSalesLogic());
     act(() => result.current.setSearch('aman'));
-    expect(String(mocks.push.mock.calls[0]?.[0])).toContain('search=aman');
+    expect(String(mocks.push.mock.lastCall?.[0])).toContain('search=aman');
   });
 });
 

@@ -124,7 +124,7 @@ export default function AdminBillingPlansCatalogModal({ logic }: AdminPlansModal
               placeholder={t('plans.admin_plans_modal.auto_eeae04113e')}
               {...register('features')}
               className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 resize-none bg-input text-primary motion-safe:transition-colors ${
-                errors.features ? 'border-border focus-visible:ring-primary' : 'border-border focus-visible:ring-primary'
+                errors.features ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-primary'
               }`}
              data-testid="admin_plans-admin_plans-modal-control-4"/>
             {errors.features && <p id="admin-plan-features-error" role="alert" className="text-danger text-xs mt-1">{getValidationMessage(errors.features.message)}</p>}

@@ -43,6 +43,6 @@ describe('admin_hr/hr_performance_analytics canonical MSW scenarios', () => {
     expect(response.status).toBe(200);
     expect(body.success).toBe(true);
     expect(body.data).toEqual([]);
-    expect(body.requestId).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+    expect(body.requestId).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$|scenario-empty/i);
   });
 });

@@ -6,7 +6,7 @@
 export const MOCK_ADMIN_SETTINGS = {
   profile: { gymName: 'Smart Gym Corp', ownerName: 'Admin', phone: '9876543210', email: 'admin@smartgym.com', city: 'Mumbai', gstNumber: '' },
   notifications: {
-    smssms: true, emailsms: true, whatsappsms: true,
+    sms: true, email: true, whatsapp: true,
     smsonJoin: true, emailonJoin: true, whatsapponJoin: true,
     smsonExpiry: true, emailonExpiry: true, whatsapponExpiry: true,
     smsonPayment: true, emailonPayment: true, whatsapponPayment: true,

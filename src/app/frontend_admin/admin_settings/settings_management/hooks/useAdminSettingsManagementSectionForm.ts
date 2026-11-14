@@ -34,6 +34,7 @@ export function useAdminSettingsSectionForm<TFormValues extends FieldValues>(
     // Do not start a second settings write until the current one has settled.
     if (activeSaveRef.current) return false;
     activeSaveRef.current = true;
+    const valuesBeforeSubmit = JSON.stringify(form.getValues());
     const intentId = `${toastId}:${JSON.stringify(data)}`;
     const idempotencyKey = getAdminIdempotencyKey(idempotencyKeysRef.current, intentId);
     try {
@@ -41,7 +42,7 @@ export function useAdminSettingsSectionForm<TFormValues extends FieldValues>(
       // being mistaken for a completed save when a confirm() Promise resolves.
       await mutation.mutateAsync({ data, idempotencyKey });
       // Don't discard user edits made while the request was in flight.
-      if (JSON.stringify(form.getValues()) === JSON.stringify(data)) {
+      if (JSON.stringify(form.getValues()) === valuesBeforeSubmit || JSON.stringify(form.getValues()) === JSON.stringify(data)) {
         form.reset(data);
       }
       // If the user edited during the request, keep the newer values untouched.

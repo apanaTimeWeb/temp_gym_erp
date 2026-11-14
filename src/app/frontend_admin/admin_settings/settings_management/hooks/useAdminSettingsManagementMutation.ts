@@ -16,7 +16,12 @@ export function useAdminSettingsMutation<TFormValues extends FieldValues>(submit
   const t = useTranslations();
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ data, idempotencyKey }: AdminSettingsMutationVariables<TFormValues>) => submit(data, idempotencyKey),
+    mutationFn: (variables: AdminSettingsMutationVariables<TFormValues> | TFormValues) => {
+      if (variables && typeof variables === 'object' && 'data' in variables && 'idempotencyKey' in variables) {
+        return submit((variables as AdminSettingsMutationVariables<TFormValues>).data, (variables as AdminSettingsMutationVariables<TFormValues>).idempotencyKey);
+      }
+      return submit(variables as TFormValues, globalThis.crypto?.randomUUID?.() ?? 'settings-key');
+    },
     onSuccess: (res) => { adminToast.success(res.message, toastId); void queryClient.invalidateQueries({ queryKey: ADMIN_SETTINGS_QUERY_KEYS.key() }); },
     onError: () => adminToast.error(t('settings.AdminRepair.requestFailed'), toastId),
   });

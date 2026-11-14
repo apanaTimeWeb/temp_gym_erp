@@ -7,7 +7,6 @@ import { formatDate } from '@/app/frontend_admin/admin_sales/sales_store_sales/u
 import { useState } from 'react';
 import { Package, ShoppingCart, IndianRupee, TrendingUp, ChevronDown, ChevronUp, RefreshCw } from 'lucide-react';
 import { AdminSalesFormatCurrency } from '@/app/frontend_admin/admin_sales/sales_store_sales/utils/AdminSalesStoreSalesFormatCurrency';
-import { maskAdminSalesListAmount } from '@/app/frontend_admin/admin_sales/sales_store_sales/utils/AdminSalesStoreSalesMaskFinancialAmount';
 
 import { useAdminSalesLogic } from '@/app/frontend_admin/admin_sales/sales_store_sales/hooks/useAdminSalesStoreSalesLogic';
 import { ADMIN_SALES_PAYMENT_MODE_STYLES } from '@/app/frontend_admin/admin_sales/sales_store_sales/constants/AdminSalesStoreSalesConstants';
@@ -89,7 +88,7 @@ export default function AdminSalesAnalyticsStoreSales() {
                     <span className="w-9 h-9 rounded-lg bg-primary-subtle flex items-center justify-center shrink-0"><ShoppingCart size={18} className="text-primary" aria-hidden="true"  strokeWidth={2}/></span>
                     <span className="min-w-0"><span className="block font-medium text-primary text-sm truncate">{t('sales.admin_sales_store_sales.text_f1e486fe3f')}{order.id.toUpperCase()}</span><span className="block text-xs text-secondary">{formatDate(order.createdAt, locale)}</span></span>
                   </span>
-                  <span className="flex items-center gap-3 sm:gap-4 justify-end"><span className={`text-xs font-bold px-2.5 py-1 rounded-full ${getPaymentClasses(order.method)}`} data-testid="sales-analytics-sales-analytics-store-sales-status-badge">{order.method}</span><span className="font-bold text-primary">{expandedOrder === order.id ? AdminSalesFormatCurrency(order.total, 'INR', locale) : <span aria-label={t('AdminAuditRepair.financialAmountHidden')}>{maskAdminSalesListAmount()}</span>}</span>{expandedOrder === order.id ? <ChevronUp size={18} className="text-secondary" aria-hidden="true"  strokeWidth={2}/> : <ChevronDown size={18} className="text-secondary" aria-hidden="true"  strokeWidth={2}/>}</span>
+                  <span className="flex items-center gap-3 sm:gap-4 justify-end"><span className={`text-xs font-bold px-2.5 py-1 rounded-full ${getPaymentClasses(order.method)}`} data-testid="sales-analytics-sales-analytics-store-sales-status-badge">{order.method}</span><span className="font-bold text-primary">{AdminSalesFormatCurrency(order.total, 'INR', locale)}</span>{expandedOrder === order.id ? <ChevronUp size={18} className="text-secondary" aria-hidden="true"  strokeWidth={2}/> : <ChevronDown size={18} className="text-secondary" aria-hidden="true"  strokeWidth={2}/>}</span>
                 </button>
 
                 {expandedOrder === order.id && (

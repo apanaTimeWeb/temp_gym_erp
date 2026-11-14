@@ -11,6 +11,6 @@ describe('sales_membership_growth_report route and API ownership contract', () =
   it('exposes only its own report read endpoint and shared blocked export route', () => {
     expect(ADMIN_SALES_MEMBERSHIP_GROWTH_REPORT_API.membership).toBe('/admin/reports/members');
     expect(ADMIN_SALES_MEMBERSHIP_GROWTH_REPORT_API.export).toBe('/admin/reports/export');
-    expect(Object.keys(ADMIN_SALES_MEMBERSHIP_GROWTH_REPORT_API).filter((key) => ['revenue','attendance','members','payroll','pnl'].includes(key))).toEqual(['membership']);
+    expect(Object.keys(ADMIN_SALES_MEMBERSHIP_GROWTH_REPORT_API).filter((key) => ['revenue','attendance','membership','payroll','pnl'].includes(key))).toEqual(['membership']);
   });
 });

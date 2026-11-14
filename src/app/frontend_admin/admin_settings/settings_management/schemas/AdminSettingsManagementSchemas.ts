@@ -20,9 +20,6 @@ export const NotificationsSettingsSchema = z.object({
   sms: z.boolean().optional(),
   email: z.boolean().optional(),
   whatsapp: z.boolean().optional(),
-  smssms: z.boolean().optional(),
-  emailsms: z.boolean().optional(),
-  whatsappsms: z.boolean().optional(),
   smsonJoin: z.boolean(),
   emailonJoin: z.boolean(),
   whatsapponJoin: z.boolean(),
@@ -47,8 +44,8 @@ export const AppIntegrationSettingsSchema = z.object({
   workoutPlanEnabled: z.boolean(),
   progressTrackingEnabled: z.boolean(),
   pushNotificationsEnabled: z.boolean(),
-  appStoreLink: z.string().url({ message: '__i18n:settings.validation.urlInvalid' }).refine(isSafeAdminSettingsAppStoreUrl, '__i18n:settings.validation.urlInvalid').optional().or(z.literal('')),
-  playStoreLink: z.string().url({ message: '__i18n:settings.validation.urlInvalid' }).refine(isSafeAdminSettingsAppStoreUrl, '__i18n:settings.validation.urlInvalid').optional().or(z.literal('')),
+  appStoreLink: z.string().refine(isSafeAdminSettingsAppStoreUrl, '__i18n:settings.validation.urlInvalid').optional().or(z.literal('')),
+  playStoreLink: z.string().refine(isSafeAdminSettingsAppStoreUrl, '__i18n:settings.validation.urlInvalid').optional().or(z.literal('')),
   apiKey: z.string().optional(),
   webhookUrl: z.string().url({ message: '__i18n:settings.validation.urlInvalid' }).optional().or(z.literal('')),
 });
@@ -95,7 +92,7 @@ export const AdminSettingsResponseSchema = z.object({
   data: z.object({
     profile: GymProfileSchema.optional().default({ gymName: '', ownerName: '', phone: '', email: '', city: '', gstNumber: '' }),
     notifications: NotificationsSettingsSchema.optional().default({
-      smssms: false, emailsms: false, whatsappsms: false,
+      sms: false, email: false, whatsapp: false,
       smsonJoin: false, emailonJoin: false, whatsapponJoin: false,
       smsonExpiry: false, emailonExpiry: false, whatsapponExpiry: false,
       smsonPayment: false, emailonPayment: false, whatsapponPayment: false,

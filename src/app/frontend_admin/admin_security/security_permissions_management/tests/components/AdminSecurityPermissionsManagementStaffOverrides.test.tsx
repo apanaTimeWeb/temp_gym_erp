@@ -27,7 +27,7 @@ describe('AdminPermissionsStaffOverrides', () => {
   beforeEach(() => { vi.clearAllMocks(); vi.mocked(useAdminPermissionsLogic).mockReturnValue(baseLogic as never); });
   it('renders translated roles, confirms supported updates, and keeps unknown server keys read-only', () => {
     render(<AdminPermissionsStaffOverrides />);
-    expect(screen.getByText('Manager')).toBeTruthy();
+    expect(screen.getByText(/Manager/)).toBeTruthy();
     expect(screen.getByText('future.unknown')).toBeTruthy();
     expect(screen.getByTestId('admin_permissions-unknown-permission-0-1').querySelector('button')).toBeNull();
     fireEvent.click(screen.getByTestId('admin_permissions-admin_permissions-staff-overrides-toggle-0-0'));

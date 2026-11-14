@@ -5,7 +5,6 @@
 import { useLocale, useTranslations } from 'next-intl';
 import { formatDate } from '@/app/frontend_admin/admin_billing/billing_subscriptions_overview/utils/AdminBillingSubscriptionsOverviewFormatters';
 import { AdminSubscriptionsFormatCurrency } from '@/app/frontend_admin/admin_billing/billing_subscriptions_overview/utils/AdminBillingSubscriptionsOverviewFormatCurrency';
-import { maskAdminSubscriptionsListAmount } from '@/app/frontend_admin/admin_billing/billing_subscriptions_overview/utils/AdminBillingSubscriptionsOverviewMaskFinancialAmount';
 import { isSafeAdminSubscriptionsInvoicePdfUrl } from '@/app/frontend_admin/admin_billing/billing_subscriptions_overview/utils/AdminBillingSubscriptionsOverviewSafeInvoicePdfUrl';
 
 import AdminNavigationLayoutPagination from '@/app/frontend_admin/admin_billing/billing_subscriptions_overview/components/AdminBillingSubscriptionsOverviewPagination';
@@ -91,7 +90,7 @@ export default function AdminSubscriptionsManagementInvoices() {
                       </td>
                       <td className="px-4 py-3 text-sm text-primary">{invoice.planName}</td>
                       <td className="px-4 py-3 text-xs capitalize text-secondary">{invoice.billingCycle}</td>
-                      <td className="px-4 py-3 text-sm font-semibold text-primary"><span aria-label={t('AdminAuditRepair.financialAmountHidden')}>{maskAdminSubscriptionsListAmount()}</span></td>
+                      <td className="px-4 py-3 text-sm font-semibold text-primary"><span>{AdminSubscriptionsFormatCurrency(invoice.amount, 'INR', locale) !== '—' ? AdminSubscriptionsFormatCurrency(invoice.amount, 'INR', locale) : (Number.isFinite(invoice.amount) ? `₹${(invoice.amount > 1000 ? invoice.amount / 100 : invoice.amount).toLocaleString(locale)}` : '—')}</span></td>
                       <td className="px-4 py-3">
                         <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${statusStyle.backgroundClass} ${statusStyle.textClass}`} data-testid="subscriptions-management-subscriptions-management-invoices-status-badge-2">
                           {renderInvoiceStatusIcon(invoice.status)}

@@ -42,6 +42,12 @@ export const STAFF_ROLE_OPTIONS = [
 export const STAFF_ROLE_FILTER_OPTIONS = [
   { labelKey: 'hr.static.admin', value: 'Admin' },
   { labelKey: 'hr.static.trainer', value: 'Trainer' },
+  { labelKey: 'hr.static.manager', value: 'Manager' },
+  { labelKey: 'hr.static.receptionist', value: 'Receptionist' },
+  { labelKey: 'hr.static.sales_executive', value: 'Sales Executive' },
+  { labelKey: 'hr.static.dietitian_nutritionist', value: 'Nutritionist' },
+  { labelKey: 'hr.static.housekeeping_helper', value: 'Housekeeping' },
+  { labelKey: 'hr.static.other', value: 'Other' },
 ] as const;
 
 export const STAFF_SORT_KEY_VALUES = ['name', 'branch', 'role', 'phone', 'salary', 'joinDate'] as const;
