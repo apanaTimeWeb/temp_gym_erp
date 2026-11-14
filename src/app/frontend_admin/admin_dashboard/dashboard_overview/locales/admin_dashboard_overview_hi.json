@@ -17,6 +17,7 @@
       "tooltip_checkIns": "{count} चेक-इन"
     },
     "admin_dashboard_branch_leaderboard": {
+      "allBranches": "सभी शाखाएँ",
       "text_b84bd2d793": "शाखा लीडरबोर्ड डेटा उपलब्ध नहीं है",
       "text_186698a248": "शाखा लीडरबोर्ड",
       "text_f2cb6cc8de": "राजस्व के आधार पर शीर्ष प्रदर्शन करने वाले स्थान",

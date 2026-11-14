@@ -13,6 +13,7 @@ const STYLE_ID = 'admin-responsive-table-styles';
  */
 function annotateTables(root: ParentNode = document) {
   root.querySelectorAll<HTMLTableElement>('table[data-admin-responsive-table]').forEach((table) => {
+    if (table.getAttribute('aria-busy') === 'true' || table.closest('[aria-busy="true"]')) return;
     const headerCells = Array.from(table.querySelectorAll<HTMLTableCellElement>('thead tr:first-child th'));
     const labels = headerCells.map((cell) => cell.textContent?.trim() || '');
     table.querySelectorAll<HTMLTableRowElement>('tbody tr').forEach((row) => {
@@ -20,6 +21,14 @@ function annotateTables(root: ParentNode = document) {
       Array.from(row.children).forEach((child) => {
         if (!(child instanceof HTMLTableCellElement)) return;
         const span = child.colSpan || 1;
+        if (span > 1) {
+          if (child.hasAttribute('data-admin-generated-label')) {
+            child.removeAttribute('data-label');
+            child.removeAttribute('data-admin-generated-label');
+          }
+          columnIndex += span;
+          return;
+        }
         const label = labels[columnIndex];
         if (label) {
           if (!child.hasAttribute('data-label') || child.hasAttribute('data-admin-generated-label')) {
@@ -45,21 +54,21 @@ export default function AdminNavigationLayoutResponsiveTableProvider() {
   useEffect(() => {
     if (styles.responsiveTableScope) document.documentElement.classList.add(styles.responsiveTableScope);
     
-    let rafId: number | null = null;
+    let timerId: ReturnType<typeof setTimeout> | null = null;
     const scheduleAnnotation = () => {
       if (typeof window === 'undefined') return;
-      if (rafId !== null) cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
+      if (timerId !== null) clearTimeout(timerId);
+      timerId = setTimeout(() => {
         annotateTables();
-        rafId = null;
-      });
+        timerId = null;
+      }, 50);
     };
 
     scheduleAnnotation();
     const observer = new MutationObserver(() => scheduleAnnotation());
     observer.observe(document.body, { childList: true, subtree: true });
     return () => {
-      if (rafId !== null && typeof window !== 'undefined') cancelAnimationFrame(rafId);
+      if (timerId !== null) clearTimeout(timerId);
       observer.disconnect();
       if (styles.responsiveTableScope) document.documentElement.classList.remove(styles.responsiveTableScope);
     };

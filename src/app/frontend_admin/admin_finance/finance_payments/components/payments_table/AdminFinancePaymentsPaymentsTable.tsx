@@ -36,7 +36,7 @@ export default function AdminFinanceOverviewPaymentsTable() {
   if (paymentsStatus === 'pending') {
     return (
       <div className="overflow-x-auto" aria-busy="true" aria-label={t('finance.admin_finance_payments_table.text_bc48c55226')}>
-        <table data-admin-responsive-table className="w-full">
+        <table className="w-full">
           <thead className="bg-input text-secondary">
             <tr>{PAYMENTS_TABLE_HEADERS.map((header,index) => { const keys: AdminFinancePaymentSortKey[]=['invoiceNo','member','amount','method','status','paidAt']; const key=keys[index]; const label=t(FINANCE_PAYMENT_TABLE_HEADER_LABEL_KEYS[header]); return <th key={header} scope="col" aria-sort={key ? (sortKey === key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none') : undefined} className="text-left text-xs font-semibold uppercase tracking-wider px-4 py-3">{label}{key && <button type="button" onClick={()=>handleSort(key)} className="min-h-11 min-w-11 motion-safe:transition-all motion-safe:duration-base ease-in-out ml-1 inline-flex align-middle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" aria-label={t('admin_finance_payments_table.auto_sortBy', { header: label })} title={t('admin_finance_payments_table.auto_sortBy', { header: label })} data-testid={`admin_finance-admin_finance-payments-table-click-map40-${index}-1`}>{sortKey===key?(sortDir==='asc'?<ChevronUp size={18} className="text-primary" strokeWidth={2}/>:<ChevronDown size={18} className="text-primary" strokeWidth={2}/>):<ChevronsUpDown size={18} className="text-disabled" strokeWidth={2}/>}</button>}</th>; })}</tr>
           </thead>

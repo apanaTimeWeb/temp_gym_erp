@@ -17,6 +17,7 @@
       "tooltip_checkIns": "{count} check-ins"
     },
     "admin_dashboard_branch_leaderboard": {
+      "allBranches": "All Branches",
       "text_b84bd2d793": "No branch leaderboard data",
       "text_186698a248": "Branch Leaderboard",
       "text_f2cb6cc8de": "Top performing locations by revenue",

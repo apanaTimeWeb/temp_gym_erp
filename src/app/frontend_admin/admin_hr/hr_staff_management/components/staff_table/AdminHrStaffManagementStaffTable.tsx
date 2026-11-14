@@ -71,7 +71,7 @@ export default function AdminHrManagementStaffTable() {
     return (
       <div className="flex flex-col h-full">
         <div className="overflow-x-auto flex-1">
-          <table data-admin-responsive-table className="w-full">
+          <table className="w-full">
             <thead className="bg-input text-secondary"><tr>{STAFF_TABLE_HEADERS.map((header) => <th key={header} aria-sort={STAFF_SORT_KEYS[header] && staffSortKey === STAFF_SORT_KEYS[header] ? (staffSortDir === 'asc' ? 'ascending' : 'descending') : 'none'} className="text-left text-xs font-semibold uppercase tracking-wider px-4 py-3">{renderHeader(header)}</th>)}<th className="text-right text-xs font-semibold uppercase tracking-wider px-4 py-3">{t('hr.admin_hr_staff_table.text_c3cd636a58')}</th></tr></thead>
             <tbody className="divide-y divide-border">
               {['staff-skeleton-1','staff-skeleton-2','staff-skeleton-3','staff-skeleton-4','staff-skeleton-5'].map((key) => (
