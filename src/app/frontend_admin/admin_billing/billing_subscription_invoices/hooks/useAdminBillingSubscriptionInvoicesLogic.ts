@@ -4,10 +4,7 @@
 
 import { useTranslations } from 'next-intl';
 import { adminBillingSubscriptionInvoicesAutoRenewIntent } from '@/app/frontend_admin/admin_billing/billing_subscription_invoices/utils/AdminBillingSubscriptionInvoicesAutoRenewIntent';
-
-
-import { useCallback, useEffect, useRef } from 'react';
-import type { AdminConfirmOptions } from '@/app/frontend_admin/admin_billing/billing_subscription_invoices/types/AdminBillingSubscriptionInvoicesConfirmTypes';
+import { useCallback, useEffect } from 'react';
 import { normalizeAdminBillingSubscriptionInvoicesUrlPage } from '@/app/frontend_admin/admin_billing/billing_subscription_invoices/utils/AdminBillingSubscriptionInvoicesUrlPage';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useAdminSubscriptionsStore } from '@/app/frontend_admin/admin_billing/billing_subscription_invoices/state/useAdminBillingSubscriptionInvoicesStore';
@@ -15,7 +12,8 @@ import { useAdminSubscriptionsQueries } from '@/app/frontend_admin/admin_billing
 import { useAdminNavigationLayoutConfirm } from '@/app/frontend_admin/admin_billing/billing_subscription_invoices/hooks/useAdminBillingSubscriptionInvoicesConfirm';
 import { ADMIN_SUBSCRIPTIONS_INVOICES_ITEMS_PER_PAGE } from '@/app/frontend_admin/admin_billing/billing_subscription_invoices/constants/AdminBillingSubscriptionInvoicesConstants';
 import { useAdminSubscriptionsMutations } from '@/app/frontend_admin/admin_billing/billing_subscription_invoices/hooks/useAdminBillingSubscriptionInvoicesMutations';
-/** @description useAdminSubscriptionsLogic: Business logic hook for Subscriptions — queries and mutations. @dependencies Consumes AdminSubscriptionsQueryKeys, useAdminSubscriptionsStore, useAdminSubscriptionsQueries, useAdminNavigationLayoutConfirm, AdminSubscriptionsConstants, useAdminSubscriptionsMutations. @edge-case Preserves documented loading, empty, error, permission, and recovery behavior without owning presentation. @returns The hook’s typed data, state, actions, and recovery handlers. */
+import { useAdminBillingSubscriptionInvoicesRunConfirmed } from '@/app/frontend_admin/admin_billing/billing_subscription_invoices/hooks/useAdminBillingSubscriptionInvoicesRunConfirmed';
+
 export function useAdminSubscriptionsLogic() {
   const t = useTranslations();
   const { confirm } = useAdminNavigationLayoutConfirm();
@@ -24,6 +22,7 @@ export function useAdminSubscriptionsLogic() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentInvoicePage = normalizeAdminBillingSubscriptionInvoicesUrlPage(searchParams.get('page'));
+
   const setCurrentInvoicePage = useCallback((page: number) => {
     const nextPage = normalizeAdminBillingSubscriptionInvoicesUrlPage(page);
     if (nextPage === currentInvoicePage) return;
@@ -35,47 +34,16 @@ export function useAdminSubscriptionsLogic() {
   }, [currentInvoicePage, pathname, router, searchParams]);
 
   const {
-    subscription,
-    plans,
-    invoices,
-    invoiceTotal,
-    invoiceTotalPages,
-    paymentMethods,
-    kpis,
-    status,
-    isPending,
+    subscription, plans, invoices, invoiceTotal, invoiceTotalPages,
+    paymentMethods, kpis, status, isPending,
     subscriptionError, retrySubscription, plansStatus, plansError, retryPlans,
     invoicesStatus, invoicesError, retryInvoices, paymentMethodsStatus, paymentMethodsError, retryPaymentMethods,
     kpisStatus, kpisError, retryKpis,
   } = useAdminSubscriptionsQueries(currentInvoicePage);
 
   const { upgradeMutation, autoRenewMutation, setDefaultPMMutation, removePMMutation, getIntentKey, clearIntentKey } = useAdminSubscriptionsMutations();
+  const runConfirmedMutation = useAdminBillingSubscriptionInvoicesRunConfirmed(confirm, clearIntentKey, getIntentKey);
 
-  // One subscription write or confirmation at a time. The lock lasts until the API resolves.
-  // Mutation onSuccess clears the key; API errors keep the same key for explicit retry.
-  const actionInFlight = useRef(false);
-  const runConfirmedMutation = useCallback(async (
-    intentId: string,
-    options: AdminConfirmOptions,
-    submit: (idempotencyKey: string) => Promise<unknown>,
-  ) => {
-    if (actionInFlight.current) return;
-    actionInFlight.current = true;
-    try {
-      const accepted = await confirm(options);
-      if (!accepted) {
-        clearIntentKey(intentId);
-        return;
-      }
-      await submit(getIntentKey(intentId));
-    } catch {
-      // Mutation onError owns user-visible feedback; keep the same key on retry.
-    } finally {
-      actionInFlight.current = false;
-    }
-  }, [confirm, clearIntentKey, getIntentKey]);
-
-  // Recover an out-of-range deep link after invoice metadata loads; do not conceal fetch errors.
   useEffect(() => {
     if (invoicesStatus === 'success' && Number.isSafeInteger(invoiceTotalPages) && invoiceTotalPages > 0 && currentInvoicePage > invoiceTotalPages) {
       setCurrentInvoicePage(invoiceTotalPages);
@@ -125,14 +93,12 @@ export function useAdminSubscriptionsLogic() {
     subscription, plans, invoices, paymentMethods, kpis,
     currentInvoicePage, setCurrentInvoicePage, invoiceTotal, invoiceTotalPages,
     invoiceItemsPerPage: ADMIN_SUBSCRIPTIONS_INVOICES_ITEMS_PER_PAGE,
-    status,
-    isPending,
+    status, isPending,
     subscriptionError, retrySubscription, plansStatus, plansError, retryPlans,
     invoicesStatus, invoicesError, retryInvoices, paymentMethodsStatus, paymentMethodsError, retryPaymentMethods,
     kpisStatus, kpisError, retryKpis,
     handleUpgrade, upgrading: upgradeMutation.isPending,
     toggleAutoRenew: () => {
-      // An unknown or unloaded subscription cannot determine a safe toggle direction.
       if (!subscription || typeof subscription.autoRenew !== 'boolean') return Promise.resolve();
       const intentId = adminBillingSubscriptionInvoicesAutoRenewIntent(subscription.autoRenew);
       const nextState = subscription.autoRenew ? 'off' : 'on';

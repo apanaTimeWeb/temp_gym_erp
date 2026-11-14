@@ -3,9 +3,8 @@
 // DATA FLOW: URL state -> query parameters/query keys -> Admin Finance API -> Zod-validated response -> read-only views.
 
 import { ADMIN_FINANCE_QUERY_KEYS } from '@/app/frontend_admin/admin_finance/finance_expenses/constants/AdminFinanceExpensesQueryKeys';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { AdminFinanceApi } from '@/app/frontend_admin/admin_finance/finance_expenses/api/admin_finance_expenses_api';
 import { useAdminFinanceDebounce } from '@/app/frontend_admin/admin_finance/finance_expenses/hooks/useAdminFinanceExpensesDebounce';
@@ -13,32 +12,13 @@ import type { AdminFinanceExpenseUrlParamKey } from '@/app/frontend_admin/admin_
 import { EXPENSE_CATEGORIES, FINANCE_DATE_FILTER_PRESETS, FINANCE_EXPENSE_ITEMS_PER_PAGE, FINANCE_ITEMS_PER_PAGE, FINANCE_PAYMENT_METHODS, FINANCE_PAYMENT_STATUSES } from '@/app/frontend_admin/admin_finance/finance_expenses/constants/AdminFinanceExpensesConstants';
 import { isValidAdminFinanceDateRange } from '@/app/frontend_admin/admin_finance/finance_expenses/utils/AdminFinanceExpensesDateRangeUtils';
 import { normalizeAdminFinanceExpensesPage } from '@/app/frontend_admin/admin_finance/finance_expenses/utils/AdminFinanceExpensesNormalizePage';
+import { useAdminFinanceExpensesUrlCommit } from './useAdminFinanceExpensesUrlCommit';
 
 const ADMIN_FINANCE_LEAF_SCOPE: string = 'expenses';
-/** @description useAdminFinanceLogic: Owns Finance URL filter state and TanStack Query server-state orchestration for read-only finance analytics. @dependencies Consumes AdminFinanceQueryKeys, AdminNavigationLayoutBackendMessage, AdminFinanceApi, useAdminNavigationLayoutDebounce, AdminFinanceTypes. @edge-case Preserves documented loading, empty, error, permission, and recovery behavior without owning presentation. @returns The hook’s typed data, state, actions, and recovery handlers. */
+
 export function useAdminFinanceLogic() {
   const t = useTranslations();
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const routeQuery = searchParams.toString();
-  const observedQueryRef = useRef(routeQuery);
-  const pendingQueryRef = useRef<string | null>(null);
-  useEffect(() => {
-    if (observedQueryRef.current !== routeQuery) {
-      observedQueryRef.current = routeQuery;
-      pendingQueryRef.current = null;
-    }
-  }, [routeQuery]);
-  const commitUrl = useCallback((update: (params: URLSearchParams) => void) => {
-    const base = observedQueryRef.current === routeQuery ? pendingQueryRef.current ?? routeQuery : routeQuery;
-    const params = new URLSearchParams(base);
-    update(params);
-    const query = params.toString();
-    if (query === base) return;
-    pendingQueryRef.current = query;
-    router.push(query ? `${pathname}?${query}` : pathname, { scroll: false });
-  }, [pathname, routeQuery, router]);
+  const { commitUrl, searchParams } = useAdminFinanceExpensesUrlCommit();
   const selectedBranchId = searchParams.get('branchId') || 'all';
 
   const search = searchParams.get('search') ?? '';
@@ -113,7 +93,6 @@ export function useAdminFinanceLogic() {
     enabled: ADMIN_FINANCE_LEAF_SCOPE === 'expenses',
   });
 
-  // A bookmarked page may no longer exist after records are removed or filters change.
   const expenseTotal = expensesQuery.data?.data?.total;
   useEffect(() => {
     if (expensesQuery.status !== 'success' || expensesQuery.isFetching || expenseTotal === undefined) return;
@@ -138,35 +117,23 @@ export function useAdminFinanceLogic() {
     expenses: expensesQuery.data?.data?.expenses ?? [],
     totalExpenses: expensesQuery.data?.data?.total ?? 0,
     totalExpenseAmount: expensesQuery.data?.data?.totalAmount ?? 0,
-    expenseCategory,
-    expensePage,
+    expenseCategory, expensePage,
     totalPayments: paymentsQuery.data?.data?.total ?? 0,
     summary: summaryQuery.data?.data ?? null,
     status,
-    paymentsStatus: paymentsQuery.status,
-    paymentsError: paymentsQuery.error,
-    summaryStatus: customRangeInvalid ? 'error' : summaryQuery.status,
-    summaryError: summaryQuery.error,
-    expensesStatus: expensesQuery.status,
-    expensesError: expensesQuery.error,
+    paymentsStatus: paymentsQuery.status, paymentsError: paymentsQuery.error,
+    summaryStatus: customRangeInvalid ? 'error' : summaryQuery.status, summaryError: summaryQuery.error,
+    expensesStatus: expensesQuery.status, expensesError: expensesQuery.error,
     isError,
     error: customRangeInvalid
       ? t('finance.AdminFinanceDateFilterDropdown.customRangeInvalid')
-      : isError
-        ? t('finance.AdminFinanceLogic.genericError')
-        : '',
+      : isError ? t('finance.AdminFinanceLogic.genericError') : '',
     loadAll,
-    search,
-    setSearch,
-    currentPage,
-    setCurrentPage,
-    methodFilter,
-    setMethodFilter,
-    statusFilter,
-    setStatusFilter,
-    range,
-    setRange,
-    setExpenseCategory,
-    setExpensePage,
+    search, setSearch,
+    currentPage, setCurrentPage,
+    methodFilter, setMethodFilter,
+    statusFilter, setStatusFilter,
+    range, setRange,
+    setExpenseCategory, setExpensePage,
   };
 }

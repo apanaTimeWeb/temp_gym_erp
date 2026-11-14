@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { FileBarChart, ArrowUpRight, TrendingUp, Users, CalendarCheck, BarChart3, Building2, Layers, Download, CheckCircle2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { ADMIN_REPORTS_CATALOG_LINKS } from '@/app/frontend_admin/admin_reports/reports_cross_domain_overview/constants/AdminReportsCrossDomainOverviewConstants';
+import AdminReportsCrossDomainOverviewChart from './AdminReportsCrossDomainOverviewChart';
 
 export default function AdminReportsCrossDomainOverview() {
   const t = useTranslations();
@@ -21,10 +22,6 @@ export default function AdminReportsCrossDomainOverview() {
     { month: 'Oct', revenue: 472, expenses: 222, profit: 250, checkIns: 10540, newMembers: 115, netGrowth: 99 },
     { month: 'Nov', revenue: 485, expenses: 224, profit: 261, checkIns: 10920, newMembers: 118, netGrowth: 107 },
   ];
-
-  const maxRevenueVal = 500; // in thousands (₹5.0L)
-  const maxCheckIns = 12000;
-  const maxGrowth = 140;
 
   // Branch performance metrics for visual benchmarking
   const branchMetrics = [
@@ -148,152 +145,41 @@ export default function AdminReportsCrossDomainOverview() {
         </div>
 
         {/* INTERACTIVE MULTI-MONTH PERFORMANCE GRAPH */}
-        <div className="rounded-xl border border-border bg-surface-highlight p-5 space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <div>
-              <p className="text-sm font-bold text-primary">
-                {activeChartTab === 'financial' && 'Monthly Revenue vs Expenses vs Net Profit (Last 6 Months)'}
-                {activeChartTab === 'attendance' && 'Total Member & Staff Check-Ins (Last 6 Months)'}
-                {activeChartTab === 'growth' && 'New Member Enrollments vs Net Member Growth (Last 6 Months)'}
-              </p>
-              <p className="text-xs text-secondary">
-                {activeChartTab === 'financial' && 'Figures shown in Thousands INR (₹K) with comparative operating margins'}
-                {activeChartTab === 'attendance' && 'Combined barcode and manual check-in volume logged across all gym gates'}
-                {activeChartTab === 'growth' && 'Net monthly addition after factoring voluntary freezes and scheduled expirations'}
-              </p>
-            </div>
-            <div className="flex items-center gap-3 text-xs">
-              {activeChartTab === 'financial' && (
-                <>
-                  <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-success inline-block" /> Revenue</span>
-                  <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-danger inline-block" /> Expenses</span>
-                  <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-primary inline-block" /> Net Profit</span>
-                </>
-              )}
-              {activeChartTab === 'attendance' && (
-                <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-info inline-block" /> Total Check-Ins</span>
-              )}
-              {activeChartTab === 'growth' && (
-                <>
-                  <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-primary inline-block" /> New Enrolls</span>
-                  <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-success inline-block" /> Net Growth</span>
-                </>
-              )}
-            </div>
-          </div>
+        <AdminReportsCrossDomainOverviewChart
+          activeChartTab={activeChartTab}
+          monthlyTrends={monthlyTrends}
+        />
 
-          {/* Graphical Visualization Bar Columns */}
-          <div className="h-56 w-full flex items-end justify-between gap-2 pt-6 pb-2 px-2 border-b border-border">
-            {monthlyTrends.map((item) => {
-              if (activeChartTab === 'financial') {
-                const revHeight = Math.round((item.revenue / maxRevenueVal) * 100);
-                const expHeight = Math.round((item.expenses / maxRevenueVal) * 100);
-                const profHeight = Math.round((item.profit / maxRevenueVal) * 100);
-                return (
-                  <div key={item.month} className="flex-1 flex flex-col items-center gap-2 h-full justify-end group">
-                    <div className="w-full max-w-16 flex items-end justify-center gap-1 h-full">
-                      <div
-                        className="w-1/3 rounded-t-md bg-success motion-safe:transition-all motion-safe:duration-500 group-hover:opacity-90"
-                        style={{ height: `${revHeight}%` }}
-                        title={`${item.month}: Revenue ₹${item.revenue}K`}
-                      />
-                      <div
-                        className="w-1/3 rounded-t-md bg-danger motion-safe:transition-all motion-safe:duration-500 group-hover:opacity-90"
-                        style={{ height: `${expHeight}%` }}
-                        title={`${item.month}: Expenses ₹${item.expenses}K`}
-                      />
-                      <div
-                        className="w-1/3 rounded-t-md bg-primary motion-safe:transition-all motion-safe:duration-500 group-hover:opacity-90"
-                        style={{ height: `${profHeight}%` }}
-                        title={`${item.month}: Profit ₹${item.profit}K`}
-                      />
-                    </div>
-                    <span className="text-xs font-semibold text-secondary">{item.month}</span>
-                  </div>
-                );
-              }
-
-              if (activeChartTab === 'attendance') {
-                const height = Math.round((item.checkIns / maxCheckIns) * 100);
-                return (
-                  <div key={item.month} className="flex-1 flex flex-col items-center gap-2 h-full justify-end group">
-                    <span className="text-xs font-bold text-primary group-hover:opacity-100 opacity-80">{item.checkIns.toLocaleString()}</span>
-                    <div className="w-full max-w-14 flex items-end justify-center h-full">
-                      <div
-                        className="w-full rounded-t-md bg-info motion-safe:transition-all motion-safe:duration-500 group-hover:opacity-90"
-                        style={{ height: `${height}%` }}
-                        title={`${item.month}: ${item.checkIns} check-ins`}
-                      />
-                    </div>
-                    <span className="text-xs font-semibold text-secondary">{item.month}</span>
-                  </div>
-                );
-              }
-
-              const newHeight = Math.round((item.newMembers / maxGrowth) * 100);
-              const netHeight = Math.round((item.netGrowth / maxGrowth) * 100);
-              return (
-                <div key={item.month} className="flex-1 flex flex-col items-center gap-2 h-full justify-end group">
-                  <div className="w-full max-w-14 flex items-end justify-center gap-1.5 h-full">
-                    <div
-                      className="w-1/2 rounded-t-md bg-primary motion-safe:transition-all motion-safe:duration-500 group-hover:opacity-90"
-                      style={{ height: `${newHeight}%` }}
-                      title={`${item.month}: +${item.newMembers} New Members`}
-                    />
-                    <div
-                      className="w-1/2 rounded-t-md bg-success motion-safe:transition-all motion-safe:duration-500 group-hover:opacity-90"
-                      style={{ height: `${netHeight}%` }}
-                      title={`${item.month}: +${item.netGrowth} Net Growth`}
-                    />
-                  </div>
-                  <span className="text-xs font-semibold text-secondary">{item.month}</span>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="flex flex-wrap items-center justify-between text-xs text-secondary pt-1">
-            <span>Data updated real-time across all 4 operational gym locations</span>
-            <span className="font-semibold text-primary">Current Period Collections: ₹4,85,000 (Margin 53.8%)</span>
-          </div>
-        </div>
-
-        {/* Visual Gym Performance Comparison Breakdown */}
+        {/* Visual Branch Benchmarking Breakdown */}
         <div className="space-y-3 pt-2">
           <div className="flex items-center justify-between">
-            <p className="text-xs font-bold uppercase tracking-wider text-secondary">
-              Branch Revenue Contribution & Scale Distribution
-            </p>
-            <Link
-              href="/frontend_admin/admin_gyms/gyms_comparison"
-              className="text-xs font-semibold text-primary hover:underline flex items-center gap-1"
-            >
-              <span>Side-by-side performance benchmarking across your gyms</span>
-              <ArrowUpRight size={13} />
-            </Link>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-secondary">
+              Branch Performance Contribution
+            </h3>
+            <span className="text-xs text-secondary">4 Operating Facilities</span>
           </div>
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {branchMetrics.map((branch) => {
-              const pct = Math.round((branch.revenue / maxRevenue) * 100);
+              const widthPct = Math.round((branch.revenue / maxRevenue) * 100);
               return (
-                <div key={branch.name} className="space-y-1">
-                  <div className="flex justify-between items-center text-xs font-semibold">
-                    <span className="flex items-center gap-1.5 text-primary">
-                      <Building2 size={13} className="text-secondary" />
-                      <span>{branch.name}</span>
-                    </span>
-                    <div className="flex items-center gap-3">
-                      <span className="text-secondary">{branch.members} active</span>
-                      <span className="text-secondary">Margin: {branch.profitMargin}</span>
-                      <span className="text-success font-bold">{branch.revenueFormatted}</span>
-                      <span className="text-primary font-bold">{pct}%</span>
+                <div key={branch.name} className="p-3.5 rounded-xl border border-border bg-surface-highlight/60 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-primary text-xs">{branch.name}</span>
+                    <span className="text-xs font-semibold text-success">{branch.profitMargin} Net</span>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-xs text-secondary">
+                      <span>Monthly Rev</span>
+                      <span className="font-semibold text-primary">{branch.revenueFormatted}</span>
+                    </div>
+                    <div className="h-2 w-full rounded-full bg-border overflow-hidden">
+                      <div className="h-full bg-primary rounded-full" style={{ width: `${widthPct}%` }} />
                     </div>
                   </div>
-                  <div className="h-2.5 w-full rounded-full bg-surface-highlight overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-primary motion-safe:transition-all motion-safe:duration-500"
-                      style={{ width: `${pct}%` }}
-                    />
+                  <div className="flex items-center justify-between text-[11px] text-secondary pt-1 border-t border-border/50">
+                    <span>{branch.members} active</span>
+                    <span className="text-success font-medium">{branch.netGrowth} new</span>
+                    <span>{branch.occupancy} cap</span>
                   </div>
                 </div>
               );
@@ -302,27 +188,44 @@ export default function AdminReportsCrossDomainOverview() {
         </div>
       </section>
 
-      {/* DETAILED REPORT CATALOG CARDS */}
-      <section aria-label={t('admin_navigation.AdminNavigation.reportsCatalog.title')} className="space-y-3">
-        <h2 className="text-sm font-bold uppercase tracking-wider text-secondary">
-          Detailed Sub-Domain Reports Catalog
+      {/* REPORT DOMAIN CARDS */}
+      <section className="space-y-4" aria-label="Detailed Domain Reports">
+        <h2 className="text-base font-bold text-primary flex items-center gap-2">
+          <Layers size={18} />
+          <span>Domain-Specific Detailed Reports</span>
         </h2>
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {ADMIN_REPORTS_CATALOG_LINKS.map((item) => (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {ADMIN_REPORTS_CATALOG_LINKS.map((report) => (
             <Link
-              key={item.id}
-              href={item.href}
-              className="group flex min-h-36 flex-col justify-between rounded-xl border border-border bg-card p-5 transition-colors hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shadow-sm"
+              key={report.id}
+              href={report.href}
+              className="group flex flex-col justify-between rounded-2xl border border-border bg-card p-5 shadow-card hover:border-primary/50 hover:bg-surface-hover hover:shadow-lg motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
-              <div>
-                <span className="flex items-center justify-between gap-3 mb-2">
-                  <span className="font-semibold text-primary group-hover:text-primary-hover">{t(item.titleKey)}</span>
-                  <ArrowUpRight size={18} aria-hidden="true" className="shrink-0 text-secondary transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                </span>
-                <span className="text-xs text-secondary leading-relaxed">{t(item.descriptionKey)}</span>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="rounded-xl border border-border bg-surface-highlight p-2 text-primary group-hover:bg-primary-subtle group-hover:text-primary motion-safe:transition-colors">
+                    <FileBarChart size={20} aria-hidden="true" />
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-secondary group-hover:text-primary motion-safe:transition-colors">
+                    <span>View Report</span>
+                    <ArrowUpRight size={14} aria-hidden="true" />
+                  </span>
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-primary group-hover:text-primary motion-safe:transition-colors">
+                    {t(report.titleKey)}
+                  </h3>
+                  <p className="mt-1 text-xs text-secondary leading-relaxed">
+                    {t(report.descriptionKey)}
+                  </p>
+                </div>
               </div>
-              <div className="mt-3 flex items-center text-xs font-semibold text-primary underline underline-offset-4">
-                View Full Detailed Report →
+              <div className="mt-4 flex items-center justify-between border-t border-border pt-3 text-[11px] text-secondary">
+                <span className="font-medium text-secondary">{report.id.toUpperCase()}</span>
+                <span className="font-semibold text-success flex items-center gap-1">
+                  <CheckCircle2 size={12} />
+                  <span>Audit Compliant</span>
+                </span>
               </div>
             </Link>
           ))}

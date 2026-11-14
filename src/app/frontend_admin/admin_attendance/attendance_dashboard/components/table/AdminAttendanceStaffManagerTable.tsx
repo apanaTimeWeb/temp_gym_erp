@@ -1,63 +1,109 @@
 "use client";
-// RESPONSIBILITY: Renders the Staff & Manager daily attendance check-in/out logs for gym admins.
-// DATA FLOW: staff fixtures & attendance state → filtered records table with shifts, check-in/out, and status.
+// RESPONSIBILITY: Renders and manages the Staff & Manager daily attendance check-in/out logs for gym admins,
+// including manual punch recording, timestamp overrides, and real-time status management.
+// DATA FLOW: staff fixtures & attendance state → filtered records table with shifts, check-in/out, manual punch modal, and status.
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { Search, Building2, UserCheck, Clock, ShieldCheck, AlertCircle, CheckCircle2, Calendar } from 'lucide-react';
-
-interface StaffAttendanceRecord {
-  id: string;
-  name: string;
-  role: 'Manager' | 'Senior Trainer' | 'Trainer' | 'Front Desk' | 'Maintenance';
-  branchName: string;
-  shift: 'Morning (06:00 - 15:00)' | 'Evening (14:00 - 23:00)' | 'General (09:00 - 18:00)';
-  checkInTime: string;
-  checkOutTime: string | null;
-  duration: string;
-  status: 'present' | 'late' | 'on-leave';
-  date: string;
-}
-
-const MOCK_STAFF_ATTENDANCE: StaffAttendanceRecord[] = [
-  { id: 'sa-01', name: 'Rohit Mehta', role: 'Manager', branchName: 'Andheri East', shift: 'Morning (06:00 - 15:00)', checkInTime: '05:55 AM', checkOutTime: '03:10 PM', duration: '9h 15m', status: 'present', date: '2026-11-13' },
-  { id: 'sa-02', name: 'Sahil Joshi', role: 'Manager', branchName: 'Bandra West', shift: 'Morning (06:00 - 15:00)', checkInTime: '06:05 AM', checkOutTime: '03:00 PM', duration: '8h 55m', status: 'present', date: '2026-11-13' },
-  { id: 'sa-03', name: 'Dev Malhotra', role: 'Manager', branchName: 'Powai', shift: 'Morning (06:00 - 15:00)', checkInTime: '06:20 AM', checkOutTime: null, duration: 'In Progress', status: 'late', date: '2026-11-13' },
-  { id: 'sa-04', name: 'Priya Shah', role: 'Senior Trainer', branchName: 'Andheri East', shift: 'Evening (14:00 - 23:00)', checkInTime: '01:50 PM', checkOutTime: '10:30 PM', duration: '8h 40m', status: 'present', date: '2026-11-13' },
-  { id: 'sa-05', name: 'Maya Singh', role: 'Trainer', branchName: 'Bandra West', shift: 'Evening (14:00 - 23:00)', checkInTime: '02:00 PM', checkOutTime: '10:00 PM', duration: '8h 00m', status: 'present', date: '2026-11-13' },
-  { id: 'sa-06', name: 'Aman Khan', role: 'Front Desk', branchName: 'Andheri East', shift: 'Morning (06:00 - 15:00)', checkInTime: '06:00 AM', checkOutTime: '02:30 PM', duration: '8h 30m', status: 'present', date: '2026-11-13' },
-  { id: 'sa-07', name: 'Vikas Singh', role: 'Trainer', branchName: 'Powai', shift: 'General (09:00 - 18:00)', checkInTime: '09:05 AM', checkOutTime: '06:15 PM', duration: '9h 10m', status: 'present', date: '2026-11-13' },
-  { id: 'sa-08', name: 'Karan Mehra', role: 'Maintenance', branchName: 'Thane', shift: 'Morning (06:00 - 15:00)', checkInTime: '—', checkOutTime: null, duration: '—', status: 'on-leave', date: '2026-11-13' },
-];
+import { 
+  Search, 
+  AlertCircle, 
+  CheckCircle2, 
+  Calendar,
+  PlusCircle,
+  Edit3,
+  X
+} from 'lucide-react';
+import { StaffAttendanceRecord, INITIAL_STAFF_ATTENDANCE } from '../../types/AdminAttendanceStaffManagerTypes';
+import AdminAttendanceStaffManagerModal from '../modal/AdminAttendanceStaffManagerModal';
 
 export default function AdminAttendanceStaffManagerTable() {
   const t = useTranslations();
+  const [records, setRecords] = useState<StaffAttendanceRecord[]>(INITIAL_STAFF_ATTENDANCE);
   const [search, setSearch] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
   const [branchFilter, setBranchFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
 
+  // Manual Punch Modal State
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingRecord, setEditingRecord] = useState<StaffAttendanceRecord | null>(null);
+  const [successToast, setSuccessToast] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!successToast) return;
+    const timer = setTimeout(() => setSuccessToast(null), 4000);
+    return () => clearTimeout(timer);
+  }, [successToast]);
+
+  const handleOpenNewModal = () => {
+    setEditingRecord(null);
+    setIsModalOpen(true);
+  };
+
+  const handleOpenEditModal = (rec: StaffAttendanceRecord) => {
+    setEditingRecord(rec);
+    setIsModalOpen(true);
+  };
+
+  const handleSaveAttendance = (data: Omit<StaffAttendanceRecord, 'id' | 'duration'> & { id?: string }) => {
+    let duration = '—';
+    if (data.status !== 'on-leave') {
+      duration = data.checkOutTime ? '8h 30m' : 'In Progress';
+    }
+
+    if (data.id) {
+      setRecords(prev => prev.map(item => item.id === data.id ? {
+        ...item,
+        ...data,
+        duration,
+      } : item));
+      setSuccessToast(`Attendance punch updated successfully for ${data.name} (${data.role})!`);
+    } else {
+      const newRecord: StaffAttendanceRecord = {
+        ...data,
+        id: `sa-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+        duration,
+      };
+      setRecords(prev => [newRecord, ...prev]);
+      setSuccessToast(`Manual attendance marked successfully for ${data.name} (${data.role})!`);
+    }
+    setIsModalOpen(false);
+  };
+
   const filtered = useMemo(() => {
-    return MOCK_STAFF_ATTENDANCE.filter((rec) => {
+    return records.filter((rec) => {
       const matchSearch = !search || rec.name.toLowerCase().includes(search.toLowerCase()) || rec.role.toLowerCase().includes(search.toLowerCase());
       const matchRole = roleFilter === 'all' || (roleFilter === 'Manager' ? rec.role === 'Manager' : rec.role !== 'Manager');
       const matchBranch = branchFilter === 'all' || rec.branchName === branchFilter;
       const matchStatus = statusFilter === 'all' || rec.status === statusFilter;
       return matchSearch && matchRole && matchBranch && matchStatus;
     });
-  }, [search, roleFilter, branchFilter, statusFilter]);
+  }, [records, search, roleFilter, branchFilter, statusFilter]);
 
-  const presentCount = MOCK_STAFF_ATTENDANCE.filter(r => r.status === 'present').length;
-  const lateCount = MOCK_STAFF_ATTENDANCE.filter(r => r.status === 'late').length;
-  const onLeaveCount = MOCK_STAFF_ATTENDANCE.filter(r => r.status === 'on-leave').length;
+  const presentCount = records.filter(r => r.status === 'present').length;
+  const lateCount = records.filter(r => r.status === 'late').length;
+  const onLeaveCount = records.filter(r => r.status === 'on-leave').length;
 
   return (
     <div className="space-y-4">
+      {successToast && (
+        <div role="status" className="flex items-center justify-between gap-3 p-3.5 bg-success-bg border border-success/30 rounded-xl text-success-text text-xs sm:text-sm font-semibold shadow-xs animate-in fade-in">
+          <div className="flex items-center gap-2">
+            <CheckCircle2 size={18} className="shrink-0 text-success-text" />
+            <span>{successToast}</span>
+          </div>
+          <button type="button" onClick={() => setSuccessToast(null)} className="text-success-text hover:opacity-80 p-1" aria-label="Dismiss message">
+            <X size={16} />
+          </button>
+        </div>
+      )}
+
       {/* Quick Staff KPI Badges */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="rounded-xl border border-border bg-surface-highlight p-3">
           <div className="text-xs font-semibold text-secondary">Total Staff Logged</div>
-          <div className="text-lg font-bold text-primary mt-0.5">{MOCK_STAFF_ATTENDANCE.length} Staff</div>
+          <div className="text-lg font-bold text-primary mt-0.5">{records.length} Staff</div>
         </div>
         <div className="rounded-xl border border-success/30 bg-success-bg p-3">
           <div className="text-xs font-semibold text-success-text">Present Today</div>
@@ -76,7 +122,7 @@ export default function AdminAttendanceStaffManagerTable() {
       {/* Toolbar */}
       <div className="flex flex-wrap items-center justify-between gap-3 bg-surface-highlight/50 p-3 rounded-xl border border-border">
         <div className="flex flex-wrap items-center gap-2.5 flex-1">
-          <div className="relative min-w-[220px]">
+          <div className="relative min-w-[200px]">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary" />
             <input
               type="text"
@@ -91,6 +137,7 @@ export default function AdminAttendanceStaffManagerTable() {
             value={roleFilter}
             onChange={(e) => setRoleFilter(e.target.value)}
             className="min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            aria-label="Filter by role"
           >
             <option value="all">All Roles (Staff & Managers)</option>
             <option value="Manager">Managers Only</option>
@@ -101,6 +148,7 @@ export default function AdminAttendanceStaffManagerTable() {
             value={branchFilter}
             onChange={(e) => setBranchFilter(e.target.value)}
             className="min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            aria-label="Filter by branch"
           >
             <option value="all">All Branches</option>
             <option value="Andheri East">Andheri East</option>
@@ -113,6 +161,7 @@ export default function AdminAttendanceStaffManagerTable() {
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
             className="min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            aria-label="Filter by attendance status"
           >
             <option value="all">All Statuses</option>
             <option value="present">Present</option>
@@ -120,6 +169,15 @@ export default function AdminAttendanceStaffManagerTable() {
             <option value="on-leave">On Leave</option>
           </select>
         </div>
+
+        <button
+          type="button"
+          onClick={handleOpenNewModal}
+          className="inline-flex items-center gap-1.5 px-4 min-h-11 rounded-xl bg-primary text-on-primary font-semibold text-xs shadow-sm hover:opacity-90 motion-safe:transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shrink-0"
+        >
+          <PlusCircle size={15} />
+          <span>Mark Manual Attendance</span>
+        </button>
       </div>
 
       {/* Table */}
@@ -135,12 +193,13 @@ export default function AdminAttendanceStaffManagerTable() {
               <th className="p-3.5 font-bold uppercase tracking-wider text-xs">Check-Out</th>
               <th className="p-3.5 font-bold uppercase tracking-wider text-xs">Total Duration</th>
               <th className="p-3.5 font-bold uppercase tracking-wider text-xs">Attendance Status</th>
+              <th className="p-3.5 font-bold uppercase tracking-wider text-xs text-right">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={8} className="p-8 text-center text-secondary">
+                <td colSpan={9} className="p-8 text-center text-secondary">
                   No staff or manager attendance records match the selected filters.
                 </td>
               </tr>
@@ -152,7 +211,14 @@ export default function AdminAttendanceStaffManagerTable() {
                       <span className="w-7 h-7 rounded-full bg-primary-subtle text-primary font-bold flex items-center justify-center text-xs">
                         {record.name.charAt(0)}
                       </span>
-                      <span>{record.name}</span>
+                      <div>
+                        <span>{record.name}</span>
+                        {record.adminNotes && (
+                          <p className="text-[10px] text-secondary font-normal italic truncate max-w-[140px]">
+                            {record.adminNotes}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </td>
                   <td className="p-3.5">
@@ -181,13 +247,30 @@ export default function AdminAttendanceStaffManagerTable() {
                       <span className="capitalize">{record.status}</span>
                     </span>
                   </td>
+                  <td className="p-3.5 text-right">
+                    <button
+                      type="button"
+                      onClick={() => handleOpenEditModal(record)}
+                      className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-border bg-card hover:bg-surface-highlight text-primary text-xs font-semibold shadow-xs motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                      aria-label={`Adjust attendance punch for ${record.name}`}
+                    >
+                      <Edit3 size={12} className="text-secondary" />
+                      <span>Adjust Punch</span>
+                    </button>
+                  </td>
                 </tr>
               ))
             )}
           </tbody>
         </table>
       </div>
+
+      <AdminAttendanceStaffManagerModal
+        isOpen={isModalOpen}
+        editingRecord={editingRecord}
+        onClose={() => setIsModalOpen(false)}
+        onSave={handleSaveAttendance}
+      />
     </div>
   );
 }
-

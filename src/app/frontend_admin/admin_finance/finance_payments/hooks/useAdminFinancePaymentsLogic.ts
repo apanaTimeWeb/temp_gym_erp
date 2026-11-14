@@ -3,9 +3,8 @@
 // DATA FLOW: URL state -> query parameters/query keys -> Admin Finance API -> Zod-validated response -> read-only views.
 
 import { ADMIN_FINANCE_QUERY_KEYS } from '@/app/frontend_admin/admin_finance/finance_payments/constants/AdminFinancePaymentsQueryKeys';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { AdminFinanceApi } from '@/app/frontend_admin/admin_finance/finance_payments/api/admin_finance_payments_api';
 import { normalizeAdminFinancePaymentsPage } from '@/app/frontend_admin/admin_finance/finance_payments/utils/AdminFinancePaymentsNormalizePage';
@@ -13,33 +12,13 @@ import { useAdminFinanceDebounce } from '@/app/frontend_admin/admin_finance/fina
 import type { AdminFinanceExpenseUrlParamKey } from '@/app/frontend_admin/admin_finance/finance_payments/types/AdminFinancePaymentsTypes';
 import { EXPENSE_CATEGORIES, FINANCE_DATE_FILTER_PRESETS, FINANCE_EXPENSE_ITEMS_PER_PAGE, FINANCE_ITEMS_PER_PAGE, FINANCE_PAYMENT_METHODS, FINANCE_PAYMENT_STATUSES } from '@/app/frontend_admin/admin_finance/finance_payments/constants/AdminFinancePaymentsConstants';
 import { isValidAdminFinanceDateRange } from '@/app/frontend_admin/admin_finance/finance_payments/utils/AdminFinancePaymentsDateRangeUtils';
+import { useAdminFinancePaymentsUrlCommit } from './useAdminFinancePaymentsUrlCommit';
 
 const ADMIN_FINANCE_LEAF_SCOPE: string = 'payments';
-/** @description useAdminFinanceLogic: Owns Finance URL filter state and TanStack Query server-state orchestration for read-only finance analytics. @dependencies Consumes AdminFinanceQueryKeys, AdminNavigationLayoutBackendMessage, AdminFinanceApi, useAdminNavigationLayoutDebounce, AdminFinanceTypes. @edge-case Preserves documented loading, empty, error, permission, and recovery behavior without owning presentation. @returns The hook’s typed data, state, actions, and recovery handlers. */
+
 export function useAdminFinanceLogic() {
   const t = useTranslations();
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const routeQuery = searchParams.toString();
-  const observedQueryRef = useRef(routeQuery);
-  const pendingQueryRef = useRef<string | null>(null);
-  useEffect(() => {
-    if (observedQueryRef.current !== routeQuery) {
-      observedQueryRef.current = routeQuery;
-      pendingQueryRef.current = null;
-    }
-  }, [routeQuery]);
-  // Merge rapid user edits before Next.js acknowledges the previous navigation.
-  const commitUrl = useCallback((update: (params: URLSearchParams) => void) => {
-    const base = observedQueryRef.current === routeQuery ? pendingQueryRef.current ?? routeQuery : routeQuery;
-    const next = new URLSearchParams(base);
-    update(next);
-    const query = next.toString();
-    if (query === base) return;
-    pendingQueryRef.current = query;
-    router.push(query ? `${pathname}?${query}` : pathname, { scroll: false });
-  }, [pathname, routeQuery, router]);
+  const { commitUrl, searchParams } = useAdminFinancePaymentsUrlCommit();
   const selectedBranchId = searchParams.get('branchId') || 'all';
 
   const search = searchParams.get('search') ?? '';
@@ -64,7 +43,7 @@ export function useAdminFinanceLogic() {
   }, [commitUrl]);
 
   const requestedExpenseCategory = searchParams.get('expenseCategory') ?? 'All';
-  const expenseCategory = requestedExpenseCategory === 'All' || (EXPENSE_CATEGORIES as readonly string[]).includes(requestedExpenseCategory) ? requestedExpenseCategory : 'All';
+  const expenseCategory = (EXPENSE_CATEGORIES as readonly string[]).includes(requestedExpenseCategory) ? requestedExpenseCategory : 'All';
   const expensePage = normalizeAdminFinancePaymentsPage(searchParams.get('expensePage'));
 
   const setSearch = useCallback((value: string) => setUrlParam('search', value || null), [setUrlParam]);
@@ -114,23 +93,21 @@ export function useAdminFinanceLogic() {
     enabled: ADMIN_FINANCE_LEAF_SCOPE === 'expenses',
   });
 
-  // Recover an obsolete bookmark after a successful, settled payments query.
-  const paymentTotal = paymentsQuery.data?.data?.total;
+  const expenseTotal = expensesQuery.data?.data?.total;
   useEffect(() => {
-    if (paymentsQuery.status !== 'success' || paymentsQuery.isFetching || paymentTotal === undefined) return;
-    const lastPage = Math.max(1, Math.ceil(paymentTotal / FINANCE_ITEMS_PER_PAGE));
-    if (currentPage > lastPage) setCurrentPage(lastPage);
-  }, [currentPage, paymentTotal, paymentsQuery.isFetching, paymentsQuery.status, setCurrentPage]);
+    if (expensesQuery.status !== 'success' || expensesQuery.isFetching || expenseTotal === undefined) return;
+    const lastPage = Math.max(1, Math.ceil(expenseTotal / FINANCE_EXPENSE_ITEMS_PER_PAGE));
+    if (expensePage > lastPage) setExpensePage(lastPage);
+  }, [expensePage, expenseTotal, expensesQuery.isFetching, expensesQuery.status, setExpensePage]);
 
   const activeEntityQuery = ADMIN_FINANCE_LEAF_SCOPE === 'payments' ? paymentsQuery : ADMIN_FINANCE_LEAF_SCOPE === 'expenses' ? expensesQuery : summaryQuery;
-  const isError = activeEntityQuery.isError || (ADMIN_FINANCE_LEAF_SCOPE !== 'summary' && summaryQuery.isError);
+  const isError = activeEntityQuery.isError || summaryQuery.isError;
   const status = activeEntityQuery.status;
 
   const loadAll = useCallback(async () => {
-    const refetches: Array<Promise<unknown>> = [
-      paymentsQuery.refetch(),
-      expensesQuery.refetch(),
-    ];
+    const refetches: Array<Promise<unknown>> = [];
+    if (ADMIN_FINANCE_LEAF_SCOPE === 'payments') refetches.push(paymentsQuery.refetch());
+    if (ADMIN_FINANCE_LEAF_SCOPE === 'expenses') refetches.push(expensesQuery.refetch());
     if (!customRangeInvalid) refetches.push(summaryQuery.refetch());
     await Promise.all(refetches);
   }, [customRangeInvalid, expensesQuery, paymentsQuery, summaryQuery]);
@@ -140,35 +117,23 @@ export function useAdminFinanceLogic() {
     expenses: expensesQuery.data?.data?.expenses ?? [],
     totalExpenses: expensesQuery.data?.data?.total ?? 0,
     totalExpenseAmount: expensesQuery.data?.data?.totalAmount ?? 0,
-    expenseCategory,
-    expensePage,
+    expenseCategory, expensePage,
     totalPayments: paymentsQuery.data?.data?.total ?? 0,
     summary: summaryQuery.data?.data ?? null,
     status,
-    paymentsStatus: paymentsQuery.status,
-    paymentsError: paymentsQuery.error,
-    summaryStatus: customRangeInvalid ? 'error' : summaryQuery.status,
-    summaryError: summaryQuery.error,
-    expensesStatus: expensesQuery.status,
-    expensesError: expensesQuery.error,
+    paymentsStatus: paymentsQuery.status, paymentsError: paymentsQuery.error,
+    summaryStatus: customRangeInvalid ? 'error' : summaryQuery.status, summaryError: summaryQuery.error,
+    expensesStatus: expensesQuery.status, expensesError: expensesQuery.error,
     isError,
     error: customRangeInvalid
       ? t('finance.AdminFinanceDateFilterDropdown.customRangeInvalid')
-      : isError
-        ? t('finance.AdminFinanceLogic.genericError')
-        : '',
+      : isError ? t('finance.AdminFinanceLogic.genericError') : '',
     loadAll,
-    search,
-    setSearch,
-    currentPage,
-    setCurrentPage,
-    methodFilter,
-    setMethodFilter,
-    statusFilter,
-    setStatusFilter,
-    range,
-    setRange,
-    setExpenseCategory,
-    setExpensePage,
+    search, setSearch,
+    currentPage, setCurrentPage,
+    methodFilter, setMethodFilter,
+    statusFilter, setStatusFilter,
+    range, setRange,
+    setExpenseCategory, setExpensePage,
   };
 }

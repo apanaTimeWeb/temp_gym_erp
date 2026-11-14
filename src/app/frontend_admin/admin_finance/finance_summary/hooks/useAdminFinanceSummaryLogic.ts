@@ -15,7 +15,7 @@ import { EXPENSE_CATEGORIES, FINANCE_DATE_FILTER_PRESETS, FINANCE_EXPENSE_ITEMS_
 import { isValidAdminFinanceDateRange } from '@/app/frontend_admin/admin_finance/finance_summary/utils/AdminFinanceSummaryDateRangeUtils';
 
 const ADMIN_FINANCE_LEAF_SCOPE: 'summary' | 'payments' | 'expenses' = 'summary';
-/** @description useAdminFinanceLogic: Owns Finance URL filter state and TanStack Query server-state orchestration for read-only finance analytics. @dependencies Consumes AdminFinanceQueryKeys, AdminNavigationLayoutBackendMessage, AdminFinanceApi, useAdminNavigationLayoutDebounce, AdminFinanceTypes. @edge-case Preserves documented loading, empty, error, permission, and recovery behavior without owning presentation. @returns The hook’s typed data, state, actions, and recovery handlers. */
+
 export function useAdminFinanceLogic() {
   const t = useTranslations();
   const router = useRouter();
@@ -39,8 +39,7 @@ export function useAdminFinanceLogic() {
 
   const setUrlParam = useCallback((key: string, value: string | null) => {
     const next = new URLSearchParams(searchParams.toString());
-    if (value) next.set(key, value);
-    else next.delete(key);
+    if (value) next.set(key, value); else next.delete(key);
     if (key !== 'page') next.set('page', '1');
     const query = next.toString();
     router.push(query ? `${pathname}?${query}` : pathname);
@@ -103,10 +102,7 @@ export function useAdminFinanceLogic() {
   const status = activeEntityQuery.status;
 
   const loadAll = useCallback(async () => {
-    const refetches: Array<Promise<unknown>> = [
-      paymentsQuery.refetch(),
-      expensesQuery.refetch(),
-    ];
+    const refetches: Array<Promise<unknown>> = [paymentsQuery.refetch(), expensesQuery.refetch()];
     if (!customRangeInvalid) refetches.push(summaryQuery.refetch());
     await Promise.all(refetches);
   }, [customRangeInvalid, expensesQuery, paymentsQuery, summaryQuery]);
