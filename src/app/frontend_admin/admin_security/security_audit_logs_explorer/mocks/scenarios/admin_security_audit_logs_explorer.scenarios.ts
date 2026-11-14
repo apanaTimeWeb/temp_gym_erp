@@ -24,7 +24,7 @@ export function createAdminSecurityAuditLogsExplorerScenarioHandler(
     throw new Error('EMPTY scenario requires an explicit schema-correct emptyData payload.');
   }
   return http.all(verifiedRoute, async () => {
-    if (scenario === 'EMPTY') return HttpResponse.json({ success: true, message: 'Empty scenario', data: options.emptyData, requestId: globalThis.crypto.randomUUID() });
+    if (scenario === 'EMPTY') return HttpResponse.json({ success: true, message: 'Empty scenario', data: options.emptyData, requestId: 'scenario-empty' });
     if (scenario === 'SERVER_500') return HttpResponse.json({ success: false, message: 'Simulated server failure', data: null, errorCode: 'ERR_INTERNAL', statusCode: 500, requestId: globalThis.crypto.randomUUID() }, { status: 500 });
     if (scenario === 'TIMEOUT') {
       await delay(options.timeoutDelayMs ?? ADMIN_AUDIT_LOGS_EXPLORER_SCENARIOS.TIMEOUT.defaultDelayMs);

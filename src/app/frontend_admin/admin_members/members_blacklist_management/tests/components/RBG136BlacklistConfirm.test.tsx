@@ -1,6 +1,6 @@
 import React from 'react';
 import { describe, it, expect, vi, afterEach } from 'vitest';
-import { render, screen, fireEvent, cleanup, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, cleanup, waitFor, act } from '@testing-library/react';
 import { NextIntlClientProvider } from 'next-intl';
 import { AdminNavigationLayoutConfirmProvider, ConfirmContext } from '@/app/frontend_admin/admin_members/members_blacklist_management/components/feedback/AdminMembersBlacklistManagementConfirmProvider';
 
@@ -14,8 +14,10 @@ describe('RBG136 blacklist confirmation protection', () => {
   it('isolates queued typed confirmation requests and enforces a nonempty phrase', async () => {
     const getConfirm=renderQueue();
     let first!:Promise<boolean>,second!:Promise<boolean>;
-    first=getConfirm()({title:'First action',message:'First',requireTyping:true,confirmationPhrase:'DELETE'});
-    second=getConfirm()({title:'Second action',message:'Second',requireTyping:true,confirmationPhrase:'    '});
+    act(() => {
+      first=getConfirm()({title:'First action',message:'First',requireTyping:true,confirmationPhrase:'DELETE'});
+      second=getConfirm()({title:'Second action',message:'Second',requireTyping:true,confirmationPhrase:'    '});
+    });
     const firstInput=screen.getByRole('textbox');
     fireEvent.change(firstInput,{target:{value:'DELETE'}});
     fireEvent.click(screen.getByRole('button',{name:'Confirm'}));
@@ -29,7 +31,10 @@ describe('RBG136 blacklist confirmation protection', () => {
   });
   it('exposes unique dialog semantics and contains tab focus', async () => {
     const getConfirm=renderQueue();
-    const result=getConfirm()({title:'Review',message:'Blacklist entry'});
+    let result!: Promise<boolean>;
+    act(() => {
+      result=getConfirm()({title:'Review',message:'Blacklist entry'});
+    });
     const dlg=screen.getByRole('dialog');
     expect(dlg.getAttribute('aria-modal')).toBe('true');
     expect(dlg.getAttribute('aria-labelledby')).toBeTruthy();

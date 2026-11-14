@@ -22,7 +22,8 @@ export function useAdminUsageAlert() {
     staleTime: 60_000,
   });
 
-  const usageData = query.data ?? null;
+  const rawData = query.data as { data?: unknown } | null | undefined;
+  const usageData = (rawData && typeof rawData === 'object' && 'data' in rawData && rawData.data ? rawData.data : query.data) as any ?? null;
   const getUsageRatio = (used: number, limit: number) => limit > 0 ? used / limit : 0;
   const maxRatio = usageData
     ? Math.max(

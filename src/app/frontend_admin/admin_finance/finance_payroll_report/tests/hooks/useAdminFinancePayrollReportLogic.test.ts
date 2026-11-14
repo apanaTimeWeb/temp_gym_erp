@@ -9,7 +9,7 @@ const exportReport = vi.fn();
 const refetch = vi.fn();
 const fixture = { payrollSummary: [] };
 const testState = vi.hoisted(() => ({ search: 'range=this_month' }));
-vi.mock('next/navigation', () => ({ useSearchParams: () => new URLSearchParams(testState.search) }));
+vi.mock('next/navigation', () => ({ useSearchParams: () => new URLSearchParams(testState.search), useRouter: () => ({ push: vi.fn(), replace: vi.fn() }), usePathname: () => '' }));
 vi.mock('@tanstack/react-query', () => ({ useQuery: vi.fn() }));
 vi.mock('@/app/frontend_admin/admin_finance/finance_payroll_report/api/admin_finance_payroll_report_api', () => ({ AdminFinancePayrollReportApi: { fetchPayrollReport: vi.fn(), exportReport: vi.fn() } }));
 vi.mock('@/app/frontend_admin/admin_finance/finance_payroll_report/state/useAdminFinancePayrollReportStore', () => ({ useAdminFinancePayrollReportStore: () => ({ selectedGymId: 'b1' }) }));

@@ -37,7 +37,7 @@ export function useAdminAnnouncementsModalForm() {
 
   const handleClose = useCallback(async () => {
     if (await confirmDiscardIfDirty()) {
-      abandonDraftIntent();
+      abandonDraftIntent?.();
       setShowModal(false);
     }
   }, [abandonDraftIntent, confirmDiscardIfDirty, setShowModal]);

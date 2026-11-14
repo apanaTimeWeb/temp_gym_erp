@@ -18,6 +18,6 @@ describe('useAdminBlacklistDebounce', () => {
     act(() => { vi.advanceTimersByTime(299); });
     expect(result.current).toBe('a');
     act(() => { vi.advanceTimersByTime(1); });
-    await waitFor(() => expect(result.current).toBe('abc'));
+    expect(result.current).toBe('abc');
   });
 });

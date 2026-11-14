@@ -13,7 +13,7 @@ describe('RBG136 pagination contract',()=>{
  });
  it('clamps obsolete page to final available page',()=>{
   render(<Pagination currentPage={999} totalPages={3} totalItems={21} itemsPerPage={10} onPageChange={()=>{}}/>);
-  expect(screen.getByRole('button',{name:'3'}).getAttribute('aria-current')).toBe('page');
+  expect(screen.getByText('3').closest('button')?.getAttribute('aria-current')).toBe('page');
   expect(screen.getByRole('button',{name:'admin_layout.AdminNavigationLayoutPagination.text_4bfc194b68'}).hasAttribute('disabled')).toBe(true);
  });
 });

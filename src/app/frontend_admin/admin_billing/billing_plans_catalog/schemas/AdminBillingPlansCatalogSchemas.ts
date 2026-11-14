@@ -33,19 +33,16 @@ export const plansInitialDataSchema = z.object({
 
 // Validate entered decimal precision lexically, not with Number(value) * 100 === integer.
 // Number.isSafeInteger guards against payloads exceeding the minor-unit API's safe range.
-const planMoneyFormSchema = z.string().trim()
-  .min(1, '__i18n:plans.validation.validPrice')
+const planMoneyFormSchema = z.string()
+  .refine(value => value.trim().length > 0, '__i18n:plans.validation.validPrice')
+  .transform(value => value.trim())
   .refine(value => /^\d+(?:\.\d{1,2})?$/.test(value) && Number.isFinite(Number(value)) && Number(value) >= 0,
     '__i18n:plans.validation.validPrice')
   .refine(value => !/^\d+(?:\.\d+)?$/.test(value) ||
-    (value.split('.')[1]?.length ?? 0) <= 2 && Number.isSafeInteger(Math.round(Number(value) * 100)),
+    ((value.split('.')[1]?.length ?? 0) <= 2 && Number.isSafeInteger(Math.round(Number(value) * 100))),
     '__i18n:plans.validation.maxTwoDecimals');
 
-const optionalPlanMoneyFormSchema = z.string().trim()
-  .refine(value => !value || (/^\d+(?:\.\d{1,2})?$/.test(value) && Number.isFinite(Number(value)) && Number(value) >= 0),
-    '__i18n:plans.validation.validPrice')
-  .optional()
-  .or(z.literal(''));
+const optionalPlanMoneyFormSchema = planMoneyFormSchema.optional().or(z.literal(''));
 
 export const planFormSchema = z.object({
   name: z.string().min(2, '__i18n:plans.validation.nameRequired'),
@@ -54,7 +51,7 @@ export const planFormSchema = z.object({
   price3Month: planMoneyFormSchema,
   price6Month: planMoneyFormSchema,
   price12Month: planMoneyFormSchema,
-  priceCustom: optionalPlanMoneyFormSchema,
+  priceCustom: planMoneyFormSchema,
   features: z.string().min(2, '__i18n:plans.validation.featuresRequired'),
   freezeAllowed: z.boolean().optional(),
   joiningFee: optionalPlanMoneyFormSchema,

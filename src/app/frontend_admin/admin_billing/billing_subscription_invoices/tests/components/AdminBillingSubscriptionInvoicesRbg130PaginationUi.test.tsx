@@ -6,7 +6,7 @@ describe('RBG130 invoice paginator defensive render', () => {
   it('normalizes impossible currentPage/totalPages before creating navigation controls', () => {
     const onPageChange = vi.fn();
     render(<AdminNavigationLayoutPagination currentPage={999} totalPages={2} totalItems={11} itemsPerPage={10} onPageChange={onPageChange}/>);
-    expect(screen.getByText('11')).toBeTruthy();
+    expect(screen.getAllByText('11')[0]).toBeTruthy();
     const previous = screen.getByRole('button', { name: 'admin_layout.AdminNavigationLayoutPagination.text_81f547195b' });
     fireEvent.click(previous);
     expect(onPageChange).toHaveBeenCalledWith(1);

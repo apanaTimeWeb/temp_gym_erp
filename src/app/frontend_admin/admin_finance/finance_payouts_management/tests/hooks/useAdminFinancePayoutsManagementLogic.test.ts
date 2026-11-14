@@ -13,10 +13,12 @@ vi.mock('@/app/frontend_admin/admin_finance/finance_payouts_management/hooks/use
 
 describe('useAdminPayoutsLogic', () => {
   beforeEach(() => {
-    vi.mocked(useQuery).mockReset()
-      .mockReturnValueOnce({ data: { data: [{ id: 'p1' }], meta: { total: 12, totalPages: 2 } }, status: 'success' } as never)
-      .mockReturnValueOnce({ data: [{ id: 'pnl1' }], isPending: false } as never)
-      .mockReturnValueOnce({ data: { revenue: 500 } } as never);
+    vi.mocked(useQuery).mockImplementation((options: { queryKey?: unknown[] }) => {
+      const key = JSON.stringify(options?.queryKey ?? []);
+      if (key.includes('pnl')) return { data: [{ id: 'pnl1' }], isPending: false } as never;
+      if (key.includes('kpis')) return { data: { revenue: 500 } } as never;
+      return { data: { data: [{ id: 'p1' }], meta: { total: 12, totalPages: 2 } }, status: 'success' } as never;
+    });
   });
 
   it('maps payout/P&L/KPI server data and resets pagination when payout sorting changes', () => {

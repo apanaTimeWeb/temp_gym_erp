@@ -25,7 +25,7 @@ describe('RBG128 HR selector and pagination safety', () => {
  });
  it('does not display impossible row numbers for obsolete pages', () => {
   render(<Pagination currentPage={50} totalPages={2} totalItems={15} itemsPerPage={10} onPageChange={vi.fn()} />);
-  const status = screen.getByText('15');
+  const status = screen.getAllByText('15')[0];
   expect(status).toBeInTheDocument();
   expect(screen.queryByText('491')).not.toBeInTheDocument();
  });

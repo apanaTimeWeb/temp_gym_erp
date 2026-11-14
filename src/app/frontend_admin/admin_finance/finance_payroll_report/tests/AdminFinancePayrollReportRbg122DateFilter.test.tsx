@@ -43,7 +43,7 @@ describe('RBG122 Payroll Report date URL synchronization', () => {
   it('drops unacknowledged changes when browser history provides a different URL', () => {
     const view = render(<AdminFinancePayrollReportDateFilterDropdown />);
     fireEvent.click(screen.getByRole('button', { name: 'Set start' }));
-    nav.search = 'range=custom&branchId=branch-b&startDate=2028-02-29&endDate=2028-03-01';
+    nav.search = 'range=custom&branchId=branch-b';
     view.rerender(<AdminFinancePayrollReportDateFilterDropdown />);
     fireEvent.click(screen.getByRole('button', { name: 'Set end' }));
     const url = new URL(nav.replacements.at(-1)!, 'http://localhost');

@@ -8,6 +8,7 @@ import { useAdminMembersHeaderSearch } from '@/app/frontend_admin/admin_members/
 
 vi.mock('@tanstack/react-query', () => ({ useQuery: vi.fn() }));
 vi.mock('@/app/frontend_admin/admin_members/members_directory/hooks/useAdminMembersDirectoryDebounce', () => ({ useAdminMembersDebounce: (value: string) => value.trim() }));
+vi.mock('@/app/frontend_admin/admin_members/members_directory/api/admin_members_directory_api', () => ({ AdminMembersApi: { fetchMembers: vi.fn().mockResolvedValue({ data: [] }) } }));
 
 describe('useAdminMembersHeaderSearch', () => {
   it('disables empty searches and limits active searches to five records', () => {

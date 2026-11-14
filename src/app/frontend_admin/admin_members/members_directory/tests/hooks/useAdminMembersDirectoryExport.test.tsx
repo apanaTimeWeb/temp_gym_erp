@@ -19,25 +19,26 @@ let clickSpy: ReturnType<typeof vi.spyOn>;
 let previousCreateDescriptor: PropertyDescriptor | undefined;
 let previousRevokeDescriptor: PropertyDescriptor | undefined;
 
-describe('useAdminMembersExport', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    createObjectURL = vi.fn().mockReturnValue('blob:members-export');
-    revokeObjectURL = vi.fn();
-    previousCreateDescriptor = Object.getOwnPropertyDescriptor(URL, 'createObjectURL');
-    previousRevokeDescriptor = Object.getOwnPropertyDescriptor(URL, 'revokeObjectURL');
-    Object.defineProperty(URL, 'createObjectURL', { configurable: true, value: createObjectURL });
-    Object.defineProperty(URL, 'revokeObjectURL', { configurable: true, value: revokeObjectURL });
-    clickSpy = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => undefined);
-  });
+beforeEach(() => {
+  vi.clearAllMocks();
+  createObjectURL = vi.fn().mockReturnValue('blob:members-export');
+  revokeObjectURL = vi.fn();
+  previousCreateDescriptor = Object.getOwnPropertyDescriptor(URL, 'createObjectURL');
+  previousRevokeDescriptor = Object.getOwnPropertyDescriptor(URL, 'revokeObjectURL');
+  Object.defineProperty(URL, 'createObjectURL', { configurable: true, value: createObjectURL });
+  Object.defineProperty(URL, 'revokeObjectURL', { configurable: true, value: revokeObjectURL });
+  clickSpy = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => undefined);
+});
 
-  afterEach(() => {
-    clickSpy.mockRestore();
-    if (previousCreateDescriptor) Object.defineProperty(URL, 'createObjectURL', previousCreateDescriptor);
-    else Reflect.deleteProperty(URL, 'createObjectURL');
-    if (previousRevokeDescriptor) Object.defineProperty(URL, 'revokeObjectURL', previousRevokeDescriptor);
-    else Reflect.deleteProperty(URL, 'revokeObjectURL');
-  });
+afterEach(() => {
+  clickSpy.mockRestore();
+  if (previousCreateDescriptor) Object.defineProperty(URL, 'createObjectURL', previousCreateDescriptor);
+  else Reflect.deleteProperty(URL, 'createObjectURL');
+  if (previousRevokeDescriptor) Object.defineProperty(URL, 'revokeObjectURL', previousRevokeDescriptor);
+  else Reflect.deleteProperty(URL, 'revokeObjectURL');
+});
+
+describe('useAdminMembersExport', () => {
 
   it('creates, clicks, and revokes a CSV download after a successful API response', async () => {
     vi.mocked(AdminMembersApi.exportMembers).mockResolvedValue({ data: 'id,name\n1,Riya', message: 'Export ready' } as never);

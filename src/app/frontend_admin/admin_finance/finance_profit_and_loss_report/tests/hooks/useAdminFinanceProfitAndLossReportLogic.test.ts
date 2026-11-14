@@ -9,7 +9,7 @@ const exportReport = vi.fn();
 const refetch = vi.fn();
 const fixture = { pnlSummary: [], kpis: { totalRevenue: 0, totalExpenses: 0, netProfit: 0, totalPayroll: 0 } };
 const testState = vi.hoisted(() => ({ search: 'range=this_month' }));
-vi.mock('next/navigation', () => ({ useSearchParams: () => new URLSearchParams(testState.search) }));
+vi.mock('next/navigation', () => ({ useSearchParams: () => new URLSearchParams(testState.search), useRouter: () => ({ push: vi.fn(), replace: vi.fn() }), usePathname: () => '' }));
 vi.mock('@tanstack/react-query', () => ({ useQuery: vi.fn() }));
 vi.mock('@/app/frontend_admin/admin_finance/finance_profit_and_loss_report/api/admin_finance_profit_and_loss_report_api', () => ({ AdminFinanceProfitAndLossReportApi: { fetchPnLReport: vi.fn(), exportReport: vi.fn() } }));
 vi.mock('@/app/frontend_admin/admin_finance/finance_profit_and_loss_report/state/useAdminFinanceProfitAndLossReportStore', () => ({ useAdminFinanceProfitAndLossReportStore: () => ({ selectedGymId: 'b1' }) }));

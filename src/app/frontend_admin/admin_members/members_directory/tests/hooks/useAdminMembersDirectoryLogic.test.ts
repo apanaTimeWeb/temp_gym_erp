@@ -25,7 +25,12 @@ vi.mock('@/app/frontend_admin/admin_members/members_directory/components/feedbac
 describe('useAdminMembersLogic', () => {
   beforeEach(() => {
     vi.mocked(useQuery).mockReset();
-    queries.forEach((q) => vi.mocked(useQuery).mockReturnValueOnce(q as never));
+    vi.mocked(useQuery).mockImplementation((options: unknown) => {
+      const key = JSON.stringify((options as { queryKey?: unknown[] })?.queryKey);
+      if (key?.includes('detail')) return queries[2] as never;
+      if (key?.includes('summary')) return queries[1] as never;
+      return queries[0] as never;
+    });
   });
 
   it('keeps branch/resource identity in list and detail queries and exposes paginated data', () => {

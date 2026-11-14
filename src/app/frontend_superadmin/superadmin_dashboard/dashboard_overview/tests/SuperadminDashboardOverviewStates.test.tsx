@@ -27,6 +27,6 @@ describe('Superadmin dashboard rendered states', () => {
     const tenant = MOCK_SUPERADMIN_DASHBOARD_DATA.metrics.recentOnboards[0]!;
     render(<SuperadminDashboardOverviewRecentOnboards recentOnboards={[tenant]} />);
     fireEvent.click(screen.getByTestId(`superadmin_dashboard-recent-onboards-${tenant.id}-open`));
-    expect(push).toHaveBeenCalledWith(`/frontend_superadmin/superadmin_gyms?id=${tenant.id}`);
+    expect(push).toHaveBeenCalledWith(`/frontend_superadmin/superadmin_gyms/gyms_detail/${tenant.id}`);
   });
 });

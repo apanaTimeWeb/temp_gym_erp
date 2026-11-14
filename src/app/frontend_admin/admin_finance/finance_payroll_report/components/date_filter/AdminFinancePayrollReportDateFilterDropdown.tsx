@@ -41,7 +41,11 @@ export function AdminFinancePayrollReportDateFilterDropdown() {
     }
   }, [renderedQuery]);
   const replaceParams = useCallback((change: (params: URLSearchParams) => void) => {
-    const draft = pendingUrlRef.current;
+    let draft = pendingUrlRef.current;
+    if (draft && (draft.latest === renderedQuery || !draft.snapshots.has(renderedQuery))) {
+      pendingUrlRef.current = null;
+      draft = null;
+    }
     const reuseDraft = Boolean(draft?.snapshots.has(renderedQuery));
     const params = new URLSearchParams(reuseDraft ? draft!.latest : renderedQuery);
     change(params);

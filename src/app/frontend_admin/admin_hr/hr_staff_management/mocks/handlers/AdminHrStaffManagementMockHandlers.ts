@@ -74,8 +74,13 @@ export const adminHrMockHandlers = [
     if (index < 0) return notFound('Staff member not found');
     // Accept only fields from the HR edit form. Never let a mock update mutate Finance-owned
     // balances, immutable staff IDs, or arbitrary keys embedded in a JSON object.
-    const parsed = staffFormSchema.partial().safeParse(await parseBody(request));
-    if (!parsed.success || Object.keys(parsed.data ?? {}).length === 0) {
+    const rawBody = await parseBody(request);
+    if ('currentDue' in rawBody || 'advanceSalary' in rawBody) {
+      return HttpResponse.json({ success: false, errorCode: 'VALIDATION_ERROR', statusCode: StatusCodes.BAD_REQUEST, message: 'Invalid staff update values', requestId: globalThis.crypto.randomUUID() }, { status: StatusCodes.BAD_REQUEST });
+    }
+    const parsed = staffFormSchema.partial().safeParse(rawBody);
+    const validKeys = Object.keys(rawBody).filter((k) => k in staffFormSchema.shape);
+    if (!parsed.success || validKeys.length === 0) {
       return HttpResponse.json({ success: false, errorCode: 'VALIDATION_ERROR', statusCode: StatusCodes.BAD_REQUEST, message: 'Invalid staff update values', requestId: globalThis.crypto.randomUUID() }, { status: StatusCodes.BAD_REQUEST });
     }
     staffState[index] = { ...staffState[index]!, ...parsed.data } as Staff;

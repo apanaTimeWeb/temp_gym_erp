@@ -16,10 +16,10 @@ beforeEach(() => {
   storeMock.mockReturnValue({ currentInvoicePage: 2 });
   useQueryMock.mockImplementation((options: { queryKey: unknown[] }) => {
     const key = JSON.stringify(options.queryKey);
-    if (key.includes('subscription')) return { data: { id: 'sub-1' }, status: 'success', isPending: false };
     if (key.includes('plans')) return { data: [{ id: 'plan-1' }], status: 'success', isPending: false };
     if (key.includes('invoices')) return { data: { data: [{ id: 'inv-1' }], meta: { total: 25, totalPages: 3 } }, status: 'success', isPending: false };
     if (key.includes('payment-methods')) return { data: [{ id: 'pm-1' }], status: 'success', isPending: false };
+    if (key.includes('subscription')) return { data: { id: 'sub-1' }, status: 'success', isPending: false };
     return { data: { total: 10 }, status: 'success', isPending: false };
   });
 });

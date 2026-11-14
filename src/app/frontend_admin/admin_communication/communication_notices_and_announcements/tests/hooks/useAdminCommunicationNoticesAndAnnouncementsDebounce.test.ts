@@ -16,6 +16,6 @@ describe('useAdminAnnouncementsDebounce', () => {
     act(() => { vi.advanceTimersByTime(299); });
     expect(result.current).toBe('initial');
     act(() => { vi.advanceTimersByTime(1); });
-    await waitFor(() => expect(result.current).toBe('latest'));
+    expect(result.current).toBe('latest');
   });
 });

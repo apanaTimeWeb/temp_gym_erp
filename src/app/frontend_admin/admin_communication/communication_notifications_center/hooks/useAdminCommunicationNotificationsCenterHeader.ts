@@ -15,7 +15,7 @@ export function useAdminNotificationsHeader() {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (notifRef.current && !notifRef.current.contains(event.target as Node)) {
+      if (!notifRef.current?.contains(event.target as Node)) {
         setShowNotifications(false);
       }
     };

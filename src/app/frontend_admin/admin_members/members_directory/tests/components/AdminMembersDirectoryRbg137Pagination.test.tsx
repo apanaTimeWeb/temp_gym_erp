@@ -8,7 +8,7 @@ describe('RBG137 rendered member pagination bounds', () => {
   it('bounds obsolete page and never calls navigation outside actual total', () => {
     const onPageChange = vi.fn();
     render(<AdminNavigationLayoutPagination currentPage={99} totalPages={2} totalItems={15} itemsPerPage={10} onPageChange={onPageChange} />);
-    expect(screen.getByText('15')).toBeTruthy();
+    expect(screen.getAllByText('15')[0]).toBeTruthy();
     expect(screen.getByRole('button', { name: /Page 2/ }).getAttribute('aria-current')).toBe('page');
     fireEvent.click(screen.getByRole('button', { name: /Page 1/ }));
     expect(onPageChange).toHaveBeenCalledWith(1);

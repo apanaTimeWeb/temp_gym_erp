@@ -78,8 +78,8 @@ export function useAdminMembersLogic() {
       setSelectedMember(null);
       return;
     }
-    setSelectedMember(memberDetailQuery.data?.data ?? null);
-  }, [memberId, memberDetailQuery.data]);
+    setSelectedMember(memberDetailQuery?.data?.data ?? null);
+  }, [memberId, memberDetailQuery?.data]);
 
   const { exportMembers, isExporting } = useAdminMembersExport({
     search: debouncedSearch || undefined,

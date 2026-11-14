@@ -15,7 +15,7 @@ export function useAdminBranchesDetailDrawerKeyboard(enabled: boolean, closeDeta
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') closeDetail();
     };
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, [enabled, closeDetail]);
 }

@@ -40,7 +40,7 @@ describe('useAdminAnnouncementsLogic', () => {
     act(() => result.current.openEdit((vi.mocked(useQuery).mock.results[0]?.value?.data?.data?.[0] ?? {}) as never));
     expect(store.setEditingAnnouncementId).toHaveBeenCalledWith('a1');
     result.current.saveAnnouncement({ title: 'New', body: 'Body', priority: 'HIGH', audience: 'ALL', gymIds: ['all'], publishedAt: '2026-10-05T09:00', expiresAt: '2026-10-10T09:00', isPinned: false } as never);
-    expect(createMutation.mutate).toHaveBeenCalledWith(expect.objectContaining({ payload: expect.objectContaining({ title: 'New' }), idempotencyKey: 'idem:create-announcement' }));
+    expect(createMutation.mutate).toHaveBeenCalledWith(expect.objectContaining({ payload: expect.objectContaining({ title: 'New' }), idempotencyKey: 'idem:create-announcement' }), expect.anything());
     await result.current.deleteAnnouncement('a1', 'Notice');
     expect(deleteMutation.mutate).toHaveBeenCalledWith({ id: 'a1', idempotencyKey: 'idem:delete-announcement:a1' });
   });

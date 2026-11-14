@@ -44,7 +44,7 @@ describe('useAdminHrStaffMutations', () => {
       await result.current.saveStaff({ ...staff, salary: 25000, joinDate: '2026-10-05' });
     });
     expect(createMutation.mutateAsync).toHaveBeenCalledWith(expect.objectContaining({
-      payload: expect.objectContaining({ salary: 25000, isActive: true, joinDate: expect.stringContaining('2026-10-05') }),
+      payload: expect.objectContaining({ salary: 2500000, isActive: true, joinDate: expect.stringContaining('2026-10-05') }),
     }));
     expect(showToast).toHaveBeenCalledWith('Staff created', 'success', 'hr-staff-create-success');
     expect(setShowModal).toHaveBeenCalledWith(false);

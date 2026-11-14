@@ -58,7 +58,7 @@ export const AdminNavigationLayoutSearchableDropdown: React.FC<AdminSearchableDr
 
   useEffect(() => {
     if (!isOpen || disabled) return;
-    listboxRef.current?.querySelectorAll<HTMLElement>('[role="option"]')[activeIndex]?.scrollIntoView({ block: 'nearest' });
+    listboxRef.current?.querySelectorAll<HTMLElement>('[role="option"]')[activeIndex]?.scrollIntoView?.({ block: 'nearest' });
   }, [activeIndex, isOpen, disabled, filteredOptions.length]);
 
   useEffect(() => {

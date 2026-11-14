@@ -87,11 +87,11 @@ export function useAdminPlansLogic(): PlansContextType {
     setForm({
       name: p.name,
       tier: (TIERS.includes(p.tier as any) ? p.tier : 'Gold') as PlanFormValues['tier'],
-      price1Month: String(adminPlansMinorToMajor(p.price1Month)),
-      price3Month: String(adminPlansMinorToMajor(p.price3Month)),
-      price6Month: String(adminPlansMinorToMajor(p.price6Month)),
-      price12Month: String(adminPlansMinorToMajor(p.price12Month)),
-      priceCustom: String(adminPlansMinorToMajor(p.priceCustom ?? 0)),
+      price1Month: String(p.price1Month),
+      price3Month: String(p.price3Month),
+      price6Month: String(p.price6Month),
+      price12Month: String(p.price12Month),
+      priceCustom: String(p.priceCustom ?? 0),
       features: p.features.join('\n'),
     });
     setShowModal(true);
@@ -109,11 +109,11 @@ export function useAdminPlansLogic(): PlansContextType {
     const payload: Partial<Plan> & { priceCustom?: number } = {
       name: data.name,
       tier: data.tier,
-      price1Month: adminPlansMajorToMinor(Number(data.price1Month)),
-      price3Month: adminPlansMajorToMinor(Number(data.price3Month)),
-      price6Month: adminPlansMajorToMinor(Number(data.price6Month)),
-      price12Month: adminPlansMajorToMinor(Number(data.price12Month)),
-      priceCustom: adminPlansMajorToMinor(Number(data.priceCustom)),
+      price1Month: Number(data.price1Month),
+      price3Month: Number(data.price3Month),
+      price6Month: Number(data.price6Month),
+      price12Month: Number(data.price12Month),
+      priceCustom: Number(data.priceCustom),
       ...(editId ? {} : { isActive: true }),
       features: data.features.split('\n').map((s: string) => s.trim()).filter(Boolean),
     };

@@ -21,7 +21,7 @@ vi.mock('@/app/frontend_admin/admin_communication/communication_notifications_ce
   adminToast: { success: vi.fn(), error: vi.fn() },
 }));
 
-vi.mock('next-intl', () => ({ useLocale: () => 'en-IN' }));
+vi.mock('next-intl', () => ({ useLocale: () => 'en-IN', useTranslations: () => (k: string) => k }));
 vi.mock('@/app/frontend_admin/admin_navigation/components/AdminNavigationLayoutWebSocketProvider', () => ({ useAdminNavigationLayoutWebSocketEvent: () => false }));
 
 function createWrapper() {
