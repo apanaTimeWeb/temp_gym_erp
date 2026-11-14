@@ -51,7 +51,7 @@ export const planFormSchema = z.object({
   price3Month: planMoneyFormSchema,
   price6Month: planMoneyFormSchema,
   price12Month: planMoneyFormSchema,
-  priceCustom: planMoneyFormSchema,
+  priceCustom: planMoneyFormSchema.optional(),
   features: z.string().min(2, '__i18n:plans.validation.featuresRequired'),
   freezeAllowed: z.boolean().optional(),
   joiningFee: optionalPlanMoneyFormSchema,
