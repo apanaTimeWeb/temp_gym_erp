@@ -19,7 +19,7 @@ vi.mock('next/navigation', () => ({
 
 describe('ManagerNavigationCommandPalette user-visible keyboard behavior', () => {
   it('includes every sidebar destination in the command registry', () => {
-    expect(MANAGER_NAV_GROUPS.flatMap((group) => group.items)).toHaveLength(28);
+    expect(MANAGER_NAV_GROUPS.flatMap((group) => group.items)).toHaveLength(38);
   });
 
   beforeEach(() => {

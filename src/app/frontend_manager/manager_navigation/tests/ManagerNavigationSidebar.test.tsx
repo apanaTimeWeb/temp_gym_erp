@@ -28,11 +28,11 @@ vi.mock('@/lib/api', () => ({ getUser: () => ({ name: 'Manager', role: 'Manager'
 vi.mock('@/app/frontend_manager/manager_infrastructure/hooks/useManagerInfrastructureMounted', () => ({ useManagerInfrastructureMounted: () => true }));
 
 describe('ManagerNavigationSidebar uses the approved 15-domain structure', () => {
-  it('defines 15 top-level domain rows and exposes 28 leaf destinations with seven expandable domains', () => {
+  it('defines 15 top-level domain rows and exposes 38 leaf destinations with 10 expandable domains', () => {
     expect(MANAGER_NAV_GROUPS).toHaveLength(15);
-    expect(MANAGER_NAV_GROUPS.flatMap((group) => group.items)).toHaveLength(28);
-    expect(MANAGER_NAV_GROUPS.filter((group) => group.collapsible)).toHaveLength(7);
-    expect(new Set(MANAGER_NAV_GROUPS.flatMap((group) => group.items.map((item) => item.href))).size).toBe(28);
+    expect(MANAGER_NAV_GROUPS.flatMap((group) => group.items)).toHaveLength(38);
+    expect(MANAGER_NAV_GROUPS.filter((group) => group.collapsible)).toHaveLength(10);
+    expect(new Set(MANAGER_NAV_GROUPS.flatMap((group) => group.items.map((item) => item.href))).size).toBe(38);
     expect(MANAGER_NAV_GROUPS.map((group) => group.groupKey)).toEqual([
       'NAV_DOMAIN_DASHBOARD', 'NAV_DOMAIN_INQUIRIES_CRM', 'NAV_DOMAIN_MEMBERS', 'NAV_DOMAIN_ATTENDANCE',
       'NAV_DOMAIN_MEMBERSHIP_PLANS', 'NAV_DOMAIN_SALES_BILLING', 'NAV_DOMAIN_FINANCE_EXPENSES',

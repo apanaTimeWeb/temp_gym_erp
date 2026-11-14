@@ -192,13 +192,13 @@ export default function ManagerBusinessSettingsMain() {
 
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-3 border-t border-border">
           <p className="text-xs text-text-secondary">
-            Master settings are controlled by Gym Administrator. To modify legal entity or operating hours, please contact Admin.
+            Master settings are synchronized with Gym Administrator. Branch preferences and profile details are saved directly.
           </p>
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-highlight border border-border text-xs font-semibold text-text-secondary">
-              <ShieldCheck size={14} className="text-primary" />
-              <span>Watch-Only Mode (Admin Controlled)</span>
-            </span>
+            <button data-testid="manager_settings-manager-settings-main-button-submit" type="submit" disabled={isSubmitting} className="flex min-h-11 min-w-32 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-sm font-semibold text-on-primary shadow-card motion-safe:transition-all motion-safe:duration-200 motion-safe:active:scale-95 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page ease-in-out hover:brightness-110">
+              {isSubmitting ? <Loader2 size={18} strokeWidth={2} className="motion-safe:animate-spin" aria-hidden="true"/> : <Save size={18} strokeWidth={2} aria-hidden="true"/>}
+              {isSubmitting ? t("TEXT_SAVING") : t("TEXT_SAVE_SETTINGS")}
+            </button>
           </div>
         </div>
       </form>

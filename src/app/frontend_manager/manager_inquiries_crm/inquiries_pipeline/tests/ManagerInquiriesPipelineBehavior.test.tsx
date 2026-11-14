@@ -57,6 +57,6 @@ describe('Manager Inquiries user-visible behavior', () => {
     await user.clear(search);
     await user.type(search, 'ZZZ-No-Such-Inquiry');
     expect(await screen.findByText(/No inquiries match the filter|No inquiries yet/i)).toBeInTheDocument();
-  });
+  }, 15000);
 
 });

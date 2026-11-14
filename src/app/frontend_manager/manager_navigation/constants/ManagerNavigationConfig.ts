@@ -42,7 +42,7 @@ export const MANAGER_NAV_GROUPS: ManagerNavGroup[] = [
       { href: MANAGER_ATTENDANCE_TRACKING_ROUTES.PATHS.LEAF, labelKey: 'NAV_ATTENDANCE_OVERVIEW', icon: CalendarCheck },
       { href: `${MANAGER_ATTENDANCE_TRACKING_ROUTES.PATHS.LEAF}?tab=Member+Attendance`, labelKey: 'NAV_MEMBER_ATTENDANCE', icon: Users },
       { href: `${MANAGER_ATTENDANCE_TRACKING_ROUTES.PATHS.LEAF}?tab=Trainer+Attendance`, labelKey: 'NAV_TRAINER_ATTENDANCE', icon: UserCheck },
-      { href: STAFF_ATTENDANCE_ROUTES.PATHS.LEAF, labelKey: 'NAV_STAFF_ATTENDANCE', icon: Clock },
+      { href: `${MANAGER_ATTENDANCE_TRACKING_ROUTES.PATHS.LEAF}?tab=Staff+Attendance`, labelKey: 'NAV_STAFF_ATTENDANCE', icon: Clock },
     ],
   },
   {
