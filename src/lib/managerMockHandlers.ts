@@ -28,6 +28,7 @@ import { MOCK_MANAGER_BUSINESS_SETTINGS } from '@/app/frontend_manager/manager_d
 import { MOCK_PROFILE } from '@/app/frontend_manager/manager_dashboard/profile_and_security/mocks/fixtures/ManagerProfileAndSecurityMockData';
 import { MOCK_GRIEVANCE_TICKETS } from '@/app/frontend_manager/manager_grievances/grievance_resolution/mocks/fixtures/ManagerGrievanceResolutionMockFixtures';
 import { MOCK_MAINTENANCE_TICKETS } from '@/app/frontend_manager/manager_maintenance/maintenance_requests/mocks/fixtures/ManagerMaintenanceRequestsMockFixtures';
+import { MOCK_SUPPORT_TICKETS, MOCK_SUPPORT_KPIS } from '@/app/frontend_manager/manager_help_support/support_tickets/mocks/fixtures/ManagerSupportTicketsMockData';
 
 function buildMockSuccess<T>(data: T, message = 'Success', meta?: any): ApiResponse<T> {
   const requestId = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `req_${Date.now()}`;
@@ -50,6 +51,7 @@ const hrData = createManagerPayrollAndLedgerFixtureSet(15, MOCK_PAYROLL_AND_LEDG
 let currentNotifications = [...MOCK_NOTIFICATIONS];
 let currentGrievances = [...MOCK_GRIEVANCE_TICKETS];
 let currentMaintenance = [...MOCK_MAINTENANCE_TICKETS];
+let currentSupportTickets = [...MOCK_SUPPORT_TICKETS];
 let currentInquiries = [...MOCK_INQUIRIES];
 let currentExpenses = [...MOCK_EXPENSES_LIST];
 let currentSettings = { ...MOCK_MANAGER_BUSINESS_SETTINGS };
@@ -1298,6 +1300,78 @@ export function handleManagerMockApiRequest(
   }
   if (path.startsWith('maintenance/') && path.endsWith('/resolve')) {
     return buildMockSuccess(currentMaintenance[0], 'Maintenance ticket resolved');
+  }
+
+  // Support Tickets
+  if (path === 'support-tickets/stats') {
+    return buildMockSuccess(MOCK_SUPPORT_KPIS, 'Support tickets KPIs loaded');
+  }
+  if (path === 'support-tickets' || path === 'support-tickets/') {
+    if (method === 'POST') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const ticket = {
+          id: `t-${Date.now()}`,
+          ticketNumber: `TICK-${Math.floor(1000 + Math.random() * 9000)}`,
+          subject: body.subject || 'Support Ticket',
+          category: body.category || 'General',
+          priority: (body.priority || 'MEDIUM') as 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT',
+          status: 'OPEN' as const,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          description: body.description || '',
+          messages: [
+            {
+              id: `m-${Date.now()}`,
+              senderRole: 'MANAGER' as const,
+              senderName: 'David Manager',
+              message: body.description || '',
+              sentAt: new Date().toISOString(),
+            },
+          ],
+        };
+        currentSupportTickets = [ticket, ...currentSupportTickets];
+        return buildMockSuccess(ticket, 'Support ticket created');
+      } catch {
+        return buildMockSuccess(currentSupportTickets[0], 'Support ticket created');
+      }
+    }
+    const status = searchParams.get('status');
+    const category = searchParams.get('category');
+    let tickets = [...currentSupportTickets];
+    if (status && status !== 'ALL') {
+      tickets = tickets.filter((t) => t.status === status);
+    }
+    if (category && category !== 'ALL') {
+      tickets = tickets.filter((t) => t.category === category);
+    }
+    return buildMockSuccess(tickets, 'Support tickets loaded');
+  }
+  if (path.startsWith('support-tickets/') && path.endsWith('/reply')) {
+    const parts = path.split('/');
+    const ticketId = parts[1];
+    try {
+      const body = options.body ? JSON.parse(options.body as string) : {};
+      const ticket = currentSupportTickets.find((t) => t.id === ticketId);
+      if (ticket) {
+        ticket.messages.push({
+          id: `m-${Date.now()}`,
+          senderRole: 'MANAGER' as const,
+          senderName: 'David Manager',
+          message: body.message || '',
+          sentAt: new Date().toISOString(),
+        });
+        ticket.updatedAt = new Date().toISOString();
+        return buildMockSuccess(ticket, 'Reply submitted');
+      }
+    } catch {}
+    return buildMockSuccess(currentSupportTickets[0], 'Reply submitted');
+  }
+  if (path.startsWith('support-tickets/')) {
+    const parts = path.split('/');
+    const ticketId = parts[1];
+    const ticket = currentSupportTickets.find((t) => t.id === ticketId) || currentSupportTickets[0];
+    return buildMockSuccess(ticket, 'Support ticket loaded');
   }
 
   // 14. REFERRALS & REPORTS
