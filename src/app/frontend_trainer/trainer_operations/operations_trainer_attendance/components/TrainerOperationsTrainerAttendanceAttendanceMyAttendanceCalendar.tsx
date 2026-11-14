@@ -61,10 +61,22 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
     return d;
   });
 
+  const isThreeMonthsRange = range === 'last_3_months';
+  const threeMonthsList = useMemo(() => {
+    const base = new Date();
+    return [
+      new Date(base.getFullYear(), base.getMonth() - 2, 1),
+      new Date(base.getFullYear(), base.getMonth() - 1, 1),
+      new Date(base.getFullYear(), base.getMonth(), 1),
+    ];
+  }, []);
+
   useEffect(() => {
     const d = new Date();
     if (range === 'last_month') {
       setCurrentDate(new Date(d.getFullYear(), d.getMonth() - 1, 1));
+    } else if (range === 'last_3_months') {
+      setCurrentDate(d);
     } else if (range === 'this_month') {
       setCurrentDate(d);
     }
@@ -105,6 +117,44 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
 
   return (
     <div className="p-6 space-y-6">
+      {/* 3-Month Quarter Selector if range=last_3_months */}
+      {isThreeMonthsRange && (
+        <div className="bg-primary/5 border border-primary/20 rounded-2xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 shadow-sm">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary text-on-primary">
+                Quarterly View (Last 3 Months)
+              </span>
+              <span className="text-xs font-semibold text-primary">
+                {format(threeMonthsList[0], 'MMM yyyy')} – {format(threeMonthsList[2], 'MMM yyyy')}
+              </span>
+            </div>
+            <p className="text-xs text-secondary mt-1">
+              Select any of the 3 months in this quarterly range to view biometric logs and attendance percentages.
+            </p>
+          </div>
+          <div className="flex items-center gap-1.5 bg-input p-1 rounded-xl border border-border w-full md:w-auto">
+            {threeMonthsList.map((mDate) => {
+              const isSelected = mDate.getMonth() === month && mDate.getFullYear() === year;
+              return (
+                <button
+                  key={mDate.toISOString()}
+                  type="button"
+                  onClick={() => setCurrentDate(mDate)}
+                  className={`flex-1 md:flex-initial px-3 py-1.5 rounded-lg text-xs font-bold motion-safe:transition-all ${
+                    isSelected
+                      ? 'bg-primary text-on-primary shadow-sm'
+                      : 'text-secondary hover:text-primary hover:bg-card'
+                  }`}
+                >
+                  {format(mDate, 'MMMM yyyy')}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {/* Calendar Header with Navigation */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>

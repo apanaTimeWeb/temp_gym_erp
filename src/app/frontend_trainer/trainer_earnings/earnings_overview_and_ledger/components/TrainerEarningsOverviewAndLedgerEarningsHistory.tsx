@@ -5,7 +5,7 @@
  * @dependencies Consumes earnings query results and module-local formatter/configuration contracts.
  * @edge-cases Handles nullable descriptions/dates, localized currency formatting, empty history, long text truncation, and stable loading layout.
  */
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState, useMemo } from 'react';
 
 import { ArrowDown, ArrowUp, ArrowUpDown, Loader2, Search, Receipt, Download, FileText } from 'lucide-react';
 
@@ -77,6 +77,8 @@ export default function TrainerEarningsHistory() {
   const debouncedSearch = useTrainerInfrastructureDebounce(draftSearch, 300);
 
   const search = searchParams.get('search') ?? '';
+  const statusFilter = searchParams.get('status') ?? 'ALL';
+  const typeFilter = searchParams.get('type') ?? 'ALL';
   const currentPageValue = Number(searchParams.get('page') ?? '1');
   const currentPage = Number.isInteger(currentPageValue) && currentPageValue > 0 ? currentPageValue : 1;
   const sortByValue = searchParams.get('sortBy') ?? TRAINER_EARNINGS_EARNINGS_SORT_OPTIONS[0].value;
@@ -135,6 +137,17 @@ export default function TrainerEarningsHistory() {
   const { data, isPending, isError, isFetching, refetch } = useTrainerEarningsQuery();
 
   const history = data?.history ?? [];
+  const filteredHistory = useMemo(() => {
+    return history.filter((row) => {
+      if (statusFilter !== 'ALL' && row.status.toLowerCase() !== statusFilter.toLowerCase()) {
+        return false;
+      }
+      if (typeFilter !== 'ALL' && !row.type.toLowerCase().includes(typeFilter.toLowerCase())) {
+        return false;
+      }
+      return true;
+    });
+  }, [history, statusFilter, typeFilter]);
   const hasPaginationMetadata = Boolean(
     data &&
     typeof data.historyTotal === 'number' &&
@@ -166,6 +179,35 @@ export default function TrainerEarningsHistory() {
             <input id="trainer-earnings-search" type="search" placeholder={t("TEXT_SEARCH_DESCRIPTIONS")} value={draftSearch} onChange={(event) => setDraftSearch(event.target.value)} className="w-full min-h-11 ps-9 pe-4 bg-input border border-border rounded-lg text-sm text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"  data-testid="trainer_earnings-earnings-history_search"/>
           </div>
           <div className="flex flex-wrap items-center gap-2 ">
+            <select
+              id="trainer-earnings-status-filter"
+              value={statusFilter}
+              onChange={(e) => updateUrlParam('status', e.target.value === 'ALL' ? null : e.target.value)}
+              className="min-h-11 px-3 bg-input border border-border rounded-lg text-xs font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              aria-label="Filter by Status"
+              data-testid="trainer_earnings-filter-status"
+            >
+              <option value="ALL">All Statuses</option>
+              <option value="settled">Settled / Paid</option>
+              <option value="pending">Pending</option>
+              <option value="processing">Processing</option>
+            </select>
+
+            <select
+              id="trainer-earnings-type-filter"
+              value={typeFilter}
+              onChange={(e) => updateUrlParam('type', e.target.value === 'ALL' ? null : e.target.value)}
+              className="min-h-11 px-3 bg-input border border-border rounded-lg text-xs font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              aria-label="Filter by Type"
+              data-testid="trainer_earnings-filter-type"
+            >
+              <option value="ALL">All Types</option>
+              <option value="session">PT Sessions</option>
+              <option value="class">Group Classes</option>
+              <option value="bonus">Bonus / Commission</option>
+              <option value="salary">Base Salary</option>
+            </select>
+
             <label htmlFor="trainer-earnings-history-start-date" className="sr-only ">{t("TEXT_START_DATE_FF99F5")}</label>
             <input id="trainer-earnings-history-start-date" type="date" value={startDate} onChange={(event) => handleDateChange('startDate', event.target.value)} className="min-h-11 px-2 bg-input border border-border rounded-lg text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"  data-testid="trainer_earnings-earnings-history_start_date"/>
             <span className="text-secondary text-sm " aria-hidden="true">{t("TEXT_TO")}</span>
@@ -195,9 +237,9 @@ export default function TrainerEarningsHistory() {
       </div>
 
       <div className="flex-1 overflow-x-auto custom-scrollbar ">
-        {history.length === 0 ? <TrainerEarningsEmptyState /> : (
+        {filteredHistory.length === 0 ? <TrainerEarningsEmptyState /> : (
           <>
-          <div className="md:hidden divide-y divide-border ">{history.map((row) => { const style = TRAINER_EARNINGS_PAYOUT_STATUS_STYLES[row.status]; return <article key={row.id} className="p-4 bg-card " data-testid={`trainer_earnings-history-card${row.id}`}><div className="flex items-start justify-between gap-3 "><div className="min-w-0 "><TrainerInfrastructureTooltip content={row.description}><p className="font-medium text-primary truncate ">{row.description}</p></TrainerInfrastructureTooltip><p className="text-xs text-secondary mt-1 ">{TrainerEarningsFormatDate(row.date, locale)} · {t(`TEXT_TYPE_${row.type.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`)}</p></div><span className={`shrink-0 inline-flex px-2 py-0.5 rounded-full text-xs font-semibold ${style?.bg ?? 'bg-input'} ${style?.text ?? 'text-secondary'} `} data-testid={`trainer_earnings-earnings-history-mobile-status-${row.id}`}>{style ? t(`TEXT_STATUS_${row.status.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`) : t('TEXT_STATUS_UNKNOWN')}</span></div><div className="mt-3 flex items-center justify-between gap-3 "><span className="text-xs text-secondary ">{t('TEXT_NET_PAYOUT')}</span><span className="text-sm font-semibold text-primary ">{row.netPayout == null ? displayValue(row.netPayout) : TrainerEarningsFormatCurrency(row.netPayout, row.currency, locale)}</span></div><div className="mt-2.5 pt-2 border-t border-border/60 flex justify-end"><button type="button" onClick={() => setSelectedPayslipRow(row)} className="min-h-8 inline-flex items-center gap-1.5 px-3 py-1 bg-input hover:bg-input/80 text-primary border border-border rounded-lg text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" data-testid={`trainer_earnings-mobile-view-payslip-${row.id}`}><Receipt size={13} />View Payslip</button></div></article>})}</div>
+          <div className="md:hidden divide-y divide-border ">{filteredHistory.map((row) => { const style = TRAINER_EARNINGS_PAYOUT_STATUS_STYLES[row.status]; return <article key={row.id} className="p-4 bg-card " data-testid={`trainer_earnings-history-card${row.id}`}><div className="flex items-start justify-between gap-3 "><div className="min-w-0 "><TrainerInfrastructureTooltip content={row.description}><p className="font-medium text-primary truncate ">{row.description}</p></TrainerInfrastructureTooltip><p className="text-xs text-secondary mt-1 ">{TrainerEarningsFormatDate(row.date, locale)} · {t(`TEXT_TYPE_${row.type.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`)}</p></div><span className={`shrink-0 inline-flex px-2 py-0.5 rounded-full text-xs font-semibold ${style?.bg ?? 'bg-input'} ${style?.text ?? 'text-secondary'} `} data-testid={`trainer_earnings-earnings-history-mobile-status-${row.id}`}>{style ? t(`TEXT_STATUS_${row.status.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`) : t('TEXT_STATUS_UNKNOWN')}</span></div><div className="mt-3 flex items-center justify-between gap-3 "><span className="text-xs text-secondary ">{t('TEXT_NET_PAYOUT')}</span><span className="text-sm font-semibold text-primary ">{row.netPayout == null ? displayValue(row.netPayout) : TrainerEarningsFormatCurrency(row.netPayout, row.currency, locale)}</span></div><div className="mt-2.5 pt-2 border-t border-border/60 flex justify-end"><button type="button" onClick={() => setSelectedPayslipRow(row)} className="min-h-8 inline-flex items-center gap-1.5 px-3 py-1 bg-input hover:bg-input/80 text-primary border border-border rounded-lg text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" data-testid={`trainer_earnings-mobile-view-payslip-${row.id}`}><Receipt size={13} />View Payslip</button></div></article>})}</div>
           <div className="hidden md:block overflow-x-auto custom-scrollbar "><table className="w-full min-w-full text-start border-collapse ">
             <thead>
               <tr className="bg-surface-highlight border-b border-border " data-testid="trainer_earnings-TrainerEarningsHistory-row-1">
@@ -209,7 +251,7 @@ export default function TrainerEarningsHistory() {
               </tr>
             </thead>
             <tbody className="divide-y divide-border ">
-              {history.map((row) => {
+              {filteredHistory.map((row) => {
                 const style = TRAINER_EARNINGS_PAYOUT_STATUS_STYLES[row.status];
                 const expanded = expandedRowId === row.id;
                 return (
@@ -230,7 +272,37 @@ export default function TrainerEarningsHistory() {
         )}
       </div>
 
-      {totalPages > 1 && <div className="p-3 border-t border-border bg-header flex items-center justify-between gap-3 text-sm "><span className="text-secondary ">{t("TEXT_PAGE")}{TrainerEarningsFormatNumber(currentPage, locale)} {t("TEXT_OF")}{TrainerEarningsFormatNumber(totalPages, locale)}</span><div className="flex gap-2 "><button type="button" onClick={() => handlePageChange(Math.max(1, currentPage - 1))} disabled={currentPage === 1} className="min-h-11 min-w-24 px-3 rounded-lg border border-border bg-card text-primary disabled:opacity-50 hover:bg-primary-subtle hover:border-focus motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_earnings-trainerearningshistory-button_7">{t("TEXT_PREVIOUS")}</button><button type="button" onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))} disabled={currentPage === totalPages} className="min-h-11 min-w-24 px-3 rounded-lg border border-border bg-card text-primary disabled:opacity-50 hover:bg-primary-subtle hover:border-focus motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring " data-testid="trainer_earnings-trainerearningshistory-button_8">{t("TEXT_NEXT")}</button></div></div>}
+      <div className="p-3.5 border-t border-border bg-header flex flex-col sm:flex-row items-center justify-between gap-3 text-sm" data-testid="trainer_earnings-pagination-bar">
+        <div className="flex items-center gap-3 text-xs text-secondary">
+          <span>
+            {t("TEXT_PAGE")} {TrainerEarningsFormatNumber(currentPage, locale)} {t("TEXT_OF")} {TrainerEarningsFormatNumber(totalPages, locale)}
+          </span>
+          <span className="hidden sm:inline">·</span>
+          <span className="hidden sm:inline">
+            Showing {filteredHistory.length} of {data?.historyTotal ?? filteredHistory.length} entries
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+            disabled={currentPage === 1}
+            className="min-h-10 min-w-24 px-3 rounded-lg border border-border bg-card text-primary disabled:opacity-50 hover:bg-primary-subtle hover:border-focus motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95 text-xs font-semibold"
+            data-testid="trainer_earnings-trainerearningshistory-button_7"
+          >
+            {t("TEXT_PREVIOUS")}
+          </button>
+          <button
+            type="button"
+            onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+            disabled={currentPage >= totalPages}
+            className="min-h-10 min-w-24 px-3 rounded-lg border border-border bg-card text-primary disabled:opacity-50 hover:bg-primary-subtle hover:border-focus motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95 text-xs font-semibold"
+            data-testid="trainer_earnings-trainerearningshistory-button_8"
+          >
+            {t("TEXT_NEXT")}
+          </button>
+        </div>
+      </div>
 
       <TrainerEarningsOverviewAndLedgerPayslipModal
         isOpen={Boolean(selectedPayslipRow)}

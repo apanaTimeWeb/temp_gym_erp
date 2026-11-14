@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { X, Send, Megaphone, Loader2, CheckCircle2, MessageSquare, Mail, Bell } from 'lucide-react';
+import { X, Send, Megaphone, Loader2, CheckCircle2, MessageSquare, Mail, Bell, ShieldCheck } from 'lucide-react';
 
 interface TrainerMembersBroadcastModalProps {
   isOpen: boolean;
@@ -57,9 +57,9 @@ export default function TrainerMembersBroadcastModal({
             </div>
             <div>
               <h3 id="broadcast-modal-title" className="text-sm font-bold text-primary">
-                Broadcast Announcement to Trainees
+                Message Assigned Trainees
               </h3>
-              <p className="text-xs text-secondary">Send instant updates, workout cues, or batch alerts</p>
+              <p className="text-xs text-secondary">Send workout cues, schedule alerts, or coaching updates to your clients</p>
             </div>
           </div>
           <button
@@ -74,9 +74,17 @@ export default function TrainerMembersBroadcastModal({
 
         {/* Body */}
         <form onSubmit={handleSend} className="p-6 space-y-4">
+          {/* Trainer Scope Notice */}
+          <div className="flex items-start gap-2.5 p-3 rounded-xl bg-info/10 border border-info/20 text-xs text-info">
+            <ShieldCheck size={16} className="shrink-0 mt-0.5 text-info" />
+            <p>
+              <strong>Trainer Scope:</strong> You can only message trainees assigned directly to you (10 total). Gym-wide announcements to all staff or all gym members are managed by Managers.
+            </p>
+          </div>
+
           <div>
             <label className="block text-xs font-semibold text-secondary uppercase tracking-wider mb-1.5">
-              Target Audience
+              Target Trainees
             </label>
             <div className="grid grid-cols-3 gap-2">
               <button
@@ -88,7 +96,7 @@ export default function TrainerMembersBroadcastModal({
                     : 'border-border bg-input text-secondary hover:text-primary'
                 }`}
               >
-                All Trainees (10)
+                My Trainees (10)
               </button>
               <button
                 type="button"
@@ -99,7 +107,7 @@ export default function TrainerMembersBroadcastModal({
                     : 'border-border bg-input text-secondary hover:text-primary'
                 }`}
               >
-                PT Clients (7)
+                1-on-1 PT (7)
               </button>
               <button
                 type="button"
@@ -110,7 +118,7 @@ export default function TrainerMembersBroadcastModal({
                     : 'border-border bg-input text-secondary hover:text-primary'
                 }`}
               >
-                Attention (3)
+                Needs Attention (3)
               </button>
             </div>
           </div>
@@ -212,12 +220,12 @@ export default function TrainerMembersBroadcastModal({
               {isSending ? (
                 <>
                   <Loader2 size={14} className="motion-safe:animate-spin" />
-                  Sending Broadcast...
+                  Sending to Trainees...
                 </>
               ) : (
                 <>
                   <Send size={14} />
-                  Send Broadcast
+                  Send to Trainees
                 </>
               )}
             </button>

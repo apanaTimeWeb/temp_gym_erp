@@ -69,7 +69,7 @@ export default function TrainerMembersToolbar() {
           data-testid="trainer_members-broadcast-button"
         >
           <Megaphone size={16} />
-          Broadcast
+          Message Trainees
         </button>
 
         <a

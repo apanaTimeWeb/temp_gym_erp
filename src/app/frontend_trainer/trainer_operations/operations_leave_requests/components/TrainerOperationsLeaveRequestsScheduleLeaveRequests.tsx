@@ -1,7 +1,7 @@
 "use client";
 // RESPONSIBILITY: Renders the Schedule leave-request history as an accessible desktop table and mobile card stack; mutation ownership remains in Schedule query state.
 // DATA FLOW: TanStack Query schedule response → leave rows/cards → feature-owned modal or local expansion.
-import { useState, useMemo } from 'react';
+import { useState, useMemo, Fragment } from 'react';
 import { Calendar, CheckCircle2, Clock, FileText, Loader2, Plus, ChevronDown, ChevronUp, Search, X } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
@@ -106,58 +106,65 @@ export default function TrainerScheduleLeaveRequests() {
     <div className="space-y-6">
       {/* Leave Summary KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-card rounded-xl border border-border p-4 shadow-card flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-primary-subtle text-primary">
-            <FileText size={20} strokeWidth={2} />
+        <div className="bg-card rounded-2xl border border-border p-5 shadow-card hover:shadow-md motion-safe:transition-all flex items-center gap-4 border-l-4 border-l-primary">
+          <div className="p-3.5 rounded-xl bg-primary/10 text-primary shrink-0">
+            <FileText size={22} strokeWidth={2} />
           </div>
           <div>
-            <p className="text-xs text-secondary font-medium">{t('TEXT_TOTAL_REQUESTS')}</p>
-            <p className="text-2xl font-bold text-primary">{totalRequests}</p>
+            <p className="text-xs text-secondary font-semibold uppercase tracking-wider">{t('TEXT_TOTAL_REQUESTS')}</p>
+            <p className="text-2xl font-bold text-primary mt-0.5">{totalRequests}</p>
+            <p className="text-2xs text-secondary mt-0.5">All-time submissions</p>
           </div>
         </div>
-        <div className="bg-card rounded-xl border border-border p-4 shadow-card flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-success-bg text-success">
-            <CheckCircle2 size={20} strokeWidth={2} />
+        <div className="bg-card rounded-2xl border border-border p-5 shadow-card hover:shadow-md motion-safe:transition-all flex items-center gap-4 border-l-4 border-l-success">
+          <div className="p-3.5 rounded-xl bg-success/10 text-success shrink-0">
+            <CheckCircle2 size={22} strokeWidth={2} />
           </div>
           <div>
-            <p className="text-xs text-secondary font-medium">{t('TEXT_APPROVED_LEAVES')}</p>
-            <p className="text-2xl font-bold text-primary">{approvedLeaves}</p>
+            <p className="text-xs text-secondary font-semibold uppercase tracking-wider">{t('TEXT_APPROVED_LEAVES')}</p>
+            <p className="text-2xl font-bold text-success mt-0.5">{approvedLeaves}</p>
+            <p className="text-2xs text-secondary mt-0.5">Authorized by manager</p>
           </div>
         </div>
-        <div className="bg-card rounded-xl border border-border p-4 shadow-card flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-warning-bg text-warning">
-            <Clock size={20} strokeWidth={2} />
+        <div className="bg-card rounded-2xl border border-border p-5 shadow-card hover:shadow-md motion-safe:transition-all flex items-center gap-4 border-l-4 border-l-warning">
+          <div className="p-3.5 rounded-xl bg-warning/10 text-warning shrink-0">
+            <Clock size={22} strokeWidth={2} />
           </div>
           <div>
-            <p className="text-xs text-secondary font-medium">{t('TEXT_PENDING_REQUESTS')}</p>
-            <p className="text-2xl font-bold text-primary">{pendingLeaves}</p>
+            <p className="text-xs text-secondary font-semibold uppercase tracking-wider">{t('TEXT_PENDING_REQUESTS')}</p>
+            <p className="text-2xl font-bold text-warning mt-0.5">{pendingLeaves}</p>
+            <p className="text-2xs text-secondary mt-0.5">Awaiting manager review</p>
           </div>
         </div>
-        <div className="bg-card rounded-xl border border-border p-4 shadow-card flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-info-bg text-info">
-            <Calendar size={20} strokeWidth={2} />
+        <div className="bg-card rounded-2xl border border-border p-5 shadow-card hover:shadow-md motion-safe:transition-all flex items-center gap-4 border-l-4 border-l-info">
+          <div className="p-3.5 rounded-xl bg-info/10 text-info shrink-0">
+            <Calendar size={22} strokeWidth={2} />
           </div>
           <div>
-            <p className="text-xs text-secondary font-medium">{t('TEXT_LEAVE_BALANCE')}</p>
-            <p className="text-2xl font-bold text-primary">
+            <p className="text-xs text-secondary font-semibold uppercase tracking-wider">{t('TEXT_LEAVE_BALANCE')}</p>
+            <p className="text-2xl font-bold text-primary mt-0.5">
               {leaveBalance} <span className="text-xs font-normal text-secondary">{t('TEXT_DAYS_AVAILABLE')}</span>
             </p>
+            <p className="text-2xs text-secondary mt-0.5">Annual paid allowance (15d)</p>
           </div>
         </div>
       </div>
 
       {/* Main Leave Requests Table Card */}
-      <div className="bg-card rounded-xl border border-border shadow-card overflow-hidden">
+      <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
         {/* Table Top Header Bar */}
-        <div className="p-4 border-b border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-card">
+        <div className="p-5 border-b border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-header">
           <div>
-            <h2 className="text-lg font-bold text-primary">{t('TEXT_TIME_OFF_REQUESTS')}</h2>
+            <h2 className="text-lg font-bold text-primary flex items-center gap-2">
+              <Calendar size={18} className="text-primary" />
+              {t('TEXT_TIME_OFF_REQUESTS')}
+            </h2>
             <p className="text-xs text-secondary mt-0.5">{t('TEXT_LEAVE_HISTORY_IS_DELIVERED_AS_PART_OF_TH_EA5A742B')}</p>
           </div>
           <button
             type="button"
             onClick={openLeaveModal}
-            className="min-h-11 min-w-36 inline-flex items-center justify-center gap-2 px-4 py-2 bg-primary text-on-primary text-sm font-bold rounded-lg hover:bg-primary-hover motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+            className="min-h-11 min-w-36 inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-primary text-on-primary text-sm font-bold rounded-xl hover:bg-primary-hover shadow-sm motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
             data-testid="trainer_schedule-schedule-leave_requests_request_leave"
           >
             <Plus size={18} strokeWidth={2} aria-hidden="true" />
@@ -292,115 +299,115 @@ export default function TrainerScheduleLeaveRequests() {
                   const statusBadgeClass = getStatusBadgeClass(leave.status);
                   const daysCount = calculateDays(leave.startDate, leave.endDate);
                   return (
-                    <tr
-                      key={leave.id}
-                      data-testid={`trainer_schedule-schedule-leave-request-row-${leave.id}`}
-                      tabIndex={0}
-                      aria-expanded={expanded}
-                      aria-controls={`trainer-schedule-leave-details-${leave.id}`}
-                      onClick={() => setExpandedId((current) => current === leave.id ? null : leave.id)}
-                      onKeyDown={(event) => {
-                        if (event.key === 'Enter' || event.key === ' ') {
-                          event.preventDefault();
-                          setExpandedId((current) => current === leave.id ? null : leave.id);
-                        }
-                      }}
-                      className={`cursor-pointer hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus-ring motion-safe:transition-colors motion-safe:duration-base ${
-                        expanded ? 'bg-surface-highlight/40' : ''
-                      }`}
-                    >
-                      <td className="px-4 py-4 text-xs font-bold text-primary whitespace-nowrap">{leave.id}</td>
-                      <td className="px-4 py-4 whitespace-nowrap">
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-input text-primary border border-border">
-                          {getLeaveTypeLabel(leave.leaveType)}
-                        </span>
-                      </td>
-                      <td className="px-4 py-4 text-sm font-semibold text-primary whitespace-nowrap">
-                        {TrainerScheduleFormatDate(leave.startDate, locale)} <span className="text-secondary font-normal mx-1">{t('TEXT_TO')}</span> {TrainerScheduleFormatDate(leave.endDate, locale)}
-                        <span className="ml-2 text-xs font-normal text-secondary">
-                          ({daysCount} {daysCount === 1 ? t('TEXT_DAY') : t('TEXT_DAYS')})
-                        </span>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-secondary max-w-xs truncate">
-                        <TrainerInfrastructureTooltip content={leave.reason}>
-                          <span>{leave.reason}</span>
-                        </TrainerInfrastructureTooltip>
-                      </td>
-                      <td className="px-4 py-4 whitespace-nowrap">
-                        <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${statusBadgeClass}`} data-testid={`trainer_schedule-leave-requests-status-state-${leave.id}`}>
-                          {getStatusLabel(leave.status)}
-                        </span>
-                      </td>
-                      <td className="px-4 py-4 text-xs text-secondary whitespace-nowrap">{TrainerScheduleFormatDate(leave.createdAt, locale)}</td>
-                      <td className="px-4 py-4 text-center whitespace-nowrap">
-                        <button
-                          type="button"
-                          aria-label={expanded ? t('TEXT_COLLAPSE') : t('TEXT_EXPAND')}
-                          className="p-1 rounded-lg hover:bg-input text-secondary hover:text-primary motion-safe:transition-colors"
-                        >
-                          {expanded ? <ChevronUp size={16} strokeWidth={2.5} /> : <ChevronDown size={16} strokeWidth={2.5} />}
-                        </button>
-                      </td>
-                    </tr>
+                    <Fragment key={leave.id}>
+                      <tr
+                        data-testid={`trainer_schedule-schedule-leave-request-row-${leave.id}`}
+                        tabIndex={0}
+                        aria-expanded={expanded}
+                        aria-controls={`trainer-schedule-leave-details-${leave.id}`}
+                        onClick={() => setExpandedId((current) => current === leave.id ? null : leave.id)}
+                        onKeyDown={(event) => {
+                          if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault();
+                            setExpandedId((current) => current === leave.id ? null : leave.id);
+                          }
+                        }}
+                        className={`cursor-pointer hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus-ring motion-safe:transition-colors motion-safe:duration-base ${
+                          expanded ? 'bg-primary-subtle border-l-4 border-l-primary' : ''
+                        }`}
+                      >
+                        <td className="px-4 py-4 text-xs font-bold text-primary whitespace-nowrap">{leave.id}</td>
+                        <td className="px-4 py-4 whitespace-nowrap">
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold bg-input text-primary border border-border">
+                            {getLeaveTypeLabel(leave.leaveType)}
+                          </span>
+                        </td>
+                        <td className="px-4 py-4 text-sm font-semibold text-primary whitespace-nowrap">
+                          {TrainerScheduleFormatDate(leave.startDate, locale)} <span className="text-secondary font-normal mx-1">{t('TEXT_TO')}</span> {TrainerScheduleFormatDate(leave.endDate, locale)}
+                          <span className="ml-2 text-xs font-normal text-secondary">
+                            ({daysCount} {daysCount === 1 ? t('TEXT_DAY') : t('TEXT_DAYS')})
+                          </span>
+                        </td>
+                        <td className="px-4 py-4 text-sm text-secondary max-w-xs truncate">
+                          <TrainerInfrastructureTooltip content={leave.reason}>
+                            <span className="truncate block">{leave.reason}</span>
+                          </TrainerInfrastructureTooltip>
+                        </td>
+                        <td className="px-4 py-4 whitespace-nowrap">
+                          <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${statusBadgeClass}`} data-testid={`trainer_schedule-leave-requests-status-state-${leave.id}`}>
+                            {getStatusLabel(leave.status)}
+                          </span>
+                        </td>
+                        <td className="px-4 py-4 text-xs text-secondary whitespace-nowrap">{TrainerScheduleFormatDate(leave.createdAt, locale)}</td>
+                        <td className="px-4 py-4 text-center whitespace-nowrap">
+                          <button
+                            type="button"
+                            aria-label={expanded ? t('TEXT_COLLAPSE') : t('TEXT_EXPAND')}
+                            className="p-1 rounded-lg hover:bg-input text-secondary hover:text-primary motion-safe:transition-colors"
+                          >
+                            {expanded ? <ChevronUp size={16} strokeWidth={2.5} /> : <ChevronDown size={16} strokeWidth={2.5} />}
+                          </button>
+                        </td>
+                      </tr>
+
+                      {/* Inline Expandable Details Row right below clicked row */}
+                      {expanded && (
+                        <tr className="bg-primary/5 border-b border-primary/20">
+                          <td colSpan={7} className="p-0">
+                            <div
+                              id={`trainer-schedule-leave-details-${leave.id}`}
+                              className="p-5 border-l-4 border-l-primary bg-card/70 space-y-4 shadow-inner"
+                            >
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                  <span className="text-sm font-bold text-primary">{leave.id}</span>
+                                  <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-input text-primary border border-border">
+                                    {getLeaveTypeLabel(leave.leaveType)}
+                                  </span>
+                                  <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${statusBadgeClass}`}>
+                                    {getStatusLabel(leave.status)}
+                                  </span>
+                                </div>
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setExpandedId(null);
+                                  }}
+                                  className="text-xs text-secondary hover:text-primary p-1 rounded hover:bg-input"
+                                >
+                                  {t('TEXT_COLLAPSE')}
+                                </button>
+                              </div>
+                              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1 text-xs">
+                                <div className="p-3 rounded-xl bg-input/40 border border-border">
+                                  <span className="font-semibold text-secondary uppercase block mb-1">{t('TEXT_DATE_RANGE')}</span>
+                                  <p className="text-sm font-bold text-primary">
+                                    {TrainerScheduleFormatDate(leave.startDate, locale)} {t('TEXT_TO')} {TrainerScheduleFormatDate(leave.endDate, locale)}
+                                    <span className="text-secondary ml-1.5 font-normal text-xs">({daysCount} {daysCount === 1 ? t('TEXT_DAY') : t('TEXT_DAYS')})</span>
+                                  </p>
+                                </div>
+                                <div className="p-3 rounded-xl bg-input/40 border border-border">
+                                  <span className="font-semibold text-secondary uppercase block mb-1">{t('TEXT_REASON')}</span>
+                                  <p className="text-sm text-primary font-medium">{leave.reason}</p>
+                                </div>
+                                <div className="p-3 rounded-xl bg-input/40 border border-border">
+                                  <span className="font-semibold text-secondary uppercase block mb-1">{t('TEXT_MANAGER_NOTES')}</span>
+                                  <p className="text-sm text-secondary italic">
+                                    {leave.managerNotes || t('TEXT_NO_MANAGER_NOTES')}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </Fragment>
                   );
                 })
               )}
             </tbody>
           </table>
-
-          {/* Expandable detail card if an item is selected */}
-          {expandedId && (
-            (() => {
-              const selectedLeave = leaveRequests.find((l) => l.id === expandedId);
-              if (!selectedLeave) return null;
-              const daysCount = calculateDays(selectedLeave.startDate, selectedLeave.endDate);
-              const statusBadgeClass = getStatusBadgeClass(selectedLeave.status);
-              return (
-                <div
-                  id={`trainer-schedule-leave-details-${selectedLeave.id}`}
-                  className="p-5 border-t border-border bg-card/90 space-y-3"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <span className="text-sm font-bold text-primary">{selectedLeave.id}</span>
-                      <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-input text-primary border border-border">
-                        {getLeaveTypeLabel(selectedLeave.leaveType)}
-                      </span>
-                      <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${statusBadgeClass}`}>
-                        {getStatusLabel(selectedLeave.status)}
-                      </span>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => setExpandedId(null)}
-                      className="text-xs text-secondary hover:text-primary p-1"
-                    >
-                      {t('TEXT_COLLAPSE')}
-                    </button>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 text-xs">
-                    <div>
-                      <span className="font-semibold text-secondary uppercase block mb-1">{t('TEXT_DATE_RANGE')}</span>
-                      <p className="text-sm font-medium text-primary">
-                        {TrainerScheduleFormatDate(selectedLeave.startDate, locale)} {t('TEXT_TO')} {TrainerScheduleFormatDate(selectedLeave.endDate, locale)}
-                        <span className="text-secondary ml-1.5 font-normal">({daysCount} {daysCount === 1 ? t('TEXT_DAY') : t('TEXT_DAYS')})</span>
-                      </p>
-                    </div>
-                    <div>
-                      <span className="font-semibold text-secondary uppercase block mb-1">{t('TEXT_REASON')}</span>
-                      <p className="text-sm text-primary">{selectedLeave.reason}</p>
-                    </div>
-                    <div>
-                      <span className="font-semibold text-secondary uppercase block mb-1">{t('TEXT_MANAGER_NOTES')}</span>
-                      <p className="text-sm text-secondary italic">
-                        {selectedLeave.managerNotes || t('TEXT_NO_MANAGER_NOTES')}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })()
-          )}
         </div>
 
         {/* Mobile View Card Stack */}
