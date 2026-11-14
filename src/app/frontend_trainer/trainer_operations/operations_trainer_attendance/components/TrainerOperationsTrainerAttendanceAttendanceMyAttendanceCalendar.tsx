@@ -1,49 +1,20 @@
 "use client";
-// RESPONSIBILITY: Renders the trainer's own monthly attendance calendar history.
+// RESPONSIBILITY: Renders the trainer's own monthly attendance calendar history and quarterly multi-month log.
 // DATA FLOW: props (records from TrainerAttendanceMain) → display only
-// Strictly view-only: trainers can browse past and present month logs.
 
 import { useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-
 import { format } from 'date-fns';
-
 import { enUS, hi } from 'date-fns/locale';
-
-import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, CheckCircle2, XCircle, Clock, ShieldCheck, UserCheck } from 'lucide-react';
-
+import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, ShieldCheck, UserCheck } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import { getUser } from '@/lib/api';
-
-import { TRAINER_ATTENDANCE_CALENDAR_STATUS } from '@/app/frontend_trainer/trainer_operations/operations_trainer_attendance/utils/TrainerOperationsTrainerAttendanceAttendanceConstants';
-
 import { buildTrainerAttendanceCalendarDays, buildTrainerAttendanceCalendarRecordMap, getTrainerAttendanceCalendarSummary } from '@/app/frontend_trainer/trainer_operations/operations_trainer_attendance/utils/TrainerOperationsTrainerAttendanceAttendanceCalendarUtils';
-
-
 import type { TrainerAttendanceMyAttendanceCalendarProps } from '@/app/frontend_trainer/trainer_operations/operations_trainer_attendance/types/TrainerOperationsTrainerAttendanceAttendanceMyAttendanceCalendarTypes';
+import { TrainerAttendanceCalendarMonthGrid } from './TrainerAttendanceCalendarMonthGrid';
+import { TrainerAttendanceQuarterlyRecordsTable } from './TrainerAttendanceQuarterlyRecordsTable';
 
-
-
-
-
-
-
-
-
-
-
-
-/**
- * @description Renders the trainer's own monthly attendance calendar history.
- * @dependencies props (records from TrainerAttendanceMain) → display only
- * @edge-case Preserves the owning feature’s loading, empty, error, permission, and recovery behavior instead of inventing fallback business data.
- */
-/**
- * @description Owns the attendance feature UI responsibility represented by TrainerAttendanceMyAttendanceCalendar, keeping feature behavior, state, and data ownership inside the Trainer module.
- * @dependencies Uses only documented attendance module dependencies and approved global infrastructure/UI primitives.
- * @edge-case Preserves documented loading, empty, error, accessibility, responsive, and recovery behavior without inventing business fallbacks.
- */
 export default function TrainerAttendanceMyAttendanceCalendar({ records }: TrainerAttendanceMyAttendanceCalendarProps) {
   const t = useTranslations('TRAINER_ATTENDANCE');
   const locale = useLocale();
@@ -52,14 +23,16 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
   const user = getUser();
   const searchParams = useSearchParams();
   const range = searchParams.get('range') || 'this_month';
+  const startDate = searchParams.get('startDate') || '';
+  const endDate = searchParams.get('endDate') || '';
 
   const [currentDate, setCurrentDate] = useState(() => {
     const d = new Date();
-    if (range === 'last_month') {
-      return new Date(d.getFullYear(), d.getMonth() - 1, 1);
-    }
+    if (range === 'last_month') return new Date(d.getFullYear(), d.getMonth() - 1, 1);
     return d;
   });
+
+  const [quarterViewTab, setQuarterViewTab] = useState<'calendar' | 'all_records'>('calendar');
 
   const isThreeMonthsRange = range === 'last_3_months';
   const threeMonthsList = useMemo(() => {
@@ -75,9 +48,7 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
     const d = new Date();
     if (range === 'last_month') {
       setCurrentDate(new Date(d.getFullYear(), d.getMonth() - 1, 1));
-    } else if (range === 'last_3_months') {
-      setCurrentDate(d);
-    } else if (range === 'this_month') {
+    } else {
       setCurrentDate(d);
     }
   }, [range]);
@@ -102,52 +73,80 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
     [daysArray],
   );
 
-  const handlePrevMonth = () => {
-    setCurrentDate(new Date(year, month - 1, 1));
-  };
-
-  const handleNextMonth = () => {
-    setCurrentDate(new Date(year, month + 1, 1));
-  };
-
-  const handleJumpToday = () => {
-    setCurrentDate(new Date());
-  };
-
+  // Filter records within the 3-month or custom date range
+  const rangeRecords = useMemo(() => {
+    if (!startDate && !endDate) return records;
+    return records.filter((r) => {
+      if (!r.date) return false;
+      if (startDate && r.date < startDate) return false;
+      if (endDate && r.date > endDate) return false;
+      return true;
+    }).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  }, [records, startDate, endDate]);
 
   return (
     <div className="p-6 space-y-6">
       {/* 3-Month Quarter Selector if range=last_3_months */}
       {isThreeMonthsRange && (
-        <div className="bg-primary/5 border border-primary/20 rounded-2xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 shadow-sm">
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary text-on-primary">
-                Quarterly View (Last 3 Months)
-              </span>
-              <span className="text-xs font-semibold text-primary">
-                {format(threeMonthsList[0], 'MMM yyyy')} – {format(threeMonthsList[2], 'MMM yyyy')}
-              </span>
+        <div className="bg-primary/5 border border-primary/20 rounded-2xl p-5 space-y-4 shadow-sm">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary text-on-primary">
+                  Quarterly View (Last 3 Months)
+                </span>
+                <span className="text-xs font-semibold text-primary">
+                  {format(threeMonthsList[0], 'MMM yyyy')} – {format(threeMonthsList[2], 'MMM yyyy')}
+                </span>
+              </div>
+              <p className="text-xs text-secondary mt-1">
+                Displaying complete biometric logs for the last 3 months ({rangeRecords.length} records found between {startDate || 'start'} and {endDate || 'now'}).
+              </p>
             </div>
-            <p className="text-xs text-secondary mt-1">
-              Select any of the 3 months in this quarterly range to view biometric logs and attendance percentages.
-            </p>
+
+            {/* Toggle: Calendar Month Grid vs All 3-Month Records List */}
+            <div className="flex items-center gap-1 bg-input p-1 rounded-xl border border-border">
+              <button
+                type="button"
+                onClick={() => setQuarterViewTab('calendar')}
+                className={`px-3 py-1 rounded-lg text-xs font-bold motion-safe:transition-all ${
+                  quarterViewTab === 'calendar' ? 'bg-card text-primary shadow-sm' : 'text-secondary hover:text-primary'
+                }`}
+              >
+                Month Grid
+              </button>
+              <button
+                type="button"
+                onClick={() => setQuarterViewTab('all_records')}
+                className={`px-3 py-1 rounded-lg text-xs font-bold motion-safe:transition-all ${
+                  quarterViewTab === 'all_records' ? 'bg-primary text-on-primary shadow-sm' : 'text-secondary hover:text-primary'
+                }`}
+              >
+                All 3-Month Records ({rangeRecords.length})
+              </button>
+            </div>
           </div>
-          <div className="flex items-center gap-1.5 bg-input p-1 rounded-xl border border-border w-full md:w-auto">
+
+          {/* 3 Month Pills */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
             {threeMonthsList.map((mDate) => {
               const isSelected = mDate.getMonth() === month && mDate.getFullYear() === year;
               return (
                 <button
                   key={mDate.toISOString()}
                   type="button"
-                  onClick={() => setCurrentDate(mDate)}
-                  className={`flex-1 md:flex-initial px-3 py-1.5 rounded-lg text-xs font-bold motion-safe:transition-all ${
+                  onClick={() => {
+                    setCurrentDate(mDate);
+                    setQuarterViewTab('calendar');
+                  }}
+                  className={`p-3 rounded-xl text-left border motion-safe:transition-all ${
                     isSelected
-                      ? 'bg-primary text-on-primary shadow-sm'
-                      : 'text-secondary hover:text-primary hover:bg-card'
+                      ? 'bg-card border-primary ring-2 ring-primary/30 shadow-sm'
+                      : 'bg-card/70 border-border hover:border-primary/50'
                   }`}
                 >
-                  {format(mDate, 'MMMM yyyy')}
+                  <p className="text-xs font-bold text-primary">{format(mDate, 'MMMM yyyy')}</p>
+                  <p className="text-[11px] text-secondary mt-0.5">Click to view monthly calendar</p>
                 </button>
               );
             })}
@@ -155,181 +154,118 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
         </div>
       )}
 
-      {/* Calendar Header with Navigation */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <h3 className="text-xl font-bold text-primary flex items-center gap-2">
-              <CalendarIcon size={18} strokeWidth={2} className="text-primary" /> {monthName} {year} {t("TEXT_HISTORY")}</h3>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-success-bg text-success border border-border flex items-center gap-1" data-testid="trainer_attendance-attendance-my_attendance_calendar_status_my_record">
-              <UserCheck size={18}  strokeWidth={2}/> {user?.name || t('TEXT_MY_RECORD')}
-            </span>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-input text-secondary border border-border flex items-center gap-1">
-              <ShieldCheck size={18}  strokeWidth={2}/> {t("TEXT_VIEW_ONLY")}</span>
-          </div>
-          <p className="text-sm text-secondary mt-0.5">
-            {t("TEXT_TRAINER_MONTHLY_BIOMETRIC_ATTENDANCE_LOG_B8F726BF")}</p>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <button type="button"
-            onClick={handleJumpToday}
-            className="min-h-11 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page px-3 py-1.5 text-xs font-semibold bg-input text-primary border border-border rounded-lg hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-base motion-safe:active:scale-95 motion-safe:ease-in-out"
-           data-testid="trainer_attendance-trainerattendancemyattendancecalendar-button_1">
-            {t("TEXT_CURRENT_MONTH")}</button>
-          <div className="flex items-center bg-input border border-border rounded-lg overflow-hidden">
-            <button type="button"
-              onClick={handlePrevMonth}
-              aria-label={t("TEXT_PREVIOUS_MONTH")}
-              className="min-w-11 min-h-11 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page p-2 hover:bg-card text-secondary hover:text-primary motion-safe:transition-colors motion-safe:duration-base motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95"
-             data-testid="trainer_attendance-trainerattendancemyattendancecalendar-button_2">
-              <ChevronLeft size={18}  strokeWidth={2}/>
-            </button>
-            <span className="px-3 text-xs font-bold text-primary select-none">
-              {monthName} {year}
-            </span>
-            <button type="button"
-              onClick={handleNextMonth}
-              aria-label={t("TEXT_NEXT_MONTH")}
-              className="min-w-11 min-h-11 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page p-2 hover:bg-card text-secondary hover:text-primary motion-safe:transition-colors motion-safe:duration-base motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95"
-             data-testid="trainer_attendance-trainerattendancemyattendancecalendar-button_3">
-              <ChevronRight size={18}  strokeWidth={2}/>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Monthly Summary Statistics */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="bg-card border border-border rounded-xl p-4 shadow-card">
-          <p className="text-xs font-medium text-secondary">{t("TEXT_PRESENT_ON_DUTY")}</p>
-          <p className="text-kpi font-bold text-success mt-1 flex items-center gap-2">
-            {presentDays} <span className="text-xs text-secondary font-normal">{t("TEXT_DAYS")}</span>
-          </p>
-        </div>
-        <div className="bg-card border border-border rounded-xl p-4 shadow-card">
-          <p className="text-xs font-medium text-secondary">{t("TEXT_ABSENT")}</p>
-          <p className="text-kpi font-bold text-danger mt-1 flex items-center gap-2">
-            {absentDays} <span className="text-xs text-secondary font-normal">{t("TEXT_DAYS")}</span>
-          </p>
-        </div>
-        <div className="bg-card border border-border rounded-xl p-4 shadow-card">
-          <p className="text-xs font-medium text-secondary">{t("TEXT_WEEKLY_OFF_REST")}</p>
-          <p className="text-kpi font-bold text-warning mt-1 flex items-center gap-2">
-            {weeklyOffDays} <span className="text-xs text-secondary font-normal">{t("TEXT_DAYS")}</span>
-          </p>
-        </div>
-        <div className="bg-card border border-border rounded-xl p-4 shadow-card">
-          <p className="text-xs font-medium text-secondary">{t("TEXT_ATTENDANCE_RATE")}</p>
-          <p className={`text-kpi font-bold mt-1 ${attPct >= 85 ? 'text-success' : 'text-danger'}`}>
-            {attPct}%
-          </p>
-        </div>
-      </div>
-
-      {/* Monthly Calendar View */}
-      <div className="bg-card border border-border rounded-2xl p-5 shadow-card space-y-4">
-        <div className="grid grid-cols-7 gap-2 text-center pb-2 border-b border-border">
-          {weekDays.map(wd => (
-            <div key={wd} className="text-xs font-bold text-secondary uppercase tracking-wider py-1">
-              {wd}
-            </div>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-7 gap-2">
-          {/* Empty offset padding for days before 1st of the month */}
-          {Array.from({ length: firstDayIndex }).map((_, i) => (
-            <div key={`offset-${i}`} className="h-24 rounded-xl bg-input border border-transparent" />
-          ))}
-
-          {/* Calendar Day Cells */}
-          {daysArray.map(({ day, status, checkIn, isToday, isPastOrToday }) => {
-            let statusStyle = 'bg-input text-secondary border-border';
-            let badgeStyle = 'text-secondary';
-            let label = t('TEXT_FUTURE_DAY');
-
-            if (isPastOrToday) {
-              if (status === TRAINER_ATTENDANCE_CALENDAR_STATUS.PRESENT) {
-                statusStyle = 'bg-success-bg text-success border-border hover:border-border';
-                badgeStyle = 'bg-success text-on-success';
-                label = t('TEXT_PRESENT_ON_DUTY');
-              } else if (status === TRAINER_ATTENDANCE_CALENDAR_STATUS.ABSENT) {
-                statusStyle = 'bg-danger-bg text-danger border-border hover:border-border';
-                badgeStyle = 'bg-danger text-on-danger';
-                label = t('TEXT_ABSENT');
-              } else if (status === TRAINER_ATTENDANCE_CALENDAR_STATUS.LEAVE) {
-                statusStyle = 'bg-warning-bg text-warning border-border hover:border-border';
-                badgeStyle = 'bg-warning-bg text-warning';
-                label = t('TEXT_WEEKLY_OFF_REST');
-              }
-            }
-
-            return (
-              <div
-                key={day}
-                className={`h-24 rounded-xl p-2.5 border flex flex-col justify-between motion-safe:transition-all relative ${statusStyle} ${
-                  isToday ? 'ring-2 ring-primary  ' : ''
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span className={`text-sm font-bold ${isToday ? 'text-primary' : 'text-primary'}`}>
-                    {day}
-                  </span>
-                  {isToday && (
-                    <span className="text-xs font-extrabold uppercase px-1.5 py-0.5 rounded bg-primary text-on-primary tracking-wide">
-                      {t("TEXT_TODAY")}</span>
-                  )}
-                </div>
-
-                <div className="mt-auto space-y-1">
-                  {isPastOrToday ? (
-                    <>
-                      <div className="flex items-center justify-between">
-                        <span className={`inline-flex items-center gap-1 text-xs font-bold px-1.5 py-0.5 rounded ${badgeStyle}`}>
-                          {status === TRAINER_ATTENDANCE_CALENDAR_STATUS.PRESENT && <CheckCircle2 size={18}  strokeWidth={2}/>}
-                          {status === TRAINER_ATTENDANCE_CALENDAR_STATUS.ABSENT && <XCircle size={18}  strokeWidth={2}/>}
-                          {label}
-                        </span>
-                      </div>
-                      {status === TRAINER_ATTENDANCE_CALENDAR_STATUS.PRESENT && checkIn && (
-                        <p className="text-xs text-secondary truncate flex items-center gap-1">
-                          <Clock size={18}  strokeWidth={2}/> {(() => {
-                            try {
-                              const d = new Date(checkIn);
-                              return !isNaN(d.getTime()) && checkIn.includes('T') ? format(d, 'hh:mm a') : checkIn;
-                            } catch {
-                              return checkIn;
-                            }
-                          })()}
-                        </p>
-                      )}
-                    </>
-                  ) : (
-                    <span className="text-xs text-disabled">—</span>
-                  )}
-                </div>
+      {/* If All 3-Month Records view is selected, render the full multi-month table */}
+      {isThreeMonthsRange && quarterViewTab === 'all_records' ? (
+        <TrainerAttendanceQuarterlyRecordsTable
+          rangeRecords={rangeRecords}
+          startDate={startDate}
+          endDate={endDate}
+        />
+      ) : (
+        <>
+          {/* Calendar Header with Navigation */}
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="text-xl font-bold text-primary flex items-center gap-2">
+                  <CalendarIcon size={18} strokeWidth={2} className="text-primary" /> {monthName} {year} {t("TEXT_HISTORY")}
+                </h3>
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-success-bg text-success border border-border flex items-center gap-1" data-testid="trainer_attendance-attendance-my_attendance_calendar_status_my_record">
+                  <UserCheck size={14} strokeWidth={2}/> {user?.name || t('TEXT_MY_RECORD')}
+                </span>
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-input text-secondary border border-border flex items-center gap-1">
+                  <ShieldCheck size={14} strokeWidth={2}/> {t("TEXT_VIEW_ONLY")}
+                </span>
               </div>
-            );
-          })}
-        </div>
-      </div>
+              <p className="text-sm text-secondary mt-0.5">
+                {t("TEXT_TRAINER_MONTHLY_BIOMETRIC_ATTENDANCE_LOG_B8F726BF")}
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setCurrentDate(new Date())}
+                className="min-h-10 px-3 py-1.5 text-xs font-semibold bg-input text-primary border border-border rounded-lg hover:bg-primary-subtle motion-safe:transition-all"
+                data-testid="trainer_attendance-trainerattendancemyattendancecalendar-button_1"
+              >
+                {t("TEXT_CURRENT_MONTH")}
+              </button>
+              <div className="flex items-center bg-input border border-border rounded-lg overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() => setCurrentDate(new Date(year, month - 1, 1))}
+                  aria-label={t("TEXT_PREVIOUS_MONTH")}
+                  className="min-h-10 p-2 hover:bg-card text-secondary hover:text-primary motion-safe:transition-colors"
+                  data-testid="trainer_attendance-trainerattendancemyattendancecalendar-button_2"
+                >
+                  <ChevronLeft size={16} strokeWidth={2}/>
+                </button>
+                <span className="px-3 text-xs font-bold text-primary select-none">
+                  {monthName} {year}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setCurrentDate(new Date(year, month + 1, 1))}
+                  aria-label={t("TEXT_NEXT_MONTH")}
+                  className="min-h-10 p-2 hover:bg-card text-secondary hover:text-primary motion-safe:transition-colors"
+                  data-testid="trainer_attendance-trainerattendancemyattendancecalendar-button_3"
+                >
+                  <ChevronRight size={16} strokeWidth={2}/>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Monthly Summary Statistics */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div className="bg-card border border-border rounded-xl p-4 shadow-card">
+              <p className="text-xs font-medium text-secondary">{t("TEXT_PRESENT_ON_DUTY")}</p>
+              <p className="text-2xl font-bold text-success mt-1 flex items-center gap-2">
+                {presentDays} <span className="text-xs text-secondary font-normal">{t("TEXT_DAYS")}</span>
+              </p>
+            </div>
+            <div className="bg-card border border-border rounded-xl p-4 shadow-card">
+              <p className="text-xs font-medium text-secondary">{t("TEXT_ABSENT")}</p>
+              <p className="text-2xl font-bold text-danger mt-1 flex items-center gap-2">
+                {absentDays} <span className="text-xs text-secondary font-normal">{t("TEXT_DAYS")}</span>
+              </p>
+            </div>
+            <div className="bg-card border border-border rounded-xl p-4 shadow-card">
+              <p className="text-xs font-medium text-secondary">{t("TEXT_WEEKLY_OFF_REST")}</p>
+              <p className="text-2xl font-bold text-warning mt-1 flex items-center gap-2">
+                {weeklyOffDays} <span className="text-xs text-secondary font-normal">{t("TEXT_DAYS")}</span>
+              </p>
+            </div>
+            <div className="bg-card border border-border rounded-xl p-4 shadow-card">
+              <p className="text-xs font-medium text-secondary">{t("TEXT_ATTENDANCE_RATE")}</p>
+              <p className={`text-2xl font-bold mt-1 ${attPct >= 85 ? 'text-success' : 'text-danger'}`}>
+                {attPct}%
+              </p>
+            </div>
+          </div>
+
+          {/* Monthly Calendar View */}
+          <TrainerAttendanceCalendarMonthGrid
+            weekDays={weekDays}
+            firstDayIndex={firstDayIndex}
+            daysArray={daysArray}
+          />
+        </>
+      )}
 
       {/* Legend Footer */}
       <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-floating border border-border rounded-xl text-xs text-secondary">
         <div className="flex items-center gap-4 flex-wrap">
           <span className="font-semibold text-primary">{t("TEXT_CALENDAR_STATUS")}</span>
-          <span className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-success text-on-success" data-testid={"trainer_attendance-my-attendance-calendar-status-state-271"}></span> {t("TEXT_PRESENT_P")}</span>
-          <span className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-danger text-on-danger" data-testid={"trainer_attendance-my-attendance-calendar-status-state-273"}></span> {t("TEXT_ABSENT_A")}</span>
-          <span className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-warning text-on-warning" data-testid={"trainer_attendance-my-attendance-calendar-status-state-275"}></span> {t("TEXT_WEEKLY_OFF_SUNDAY")}</span>
-          <span className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-input"></span> {t("TEXT_FUTURE_DAY")}</span>
+          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-success text-on-success"></span> {t("TEXT_PRESENT_P")}</span>
+          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-danger text-on-danger"></span> {t("TEXT_ABSENT_A")}</span>
+          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-warning text-on-warning"></span> {t("TEXT_WEEKLY_OFF_SUNDAY")}</span>
+          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-input"></span> {t("TEXT_FUTURE_DAY")}</span>
         </div>
         <p className="text-disabled">
-          {t("TEXT_ATTENDANCE_IS_AUTOMATICALLY_MARKED_UPON__82FBA262")}</p>
+          {t("TEXT_ATTENDANCE_IS_AUTOMATICALLY_MARKED_UPON__82FBA262")}
+        </p>
       </div>
     </div>
   );

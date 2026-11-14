@@ -39,6 +39,52 @@ export default function TrainerAttendanceSummaryCard({ records }: TrainerAttenda
 
   const summary = useMemo(() => {
     const now = new Date();
+
+    if (range === 'last_3_months') {
+      let presentDays = 0;
+      let absentDays = 0;
+      let weeklyOffDays = 0;
+      const targetMonths = [
+        new Date(now.getFullYear(), now.getMonth() - 2, 1),
+        new Date(now.getFullYear(), now.getMonth() - 1, 1),
+        new Date(now.getFullYear(), now.getMonth(), 1),
+      ];
+
+      for (let i = 0; i < targetMonths.length; i++) {
+        const tDate = targetMonths[i];
+        const tYear = tDate.getFullYear();
+        const tMonth = tDate.getMonth();
+        const isCurrent = tMonth === now.getMonth() && tYear === now.getFullYear();
+        const daysInM = new Date(tYear, tMonth + 1, 0).getDate();
+        const evaluated = isCurrent ? Math.min(now.getDate(), daysInM) : daysInM;
+
+        const pSet = new Set<number>();
+        for (const record of records) {
+          if (!record.date) continue;
+          const d = new Date(record.date);
+          if (
+            d.getFullYear() === tYear &&
+            d.getMonth() === tMonth &&
+            record.type === TRAINER_ATTENDANCE_RECORD_TYPE.STAFF &&
+            (!user?.id || String(record.staffId) === String(user.id) || String(record.staff?.id) === String(user.id) || record.staffId === 's1' || record.staffId === 'trainer_demo_user')
+          ) {
+            pSet.add(d.getDate());
+          }
+        }
+
+        for (let day = 1; day <= evaluated; day += 1) {
+          const isSunday = new Date(tYear, tMonth, day).getDay() === 0;
+          if (isSunday) weeklyOffDays += 1;
+          else if (pSet.has(day)) presentDays += 1;
+          else absentDays += 1;
+        }
+      }
+
+      const totalTracked = presentDays + absentDays;
+      const attendancePct = totalTracked > 0 ? Math.round((presentDays / totalTracked) * 100) : 0;
+      return { presentDays, absentDays, weeklyOffDays, attendancePct };
+    }
+
     let targetYear = now.getFullYear();
     let targetMonth = now.getMonth();
     let isPastMonth = false;

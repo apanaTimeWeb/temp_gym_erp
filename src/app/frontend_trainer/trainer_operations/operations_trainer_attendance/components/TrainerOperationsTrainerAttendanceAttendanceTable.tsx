@@ -5,10 +5,9 @@
  * @dependencies Uses only attendance-owned data types, display helpers, and infrastructure primitives.
  * @edge-cases Handles nullable attendance fields, keyboard row interaction, empty records, and mobile action visibility without losing essential status data.
  */
-import { Fragment, useState } from 'react';
-
+import { Fragment, useState, useMemo } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Clock } from 'lucide-react';
-
 import { useLocale, useTranslations } from 'next-intl';
 
 import { displayValue } from '@/lib/display_value';
@@ -85,9 +84,23 @@ function getPersonName(record: TrainerAttendanceTableProps['records'][number]) {
 export default function TrainerAttendanceTable({ records, totalRecords, isPending, search, filterDate, currentPage, sortBy, sortDirection, onPageChange, onSort }: TrainerAttendanceTableProps) {
   const locale = useLocale();
   const t = useTranslations('TRAINER_ATTENDANCE');
+  const searchParams = useSearchParams();
+  const startDate = searchParams?.get('startDate');
+  const endDate = searchParams?.get('endDate');
+
+  const displayedRecords = useMemo(() => {
+    if (!startDate && !endDate) return records;
+    return records.filter((r) => {
+      if (!r.date) return true;
+      if (startDate && r.date < startDate) return false;
+      if (endDate && r.date > endDate) return false;
+      return true;
+    });
+  }, [records, startDate, endDate]);
+
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  const totalPages = Math.max(1, Math.ceil(totalRecords / TRAINER_INFRASTRUCTURE_ITEMS_PER_PAGE));
-  const hasFilter = Boolean(search.trim()) || filterDate !== 'ALL_TIME';
+  const totalPages = Math.max(1, Math.ceil((startDate || endDate ? displayedRecords.length : totalRecords) / TRAINER_INFRASTRUCTURE_ITEMS_PER_PAGE));
+  const hasFilter = Boolean(search.trim()) || filterDate !== 'ALL_TIME' || Boolean(startDate || endDate);
 
   if (isPending) {
     return (
@@ -118,9 +131,9 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
             <tr data-testid="trainer_attendance-TrainerAttendanceTable-row-1">{TRAINER_ATTENDANCE_TABLE_HEADERS.map((header, index) => <TrainerAttendanceSortableHeader key={header} label={t(`TEXT_COLUMN_${SORT_FIELDS[index]!.toUpperCase()}`)} sortLabel={t('TEXT_SORT_BY', { label: t(`TEXT_COLUMN_${SORT_FIELDS[index]!.toUpperCase()}`) })} field={SORT_FIELDS[index]!} sortBy={sortBy} sortDirection={sortDirection} onSort={onSort}/>)}</tr>
           </thead>
           <tbody className="divide-y divide-border">
-            {records.length === 0 ? (
+            {displayedRecords.length === 0 ? (
               <tr data-testid="trainer_attendance-TrainerAttendanceTable-row-2"><td colSpan={TABLE_COLUMNS} className="p-0"><TrainerAttendanceEmptyState isFiltered={hasFilter} /></td></tr>
-            ) : records.map((record) => {
+            ) : displayedRecords.map((record) => {
               const personName = getPersonName(record);
               const initial = personName?.charAt(0).toUpperCase() ?? '?';
               const expanded = expandedId === record.id;
@@ -144,7 +157,7 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
       </div>
 
       <div className="md:hidden space-y-3">
-        {records.length === 0 ? <TrainerAttendanceEmptyState isFiltered={hasFilter} /> : records.map((record) => {
+        {displayedRecords.length === 0 ? <TrainerAttendanceEmptyState isFiltered={hasFilter} /> : displayedRecords.map((record) => {
           const personName = getPersonName(record);
           const initial = personName?.charAt(0).toUpperCase() ?? '?';
           return (
