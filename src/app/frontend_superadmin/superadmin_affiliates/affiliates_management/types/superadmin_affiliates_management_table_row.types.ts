@@ -7,4 +7,6 @@ export interface SuperadminAffiliatesTableRowProps {
     onEdit: (affiliate: Affiliate) => void;
     onDelete: (id: string) => void;
     onPayCommission?: (affiliate: Affiliate) => void;
+    isSelected?: boolean;
+    onToggleSelect?: (id: string) => void;
 }

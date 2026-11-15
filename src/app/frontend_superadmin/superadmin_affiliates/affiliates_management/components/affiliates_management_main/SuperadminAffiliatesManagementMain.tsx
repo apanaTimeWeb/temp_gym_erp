@@ -52,7 +52,7 @@ export default function SuperadminAffiliatesManagementMain() {
       <div className="bg-card border border-border rounded-xl shadow-card overflow-hidden">
         <div className="border-b border-border p-4"><Link href={SUPERADMIN_AFFILIATES_MANAGEMENT_ROUTES.DESTINATION_1} className="inline-flex min-h-11 items-center rounded-md border border-border bg-card px-4 text-primary focus-visible:ring-2 focus-visible:ring-primary">{t('ui.payout_history_625c04c')}</Link></div>
         <SuperadminAffiliatesManagementErrorBoundary variant="inline">
-          {affiliates.length===0 ? <SuperadminAffiliatesEmptyState onAddClick={()=>setIsModalOpen(true)}/> : <SuperadminAffiliatesTable onAddClick={()=>setIsModalOpen(true)} affiliates={affiliates} onToggleStatus={handleToggleAffiliateStatus} onEdit={openEditModal} onDelete={handleDeleteAffiliate} onPayCommission={handlePayCommission} currentPage={currentPage} totalPages={totalPages} setPage={setPage}/>}
+          {affiliates.length===0 ? <SuperadminAffiliatesEmptyState onAddClick={()=>setIsModalOpen(true)}/> : <SuperadminAffiliatesTable onAddClick={()=>setIsModalOpen(true)} affiliates={affiliates} onToggleStatus={handleToggleAffiliateStatus} onEdit={openEditModal} onDelete={handleDeleteAffiliate} onPayCommission={handlePayCommission} currentPage={currentPage} totalPages={totalPages} setPage={setPage} total={totalAffiliates}/>}
         </SuperadminAffiliatesManagementErrorBoundary>
       </div>
 

@@ -4,6 +4,7 @@
 import { Pencil, Trash2, Power, Check, Banknote } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 
+import CopyButton from '@/components/ui/CopyButton';
 import { useConfirm } from '@/components/ui/Feedback/ConfirmProvider';
 import Tooltip from '@/components/ui/Tooltip';
 
@@ -20,35 +21,52 @@ import type { SuperadminAffiliatesTableRowProps } from '@/app/frontend_superadmi
  * @dependencies Consumes feature-local state/data through its declared props and hooks; it does not own unrelated business state.
  * @edge-case Must preserve the owning feature's loading, empty, error, disabled, keyboard, and repeated-action behavior where applicable.
  */
-export default function SuperadminAffiliatesManagementTableRow({ affiliate: aff, onToggleStatus, onEdit, onDelete, onPayCommission }: SuperadminAffiliatesTableRowProps) {
+export default function SuperadminAffiliatesManagementTableRow({ affiliate: aff, onToggleStatus, onEdit, onDelete, onPayCommission, isSelected = false, onToggleSelect }: SuperadminAffiliatesTableRowProps) {
   const t = useTranslations('superadmin_affiliates');
     const locale = useLocale();
     const { confirm } = useConfirm();
 
-    return (<tr tabIndex={0} aria-label={t('ui.a11y_edit_affiliate', { name: aff.name })} data-testid={`superadmin_affiliates-table-row-${aff.id}-edit`} className="hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset" onClick={() => onEdit(aff)} onKeyDown={(event) => { if (event.target !== event.currentTarget) return; if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onEdit(aff); } }}>
-      <td className="px-6 py-4" data-mobile-label={t('ui.mobile_field_1')}>
+    return (<tr tabIndex={0} aria-label={t('ui.a11y_edit_affiliate', { name: aff.name })} data-testid={`superadmin_affiliates-table-row-${aff.id}-edit`} className={`hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ${isSelected ? 'bg-primary-subtle/50' : ''}`} onClick={() => onEdit(aff)} onKeyDown={(event) => { if (event.target !== event.currentTarget) return; if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onEdit(aff); } }}>
+      <td className="sticky start-0 z-10 w-12 bg-card group-hover:bg-surface-hover border-b border-border px-4 py-3 text-center transition-colors">
+        <input
+          type="checkbox"
+          aria-label={`Select affiliate ${aff.name}`}
+          checked={isSelected}
+          onChange={(e) => {
+            e.stopPropagation();
+            onToggleSelect?.(aff.id);
+          }}
+          onClick={(e) => e.stopPropagation()}
+          className="h-4 w-4 rounded border-border text-primary accent-primary cursor-pointer focus:ring-2 focus:ring-primary"
+          data-testid={`superadmin_affiliates-select-row-${aff.id}`}
+        />
+      </td>
+      <td className="sticky start-12 z-10 bg-card group-hover:bg-surface-hover border-b border-e border-border px-6 py-4 whitespace-nowrap transition-colors" data-mobile-label={t('ui.mobile_field_1')}>
         <div className="flex flex-col">
           <Tooltip content={aff.name}><span className="text-sm font-medium text-primary truncate">{aff.name}</span></Tooltip>
           <Tooltip content={superadminAffiliatesMaskEmail(aff.email)}><span className="text-xs text-secondary truncate">{superadminAffiliatesMaskEmail(aff.email)}</span></Tooltip>
         </div>
       </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm" data-mobile-label={t('ui.mobile_field_2')}>
-        <span className="px-2 py-1 bg-floating rounded text-secondary font-mono">{aff.referralCode}</span>
+      <td className="border-b border-border px-6 py-4 whitespace-nowrap text-sm" data-mobile-label={t('ui.mobile_field_2')}>
+        <div className="flex items-center gap-2">
+          <span className="px-2 py-1 bg-floating rounded text-secondary font-mono">{aff.referralCode}</span>
+          <CopyButton value={aff.referralCode} label={`Copy referral code ${aff.referralCode}`} />
+        </div>
       </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-primary" data-mobile-label={t('ui.mobile_field_3')}>
+      <td className="border-b border-border px-6 py-4 whitespace-nowrap text-sm font-semibold text-primary" data-mobile-label={t('ui.mobile_field_3')}>
         {aff.referralCount ?? aff.totalReferred}  {t('ui.superadmin_gyms_f12fa9a')}
       </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-primary" data-mobile-label={t('ui.mobile_field_4')}>
+      <td className="border-b border-border px-6 py-4 whitespace-nowrap text-sm font-medium text-primary" data-mobile-label={t('ui.mobile_field_4')}>
         {aff.conversionRate !== undefined ? t('ui.conversion_rate_percent', { value: aff.conversionRate }) : t('ui.not_available_dash')}
       </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-success font-medium" data-mobile-label={t('ui.mobile_field_5')}>
+      <td className="border-b border-border px-6 py-4 whitespace-nowrap text-sm text-success font-medium" data-mobile-label={t('ui.mobile_field_5')}>
         {SuperadminAffiliatesFormatCurrency(aff.commissionEarned, aff.currency || 'INR', locale)}
         {aff.pendingPayout ? (<span className="ms-2 text-xs text-warning">{t('ui.text_84c40473')}{SuperadminAffiliatesFormatCurrency(aff.pendingPayout, aff.currency || 'INR', locale)}  {t('ui.pending_07d235c')}</span>) : null}
       </td>
-      <td className="px-6 py-4 whitespace-nowrap" data-mobile-label={t('ui.mobile_field_6')}>
+      <td className="border-b border-border px-6 py-4 whitespace-nowrap" data-mobile-label={t('ui.mobile_field_6')}>
         <SuperadminAffiliatesAffiliateStatusBadge status={aff.status}/>
       </td>
-      <td className="px-6 py-4 whitespace-nowrap text-end text-sm" data-mobile-label={t('ui.mobile_field_7')}>
+      <td className="border-b border-border px-6 py-4 whitespace-nowrap text-end text-sm" data-mobile-label={t('ui.mobile_field_7')}>
         <div className="flex items-center justify-end gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100 motion-safe:transition-opacity">
           <button  type="button" onClick={(e) => { e.stopPropagation(); onToggleStatus(aff.id, aff.status); }} className="min-w-11 min-h-11 p-1.5 text-secondary hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" title={aff.status === SUPERADMIN_AFFILIATE_STATUS_CODES.ACTIVE ? t('ui.suspend_affiliate_action') : t('ui.activate_affiliate_action')} aria-label={aff.status === SUPERADMIN_AFFILIATE_STATUS_CODES.ACTIVE ? t('ui.a11y_suspend_affiliate', { name: aff.name }) : t('ui.a11y_activate_affiliate', { name: aff.name })} data-testid="superadmin_affiliates-superadmin-affiliates-table-row-affiliates-affiliates-table-action1">
             {aff.status === SUPERADMIN_AFFILIATE_STATUS_CODES.ACTIVE ? <Power size={18}/> : <Check size={18}/>}

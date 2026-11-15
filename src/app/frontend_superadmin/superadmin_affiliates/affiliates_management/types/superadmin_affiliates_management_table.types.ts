@@ -11,4 +11,10 @@ export interface SuperadminAffiliatesTableProps {
     currentPage: number;
     totalPages: number;
     setPage: (page: number) => void;
+    total?: number;
+    pageSize?: number;
+    onPageSizeChange?: (pageSize: number) => void;
+    selectedAffiliateIds?: Set<string>;
+    onToggleSelectAffiliate?: (id: string) => void;
+    onToggleSelectAllAffiliates?: () => void;
 }
