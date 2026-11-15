@@ -1,4 +1,4 @@
-# FORENSIC FRONTEND BACKEND MOBILE ARCHITECTURE RULES AUDITOR — V6.5
+# FORENSIC FRONTEND BACKEND MOBILE ARCHITECTURE RULES AUDITOR — V6.6
 
 ## FORENSIC SOFTWARE / ARCHITECTURE / UI-UX / CONTRACT COMPLIANCE AUDIT
 
@@ -3457,6 +3457,27 @@ If the target is Mobile (React Native), inspect ALL of the following where appli
 - `PermissionDenied` component MUST be shown when API returns 403 -- never a blank screen
 - Offline state MUST be handled -- list screens show last cached data with `OfflineBanner`; mutation screens show `OfflineBlocker`
 
+
+### Mobile Entity Directories, Card-Stack Tables & Parity (Rule 8.0, 8C–8F & Section 5D)
+- **Zero Data Truncation / Parity Check (Rule 8.0):**
+  - Inspect browsable entity collections (Gyms, Members, Invoices, Staff, Coaching Sessions, Leads). Verify zero fields, columns, badges, or action buttons from the backend API model or web counterpart were omitted due to compact mobile width.
+  - Violation: `FINDING: MOBILE_DATA_PARITY_VIOLATION` (Severity: CRITICAL).
+- **Card-Stack Pattern Verification (Rule 8C):**
+  - Verify collections use `@shopify/flash-list` or optimized `FlatList` (never `ScrollView` wrapping `.map()`). Verify elevated card containers (`tokens.color.card`, `tokens.radius.lg`, padding 16, border 1px), two-tier ID header (Title + Monospace ID with `<CopyToClipboardButton />`), top-right status badge, and 2-column key-value metrics grid with Rule 38 en-dash `—` fallback.
+  - Violation: `FINDING: RAW_VIEW_LIST_VIOLATION` or `FINDING: MISSING_CARD_STACK_HIERARCHY` (Severity: MAJOR).
+- **Search Bar & Filter Chip Carousel Standard (Rule 8E):**
+  - Verify search input height 44pt (iOS) / 48pt (Android), leading `Search` icon, clear `X` button, and minimum 300ms–500ms debounce (Rule 8B). Verify horizontal filter chip carousel and Filter Bottom Sheet (`@gorhom/bottom-sheet` snap point `["50%"]`) with "Clear All" reset.
+  - Violation: `FINDING: UNDEBOUNCED_MOBILE_SEARCH` or `FINDING: MISSING_FILTER_BOTTOM_SHEET` (Severity: MAJOR).
+- **Mobile Multi-Select & Floating Batch Action Bar (Rule 8D):**
+  - When bulk actions are supported: verify mode toggle ("Select" / long-press), 24pt circular checkboxes, card selected highlight tint (`tokens.color.surfacePressed`), selection tap isolation (tap selects, does not navigate), and safe-area floating batch bar (`bottom: insets.bottom + 16`) with confirmation bottom sheet.
+  - Violation: `FINDING: UNISOLATED_MOBILE_SELECTION` or `FINDING: MISSING_FLOATING_BATCH_BAR` (Severity: MAJOR).
+- **Infinite Pagination & Localized Summary (Rule 8F):**
+  - Verify localized footer result summary: `Showing 1–25 of 143 records` using `new Intl.NumberFormat()`. Verify `onEndReachedThreshold={0.3}` with `<ActivityIndicator />` footer loader. Verify pull-to-refresh (`RefreshControl`) is wired (Rule 10B).
+  - Violation: `FINDING: MISSING_MOBILE_RESULT_SUMMARY` or `FINDING: MISSING_PULL_TO_REFRESH` (Severity: MINOR to MAJOR).
+- **Component Line Ceilings (Rule 24):**
+  - List component MUST remain `<= 300 lines`. Sub-components (`CardItem.tsx`, `FilterBar.tsx`, `BatchActionBar.tsx`, `FilterBottomSheet.tsx`) MUST be extracted rather than omitting fields.
+  - Violation: `FINDING: MOBILE_LIST_LINE_CEILING_EXCEEDED` (Severity: MAJOR).
+
 Do NOT apply Web/DOM rules to React Native code.
 
 Use framework-specific supplied rules only.
@@ -3605,22 +3626,39 @@ MOBILE PRESENTATION
 ACCESSIBILITY
 ```
 
-Check whether:
+### Enterprise Data Table Standard Audit Checklist (Rule 68 & Benchmark `superadmin_gyms`)
+Evaluate every table against these 10 mandatory architectural rules and emit deterministic findings:
 
-- pagination controls affect actual data;
-- sorting changes actual order or only UI appearance;
-- filter state maps to the actual query/request;
-- row actions target the selected row;
-- bulk actions target the correct selection;
-- mutations reconcile the table;
-- query keys contain required identity/filter state;
-- mobile presentation retains essential information;
-- horizontal scrolling/card stacking follows supplied design rules;
-- exports reflect current filtered/sorted data where required;
-- loading and empty state are distinguishable;
-- errors provide recovery where required.
-
-Do not assume visual table presence implies working data behavior.
+1. **Zero-Column & Zero-Field Removal Invariant (Rule 68.0):**
+   - Verify zero deleted, commented out, or truncated columns, fields, status badges, action buttons, or filter dropdowns from previous iterations or backend contracts.
+   - Violation: `FINDING: TRUNCATED_TABLE_COLUMN_OR_DATA_FIELD` (Severity: CRITICAL).
+2. **Exact `TABLE_COLUMN_COUNT` Synchronization (Rule 68.1):**
+   - Verify `const TABLE_COLUMN_COUNT = N;` is declared at the top of the table file and matched across `<th>` count, `<td>` count, skeleton columns count, and empty state `colSpan={TABLE_COLUMN_COUNT}`.
+   - Violation: `FINDING: TABLE_COLUMN_COUNT_MISMATCH` (Severity: MAJOR).
+3. **Sticky First-Column Frozen Horizontal Scroll (Rule 68.2):**
+   - When columns > 5 or viewport scrolls horizontally (`overflow-x-auto`), verify the primary identity column uses `sticky start-0 z-10 border-e border-border` with opaque background tokens (`bg-card` for body, `bg-primary-subtle` for header).
+   - Violation: `FINDING: UNANCHORED_HORIZONTAL_SCROLL` or `FINDING: BLEEDING_STICKY_CELL_TRANSPARENCY` (Severity: MAJOR).
+4. **Desktop Hover-Only vs Mobile Persistent Actions (Rule 64 / Rule 68.3):**
+   - Verify action cells use `opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100 motion-safe:transition-opacity` (clean on desktop, persistent on touch/mobile).
+   - Violation: `FINDING: ACTION_BUTTON_CLUTTER` or `FINDING: UNREACHABLE_TOUCH_ACTIONS` (Severity: MINOR to MAJOR).
+5. **Two-Tier Data Hierarchy & Inline `<CopyButton />` (Rule 68.4):**
+   - Primary title bold on line 1; technical IDs (UUIDs, gym IDs, invoice numbers) on line 2 with an inline `<CopyButton />`.
+   - Violation: `FINDING: MISSING_COPY_BUTTON_ON_TECHNICAL_ID` (Severity: MINOR).
+6. **Keyboard Row Navigation & `stopPropagation` Guard (Rule 68.5):**
+   - Clickable rows (`<tr>`) MUST have `tabIndex={0}` and Enter/Space `onKeyDown` handlers. ALL clickable controls inside the row (Buttons, Links, `<CopyButton />`, Checkbox) MUST execute `e.stopPropagation()`.
+   - Violation: `FINDING: MISSING_STOP_PROPAGATION_ON_TABLE_ROW_ACTION` (Severity: MAJOR).
+7. **Multi-Select Checkbox Column & Floating Batch Action Bar (Rule 68.8):**
+   - Checkbox column is Column 1 `w-12 px-4 py-3 text-center`. Header Select All handles `checked` and `indeterminate`. Selected rows receive `bg-primary-subtle border-l-4 border-l-primary`. Floating/top batch action bar renders when `selectedCount > 0` with selection counter badge.
+   - Violation: `FINDING: UNISOLATED_CHECKBOX_SELECTION` or `FINDING: MISSING_BATCH_ACTION_BAR` (Severity: MAJOR).
+8. **Filter Toolbar Layout & Interactive Control Spacing Contract (Rule 68.9):**
+   - Container: `p-4 border-b border-border bg-surface-highlight/30 gap-3`. Search box: `w-72 min-h-10` with left search icon and trailing clear `X` button. Filter controls grouped with `gap-2.5` to `gap-3` (never crowded). Segmented quick filter tabs. Explicit "Clear All" reset button. Right-aligned primary CTA.
+   - Violation: `FINDING: CROWDED_FILTER_TOOLBAR` or `FINDING: MISSING_CLEAR_SEARCH_BUTTON` (Severity: MINOR).
+9. **In-Card Bottom-Pinned Pagination Bar (Rule 68.10):**
+   - Container pinned inside card footer `border-t border-border px-4 py-3 bg-card/60`. Localized result summary: `Showing ${start}–${end} of ${total} records` with `Intl.NumberFormat`. Page size dropdown `10 / 25 / 50 / 100`. URL synchronization (`?page=2&pageSize=25`) with `{ scroll: false }`.
+   - Violation: `FINDING: MISSING_PAGINATION_RESULT_SUMMARY` or `FINDING: VIEWPORT_JUMPING_PAGINATION` (Severity: MINOR to MAJOR).
+10. **Component Line Ceilings (Rule 24 / Rule 68.7):**
+    - Table component MUST remain `<= 300 lines`. Sub-components (`TableRow.tsx`, `TableToolbar.tsx`, `TablePagination.tsx`) MUST be extracted rather than deleting columns.
+    - Violation: `FINDING: TABLE_COMPONENT_LINE_CEILING_EXCEEDED` (Severity: MAJOR).
 
 ---
 
@@ -6463,4 +6501,4 @@ Only AFTER completing the Final Verification Ledger are you allowed to begin gen
 
 This verification mechanism is CRITICAL and NON-NEGOTIABLE for a "Great Audit".
 
-# END OF FORENSIC FRONTEND BACKEND MOBILE ARCHITECTURE RULES AUDITOR V6.5
+# END OF FORENSIC FRONTEND BACKEND MOBILE ARCHITECTURE RULES AUDITOR V6.6
