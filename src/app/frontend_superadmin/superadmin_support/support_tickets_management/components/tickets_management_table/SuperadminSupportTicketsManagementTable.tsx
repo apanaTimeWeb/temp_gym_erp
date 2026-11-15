@@ -1,6 +1,7 @@
 // RESPONSIBILITY: Renders/orchestrates SuperadminSupportTicketsTable within its owning Superadmin feature module; no direct backend implementation.
 'use client';
 
+import { useState, useCallback } from 'react';
 
 import { ExternalLink, AlertOctagon, Eye, MessageSquare, UserCheck, CheckCircle2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -17,9 +18,9 @@ import { getSuperadminSupportTicketsSlaRemainingMs } from '@/app/frontend_supera
 import type { SuperadminSupportTicketsTableProps } from '@/app/frontend_superadmin/superadmin_support/support_tickets_management/types/superadmin_support_tickets_management_table.types';
 import type { SupportTicket } from '@/app/frontend_superadmin/superadmin_support/support_tickets_management/types/superadmin_support_tickets_management.types';
 
+const TABLE_COLUMN_COUNT = 9;
 
 // RESPONSIBILITY: Renders and composes SuperadminSupportTicketsTable for the owning feature module; business logic and API transport remain in module-owned hooks/services.
-
 
 /**
  * @description Renders the data table for Support Tickets
@@ -38,87 +39,255 @@ const MOBILE_CARD_TABLE_CLASSES = [
   'max-md:[&_tbody_td::before]:text-xs max-md:[&_tbody_td::before]:font-semibold max-md:[&_tbody_td::before]:uppercase',
 ].join(' ');
 
-export default function SuperadminSupportTicketsManagementTable({ tickets, onReply, onInspect, onClose, onAssign }: SuperadminSupportTicketsTableProps) {
+export default function SuperadminSupportTicketsManagementTable({
+  tickets,
+  onReply,
+  onInspect,
+  onClose,
+  onAssign,
+  selectedTicketIds,
+  onToggleSelectTicket,
+  onToggleSelectAllTickets,
+}: SuperadminSupportTicketsTableProps) {
   const t = useTranslations('superadmin_support_tickets');
-    const router = useRouter();
-    const getSlaStatus = (ticket: SupportTicket) => {
-        if (!ticket.slaDeadline)
-            return { label: t('ui.sla_no_sla'), color: 'text-secondary', icon: null };
-        const diff = getSuperadminSupportTicketsSlaRemainingMs(ticket.slaDeadline);
-        if (diff === null) return { label: t('ui.sla_unavailable'), color: 'text-secondary', icon: null };
-        if (diff < 0)
-            return { label: t('ui.sla_breached'), color: 'text-danger', icon: <AlertOctagon size={18} className="w-3"/> };
-        if (diff < 12 * 60 * 60 * 1000)
-            return { label: t('ui.sla_approaching'), color: 'text-warning', icon: <AlertOctagon size={18} className="w-3"/> };
-        return { label: t('ui.sla_ok'), color: 'text-success', icon: <CheckCircle2 size={18}/> };
-    };
-    return (<div className="overflow-x-auto flex-1">
-      <table className={`w-full text-start border-collapse min-w-max ${MOBILE_CARD_TABLE_CLASSES}`}>
-        <thead>
+  const router = useRouter();
+
+  const [internalSelectedIds, setInternalSelectedIds] = useState<Set<string>>(new Set());
+  const selectedIds = selectedTicketIds ?? internalSelectedIds;
+
+  const handleToggleSelectTicket = useCallback((id: string) => {
+    if (onToggleSelectTicket) {
+      onToggleSelectTicket(id);
+      return;
+    }
+    setInternalSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }, [onToggleSelectTicket]);
+
+  const isAllSelected = tickets.length > 0 && tickets.every((ticket) => selectedIds.has(ticket.id));
+  const isIndeterminate = tickets.some((ticket) => selectedIds.has(ticket.id)) && !isAllSelected;
+
+  const handleToggleSelectAll = useCallback(() => {
+    if (onToggleSelectAllTickets) {
+      onToggleSelectAllTickets();
+      return;
+    }
+    setInternalSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (isAllSelected) {
+        tickets.forEach((t) => next.delete(t.id));
+      } else {
+        tickets.forEach((t) => next.add(t.id));
+      }
+      return next;
+    });
+  }, [onToggleSelectAllTickets, isAllSelected, tickets]);
+
+  const handleClearSelection = useCallback(() => {
+    setInternalSelectedIds(new Set());
+  }, []);
+
+  const getSlaStatus = (ticket: SupportTicket) => {
+    if (!ticket.slaDeadline)
+      return { label: t('ui.sla_no_sla'), color: 'text-secondary', icon: null };
+    const diff = getSuperadminSupportTicketsSlaRemainingMs(ticket.slaDeadline);
+    if (diff === null) return { label: t('ui.sla_unavailable'), color: 'text-secondary', icon: null };
+    if (diff < 0)
+      return { label: t('ui.sla_breached'), color: 'text-danger', icon: <AlertOctagon size={18} className="w-3" /> };
+    if (diff < 12 * 60 * 60 * 1000)
+      return { label: t('ui.sla_approaching'), color: 'text-warning', icon: <AlertOctagon size={18} className="w-3" /> };
+    return { label: t('ui.sla_ok'), color: 'text-success', icon: <CheckCircle2 size={18} /> };
+  };
+
+  return (
+    <div className="flex flex-col flex-1">
+      {selectedIds.size > 0 && (
+        <div className="p-3 bg-primary/10 border-b border-primary/20 flex flex-wrap items-center justify-between gap-3 motion-safe:animate-fadeIn">
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary text-on-primary">
+              {selectedIds.size} {t('ui.selected') ?? 'Selected'}
+            </span>
+            <button
+              type="button"
+              onClick={handleClearSelection}
+              className="text-xs text-secondary hover:text-primary font-medium underline"
+            >
+              {t('ui.clear_selection') ?? 'Clear selection'}
+            </button>
+          </div>
+        </div>
+      )}
+      <div className="overflow-x-auto flex-1">
+        <table className={`w-full text-start border-collapse min-w-max ${MOBILE_CARD_TABLE_CLASSES}`}>
+          <thead>
             <tr className="bg-header border-b border-border text-sm" data-testid="superadmin_support_tickets-superadmin-tickets-table-tickets-table-action-1">
-              <th className="p-4 font-semibold text-secondary">{t('ui.ticket_id_bfe2ba9')}</th>
-              <th className="p-4 font-semibold text-secondary">{t('ui.gym_4f5e8a8')}</th>
-              <th className="p-4 font-semibold text-secondary">{t('ui.subject_5f39e42')}</th>
-              <th className="p-4 font-semibold text-secondary">{t('ui.priority_292b027')}</th>
-              <th className="p-4 font-semibold text-secondary">{t('ui.status_b9a439d')}</th>
-              <th className="p-4 font-semibold text-secondary">{t('ui.response_time_22cd6ee')}</th>
-              <th className="p-4 font-semibold text-secondary">{t('ui.last_updated_a6d2b1f')}</th>
+              <th className="sticky start-0 z-20 bg-header border-b border-border w-12 p-4 text-center">
+                <input
+                  type="checkbox"
+                  aria-label={t('ui.select_all_tickets') ?? 'Select all tickets'}
+                  checked={isAllSelected}
+                  ref={(el) => { if (el) el.indeterminate = isIndeterminate; }}
+                  onChange={handleToggleSelectAll}
+                  className="h-4 w-4 rounded border-border text-primary accent-primary cursor-pointer focus:ring-2 focus:ring-primary"
+                  data-testid="superadmin_support_tickets-table-select-all"
+                />
+              </th>
+              <th className="sticky start-12 z-20 bg-header border-b border-e border-border p-4 font-semibold text-secondary text-start">
+                {t('ui.ticket_id_bfe2ba9')}
+              </th>
+              <th className="p-4 font-semibold text-secondary text-start">{t('ui.gym_4f5e8a8')}</th>
+              <th className="p-4 font-semibold text-secondary text-start">{t('ui.subject_5f39e42')}</th>
+              <th className="p-4 font-semibold text-secondary text-start">{t('ui.priority_292b027')}</th>
+              <th className="p-4 font-semibold text-secondary text-start">{t('ui.status_b9a439d')}</th>
+              <th className="p-4 font-semibold text-secondary text-start">{t('ui.response_time_22cd6ee')}</th>
+              <th className="p-4 font-semibold text-secondary text-start">{t('ui.last_updated_a6d2b1f')}</th>
               <th className="p-4 font-semibold text-secondary text-end">{t('ui.actions_67b65eb')}</th>
             </tr>
-        </thead>
-        <tbody className="divide-y divide-border">
-          {tickets.length === 0 ? (<tr data-testid="superadmin_support_tickets-superadmin-tickets-table-tickets-table-action-2">
-              <td colSpan={8} data-mobile-label={t('ui.mobile_ticket_id')}><SuperadminSupportTicketsEmptyState /></td>
-            </tr>) : (tickets.map((ticket, index) => {
-            const sla = getSlaStatus(ticket);
-            return (<tr key={ticket.id} tabIndex={0} aria-label={t('ui.a11y_open_ticket', { id: ticket.id })} data-testid={`superadmin_support_tickets-table-${ticket.id}-open`} className="hover:bg-surface-hover focus-visible:bg-surface-hover focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary motion-safe:transition-colors cursor-pointer" onClick={() => onInspect(ticket.id)} onKeyDown={(event) => { if (event.target !== event.currentTarget) return; if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onInspect(ticket.id); } }}>
-                <td className="p-4" data-mobile-label={t('ui.mobile_ticket_id')}>
-                  <span className="flex items-center gap-1 text-sm font-mono font-medium text-primary">
-                    <span>{ticket.id}</span>
-                    <CopyButton value={ticket.id} label={`Copy ticket ID ${ticket.id}`} data-testid={`superadmin_support_tickets-tickets-table-copy-id-${ticket.id}`}/>
-                  </span>
+          </thead>
+          <tbody className="divide-y divide-border">
+            {tickets.length === 0 ? (
+              <tr data-testid="superadmin_support_tickets-superadmin-tickets-table-tickets-table-action-2">
+                <td colSpan={TABLE_COLUMN_COUNT} data-mobile-label={t('ui.mobile_ticket_id')}>
+                  <SuperadminSupportTicketsEmptyState />
                 </td>
-                <td className="p-4 text-sm text-secondary" data-mobile-label={t('ui.mobile_gym')}>
-                  <button  type="button" onClick={(e) => {
-                    e.stopPropagation();
-                    router.push(`${SUPERADMIN_SUPPORT_TICKETS_MANAGEMENT_ROUTES.GYMS}?id=${ticket.tenantId}`);
-                }} className="min-w-11 min-h-11 flex items-center gap-1 hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" title={t('ui.view_gym_37e8508')} data-testid={`superadmin_support_tickets-table-view-${index}`}>
-                    {ticket.tenantName} <ExternalLink size={18}/>
-                  </button>
-                </td>
-                <td className="p-4 text-sm text-primary font-medium" data-mobile-label={t('ui.mobile_subject')}>{ticket.subject}</td>
-                <td className="p-4 text-sm" data-mobile-label={t('ui.mobile_priority')}>
-                  <span className={`px-2.5 py-1 rounded-md text-xs font-bold border ${PriorityColors[ticket.priority]}`}>
-                    {t(`ui.priority_${ticket.priority.toLowerCase()}`)}
-                  </span>
-                </td>
-                <td className="p-4 text-sm font-bold" data-mobile-label={t('ui.mobile_status')}>
-                  <span data-testid={`superadmin_support_tickets-status-${ticket.id}`} className={StatusColors[ticket.status]}>{t(`ui.status_${ticket.status.toLowerCase()}`)}</span>
-                </td>
-                <td className="p-4 text-sm" data-mobile-label={t('ui.mobile_response_time')}>
-                  <span className={`flex items-center gap-1 text-xs font-semibold ${sla.color}`}>
-                    {sla.icon} {sla.label}
-                  </span>
-                </td>
-                <td className="p-4 text-sm text-secondary" data-mobile-label={t('ui.mobile_last_updated')}>{formatDateTime(ticket.lastUpdated)}</td>
-                <td className="p-4 text-sm text-end" data-mobile-label={t('ui.mobile_actions')}>
-                  <div className="flex items-center justify-end gap-1">
-                      <button type="button" onClick={(e) => { e.stopPropagation(); onInspect(ticket.id); }} className="min-w-11 min-h-11 p-2 text-secondary hover:bg-surface-hover rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:active:scale-95" aria-label={t('ui.inspect_ticket', { id: ticket.id })}><Eye size={16} aria-hidden="true" /></button>
-                      <button type="button" onClick={(e) => { e.stopPropagation(); onReply(ticket.id); }} className="min-w-11 min-h-11 p-2 text-primary hover:bg-primary-subtle rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:active:scale-95" title={t('ui.reply_to_ticket_d555f35')} aria-label={t('ui.a11y_reply_ticket', { id: ticket.id })} data-testid={`superadmin_support_tickets-table-reply-${index}`}>
-                      <MessageSquare size={18}/>
-                    </button>
-                    {onAssign && (<button  type="button" onClick={(e) => { e.stopPropagation(); onAssign(ticket.id); }} className="min-w-11 min-h-11 p-2 text-secondary hover:bg-surface-hover hover:text-primary rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" title={t('ui.assign_to_4306f8c')} data-testid={`superadmin_support_tickets-table-assign-${index}`}>
-                        <UserCheck size={18} className="w-4"/>
-                      </button>)}
-                    {onClose && ticket.status !== SUPERADMIN_SUPPORT_TICKETS_STATUS_CODES.RESOLVED && ticket.status !== SUPERADMIN_SUPPORT_TICKETS_STATUS_CODES.CLOSED && (<button  type="button" onClick={(e) => { e.stopPropagation(); onClose(ticket.id); }} className="min-w-11 min-h-11 p-2 text-success hover:bg-success-bg rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" title={t('ui.close_ticket_94a4dc0')} data-testid={`superadmin_support_tickets-table-close-${index}`}>
-                        <CheckCircle2 size={18}/>
-                      </button>)}
-                  </div>
-                </td>
-              </tr>);
-        }))}
-        </tbody>
-      </table>
-    </div>);
+              </tr>
+            ) : (
+              tickets.map((ticket, index) => {
+                const sla = getSlaStatus(ticket);
+                const isSelected = selectedIds.has(ticket.id);
+                return (
+                  <tr
+                    key={ticket.id}
+                    tabIndex={0}
+                    aria-label={t('ui.a11y_open_ticket', { id: ticket.id })}
+                    data-testid={`superadmin_support_tickets-table-${ticket.id}-open`}
+                    className={`hover:bg-surface-hover focus-visible:bg-surface-hover focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary motion-safe:transition-colors cursor-pointer group ${isSelected ? 'bg-primary-subtle/50' : ''}`}
+                    onClick={() => onInspect(ticket.id)}
+                    onKeyDown={(event) => {
+                      if (event.target !== event.currentTarget) return;
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        onInspect(ticket.id);
+                      }
+                    }}
+                  >
+                    <td className="sticky start-0 z-10 w-12 bg-card group-hover:bg-surface-hover border-b border-border p-4 text-center transition-colors">
+                      <input
+                        type="checkbox"
+                        aria-label={`Select ticket ${ticket.id}`}
+                        checked={isSelected}
+                        onChange={(e) => {
+                          e.stopPropagation();
+                          handleToggleSelectTicket(ticket.id);
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                        className="h-4 w-4 rounded border-border text-primary accent-primary cursor-pointer focus:ring-2 focus:ring-primary"
+                        data-testid={`superadmin_support_tickets-select-row-${ticket.id}`}
+                      />
+                    </td>
+                    <td className="sticky start-12 z-10 bg-card group-hover:bg-surface-hover border-b border-e border-border p-4 transition-colors" data-mobile-label={t('ui.mobile_ticket_id')}>
+                      <span className="flex items-center gap-1.5 text-sm font-mono font-medium text-primary">
+                        <span>{ticket.id}</span>
+                        <CopyButton value={ticket.id} label={`Copy ticket ID ${ticket.id}`} data-testid={`superadmin_support_tickets-tickets-table-copy-id-${ticket.id}`} />
+                      </span>
+                    </td>
+                    <td className="border-b border-border p-4 text-sm text-secondary" data-mobile-label={t('ui.mobile_gym')}>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          router.push(`${SUPERADMIN_SUPPORT_TICKETS_MANAGEMENT_ROUTES.GYMS}?id=${ticket.tenantId}`);
+                        }}
+                        className="min-w-11 min-h-11 flex items-center gap-1 hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95"
+                        title={t('ui.view_gym_37e8508')}
+                        data-testid={`superadmin_support_tickets-table-view-${index}`}
+                      >
+                        {ticket.tenantName} <ExternalLink size={18} />
+                      </button>
+                    </td>
+                    <td className="border-b border-border p-4 text-sm text-primary font-medium" data-mobile-label={t('ui.mobile_subject')}>{ticket.subject}</td>
+                    <td className="border-b border-border p-4 text-sm" data-mobile-label={t('ui.mobile_priority')}>
+                      <span className={`px-2.5 py-1 rounded-md text-xs font-bold border ${PriorityColors[ticket.priority]}`}>
+                        {t(`ui.priority_${ticket.priority.toLowerCase()}`)}
+                      </span>
+                    </td>
+                    <td className="border-b border-border p-4 text-sm font-bold" data-mobile-label={t('ui.mobile_status')}>
+                      <span data-testid={`superadmin_support_tickets-status-${ticket.id}`} className={StatusColors[ticket.status]}>{t(`ui.status_${ticket.status.toLowerCase()}`)}</span>
+                    </td>
+                    <td className="border-b border-border p-4 text-sm" data-mobile-label={t('ui.mobile_response_time')}>
+                      <span className={`flex items-center gap-1 text-xs font-semibold ${sla.color}`}>
+                        {sla.icon} {sla.label}
+                      </span>
+                    </td>
+                    <td className="border-b border-border p-4 text-sm text-secondary" data-mobile-label={t('ui.mobile_last_updated')}>{formatDateTime(ticket.lastUpdated)}</td>
+                    <td className="border-b border-border p-4 text-sm text-end" data-mobile-label={t('ui.mobile_actions')}>
+                      <div className="flex items-center justify-end gap-1 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100 motion-safe:transition-opacity">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onInspect(ticket.id);
+                          }}
+                          className="min-w-11 min-h-11 p-2 text-secondary hover:bg-surface-hover rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:active:scale-95"
+                          aria-label={t('ui.inspect_ticket', { id: ticket.id })}
+                        >
+                          <Eye size={16} aria-hidden="true" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onReply(ticket.id);
+                          }}
+                          className="min-w-11 min-h-11 p-2 text-primary hover:bg-primary-subtle rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:active:scale-95"
+                          title={t('ui.reply_to_ticket_d555f35')}
+                          aria-label={t('ui.a11y_reply_ticket', { id: ticket.id })}
+                          data-testid={`superadmin_support_tickets-table-reply-${index}`}
+                        >
+                          <MessageSquare size={18} />
+                        </button>
+                        {onAssign && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onAssign(ticket.id);
+                            }}
+                            className="min-w-11 min-h-11 p-2 text-secondary hover:bg-surface-hover hover:text-primary rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95"
+                            title={t('ui.assign_to_4306f8c')}
+                            data-testid={`superadmin_support_tickets-table-assign-${index}`}
+                          >
+                            <UserCheck size={18} className="w-4" />
+                          </button>
+                        )}
+                        {onClose && ticket.status !== SUPERADMIN_SUPPORT_TICKETS_STATUS_CODES.RESOLVED && ticket.status !== SUPERADMIN_SUPPORT_TICKETS_STATUS_CODES.CLOSED && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onClose(ticket.id);
+                            }}
+                            className="min-w-11 min-h-11 p-2 text-success hover:bg-success-bg rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95"
+                            title={t('ui.close_ticket_94a4dc0')}
+                            data-testid={`superadmin_support_tickets-table-close-${index}`}
+                          >
+                            <CheckCircle2 size={18} />
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 }
 

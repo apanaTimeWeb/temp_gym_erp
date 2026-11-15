@@ -7,4 +7,7 @@ export interface SuperadminSupportTicketsTableProps {
   onInspect: (ticketId: string) => void;
     onClose?: (ticketId: string) => void;
     onAssign?: (ticketId: string) => void;
+    selectedTicketIds?: Set<string>;
+    onToggleSelectTicket?: (id: string) => void;
+    onToggleSelectAllTickets?: () => void;
 }
