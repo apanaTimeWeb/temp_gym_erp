@@ -643,15 +643,6 @@ The table filter toolbar must maintain consistent visual rhythm, clear spacing, 
 - **Page Size Selector:** Options for `10 / 25 / 50 / 100` records per page. Changing page size resets current page to 1.
 - **URL Synchronization:** Page changes (`?page=2&pageSize=25`) MUST sync to browser search params with `{ scroll: false }` to support bookmarks, deep-linking, and browser back/forward buttons without jumping to the top of the viewport.
 
-#### 11. Scrollable Viewport & Sticky Geometry Standards
-- **Horizontal Scrolling:** The table container must have `overflow-x-auto flex-1`.
-  - When scrolling horizontally, the sticky start column (`sticky start-0 z-10 border-e border-border`) stays locked in position.
-  - Sticky header has `sticky start-0 z-20 bg-primary-subtle`.
-- **Vertical Scrolling (Fixed-Height Tables):**
-  - If a dense analytical table requires vertical scrolling within a bounded viewport, apply `max-h-[calc(100vh-280px)] overflow-y-auto`.
-  - Table headers must implement `sticky top-0 z-20 bg-header border-b border-border shadow-sm` to stay pinned during vertical scrolling.
-  - The intersection cell (top-left header) requires `sticky top-0 start-0 z-30` to stay above both vertically and horizontally scrolled cells.
-
 ### Table Accessibility and Interaction Rules
 
 - **Zero-Column & Zero-Field Removal Invariant (Non-Destructive Evolution):** Refactoring or restyling a table must NEVER remove, delete, hide, or truncate any existing table column, data field, status badge, action button, or filter control to fit the UI or avoid scroll. All existing features, columns, and interactions must be preserved 100%. If component length exceeds limits, decompose into sub-components (`TableRow`, `TableToolbar`, `TablePagination`) rather than omitting columns or features.

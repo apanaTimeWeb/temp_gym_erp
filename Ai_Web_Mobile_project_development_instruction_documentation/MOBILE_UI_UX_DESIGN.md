@@ -653,15 +653,7 @@ The canonical pattern for user-browsable collections (e.g. Members Directory, Gy
 </Pressable>
 ```
 
-### 5D.2 Dense Analytical & Financial Matrix Pattern (Horizontal Scroll Matrix)
-When dense multi-column accounting, ledger, shift rosters, or biometric attendance tables require visual side-by-side comparison across 6+ columns that cannot be flattened into cards:
-- **Layout Structure:** Dual-pane layout combining a fixed left column with a horizontally scrollable right pane.
-- **Frozen First Column (Entity Anchor):** Width `130pt–160pt`, fixed on the left with `backgroundColor: tokens.color.card` and `borderRightWidth: 1`, `borderColor: tokens.color.border` to eliminate visual bleed.
-- **Scrollable Columns Container:** Horizontal `ScrollView` (`showsHorizontalScrollIndicator={false}`) containing the remaining metric columns.
-- **Synchronized Vertical Scrolling:** Both the frozen column and scrollable pane scroll vertically in unison inside a single parent list or shared scroll driver.
-- **Sticky Table Header:** Header row pinned at the top (`backgroundColor: tokens.color.cardElevated`, `borderBottomWidth: 1`, `borderColor: tokens.color.border`).
-
-### 5D.3 Mobile Search Bar & Filter Chip Carousel Standard
+### 5D.2 Mobile Search Bar & Filter Chip Carousel Standard
 Search and filtering on mobile screens must follow this unified, thumb-accessible layout:
 - **Toolbar Container:**
   - `paddingHorizontal: tokens.spacing[4]` (16pt), `paddingVertical: tokens.spacing[3]` (12pt)
@@ -686,7 +678,7 @@ Search and filtering on mobile screens must follow this unified, thumb-accessibl
 - **"Clear All" Reset Trigger:**
   - When search or multiple filters are active, render an explicit "Clear All" text button (`color: tokens.color.danger`, `fontSize: 12`, weight: 600).
 
-### 5D.4 Mobile Multi-Select Mode & Floating Batch Action Bar
+### 5D.3 Mobile Multi-Select Mode & Floating Batch Action Bar
 For bulk operations (e.g. Bulk SMS/WhatsApp, Multi-Member Plan Renewal, Bulk Check-in, Batch Delete):
 - **Mode Activation:** Triggered by tapping a top-right "Select" / "Edit" button in the navigation header, or long-pressing on any list card (with medium haptic feedback).
 - **Selection Checkbox Indicator:**
@@ -706,7 +698,7 @@ For bulk operations (e.g. Bulk SMS/WhatsApp, Multi-Member Plan Renewal, Bulk Che
     - Left: Selection badge pill: `<View style={styles.badge}><Text>{selectedCount} Selected</Text></View>` + "Deselect All" button.
     - Right: Action buttons (Export, Status Update, Delete with confirmation bottom sheet).
 
-### 5D.5 Zero-Field & Zero-Feature Removal Invariant on Mobile
+### 5D.4 Zero-Field & Zero-Feature Removal Invariant on Mobile
 - **ZERO DATA LOSS CONTRACT:** Refactoring or adapting a desktop data table or API model to mobile MUST NEVER drop, delete, or hide existing data fields, columns, badges, or metadata solely because the mobile viewport is small.
 - **Preservation Strategy:** If 6+ data points crowd the card view:
   - Keep primary 4 metrics in the visible card grid.
@@ -714,7 +706,7 @@ For bulk operations (e.g. Bulk SMS/WhatsApp, Multi-Member Plan Renewal, Bulk Che
   - **NEVER silently omit fields from the UI.**
 - **Action Parity:** All action buttons available on desktop (Edit, Delete, Download, Resend, Refund) must remain accessible on mobile, either directly on the card or inside an accessible Action Bottom Sheet (`MoreVertical` tap).
 
-### 5D.6 Infinite Scroll, List Footer Summary & Pull-to-Refresh
+### 5D.5 Infinite Scroll, List Footer Summary & Pull-to-Refresh
 - **List Footer Result Summary:**
   - The list footer MUST render a human-readable localized result counter:
     `Showing 1–25 of 143 records`

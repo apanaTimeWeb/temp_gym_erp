@@ -5211,7 +5211,6 @@ and MUST NOT claim that a ZIP was generated.
 | **Gate 12** | Multi-Tenancy Enforced | Verify `x-tenant-id` derived from trusted session context, never from route params or client payload | **STOP.** Cross-tenant data vulnerability |
 | **Gate 13** | Complete Async States | Verify loading skeletons (`[Feature]Skeleton.tsx`), empty states (`[Feature]EmptyState.tsx`), and error fallbacks implemented | **STOP.** Blank screen on async fetch |
 | **Gate 14** | Consolidated Integration Guide & Re-Audit Included | `INTEGRATION_GUIDE.md` (consolidating changelog, navigation route registry, host integration steps, and verification commands), `RE_AUDIT_CHECKLIST_RESULT.md`, and Maestro E2E test suite present inside ZIP root | **STOP.** Missing deliverable = REJECTED DELIVERY |
-| **Gate 15** | Mobile Directory & Zero-Drop Parity | Verify all entity collections implement card-stack/table parity, zero dropped fields from backend model, search debounce, filter sheet, and batch selection isolation | **STOP.** Truncated fields or missing batch parity = REJECTED DELIVERY |
 
 > ⛔ **If ANY source-level code gate fails: STATUS = `REPAIR_REQUIRED`. Fix the source code. Once all source-level code fixes are written, deliver the output per the Artifact Delivery Resolution Rule with deferred/out-of-scope items explicitly documented.**
 >

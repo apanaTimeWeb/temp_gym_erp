@@ -3982,11 +3982,6 @@ To eliminate visual jitter, unanchored horizontal scrolling, and desktop action 
     - Mandatory result summary text with localized numbers: `Showing ${start}–${end} of ${total} records` (e.g. `start = total === 0 ? 0 : (page - 1) * pageSize + 1`, `end = Math.min(page * pageSize, total)`).
     - Page changes and page size adjustments (`10 / 25 / 50 / 100`) MUST synchronize to URL search parameters (`?page=2&pageSize=25`) with `{ scroll: false }` to enable deep linking and browser history navigation without viewport jump.
 
-11. **Scrollable Viewport & Sticky Geometry Standards:**
-    - Horizontal scroll container: `overflow-x-auto flex-1` with smooth scrolling.
-    - Pinned start column (`sticky start-0 z-10 border-e border-border`) with solid background tokens to eliminate text bleed-through.
-    - For vertical scrolling in fixed-height analytical tables, apply `max-h-[calc(100vh-280px)] overflow-y-auto` with sticky headers (`sticky top-0 z-20 bg-header border-b border-border`) and intersection header cell (`sticky top-0 start-0 z-30`).
-
 ### KPI and Chart Completeness Rule
 
 For every KPI or chart:
