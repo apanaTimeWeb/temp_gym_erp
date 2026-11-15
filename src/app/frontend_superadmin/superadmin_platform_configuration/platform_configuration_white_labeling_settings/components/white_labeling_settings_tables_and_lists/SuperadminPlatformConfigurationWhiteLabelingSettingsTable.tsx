@@ -11,6 +11,7 @@
 // RESPONSIBILITY: Renders White-labeling domain records as a clickable desktop table and mobile card stack. No API calls.
 import { useLocale, useTranslations } from 'next-intl';
 
+import CopyButton from '@/components/ui/CopyButton';
 import Tooltip from '@/components/ui/Tooltip';
 
 import SuperadminPlatformConfigurationWhiteLabelingEmptyState from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_white_labeling_settings/components/white_labeling_settings_states_and_feedback/SuperadminPlatformConfigurationWhiteLabelingSettingsEmptyState';
@@ -20,6 +21,7 @@ import { formatWhiteLabelingDate } from '@/app/frontend_superadmin/superadmin_pl
 
 import type { SuperadminPlatformConfigurationWhiteLabelingTableProps } from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_white_labeling_settings/types/superadmin_platform_configuration_white_labeling_settings_component.types';
 
+const TABLE_COLUMN_COUNT = 5;
 
 function openDomain(id: string) { useSuperadminPlatformConfigurationWhiteLabelingSettingsStore.getState().setSelectedDomainId(id); }
 
@@ -40,15 +42,58 @@ export default function SuperadminPlatformConfigurationWhiteLabelingSettingsTabl
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-start">
             <caption className="sr-only">{t('ui.white_labeling_custom_domains_e5d66331')}</caption>
-            <thead><tr className="border-b border-border bg-surface-highlight"><th className="w-48 p-4 text-xs font-semibold uppercase tracking-wider text-secondary">{t('ui.gym_name_4ad76c40')}</th><th className="min-w-40 p-4 text-xs font-semibold uppercase tracking-wider text-secondary">{t('ui.domain_eae639a7')}</th><th className="w-28 p-4 text-xs font-semibold uppercase tracking-wider text-secondary">{t('ui.status_ec53a8c4')}</th><th className="w-28 p-4 text-xs font-semibold uppercase tracking-wider text-secondary">{t('ui.ssl_ea52c362')}</th><th className="w-32 p-4 text-xs font-semibold uppercase tracking-wider text-secondary">{t('ui.added_on_70e4179a')}</th></tr></thead>
+            <thead>
+              <tr className="border-b border-border bg-surface-highlight">
+                <th className="sticky start-0 z-20 bg-surface-highlight border-b border-e border-border w-48 p-4 text-xs font-semibold uppercase tracking-wider text-secondary text-start">
+                  {t('ui.gym_name_4ad76c40')}
+                </th>
+                <th className="border-b border-border min-w-40 p-4 text-xs font-semibold uppercase tracking-wider text-secondary text-start">
+                  {t('ui.domain_eae639a7')}
+                </th>
+                <th className="border-b border-border w-28 p-4 text-xs font-semibold uppercase tracking-wider text-secondary text-start">
+                  {t('ui.status_ec53a8c4')}
+                </th>
+                <th className="border-b border-border w-28 p-4 text-xs font-semibold uppercase tracking-wider text-secondary text-start">
+                  {t('ui.ssl_ea52c362')}
+                </th>
+                <th className="border-b border-border w-32 p-4 text-xs font-semibold uppercase tracking-wider text-secondary text-start">
+                  {t('ui.added_on_70e4179a')}
+                </th>
+              </tr>
+            </thead>
             <tbody className="divide-y divide-border">
               {domains.map((domain) => (
-                <tr key={domain.id} className="motion-safe:transition-colors hover:bg-surface-hover" data-testid={`superadmin_platform_configuration_white_labeling-table-row-${domain.id}`}>
-                  <td className="max-w-48 p-4"><Tooltip content={domain.gymName}><button type="button" onClick={() => openDomain(domain.id)} aria-label={t('ui.open_domain_details', { gymName: domain.gymName })} className="block min-h-11 max-w-full truncate text-start font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-card" data-testid={`superadmin_platform_configuration_white_labeling-open-domain-${domain.id}`}>{domain.gymName}</button></Tooltip></td>
-                  <td className="p-4"><Tooltip content={domain.domain}><span className="block max-w-60 truncate font-mono text-sm text-primary">{domain.domain}</span></Tooltip></td>
-                  <td className="p-4"><SuperadminPlatformConfigurationWhiteLabelingStatusBadge status={domain.status} /></td>
-                  <td className="p-4"><SuperadminPlatformConfigurationWhiteLabelingStatusBadge status={domain.sslStatus} /></td>
-                  <td className="p-4 text-sm text-secondary">{formatWhiteLabelingDate(domain.createdAt, locale)}</td>
+                <tr key={domain.id} className="group motion-safe:transition-colors hover:bg-surface-hover" data-testid={`superadmin_platform_configuration_white_labeling-table-row-${domain.id}`}>
+                  <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-b border-e border-border max-w-48 p-4 transition-colors">
+                    <Tooltip content={domain.gymName}>
+                      <button
+                        type="button"
+                        onClick={() => openDomain(domain.id)}
+                        aria-label={t('ui.open_domain_details', { gymName: domain.gymName })}
+                        className="block min-h-11 max-w-full truncate text-start font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                        data-testid={`superadmin_platform_configuration_white_labeling-open-domain-${domain.id}`}
+                      >
+                        {domain.gymName}
+                      </button>
+                    </Tooltip>
+                  </td>
+                  <td className="border-b border-border p-4">
+                    <div className="flex items-center gap-1.5">
+                      <Tooltip content={domain.domain}>
+                        <span className="block max-w-60 truncate font-mono text-sm text-primary">{domain.domain}</span>
+                      </Tooltip>
+                      <CopyButton value={domain.domain} label={`Copy domain ${domain.domain}`} />
+                    </div>
+                  </td>
+                  <td className="border-b border-border p-4">
+                    <SuperadminPlatformConfigurationWhiteLabelingStatusBadge status={domain.status} />
+                  </td>
+                  <td className="border-b border-border p-4">
+                    <SuperadminPlatformConfigurationWhiteLabelingStatusBadge status={domain.sslStatus} />
+                  </td>
+                  <td className="border-b border-border p-4 text-sm text-secondary">
+                    {formatWhiteLabelingDate(domain.createdAt, locale)}
+                  </td>
                 </tr>
               ))}
             </tbody>
