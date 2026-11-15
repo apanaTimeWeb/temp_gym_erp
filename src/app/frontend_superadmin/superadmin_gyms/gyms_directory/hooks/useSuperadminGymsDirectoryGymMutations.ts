@@ -58,7 +58,7 @@ export function useSuperadminGymsDirectoryGymMutations(gyms: Tenant[]) {
             toast.error(resolveSuperadminGymsDirectoryFeedback(err, t('ui.action_failed_retry')), { id: `superadmin-gym-status-error-${variables.id}-${variables.status}` });
         },
     });
-    const onGhostLoginClick = (e: MouseEvent, gymId: string, _gymName: string) => {
+    const onGhostLoginClick = (e: MouseEvent, gymId: string) => {
         e.stopPropagation();
         const gym = gyms.find((item) => item.id === gymId);
         if (!gym) { toast.error(t('ui.action_failed_retry'), { id: 'superadmin-gym-ghost-login-missing' }); return; }

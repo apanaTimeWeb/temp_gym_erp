@@ -34,7 +34,7 @@ import { resolveSuperadminGymsDirectoryFeedback } from '@/app/frontend_superadmi
 export function useSuperadminGymsDirectoryToolbar() {
  const feedback = useFeedbackTranslations('superadmin_gyms');
 
-    const { getParam, setParam, setParams } = useSuperadminGymsDirectoryUrlState();
+    const { getParam, setParams } = useSuperadminGymsDirectoryUrlState();
     const search = getParam('search', '');
     const statusFilter = getParam('statusFilter', 'All');
     const planFilter = getParam('planFilter', 'All');

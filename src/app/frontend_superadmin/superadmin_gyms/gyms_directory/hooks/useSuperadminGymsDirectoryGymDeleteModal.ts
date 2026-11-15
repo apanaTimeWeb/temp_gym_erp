@@ -40,26 +40,29 @@ export function useSuperadminGymsDirectoryGymDeleteModal() {
     const gymToDelete = useSuperadminGymsDirectoryStore(state => state.gymToDelete);
     const queryClient = useQueryClient();
     const [confirmText, setConfirmText] = useState('');
+    const prevGymIdRef = useRef<string | null>(null);
+
+    useEffect(() => {
+        if (gymToDelete?.id !== prevGymIdRef.current) {
+            prevGymIdRef.current = gymToDelete?.id ?? null;
+            setConfirmText('');
+        }
+    }, [gymToDelete?.id]);
     const idempotencyKeyRef = useRef<string | null>(null);
     const targetGymIdRef = useRef<string | null>(null);
     const handleClose = () => { if (deleteMutation.isPending) return; idempotencyKeyRef.current = null; targetGymIdRef.current = null; setConfirmText(''); closeDeleteModal(); };
-    // Reset confirmation text whenever the modal opens or closes
-    // EXPLANATION: Synchronize component state with external dependencies.
-    // EFFECT DEPENDENCIES: Documented intentionally.
-    // EFFECT INTENT: Synchronize local/UI state with the listed external dependencies.
+
     useEffect(() => {
         if (!isDeleteModalOpen || !gymToDelete) {
             idempotencyKeyRef.current = null;
             targetGymIdRef.current = null;
-            setConfirmText('');
             return;
         }
         if (targetGymIdRef.current !== gymToDelete.id) {
             idempotencyKeyRef.current = null;
             targetGymIdRef.current = gymToDelete.id;
-            setConfirmText('');
         }
-    }, [isDeleteModalOpen, gymToDelete?.id]);
+    }, [isDeleteModalOpen, gymToDelete]);
     const deleteMutation = useMutation({
         mutationFn: async ({ id, idempotencyKey }: { id: string; idempotencyKey: string }) => {
             const response = await gymsApi.deleteGym(id, idempotencyKey);

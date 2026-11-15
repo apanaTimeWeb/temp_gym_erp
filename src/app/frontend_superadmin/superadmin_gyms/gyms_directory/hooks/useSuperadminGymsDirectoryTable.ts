@@ -73,13 +73,10 @@ export function useSuperadminGymsDirectoryTable() {
             return response;
         },
     });
-    const gyms = fetchRes?.data && fetchRes.data.length > 0 ? fetchRes.data : [];
+    const rawData = fetchRes?.data;
+    const gyms = useMemo(() => (rawData && rawData.length > 0 ? rawData : []), [rawData]);
     const total = fetchRes?.meta?.total || gyms.length;
-    const filteredGyms = useMemo(() => {
-        if (!gyms)
-            return [];
-        return gyms;
-    }, [gyms]);
+    const filteredGyms = gyms;
     const { actionLoadingId, onGhostLoginClick, onSuspendClick, } = useSuperadminGymsDirectoryGymMutations(gyms);
     const handleRowClick = async (gym: Tenant) => {
         const allowed = await confirmSuperadminGymsDirectoryProgrammaticNavigation();
