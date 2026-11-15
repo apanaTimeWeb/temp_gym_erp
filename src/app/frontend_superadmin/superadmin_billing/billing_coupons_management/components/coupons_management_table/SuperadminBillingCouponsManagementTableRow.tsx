@@ -127,6 +127,5 @@ export default function SuperadminBillingCouponsManagementTableRow({ coupon, onT
         </div>
       </td>
     </tr>);
-    </tr>);
 }
 
