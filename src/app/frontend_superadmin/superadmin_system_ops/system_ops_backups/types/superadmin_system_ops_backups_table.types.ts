@@ -6,4 +6,7 @@ export interface SuperadminBackupsTableProps {
     filteredLength: number;
     handleDownload: (id: string) => void | Promise<void>;
     handleRestoreClick: (backup: BackupRecord) => void;
+    selectedBackupIds?: Set<string>;
+    onToggleSelectBackup?: (id: string) => void;
+    onToggleSelectAllBackups?: () => void;
 }

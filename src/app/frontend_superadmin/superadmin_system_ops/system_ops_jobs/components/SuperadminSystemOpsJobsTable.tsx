@@ -5,6 +5,7 @@
 import { Trash2, RefreshCw, XCircle, Eye } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
+import CopyButton from '@/components/ui/CopyButton';
 import Tooltip from '@/components/ui/Tooltip';
 
 // RESPONSIBILITY: Renders and composes SuperadminSystemOpsJobsTable for the owning feature module; business logic and API transport remain in module-owned hooks/services.
@@ -31,37 +32,45 @@ const MOBILE_CARD_TABLE_CLASSES = [
   'max-md:[&_tbody_td::before]:text-xs max-md:[&_tbody_td::before]:font-semibold max-md:[&_tbody_td::before]:uppercase',
 ].join(' ');
 
+const TABLE_COLUMN_COUNT = 7;
+
 export default function SuperadminSystemOpsJobsTable({ jobs, allJobsFiltered, selectedJobIds, toggleSelection, toggleAll, onInspect, onRetry, onCancel, onDelete, }: SuperadminSystemOpsJobsTableProps) {
   const t = useTranslations('superadmin_system_ops_jobs');
-    return (<div className="overflow-x-auto">
+    return (<div className="overflow-x-auto flex-1">
       <table className={`w-full text-start border-collapse min-w-full ${MOBILE_CARD_TABLE_CLASSES}`}>
         <thead>
           <tr className="bg-primary-subtle border-b border-border text-sm" data-testid="superadmin_system_ops_jobs-superadmin-system-ops-jobs-table-jobs-table-action-1">
-            <th className="p-4 w-12 text-center">
+            <th className="sticky start-0 z-20 bg-primary-subtle border-b border-border p-4 w-12 text-center">
               <input  type="checkbox" aria-label={t('ui.select_all_visible_jobs_33ef689')} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page rounded border-border text-primary cursor-pointer w-4 h-4 min-h-11 min-w-11 motion-safe:transition-all motion-safe:duration-base ease-in-out" checked={jobs.length > 0 && jobs.every((job) => selectedJobIds.has(job.id))} onChange={() => toggleAll(jobs.map((job) => job.id))} data-testid="superadmin_system_ops_jobs-superadmin-system-ops-jobs-table-jobs-table-select-all"/>
             </th>
-            <th className="p-4 font-semibold text-secondary text-xs uppercase tracking-wider">{t('ui.job_id_0e9172b')}</th>
-            <th className="p-4 font-semibold text-secondary text-xs uppercase tracking-wider">{t('ui.queue_9cd7e3f')}</th>
-            <th className="p-4 font-semibold text-secondary text-xs uppercase tracking-wider">{t('ui.task_error_1fb40b6')}</th>
-            <th className="p-4 font-semibold text-secondary text-xs uppercase tracking-wider">{t('ui.status_b5bd428')}</th>
-            <th className="p-4 font-semibold text-secondary text-xs uppercase tracking-wider">{t('ui.timing_bcdb348')}</th>
-            <th className="p-4 font-semibold text-secondary text-xs uppercase tracking-wider text-end">{t('ui.actions_0290a3d')}</th>
+            <th className="sticky start-12 z-20 bg-primary-subtle border-b border-e border-border p-4 font-semibold text-secondary text-xs uppercase tracking-wider text-start">{t('ui.job_id_0e9172b')}</th>
+            <th className="border-b border-border p-4 font-semibold text-secondary text-xs uppercase tracking-wider text-start">{t('ui.queue_9cd7e3f')}</th>
+            <th className="border-b border-border p-4 font-semibold text-secondary text-xs uppercase tracking-wider text-start">{t('ui.task_error_1fb40b6')}</th>
+            <th className="border-b border-border p-4 font-semibold text-secondary text-xs uppercase tracking-wider text-start">{t('ui.status_b5bd428')}</th>
+            <th className="border-b border-border p-4 font-semibold text-secondary text-xs uppercase tracking-wider text-start">{t('ui.timing_bcdb348')}</th>
+            <th className="border-b border-border p-4 font-semibold text-secondary text-xs uppercase tracking-wider text-end">{t('ui.actions_0290a3d')}</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-border">
           {jobs.length === 0 ? <SuperadminSystemOpsJobsEmptyState isFiltered={allJobsFiltered}/> : jobs.map((job, index) => {
             const statusKey = job.status as keyof typeof SUPERADMIN_JOBS_STATUS_STYLES;
-            return (<tr key={job.id} tabIndex={0} aria-label={t('ui.a11y_inspect_job', { id: job.id })} data-testid={`superadmin_system_ops_jobs-table-${job.id}-inspect`} onClick={() => onInspect(job)} onKeyDown={(event) => { if (event.target !== event.currentTarget) return; if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onInspect(job); } }} className="hover:bg-card motion-safe:transition-colors group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset">
-                <td className="p-4 text-center" onClick={(e) => e.stopPropagation()} data-testid={`superadmin_system_ops_jobs-superadminjobstable-click-action-${index}`} data-mobile-label={t('ui.mobile_select_all_visible_jobs')}>
+            const isSelected = selectedJobIds.has(job.id);
+            return (<tr key={job.id} tabIndex={0} aria-label={t('ui.a11y_inspect_job', { id: job.id })} data-testid={`superadmin_system_ops_jobs-table-${job.id}-inspect`} onClick={() => onInspect(job)} onKeyDown={(event) => { if (event.target !== event.currentTarget) return; if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onInspect(job); } }} className={`hover:bg-card motion-safe:transition-colors group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ${isSelected ? 'bg-primary-subtle/50' : ''}`}>
+                <td className="sticky start-0 z-10 w-12 bg-card group-hover:bg-surface-hover border-b border-border p-4 text-center transition-colors" onClick={(e) => e.stopPropagation()} data-testid={`superadmin_system_ops_jobs-superadminjobstable-click-action-${index}`} data-mobile-label={t('ui.mobile_select_all_visible_jobs')}>
                   <input  type="checkbox" aria-label={t('ui.a11y_select_job', { id: job.id })} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page rounded border-border text-primary cursor-pointer w-4 h-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11 motion-safe:transition-all motion-safe:duration-base ease-in-out" checked={selectedJobIds.has(job.id)} onChange={() => toggleSelection(job.id)} data-testid={`superadmin_system_ops_jobs-jobs-table-control-${index}`}/>
                 </td>
-                <td className="p-4 text-xs font-mono text-secondary" data-mobile-label={t('ui.mobile_job_id')}><Tooltip content={job.id}><span className="block max-w-32 truncate">{job.id}</span></Tooltip></td>
-                <td className="p-4 text-sm font-medium text-primary" data-mobile-label={t('ui.mobile_queue')}>{(['billing', 'email', 'webhook', 'database', 'export', 'maintenance'] as string[]).includes(job.queueName) ? t(`ui.queue_${job.queueName}`) : job.queueName}</td>
-                <td className="p-4 text-sm max-w-sm" data-mobile-label={t('ui.mobile_task_error')}>
+                <td className="sticky start-12 z-10 bg-card group-hover:bg-surface-hover border-b border-e border-border p-4 text-xs font-mono text-secondary transition-colors" data-mobile-label={t('ui.mobile_job_id')}>
+                  <div className="flex items-center gap-1.5">
+                    <Tooltip content={job.id}><span className="block max-w-32 truncate">{job.id}</span></Tooltip>
+                    <CopyButton value={job.id} label={`Copy job ID ${job.id}`} />
+                  </div>
+                </td>
+                <td className="border-b border-border p-4 text-sm font-medium text-primary" data-mobile-label={t('ui.mobile_queue')}>{(['billing', 'email', 'webhook', 'database', 'export', 'maintenance'] as string[]).includes(job.queueName) ? t(`ui.queue_${job.queueName}`) : job.queueName}</td>
+                <td className="border-b border-border p-4 text-sm max-w-sm" data-mobile-label={t('ui.mobile_task_error')}>
                   <Tooltip content={job.jobName}><div className="font-medium text-primary truncate">{job.jobName}</div></Tooltip>
                   {job.error && (<Tooltip content={job.error}><div className="text-xs text-danger truncate mt-1">{job.error}</div></Tooltip>)}
                 </td>
-                <td className="p-4" data-mobile-label={t('ui.mobile_status')}>
+                <td className="border-b border-border p-4" data-mobile-label={t('ui.mobile_status')}>
                   <div className="flex flex-col items-start gap-1">
                     <span data-testid={`superadmin_system_ops_jobs-status-${job.id}`} className={`px-2.5 py-0.5 rounded-md text-xs font-bold ${SUPERADMIN_JOBS_STATUS_STYLES[statusKey]}`}>
                       {t(`ui.status_${job.status.toLowerCase()}`)}
@@ -69,12 +78,12 @@ export default function SuperadminSystemOpsJobsTable({ jobs, allJobsFiltered, se
                     {job.attempts > 1 && (<span className="text-xs text-secondary">{t('ui.attempts_4b7e006')} {job.attempts}</span>)}
                   </div>
                 </td>
-                <td className="p-4 text-xs text-secondary whitespace-nowrap" data-mobile-label={t('ui.mobile_timing')}>
+                <td className="border-b border-border p-4 text-xs text-secondary whitespace-nowrap" data-mobile-label={t('ui.mobile_timing')}>
                   <div>{t('ui.created_a7e5415')} {formatDateTime(job.createdAt)}</div>
                   {job.finishedAt && <div>{t('ui.finished_04c8a88')} {formatDateTime(job.finishedAt)}</div>}
                   <div className="font-mono mt-1 text-primary">{t('ui.duration_973f43d')} {formatDuration(job.durationMs)}</div>
                 </td>
-                <td className="p-4 text-end" onClick={(e) => e.stopPropagation()} data-testid={`superadmin_system_ops_jobs-superadminjobstable-click-action-2-${index}`} data-mobile-label={t('ui.mobile_actions')}>
+                <td className="border-b border-border p-4 text-end" onClick={(e) => e.stopPropagation()} data-testid={`superadmin_system_ops_jobs-superadminjobstable-click-action-2-${index}`} data-mobile-label={t('ui.mobile_actions')}>
                   <div className="flex items-center justify-end gap-1 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100 motion-safe:transition-opacity">
                     <button  type="button" onClick={() => onInspect(job)} className="min-w-11 min-h-11 p-1.5 text-secondary hover:text-primary hover:bg-page rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" title={t('ui.a11y_inspect_job', { id: job.id })} aria-label={t('ui.a11y_inspect_job', { id: job.id })} data-testid={`superadmin_system_ops_jobs-jobs-table-inspect-btn-${index}`}>
                       <Eye size={18} strokeWidth={2}/>
