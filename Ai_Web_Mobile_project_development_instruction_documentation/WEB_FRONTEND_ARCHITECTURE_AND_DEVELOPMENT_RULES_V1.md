@@ -3909,6 +3909,13 @@ For every rendered table across all modules:
 
 To eliminate visual jitter, unanchored horizontal scrolling, and desktop action clutter, every feature data table MUST follow this canonical architecture (benchmark established in `superadmin_gyms`):
 
+0. **Zero-Column & Zero-Field Removal Invariant (Non-Destructive Evolution):**
+   - Refactoring, restyling, or modernizing an existing table MUST NEVER delete, comment out, or omit any existing table column (`<th>` and `<td>`), data field, status badge, pill, icon, action button, or metadata tier.
+   - All existing action buttons (Edit, Delete, View, Download, Resend, Refund, Toggle, etc.), dropdown menus, modal triggers, and callbacks MUST be preserved 100% with their exact `onClick` handlers and parameters.
+   - All existing filter dropdowns, search fields, date pickers, segmented tabs, and sort keys MUST be preserved.
+   - **Line Limit Safeguard:** If preserving all columns causes the component to exceed the Rule 24 limit (`<= 300 lines`), you MUST decompose the table into sub-components (`[Module]TableRow.tsx`, `[Module]TableToolbar.tsx`, `[Module]TablePagination.tsx`). **NEVER delete or omit columns or features to reduce file size.**
+   - Multi-select checkbox columns are strictly ADDITIVE (Column 1) and must never displace or replace existing data columns.
+
 1. **Exact `TABLE_COLUMN_COUNT` Synchronization:**
    Every table file must declare a constant:
    ```typescript

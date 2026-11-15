@@ -654,6 +654,8 @@ The table filter toolbar must maintain consistent visual rhythm, clear spacing, 
 
 ### Table Accessibility and Interaction Rules
 
+- **Zero-Column & Zero-Field Removal Invariant (Non-Destructive Evolution):** Refactoring or restyling a table must NEVER remove, delete, hide, or truncate any existing table column, data field, status badge, action button, or filter control to fit the UI or avoid scroll. All existing features, columns, and interactions must be preserved 100%. If component length exceeds limits, decompose into sub-components (`TableRow`, `TableToolbar`, `TablePagination`) rather than omitting columns or features.
+- Multi-select checkboxes or batch action columns are strictly additive (Column 1) and must not displace existing columns.
 - Tables must preserve semantic HTML structure: `table`, `thead`, `tbody`, `th`, `td`.
 - Sortable headers must expose current sorting state through accessible labels and `aria-sort`.
 - Row-click navigation must not prevent keyboard users from reaching inline actions.
