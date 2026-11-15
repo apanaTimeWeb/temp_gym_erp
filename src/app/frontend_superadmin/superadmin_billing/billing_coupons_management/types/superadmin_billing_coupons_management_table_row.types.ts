@@ -7,4 +7,6 @@ export interface SuperadminBillingCouponsTableRowProps {
     onEdit: (coupon: Coupon) => void;
     onDelete: (id: string) => void;
     onRestore: (id: string) => void;
+    isSelected?: boolean;
+    onToggleSelect?: (id: string) => void;
 }

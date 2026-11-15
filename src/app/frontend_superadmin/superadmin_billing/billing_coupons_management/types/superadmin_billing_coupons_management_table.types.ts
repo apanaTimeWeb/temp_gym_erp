@@ -8,4 +8,7 @@ export interface SuperadminBillingCouponsTableProps {
     onDelete: (id: string) => void;
     onRestore: (id: string) => void;
     onCreateClick: () => void;
+    selectedCouponIds?: Set<string>;
+    onToggleSelectCoupon?: (id: string) => void;
+    onToggleSelectAllCoupons?: () => void;
 }

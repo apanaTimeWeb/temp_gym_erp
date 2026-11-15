@@ -5,6 +5,7 @@
 import { Trash2, RefreshCw, MessageCircle, Edit2, ToggleLeft, ToggleRight, History } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
+import CopyButton from '@/components/ui/CopyButton';
 import { useConfirm } from '@/components/ui/Feedback/ConfirmProvider';
 
 import SuperadminBillingCouponsStatusBadge from '@/app/frontend_superadmin/superadmin_billing/billing_coupons_management/components/coupons_management_status_badge/SuperadminBillingCouponsManagementStatusBadge';
@@ -20,7 +21,7 @@ import type { Coupon } from '@/app/frontend_superadmin/superadmin_billing/billin
 import type { MouseEvent } from 'react';
 
 /** @description Renders one coupon row with navigation-safe inline actions. @dependencies Receives one feature-owned coupon record and mutation callbacks. @edge-case Edit/delete/toggle actions stop row propagation so row navigation is not triggered accidentally. */
-export default function SuperadminBillingCouponsManagementTableRow({ coupon, onToggleStatus, onEdit, onDelete, onRestore }: SuperadminBillingCouponsTableRowProps) {
+export default function SuperadminBillingCouponsManagementTableRow({ coupon, onToggleStatus, onEdit, onDelete, onRestore, isSelected = false, onToggleSelect }: SuperadminBillingCouponsTableRowProps) {
   const t = useTranslations('superadmin_coupons');
   const locale = useLocale();
 
@@ -56,21 +57,39 @@ export default function SuperadminBillingCouponsManagementTableRow({ coupon, onT
         });
         window.open(SUPERADMIN_BILLING_COUPONS_MANAGEMENT_EXTERNAL.WHATSAPP_SHARE(waText), '_blank', 'noopener,noreferrer');
     };
-    return (<tr tabIndex={0} aria-label={t('ui.edit_coupon_aria', { code: cpn.code })} className={`hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ${cpn.isDeleted ? 'opacity-50 grayscale' : ''}`} onClick={() => { if (!cpn.isDeleted)
+    return (<tr tabIndex={0} aria-label={t('ui.edit_coupon_aria', { code: cpn.code })} className={`hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ${cpn.isDeleted ? 'opacity-50 grayscale' : ''} ${isSelected ? 'bg-primary-subtle/50' : ''}`} onClick={() => { if (!cpn.isDeleted)
         onEdit(cpn); }} onKeyDown={(event) => { if (event.target !== event.currentTarget) return; if (!cpn.isDeleted && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); onEdit(cpn); } }} data-testid={`superadmin_coupons-table-row-${cpn.id}`}>
-      <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-primary tracking-wide">
-        {cpn.code}
-        {cpn.isDeleted && <span className="ms-2 text-xs bg-danger-bg text-danger px-2 py-0.5 rounded-full">{t('ui.deleted_63c2867f')}</span>}
+      <td className="sticky start-0 z-10 w-12 bg-card group-hover:bg-surface-hover border-b border-border px-4 py-3 text-center transition-colors">
+        <input
+          type="checkbox"
+          aria-label={`Select coupon ${cpn.code}`}
+          checked={isSelected}
+          onChange={(e) => {
+            e.stopPropagation();
+            onToggleSelect?.(cpn.id);
+          }}
+          onClick={(e) => e.stopPropagation()}
+          className="h-4 w-4 rounded border-border text-primary accent-primary cursor-pointer focus:ring-2 focus:ring-primary"
+          data-testid={`superadmin_coupons-select-row-${cpn.id}`}
+        />
       </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-secondary">
+      <td className="sticky start-12 z-10 bg-card group-hover:bg-surface-hover border-b border-e border-border px-6 py-4 whitespace-nowrap text-sm font-bold text-primary tracking-wide transition-colors">
+        <div className="flex items-center gap-2">
+          <span>{cpn.code}</span>
+          <CopyButton value={cpn.code} label={`Copy coupon code ${cpn.code}`} />
+          {cpn.isDeleted && <span className="ms-2 text-xs bg-danger-bg text-danger px-2 py-0.5 rounded-full">{t('ui.deleted_63c2867f')}</span>}
+        </div>
+      </td>
+      <td className="border-b border-border px-6 py-4 whitespace-nowrap text-sm text-secondary">
         {cpn.discountType === 'PERCENTAGE'
             ? <span className="font-semibold text-success">{cpn.discountValue}{t('ui.off_22958f9a')}</span>
             : <span className="font-semibold text-success">{SuperadminBillingCouponsFormatCurrency(cpn.discountValue, cpn.currency || 'INR', locale)} {t('ui.off_88559a0c')}</span>}
       </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-secondary">{cpn.currentUses} {t('ui.text_6666cd76')}{cpn.maxUses}</td>
-      <td className="px-6 py-4 whitespace-nowrap"><SuperadminBillingCouponsStatusBadge status={coupon.status}/></td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-secondary">{formatSuperadminBillingCouponsDisplayDate(cpn.expiryDate, locale)}</td>
-      <td className="px-6 py-4 whitespace-nowrap text-end flex items-center justify-end gap-2">
+      <td className="border-b border-border px-6 py-4 whitespace-nowrap text-sm text-secondary">{cpn.currentUses} {t('ui.text_6666cd76')}{cpn.maxUses}</td>
+      <td className="border-b border-border px-6 py-4 whitespace-nowrap"><SuperadminBillingCouponsStatusBadge status={coupon.status}/></td>
+      <td className="border-b border-border px-6 py-4 whitespace-nowrap text-sm text-secondary">{formatSuperadminBillingCouponsDisplayDate(cpn.expiryDate, locale)}</td>
+      <td className="border-b border-border px-6 py-4 whitespace-nowrap text-end">
+        <div className="flex items-center justify-end gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100 motion-safe:transition-opacity">
         {cpn.isDeleted ? (<button type="button" title={t('ui.restore_coupon_01ab5a58')} aria-label={t('ui.restore_coupon_01ab5a58')} onClick={(e) => { e.stopPropagation(); onRestore(cpn.id); }} className="inline-flex min-h-11 min-w-11 items-center justify-center text-secondary hover:text-success motion-safe:transition-colors p-1.5 bg-input hover:bg-success-bg rounded-md border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="superadmin_coupons-superadmin-coupons-table-row-table-row-restore-coupon">
             <RefreshCw size={18}/>
           </button>) : (<>
@@ -105,7 +124,9 @@ export default function SuperadminBillingCouponsManagementTableRow({ coupon, onT
               <Trash2 size={18}/>
             </button>
           </>)}
+        </div>
       </td>
+    </tr>);
     </tr>);
 }
 
