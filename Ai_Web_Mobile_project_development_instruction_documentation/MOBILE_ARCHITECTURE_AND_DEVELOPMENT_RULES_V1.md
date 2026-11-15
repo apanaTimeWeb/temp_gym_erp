@@ -2086,6 +2086,12 @@ Cross-reference: Rule 60 (cache invalidation), Rule 7C (query key registry).
 
 ## Rule 8 — Lists & Rendering Performance
 
+### Rule 8.0 — Strict Zero-Field & Zero-Feature Removal Invariant on Mobile (Parity Protection)
+- **ZERO DATA TRUNCATION CONTRACT:** When translating desktop web tables or backend API models into mobile screens, you MUST NEVER delete, comment out, or omit any data field, status badge, metadata tier, or action button solely because the mobile viewport is compact (360pt–430pt).
+- **Full Data Parity via Card-Stack Layout:** Every data field present in the backend entity model must be displayed either in the 2-column key-value card grid or inside an expandable "View Details" drawer/sheet. Silently omitting fields is STRICTLY FORBIDDEN.
+- **Full Action Parity:** All actions (Edit, Delete, Download, Resend, Refund, Toggle, Status Change) must remain accessible on mobile, either directly on the card or through a context bottom sheet (`MoreVertical` menu).
+- **Component Line Ceilings & Sub-Component Extraction (Rule 24):** If preserving all fields and actions causes the list component to exceed the 300-line ceiling, you MUST decompose the screen into sub-components (`[Module]CardItem.tsx`, `[Module]FilterBar.tsx`, `[Module]BatchActionBar.tsx`, `[Module]FilterBottomSheet.tsx`). **NEVER delete fields or features to fit line limits.**
+
 ### Rule 8A — Virtualization Threshold & List Performance (> 50 Items)
 - Any list rendering more than ~20 items MUST use a virtualization-aware list component.
 - For collections with potential **> 50 items**, Shopify's `@shopify/flash-list` (or optimized `FlatList` with `windowSize={5}`, `initialNumToRender={10}`, and `removeClippedSubviews={true}`) is **MANDATORY**.
@@ -2104,6 +2110,38 @@ const debouncedSearch = useDebounce(rawSearchQuery, 300);
 // TanStack Query consumes the debounced value only
 const { data, isPending } = useManagerMembersList({ search: debouncedSearch, page: 1 });
 ```
+
+### Rule 8C — Mobile Entity Directory & Card-Stack Architecture (Canonical Implementation)
+- Every browsable entity collection (Gyms, Members, Invoices, Staff, Coaching Sessions, Leads) MUST implement the **Mobile Card-Stack Table Pattern** using `@shopify/flash-list` or optimized `FlatList`:
+  - **Card Shell:** `backgroundColor: tokens.color.card`, `borderRadius: tokens.radius.lg`, `borderWidth: 1`, `borderColor: tokens.color.border`, `padding: 16`, `marginBottom: 12`.
+  - **Two-Tier Primary Identification:** Primary entity name in `heading-sm` (bold) + Subtitle metadata tier (monospace ID with `<CopyToClipboardButton />`, phone/email in `tokens.color.muted`).
+  - **Top-Right Semantic Status Badge:** Status badge positioned top-right with semantic color tokens (`status-success`, `status-warning`, `status-danger`, `status-info`).
+  - **2-Column Key-Value Grid for Secondary Fields:** Display secondary metrics (Plan, MRR, Expiry, Check-in) in a structured 2-column grid. Null/undefined fields MUST use Rule 38 en-dash `—` fallback.
+  - **Navigation Cue:** Tappable cards display `lucide-react-native` `ChevronRight` on the trailing edge.
+
+### Rule 8D — Mobile Multi-Select Checkbox Protocol & Floating Batch Action Bar
+- When a mobile list supports bulk actions or member/gym comparisons:
+  - **Selection Mode Trigger:** Tap "Select" / "Done" in the navigation header, or long-press on any card (with medium haptic feedback).
+  - **Card Selection Checkbox:** Render a 24pt circular checkbox on the left of each card in selection mode.
+  - **Selection Tap Isolation:** Tapping a card in selection mode MUST toggle the item in `selectedIds` and MUST NOT trigger drilldown navigation.
+  - **Selected Card Visual Tint:** Selected card receives `borderColor: tokens.color.primary`, `borderWidth: 1.5`, and `backgroundColor: tokens.color.surfacePressed`.
+  - **Floating Batch Action Bar:** When `selectedIds.length > 0`, render a floating action card pinned above the bottom safe area (`position: "absolute"`, `bottom: insets.bottom + 16`, `left: 16`, `right: 16`):
+    - Displays `[N Selected]` badge and "Deselect All" button.
+    - Action buttons (Bulk Status Change, Delete, Export, Message) paired with `ConfirmationBottomSheet` (Rule 31 double verification).
+
+### Rule 8E — Mobile Filter Toolbar, Chip Carousel & Filter Bottom Sheet Contract
+- **Search Box Geometry:** Height 44pt (iOS) / 48pt (Android), `backgroundColor: tokens.color.input`, `borderRadius: tokens.radius.md`, left `Search` icon, right `X` clear button when query exists. Must debounce query updates by 300ms–500ms (Rule 8B).
+- **Horizontal Filter Chip Carousel:** Rendered beneath the search bar with `ScrollView horizontal showsHorizontalScrollIndicator={false}`:
+  - Active chip: `backgroundColor: tokens.color.primary`, text `tokens.color.onPrimary` (weight: 600).
+  - Inactive chip: `backgroundColor: tokens.color.card`, `borderColor: tokens.color.border`, text `tokens.color.muted`.
+- **Filter Bottom Sheet Trigger:** Provide a "Filters" button with active count badge (e.g. `Filters (2)`) that presents a `@gorhom/bottom-sheet` (snap point `["50%"]`) containing multi-criteria filters and an explicit "Clear All" reset button.
+
+### Rule 8F — Infinite Pagination, Result Summary Invariant & Pull-to-Refresh
+- **List Footer Result Summary:** List footer MUST render a human-readable localized result summary:
+  `Showing ${start}–${end} of ${total} records`
+  (Computed from Rule 33 `PaginationMeta` and formatted with `new Intl.NumberFormat(locale).format()`).
+- **Endless Pagination:** Virtualized list must use `onEndReachedThreshold={0.3}` with an `<ActivityIndicator color={tokens.color.primary} />` in `ListFooterComponent` while fetching next page.
+- **Pull-to-Refresh:** Pull-to-refresh (`RefreshControl`) is MANDATORY on all browsable entity lists (Rule 10B).
 
 ## Rule 9 — Images & Media Assets
 
@@ -5173,6 +5211,7 @@ and MUST NOT claim that a ZIP was generated.
 | **Gate 12** | Multi-Tenancy Enforced | Verify `x-tenant-id` derived from trusted session context, never from route params or client payload | **STOP.** Cross-tenant data vulnerability |
 | **Gate 13** | Complete Async States | Verify loading skeletons (`[Feature]Skeleton.tsx`), empty states (`[Feature]EmptyState.tsx`), and error fallbacks implemented | **STOP.** Blank screen on async fetch |
 | **Gate 14** | Consolidated Integration Guide & Re-Audit Included | `INTEGRATION_GUIDE.md` (consolidating changelog, navigation route registry, host integration steps, and verification commands), `RE_AUDIT_CHECKLIST_RESULT.md`, and Maestro E2E test suite present inside ZIP root | **STOP.** Missing deliverable = REJECTED DELIVERY |
+| **Gate 15** | Mobile Directory & Zero-Drop Parity | Verify all entity collections implement card-stack/table parity, zero dropped fields from backend model, search debounce, filter sheet, and batch selection isolation | **STOP.** Truncated fields or missing batch parity = REJECTED DELIVERY |
 
 > ⛔ **If ANY source-level code gate fails: STATUS = `REPAIR_REQUIRED`. Fix the source code. Once all source-level code fixes are written, deliver the output per the Artifact Delivery Resolution Rule with deferred/out-of-scope items explicitly documented.**
 >

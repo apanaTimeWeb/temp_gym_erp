@@ -598,6 +598,135 @@ To maintain the Luxury Premium Gold aesthetic across all mobile screens, navigat
 
 ---
 
+## 5D. Enterprise Mobile Data Lists, Card-Stack Tables, and Directory UX Contract
+
+On mobile viewports (360pt–430pt width), traditional wide desktop tables (`<table>`, `<th>`, `<td>`) cannot display multi-column analytical data without severe clipping or cognitive fatigue. Mobile ERP directories (Gyms, Members, Invoices, Staff, Coaching Sessions, Leads) MUST implement this enterprise mobile list standard to provide parity with desktop tables while respecting touch ergonomic guidelines.
+
+### 5D.1 Mobile Card-Stack Directory Pattern (The Default for Entity Records)
+The canonical pattern for user-browsable collections (e.g. Members Directory, Gyms Directory, Invoice History) is an accessible elevated card list rendered with `@shopify/flash-list` (or optimized `FlatList`):
+
+- **Card Container Geometry & Tokens:**
+  - `backgroundColor: tokens.color.card` (`#FFFFFF` light / `#111111` dark)
+  - `borderRadius: tokens.radius.lg` (16pt rounded corners)
+  - `borderWidth: 1`, `borderColor: tokens.color.border`
+  - `padding: tokens.spacing[4]` (16pt internal padding)
+  - `marginBottom: tokens.spacing[3]` (12pt spacing between list cards)
+  - `press-scale: 0.98` with light haptic on card tap (`tokens.haptic.impactLight()`)
+- **Two-Tier Primary Identification Header:**
+  - **Primary Title:** Entity name (e.g. "Iron Fitness Club", "Rahul Sharma") in `heading-sm` (Weight: 600, `tokens.color.foreground`).
+  - **Subtitle Metadata Tier:** Monospace entity ID, plan, or phone/email in `label-sm` (`tokens.color.muted`), paired with an inline copy-to-clipboard button (`tokens.icon.sm`, `hitSlop: 8`).
+- **Top-Right Semantic Status Badge:**
+  - Status badge (e.g. `Active`, `Past Due`, `Trial`, `Pending`) positioned in the card top-right corner.
+  - Renders using semantic tokens: `status-success`, `status-warning`, `status-danger`, `status-info` (never invented colors).
+- **2-Column Key-Value Grid for Core Metrics:**
+  - Secondary metrics (e.g. Plan, MRR, Members, Expiry Date, Last Check-in) are displayed in a clean 2-column or 3-column key-value grid.
+  - **Label:** `label-uppercase` (11pt, `tokens.color.muted`, bold/uppercase).
+  - **Value:** `body-sm` (13pt, `tokens.color.foreground`, weight: 600).
+  - **En-Dash Fallback (Rule 38):** Null or missing values MUST display the canonical en-dash `—`.
+- **Trailing Navigation Chevron:**
+  - Tappable cards display `lucide-react-native` `ChevronRight` (`tokens.icon.sm`, `tokens.color.muted`) on the far right edge.
+
+```tsx
+// Canonical Mobile Card Structure
+<Pressable
+  style={[styles.card, isSelected && styles.cardSelected]}
+  onPress={handleCardPress}
+  accessibilityRole="button"
+  accessibilityLabel={`View details for ${item.name}`}
+>
+  <View style={styles.cardHeader}>
+    <View style={styles.identityContainer}>
+      <Text style={styles.primaryTitle}>{item.name}</Text>
+      <View style={styles.subtitleRow}>
+        <Text style={styles.entityId}>{item.displayId}</Text>
+        <CopyToClipboardButton value={item.displayId} />
+      </View>
+    </View>
+    <StatusBadge status={item.status} />
+  </View>
+  <View style={styles.metricsGrid}>
+    <MetricItem label="PLAN" value={item.planName ?? "—"} />
+    <MetricItem label="MRR" value={formatCurrency(item.monthlyRevenue)} />
+    <MetricItem label="MEMBERS" value={formatNumber(item.activeMembers)} />
+    <MetricItem label="LAST VISIT" value={formatDate(item.lastVisitAt) ?? "—"} />
+  </View>
+</Pressable>
+```
+
+### 5D.2 Dense Analytical & Financial Matrix Pattern (Horizontal Scroll Matrix)
+When dense multi-column accounting, ledger, shift rosters, or biometric attendance tables require visual side-by-side comparison across 6+ columns that cannot be flattened into cards:
+- **Layout Structure:** Dual-pane layout combining a fixed left column with a horizontally scrollable right pane.
+- **Frozen First Column (Entity Anchor):** Width `130pt–160pt`, fixed on the left with `backgroundColor: tokens.color.card` and `borderRightWidth: 1`, `borderColor: tokens.color.border` to eliminate visual bleed.
+- **Scrollable Columns Container:** Horizontal `ScrollView` (`showsHorizontalScrollIndicator={false}`) containing the remaining metric columns.
+- **Synchronized Vertical Scrolling:** Both the frozen column and scrollable pane scroll vertically in unison inside a single parent list or shared scroll driver.
+- **Sticky Table Header:** Header row pinned at the top (`backgroundColor: tokens.color.cardElevated`, `borderBottomWidth: 1`, `borderColor: tokens.color.border`).
+
+### 5D.3 Mobile Search Bar & Filter Chip Carousel Standard
+Search and filtering on mobile screens must follow this unified, thumb-accessible layout:
+- **Toolbar Container:**
+  - `paddingHorizontal: tokens.spacing[4]` (16pt), `paddingVertical: tokens.spacing[3]` (12pt)
+  - `backgroundColor: tokens.color.background`, `borderBottomWidth: 1`, `borderColor: tokens.color.border`
+- **Search Input Geometry:**
+  - Height: `tokens.layout.minTouchTarget` (44pt iOS / 48pt Android)
+  - `backgroundColor: tokens.color.input`, `borderRadius: tokens.radius.md`
+  - `borderWidth: 1`, `borderColor: tokens.color.border`
+  - Left Icon: `Search` (`tokens.icon.sm`, `tokens.color.muted`) positioned at `left: 12`
+  - Input Text: `body-md` (14pt, `tokens.color.foreground`), `paddingLeft: 38`, `paddingRight: 36`
+  - Trailing Clear (`X`) Button: Rendered when search input is non-empty (`tokens.icon.sm`, `tokens.color.muted`, `hitSlop: 8`) to clear the query in one tap.
+  - **Debounce Mandate (Rule 8B):** Live search inputs MUST debounce query updates by 300ms–500ms.
+- **Horizontal Filter Chips Carousel:**
+  - Rendered directly beneath search input via `ScrollView horizontal showsHorizontalScrollIndicator={false}` with `paddingTop: tokens.spacing[2.5]` (10pt).
+  - **Filter Chip Style:**
+    - Height: 34pt, `paddingHorizontal: 14`, `borderRadius: tokens.radius.full`, `marginRight: 8`
+    - **Active Chip:** `backgroundColor: tokens.color.primary`, text `tokens.color.onPrimary` (Weight: 600)
+    - **Inactive Chip:** `backgroundColor: tokens.color.card`, `borderWidth: 1`, `borderColor: tokens.color.border`, text `tokens.color.muted`
+- **"Filters" Modal Trigger with Badge Counter:**
+  - Leading or trailing filter button with `SlidersHorizontal` icon that displays active filter count badge (e.g. `Filters (2)`).
+  - Tapping opens the canonical Filter Bottom Sheet (`@gorhom/bottom-sheet` snap point `['50%']`) with clear reset and apply buttons.
+- **"Clear All" Reset Trigger:**
+  - When search or multiple filters are active, render an explicit "Clear All" text button (`color: tokens.color.danger`, `fontSize: 12`, weight: 600).
+
+### 5D.4 Mobile Multi-Select Mode & Floating Batch Action Bar
+For bulk operations (e.g. Bulk SMS/WhatsApp, Multi-Member Plan Renewal, Bulk Check-in, Batch Delete):
+- **Mode Activation:** Triggered by tapping a top-right "Select" / "Edit" button in the navigation header, or long-pressing on any list card (with medium haptic feedback).
+- **Selection Checkbox Indicator:**
+  - Animated 24pt circular checkbox appears on the left of each card.
+  - **Unselected:** `borderWidth: 1.5`, `borderColor: tokens.color.muted`, `backgroundColor: transparent`.
+  - **Selected:** `backgroundColor: tokens.color.primary`, `borderColor: tokens.color.primary`, displaying a white/dark checkmark icon.
+- **Card Highlight Tint:**
+  - Selected card receives `borderColor: tokens.color.primary`, `borderWidth: 1.5`, and `backgroundColor: tokens.color.surfacePressed`.
+- **Card Tap Isolation:** In selection mode, tapping the card toggles its selection checkbox without triggering screen navigation.
+- **Floating Batch Action Bar (Safe-Area Aware):**
+  - Rendered when `selectedCount > 0` as a floating card pinned above the bottom safe area:
+  - `position: 'absolute'`, `bottom: insets.bottom + 16`, `left: 16`, `right: 16`
+  - `backgroundColor: tokens.color.cardElevated`, `borderRadius: tokens.radius.xl`
+  - `padding: 14`, `borderWidth: 1`, `borderColor: tokens.color.border`
+  - `shadow: tokens.elevation.modal` (shadow-xl)
+  - **Contents:**
+    - Left: Selection badge pill: `<View style={styles.badge}><Text>{selectedCount} Selected</Text></View>` + "Deselect All" button.
+    - Right: Action buttons (Export, Status Update, Delete with confirmation bottom sheet).
+
+### 5D.5 Zero-Field & Zero-Feature Removal Invariant on Mobile
+- **ZERO DATA LOSS CONTRACT:** Refactoring or adapting a desktop data table or API model to mobile MUST NEVER drop, delete, or hide existing data fields, columns, badges, or metadata solely because the mobile viewport is small.
+- **Preservation Strategy:** If 6+ data points crowd the card view:
+  - Keep primary 4 metrics in the visible card grid.
+  - Place secondary/technical fields in an expandable drawer/accordion ("Show More Details") or in the tap-through detail sheet.
+  - **NEVER silently omit fields from the UI.**
+- **Action Parity:** All action buttons available on desktop (Edit, Delete, Download, Resend, Refund) must remain accessible on mobile, either directly on the card or inside an accessible Action Bottom Sheet (`MoreVertical` tap).
+
+### 5D.6 Infinite Scroll, List Footer Summary & Pull-to-Refresh
+- **List Footer Result Summary:**
+  - The list footer MUST render a human-readable localized result counter:
+    `Showing 1–25 of 143 records`
+    Formatted with `new Intl.NumberFormat(locale).format(count)`.
+- **Endless Pagination:**
+  - Use `onEndReachedThreshold={0.3}` on `FlashList` / `FlatList`.
+  - Display a centered `<ActivityIndicator size="small" color={tokens.color.primary} />` in `ListFooterComponent` while fetching next page.
+- **Pull-to-Refresh:**
+  - `refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh} tintColor={tokens.color.primary} />}` is MANDATORY on all browsable collection screens (Rule 10B).
+
+---
+
 ## 6. Touch Targets
 `min-touch-target = 44` (iOS pt) / `48` (Android dp) — every tappable element
 must meet this via minimum height/width or padding.
