@@ -822,7 +822,7 @@ src/features/frontend_{role}/{role}_{domain}/
 
 7. **NO TOAST-ONLY MOCKS:** Mobile MSW fixtures MUST be mutable in-memory arrays. Create → adds to array. Delete → removes from array. Static fixtures that never change = CRITICAL VIOLATION.
 8. **CANONICAL SUBFOLDERS & PREFIXED FILES (NO MODULE PREFIX ON FOLDERS):** Subfolders MUST use standard names (`components/`, `hooks/`, `schemas/`, `types/`, `api/`, `config/`, `mocks/`, `state/`, `tests/`, `utils/`, `_locales/`). Naming subfolders as `{module}_components/` or `{module}_hooks/` is FORBIDDEN. The Role+Module prefix MUST be placed on the **files** inside them (e.g., `TrainerMembersMemberCard.tsx`, `useTrainerMembers.ts`).
-9. **NO DROPPED FIELDS OR TRUNCATED UI (ZERO DATA LOSS INVARIANT):** When translating web data tables or complex forms to mobile, NEVER omit, delete, or hide any fields, columns, badges, or action buttons under the excuse that "mobile screen has less space". All fields must be preserved using the 2-column key-value metrics grid (Section 5D.1) or expandable drawer. All actions must be preserved via Action Bottom Sheets (Section 5D.5). Silently dropping data from web parity = CRITICAL COMPLIANCE FAILURE.
+9. **NO DROPPED FIELDS OR TRUNCATED UI (ZERO DATA LOSS INVARIANT):** When translating web data tables or complex forms to mobile, NEVER omit, delete, or hide any fields, columns, badges, or action buttons under the excuse that "mobile screen has less space". All fields must be preserved using the 2-column key-value metrics grid (Section 5D.1) or expandable drawer. All actions must be preserved via Action Bottom Sheets (Section 5D.4). Silently dropping data from web parity = CRITICAL COMPLIANCE FAILURE.
 
 ---
 
@@ -7960,7 +7960,7 @@ Before final delivery, the AI MUST literally verify:
 [ ] Extended Rule 21 — Tenant Data Export & Async Offboarding UX checked
 [ ] Extended Rule 22 — AI-Testable UI (Accessible Selectors First) checked
 [ ] Extended Rule 23 — Component-Level AI Docstrings (JSDoc) checked
-[ ] FRONTEND DELIVERY FREEZE GATE — All Gates Verified (Web 14 Gates / Mobile 15 Gates including Gate 15 Directory & Zero-Drop Parity) checked
+[ ] FRONTEND DELIVERY FREEZE GATE — All Gates Verified (Web 14 Gates / Mobile 14 Gates) checked
 [ ] DEFINITION OF DONE — All 8 Invariant Gates Verified checked
 [ ] Design §1 checked
 [ ] Design §1A checked
