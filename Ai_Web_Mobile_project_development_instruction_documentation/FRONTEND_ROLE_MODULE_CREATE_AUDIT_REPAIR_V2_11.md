@@ -11085,4 +11085,4 @@ The Boot Declaration execution order block now includes Mode D:
 
 ---
 
-# END OF VERSION 2.7 ADDENDUM
+# END OF VERSION 2.12 HARMONIZATION ADDENDUM
