@@ -532,19 +532,133 @@ Badges are small pill-shaped labels: `border-radius: var(--radius-full)`, `paddi
 - Arranged in a row of 3–5 cards at the top of dashboard/report pages
 
 ### 5b. Data Table
-- Header row: `background: var(--surface-highlight)`, UPPERCASE 12px `--text-secondary`, sortable columns show ↑↓ arrows on hover
-- Data rows: alternating subtle zebra stripe (`var(--bg-card)` / `var(--surface-zebra)`), `var(--table-row-height)` row height
-- Row hover: `background: var(--surface-hover)`, subtle highlight
-- Inline row actions (rightmost column): small icon buttons — ✏️ Edit, 🗑️ Delete — visible on hover, focus-within, and keyboard tab.
-- Pagination bar (below table): "Showing 1–25 of 143 results" + Previous / Next buttons + rows-per-page selector (10 / 25 / 50)
-- Empty state (no rows): Centered SVG illustration + "No [items] found" (16px, `--text-secondary`) + optional CTA button
+
+The enterprise data table architecture adheres to a strict canonical layout pattern (proven in `superadmin_gyms`):
+
+#### 1. Container & Shell Hierarchy
+- **Outer Card Wrapper:** `bg-page` / `bg-card`, `border border-border`, `rounded-xl`, `overflow-hidden`, `shadow-card`, `flex flex-col min-h-96`. The table, toolbar, inline error states, and pagination MUST live inside this single unified card boundary.
+- **Scrollable Viewport:** `overflow-x-auto flex-1`.
+- **Table Element:** `w-full text-start border-collapse flex-1`.
+- **Header Row (`<thead>`):** `bg-primary-subtle border-b border-border text-secondary text-sm`. Header text is UPPERCASE 12px, font-semibold, tracking-wider.
+- **Data Rows (`<tbody>`):** Alternating subtle zebra stripe (`var(--bg-card)` / `var(--surface-zebra)`), `var(--table-row-height)` (48px) standard row height.
+- **Row Hover:** `hover:bg-card focus-visible:bg-card motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset`.
+
+#### 2. Sticky First-Column Frozen Horizontal Scroll (`sticky start-0`)
+For tables with more than 5 columns or dense analytical datasets:
+- **Sticky Header (`<th>`):** `sticky start-0 z-20 w-48 bg-primary-subtle p-4 font-semibold uppercase text-xs tracking-wider`.
+- **Sticky Cell (`<td>`):** `sticky start-0 z-10 max-w-48 border-e border-border bg-card p-4 group-hover:bg-surface-hover group-focus-visible:bg-surface-hover`.
+- **Background & Boundary Invariant:** Sticky cells MUST use an opaque background (`bg-primary-subtle` for header, `bg-card` for body) and a vertical end border (`border-e border-border`). This strictly prevents content from underlying scrolled columns bleeding through or creating visual collisions.
+
+#### 3. Desktop Hover-Only vs Mobile Persistent Actions (Rule 64)
+- **Action Cell Container:**
+  ```tsx
+  <div className="flex items-center justify-end gap-1 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100 motion-safe:transition-opacity">
+    {/* Action buttons */}
+  </div>
+  ```
+- **Desktop (`lg+`):** Action icon buttons (Edit, Delete, Impersonate, Message, Download) are concealed by default to minimize visual clutter, smoothly fading in on row hover or keyboard focus (`focus-within`).
+- **Mobile & Touch (`<lg`):** Actions remain 100% visible (`opacity-100`) so touch users on tablets and phones can interact immediately without hover emulation.
+
+#### 4. Two-Tier Data Hierarchy & Inline `CopyButton` Pattern
+- **Primary Cells:** Render primary entity name/title in bold on line 1 (`text-sm font-semibold text-primary truncate`, with `title={val}`).
+- **Secondary Metadata / Technical IDs:** Render on line 2 in smaller, subdued text (`text-xs text-disabled mt-1 flex items-center gap-1 font-mono truncate`).
+- **Inline One-Click Copy:** Technical identifiers (UUIDs, gym IDs, invoice numbers, coupon codes, API tokens) MUST include an inline `<CopyButton value={id} label={`Copy ID ${id}`} />`.
+- **PII & Financial Protection:** All sensitive customer data (email addresses, phone numbers, tax IDs) in list views MUST be masked via `maskSensitiveData(val, 'email')`.
+
+#### 5. Accessible Interactive Column Sorting
+- **Header Markup:** Sortable `<th>` elements must expose `aria-sort="ascending" | "descending" | "none"`.
+- **Interactive Button:** The sort trigger button must span the header cell with an accessible label describing the column and upcoming sort direction: `aria-label={t('ui.sort_column_aria', { order: nextOrder })}`.
+- **Standardized Sort Icon:** Render `<TableSortIcon col="field" active={sortBy === 'field'} />` alongside the header label.
+- **Alignment Standards:**
+  - Primary text / entity names: `text-start`
+  - Status badges / pills: `text-center`
+  - Numbers, counts, timestamps, and currency: `text-end`
+
+#### 6. Keyboard Accessible Row Navigation & `stopPropagation` Invariant
+- **Row Focus:** Rows have `tabIndex={0}` and keyboard listeners (`onKeyDown` handling `Enter` and `Space`) to navigate to details or trigger primary inspection.
+- **Event Isolation:** Every interactive control inside the row (Action buttons, Links, `<CopyButton />`) MUST call `event.stopPropagation()` to prevent accidentally triggering the parent row's navigation click.
+
+#### 7. Synchronized Skeletons, Errors & Empty States (Rule 68)
+- **Exact Column Synchronization:** Define `const TABLE_COLUMN_COUNT = N;`. The number of `<th>` columns, `<td>` cells, skeleton columns, and the empty state `<td colSpan={TABLE_COLUMN_COUNT}>` MUST match exactly.
+- **Integrated Skeleton:** Loading skeleton must render directly inside the table shell, matching the exact column count, widths, and alignments with pulse animation (`bg-skeleton-base motion-safe:animate-pulse rounded`).
+- **In-Card Error State:** If the query fails, render a dedicated in-card error box with a localized retry button without unmounting the outer card.
+- **Footer Pagination:** Pagination controls ([Pagination.tsx](file:///c:/Users/satya/Desktop/PojectsToWork/temp_gym_erp/src/components/ui/Pagination.tsx)) reside inside the bottom card boundary, displaying page indices, total counts, and page change triggers.
+
+#### 8. Multi-Select Checkbox Column & Batch Action Bar
+For tables that support bulk actions (e.g. Bulk Delete, Bulk Status Change, Bulk Export, Multi-Member Comparison):
+- **Checkbox Header Column:** `<th className="w-12 px-4 py-3 text-center">` containing a "Select All" checkbox.
+  - Accessibility: `aria-label="Select all rows"`, with `checked={isAllSelected}` and `indeterminate={isIndeterminate}` states.
+- **Checkbox Row Cell:** `<td className="w-12 px-4 py-3 text-center">` containing `<input type="checkbox" className="h-4 w-4 rounded border-border text-primary accent-primary focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-card cursor-pointer" ... />`.
+- **Event Isolation:** The checkbox `<input>` or its label MUST execute `e.stopPropagation()` so toggling selection never triggers row click navigation.
+- **Selected Row Highlight Tint:** When a row is selected (`isSelected = true`), the `<tr>` MUST receive an active visual tint: `bg-primary-subtle border-l-4 border-l-primary` (or `bg-surface-hover`). This provides clear visual confirmation of selection across the entire table.
+- **Batch Action Floating / Top Bar:**
+  - Appears whenever `selectedIds.length > 0`:
+    ```tsx
+    <div className="p-3 bg-primary/10 border-b border-primary/20 flex flex-wrap items-center justify-between gap-3 motion-safe:animate-fadeIn">
+      <div className="flex items-center gap-2">
+        <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary text-on-primary">
+          {selectedCount} Selected
+        </span>
+        <button type="button" onClick={handleClearSelection} className="text-xs text-secondary hover:text-primary font-medium underline">
+          Clear Selection
+        </button>
+      </div>
+      <div className="flex items-center gap-2">
+        {/* Bulk Action Buttons (e.g. Export, Status Change, Delete) */}
+      </div>
+    </div>
+    ```
+
+#### 9. Filter Toolbar, Search Box & Control Spacing Standard
+The table filter toolbar must maintain consistent visual rhythm, clear spacing, and minimum touch target sizes:
+- **Toolbar Container:** `p-4 border-b border-border bg-surface-highlight/30 flex flex-wrap items-center justify-between gap-3`.
+- **Search Box Geometry:**
+  - Container: `relative min-w-[240px] sm:w-72`.
+  - Leading Icon: `Search` icon positioned `absolute left-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none w-4 h-4`.
+  - Input Field: `w-full pl-9 pr-8 py-2 bg-input border border-border rounded-xl text-xs sm:text-sm text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary min-h-10`.
+  - Trailing Clear (`X`) Button: When `searchQuery` has a value, render `absolute right-2.5 top-1/2 -translate-y-1/2 text-secondary hover:text-primary p-1 rounded-md` with `aria-label="Clear search"`.
+- **Dropdown Filter Spacing & Styling:**
+  - Grouping: `flex items-center gap-2.5 flex-wrap`.
+  - Select Elements: `min-h-10 rounded-xl border border-border bg-input px-3 py-1.5 text-xs font-medium text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary`.
+  - Spacing between filters: Maintain `gap-2.5` to `gap-3`. Never crowd controls edge-to-edge.
+- **Quick Status Filter Tabs / Segmented Controls:**
+  - Container: `bg-input rounded-xl p-1 gap-1 flex items-center`.
+  - Tab Button: `px-3 py-1.5 rounded-lg text-xs font-semibold motion-safe:transition-all`.
+  - Active Tab: `bg-card text-primary shadow-sm font-bold`.
+  - Inactive Tab: `text-secondary hover:text-primary`.
+- **Clear All Filters Trigger:** When active filters exist, render a distinct `text-xs text-secondary hover:text-danger font-semibold px-2.5 py-1.5 rounded-lg border border-border hover:bg-input transition-colors` button.
+- **Primary Page Action (Right-Aligned CTA):** E.g. "Add New", "Create Invoice", "Onboard Gym":
+  - Style: `min-h-10 inline-flex items-center justify-center gap-2 px-4 py-2 bg-primary text-on-primary text-xs sm:text-sm font-bold rounded-xl hover:bg-primary-hover shadow-sm motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:active:scale-95`.
+
+#### 10. In-Card Pagination Bar & Result Summary Invariant
+- **Pinned Container:** Rendered inside the card at the bottom with `border-t border-border px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-card/60`.
+- **Result Summary Text:** Must always display a human-readable range with localized digits:
+  ```text
+  Showing 1–25 of 143 results (or localized: "Showing 1–25 of 143 gyms")
+  ```
+  Computed as:
+  `start = total === 0 ? 0 : (currentPage - 1) * pageSize + 1;`
+  `end = Math.min(currentPage * pageSize, total);`
+  Formatted with `new Intl.NumberFormat(locale).format(value)`.
+- **Page Size Selector:** Options for `10 / 25 / 50 / 100` records per page. Changing page size resets current page to 1.
+- **URL Synchronization:** Page changes (`?page=2&pageSize=25`) MUST sync to browser search params with `{ scroll: false }` to support bookmarks, deep-linking, and browser back/forward buttons without jumping to the top of the viewport.
+
+#### 11. Scrollable Viewport & Sticky Geometry Standards
+- **Horizontal Scrolling:** The table container must have `overflow-x-auto flex-1`.
+  - When scrolling horizontally, the sticky start column (`sticky start-0 z-10 border-e border-border`) stays locked in position.
+  - Sticky header has `sticky start-0 z-20 bg-primary-subtle`.
+- **Vertical Scrolling (Fixed-Height Tables):**
+  - If a dense analytical table requires vertical scrolling within a bounded viewport, apply `max-h-[calc(100vh-280px)] overflow-y-auto`.
+  - Table headers must implement `sticky top-0 z-20 bg-header border-b border-border shadow-sm` to stay pinned during vertical scrolling.
+  - The intersection cell (top-left header) requires `sticky top-0 start-0 z-30` to stay above both vertically and horizontally scrolled cells.
 
 ### Table Accessibility and Interaction Rules
 
 - Tables must preserve semantic HTML structure: `table`, `thead`, `tbody`, `th`, `td`.
-- Sortable headers must expose current sorting state through accessible labels.
+- Sortable headers must expose current sorting state through accessible labels and `aria-sort`.
 - Row-click navigation must not prevent keyboard users from reaching inline actions.
 - Row actions must be keyboard accessible and visible on `focus-within`. On touch/mobile use always-visible actions or an accessible overflow menu.
+- Action buttons inside clickable rows MUST call `e.stopPropagation()`.
 - Never hide essential financial, status, or permission information solely because of viewport size.
 
 ### Responsive Table Decision Matrix

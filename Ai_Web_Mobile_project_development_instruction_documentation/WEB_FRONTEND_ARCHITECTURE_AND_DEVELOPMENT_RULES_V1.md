@@ -2489,7 +2489,7 @@ None
 - [ ] Rule 48: Empty state component present per entity list
 - [ ] Rule 55: No `key={index}` on reorderable/filterable lists
 - [ ] Rule 64: Mobile-first — `flex-col sm:flex-row`, responsive breakpoints verified (320px, 375px, 768px, 1024px, 1440px)
-- [ ] Rule 68: Table column count matches header count exactly
+- [ ] Rule 68: Enterprise Table Architecture — sticky first column on horizontal scroll, TABLE_COLUMN_COUNT synchronization across thead/tbody/skeletons/colSpan, hover-only desktop action bar (Rule 64), inline CopyButton for IDs, and e.stopPropagation() on row child buttons
 - [ ] Rule 71: Double verification — destructive actions use `useConfirm()` modal
 - [ ] Rule 72: API function naming follows verb contract
 - [ ] Rule 73: `import type` used for all type-only imports
@@ -3895,15 +3895,90 @@ Fixture completeness must never be achieved by adding hardcoded fallback data to
 
 The exact number of records is determined by the feature's pagination and UI requirements. Do not artificially limit a paginated feature to one or two records when the UI requires multiple pages to be testable.
 
-### Table Completeness Rule
+### Table Completeness & Enterprise Data Table Standard (Rule 68)
 
-For every rendered table:
+For every rendered table across all modules:
 1. Every visible header MUST correspond to a real response field.
 2. Every row cell MUST receive its value from the API response or an explicitly documented derived value.
 3. No table cell may depend on an undocumented mock-only field.
 4. No required cell may silently render `undefined` because the MSW fixture omitted the field.
 5. Nullable fields MUST use the canonical nullable display fallback (Rule 78 `displayValue()`).
-6. Header count, cell count, and `colSpan` MUST remain consistent (Rule 68).
+6. Header count, cell count, skeleton columns, and empty state `colSpan` MUST remain strictly consistent via `TABLE_COLUMN_COUNT`.
+
+#### Rule 68 Specification — Canonical Data Table Architecture
+
+To eliminate visual jitter, unanchored horizontal scrolling, and desktop action clutter, every feature data table MUST follow this canonical architecture (benchmark established in `superadmin_gyms`):
+
+1. **Exact `TABLE_COLUMN_COUNT` Synchronization:**
+   Every table file must declare a constant:
+   ```typescript
+   // Rule 68: TABLE_COLUMN_COUNT must match <th> count AND colSpan on empty state
+   const TABLE_COLUMN_COUNT = 8; // e.g. Name | Owner | Plan | Members | MRR | Status | Last Login | Actions
+   ```
+   - The count of `<th>` in `<thead>` MUST equal `TABLE_COLUMN_COUNT`.
+   - The count of `<td>` in `<tbody>` MUST equal `TABLE_COLUMN_COUNT`.
+   - The empty state cell MUST explicitly declare `colSpan={TABLE_COLUMN_COUNT}`.
+   - The loading skeleton table rows MUST render exactly `TABLE_COLUMN_COUNT` columns matching the widths and text alignments of the table.
+
+2. **Sticky First-Column Frozen Horizontal Scroll (`sticky start-0`):**
+   - When a table has more than 5 columns or requires horizontal scrolling (`overflow-x-auto`), the primary identification column (Name / ID) MUST remain frozen at `start-0` so users maintain entity context while scrolling through dense analytical data.
+   - **Header Cell:** `className="sticky start-0 z-20 w-48 bg-primary-subtle p-4 font-semibold uppercase text-xs tracking-wider"`
+   - **Body Cell:** `className="sticky start-0 z-10 max-w-48 border-e border-border bg-card p-4 group-hover:bg-surface-hover group-focus-visible:bg-surface-hover"`
+   - **Opaque Background Invariant:** Sticky cells MUST define an opaque background token (`bg-primary-subtle` for header, `bg-card` for body) and a vertical border (`border-e border-border`). Transparent backgrounds on sticky cells cause scrolled content to bleed through and produce visual collisions.
+
+3. **Desktop Hover-Only vs Mobile Persistent Actions (Rule 64):**
+   - Action cells (Edit, Delete, Suspend, Message, Download) MUST be styled as:
+     ```tsx
+     <div className="flex items-center justify-end gap-1 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100 motion-safe:transition-opacity">
+       {/* Action buttons */}
+     </div>
+     ```
+   - On desktop (`lg+`), the row actions are concealed by default to eliminate visual noise across dozens of rows, smoothly fading in on row hover or keyboard focus (`focus-within`).
+   - On mobile/touch devices (`<lg`), actions remain 100% visible (`opacity-100`) so touch users on tablets and phones can interact immediately without hover emulation.
+
+4. **Two-Tier Data Hierarchy & Inline `CopyButton`:**
+   - Entity names appear on line 1 in bold (`text-sm font-semibold text-primary truncate`, with `title={val}`).
+   - Technical IDs (UUIDs, gym IDs, invoice numbers, promo codes) appear on line 2 in monospace font with an inline `<CopyButton value={id} label={`Copy ID ${id}`} />`.
+   - Sensitive customer data (emails, phone numbers) must be masked in list views (`maskSensitiveData(val, 'email')`).
+
+5. **Keyboard Row Navigation & `stopPropagation` Invariant:**
+   - Clickable table rows (`<tr>`) must have `tabIndex={0}`, `cursor-pointer`, focus ring styling (`focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset`), and an `onKeyDown` handler listening for `Enter` and `Space`.
+   - Every clickable child element inside the row (Buttons, Links, `<CopyButton />`) MUST call `event.stopPropagation()` to prevent accidentally triggering the parent row's navigation click.
+
+6. **Interactive Column Sorting & Accessibility:**
+   - Sortable headers must define `aria-sort="ascending" | "descending" | "none"`.
+   - Standardized sort icon component: `<TableSortIcon col="colName" active={sortBy === 'colName'} />`.
+   - Clear aria-labels on sort buttons describing the upcoming direction (e.g., `aria-label="Sort by monthly revenue, currently descending"`).
+   - Standard text alignments: Names/Text (`text-start`), Status Badges (`text-center`), Numbers/Currency/Dates/Actions (`text-end`).
+
+7. **Component Line Count Rule Compliance (Rule 24):**
+   - The table component must remain `<= 300 lines`. If table markup, toolbar, modals, and row handlers exceed 300 lines, extract sub-components (e.g. `[Module]TableRow.tsx`, `[Module]TableToolbar.tsx`, `[Module]TableSortIcon.tsx`, `[Module]TableEmptyState.tsx`, `[Module]TableFilterBar.tsx`).
+
+8. **Multi-Select Checkbox Column & Batch Action Protocol:**
+   - When a table supports batch actions or comparisons, the checkbox column is column 1 and MUST be included in `TABLE_COLUMN_COUNT`.
+   - Header cell: `<th className="w-12 px-4 py-3 text-center">` with "Select All" checkbox handling `checked` and `indeterminate` states.
+   - Row cell: `<td className="w-12 px-4 py-3 text-center">` with `<input type="checkbox" className="h-4 w-4 rounded border-border text-primary accent-primary focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-card cursor-pointer" />`.
+   - The checkbox element and label MUST call `e.stopPropagation()` to avoid activating row click navigation.
+   - Selected rows MUST receive a distinct visual tint: `bg-primary-subtle border-l-4 border-l-primary` (or `bg-surface-hover`).
+   - Floating / Top Batch Action bar MUST render when `selectedIds.length > 0`, showing the active selection counter badge and batch action buttons (Delete, Status Update, Export) with `useConfirm()` double-verification.
+
+9. **Filter Toolbar Layout & Interactive Control Spacing Contract:**
+   - Container: `p-4 border-b border-border bg-surface-highlight/30 flex flex-wrap items-center justify-between gap-3`.
+   - Search box: `relative min-w-[240px] sm:w-72`, with left search icon (`absolute left-3 top-1/2 -translate-y-1/2`), clear (`X`) button (`absolute right-2.5 top-1/2 -translate-y-1/2`), and `min-h-10` touch target.
+   - Filter dropdowns: Grouped in `flex items-center gap-2.5 flex-wrap`, with `min-h-10 rounded-xl border border-border bg-input px-3 py-1.5 text-xs font-medium text-primary`. Never crowd controls edge-to-edge; maintain consistent `gap-2.5` to `gap-3`.
+   - Quick Filter Segmented Tabs: `bg-input rounded-xl p-1 gap-1 flex items-center`, with active tab `bg-card text-primary shadow-sm font-bold` and inactive `text-secondary hover:text-primary`.
+   - Active Filter Reset: When active filters exist, render an explicit "Clear All" button (`text-xs text-secondary hover:text-danger font-semibold px-2.5 py-1.5 rounded-lg border border-border hover:bg-input`).
+   - Primary Action Button: Right-aligned CTA (e.g. "Onboard New Gym", "Add Member") styled with `min-h-10 px-4 py-2 bg-primary text-on-primary rounded-xl text-xs sm:text-sm font-bold hover:bg-primary-hover shadow-sm inline-flex items-center gap-2`.
+
+10. **In-Card Pagination & Result Summary Invariant:**
+    - Pagination container is pinned inside the card footer: `border-t border-border px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-card/60`.
+    - Mandatory result summary text with localized numbers: `Showing ${start}–${end} of ${total} records` (e.g. `start = total === 0 ? 0 : (page - 1) * pageSize + 1`, `end = Math.min(page * pageSize, total)`).
+    - Page changes and page size adjustments (`10 / 25 / 50 / 100`) MUST synchronize to URL search parameters (`?page=2&pageSize=25`) with `{ scroll: false }` to enable deep linking and browser history navigation without viewport jump.
+
+11. **Scrollable Viewport & Sticky Geometry Standards:**
+    - Horizontal scroll container: `overflow-x-auto flex-1` with smooth scrolling.
+    - Pinned start column (`sticky start-0 z-10 border-e border-border`) with solid background tokens to eliminate text bleed-through.
+    - For vertical scrolling in fixed-height analytical tables, apply `max-h-[calc(100vh-280px)] overflow-y-auto` with sticky headers (`sticky top-0 z-20 bg-header border-b border-border`) and intersection header cell (`sticky top-0 start-0 z-30`).
 
 ### KPI and Chart Completeness Rule
 
@@ -5000,6 +5075,7 @@ Every project MUST have a `globals.css` (or equivalent canonical theme styleshee
 - [ ] **Button Loading Stability (Rule 81):** Buttons maintain exact width during loading states. No layout shift on spinner activation. — *STOP if button shrinks on submit.*
 - [ ] **Image Optimization (Rule 33):** All images use `next/image` with explicit dimensions. Zero unapproved `<img>` tags. — *STOP if raw img used.*
 - [ ] **Search & Filter Debounce:** Search inputs debounced ≥300ms before triggering API/query calls. — *STOP if API flooded on every keystroke.*
+- [ ] **Enterprise Table Architecture (Rule 68):** Tables with horizontal scroll implement sticky start-0 first column with opaque background, hover-only desktop actions (Rule 64) with keyboard focus-within support, exact TABLE_COLUMN_COUNT synchronization across thead, tbody, colSpan, and skeletons, and e.stopPropagation() on row child buttons. — *STOP if table columns scroll away unanchored, actions lack focus-within, or colSpan mismatches.*
 
 ### 7. Localization Gate
 - [ ] **Zero Hardcoded Strings in JSX (Rule 18):** All user-facing text uses `t('KEY')` via `next-intl`. — *STOP if hardcoded English string in JSX.*
