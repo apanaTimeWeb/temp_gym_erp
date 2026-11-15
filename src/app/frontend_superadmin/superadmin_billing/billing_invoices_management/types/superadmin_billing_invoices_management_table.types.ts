@@ -7,4 +7,10 @@ export interface SuperadminBillingInvoicesTableProps {
     currentPage: number;
     totalPages: number;
     onPageChange: (page: number) => void;
+    total?: number;
+    pageSize?: number;
+    onPageSizeChange?: (pageSize: number) => void;
+    selectedInvoiceIds?: Set<string>;
+    onToggleSelectInvoice?: (id: string) => void;
+    onToggleSelectAllInvoices?: () => void;
 }

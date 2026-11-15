@@ -3,4 +3,6 @@ import type { SaaSInvoice } from '@/app/frontend_superadmin/superadmin_billing/b
 
 export interface SuperadminBillingInvoicesTableRowProps {
     invoice: SaaSInvoice;
+    isSelected?: boolean;
+    onToggleSelect?: (id: string) => void;
 }
