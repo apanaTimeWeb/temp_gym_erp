@@ -6503,13 +6503,27 @@ For every applicable pattern compare:
 - empty;
 - accessibility.
 
-### Design table checks
-Also verify:
-- semantic table elements;
-- sortable-header accessibility;
-- row-click + inline-action keyboard behavior;
-- mobile scroll/card-stack strategy;
-- no essential-information hiding.
+### Design table checks (Web Enterprise Data Table Standard — Rule 68)
+Verify 100% compliance with canonical benchmark (`superadmin_gyms`):
+- **Zero-Column & Zero-Field Removal Invariant:** Refactoring or restyling must NEVER remove, delete, hide, or truncate any existing table column, data field, status badge, action button, or filter control to fit the UI or avoid scroll. All existing features, columns, and interactions must be preserved 100%. If component length exceeds limits, decompose into sub-components (`TableRow`, `TableToolbar`, `TablePagination`) rather than omitting columns or features.
+- **Exact `TABLE_COLUMN_COUNT` Synchronization:** Constant declared and matched across `<th>`, `<td>`, skeleton loaders, error states, and empty state `colSpan`.
+- **Sticky First-Column Frozen Horizontal Scroll (`sticky start-0`):** Pinned at `start-0 z-10` with opaque background tokens (`bg-card`, `bg-primary-subtle`) and vertical border divider (`border-e border-border`) to eliminate visual bleed.
+- **Desktop Hover-Only vs Mobile Persistent Actions (Rule 64):** Actions cell styled with `opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100 motion-safe:transition-opacity` (concealed on desktop, persistent on touch).
+- **Two-Tier Data Hierarchy & CopyButton:** Primary title bold on line 1, monospace technical ID with inline `<CopyButton />` on line 2.
+- **Keyboard Row Navigation & `stopPropagation`:** Rows have `tabIndex={0}` and Enter/Space handlers; ALL clickable child controls execute `e.stopPropagation()`.
+- **Multi-Select Checkboxes & Floating Batch Action Bar:** Column 1 `w-12 px-4 py-3 text-center`, Select All with indeterminate support, selected row tint (`bg-primary-subtle border-l-4 border-l-primary`), and floating/top batch action bar with counter badge.
+- **Filter Toolbar & Control Spacing Contract:** Container `p-4 border-b border-border bg-surface-highlight/30 flex flex-wrap items-center justify-between gap-3`. Search box `relative min-w-[240px] sm:w-72 min-h-10` with leading icon and clear `X` button. Grouped dropdown filters maintaining consistent `gap-2.5` to `gap-3`. Quick filter segmented tabs (`bg-input rounded-xl p-1 gap-1`). Explicit "Clear All" reset button. Right-aligned primary CTA.
+- **In-Card Bottom-Pinned Pagination:** Pinned inside card footer (`border-t border-border px-4 py-3 bg-card/60`), localized result summary (`Showing ${start}–${end} of ${total} records`), page size dropdown (`10 / 25 / 50 / 100`), URL synchronization (`?page=2&pageSize=25`) with `{ scroll: false }`.
+- **Component Line Ceilings (Rule 24):** Table components exceeding 300 lines must be decomposed into sub-components rather than trimmed.
+
+### Mobile directory & card-stack checks (Mobile Enterprise Standard — Rule 8.0, 8C–8F & Section 5D)
+For browsable entity collections on mobile:
+- **Zero-Data Truncation Contract:** 100% data and action parity with backend/web. Never omit fields due to compact viewport.
+- **Card-Stack Layout:** `@shopify/flash-list` / `FlatList` with elevated cards (`backgroundColor: tokens.color.card`, `borderRadius: tokens.radius.lg`, padding 16, border 1px). Two-tier identity header (Title + Monospace ID with `<CopyToClipboardButton />`) and top-right status badge.
+- **2-Column Metrics Grid:** Key metrics in structured 2-column grid (`Label: Value` with Rule 38 en-dash `—` fallback).
+- **Search Bar & Filter Chip Carousel:** Height 44/48pt, leading search icon, clear `X` button, 300ms debounce. Horizontal filter chip carousel with "Filters" count badge opening `@gorhom/bottom-sheet` (`['50%']`) and "Clear All" reset.
+- **Multi-Select Mode & Floating Batch Bar:** Circular 24pt checkboxes, card visual tint when selected, safe-area floating batch bar (`bottom: insets.bottom + 16`) with selection counter and confirmation sheet.
+- **Infinite Scroll & Result Summary:** Localized list footer summary (`Showing 1–25 of 143 records`), `onEndReachedThreshold={0.3}`, footer `<ActivityIndicator />`, and mandatory pull-to-refresh (`RefreshControl`).
 
 ### Design form checks
 Verify all documented states:
@@ -7763,7 +7777,7 @@ NO UNKNOWN REQUIREMENT
 [ ] Mobile Rule 7A — Mock covers 100% of UI fields; mutable in-memory state; no toast-only mutations
 [ ] Mobile Rule 7B — config/[module].url_config.ts present; no hardcoded URLs in api files
 [ ] Mobile Rule 7C — api/[module].query_keys.ts present; dedicated mutation hooks; no inline useMutation in screens
-[ ] Mobile Rule 8 — FlatList/FlashList for lists with potential >50 items; 300ms debounce on search
+[ ] Mobile Rule 8 — Lists, Entity Directories & Parity (Rule 8.0 Zero-Data Truncation, Rule 8A FlashList >50 items, Rule 8B 300ms search debounce, Rule 8C Card-Stack Pattern, Rule 8D Multi-select checkboxes & floating batch bar, Rule 8E Filter toolbar & bottom sheet, Rule 8F Infinite pagination & footer result summary, Rule 24 decomposition) checked
 [ ] Mobile Rule 10 — lucide-react-native only; no mixed icon sets
 [ ] Mobile Rule 10A — KeyboardAvoidingView + keyboardShouldPersistTaps on all form screens
 [ ] Mobile Rule 10B — Pull-to-refresh wired on all user-browsable lists
@@ -7912,7 +7926,7 @@ Before final delivery, the AI MUST literally verify:
 [ ] Web Rule 65 — Hardened Numeric Inputs checked
 [ ] Web Rule 66 — Optimistic Mutation Reconciliation with Server checked
 [ ] Web Rule 67 — Explicit API Parameter Propagation checked
-[ ] Web Rule 68 — Table Header/Cell/ColSpan Alignment checked
+[ ] Web Rule 68 — Complete Enterprise Data Table Implementation (Zero-Column/Field Removal Invariant, exact TABLE_COLUMN_COUNT, frozen sticky start-0 column with opaque background, desktop hover actions Rule 64, inline CopyButton, stopPropagation on row clicks, multi-select checkboxes & batch action bar, filter toolbar spacing gap-2.5/gap-3, and in-card pagination with result summary) checked
 [ ] Web Rule 69 — Social-Brand Tokens checked
 [ ] Web Rule 70 — Interactive KPI Cards checked
 [ ] Web Rule 71 — Destructive Action Double Verification Modal checked
@@ -7943,7 +7957,7 @@ Before final delivery, the AI MUST literally verify:
 [ ] Extended Rule 21 — Tenant Data Export & Async Offboarding UX checked
 [ ] Extended Rule 22 — AI-Testable UI (Accessible Selectors First) checked
 [ ] Extended Rule 23 — Component-Level AI Docstrings (JSDoc) checked
-[ ] FRONTEND DELIVERY FREEZE GATE — All 14 Gates Verified checked
+[ ] FRONTEND DELIVERY FREEZE GATE — All Gates Verified (Web 14 Gates / Mobile 15 Gates including Gate 15 Directory & Zero-Drop Parity) checked
 [ ] DEFINITION OF DONE — All 8 Invariant Gates Verified checked
 [ ] Design §1 checked
 [ ] Design §1A checked
@@ -10531,6 +10545,7 @@ The AI MUST evaluate every item below against the created mobile module and reco
 - [ ] **43P-RULES-16:** Every pressable/touchable applies `animatedStyle` with `tokens.pressScale` (0.96) on press-in â€” zero hardcoded scale values
 - [ ] **43P-RULES-17:** Every screen sets `<StatusBar>` explicitly (style, backgroundColor) â€” no screen inherits StatusBar from host app
 - [ ] **43P-RULES-18:** Every screen root uses `<SafeAreaView>` from `react-native-safe-area-context` â€” never from `react-native` core
+- [ ] **43P-RULES-19:** Entity Directory Card-Stack & Zero-Drop Parity (Rule 8.0, 8C–8F) — Browsable collections implement the Mobile Card-Stack pattern with 100% field parity (zero dropped fields from model), 2-column key-value metrics with en-dash fallback, two-tier ID with CopyToClipboard, status badge, selection mode with floating batch action bar, filter chip carousel + bottom sheet, and localized footer result summary (`Showing 1–25 of 143 records`). Component line ceilings (<=300 lines) decomposed via sub-components.
 
 ## 43P-HEADER — File Header Comments
 
@@ -11022,12 +11037,43 @@ The Boot Declaration execution order block now includes Mode D:
 
 ---
 
+## PATCH-16 — Enterprise Data Table (Rule 68) & Mobile Card-Stack Parity (Rule 8.0, 8C–8F) Harmonization
+
+> ⛔ **CRITICAL HARMONIZATION DIRECTIVE (NON-NEGOTIABLE):**
+>
+> 1. **Zero-Column & Zero-Field Removal Invariant (Non-Destructive Evolution):**
+>    - Refactoring, modernizing, or styling a table or mobile directory screen MUST NEVER remove, delete, hide, or truncate any existing table column, data field, status badge, action button, or filter control to fit the UI or avoid scroll. All existing features, columns, and interactions must be preserved 100%.
+>    - If component line length exceeds the Rule 24 limit (`<= 300 lines`), you MUST decompose into sub-components (`TableRow.tsx`, `TableToolbar.tsx`, `CardItem.tsx`, `FilterBar.tsx`, `BatchActionBar.tsx`) rather than omitting columns or features.
+>
+> 2. **Web Enterprise Data Table Standard (Rule 68 Benchmark):**
+>    - Exact `TABLE_COLUMN_COUNT` synchronization across normal rows, skeletons, error states, and empty states (`colSpan={TABLE_COLUMN_COUNT}`).
+>    - Sticky start column (`sticky start-0 z-10 border-e border-border`) with opaque background tokens (`bg-card`, `bg-primary-subtle`) to eliminate scroll bleed.
+>    - Desktop hover-only action reveal (Rule 64: `opacity-100 lg:opacity-0 lg:group-hover:opacity-100`) vs mobile persistent actions.
+>    - Two-tier data hierarchy + inline `<CopyButton />` for technical IDs.
+>    - Keyboard row navigation (`tabIndex={0}`, Enter/Space) with `e.stopPropagation()` guard on all interactive controls.
+>    - Multi-select checkbox column (Column 1) + floating/top batch action bar with selection counter badge.
+>    - Filter toolbar spacing contract (`gap-2.5` to `gap-3`, search box `w-72 min-h-10`, clear `X` button, segmented quick filter tabs, "Clear All" reset, right-aligned CTA).
+>    - In-card bottom-pinned pagination with localized result summary (`Showing 1–25 of 143 records`) and URL sync `{ scroll: false }`.
+>
+> 3. **Mobile Card-Stack & Directory Parity Standard (Rule 8.0, 8C–8F & Section 5D):**
+>    - Virtualized `@shopify/flash-list` / `FlatList` with elevated card containers (`tokens.color.card`, `tokens.radius.lg`, padding 16).
+>    - Two-tier primary identification + top-right semantic status badge + 2-column key-value metrics grid with Rule 38 en-dash `—` fallback.
+>    - Search bar (height 44/48, clear `X` button, 300ms debounce) + horizontal filter chip carousel + Filter Bottom Sheet (`['50%']`) + Clear All trigger.
+>    - Multi-select mode with 24pt circular checkboxes and safe-area floating batch action bar (`bottom: insets.bottom + 16`).
+>    - Infinite scroll pagination with localized footer result summary (`Showing 1–25 of 143 records`) and mandatory pull-to-refresh (`RefreshControl`).
+>
+> 4. **Delivery Freeze Gate Integration:**
+>    - Gate 15 added to Mobile Delivery Freeze Gate (`MOBILE_ARCHITECTURE_AND_DEVELOPMENT_RULES_V1.md`) requiring verification of card-stack parity, zero dropped fields, search debounce, filter sheet, and batch selection isolation.
+
+---
+
 # VERSION HISTORY
 
 | Version | Changes |
 |---|---|
 | V2.5 | Original — Web Modes A + B only |
 | V2.6 | Added Mode C (Cross-Platform Mobile Create from Web ZIP) |
+| V2.12 | **ENTERPRISE DATA TABLE & MOBILE CARD-STACK PARITY PATCH:** Codified complete Enterprise Data Table Standard (Rule 68) with Zero-Column/Field Removal Invariant, exact TABLE_COLUMN_COUNT, frozen sticky start column, Rule 64 desktop hover actions, inline CopyButton, keyboard row navigation, multi-select checkboxes & batch action bar, filter toolbar spacing contract (gap-2.5/gap-3), and in-card pagination with result summary. Synchronized Mobile lists with Rule 8.0 Zero-Data Truncation, Card-Stack Pattern (Rule 8C), Mobile Multi-Select & Floating Batch Bar (Rule 8D), Filter Carousel & Bottom Sheet (Rule 8E), and Infinite Pagination & Footer Summary (Rule 8F). Added Gate 15 to Mobile Delivery Freeze Gate. Added 43P-RULES-19. Added PATCH-16. |
 | V2.11 | **FINAL HARMONIZATION PATCH:** Fixed Line 3793 Gold score penalty bug (replaces with Gold compliance rule). Mandated useThemeTokens() hook consumption (banning static tokens.ts import in feature UI). Added getMinTouchTarget() and getShadowStyle() core helpers. Updated audit scope to all currently numbered rules in `MOBILE_ARCHITECTURE_AND_DEVELOPMENT_RULES_V1.md`, including the Mobile Delivery Freeze Gate and Definition of Done, incorporating Rule 68 App Upgrade & Backward Compatibility. Clarified Android Back Handler return false safety to prevent trapping. Harmonized accessibility label rules for text vs icon controls. Added PATCH-15. |
 | V2.10 | **CROSS-PLATFORM FORM & TOUCH TARGET HARMONIZATION:** Added Section 43P-FORM covering react-hook-form v7, Zod v3 integration, and 400 field-level validation mapping via handleValidationErrors(). Clarified Android 48dp touch targets in 43P-A11Y-04. Added PATCH-14 enforcing Query Key role prefixes (preventing multi-role cache collisions) and cross-platform touch target hitSlop. |
 | V2.9 | **MOBILE ARCHITECTURE & DESIGN SYSTEM SYNC:** Fixed stale Indigo references in Mode C Hallucination Prevention (Rules 492-506, 554) to enforce Luxury Premium Gold (#FACC15 / #EAB308, onPrimary #111111). Clarified canonical subfolder names vs Role+Module prefixed files. Added Patches 08 to 13 covering Query Key Factories, Dedicated Mutation Hooks, Single-Flight 401 Refresh, Trusted Tenant Context, Form Keyboard Safety, Button Loading Stability, Feature-Local Currency (WET), and displayValue en-dash fallbacks. Synchronized 100% with MOBILE_ARCHITECTURE_AND_DEVELOPMENT_RULES_V1.md and MOBILE_UI_UX_DESIGN.md. |
