@@ -414,8 +414,9 @@ No global shared business E2E helper directory is permitted.
 1. Deeply read and analyze the feature document and both instruction/design documents.
 2. Create the complete frontend module from SCRATCH for the specific role.
 3. Strictly follow EVERY design requirement in `[SUPPLIED_UI_UX_DESIGN_RULES.md]` and EVERY architectural rule in `[SUPPLIED_ARCHITECTURE_AND_DEVELOPMENT_RULES.md]`.
-4. Run Section 43P Anti-Skipping Checklist on all created code before packaging.
-5. Deliver a **versioned ZIP**: `frontend-{role}-v1.zip`
+4. **Enterprise Data Table Invariant (Rule 68):** Every data table MUST implement complete Enterprise Data Table Standard: Zero-field/column removal invariant, exact `TABLE_COLUMN_COUNT`, frozen sticky start column (`sticky start-0 z-10 border-e border-border`) with opaque background, Rule 64 desktop hover actions, inline `<CopyButton />`, keyboard row navigation with `e.stopPropagation()`, multi-select checkboxes & batch bar, filter toolbar spacing (`gap-2.5` to `gap-3`), in-card pagination with result summary (`Showing 1–25 of 143 records`), and Rule 24 decomposition (`<= 300 lines`).
+5. Run Section 43P Anti-Skipping Checklist on all created code before packaging.
+6. Deliver a **versioned ZIP**: `frontend-{role}-v1.zip`
 
 **Mandatory deliverables inside the ZIP:**
 - `INTEGRATION_GUIDE.md` (consolidated developer guide)
@@ -643,7 +644,7 @@ After extraction, the AI MUST translate web patterns to mobile equivalents. This
 ║ next/navigation router.push    │ navigation.navigate(ROUTES.X)       ║
 ║ ?view= query param routing     │ Stack navigator screens             ║
 ║ Modal/Dialog component         │ @gorhom/bottom-sheet                ║
-║ Data table with pagination     │ FlashList + pull-to-refresh         ║
+║ Data table with pagination (Rule 68) │ FlashList Card-Stack + Zero Data Truncation + 2-col metrics + Filter Sheet + Floating Batch Bar + Footer Summary (Rule 8.0, 8C–8F, §5D) ║
 ║ Sidebar navigation             │ Bottom tabs / Drawer navigator      ║
 ║ TanStack Query (web)           │ TanStack Query v5 (React Native)    ║
 ║ Zustand store (web)            │ Zustand store (React Native)        ║
@@ -821,6 +822,7 @@ src/features/frontend_{role}/{role}_{domain}/
 
 7. **NO TOAST-ONLY MOCKS:** Mobile MSW fixtures MUST be mutable in-memory arrays. Create → adds to array. Delete → removes from array. Static fixtures that never change = CRITICAL VIOLATION.
 8. **CANONICAL SUBFOLDERS & PREFIXED FILES (NO MODULE PREFIX ON FOLDERS):** Subfolders MUST use standard names (`components/`, `hooks/`, `schemas/`, `types/`, `api/`, `config/`, `mocks/`, `state/`, `tests/`, `utils/`, `_locales/`). Naming subfolders as `{module}_components/` or `{module}_hooks/` is FORBIDDEN. The Role+Module prefix MUST be placed on the **files** inside them (e.g., `TrainerMembersMemberCard.tsx`, `useTrainerMembers.ts`).
+9. **NO DROPPED FIELDS OR TRUNCATED UI (ZERO DATA LOSS INVARIANT):** When translating web data tables or complex forms to mobile, NEVER omit, delete, or hide any fields, columns, badges, or action buttons under the excuse that "mobile screen has less space". All fields must be preserved using the 2-column key-value metrics grid (Section 5D.1) or expandable drawer. All actions must be preserved via Action Bottom Sheets (Section 5D.5). Silently dropping data from web parity = CRITICAL COMPLIANCE FAILURE.
 
 ---
 
@@ -938,10 +940,11 @@ If web ZIP evidence for an endpoint, request field, response field, permission, 
 1. Deeply read and audit the existing frontend ZIP against the documentation and rules.
 2. Identify every gap, missing file, UI issue, broken API contract, and missing architectural/design rule.
 3. Fix ALL found issues directly in code — no half-fixes, no skipping.
-4. Double-verify after repair by re-running the checklist.
-5. Deliver a **versioned delivery ZIP**: `frontend-{role}-v{N}-ALL-RBGS-COMPLETE.zip` (or intermediate `frontend-{role}-v{N}-PARTIAL-rbg{X}.zip`)
-6. Include `INTEGRATION_GUIDE.md` inside the ZIP.
-7. Include `contracts/host-stubs.d.ts` and `tests/harness/bootstrap.ts` inside every repaired sub-module to guarantee 100% standalone TypeScript compilation and isolated test execution.
+4. **Audit & Align Data Tables to Gold Standard (Rule 68):** Check all tables against the `superadmin_gyms` canonical benchmark. Enforce zero column deletion, sticky frozen first columns, Rule 64 hover action reveal, inline copy buttons, multi-select checkboxes with batch bars, toolbar spacing, in-card pagination, and line limit decomposition.
+5. Double-verify after repair by re-running the checklist.
+6. Deliver a **versioned delivery ZIP**: `frontend-{role}-v{N}-ALL-RBGS-COMPLETE.zip` (or intermediate `frontend-{role}-v{N}-PARTIAL-rbg{X}.zip`)
+7. Include `INTEGRATION_GUIDE.md` inside the ZIP.
+8. Include `contracts/host-stubs.d.ts` and `tests/harness/bootstrap.ts` inside every repaired sub-module to guarantee 100% standalone TypeScript compilation and isolated test execution.
 
 ---
 
