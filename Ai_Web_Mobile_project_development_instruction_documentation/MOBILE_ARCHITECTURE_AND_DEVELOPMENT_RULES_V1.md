@@ -5256,6 +5256,7 @@ and MUST NOT claim that a ZIP was generated.
 - [ ] **Maestro E2E Tests:** Critical mobile CRUD and auth flows covered in YAML-based Maestro test suite (`mobile_e2e/`). — *STOP if E2E missing for critical flows.*
 
 ### 6. Performance & UX Gate
+- [ ] **Mobile Data Directory & Card-Stack Parity (Rule 8.0, 8C–8F):** All entity collection screens implement Card-Stack pattern with 100% field parity (zero dropped fields), 2-column metric grid, selection mode with floating batch action bar, filter bottom sheet, and localized footer result summary (`Showing 1–25 of 143 records`). — *STOP if fields truncated or batch actions unisolated.*
 - [ ] **Virtualized Lists (Rule 8):** Any list with potential >50 items uses `FlatList` or `@shopify/flash-list` with `React.memo` item renderers. Never `ScrollView` wrapping `.map()`. — *STOP if mapped ScrollView used.*
 - [ ] **Search & Filter Debounce:** Search inputs debounced ≥300ms before triggering API/query calls. — *STOP if API flooded on every keystroke.*
 - [ ] **Button Loading Stability (Rule 39):** Submit buttons have explicit `minWidth` to prevent layout shift during loading state. — *STOP if button shrinks on submit.*
