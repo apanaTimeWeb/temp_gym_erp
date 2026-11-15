@@ -13,6 +13,8 @@ import { formatDateTime } from '@/app/frontend_superadmin/superadmin_communicati
 
 import type { SuperadminCommunicationBroadcastsTableProps } from '@/app/frontend_superadmin/superadmin_communication/communication_broadcasts_campaigns/types/superadmin_communication_broadcasts_campaigns.types';
 
+const TABLE_COLUMN_COUNT = 6;
+
 /**
  * RESPONSIBILITY: React component SuperadminCommunicationBroadcastsTable owned by the superadmin_communication_broadcasts feature boundary.
  * INTENT: Keep this file’s presentation, logic, and state responsibility isolated from unrelated business modules.
@@ -35,38 +37,38 @@ export default function SuperadminCommunicationBroadcastsCampaignsTable({ broadc
 
   const t = useTranslations('superadmin_communication_broadcasts');
     const { confirm } = useConfirm();
-    return (<div className="bg-card border border-border rounded-xl overflow-hidden shadow-card flex flex-col min-h-96">
+    return (<div className="bg-card border border-border rounded-2xl overflow-hidden shadow-sm flex flex-col min-h-96">
       <div className="overflow-x-auto flex-1">
         <table className="w-full text-start border-collapse">
           <thead>
             <tr className="bg-primary-subtle border-b border-border">
-              <th className="px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider">{t('ui.title_b78a3223')}</th>
-              <th className="px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider">{t('ui.audience_ef1e6887')}</th>
-              <th className="px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider">{t('ui.status_ec53a8c4')}</th>
-              <th className="px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider">{t('ui.delivery_rate_11895316')}</th>
-              <th className="px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider">{t('ui.scheduled_sent_date_d715318e')}</th>
-              <th className="px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-end">{t('ui.actions_06df3300')}</th>
+              <th className="sticky start-0 z-20 bg-primary-subtle border-b border-e border-border px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-start">{t('ui.title_b78a3223')}</th>
+              <th className="border-b border-border px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-start">{t('ui.audience_ef1e6887')}</th>
+              <th className="border-b border-border px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-start">{t('ui.status_ec53a8c4')}</th>
+              <th className="border-b border-border px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-start">{t('ui.delivery_rate_11895316')}</th>
+              <th className="border-b border-border px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-start">{t('ui.scheduled_sent_date_d715318e')}</th>
+              <th className="border-b border-border px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-end">{t('ui.actions_06df3300')}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
             {broadcasts.length === 0 ? (<tr>
-                <td colSpan={6}><SuperadminCommunicationBroadcastsEmptyState onCreateClick={onCreateClick}/></td>
+                <td colSpan={TABLE_COLUMN_COUNT}><SuperadminCommunicationBroadcastsEmptyState onCreateClick={onCreateClick}/></td>
               </tr>) : (broadcasts.map((bc) => (<tr key={bc.id} className="hover:bg-primary-subtle motion-safe:transition-colors group" data-testid={`superadmin-broadcast-row-${bc.id}`}>
-                  <td className="px-6 py-4">
+                  <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-b border-e border-border px-6 py-4 transition-colors">
                     <div className="flex flex-col">
                       <button type="button" className="text-start text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary min-h-11 min-w-11" onClick={() => onEdit(bc)} aria-label={t('ui.open_broadcast_aria', { title: bc.title })}>{bc.title}</button>
                       <span className="text-xs text-secondary truncate max-w-xs">{bc.content}</span>
                     </div>
                   </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="border-b border-border px-6 py-4 whitespace-nowrap">
                   <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-primary-subtle text-primary border border-border">
                     {bc.targetGymIds && bc.targetGymIds.length > 0 ? t('ui.gym_count_repair', { count: bc.targetGymIds.length }) : t('ui.all_gyms_repair')}
                   </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="border-b border-border px-6 py-4 whitespace-nowrap">
                   <SuperadminCommunicationBroadcastsBroadcastStatusBadge status={bc.status}/>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                <td className="border-b border-border px-6 py-4 whitespace-nowrap text-sm">
                   {bc.status === SUPERADMIN_BROADCAST_STATUS_CODES.SENT && bc.totalRecipients ? (<div>
                       <span className="text-success font-semibold">
                         {bc.deliveredCount ?? 0}{t('ui.text_6666cd76')}{bc.totalRecipients}
@@ -75,13 +77,13 @@ export default function SuperadminCommunicationBroadcastsCampaignsTable({ broadc
                         {t('ui.text_84c40473')}{Math.round(((bc.deliveredCount ?? 0) / bc.totalRecipients) * 100)}{t('ui.text_16379325')}</span>
                     </div>) : (<span className="text-disabled">{t('ui.text_d5fd8e6f')}</span>)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-secondary">
+                <td className="border-b border-border px-6 py-4 whitespace-nowrap text-sm text-secondary">
                   {(() => { if (bc.status === SUPERADMIN_BROADCAST_STATUS_CODES.SCHEDULED) { if (bc.scheduledDate) { return (formatDateTime(bc.scheduledDate, formatterLocale)); } return ('–'); } return (null); })()}
                   {(() => { if (bc.status === SUPERADMIN_BROADCAST_STATUS_CODES.SENT) { if (bc.sentDate) { return (formatDateTime(bc.sentDate, formatterLocale)); } return ('–'); } return (null); })()}
                   {bc.status === SUPERADMIN_BROADCAST_STATUS_CODES.DRAFT ? '–' : null}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-end">
-                  <div className="flex items-center justify-end gap-2">
+                <td className="border-b border-border px-6 py-4 whitespace-nowrap text-end">
+                  <div className="flex items-center justify-end gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100 motion-safe:transition-opacity">
                     {bc.status === SUPERADMIN_BROADCAST_STATUS_CODES.DRAFT && (<button type="button" onClick={(e) => { e.stopPropagation(); onSend(bc.id); }} className="p-1.5 text-secondary hover:text-primary hover:bg-primary-subtle rounded-lg motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11" title={t('ui.send_now_db3c809c')} aria-label={t('ui.send_broadcast_aria', { title: bc.title })} data-testid="superadmin_communication_broadcasts-superadmin-broadcasts-table-broadcasts-table-send-now">
                         <Send size={18} strokeWidth={2}/>
                       </button>)}
