@@ -8,6 +8,7 @@ import { MANAGER_CHURN_RECOVERY_TABLE_HEADERS } from '@/app/frontend_manager/man
 import { ManagerInfrastructureTableRowActionMenu } from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureTableContextMenu';
 import { ManagerCommunicationsCampaignsFormatDate } from '@/app/frontend_manager/manager_communications/communications_churn_recovery/utils/ManagerCommunicationsChurnRecoveryFormatters';
 import type { ManagerCommunicationsCampaignsChurnRecoveryTableRowProps } from '@/app/frontend_manager/manager_communications/communications_churn_recovery/types/manager_communications_campaigns_churn_recovery_table_row.types';
+import CopyButton from '@/components/ui/CopyButton';
 
 const INTERACTIVE_ROW_TARGETS = 'a, button, input, select, textarea, [role=\"combobox\"], [role=\"listbox\"], [role=\"option\"], [contenteditable=\"true\"]';
 
@@ -59,10 +60,13 @@ export default function ManagerCommunicationsCampaignsChurnRecoveryTableRow({
       }}
     >
       {/* Name + Plan */}
-      <td className={`px-4 py-3 ${cellBaseClass}`} data-label={MANAGER_CHURN_RECOVERY_TABLE_HEADERS[0]} data-mobile-primary="true"><span className="sr-only md:hidden">{MANAGER_CHURN_RECOVERY_TABLE_HEADERS[0]}</span>
-        <div className="flex flex-col">
-          <span className="text-sm font-medium text-text-primary truncate max-w-40">{member.name}</span>
-          <span className="text-xs text-text-secondary truncate max-w-40">{member.plan}</span>
+      <td className={`px-4 py-3 md:sticky md:start-0 md:z-10 md:bg-card md:border-e md:border-border ${cellBaseClass}`} data-label={MANAGER_CHURN_RECOVERY_TABLE_HEADERS[0]} data-mobile-primary="true"><span className="sr-only md:hidden">{MANAGER_CHURN_RECOVERY_TABLE_HEADERS[0]}</span>
+        <div className="flex items-center gap-2">
+          <div className="flex flex-col">
+            <span className="text-sm font-medium text-text-primary truncate max-w-40">{member.name}</span>
+            <span className="text-xs text-text-secondary truncate max-w-40">{member.plan}</span>
+          </div>
+          <CopyButton value={member.name} label="Copy member name" />
         </div>
       </td>
 

@@ -18,6 +18,9 @@ import { DASHBOARD_RECENT_MEMBERS_PAGE_SIZE, RECENT_MEMBERS_HEADERS, DASHBOARD_S
 import { useDashboardStatsQuery } from '@/app/frontend_manager/manager_dashboard/dashboard_overview/hooks/useManagerDashboardOverviewQueries';
 import { useManagerDashboardOverviewUrlState } from '@/app/frontend_manager/manager_dashboard/dashboard_overview/hooks/useManagerDashboardOverviewUrlState';
 import { ManagerDashboardOverviewFormatCurrency, ManagerDashboardOverviewFormatDate, ManagerDashboardOverviewDisplayValue } from '@/app/frontend_manager/manager_dashboard/dashboard_overview/utils/ManagerDashboardOverviewFormatters';
+import CopyButton from '@/components/ui/CopyButton';
+
+const TABLE_COLUMN_COUNT = 5;
 /** @description Renders the ManagerDashboardOverviewRecentMembers component for its owning Manager frontend boundary. @dependencies Local dependencies are owned by this feature module (8 documented module/import dependencies).. @edge-case Preserves the documented interaction and boundary states. */
 export default function ManagerDashboardOverviewRecentMembers() {
   const t = useTranslations('MANAGER_DASHBOARD');
@@ -55,13 +58,13 @@ export default function ManagerDashboardOverviewRecentMembers() {
   };
 
   return (
-    <div className="xl:col-span-2 rounded-xl shadow-card border overflow-hidden bg-card border-border">
-      <div className="min-w-0 px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-3 border-b border-border">
+    <div className="xl:col-span-2 rounded-2xl shadow-card border overflow-hidden bg-card border-border">
+      <div className="min-w-0 px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-3 border-b border-border bg-surface-highlight/30">
         <h2 className="font-semibold text-text-primary">{t("COPY_RECENT_MEMBERS")}</h2>
         <div className="min-w-0 flex flex-wrap items-center gap-3">
           <div className="relative min-w-0 w-full sm:w-auto">
             <Search size={18} strokeWidth={2} className="absolute start-2.5 top-1/2 -translate-y-1/2 text-text-secondary" />
-            <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "ps-8 pe-3 py-1.5 min-h-11 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page w-full sm:w-52 max-w-full bg-input text-text-primary"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_dashboard-manager-dashboard-recent-members-input-value"
+            <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "ps-8 pe-3 py-1.5 min-h-11 text-sm border border-border rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring w-full sm:w-52 max-w-full bg-input text-text-primary"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_dashboard-manager-dashboard-recent-members-input-value"
               value={localSearch}
               onChange={e => handleSearchChange(e.target.value)}
               placeholder={t("COPY_SEARCH_MEMBERS")}
@@ -108,13 +111,21 @@ export default function ManagerDashboardOverviewRecentMembers() {
         )}
       </div>
 
-      <div className="hidden max-w-full overflow-x-auto md:block" tabIndex={0} role="region" aria-label={t('COPY_RECENT_MEMBERS_TABLE_LABEL')} data-testid="manager_dashboard-dashboard-recent-members-desktop-table">
-        <table className="w-full">
+      <div className="hidden max-w-full max-h-[640px] overflow-auto md:block" tabIndex={0} role="region" aria-label={t('COPY_RECENT_MEMBERS_TABLE_LABEL')} data-testid="manager_dashboard-dashboard-recent-members-desktop-table">
+        <table className="w-full text-sm">
           <caption className="sr-only">{t('COPY_RECENT_MEMBERS_TABLE_LABEL')}</caption>
-          <thead className="bg-primary-subtle">
+          <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
             <tr>
-              {RECENT_MEMBERS_HEADERS.map(h => (
-                <th key={h} scope="col" className="text-start text-xs font-semibold uppercase tracking-wider px-6 py-3 text-text-secondary">{t(h)}</th>
+              {RECENT_MEMBERS_HEADERS.map((h, hIdx) => (
+                <th
+                  key={h}
+                  scope="col"
+                  className={`text-start text-xs font-semibold uppercase tracking-wider px-6 py-3 text-text-secondary whitespace-nowrap ${
+                    hIdx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                  }`}
+                >
+                  {t(h)}
+                </th>
               ))}
             </tr>
           </thead>
@@ -122,33 +133,34 @@ export default function ManagerDashboardOverviewRecentMembers() {
             {paginated.map(m => {
               const statusStyle = DASHBOARD_STATUS_STYLES[m.status] || { bg: 'bg-input', text: 'text-text-secondary' };
               return (
-                <tr key={m.id} className="motion-safe:transition-all hover:bg-primary-subtle bg-card motion-safe:duration-200 ease-in-out">
-                  <td className="px-6 py-4">
+                <tr key={m.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                  <td className="px-6 py-4 sticky start-0 z-10 bg-card border-e border-border whitespace-nowrap">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm bg-primary-subtle text-primary">
                         {m.name.charAt(0) || '?'}
                       </div>
                       <span className="text-sm font-medium text-text-primary">{m.name}</span>
+                      <CopyButton value={m.name} label="Copy member name" />
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-sm text-text-secondary">
+                  <td className="px-6 py-4 text-sm text-text-secondary whitespace-nowrap">
                     {typeof m.plan === 'string' ? m.plan : ManagerDashboardOverviewDisplayValue(m.plan?.name)}
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-4 whitespace-nowrap">
                     <span data-testid={`manager_dashboard-dashboard-recent-members-mobile-status-${m.id}`} className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${statusStyle.bg} ${statusStyle.text}`}>
                       {m.status === 'ACTIVE' ? t('COPY_STATUS_ACTIVE') : m.status === 'PENDING' ? t('COPY_STATUS_PENDING') : m.status === 'EXPIRED' ? t('COPY_STATUS_EXPIRED') : m.status}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-sm text-text-secondary">
+                  <td className="px-6 py-4 text-sm text-text-secondary whitespace-nowrap">
                     {ManagerDashboardOverviewFormatDate(m.joinDate, locale)}
                   </td>
-                  <td className="px-6 py-4 text-sm font-medium text-text-primary">{ManagerDashboardOverviewFormatCurrency(m.paidAmount, ManagerEnvConfig.currencyCode, locale)}</td>
+                  <td className="px-6 py-4 text-sm font-medium text-text-primary whitespace-nowrap">{ManagerDashboardOverviewFormatCurrency(m.paidAmount, ManagerEnvConfig.currencyCode, locale)}</td>
                 </tr>
               );
             })}
             {paginated.length === 0 && (
               <tr>
-                <td colSpan={RECENT_MEMBERS_HEADERS.length} className="text-center py-8 text-sm text-text-secondary">
+                <td colSpan={TABLE_COLUMN_COUNT} className="text-center py-8 text-sm text-text-secondary">
                   {search || debouncedSearch ? t('TEXT_NO_MEMBERS_MATCHING_QUERY', { query: search || debouncedSearch }) : t('COPY_NO_MEMBERS_YET_ADD_FIRST_MEMBER')}
                 </td>
               </tr>
@@ -157,15 +169,16 @@ export default function ManagerDashboardOverviewRecentMembers() {
         </table>
       </div>
       
-      <div className="border-t border-border mt-2 p-2">
-          <ManagerPagination data-testid="manager_dashboard-managerdashboardrecentmembers-managerpagination-1" 
-            currentPage={currentPage}
-            totalPages={totalPages}
-            totalItems={totalRecentMembers}
-            itemsPerPage={DASHBOARD_RECENT_MEMBERS_PAGE_SIZE}
-            onPageChange={handlePageChange}
-          />
-        </div>
+      <div className="border-t border-border p-4 bg-card/60">
+        <ManagerPagination data-testid="manager_dashboard-managerdashboardrecentmembers-managerpagination-1" 
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={totalRecentMembers}
+          itemsPerPage={DASHBOARD_RECENT_MEMBERS_PAGE_SIZE}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </div>
+  );
   );
 }

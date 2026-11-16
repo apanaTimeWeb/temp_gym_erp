@@ -13,6 +13,9 @@ import { COMM_STATUS_STYLES } from '@/app/frontend_manager/manager_communication
 import { MANAGER_COMMUNICATION_HISTORY_HEADERS } from '@/app/frontend_manager/manager_communications/communications_history/constants/manager_communications_campaigns_table.constants';
 import { useManagerCommunicationsCampaignsLogic } from '@/app/frontend_manager/manager_communications/communications_history/hooks/useManagerCommunicationsHistoryLogic';
 import { ManagerCommunicationsCampaignsFormatDate } from '@/app/frontend_manager/manager_communications/communications_history/utils/ManagerCommunicationsHistoryFormatters';
+import CopyButton from '@/components/ui/CopyButton';
+
+const TABLE_COLUMN_COUNT = 7;
 
 
 
@@ -74,60 +77,68 @@ export default function ManagerCommunicationsCampaignsHistory() {
       {(() => { if (paginatedCampaigns.length === 0) { return (
         <ManagerCommunicationsHistoryEmptyState isFiltered={Boolean(historySearch || historyChannelFilter !== 'all')} />
       ); } return (
-        <div className="bg-card rounded-xl border border-border overflow-hidden">
-          <div className="overflow-x-auto">
+        <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
+          <div className="max-h-[640px] overflow-auto">
             <ManagerInfrastructureResponsiveTable labels={MANAGER_COMMUNICATION_HISTORY_HEADERS}>
-<table className="w-full">
-              <thead>
-                <tr className="bg-primary-subtle">
-                  {MANAGER_COMMUNICATION_HISTORY_HEADERS.map(h => (
-                    <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap">
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {paginatedCampaigns.map((c) => {
-                  const statusStyle = COMM_STATUS_STYLES[c.status] ?? COMM_STATUS_STYLES.sent;
-                  const isWA = c.channel === 'whatsapp';
-                  return (
-                    <tr key={c.id} className="hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-200 ease-in-out">
-                      <td className="px-4 py-3">
-                        <p className="text-sm font-medium text-text-primary">{c.title}</p>
-                      </td>
-                      <td className="px-4 py-3">
-                        <span
-                          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${isWA ? 'bg-success text-on-success' : 'bg-info text-on-info'}`}
-                         data-testid={`manager_communications-managercommunicationshistory-channel-badge-${c.id}`}>
-                          {isWA ? <MessageCircle size={18} strokeWidth={2}/> : <Mail size={18} strokeWidth={2}/>}
-                          {isWA ? t('COPY_WHATSAPP_1') : t('COPY_EMAIL_2')}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-sm text-text-secondary">{c.segmentLabel}</td>
-                      <td className="px-4 py-3">
-                        <span className="inline-flex items-center gap-1 text-sm text-text-secondary">
-                          <Users size={18} strokeWidth={2}/>
-                          {new Intl.NumberFormat('en-IN').format(c.recipientCount)}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-sm text-text-primary font-medium">{new Intl.NumberFormat('en-IN').format(c.sentCount)}</td>
-                      <td className="px-4 py-3">
-                        <span data-testid={`manager_communications-manager-communications-history-status-${c.id}`} className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${statusStyle?.bg || ''} ${statusStyle?.text || ''}`}>
-                          {statusStyle?.label || c.status}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-sm text-text-secondary whitespace-nowrap">
-                        {ManagerCommunicationsCampaignsFormatDate(c.sentAt)}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-</ManagerInfrastructureResponsiveTable>
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+                    {MANAGER_COMMUNICATION_HISTORY_HEADERS.map((h, hIdx) => (
+                      <th
+                        key={h}
+                        className={`px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap ${
+                          hIdx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                        }`}
+                      >
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {paginatedCampaigns.map((c) => {
+                    const statusStyle = COMM_STATUS_STYLES[c.status] ?? COMM_STATUS_STYLES.sent;
+                    const isWA = c.channel === 'whatsapp';
+                    return (
+                      <tr key={c.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                        <td className="px-4 py-3 sticky start-0 z-10 bg-card border-e border-border whitespace-nowrap">
+                          <div className="flex items-center gap-2">
+                            <p className="text-sm font-medium text-text-primary">{c.title}</p>
+                            <CopyButton value={c.title} label="Copy title" />
+                          </div>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span
+                            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${isWA ? 'bg-success text-on-success' : 'bg-info text-on-info'}`}
+                            data-testid={`manager_communications-managercommunicationshistory-channel-badge-${c.id}`}>
+                            {isWA ? <MessageCircle size={18} strokeWidth={2}/> : <Mail size={18} strokeWidth={2}/>}
+                            {isWA ? t('COPY_WHATSAPP_1') : t('COPY_EMAIL_2')}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-text-secondary whitespace-nowrap">{c.segmentLabel}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="inline-flex items-center gap-1 text-sm text-text-secondary">
+                            <Users size={18} strokeWidth={2}/>
+                            {new Intl.NumberFormat('en-IN').format(c.recipientCount)}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-text-primary font-medium whitespace-nowrap">{new Intl.NumberFormat('en-IN').format(c.sentCount)}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span data-testid={`manager_communications-manager-communications-history-status-${c.id}`} className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${statusStyle?.bg || ''} ${statusStyle?.text || ''}`}>
+                            {statusStyle?.label || c.status}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-text-secondary whitespace-nowrap">
+                          {ManagerCommunicationsCampaignsFormatDate(c.sentAt)}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </ManagerInfrastructureResponsiveTable>
           </div>
-          <div className="border-t border-border">
+          <div className="border-t border-border p-4 bg-card/60">
             <ManagerPagination data-testid="manager_communications-managercommunicationshistory-managerpagination-1"
               currentPage={currentPage}
               totalPages={totalPages}

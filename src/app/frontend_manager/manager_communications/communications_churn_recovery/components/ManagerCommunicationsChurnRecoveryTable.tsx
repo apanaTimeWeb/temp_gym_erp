@@ -11,24 +11,15 @@ import { CANCELLATIONS_REASON_OPTIONS, CANCELLATIONS_ITEMS_PER_PAGE } from '@/ap
 import { MANAGER_CHURN_RECOVERY_TABLE_HEADERS } from '@/app/frontend_manager/manager_communications/communications_churn_recovery/constants/manager_communications_campaigns_table.constants';
 import type { ManagerCommunicationsCampaignsChurnRecoveryTableProps } from '@/app/frontend_manager/manager_communications/communications_churn_recovery/types/manager_communications_campaigns_churn_recovery_table.types';
 
-
-
+const TABLE_COLUMN_COUNT = 7;
+const SKELETON_ROW_COUNT = 5;
 
 /** Masks a phone number: 98****2310 */
-/**
- * @description Provides the `maskPhone` transformation used by the owning Manager feature. Keeps display/domain shaping local so components remain focused on rendering and interaction orchestration.
- * @dependencies Uses only the values and module constants visible in this file; it does not call APIs or cross feature boundaries.
- * @edge-case Handles missing, empty, nullable, and boundary inputs according to the caller's documented UI contract without inventing business data.
- */
 function maskPhone(phone: string): string {
   const normalizedPhone = phone.replace(/\D/g, '');
   if (normalizedPhone.length < 7) return normalizedPhone ? `${'*'.repeat(Math.max(0, normalizedPhone.length - 2))}${normalizedPhone.slice(-2)}` : '—';
   return normalizedPhone.slice(0, 2) + '****' + normalizedPhone.slice(-4);
 }
-
-
-
-const SKELETON_ROW_COUNT = 5;
 
 /** @description Renders the ManagerCommunicationsCampaignsChurnRecoveryTable component for its owning Manager frontend boundary. @dependencies Local dependencies are owned by this feature module (6 documented module/import dependencies).. @edge-case Preserves empty state, error state. */
 export default function ManagerCommunicationsCampaignsChurnRecoveryTable({
@@ -49,13 +40,13 @@ export default function ManagerCommunicationsCampaignsChurnRecoveryTable({
   const endEntry   = Math.min(currentPage * CANCELLATIONS_ITEMS_PER_PAGE, allFilteredCount);
 
   return (
-    <div className="bg-card border border-border rounded-lg overflow-hidden">
+    <div className="bg-card border border-border rounded-2xl shadow-card overflow-hidden">
       {/* Controls */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-4 border-b border-border">
+      <div className="p-4 border-b border-border bg-surface-highlight/30 flex flex-wrap items-center justify-between gap-3">
         {/* Search */}
-        <div className="relative flex-1 w-full sm:max-w-xs">
+        <div className="relative min-w-[240px] sm:w-72">
           <Search size={18} strokeWidth={2} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary pointer-events-none"/>
-          <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "w-full pl-9 pr-3 py-2 text-sm bg-input border border-border rounded-lg text-text-primary placeholder:text-text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:border-primary motion-safe:transition-all motion-safe:duration-200 ease-in-out"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_communications-manager-churn-recovery-input-text"
+          <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "w-full pl-9 pr-3 py-2 text-sm bg-input border border-border rounded-xl text-text-primary placeholder:text-text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring min-h-10 motion-safe:transition-all motion-safe:duration-200 ease-in-out"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_communications-manager-churn-recovery-input-text"
             type="text"
             placeholder={t("COPY_SEARCH_NAME")}
             value={churnSearch}
@@ -68,7 +59,7 @@ export default function ManagerCommunicationsCampaignsChurnRecoveryTable({
         {/* Reason Filter */}
         <div className="flex items-center gap-2 flex-wrap">
           {CANCELLATIONS_REASON_OPTIONS.map((opt, mapIndex) => (
-            <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", (`px-3 py-1.5 rounded-lg text-xs font-medium motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring ${
+            <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", (`px-3 py-1.5 rounded-xl text-xs font-medium min-h-10 motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring ${
                 churnReasonFilter === opt.value
                   ? 'bg-primary text-on-primary'
                   : 'bg-input border border-border text-text-secondary hover:text-primary'
@@ -85,54 +76,56 @@ export default function ManagerCommunicationsCampaignsChurnRecoveryTable({
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto">
+      <div className="max-h-[640px] overflow-auto">
         <ManagerInfrastructureResponsiveTable labels={MANAGER_CHURN_RECOVERY_TABLE_HEADERS}>
-<table data-testid="manager_communications-managercommunicationschurnrecoverytable-grid" className="w-full text-left" aria-label={t("COPY_CHURNED_MEMBERS_TABLE")}>
-          <thead>
-            <tr className="bg-primary-subtle border-b border-border">
-              {MANAGER_CHURN_RECOVERY_TABLE_HEADERS.map((h) => (
-                <th
-                  key={h}
-                  scope="col"
-                  className="px-4 py-3 text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap"
-                >
-                  {h}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {(() => { if (isPending) { return (
-              Array.from({ length: SKELETON_ROW_COUNT }).map((_, i) => (
-                <tr key={`churn-skeleton-${i}`} className="border-b border-border">
-                  {MANAGER_CHURN_RECOVERY_TABLE_HEADERS.map((h) => (
-                    <td key={h} className="px-4 py-3">
-                      <div className="h-4 w-3/4 bg-skeleton-base rounded motion-safe:animate-pulse" />
-                    </td>
-                  ))}
-                </tr>
-              ))
-            ); } return (() => { if (isError) { return (
-              <tr><td colSpan={MANAGER_CHURN_RECOVERY_TABLE_HEADERS.length} className="py-12 text-center text-danger-text text-sm">{errorMessage || t("TEXT_GENERIC_ERROR")}</td></tr>
-            ); } return (() => { if (members.length === 0) { return (
-              <tr>
-                <td colSpan={MANAGER_CHURN_RECOVERY_TABLE_HEADERS.length}>
-                  <ManagerCommunicationsCampaignsChurnRecoveryEmptyState />
-                </td>
+          <table data-testid="manager_communications-managercommunicationschurnrecoverytable-grid" className="w-full text-left text-sm" aria-label={t("COPY_CHURNED_MEMBERS_TABLE")}>
+            <thead>
+              <tr className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+                {MANAGER_CHURN_RECOVERY_TABLE_HEADERS.map((h, hIdx) => (
+                  <th
+                    key={h}
+                    scope="col"
+                    className={`px-4 py-3 text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap ${
+                      hIdx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    }`}
+                  >
+                    {h}
+                  </th>
+                ))}
               </tr>
-            ); } return (
-              members.map((member) => (
-                <ManagerCommunicationsCampaignsChurnRecoveryTableRow data-testid={`manager_communications-managercommunicationschurnrecoverytable-row-${member.memberId}`}
-                  key={member.memberId}
-                  member={member}
-                  onOpenComposer={onOpenComposer}
-                  maskPhone={maskPhone}
-                />
-              ))
-            ); })(); })(); })()}
-          </tbody>
-        </table>
-</ManagerInfrastructureResponsiveTable>
+            </thead>
+            <tbody>
+              {(() => { if (isPending) { return (
+                Array.from({ length: SKELETON_ROW_COUNT }).map((_, i) => (
+                  <tr key={`churn-skeleton-${i}`} className="border-b border-border">
+                    {MANAGER_CHURN_RECOVERY_TABLE_HEADERS.map((h, hIdx) => (
+                      <td key={h} className={`px-4 py-3 ${hIdx === 0 ? 'sticky start-0 z-10 bg-card border-e border-border' : ''}`}>
+                        <div className="h-4 w-3/4 bg-skeleton-base rounded motion-safe:animate-pulse" />
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              ); } return (() => { if (isError) { return (
+                <tr><td colSpan={TABLE_COLUMN_COUNT} className="py-12 text-center text-danger-text text-sm">{errorMessage || t("TEXT_GENERIC_ERROR")}</td></tr>
+              ); } return (() => { if (members.length === 0) { return (
+                <tr>
+                  <td colSpan={TABLE_COLUMN_COUNT}>
+                    <ManagerCommunicationsCampaignsChurnRecoveryEmptyState />
+                  </td>
+                </tr>
+              ); } return (
+                members.map((member) => (
+                  <ManagerCommunicationsCampaignsChurnRecoveryTableRow data-testid={`manager_communications-managercommunicationschurnrecoverytable-row-${member.memberId}`}
+                    key={member.memberId}
+                    member={member}
+                    onOpenComposer={onOpenComposer}
+                    maskPhone={maskPhone}
+                  />
+                ))
+              ); })(); })(); })()}
+            </tbody>
+          </table>
+        </ManagerInfrastructureResponsiveTable>
       </div>
 
       {/* Pagination */}
