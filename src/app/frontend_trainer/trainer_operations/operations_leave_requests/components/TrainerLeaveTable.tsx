@@ -4,6 +4,7 @@ import { useState, useMemo, Fragment } from 'react';
 import { Calendar, ChevronDown, ChevronUp, Plus } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
+import CopyButton from '@/components/ui/CopyButton';
 import TrainerInfrastructureTooltip from './TrainerOperationsLeaveRequestsTrainerInfrastructureTooltip';
 import TrainerScheduleEmptyState from './TrainerOperationsLeaveRequestsScheduleEmptyState';
 import { TrainerLeaveFilterBar } from './TrainerLeaveFilterBar';
@@ -129,11 +130,11 @@ export function TrainerLeaveTable({ leaveRequests, openLeaveModal }: TrainerLeav
       />
 
       {/* Desktop Table View */}
-      <div className="hidden md:block overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-surface-highlight">
-            <tr data-testid="trainer_schedule-TrainerScheduleLeaveRequests-row-1">
-              <th scope="col" className="text-start text-xs font-bold text-secondary uppercase tracking-wider px-4 py-3 whitespace-nowrap">{t('TEXT_ID')}</th>
+      <div className="hidden md:block max-h-[640px] overflow-auto custom-scrollbar">
+        <table className="w-full text-start border-collapse">
+          <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+            <tr className="bg-surface-highlight border-b border-border" data-testid="trainer_schedule-TrainerScheduleLeaveRequests-row-1">
+              <th scope="col" className="sticky start-0 z-30 bg-surface-highlight border-e border-border text-start text-xs font-bold text-secondary uppercase tracking-wider px-4 py-3 whitespace-nowrap">{t('TEXT_ID')}</th>
               <th scope="col" className="text-start text-xs font-bold text-secondary uppercase tracking-wider px-4 py-3 whitespace-nowrap">{t('TEXT_LEAVE_TYPE_LABEL')}</th>
               <th scope="col" className="text-start text-xs font-bold text-secondary uppercase tracking-wider px-4 py-3 whitespace-nowrap">{t('TEXT_DATE_RANGE')}</th>
               <th scope="col" className="text-start text-xs font-bold text-secondary uppercase tracking-wider px-4 py-3 whitespace-nowrap">{t('TEXT_REASON')}</th>
@@ -174,11 +175,16 @@ export function TrainerLeaveTable({ leaveRequests, openLeaveModal }: TrainerLeav
                           setExpandedId((curr) => (curr === leave.id ? null : leave.id));
                         }
                       }}
-                      className={`cursor-pointer hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-colors ${
+                      className={`cursor-pointer hover:bg-surface-highlight/50 transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-colors ${
                         expanded ? 'bg-primary-subtle border-l-4 border-l-primary' : ''
                       }`}
                     >
-                      <td className="px-4 py-4 text-xs font-bold text-primary whitespace-nowrap">{leave.id}</td>
+                      <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-4 text-xs font-bold text-primary whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
+                        <div className="flex items-center gap-2">
+                          <span>{leave.id}</span>
+                          <CopyButton value={leave.id} />
+                        </div>
+                      </td>
                       <td className="px-4 py-4 whitespace-nowrap">
                         <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold bg-input text-primary border border-border">
                           {getLeaveTypeLabel(leave.leaveType)}

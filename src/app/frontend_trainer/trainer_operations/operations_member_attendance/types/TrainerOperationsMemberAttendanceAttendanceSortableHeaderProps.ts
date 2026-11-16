@@ -8,4 +8,5 @@ export interface TrainerAttendanceSortableHeaderProps {
   sortDirection: TrainerAttendanceSortDirection;
   onSort: (field: TrainerAttendanceSortField) => void;
   sortLabel: string;
+  className?: string;
 }

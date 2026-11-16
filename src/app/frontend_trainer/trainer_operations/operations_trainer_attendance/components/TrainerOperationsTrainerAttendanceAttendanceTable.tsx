@@ -10,6 +10,7 @@ import { useSearchParams } from 'next/navigation';
 import { Clock } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
+import CopyButton from '@/components/ui/CopyButton';
 import { displayValue } from '@/lib/display_value';
 import TrainerAttendanceEmptyState from '@/app/frontend_trainer/trainer_operations/operations_trainer_attendance/components/TrainerOperationsTrainerAttendanceAttendanceEmptyState';
 
@@ -124,11 +125,24 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
   }
 
   return (
-    <div className="p-5">
-      <div className="hidden md:block overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-surface-highlight">
-            <tr data-testid="trainer_attendance-TrainerAttendanceTable-row-1">{TRAINER_ATTENDANCE_TABLE_HEADERS.map((header, index) => <TrainerAttendanceSortableHeader key={header} label={t(`TEXT_COLUMN_${SORT_FIELDS[index]!.toUpperCase()}`)} sortLabel={t('TEXT_SORT_BY', { label: t(`TEXT_COLUMN_${SORT_FIELDS[index]!.toUpperCase()}`) })} field={SORT_FIELDS[index]!} sortBy={sortBy} sortDirection={sortDirection} onSort={onSort}/>)}</tr>
+    <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+      <div className="hidden md:block max-h-[640px] overflow-auto custom-scrollbar">
+        <table className="w-full text-start border-collapse">
+          <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+            <tr className="bg-surface-highlight border-b border-border" data-testid="trainer_attendance-TrainerAttendanceTable-row-1">
+              {TRAINER_ATTENDANCE_TABLE_HEADERS.map((header, index) => (
+                <TrainerAttendanceSortableHeader
+                  key={header}
+                  label={t(`TEXT_COLUMN_${SORT_FIELDS[index]!.toUpperCase()}`)}
+                  sortLabel={t('TEXT_SORT_BY', { label: t(`TEXT_COLUMN_${SORT_FIELDS[index]!.toUpperCase()}`) })}
+                  field={SORT_FIELDS[index]!}
+                  sortBy={sortBy}
+                  sortDirection={sortDirection}
+                  onSort={onSort}
+                  className={index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''}
+                />
+              ))}
+            </tr>
           </thead>
           <tbody className="divide-y divide-border">
             {displayedRecords.length === 0 ? (
@@ -139,8 +153,28 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
               const expanded = expandedId === record.id;
               return (
                 <Fragment key={record.id}>
-                  <tr data-testid={`trainer_attendance-attendance-table-row-${record.id}`} tabIndex={0} aria-expanded={expanded} onClick={() => setExpandedId((current) => current === record.id ? null : record.id)} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setExpandedId((current) => current === record.id ? null : record.id); } }} className="cursor-pointer hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus-ring motion-safe:transition-colors motion-safe:duration-base">
-                    <td className="cursor-pointer px-4 py-3 whitespace-nowrap"><div className="flex items-center gap-3"><div className="w-8 h-8 rounded-full bg-primary-subtle flex items-center justify-center text-primary font-bold text-sm" aria-hidden="true">{initial}</div><div className="min-w-0"><TrainerInfrastructureTooltip content={String(displayValue(personName))}><div className="text-sm font-medium text-primary truncate max-w-52">{displayValue(personName)}</div></TrainerInfrastructureTooltip><div className="text-xs text-secondary">{record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? t('TEXT_MEMBER') : t('TEXT_STAFF')}</div></div></div></td>
+                  <tr
+                    data-testid={`trainer_attendance-attendance-table-row-${record.id}`}
+                    tabIndex={0}
+                    aria-expanded={expanded}
+                    onClick={() => setExpandedId((current) => current === record.id ? null : record.id)}
+                    onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setExpandedId((current) => current === record.id ? null : record.id); } }}
+                    className="cursor-pointer hover:bg-surface-highlight/50 transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus-ring"
+                  >
+                    <td className="sticky start-0 z-10 bg-card border-e border-border cursor-pointer px-4 py-3 whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-primary-subtle flex items-center justify-center text-primary font-bold text-sm shrink-0" aria-hidden="true">{initial}</div>
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2">
+                            <TrainerInfrastructureTooltip content={String(displayValue(personName))}>
+                              <div className="text-sm font-medium text-primary truncate max-w-52">{displayValue(personName)}</div>
+                            </TrainerInfrastructureTooltip>
+                            <CopyButton value={String(personName ?? '')} />
+                          </div>
+                          <div className="text-xs text-secondary">{record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? t('TEXT_MEMBER') : t('TEXT_STAFF')}</div>
+                        </div>
+                      </div>
+                    </td>
                     <td className="px-4 py-3"><span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? 'bg-info-bg text-info' : 'bg-success-bg text-success'}`} data-testid={`trainer_attendance-table-type${record.id}`}>{record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? t('TEXT_MEMBER') : t('TEXT_STAFF')}</span></td>
                     <td className="px-4 py-3 text-sm text-secondary whitespace-nowrap">{TrainerAttendanceFormatDate(record.date, locale)}</td>
                     <td className="px-4 py-3 text-sm text-secondary whitespace-nowrap"><span className="flex items-center gap-1"><Clock size={18} strokeWidth={2} className="text-secondary" aria-hidden="true" />{TrainerAttendanceFormatTime(record.checkIn, locale)}</span></td>

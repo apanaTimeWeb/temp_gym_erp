@@ -6,6 +6,7 @@ import { AlertCircle, Minus, TrendingDown, TrendingUp } from 'lucide-react';
 
 import { useLocale, useTranslations } from 'next-intl';
 
+import CopyButton from '@/components/ui/CopyButton';
 import TrainerProgressTrackingComparisonEmptyState from '@/app/frontend_trainer/trainer_coaching/coaching_progress_comparison/components/TrainerCoachingProgressComparisonProgressTrackingComparisonEmptyState';
 
 import TrainerInfrastructureTooltip from '@/app/frontend_trainer/trainer_coaching/coaching_progress_comparison/components/TrainerCoachingProgressComparisonTrainerInfrastructureTooltip';
@@ -50,11 +51,69 @@ export default function TrainerProgressTrackingComparisonTable({ snapshots }: Tr
   const t = useTranslations('TRAINER_PROGRESS_TRACKING');
   if (snapshots.length === 0) return <TrainerProgressTrackingComparisonEmptyState />;
 
+  const TABLE_COLUMN_COUNT = 9;
+
   return (
-    <div className="bg-card rounded-xl border border-border overflow-hidden">
-      <div className="px-5 py-3.5 border-b border-border"><h3 className="text-sm font-semibold text-primary">{t('TEXT_MEMBER_COMPARISON_LATEST_SNAPSHOT')}</h3><p className="text-xs text-secondary mt-0.5">{t('TEXT_CHANGE_FROM_FIRST_TO_LATEST_ENTRY')}</p></div>
+    <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
+      <div className="px-5 py-3.5 border-b border-border bg-header">
+        <h3 className="text-sm font-semibold text-primary">{t('TEXT_MEMBER_COMPARISON_LATEST_SNAPSHOT')}</h3>
+        <p className="text-xs text-secondary mt-0.5">{t('TEXT_CHANGE_FROM_FIRST_TO_LATEST_ENTRY')}</p>
+      </div>
       <div className="hidden md:block overflow-x-auto">
-        <table className="w-full text-sm"><thead><tr className="border-b border-border bg-surface-highlight" data-testid="trainer_progress_tracking-TrainerProgressTrackingComparisonTable-row-1">{['TEXT_MEMBER', 'TEXT_TREND', 'TEXT_WEIGHT_KG', 'TEXT_BMI', 'TEXT_BODY_FAT_PERCENT', 'TEXT_MUSCLE_MASS_KG', 'TEXT_DELTA_WEIGHT', 'TEXT_DELTA_MUSCLE', 'TEXT_ENTRIES'].map((key) => <th key={key} scope="col" className="px-4 py-3 text-start text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap">{t(key)}</th>)}</tr></thead><tbody className="divide-y divide-border">{snapshots.map((snapshot) => { const trend = TREND_CONFIG[snapshot.trend]; const TrendIcon = trend.icon; return <tr key={snapshot.memberId} className="hover:bg-surface-hover motion-safe:transition-colors motion-safe:duration-base" data-testid="trainer_progress_tracking-TrainerProgressTrackingComparisonTable-row-2"><td className="px-4 py-3 font-medium text-primary whitespace-nowrap"><div className="flex items-center gap-2"><div className="w-7 h-7 rounded-full bg-primary-subtle flex items-center justify-center text-primary text-xs font-bold shrink-0" aria-hidden="true">{snapshot.memberName.charAt(0)}</div>{snapshot.memberName}</div></td><td className="px-4 py-3"><span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border ${trend.cls}`}><TrendIcon size={18} strokeWidth={2} aria-hidden="true" />{t(trend.labelKey)}</span></td><td className="px-4 py-3 text-primary">{snapshot.latestWeightKg == null ? displayValue(snapshot.latestWeightKg) : TrainerProgressTrackingFormatNumber(snapshot.latestWeightKg, locale)}</td><td className="px-4 py-3 text-primary">{snapshot.latestBmi == null ? displayValue(snapshot.latestBmi) : TrainerProgressTrackingFormatNumber(snapshot.latestBmi, locale)}</td><td className="px-4 py-3 text-primary">{snapshot.latestBodyFatPercent == null ? '—' : `${TrainerProgressTrackingFormatNumber(snapshot.latestBodyFatPercent, locale)}%`}</td><td className="px-4 py-3 text-primary">{snapshot.latestMuscleMassKg == null ? displayValue(snapshot.latestMuscleMassKg) : TrainerProgressTrackingFormatNumber(snapshot.latestMuscleMassKg, locale)}</td><td className="px-4 py-3"><TrainerProgressTrackingComparisonDelta value={snapshot.weightChangeKg} lowerIsBetter={true} /></td><td className="px-4 py-3"><TrainerProgressTrackingComparisonDelta value={snapshot.muscleMassChange} lowerIsBetter={false} /></td><td className="px-4 py-3 text-secondary">{TrainerProgressTrackingFormatNumber(snapshot.totalEntries, locale)}</td></tr>; })}</tbody></table>
+        <div className="max-h-[640px] overflow-auto">
+          <table className="w-full text-sm">
+            <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+              <tr data-testid="trainer_progress_tracking-TrainerProgressTrackingComparisonTable-row-1">
+                {['TEXT_MEMBER', 'TEXT_TREND', 'TEXT_WEIGHT_KG', 'TEXT_BMI', 'TEXT_BODY_FAT_PERCENT', 'TEXT_MUSCLE_MASS_KG', 'TEXT_DELTA_WEIGHT', 'TEXT_DELTA_MUSCLE', 'TEXT_ENTRIES'].map((key, index) => (
+                  <th
+                    key={key}
+                    scope="col"
+                    className={`px-4 py-3 text-start text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
+                      index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    }`}
+                  >
+                    {t(key)}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {snapshots.map((snapshot) => {
+                const trend = TREND_CONFIG[snapshot.trend];
+                const TrendIcon = trend.icon;
+                return (
+                  <tr
+                    key={snapshot.memberId}
+                    className="hover:bg-surface-highlight/50 transition-colors group"
+                    data-testid="trainer_progress_tracking-TrainerProgressTrackingComparisonTable-row-2"
+                  >
+                    <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 font-medium text-primary whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
+                      <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-full bg-primary-subtle flex items-center justify-center text-primary text-xs font-bold shrink-0" aria-hidden="true">
+                          {snapshot.memberName.charAt(0)}
+                        </div>
+                        <span>{snapshot.memberName}</span>
+                        <CopyButton value={snapshot.memberName} />
+                      </div>
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border ${trend.cls}`}>
+                        <TrendIcon size={18} strokeWidth={2} aria-hidden="true" />{t(trend.labelKey)}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-primary">{snapshot.latestWeightKg == null ? displayValue(snapshot.latestWeightKg) : TrainerProgressTrackingFormatNumber(snapshot.latestWeightKg, locale)}</td>
+                    <td className="px-4 py-3 text-primary">{snapshot.latestBmi == null ? displayValue(snapshot.latestBmi) : TrainerProgressTrackingFormatNumber(snapshot.latestBmi, locale)}</td>
+                    <td className="px-4 py-3 text-primary">{snapshot.latestBodyFatPercent == null ? '—' : `${TrainerProgressTrackingFormatNumber(snapshot.latestBodyFatPercent, locale)}%`}</td>
+                    <td className="px-4 py-3 text-primary">{snapshot.latestMuscleMassKg == null ? displayValue(snapshot.latestMuscleMassKg) : TrainerProgressTrackingFormatNumber(snapshot.latestMuscleMassKg, locale)}</td>
+                    <td className="px-4 py-3"><TrainerProgressTrackingComparisonDelta value={snapshot.weightChangeKg} lowerIsBetter={true} /></td>
+                    <td className="px-4 py-3"><TrainerProgressTrackingComparisonDelta value={snapshot.muscleMassChange} lowerIsBetter={false} /></td>
+                    <td className="px-4 py-3 text-secondary">{TrainerProgressTrackingFormatNumber(snapshot.totalEntries, locale)}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
       <div className="md:hidden space-y-3 p-3">
         {snapshots.map((snapshot) => { const trend = TREND_CONFIG[snapshot.trend]; const TrendIcon = trend.icon; return <article key={snapshot.memberId} className="bg-card rounded-xl border border-border p-4 shadow-card" data-testid={`trainer-progress-tracking-comparison-table-card-${snapshot.memberId}`}>

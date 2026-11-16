@@ -10,6 +10,7 @@ import { ArrowDown, ArrowUp, ArrowUpDown, Edit2, Loader2, Trash2 } from 'lucide-
 
 import { useTranslations } from 'next-intl';
 
+import CopyButton from '@/components/ui/CopyButton';
 import { TRAINER_INFRASTRUCTURE_ITEMS_PER_PAGE } from '@/app/frontend_trainer/trainer_coaching/coaching_exercise_management/utils/TrainerCoachingExerciseManagementTrainerInfrastructureConstants';
 
 import { TrainerInfrastructureUserSafeError } from '@/app/frontend_trainer/trainer_coaching/coaching_exercise_management/utils/TrainerCoachingExerciseManagementTrainerInfrastructureUserSafeError';
@@ -96,6 +97,7 @@ export default function TrainerWorkoutExerciseTable() {
   if (isPending) return <TrainerInfrastructureTableSkeleton rows={6} columns={TRAINER_WORKOUT_EXERCISE_TABLE_HEADERS.length} />;
   if (isError) return <div role="alert" className="text-center py-16 bg-card rounded-2xl border border-border" data-testid="trainer_workout-workout-exercise_table_unable_to_load_exercises_right_now"><p className="text-danger font-medium" data-testid="trainer_workout-exercise-table_error_state">{t('TEXT_UNABLE_TO_LOAD_EXERCISES_RIGHT_NOW')}</p><button type="button" onClick={() => void refetch()} disabled={isFetching} className="mt-3 min-h-11 min-w-28 inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-primary text-on-primary font-semibold motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_workout-trainerworkoutexercisetable-button_1">{isFetching ? <><Loader2 size={18} className="motion-safe:animate-spin" aria-hidden="true" strokeWidth={2}/>{t('TEXT_RETRYING')}</> : t('TEXT_RETRY')}</button><p className="text-xs mt-2 text-secondary">{TrainerInfrastructureUserSafeError(error, t('TEXT_UNABLE_TO_LOAD_EXERCISES_RIGHT_NOW'))}</p></div>;
 
+  const TABLE_COLUMN_COUNT = TRAINER_WORKOUT_EXERCISE_TABLE_HEADERS.length;
   const headers: Array<{ label: string; field?: TrainerWorkoutSortField }> = [
     { label: t(TRAINER_WORKOUT_EXERCISE_TABLE_HEADERS[0]!.labelKey), field: TRAINER_WORKOUT_SORT_FIELDS.NAME },
     { label: t(TRAINER_WORKOUT_EXERCISE_TABLE_HEADERS[1]!.labelKey), field: TRAINER_WORKOUT_SORT_FIELDS.CATEGORY },
@@ -104,11 +106,85 @@ export default function TrainerWorkoutExerciseTable() {
     { label: t(TRAINER_WORKOUT_EXERCISE_TABLE_HEADERS[4]!.labelKey) },
   ];
 
-  return <div className="flex flex-col h-full min-h-96">
-    <div className="hidden md:block overflow-x-auto flex-1"><table className="w-full"><thead className="bg-surface-highlight"><tr data-testid="trainer_workout-TrainerWorkoutExerciseTable-row-1">{headers.map((header) => <th key={header.label} scope="col" aria-sort={header.field ? (sortBy === header.field ? (sortDirection === 'asc' ? 'ascending' : 'descending') : 'none') : undefined} className="text-start text-xs font-semibold text-secondary uppercase tracking-wider px-4 py-3">{header.field ? <button type="button" onClick={() => setSort(header.field!)} aria-label={`${header.label}: ${t(sortLabel(header.field, sortBy, sortDirection))}`} className="min-w-11 min-h-11 inline-flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring rounded motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid={`trainer_workout-exercise-table-sort-${header.field}`}>{header.label}{sortBy === header.field ? sortDirection === 'asc' ? <ArrowUp size={18} aria-hidden="true" strokeWidth={2}/> : <ArrowDown size={18} aria-hidden="true" strokeWidth={2}/> : <ArrowUpDown size={18} aria-hidden="true" className="text-secondary" strokeWidth={2}/>}</button> : header.label}</th>)}</tr></thead><tbody className="divide-y divide-border">{exercises.map((exercise) => <tr key={exercise.id} className="hover:bg-surface-hover motion-safe:transition-colors motion-safe:duration-base focus-within:bg-surface-hover" data-testid={`trainer_workout-exercise-table_row${exercise.id}`}><td className="px-4 py-3 text-sm font-medium text-primary"><TrainerInfrastructureTooltip content={String(displayValue(exercise.name))}><span className="truncate max-w-xs inline-block">{displayValue(exercise.name)}</span></TrainerInfrastructureTooltip></td><td className="px-4 py-3 text-sm text-secondary">{Array.isArray(exercise.muscleGroup) ? displayValue(exercise.muscleGroup.join(', ')) : displayValue(exercise.muscleGroup)}</td><td className="px-4 py-3"><span className="text-xs bg-input text-secondary border border-border px-2 py-1 rounded-full">{displayValue(exercise.equipment)}</span></td><td className="px-4 py-3"><span className={`text-xs px-2.5 py-0.5 rounded-full font-semibold ${TRAINER_WORKOUT_DIFFICULTY_STYLES[exercise.difficulty as keyof typeof TRAINER_WORKOUT_DIFFICULTY_STYLES] ?? 'bg-input text-secondary'}`}>{displayValue(exercise.difficulty)}</span></td><td className="px-4 py-3"><div className="flex gap-1"><button type="button" aria-label={t('TEXT_EDIT_EXERCISE_ARIA', { name: exercise.name })} title={t('TEXT_EDIT_EXERCISE_ARIA', { name: exercise.name })} onClick={(event) => { event.stopPropagation(); openExerciseEditor(exercise.id); }} className="min-w-11 min-h-11 inline-flex items-center justify-center p-1.5 text-secondary hover:text-primary hover:bg-input rounded-md motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid={`trainer_workout-exercise-table-edit-${exercise.id}`}><Edit2 size={18} strokeWidth={2} aria-hidden="true" /></button><button type="button" aria-label={t('TEXT_DELETE_EXERCISE_ARIA', { name: exercise.name })} title={t('TEXT_DELETE_EXERCISE_ARIA', { name: exercise.name })} onClick={(event) => { event.stopPropagation(); void handleDelete(exercise.id); }} className="min-w-11 min-h-11 inline-flex items-center justify-center p-1.5 text-secondary hover:text-danger hover:bg-danger-bg rounded-md motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid={`trainer_workout-exercise-table-delete-${exercise.id}`}><Trash2 size={18} strokeWidth={2} aria-hidden="true" /></button></div></td></tr>)}{exercises.length === 0 && <tr data-testid="trainer_workout-TrainerWorkoutExerciseTable-row-2"><td colSpan={TRAINER_WORKOUT_EXERCISE_TABLE_HEADERS.length}><TrainerWorkoutExerciseEmptyState search={search} /></td></tr>}</tbody></table></div>
+  return (
+    <div className="flex flex-col h-full min-h-96 gap-4">
+      <div className="hidden md:block flex-1">
+        <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+          <div className="max-h-[640px] overflow-auto">
+            <table className="w-full">
+              <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+                <tr data-testid="trainer_workout-TrainerWorkoutExerciseTable-row-1">
+                  {headers.map((header, index) => (
+                    <th
+                      key={header.label}
+                      scope="col"
+                      aria-sort={header.field ? (sortBy === header.field ? (sortDirection === 'asc' ? 'ascending' : 'descending') : 'none') : undefined}
+                      className={`text-start text-xs font-semibold text-secondary uppercase tracking-wider px-4 py-3 whitespace-nowrap ${
+                        index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                      }`}
+                    >
+                      {header.field ? (
+                        <button
+                          type="button"
+                          onClick={() => setSort(header.field!)}
+                          aria-label={`${header.label}: ${t(sortLabel(header.field, sortBy, sortDirection))}`}
+                          className="min-w-11 min-h-11 inline-flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring rounded motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+                          data-testid={`trainer_workout-exercise-table-sort-${header.field}`}
+                        >
+                          {header.label}
+                          {sortBy === header.field ? (
+                            sortDirection === 'asc' ? <ArrowUp size={18} aria-hidden="true" strokeWidth={2}/> : <ArrowDown size={18} aria-hidden="true" strokeWidth={2}/>
+                          ) : (
+                            <ArrowUpDown size={18} aria-hidden="true" className="text-secondary" strokeWidth={2}/>
+                          )}
+                        </button>
+                      ) : (
+                        header.label
+                      )}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {exercises.map((exercise) => (
+                  <tr
+                    key={exercise.id}
+                    className="hover:bg-surface-highlight/50 transition-colors group focus-within:bg-surface-highlight/50"
+                    data-testid={`trainer_workout-exercise-table_row${exercise.id}`}
+                  >
+                    <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-medium text-primary whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
+                      <div className="flex items-center gap-2">
+                        <TrainerInfrastructureTooltip content={String(displayValue(exercise.name))}>
+                          <span className="truncate max-w-xs inline-block">{displayValue(exercise.name)}</span>
+                        </TrainerInfrastructureTooltip>
+                        <CopyButton value={String(exercise.name ?? '')} />
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-sm text-secondary">{Array.isArray(exercise.muscleGroup) ? displayValue(exercise.muscleGroup.join(', ')) : displayValue(exercise.muscleGroup)}</td>
+                    <td className="px-4 py-3"><span className="text-xs bg-input text-secondary border border-border px-2 py-1 rounded-full">{displayValue(exercise.equipment)}</span></td>
+                    <td className="px-4 py-3"><span className={`text-xs px-2.5 py-0.5 rounded-full font-semibold ${TRAINER_WORKOUT_DIFFICULTY_STYLES[exercise.difficulty as keyof typeof TRAINER_WORKOUT_DIFFICULTY_STYLES] ?? 'bg-input text-secondary'}`}>{displayValue(exercise.difficulty)}</span></td>
+                    <td className="px-4 py-3">
+                      <div className="flex gap-1">
+                        <button type="button" aria-label={t('TEXT_EDIT_EXERCISE_ARIA', { name: exercise.name })} title={t('TEXT_EDIT_EXERCISE_ARIA', { name: exercise.name })} onClick={(event) => { event.stopPropagation(); openExerciseEditor(exercise.id); }} className="min-w-11 min-h-11 inline-flex items-center justify-center p-1.5 text-secondary hover:text-primary hover:bg-input rounded-md motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid={`trainer_workout-exercise-table-edit-${exercise.id}`}><Edit2 size={18} strokeWidth={2} aria-hidden="true" /></button>
+                        <button type="button" aria-label={t('TEXT_DELETE_EXERCISE_ARIA', { name: exercise.name })} title={t('TEXT_DELETE_EXERCISE_ARIA', { name: exercise.name })} onClick={(event) => { event.stopPropagation(); void handleDelete(exercise.id); }} className="min-w-11 min-h-11 inline-flex items-center justify-center p-1.5 text-secondary hover:text-danger hover:bg-danger-bg rounded-md motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid={`trainer_workout-exercise-table-delete-${exercise.id}`}><Trash2 size={18} strokeWidth={2} aria-hidden="true" /></button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+                {exercises.length === 0 && (
+                  <tr data-testid="trainer_workout-TrainerWorkoutExerciseTable-row-2">
+                    <td colSpan={TABLE_COLUMN_COUNT}><TrainerWorkoutExerciseEmptyState search={search} /></td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 
     <div className="md:hidden space-y-3 p-3">{exercises.length === 0 ? <TrainerWorkoutExerciseEmptyState search={search} /> : exercises.map((exercise) => <article key={exercise.id} className="bg-card rounded-xl border border-border p-4 shadow-card" data-testid={`trainer_workout-exercise-table_card${exercise.id}`}><div className="flex items-start justify-between gap-3"><div className="min-w-0"><TrainerInfrastructureTooltip content={String(displayValue(exercise.name))}><h3 className="font-semibold text-primary truncate">{displayValue(exercise.name)}</h3></TrainerInfrastructureTooltip><p className="text-xs text-secondary">{t('TEXT_EXERCISE')}</p></div><span className={`shrink-0 inline-flex px-2 py-1 rounded-full text-xs font-semibold ${TRAINER_WORKOUT_DIFFICULTY_STYLES[exercise.difficulty as keyof typeof TRAINER_WORKOUT_DIFFICULTY_STYLES] ?? 'bg-input text-secondary'}`}>{displayValue(exercise.difficulty)}</span></div><div className="mt-4 space-y-3 text-sm"><p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_PRIMARY_MUSCLE')}</span><span className="text-primary">{Array.isArray(exercise.muscleGroup) ? displayValue(exercise.muscleGroup.join(', ')) : displayValue(exercise.muscleGroup)}</span></p><p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_EQUIPMENT')}</span><span className="text-primary">{displayValue(exercise.equipment)}</span></p></div><div className="mt-4 pt-3 border-t border-border flex gap-2"><button type="button" onClick={() => { setEditExerciseId(exercise.id); setShowExModal(true); }} className="min-h-11 flex-1 inline-flex items-center justify-center gap-2 rounded-lg border border-border text-primary hover:bg-input focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" aria-label={t('TEXT_EDIT_EXERCISE_ARIA', { name: exercise.name })} data-testid={`trainer_workout-exercise-table-mobile-edit-${exercise.id}`}><Edit2 size={18} strokeWidth={2} aria-hidden="true"/>{t('TEXT_EDIT_EXERCISE')}</button><button type="button" onClick={() => void handleDelete(exercise.id)} className="min-h-11 flex-1 inline-flex items-center justify-center gap-2 rounded-lg bg-danger text-on-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" aria-label={t('TEXT_DELETE_EXERCISE_ARIA', { name: exercise.name })} data-testid={`trainer_workout-exercise-table-mobile-delete-${exercise.id}`}><Trash2 size={18} strokeWidth={2} aria-hidden="true"/>{t('TEXT_DELETE')}</button></div></article>)}</div>
     <TrainerInfrastructurePagination currentPage={page} totalPages={totalPages} totalItems={totalExercises} itemsPerPage={TRAINER_INFRASTRUCTURE_ITEMS_PER_PAGE} onPageChange={setPage}/>
-  </div>;
+    </div>
+  );
 }
 

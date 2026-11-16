@@ -26,12 +26,17 @@ export default function TrainerAttendanceSortableHeader({
   sortDirection,
   onSort,
   sortLabel,
+  className = '',
 }: TrainerAttendanceSortableHeaderProps) {
   const active = field === sortBy;
   const Icon = active ? (sortDirection === 'asc' ? ArrowUp : ArrowDown) : ArrowUpDown;
 
   return (
-    <th scope="col" aria-sort={active ? (sortDirection === 'asc' ? 'ascending' : 'descending') : 'none'} className="px-4 py-3 text-start text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap">
+    <th
+      scope="col"
+      aria-sort={active ? (sortDirection === 'asc' ? 'ascending' : 'descending') : 'none'}
+      className={`px-4 py-3 text-start text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${className}`}
+    >
       <button
         type="button"
         onClick={() => onSort(field)}
