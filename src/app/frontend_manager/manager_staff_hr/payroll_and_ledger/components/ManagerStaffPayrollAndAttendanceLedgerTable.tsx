@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 import { useTranslations, useLocale } from 'next-intl';
 
+import CopyButton from '@/components/ui/CopyButton';
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
 import ManagerSearchableDropdown from '@/components/ui/manager_searchable_dropdown/ManagerSearchableDropdown';
 
@@ -112,7 +113,12 @@ export default function ManagerStaffPayrollAndAttendanceLedgerTable() {
                   return (
                     ledger.map(l => (
                       <tr key={l.id} className="hover:bg-surface-highlight/50 transition-colors group">
-                        <td className="sticky start-0 z-10 bg-card border-e border-border p-4 text-text-primary whitespace-nowrap">{ManagerStaffPayrollAndAttendanceFormatDate(l.date)}</td>
+                        <td className="sticky start-0 z-10 bg-card border-e border-border p-4 text-text-primary whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
+                          <div className="flex items-center gap-2">
+                            <span>{ManagerStaffPayrollAndAttendanceFormatDate(l.date)}</span>
+                            <CopyButton value={ManagerStaffPayrollAndAttendanceFormatDate(l.date)} />
+                          </div>
+                        </td>
                         <td className="p-4">
                           <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium 
                             ${(() => { if (l.type.includes('Advance')) { return 'bg-danger text-on-danger'; } return (() => { if (l.type.includes('Salary Generated')) { return 'bg-info text-on-info'; } return (() => { if (l.type.includes('Due')) { return 'bg-warning text-on-warning'; } return 'bg-success text-on-success'; })(); })(); })()}`} data-testid="manager_hr-managerhrledgertable-status-badge-1">

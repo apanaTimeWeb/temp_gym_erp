@@ -4,6 +4,7 @@
 import { Download } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
+import CopyButton from '@/components/ui/CopyButton';
 import ManagerStaffAttendanceEmptyState from '@/app/frontend_manager/manager_staff_hr/staff_attendance/components/ManagerStaffAttendanceEmptyState';
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
 import ManagerSearchableDropdown from '@/components/ui/manager_searchable_dropdown/ManagerSearchableDropdown';
@@ -179,7 +180,12 @@ export default function ManagerStaffPayrollAndAttendanceAttendanceHistory() {
                 ) : (
                   history.map((record) => (
                     <tr key={`${record.date}-${record.status}`} className="hover:bg-surface-highlight/50 transition-colors group">
-                      <td className="sticky start-0 z-10 bg-card border-e border-border p-4 text-text-primary whitespace-nowrap">{ManagerStaffPayrollAndAttendanceFormatDate(record.date, locale)}</td>
+                      <td className="sticky start-0 z-10 bg-card border-e border-border p-4 text-text-primary whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
+                        <div className="flex items-center gap-2">
+                          <span>{ManagerStaffPayrollAndAttendanceFormatDate(record.date, locale)}</span>
+                          <CopyButton value={ManagerStaffPayrollAndAttendanceFormatDate(record.date, locale)} />
+                        </div>
+                      </td>
                       <td className="p-4">
                         <span
                           data-testid={`manager_hr-manager-hr-attendance-history-status-${record.date}-${record.status}`}

@@ -3,6 +3,7 @@
 
 import { useTranslations } from 'next-intl';
 
+import CopyButton from '@/components/ui/CopyButton';
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
 import ManagerReportsOverviewEmptyState from '@/app/frontend_manager/manager_reports_referrals/reports_overview/components/ManagerReportsOverviewEmptyState';
 import { useManagerReportsOverviewLogic } from '@/app/frontend_manager/manager_reports_referrals/reports_overview/hooks/useManagerReportsOverviewLogic';
@@ -47,7 +48,12 @@ export function ManagerReportsOverviewAttendanceTable() {
               ) : (
                 data.map((d) => (
                   <tr key={d.date} className="hover:bg-surface-highlight/50 transition-colors group">
-                    <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-3.5 text-sm text-text-primary whitespace-nowrap">{d.date}</td>
+                    <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-3.5 text-sm text-text-primary whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
+                      <div className="flex items-center gap-2">
+                        <span>{d.date}</span>
+                        <CopyButton value={d.date} />
+                      </div>
+                    </td>
                     <td className="px-5 py-3.5 text-sm text-success-text font-semibold whitespace-nowrap">{ManagerReportsOverviewFormatNumber(d.present)}</td>
                     <td className="px-5 py-3.5 text-sm text-danger-text whitespace-nowrap">{ManagerReportsOverviewFormatNumber(d.absent)}</td>
                     <td className="px-5 py-3.5 text-sm font-semibold text-text-primary whitespace-nowrap">{ManagerReportsOverviewFormatPercent(d.rate)}</td>

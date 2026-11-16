@@ -3,6 +3,7 @@
 
 import { useTranslations, useLocale } from 'next-intl';
 
+import CopyButton from '@/components/ui/CopyButton';
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
 import { ManagerEnvConfig } from '@/app/frontend_manager/manager_infrastructure/constants/ManagerInfrastructureEnvConfig';
 
@@ -60,8 +61,11 @@ export function ManagerReportsOverviewExpensesTable() {
                   const style = EXPENSE_CATEGORY_STYLES[d.category] ?? { bg: 'bg-input', text: 'text-text-secondary' };
                   return (
                     <tr key={d.category} className="hover:bg-surface-highlight/50 transition-colors group">
-                      <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-3.5 whitespace-nowrap">
-                        <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${style.bg} ${style.text}`}>{d.category}</span>
+                      <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-3.5 whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
+                        <div className="flex items-center gap-2">
+                          <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${style.bg} ${style.text}`}>{d.category}</span>
+                          <CopyButton value={d.category} />
+                        </div>
                       </td>
                       <td className="px-5 py-3.5 text-sm font-semibold text-text-primary whitespace-nowrap">{formatReportCurrency(d.amount)}</td>
                       <td className="px-5 py-3.5 whitespace-nowrap">

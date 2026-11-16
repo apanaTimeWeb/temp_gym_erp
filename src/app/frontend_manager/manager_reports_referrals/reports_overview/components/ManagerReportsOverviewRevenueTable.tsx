@@ -3,6 +3,7 @@
 
 import { useTranslations, useLocale } from 'next-intl';
 
+import CopyButton from '@/components/ui/CopyButton';
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
 import { ManagerEnvConfig } from '@/app/frontend_manager/manager_infrastructure/constants/ManagerInfrastructureEnvConfig';
 
@@ -57,7 +58,12 @@ export function ManagerReportsOverviewRevenueTable() {
               ) : (
                 data.map(d => (
                   <tr key={d.month} className="hover:bg-surface-highlight/50 transition-colors group">
-                    <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-3.5 text-sm font-medium text-text-primary whitespace-nowrap">{d.month}</td>
+                    <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-3.5 text-sm font-medium text-text-primary whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
+                      <div className="flex items-center gap-2">
+                        <span>{d.month}</span>
+                        <CopyButton value={d.month} />
+                      </div>
+                    </td>
                     <td className="px-5 py-3.5 text-sm text-success-text font-semibold whitespace-nowrap">{formatReportCurrency(d.revenue)}</td>
                     <td className="px-5 py-3.5 text-sm text-danger-text whitespace-nowrap">{formatReportCurrency(d.expenses)}</td>
                     <td className={`px-5 py-3.5 text-sm font-semibold whitespace-nowrap ${d.profit >= 0 ? 'text-success-text' : 'text-danger-text'}`}>{formatReportCurrency(d.profit)}</td>
