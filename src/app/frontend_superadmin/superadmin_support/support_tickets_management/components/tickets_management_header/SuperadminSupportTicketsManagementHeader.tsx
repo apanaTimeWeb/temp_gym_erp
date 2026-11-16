@@ -84,6 +84,21 @@ export default function SuperadminSupportTicketsManagementHeader({ search, setSe
               </div>
             </div>)}
         </div>
+
+        {(statusFilter !== SUPERADMIN_SUPPORT_TICKETS_ALL_FILTER || priorityFilter !== SUPERADMIN_SUPPORT_TICKETS_ALL_FILTER || search) && (
+          <button
+            type="button"
+            onClick={() => {
+              setSearch('');
+              setStatusFilter(SUPERADMIN_SUPPORT_TICKETS_ALL_FILTER);
+              setPriorityFilter(SUPERADMIN_SUPPORT_TICKETS_ALL_FILTER);
+              onFilterChange();
+            }}
+            className="text-xs text-secondary hover:text-danger font-semibold px-2.5 py-1.5 rounded-lg border border-border hover:bg-input transition-colors min-h-11"
+          >
+            Clear Filters
+          </button>
+        )}
       </div>
     </div>);
 }

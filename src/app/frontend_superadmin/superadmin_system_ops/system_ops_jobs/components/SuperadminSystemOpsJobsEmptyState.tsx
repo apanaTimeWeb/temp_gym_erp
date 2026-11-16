@@ -8,6 +8,8 @@ import type { SuperadminSystemOpsJobsEmptyStateProps } from '@/app/frontend_supe
 
 
 
+const TABLE_COLUMN_COUNT = 7;
+
 /**
  * @description Renders the empty state for the jobs table.
  * @dependencies Consumes feature-local state/data through its declared props and hooks; it does not own unrelated business state.
@@ -16,7 +18,7 @@ import type { SuperadminSystemOpsJobsEmptyStateProps } from '@/app/frontend_supe
 export default function SuperadminSystemOpsJobsEmptyState({ isFiltered }: SuperadminSystemOpsJobsEmptyStateProps) {
   const t = useTranslations('superadmin_system_ops_jobs');
     return (<tr data-testid="superadmin_system_ops_jobs-superadmin-system-ops-jobs-empty-state-jobs-empty-state-empty">
-      <td colSpan={7} className="py-16" data-mobile-label={t('ui.mobile_field_1')} data-testid="superadmin_system_ops_jobs-superadmin-system-ops-jobs-empty-state-jobs-empty-state-empty-2">
+      <td colSpan={TABLE_COLUMN_COUNT} className="py-16" data-mobile-label={t('ui.mobile_field_1')} data-testid="superadmin_system_ops_jobs-superadmin-system-ops-jobs-empty-state-jobs-empty-state-empty-2">
         <div className="flex flex-col items-center justify-center text-center px-4" data-testid="superadmin_system_ops-systemopsjobsemptystate-state">
           <div className="w-12 h-12 rounded-full bg-floating flex items-center justify-center mb-4">
             <Activity size={18} className="text-secondary"/>

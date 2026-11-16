@@ -18,6 +18,8 @@ interface SuperadminAuditComplianceGlobalAuditFiltersProps {
  */
 export default function SuperadminAuditComplianceGlobalAuditOverviewFilters(props: SuperadminAuditComplianceGlobalAuditFiltersProps) {
   const t = useTranslations('superadmin_audit_compliance_global_audit');
+  const isFiltered = Boolean(props.search || props.severityFilter !== 'ALL' || props.actorTypeFilter !== 'ALL');
+
   return <div className="flex flex-col items-stretch justify-between gap-4 border-b border-border bg-surface-hover p-4 sm:flex-row sm:items-center">
     <div className="relative w-full max-w-md">
       <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" aria-hidden="true"/>
@@ -36,6 +38,19 @@ export default function SuperadminAuditComplianceGlobalAuditOverviewFilters(prop
     <div className="flex flex-wrap items-center gap-3">
       <div role="group" aria-label={t('ui.severity_007cc954')} className="w-48 rounded-lg bg-input"><SearchableDropdown data-testid="superadmin-global-audit-severity-filter" options={props.severityOptions} value={props.severityFilter} onChange={(value) => props.setSeverityFilter(value as AuditSeverityFilter)} className="border-transparent bg-transparent"/></div>
       <div role="group" aria-label={t('ui.actor_origin_ip_ba2d92b2')} className="w-48 rounded-lg bg-input"><SearchableDropdown data-testid="superadmin-global-audit-actor-filter" options={props.actorTypeOptions} value={props.actorTypeFilter} onChange={(value) => props.setActorTypeFilter(value as AuditActorFilter)} className="border-transparent bg-transparent"/></div>
+      {isFiltered && (
+        <button
+          type="button"
+          onClick={() => {
+            props.setSearch('');
+            props.setSeverityFilter('ALL');
+            props.setActorTypeFilter('ALL');
+          }}
+          className="text-xs text-secondary hover:text-danger font-semibold px-2.5 py-1.5 rounded-lg border border-border hover:bg-input transition-colors cursor-pointer"
+        >
+          Reset Filters
+        </button>
+      )}
     </div>
   </div>;
 }
