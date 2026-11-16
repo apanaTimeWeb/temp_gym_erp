@@ -8,9 +8,13 @@ import AdminAttendanceReportsSortIcon from '@/app/frontend_admin/admin_attendanc
 import AdminAttendanceReportsProgressBar from '@/app/frontend_admin/admin_attendance/attendance_reports/components/progress_bar/AdminAttendanceReportsProgressBar';
 import { useAdminAttendanceReportsLogic } from '@/app/frontend_admin/admin_attendance/attendance_reports/hooks/useAdminAttendanceReportsLogic';
 import AdminAttendanceReportsSectionState from '@/app/frontend_admin/admin_attendance/attendance_reports/components/main_view/AdminAttendanceReportsSectionState';
-import { formatNumber, formatPercent1dp } from '@/app/frontend_admin/admin_attendance/attendance_reports/utils/AdminAttendanceReportsFormatters';
-import type { AttendanceSortKey, AdminAttendanceReportsReportData } from '@/app/frontend_admin/admin_attendance/attendance_reports/types/AdminAttendanceReportsTableTypes';
-import { useAdminAttendanceReportsTable } from '@/app/frontend_admin/admin_attendance/attendance_reports/hooks/useAdminAttendanceReportsTable';
+import { formatNumber, formatPercent1dp } from '@/app/frontend_admin\admin_attendance\attendance_reports\utils\AdminAttendanceReportsFormatters';
+import type { AttendanceSortKey, AdminAttendanceReportsReportData } from '@/app/frontend_admin\admin_attendance\attendance_reports\types\AdminAttendanceReportsTableTypes';
+import { useAdminAttendanceReportsTable } from '@/app/frontend_admin\admin_attendance\attendance_reports\hooks\useAdminAttendanceReportsTable';
+import { CopyButton } from '@/components/ui/CopyButton';
+
+const SUMMARY_TABLE_COLUMN_COUNT = 5;
+const HEATMAP_TABLE_COLUMN_COUNT = 8;
 
 /**
  * @description AdminAttendanceReportsTable renders summary and heatmap tables; sorting state is delegated to useAdminAttendanceReportsTable.
@@ -43,23 +47,39 @@ export default function AdminAttendanceReportsTable() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
+      <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
         <div className="px-5 py-4 border-b border-border"><h2 className="text-base font-semibold text-primary">{t('reports.admin_reports_attendance.text_aff29fd842')}</h2></div>
-        <div className="overflow-x-auto">
-          <table data-admin-responsive-table className="w-full">
-            <thead><tr className="bg-surface-highlight">
-              {headers.map((header, index) => (
-                <th key={header.key} className="px-5 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider" aria-sort={sortKey === header.key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}>
-                  <button type="button" onClick={() => handleSort(header.key)} className="inline-flex min-h-11 items-center gap-1.5 rounded text-left select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" aria-label={t('reports.admin_finance_revenue_report.auto_sortBy', { header: header.label })} data-testid={`admin_attendance-admin_attendance-attendance-control-${index}`}>
-                    {header.label}<AdminAttendanceReportsSortIcon column={header.key} sortKey={sortKey} sortDir={sortDir} />
-                  </button>
-                </th>
-              ))}
-            </tr></thead>
+        <div className="max-h-[640px] overflow-auto">
+          <table data-admin-responsive-table className="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border shadow-xs">
+              <tr className="bg-surface-highlight">
+                {headers.map((header, index) => {
+                  const isFirst = index === 0;
+                  return (
+                    <th
+                      key={header.key}
+                      className={`px-5 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
+                        isFirst ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                      }`}
+                      aria-sort={sortKey === header.key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
+                    >
+                      <button type="button" onClick={() => handleSort(header.key)} className="inline-flex min-h-11 items-center gap-1.5 rounded text-left select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" aria-label={t('reports.admin_finance_revenue_report.auto_sortBy', { header: header.label })} data-testid={`admin_attendance-admin_attendance-attendance-control-${index}`}>
+                        {header.label}<AdminAttendanceReportsSortIcon column={header.key} sortKey={sortKey} sortDir={sortDir} />
+                      </button>
+                    </th>
+                  );
+                })}
+              </tr>
+            </thead>
             <tbody className="divide-y divide-border">
-              {rows.length === 0 ? <tr><td colSpan={headers.length}><AdminAttendanceReportsEmptyState title={t('reports.admin_reports_attendance.text_0e47830c90')} description={t('reports.admin_reports_attendance.auto_1d0c4b148c')} /></td></tr> : rows.map((row) => (
-                <tr key={row.gymId} className="hover:bg-surface-highlight motion-safe:transition-colors motion-safe:duration-base">
-                  <td className="px-5 py-4 text-sm font-semibold text-primary">{row.gymName}</td>
+              {rows.length === 0 ? <tr><td colSpan={SUMMARY_TABLE_COLUMN_COUNT}><AdminAttendanceReportsEmptyState title={t('reports.admin_reports_attendance.text_0e47830c90')} description={t('reports.admin_reports_attendance.auto_1d0c4b148c')} /></td></tr> : rows.map((row) => (
+                <tr key={row.gymId} className="hover:bg-surface-highlight motion-safe:transition-colors motion-safe:duration-base group">
+                  <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-highlight border-e border-border px-5 py-4 text-sm font-semibold text-primary">
+                    <div className="flex items-center gap-1.5">
+                      <span>{row.gymName}</span>
+                      <CopyButton value={row.gymName} label="Copy gym name" className="opacity-0 group-hover:opacity-100" />
+                    </div>
+                  </td>
                   <td className="px-5 py-4 text-sm text-primary">{row.avgDailyAttendance}</td>
                   <td className="px-5 py-4 text-sm text-primary">{formatNumber(row.totalCheckIns, locale)}</td>
                   <td className="px-5 py-4"><div className="flex items-center gap-2"><div className="flex-1 max-w-24"><AdminAttendanceReportsProgressBar value={row.attendanceRate} label={t('reports.admin_reports_attendance.auto_attendanceRate', { gym: row.gymName })} variant="success" /></div><span className="text-sm font-semibold text-primary">{formatPercent1dp(row.attendanceRate, locale)}%</span></div></td>
@@ -70,18 +90,48 @@ export default function AdminAttendanceReportsTable() {
           </table>
         </div>
       </div>
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
+      <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
         <div className="px-5 py-4 border-b border-border flex items-center justify-between"><h2 className="text-base font-semibold text-primary">{t('reports.admin_reports_attendance.text_373e6c1e10')}</h2><div className="flex items-center gap-3 text-xs text-secondary"><span>{t('reports.admin_reports_attendance.text_cabfc9d38a')}</span><span>{t('reports.admin_reports_attendance.text_ff8daa2365')}</span><span>{t('reports.admin_reports_attendance.text_c040292c67')}</span><span>{t('reports.admin_reports_attendance.text_4e0fa4378f')}</span></div></div>
-        <div className="p-5 overflow-x-auto"><table data-admin-responsive-table className="w-full"><thead><tr><th className="text-left text-xs font-semibold text-secondary uppercase tracking-wider pb-3 pr-4 w-32">{t('reports.admin_reports_attendance.text_bc4359231d')}</th>{(['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] as const).map((day) => <th key={day} className="text-center text-xs font-semibold text-secondary uppercase tracking-wider pb-3 px-1">{dayLabels[day]}</th>)}</tr></thead><tbody className="divide-y divide-border">{rows.length === 0 ? <tr><td colSpan={8}><AdminAttendanceReportsEmptyState title={t('reports.admin_reports_attendance.text_c221964277')} description={t('reports.admin_reports_attendance.auto_f0707f1ee7')} /></td></tr> : rows.map((gym) => { const heatmap = (reportData as AdminAttendanceReportsReportData).attendanceHeatmap ?? []; const byDay = heatmap.filter((cell) => cell.gymId === gym.gymId); return <tr key={gym.gymId}><td className="text-sm font-medium text-primary pr-4 py-2">{gym.gymName}</td>{(['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] as const).map((day) => {
-              const cell = byDay.find((item) => item.day === day);
-              const rate = cell?.rate;
-              const cellClass = rate === undefined
-                ? 'bg-input text-disabled border border-border'
-                : rate >= 80 ? 'bg-success text-on-success'
-                  : rate >= 60 ? 'bg-warning-bg text-warning'
-                    : rate >= 40 ? 'bg-info-bg text-info' : 'bg-danger text-on-danger border border-border';
-              return <td key={day} className="px-1 py-1"><div className={`w-full h-9 rounded-lg flex items-center justify-center text-xs font-bold ${cellClass}`} aria-label={cell ? `${dayLabels[day]}: ${rate === undefined ? '—' : `${formatPercent1dp(rate, locale)}%`}` : `${dayLabels[day]}: ${t('reports.admin_reports_attendance.text_c221964277')}`}>{rate === undefined ? '—' : `${formatPercent1dp(rate, locale)}%`}</div></td>;
-            })}</tr>; })}</tbody></table></div>
+        <div className="p-5 max-h-[640px] overflow-auto">
+          <table data-admin-responsive-table className="w-full border-collapse">
+            <thead className="sticky top-0 z-20 bg-card border-b border-border shadow-xs">
+              <tr>
+                <th className="sticky start-0 z-30 bg-card border-e border-border text-left text-xs font-semibold text-secondary uppercase tracking-wider pb-3 pr-4 w-32">{t('reports.admin_reports_attendance.text_bc4359231d')}</th>
+                {(['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] as const).map((day) => <th key={day} className="text-center text-xs font-semibold text-secondary uppercase tracking-wider pb-3 px-1">{dayLabels[day]}</th>)}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {rows.length === 0 ? <tr><td colSpan={HEATMAP_TABLE_COLUMN_COUNT}><AdminAttendanceReportsEmptyState title={t('reports.admin_reports_attendance.text_c221964277')} description={t('reports.admin_reports_attendance.auto_f0707f1ee7')} /></td></tr> : rows.map((gym) => {
+                const heatmap = (reportData as AdminAttendanceReportsReportData).attendanceHeatmap ?? [];
+                const byDay = heatmap.filter((cell) => cell.gymId === gym.gymId);
+                return (
+                  <tr key={gym.gymId} className="group">
+                    <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-highlight border-e border-border text-sm font-medium text-primary pr-4 py-2">
+                      <div className="flex items-center gap-1.5">
+                        <span>{gym.gymName}</span>
+                        <CopyButton value={gym.gymName} label="Copy gym name" className="opacity-0 group-hover:opacity-100" />
+                      </div>
+                    </td>
+                    {(['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] as const).map((day) => {
+                      const cell = byDay.find((item) => item.day === day);
+                      const rate = cell?.rate;
+                      const cellClass = rate === undefined
+                        ? 'bg-input text-disabled border border-border'
+                        : rate >= 80 ? 'bg-success text-on-success'
+                          : rate >= 60 ? 'bg-warning-bg text-warning'
+                            : rate >= 40 ? 'bg-info-bg text-info' : 'bg-danger text-on-danger border border-border';
+                      return (
+                        <td key={day} className="px-1 py-1">
+                          <div className={`w-full h-9 rounded-lg flex items-center justify-center text-xs font-bold ${cellClass}`} aria-label={cell ? `${dayLabels[day]}: ${rate === undefined ? '—' : `${formatPercent1dp(rate, locale)}%`}` : `${dayLabels[day]}: ${t('reports.admin_reports_attendance.text_c221964277')}`}>{rate === undefined ? '—' : `${formatPercent1dp(rate, locale)}%`}</div>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

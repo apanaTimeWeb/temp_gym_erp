@@ -16,6 +16,9 @@ import AdminBlacklistEmptyState from '@/app/frontend_admin/admin_members/members
 import { maskSensitiveData } from '@/app/frontend_admin/admin_members/members_blacklist_management/utils/AdminMembersBlacklistManagementMaskSensitiveData';
 import { displayValue } from '@/app/frontend_admin/admin_members/members_blacklist_management/utils/AdminMembersBlacklistManagementDisplayValue';
 import { BLACKLIST_SCOPE_VALUES, BLACKLIST_SCOPE_STYLES, BLACKLIST_STATUS_STYLES } from '@/app/frontend_admin/admin_members/members_blacklist_management/constants/AdminMembersBlacklistManagementConstants';
+import { CopyButton } from '@/components/ui/CopyButton';
+
+const TABLE_COLUMN_COUNT = 8;
 
 const HEADER_KEYS = [
   'blacklist.admin_blacklist_table.member',
@@ -62,30 +65,49 @@ export default function AdminMembersBlacklistManagementTable() {
     else { setSortKey(field); setSortDirection(field === 'blacklistedAt' ? 'desc' : 'asc'); }
   };
 
-  if (status === 'pending') return <AdminNavigationLayoutTableSkeleton rows={5} cols={HEADER_KEYS.length} />;
-  if (status === 'error') return <div role="alert" className="space-y-3 rounded-xl border border-danger bg-danger-bg p-4"><p>{t('blacklist.table.loadError')}</p><button type="button" onClick={() => retry()} className="min-h-11 rounded-lg border border-border px-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="blacklist-management-blacklist-management-table-retry">{t('blacklist.table.retry')}</button></div>;
+  if (status === 'pending') return <AdminNavigationLayoutTableSkeleton rows={5} cols={TABLE_COLUMN_COUNT} />;
+  if (status === 'error') return <div role="alert" className="space-y-3 rounded-2xl border border-danger bg-danger-bg p-4 shadow-card"><p>{t('blacklist.table.loadError')}</p><button type="button" onClick={() => retry()} className="min-h-11 rounded-lg border border-border px-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="blacklist-management-blacklist-management-table-retry">{t('blacklist.table.retry')}</button></div>;
   if (members.length === 0) return <AdminBlacklistEmptyState />;
 
   return (
-    <div className="bg-card rounded-xl border border-border overflow-hidden">
-      <div className="overflow-x-auto">
-        <table data-admin-responsive-table className="w-full">
-          <thead>
-            <tr className="bg-danger-bg">
-              {HEADER_KEYS.map(h => {
+    <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
+      <div className="overflow-x-auto max-h-[640px] overflow-auto">
+        <table data-admin-responsive-table className="w-full text-left border-collapse">
+          <thead className="sticky top-0 z-20 bg-surface-highlight">
+            <tr className="border-b border-border">
+              {HEADER_KEYS.map((h, idx) => {
                 const field = sortableFields[h];
                 const ariaSort = field !== sortKey ? 'none' : sortDirection === 'asc' ? 'ascending' : 'descending';
-                return <th key={h} scope="col" aria-sort={field ? ariaSort : undefined} className="px-4 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap">
-                  {field ? <button type="button" onClick={() => activateSort(field)} className="inline-flex items-center gap-1.5 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label={t(h)} data-testid="blacklist-management-blacklist-management-table-button">{t(h)}<ArrowUpDown size={14} aria-hidden="true" /></button> : t(h)}
-                </th>;
+                return (
+                  <th
+                    key={h}
+                    scope="col"
+                    aria-sort={field ? ariaSort : undefined}
+                    className={`px-4 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
+                      idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    }`}
+                  >
+                    {field ? (
+                      <button type="button" onClick={() => activateSort(field)} className="inline-flex items-center gap-1.5 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label={t(h)} data-testid="blacklist-management-blacklist-management-table-button">
+                        {t(h)}
+                        <ArrowUpDown size={14} aria-hidden="true" />
+                      </button>
+                    ) : (
+                      t(h)
+                    )}
+                  </th>
+                );
               })}
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
             {sortedMembers.map((m: BlacklistedMember , __testIdIndex41) => (
-              <tr key={m.id} className="hover:bg-danger-bg motion-safe:transition-colors group motion-safe:duration-base">
-                <td className="px-4 py-3">
-                  <p className="text-sm font-medium text-primary">{m.memberName}</p>
+              <tr key={m.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3">
+                  <div className="flex items-center gap-1.5">
+                    <p className="text-sm font-medium text-primary">{m.memberName}</p>
+                    <CopyButton text={m.memberName} label={m.memberName} />
+                  </div>
                   <p className="text-xs text-secondary">{t('blacklist.admin_blacklist_table.text_d789a1e992')}{m.memberId}</p>
                 </td>
                 <td className="px-4 py-3">
@@ -109,11 +131,11 @@ export default function AdminMembersBlacklistManagementTable() {
                   </span>
                 </td>
                 <td className="px-4 py-3">
-                  <div className="flex items-center gap-1 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100 motion-safe:transition-opacity motion-safe:duration-base">
-                    <button type="button" onClick={() => toggleBlacklist(m.id)} className="min-h-11 min-w-11 p-1.5 rounded-lg hover:bg-input text-secondary hover:text-primary motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out motion-safe:active:scale-95" aria-label={t('blacklist.admin_blacklist_table.text_e922812370')} data-testid={`admin_blacklist-admin_blacklist-table-click-map41-${__testIdIndex41}-3`}>
+                  <div className="flex items-center gap-1 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100 transition-opacity">
+                    <button type="button" onClick={() => toggleBlacklist(m.id)} className="min-h-11 min-w-11 p-1.5 rounded-lg hover:bg-input text-secondary hover:text-primary transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label={t('blacklist.admin_blacklist_table.text_e922812370')} data-testid={`admin_blacklist-admin_blacklist-table-click-map41-${__testIdIndex41}-3`}>
                       {m.isActive ? <ToggleRight size={18} className="text-danger"  strokeWidth={2}/> : <ToggleLeft size={18}  strokeWidth={2}/>}
                     </button>
-                    <button type="button" onClick={() => removeFromBlacklist(m.id, m.memberName)} className="min-h-11 min-w-11 p-1.5 rounded-lg hover:bg-success-bg text-secondary hover:text-success motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out motion-safe:active:scale-95" aria-label={t('blacklist.admin_blacklist_table.text_ed59206098')} title={t('blacklist.admin_blacklist_table.text_12aabd251c')} data-testid={`admin_blacklist-admin_blacklist-table-click-2-map41-${__testIdIndex41}-4`}>
+                    <button type="button" onClick={() => removeFromBlacklist(m.id, m.memberName)} className="min-h-11 min-w-11 p-1.5 rounded-lg hover:bg-success-bg text-secondary hover:text-success transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label={t('blacklist.admin_blacklist_table.text_ed59206098')} title={t('blacklist.admin_blacklist_table.text_12aabd251c')} data-testid={`admin_blacklist-admin_blacklist-table-click-2-map41-${__testIdIndex41}-4`}>
                       <Unlock size={18}  strokeWidth={2}/>
                     </button>
                   </div>
@@ -123,9 +145,10 @@ export default function AdminMembersBlacklistManagementTable() {
           </tbody>
         </table>
       </div>
-      <div className="border-t border-border">
+      <div className="border-t border-border p-4 bg-surface-highlight/10">
         <AdminNavigationLayoutPagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} totalItems={totalItems} itemsPerPage={10} />
       </div>
     </div>
+  );
   );
 }

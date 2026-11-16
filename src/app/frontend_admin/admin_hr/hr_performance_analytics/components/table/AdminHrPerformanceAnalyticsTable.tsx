@@ -17,6 +17,9 @@ import type {
 } from '@/app/frontend_admin/admin_hr/hr_performance_analytics/types/AdminHrPerformanceAnalyticsTypes';
 
 import type { AdminHrPerformanceTableProps } from '@/app/frontend_admin/admin_hr/hr_performance_analytics/types/AdminHrPerformanceAnalyticsTablePropsTypes';
+import { CopyButton } from '@/components/ui/CopyButton';
+
+const TABLE_COLUMN_COUNT = 7;
 
 
 /**
@@ -36,21 +39,23 @@ export default function AdminHrPerformanceAnalyticsTable({
   const t = useTranslations();
 
   return (
-    <div className="bg-card border border-border rounded-xl overflow-hidden">
-      <div className="overflow-x-auto">
+    <div className="bg-card border border-border rounded-2xl shadow-card overflow-hidden">
+      <div className="overflow-x-auto max-h-[640px] overflow-auto">
         <table data-admin-responsive-table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="bg-surface-highlight border-b border-border">
+          <thead className="sticky top-0 z-20 bg-surface-highlight">
+            <tr className="border-b border-border">
               {PERFORMANCE_TABLE_HEADERS.map((h, index) => (
                 <th
                   key={h.key}
                   scope="col"
-                  className="px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap"
+                  className={`px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
+                    index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                  }`}
                   aria-sort={h.sortable ? (sortKey === h.key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none') : undefined}
                   data-testid={`admin_hr-admin_hr-performance-table-control-map41-${index}-1`}
                 >
                   {h.sortable ? (
-                    <button type="button" onClick={() => onSort(h.key as PerformanceSortKey)} className="inline-flex min-h-11 items-center gap-1.5 text-left select-none hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" aria-label={t('hr.AdminAuditRepair.sortPerformanceBy', { column: t(h.labelKey) })} data-testid="hr-performance-analytics-hr-performance-analytics-table-on-sort">
+                    <button type="button" onClick={() => onSort(h.key as PerformanceSortKey)} className="inline-flex min-h-11 items-center gap-1.5 text-left select-none hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label={t('hr.AdminAuditRepair.sortPerformanceBy', { column: t(h.labelKey) })} data-testid="hr-performance-analytics-hr-performance-analytics-table-on-sort">
                       {t(h.labelKey)}
                       <AdminHrPerformanceTableSortIcon column={h.key} sortKey={sortKey} sortDir={sortDir} />
                     </button>
@@ -62,20 +67,23 @@ export default function AdminHrPerformanceAnalyticsTable({
           <tbody className="divide-y divide-border">
             {data.length === 0 ? (
               <tr>
-                <td colSpan={7}><AdminHrEmptyState title={t('hr.AdminHrPerformanceTable.text_04f991ef9b')} description={t('hr.AdminHrPerformanceTable.auto_36595ed797')} /></td>
+                <td colSpan={TABLE_COLUMN_COUNT}><AdminHrEmptyState title={t('hr.AdminHrPerformanceTable.text_04f991ef9b')} description={t('hr.AdminHrPerformanceTable.auto_36595ed797')} /></td>
               </tr>
             ) : (
               data.map((staff) => {
                 const statusCfg = PERFORMANCE_STATUS_CONFIG[staff.status];
                 return (
-                  <tr key={staff.id} className="hover:bg-input motion-safe:transition-colors motion-safe:duration-base">
-                    <td className="px-4 py-3.5">
+                  <tr key={staff.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                    <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3.5">
                       <div className="flex items-center gap-2.5">
                         <div className="w-8 h-8 rounded-lg bg-primary-subtle flex items-center justify-center text-primary text-xs font-bold flex-shrink-0">
                           {staff.name.charAt(0)}
                         </div>
                         <div className="min-w-0">
-                          <p className="text-sm font-semibold text-primary truncate">{staff.name}</p>
+                          <div className="flex items-center gap-1.5">
+                            <p className="text-sm font-semibold text-primary truncate">{staff.name}</p>
+                            <CopyButton text={staff.name} label={staff.name} />
+                          </div>
                           <p className="text-xs text-disabled truncate">{staff.branchName}</p>
                         </div>
                       </div>

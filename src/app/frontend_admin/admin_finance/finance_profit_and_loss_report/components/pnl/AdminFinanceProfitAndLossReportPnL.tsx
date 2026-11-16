@@ -10,6 +10,9 @@ import { useAdminFinanceProfitAndLossReportLogic } from '@/app/frontend_admin/ad
 import AdminReportsSectionState from '@/app/frontend_admin/admin_finance/finance_profit_and_loss_report/components/main_view/AdminFinanceProfitAndLossReportSectionState';
 import { AdminFinanceProfitAndLossReportEmptyState as AdminReportsEmptyState } from '@/app/frontend_admin/admin_finance/finance_profit_and_loss_report/components/empty_state/AdminFinanceProfitAndLossReportEmptyState';
 import AdminNavigationLayoutProgressBar from '@/app/frontend_admin/admin_finance/finance_profit_and_loss_report/components/progress_bar/AdminFinanceProfitAndLossReportProgressBar';
+import { CopyButton } from '@/components/ui/CopyButton';
+
+const TABLE_COLUMN_COUNT = 9;
 
 /**
  * AdminFinanceProfitAndLossReportPnL renders the admin reports pn l UI surface and coordinates only the state or handlers required by its owning module.
@@ -28,26 +31,38 @@ export default function AdminFinanceProfitAndLossReportPnL() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
-        <div className="px-5 py-4 border-b border-border">
+      <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
+        <div className="px-5 py-4 border-b border-border bg-surface-highlight/30">
           <h2 className="text-base font-semibold text-primary">{t('reports.admin_finance_profit_and_loss_report.text_abc7e55ec9')}</h2>
           <p className="text-xs text-secondary mt-0.5">{t('reports.admin_finance_profit_and_loss_report.text_c51b793f71')}</p>
         </div>
-        <div className="overflow-x-auto">
-          <table data-admin-responsive-table className="w-full">
-            <thead>
-              <tr className="bg-surface-highlight">
-                {['reports.AdminAuditRepair.gym', 'reports.AdminAuditRepair.totalRevenue', 'reports.AdminAuditRepair.membershipRevenue', 'reports.AdminAuditRepair.storeRevenue', 'reports.AdminAuditRepair.staffCost', 'reports.AdminAuditRepair.operationalCost', 'reports.AdminAuditRepair.totalExpenses', 'reports.AdminAuditRepair.netProfit', 'reports.AdminAuditRepair.margin'].map(h => (
-                  <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap">{t(h)}</th>
+        <div className="overflow-x-auto max-h-[640px] overflow-auto">
+          <table data-admin-responsive-table className="w-full text-left border-collapse">
+            <thead className="sticky top-0 z-20 bg-surface-highlight">
+              <tr className="border-b border-border">
+                {['reports.AdminAuditRepair.gym', 'reports.AdminAuditRepair.totalRevenue', 'reports.AdminAuditRepair.membershipRevenue', 'reports.AdminAuditRepair.storeRevenue', 'reports.AdminAuditRepair.staffCost', 'reports.AdminAuditRepair.operationalCost', 'reports.AdminAuditRepair.totalExpenses', 'reports.AdminAuditRepair.netProfit', 'reports.AdminAuditRepair.margin'].map((h, idx) => (
+                  <th
+                    key={h}
+                    className={`px-4 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
+                      idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    }`}
+                  >
+                    {t(h)}
+                  </th>
                 ))}
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
               {reportData.pnlSummary.length === 0 ? (
-                <tr><td colSpan={9}><AdminReportsEmptyState title={t('reports.admin_finance_profit_and_loss_report.emptyTitle')} description={t('reports.admin_finance_profit_and_loss_report.emptyDescription')} /></td></tr>
+                <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminReportsEmptyState title={t('reports.admin_finance_profit_and_loss_report.emptyTitle')} description={t('reports.admin_finance_profit_and_loss_report.emptyDescription')} /></td></tr>
               ) : reportData.pnlSummary.map((row) => (
-                <tr key={row.gymId} className="hover:bg-surface-highlight motion-safe:transition-colors motion-safe:duration-base">
-                  <td className="px-4 py-4 text-sm font-semibold text-primary whitespace-nowrap">{row.gymName}</td>
+                <tr key={row.gymId} className="hover:bg-surface-highlight/50 transition-colors group">
+                  <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-4 text-sm font-semibold text-primary whitespace-nowrap">
+                    <div className="flex items-center gap-1.5">
+                      <span>{row.gymName}</span>
+                      <CopyButton text={row.gymName} label={row.gymName} />
+                    </div>
+                  </td>
                   <td className="px-4 py-4 text-sm font-semibold text-primary">{AdminFinanceProfitAndLossReportFormatCurrency(row.revenue, undefined, locale)}</td>
                   <td className="px-4 py-4 text-sm text-primary">{AdminFinanceProfitAndLossReportFormatCurrency(row.membershipRevenue, undefined, locale)}</td>
                   <td className="px-4 py-4 text-sm text-primary">{AdminFinanceProfitAndLossReportFormatCurrency(row.storeRevenue, undefined, locale)}</td>
@@ -68,19 +83,21 @@ export default function AdminFinanceProfitAndLossReportPnL() {
                 </tr>
               ))}
             </tbody>
-            {reportData.pnlSummary.length > 0 && <tfoot>
-              <tr className="bg-surface-highlight border-t-2 border-border">
-                <td className="px-4 py-3 text-sm font-bold text-primary">{t('reports.admin_finance_profit_and_loss_report.text_b25928c699')}</td>
-                <td className="px-4 py-3 text-sm font-bold text-primary">{AdminFinanceProfitAndLossReportFormatCurrency(reportData.pnlSummary.reduce((s: number, r) => s + r.revenue, 0), undefined, locale)}</td>
-                <td className="px-4 py-3 text-sm font-bold text-primary">{AdminFinanceProfitAndLossReportFormatCurrency(reportData.pnlSummary.reduce((s: number, r) => s + r.membershipRevenue, 0), undefined, locale)}</td>
-                <td className="px-4 py-3 text-sm font-bold text-primary">{AdminFinanceProfitAndLossReportFormatCurrency(reportData.pnlSummary.reduce((s: number, r) => s + r.storeRevenue, 0), undefined, locale)}</td>
-                <td className="px-4 py-3 text-sm font-bold text-danger">{AdminFinanceProfitAndLossReportFormatCurrency(reportData.pnlSummary.reduce((s: number, r) => s + r.staffCost, 0), undefined, locale)}</td>
-                <td className="px-4 py-3 text-sm font-bold text-danger">{AdminFinanceProfitAndLossReportFormatCurrency(reportData.pnlSummary.reduce((s: number, r) => s + r.operationalCost, 0), undefined, locale)}</td>
-                <td className="px-4 py-3 text-sm font-bold text-danger">{AdminFinanceProfitAndLossReportFormatCurrency(reportData.pnlSummary.reduce((s: number, r) => s + r.totalExpenses, 0), undefined, locale)}</td>
-                <td className="px-4 py-3 text-sm font-bold text-success">{AdminFinanceProfitAndLossReportFormatCurrency(reportData.pnlSummary.reduce((s: number, r) => s + r.netProfit, 0), undefined, locale)}</td>
-                <td className="px-4 py-3" />
-              </tr>
-            </tfoot>}
+            {reportData.pnlSummary.length > 0 && (
+              <tfoot>
+                <tr className="bg-surface-highlight border-t-2 border-border">
+                  <td className="sticky start-0 z-10 bg-surface-highlight border-e border-border px-4 py-3 text-sm font-bold text-primary">{t('reports.admin_finance_profit_and_loss_report.text_b25928c699')}</td>
+                  <td className="px-4 py-3 text-sm font-bold text-primary">{AdminFinanceProfitAndLossReportFormatCurrency(reportData.pnlSummary.reduce((s: number, r) => s + r.revenue, 0), undefined, locale)}</td>
+                  <td className="px-4 py-3 text-sm font-bold text-primary">{AdminFinanceProfitAndLossReportFormatCurrency(reportData.pnlSummary.reduce((s: number, r) => s + r.membershipRevenue, 0), undefined, locale)}</td>
+                  <td className="px-4 py-3 text-sm font-bold text-primary">{AdminFinanceProfitAndLossReportFormatCurrency(reportData.pnlSummary.reduce((s: number, r) => s + r.storeRevenue, 0), undefined, locale)}</td>
+                  <td className="px-4 py-3 text-sm font-bold text-danger">{AdminFinanceProfitAndLossReportFormatCurrency(reportData.pnlSummary.reduce((s: number, r) => s + r.staffCost, 0), undefined, locale)}</td>
+                  <td className="px-4 py-3 text-sm font-bold text-danger">{AdminFinanceProfitAndLossReportFormatCurrency(reportData.pnlSummary.reduce((s: number, r) => s + r.operationalCost, 0), undefined, locale)}</td>
+                  <td className="px-4 py-3 text-sm font-bold text-danger">{AdminFinanceProfitAndLossReportFormatCurrency(reportData.pnlSummary.reduce((s: number, r) => s + r.totalExpenses, 0), undefined, locale)}</td>
+                  <td className="px-4 py-3 text-sm font-bold text-success">{AdminFinanceProfitAndLossReportFormatCurrency(reportData.pnlSummary.reduce((s: number, r) => s + r.netProfit, 0), undefined, locale)}</td>
+                  <td className="px-4 py-3" />
+                </tr>
+              </tfoot>
+            )}
           </table>
         </div>
       </div>

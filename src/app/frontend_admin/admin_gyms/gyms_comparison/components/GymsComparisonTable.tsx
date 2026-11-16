@@ -2,6 +2,7 @@
 
 import { Building2, CheckCircle2, AlertTriangle } from 'lucide-react';
 import type { Branch } from '@/app/frontend_admin/admin_gyms/gyms_branches_directory/types/AdminGymsBranchesDirectoryTypes';
+import { CopyButton } from '@/components/ui/CopyButton';
 
 interface GymsComparisonTableProps {
   branches: Branch[];
@@ -21,11 +22,11 @@ export function GymsComparisonTable({
         <p className="text-xs text-secondary mt-0.5">Comprehensive operational and financial metrics compared across selected gyms</p>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="border-b border-border bg-surface-highlight">
-              <th className="p-4 text-xs font-bold uppercase tracking-wider text-secondary w-64">
+      <div className="overflow-x-auto max-h-[640px] overflow-auto">
+        <table data-admin-responsive-table className="w-full text-left border-collapse">
+          <thead className="sticky top-0 z-20 bg-surface-highlight">
+            <tr className="border-b border-border">
+              <th className="sticky start-0 z-30 bg-surface-highlight border-e border-border p-4 text-xs font-bold uppercase tracking-wider text-secondary w-64">
                 Comparison Metric
               </th>
               {branches.map((b) => (
@@ -33,6 +34,7 @@ export function GymsComparisonTable({
                   <div className="flex items-center gap-1.5">
                     <Building2 size={16} className="text-primary" />
                     <span>{b.name}</span>
+                    <CopyButton text={b.name} label={b.name} />
                   </div>
                   <span className="text-xs font-normal text-secondary">{b.location} ({b.branchCode})</span>
                 </th>
@@ -41,8 +43,8 @@ export function GymsComparisonTable({
           </thead>
           <tbody className="divide-y divide-border text-sm">
             {/* Status */}
-            <tr className="hover:bg-surface-hover motion-safe:transition-colors">
-              <td className="p-4 font-semibold text-secondary">Operational Status</td>
+            <tr className="hover:bg-surface-highlight/50 transition-colors group">
+              <td className="sticky start-0 z-10 bg-card border-e border-border p-4 font-semibold text-secondary">Operational Status</td>
               {branches.map((b) => (
                 <td key={b.id} className="p-4">
                   <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold uppercase ${
@@ -60,8 +62,8 @@ export function GymsComparisonTable({
             {/* Monthly Revenue */}
             {(metricFilter === 'all' || metricFilter === 'financial') && (
               <>
-                <tr className="hover:bg-surface-hover motion-safe:transition-colors bg-card">
-                  <td className="p-4 font-semibold text-secondary">Monthly Collections</td>
+                <tr className="hover:bg-surface-highlight/50 transition-colors group bg-card">
+                  <td className="sticky start-0 z-10 bg-card border-e border-border p-4 font-semibold text-secondary">Monthly Collections</td>
                   {branches.map((b) => (
                     <td key={b.id} className="p-4 font-bold text-success text-base">
                       {formatCurrency(b.revenue)}
@@ -69,8 +71,8 @@ export function GymsComparisonTable({
                   ))}
                 </tr>
 
-                <tr className="hover:bg-surface-hover motion-safe:transition-colors">
-                  <td className="p-4 font-semibold text-secondary">Operating Expenses</td>
+                <tr className="hover:bg-surface-highlight/50 transition-colors group">
+                  <td className="sticky start-0 z-10 bg-card border-e border-border p-4 font-semibold text-secondary">Operating Expenses</td>
                   {branches.map((b) => (
                     <td key={b.id} className="p-4 font-medium text-danger">
                       {formatCurrency(b.expenses)}
@@ -78,8 +80,8 @@ export function GymsComparisonTable({
                   ))}
                 </tr>
 
-                <tr className="hover:bg-surface-hover motion-safe:transition-colors bg-surface-highlight/50">
-                  <td className="p-4 font-semibold text-primary">Net Operating Profit</td>
+                <tr className="hover:bg-surface-highlight/50 transition-colors group bg-surface-highlight/50">
+                  <td className="sticky start-0 z-10 bg-surface-highlight border-e border-border p-4 font-semibold text-primary">Net Operating Profit</td>
                   {branches.map((b) => {
                     const net = b.revenue - b.expenses;
                     return (
@@ -90,8 +92,8 @@ export function GymsComparisonTable({
                   })}
                 </tr>
 
-                <tr className="hover:bg-surface-hover motion-safe:transition-colors">
-                  <td className="p-4 font-semibold text-secondary">Profit Margin %</td>
+                <tr className="hover:bg-surface-highlight/50 transition-colors group">
+                  <td className="sticky start-0 z-10 bg-card border-e border-border p-4 font-semibold text-secondary">Profit Margin %</td>
                   {branches.map((b) => {
                     const margin = Math.round(((b.revenue - b.expenses) / b.revenue) * 100);
                     return (
@@ -111,8 +113,8 @@ export function GymsComparisonTable({
             {/* Operations */}
             {(metricFilter === 'all' || metricFilter === 'operations') && (
               <>
-                <tr className="hover:bg-surface-hover motion-safe:transition-colors">
-                  <td className="p-4 font-semibold text-secondary">Active Members</td>
+                <tr className="hover:bg-surface-highlight/50 transition-colors group">
+                  <td className="sticky start-0 z-10 bg-card border-e border-border p-4 font-semibold text-secondary">Active Members</td>
                   {branches.map((b) => (
                     <td key={b.id} className="p-4 font-bold text-primary">
                       {b.studentsCount} Members
@@ -120,8 +122,8 @@ export function GymsComparisonTable({
                   ))}
                 </tr>
 
-                <tr className="hover:bg-surface-hover motion-safe:transition-colors">
-                  <td className="p-4 font-semibold text-secondary">Total Staff Members</td>
+                <tr className="hover:bg-surface-highlight/50 transition-colors group">
+                  <td className="sticky start-0 z-10 bg-card border-e border-border p-4 font-semibold text-secondary">Total Staff Members</td>
                   {branches.map((b) => (
                     <td key={b.id} className="p-4 text-primary">
                       {b.staffCount} Staff
@@ -129,8 +131,8 @@ export function GymsComparisonTable({
                   ))}
                 </tr>
 
-                <tr className="hover:bg-surface-hover motion-safe:transition-colors">
-                  <td className="p-4 font-semibold text-secondary">Equipments Tracked</td>
+                <tr className="hover:bg-surface-highlight/50 transition-colors group">
+                  <td className="sticky start-0 z-10 bg-card border-e border-border p-4 font-semibold text-secondary">Equipments Tracked</td>
                   {branches.map((b) => (
                     <td key={b.id} className="p-4 text-primary">
                       {b.equipmentCount} Machines
@@ -138,8 +140,8 @@ export function GymsComparisonTable({
                   ))}
                 </tr>
 
-                <tr className="hover:bg-surface-hover motion-safe:transition-colors">
-                  <td className="p-4 font-semibold text-secondary">Occupancy vs Capacity</td>
+                <tr className="hover:bg-surface-highlight/50 transition-colors group">
+                  <td className="sticky start-0 z-10 bg-card border-e border-border p-4 font-semibold text-secondary">Occupancy vs Capacity</td>
                   {branches.map((b) => {
                     const current = b.currentOccupancy ?? 0;
                     const max = b.maxCapacity ?? 100;
@@ -153,8 +155,8 @@ export function GymsComparisonTable({
                   })}
                 </tr>
 
-                <tr className="hover:bg-surface-hover motion-safe:transition-colors">
-                  <td className="p-4 font-semibold text-secondary">Operating Hours</td>
+                <tr className="hover:bg-surface-highlight/50 transition-colors group">
+                  <td className="sticky start-0 z-10 bg-card border-e border-border p-4 font-semibold text-secondary">Operating Hours</td>
                   {branches.map((b) => (
                     <td key={b.id} className="p-4 text-xs text-secondary">
                       {b.openingTime || '06:00'} - {b.closingTime || '22:00'}

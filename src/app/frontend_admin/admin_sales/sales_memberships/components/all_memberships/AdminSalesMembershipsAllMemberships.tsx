@@ -16,6 +16,9 @@ import AdminNavigationLayoutPagination from '@/app/frontend_admin/admin_sales/sa
 import AdminSalesEmptyState from '@/app/frontend_admin/admin_sales/sales_memberships/components/empty_state/AdminSalesMembershipsEmptyState';
 import type { Member } from '@/app/frontend_admin/admin_sales/sales_memberships/types/AdminSalesMembershipsTypes';
 import { Users, CheckCircle, AlertTriangle, XCircle } from 'lucide-react';
+import { CopyButton } from '@/components/ui/CopyButton';
+
+const TABLE_COLUMN_COUNT = 7;
 
 
 
@@ -145,44 +148,56 @@ export default function AdminSalesAnalyticsAllMemberships() {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-xl border border-border">
-        <table data-admin-responsive-table className="w-full">
-          <thead className="bg-input">
-            <tr>
-              {tableHeaders.map(h => (
-                <th key={h} className="text-left text-xs font-semibold text-secondary uppercase tracking-wider px-4 py-3">
-                  {h}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-border">
-            {filtered.map((r: Member , __testIdIndex151) => {
-              const daysLeft = getAdminSalesMembershipsDaysLeft(r.expiryDate);
-              return (
-                <tr key={r.id} className="hover:bg-surface-highlight motion-safe:transition-colors bg-card motion-safe:duration-base">
-                  <td className="px-4 py-3 text-sm font-medium text-primary">{r.name}</td>
-                  <td className="px-4 py-3 text-sm text-secondary">{r.plan?.name ?? `Plan #${r.planId}`}</td>
-                  <td className="px-4 py-3 text-sm text-secondary">{formatDate(r.joinDate, locale)}</td>
-                  <td className="px-4 py-3 text-sm text-secondary">{formatDate(r.expiryDate, locale)}</td>
-                  <td className="px-4 py-3">
-                    <span className={`text-xs px-2.5 py-0.5 rounded-full font-semibold ${
-                      r.status?.toLowerCase() === ADMIN_SALES_MEMBERSHIP_STATUS.ACTIVE
-                        ? 'bg-success-bg text-success-text'
-                        : 'bg-danger-bg text-danger-text'
-                    }`} data-testid={`admin_sales-adminsalesallmemberships-status-1-map151-${__testIdIndex151}-1`}>
-                      {t(ADMIN_SALES_MEMBERSHIP_STATUS_LABEL_KEYS[r.status] ?? r.status)}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-sm font-medium text-primary">{AdminSalesFormatCurrency(r.paidAmount || 0, 'INR', locale)}</td>
-                  <td className={`px-4 py-3 text-sm font-medium ${getDaysLeftColorClass(daysLeft)}`}>
-                    {!Number.isFinite(daysLeft) ? '—' : daysLeft <= 0 ? t('sales.admin_sales_all_memberships.auto_112a3f9892') : `${daysLeft}d`}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+        <div className="max-h-[640px] overflow-auto">
+          <table data-admin-responsive-table className="w-full text-sm">
+            <thead>
+              <tr className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+                {tableHeaders.map((h, hIdx) => (
+                  <th
+                    key={h}
+                    className={`text-left text-xs font-semibold text-secondary uppercase tracking-wider px-4 py-3 whitespace-nowrap ${
+                      hIdx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    }`}
+                  >
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {filtered.map((r: Member , __testIdIndex151) => {
+                const daysLeft = getAdminSalesMembershipsDaysLeft(r.expiryDate);
+                return (
+                  <tr key={r.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                    <td className="px-4 py-3 text-sm font-medium text-primary sticky start-0 z-10 bg-card border-e border-border">
+                      <div className="flex items-center gap-2">
+                        <span>{r.name}</span>
+                        <CopyButton text={r.name} label="Copy name" />
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-sm text-secondary">{r.plan?.name ?? `Plan #${r.planId}`}</td>
+                    <td className="px-4 py-3 text-sm text-secondary whitespace-nowrap">{formatDate(r.joinDate, locale)}</td>
+                    <td className="px-4 py-3 text-sm text-secondary whitespace-nowrap">{formatDate(r.expiryDate, locale)}</td>
+                    <td className="px-4 py-3">
+                      <span className={`text-xs px-2.5 py-0.5 rounded-full font-semibold ${
+                        r.status?.toLowerCase() === ADMIN_SALES_MEMBERSHIP_STATUS.ACTIVE
+                          ? 'bg-success-bg text-success-text'
+                          : 'bg-danger-bg text-danger-text'
+                      }`} data-testid={`admin_sales-adminsalesallmemberships-status-1-map151-${__testIdIndex151}-1`}>
+                        {t(ADMIN_SALES_MEMBERSHIP_STATUS_LABEL_KEYS[r.status] ?? r.status)}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-sm font-medium text-primary whitespace-nowrap">{AdminSalesFormatCurrency(r.paidAmount || 0, 'INR', locale)}</td>
+                    <td className={`px-4 py-3 text-sm font-medium whitespace-nowrap ${getDaysLeftColorClass(daysLeft)}`}>
+                      {!Number.isFinite(daysLeft) ? '—' : daysLeft <= 0 ? t('sales.admin_sales_all_memberships.auto_112a3f9892') : `${daysLeft}d`}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {filtered.length === 0 && (

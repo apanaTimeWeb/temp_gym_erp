@@ -18,6 +18,8 @@ import { adminToast } from '@/app/frontend_admin/admin_billing/billing_coupons_m
 import type { Coupon } from '@/app/frontend_admin/admin_billing/billing_coupons_management/types/AdminBillingCouponsManagementTypes';
 import { COUPON_STATUS, COUPON_STATUS_STYLES, COUPON_STATUS_LABEL_KEYS, COUPON_TABLE_HEADER_KEYS } from '@/app/frontend_admin/admin_billing/billing_coupons_management/constants/AdminBillingCouponsManagementConstants';
 
+const TABLE_COLUMN_COUNT = 7;
+
 
 /**
  * AdminBillingCouponsManagementTable renders the admin coupons table UI surface and coordinates only the state or handlers required by its owning module.
@@ -33,7 +35,7 @@ export default function AdminBillingCouponsManagementTable() {
   const todayLocalKey = format(new Date(), 'yyyy-MM-dd');
   const { coupons, status, error, retry, openEdit, deleteCoupon, toggleCoupon, currentPage, setCurrentPage, totalPages, totalItems } = useAdminCouponsLogic();
 
-  if (status === 'pending') return <AdminNavigationLayoutTableSkeleton rows={6} cols={COUPON_TABLE_HEADER_KEYS.length} />;
+  if (status === 'pending') return <AdminNavigationLayoutTableSkeleton rows={6} cols={TABLE_COLUMN_COUNT} />;
   if (status === 'error') return <div role="alert" className="rounded-lg border border-border bg-danger-bg p-4 text-danger">{t('coupons.admin_coupons_table.loadError')} <button type="button" onClick={() => void retry()} className="ml-3 min-h-11 rounded-md border border-border px-3 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="coupons-management-coupons-management-table-retry">{t('coupons.admin_coupons_table.retry')}</button></div>;
 
   if (coupons.length === 0) return <AdminCouponsEmptyState />;
@@ -53,14 +55,24 @@ export default function AdminBillingCouponsManagementTable() {
   const formatDate = (value: string) => { const parsed = parseISO(value); return isValid(parsed) ? format(parsed, 'PP', { locale: locale.toLowerCase().startsWith('hi') ? hi : enUS }) : value; };
 
   return (
-    <div className="bg-card rounded-xl border border-border overflow-hidden">
-      <div className="overflow-x-auto">
-        <table data-admin-responsive-table className="w-full">
-          <thead>
+    <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
+      <div className="max-h-[640px] overflow-auto">
+        <table data-admin-responsive-table className="w-full text-left border-collapse text-xs sm:text-sm">
+          <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border shadow-xs">
             <tr className="bg-surface-highlight">
-              {COUPON_TABLE_HEADER_KEYS.map((key) => (
-                <th key={key} className="px-5 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap">{t(key)}</th>
-              ))}
+              {COUPON_TABLE_HEADER_KEYS.map((key, index) => {
+                const isFirst = index === 0;
+                return (
+                  <th
+                    key={key}
+                    className={`px-5 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
+                      isFirst ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    }`}
+                  >
+                    {t(key)}
+                  </th>
+                );
+              })}
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
@@ -69,7 +81,7 @@ export default function AdminBillingCouponsManagementTable() {
                 key={coupon.id}
                 className="hover:bg-surface-highlight motion-safe:transition-colors group motion-safe:duration-base"
                 data-testid={`admin_coupons-admin_coupons-table-row-${__testIdIndex54}`}>
-                <td className="px-5 py-4">
+                <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-highlight border-e border-border px-5 py-4">
                   <div className="flex items-center gap-2">
                     <button type="button" onClick={() => openEdit(coupon)} disabled={coupon.status === COUPON_STATUS.EXPIRED || coupon.validUntil < todayLocalKey} aria-label={t('admin_coupons_table.auto_editCoupon', { code: coupon.code })} className="font-mono text-sm font-bold text-primary bg-primary-subtle px-2 py-1 rounded min-h-11 underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid={`admin_coupons-admin_coupons-table-edit-code-${__testIdIndex54}`}>{coupon.code}</button>
                     <button type="button"

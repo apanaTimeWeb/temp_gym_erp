@@ -14,6 +14,9 @@ import { useAdminHrViewModel } from '@/app/frontend_admin/admin_hr/hr_staff_mana
 import { useAdminHrStaffProfileBranches } from '@/app/frontend_admin/admin_hr/hr_staff_management/hooks/useAdminHrStaffManagementStaffProfileBranches';
 import { ChevronDown, ChevronUp, X, Building2, User, Phone, Mail, MapPin, Calendar, Activity, CheckCircle2, Ban, Edit2, IndianRupee, Hash } from 'lucide-react';
 import AdminHrEmptyState from '@/app/frontend_admin/admin_hr/hr_staff_management/components/empty_state/AdminHrStaffManagementEmptyState';
+import { CopyButton } from '@/components/ui/CopyButton';
+
+const PROFILE_BRANCHES_COLUMN_COUNT = 3;
 
 /**
  * AdminHrManagementStaffProfileModal renders the admin hr staff profile modal UI surface and coordinates only the state or handlers required by its owning module.
@@ -147,58 +150,63 @@ export default function AdminHrManagementStaffProfileModal() {
               <h3 className="text-base font-bold text-primary">{t('hr.admin_hr_staff_profile_modal.text_e24e824b68')}{isManager ? t('hr.admin_hr_staff_profile_modal.auto_3e4eca54ae') : t('hr.admin_hr_staff_profile_modal.auto_1c044fc818')}</h3>
             </div>
             
-            <div className="border border-border rounded-xl overflow-hidden">
-              <table data-admin-responsive-table className="w-full text-left border-collapse">
-                <thead className="bg-input">
-                  <tr>
-                    <th className="px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider" aria-sort={branchSortDirection === 'asc' ? 'ascending' : 'descending'}><button type="button" onClick={() => setBranchSortDirection((current) => current === 'asc' ? 'desc' : 'asc')} className="flex min-h-11 min-w-11 items-center gap-1.5 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="admin_hr-admin_hr-staff-profile-modal-control-4">{t('hr.admin_hr_staff_profile_modal.text_1627510b24')}{branchSortDirection === 'asc' ? <ChevronUp size={18} className="text-primary" strokeWidth={2}/> : <ChevronDown size={18} className="text-primary" strokeWidth={2}/>}</button></th>
-                    <th className="px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider">{t('hr.admin_hr_staff_profile_modal.text_d219c68101')}</th>
-                    {isManager && <th className="px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider text-right">{t('hr.admin_hr_staff_profile_modal.text_6d12c8adbe')}</th>}
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-border">
-                  {branchesToRender.map((bId , __testIdIndex170) => {
-                    if (!bId) return null;
-                    const info = branchesById.get(bId);
-                    if (!info) return null;
-                    const isPrimary = editData.primaryBranchId === bId || (!editData.primaryBranchId && bId === editData.branch);
-                    
-                    return (
-                      <tr key={bId} className="bg-card hover:bg-surface-hover motion-safe:transition-colors motion-safe:duration-base">
-                        <td className="px-4 py-3 text-sm font-medium text-primary">
-                          {info.name}
-                        </td>
-                        <td className="px-4 py-3 text-sm text-secondary">
-                          <div className="flex items-center gap-1.5">
-                            <MapPin size={18}  strokeWidth={2}/>
-                            {displayValue(info?.location)}
-                          </div>
-                        </td>
-                        {isManager && (
-                          <td className="px-4 py-3 text-right">
-                            {isPrimary ? (
-                              <span className="inline-block text-xs font-bold text-warning bg-warning-bg border border-border px-2 py-1 rounded-md uppercase" data-testid={`admin_hr-adminhrstaffprofilemodal-status-3-map170-${__testIdIndex170}-1`}>
-                                {t('hr.admin_hr_staff_profile_modal.text_daf6ad5962')}</span>
-                            ) : (
-                              <span className="inline-block text-xs font-bold text-secondary bg-input px-2 py-1 rounded-md uppercase">
-                                {t('hr.admin_hr_staff_profile_modal.text_e24e824b68')}</span>
-                            )}
+            <div className="border border-border rounded-xl overflow-hidden shadow-card">
+              <div className="max-h-60 overflow-auto">
+                <table data-admin-responsive-table className="w-full text-left border-collapse">
+                  <thead className="sticky top-0 z-20 bg-surface-highlight">
+                    <tr className="border-b border-border">
+                      <th className="sticky start-0 z-30 bg-surface-highlight border-e border-border px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider" aria-sort={branchSortDirection === 'asc' ? 'ascending' : 'descending'}><button type="button" onClick={() => setBranchSortDirection((current) => current === 'asc' ? 'desc' : 'asc')} className="flex min-h-11 min-w-11 items-center gap-1.5 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="admin_hr-admin_hr-staff-profile-modal-control-4">{t('hr.admin_hr_staff_profile_modal.text_1627510b24')}{branchSortDirection === 'asc' ? <ChevronUp size={18} className="text-primary" strokeWidth={2}/> : <ChevronDown size={18} className="text-primary" strokeWidth={2}/>}</button></th>
+                      <th className="px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider">{t('hr.admin_hr_staff_profile_modal.text_d219c68101')}</th>
+                      {isManager && <th className="px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider text-right">{t('hr.admin_hr_staff_profile_modal.text_6d12c8adbe')}</th>}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-border">
+                    {branchesToRender.map((bId , __testIdIndex170) => {
+                      if (!bId) return null;
+                      const info = branchesById.get(bId);
+                      if (!info) return null;
+                      const isPrimary = editData.primaryBranchId === bId || (!editData.primaryBranchId && bId === editData.branch);
+                      
+                      return (
+                        <tr key={bId} className="hover:bg-surface-highlight/50 transition-colors group">
+                          <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-medium text-primary">
+                            <div className="flex items-center gap-1.5">
+                              <span>{info.name}</span>
+                              <CopyButton text={info.name} label={info.name} />
+                            </div>
                           </td>
-                        )}
-                      </tr>
-                    );
-                  })}
-                  {branchQuery.status === 'pending' && (
-                    <tr><td colSpan={3} className="px-4 py-8 text-center text-secondary text-sm">{t('hr.admin_hr_staff_profile_modal.text_f0f39b3dc6')}</td></tr>
-                  )}
-                  {branchQuery.status === 'error' && (
-                    <tr><td colSpan={3} className="px-4 py-8 text-center text-secondary text-sm">{t('hr.admin_hr_staff_profile_modal.text_438638b969')}</td></tr>
-                  )}
-                  {!branchesToRender.length && branchQuery.status === 'success' && (
-                    <tr><td colSpan={3}><AdminHrEmptyState title={t('hr.admin_hr_staff_profile_modal.text_a1a004a8e5')} description={t('hr.admin_hr_staff_profile_modal.auto_c85fbfab94')} /></td></tr>
-                  )}
-                </tbody>
-              </table>
+                          <td className="px-4 py-3 text-sm text-secondary">
+                            <div className="flex items-center gap-1.5">
+                              <MapPin size={18}  strokeWidth={2}/>
+                              {displayValue(info?.location)}
+                            </div>
+                          </td>
+                          {isManager && (
+                            <td className="px-4 py-3 text-right">
+                              {isPrimary ? (
+                                <span className="inline-block text-xs font-bold text-warning bg-warning-bg border border-border px-2 py-1 rounded-md uppercase" data-testid={`admin_hr-adminhrstaffprofilemodal-status-3-map170-${__testIdIndex170}-1`}>
+                                  {t('hr.admin_hr_staff_profile_modal.text_daf6ad5962')}</span>
+                              ) : (
+                                <span className="inline-block text-xs font-bold text-secondary bg-input px-2 py-1 rounded-md uppercase">
+                                  {t('hr.admin_hr_staff_profile_modal.text_e24e824b68')}</span>
+                              )}
+                            </td>
+                          )}
+                        </tr>
+                      );
+                    })}
+                    {branchQuery.status === 'pending' && (
+                      <tr><td colSpan={PROFILE_BRANCHES_COLUMN_COUNT} className="px-4 py-8 text-center text-secondary text-sm">{t('hr.admin_hr_staff_profile_modal.text_f0f39b3dc6')}</td></tr>
+                    )}
+                    {branchQuery.status === 'error' && (
+                      <tr><td colSpan={PROFILE_BRANCHES_COLUMN_COUNT} className="px-4 py-8 text-center text-secondary text-sm">{t('hr.admin_hr_staff_profile_modal.text_438638b969')}</td></tr>
+                    )}
+                    {!branchesToRender.length && branchQuery.status === 'success' && (
+                      <tr><td colSpan={PROFILE_BRANCHES_COLUMN_COUNT}><AdminHrEmptyState title={t('hr.admin_hr_staff_profile_modal.text_a1a004a8e5')} description={t('hr.admin_hr_staff_profile_modal.auto_c85fbfab94')} /></td></tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
             {isManager && (
               <p className="text-xs text-disabled italic flex items-center gap-1 mt-2">

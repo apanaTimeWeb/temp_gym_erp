@@ -15,6 +15,9 @@ import AdminNavigationLayoutTableSkeleton from '@/app/frontend_admin/admin_atten
 import { RefreshCw } from 'lucide-react';
 import { ATTENDANCE_TABLE_HEADER_KEYS, ATTENDANCE_ITEMS_PER_PAGE, ATTENDANCE_STATUS_LABEL_KEYS } from '@/app/frontend_admin/admin_attendance/attendance_dashboard/constants/AdminAttendanceDashboardConstants';
 import { computeDuration, formatAttendanceTime } from '@/app/frontend_admin/admin_attendance/attendance_dashboard/utils/AdminAttendanceDashboardFormatters';
+import { CopyButton } from '@/components/ui/CopyButton';
+
+const TABLE_COLUMN_COUNT = 8;
 
 type AttendanceSortKey = 'memberName' | 'branchName' | 'planName' | 'trainerName' | 'checkInTime' | 'checkOutTime' | 'duration' | 'status';
 const ATTENDANCE_SORT_KEYS: AttendanceSortKey[] = ['memberName', 'branchName', 'planName', 'trainerName', 'checkInTime', 'checkOutTime', 'duration', 'status'];
@@ -60,7 +63,7 @@ export default function AdminAttendanceDashboardTable() {
   const hasFilters = search !== '' || statusFilter !== 'all' || branchFilter !== 'all' || dateRange !== 'today';
 
   if (status === 'pending' && records.length === 0) {
-    return <AdminNavigationLayoutTableSkeleton rows={6} cols={ATTENDANCE_TABLE_HEADER_KEYS.length} />;
+    return <AdminNavigationLayoutTableSkeleton rows={6} cols={TABLE_COLUMN_COUNT} />;
   }
 
   if (status === 'error' && records.length === 0) {
@@ -80,20 +83,23 @@ export default function AdminAttendanceDashboardTable() {
   }
 
   return (
-    <div className="bg-card rounded-xl border border-border overflow-hidden">
-      <div className="overflow-x-auto">
-        <table data-admin-responsive-table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="bg-surface-highlight border-b border-border">
+    <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
+      <div className="max-h-[640px] overflow-auto">
+        <table data-admin-responsive-table className="w-full text-left border-collapse text-xs sm:text-sm">
+          <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border shadow-xs">
+            <tr>
               {ATTENDANCE_TABLE_HEADER_KEYS.map((key, index) => {
                 const columnSortKey = ATTENDANCE_SORT_KEYS[index];
                 const active = sortKey === columnSortKey;
+                const isFirst = index === 0;
                 return (
                   <th
                     key={key}
                     scope="col"
                     aria-sort={active ? (sortDirection === 'asc' ? 'ascending' : 'descending') : 'none'}
-                    className="px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap"
+                    className={`px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
+                      isFirst ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    }`}
                   >
                     <button
                       type="button"
@@ -114,14 +120,17 @@ export default function AdminAttendanceDashboardTable() {
           </thead>
           <tbody className="divide-y divide-border">
             {sortedRecords.map((r) => (
-              <tr key={r.id} className="hover:bg-surface-highlight motion-safe:transition-colors motion-safe:duration-base">
-                <td className="px-4 py-3">
+              <tr key={r.id} className="hover:bg-surface-highlight/70 motion-safe:transition-colors motion-safe:duration-base group">
+                <td className="px-4 py-3 sticky start-0 z-10 bg-card group-hover:bg-surface-highlight border-e border-border">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-primary-subtle flex items-center justify-center text-primary text-xs font-bold flex-shrink-0">
                       {r.memberName.charAt(0).toUpperCase()}
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-primary">{r.memberName}</p>
+                      <div className="flex items-center gap-1.5">
+                        <p className="text-sm font-semibold text-primary">{r.memberName}</p>
+                        <CopyButton value={r.memberName} label="Copy member name" className="opacity-0 group-hover:opacity-100" />
+                      </div>
                       <p className="text-xs text-secondary">
                         {maskSensitiveData(r.memberPhone)}
                       </p>

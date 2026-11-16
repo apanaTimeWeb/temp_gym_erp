@@ -15,6 +15,10 @@ import { useAdminFinanceRevenueReportLogic } from '@/app/frontend_admin/admin_fi
 import AdminReportsSectionState from '@/app/frontend_admin/admin_finance/finance_revenue_report/components/main_view/AdminFinanceRevenueReportSectionState';
 import { AdminFinanceRevenueReportEmptyState as AdminReportsEmptyState } from '@/app/frontend_admin/admin_finance/finance_revenue_report/components/empty_state/AdminFinanceRevenueReportEmptyState';
 import AdminNavigationLayoutProgressBar from '@/app/frontend_admin/admin_finance/finance_revenue_report/components/progress_bar/AdminFinanceRevenueReportProgressBar';
+import { CopyButton } from '@/components/ui/CopyButton';
+
+const REVENUE_BY_GYM_COLUMN_COUNT = 6;
+const MONTHLY_REVENUE_COLUMN_COUNT = 5;
 
 const TREND_ICON = {
   up: <TrendingUp size={18} className="text-success"  strokeWidth={2}/>,
@@ -71,20 +75,27 @@ export default function AdminFinanceRevenueReportRevenue() {
   return (
     <div className="space-y-6">
       {/* Revenue by Gym */}
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
-        <div className="px-5 py-4 border-b border-border">
+      <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
+        <div className="px-5 py-4 border-b border-border bg-surface-highlight/30">
           <h2 className="text-base font-semibold text-primary">{t('reports.admin_finance_revenue_report.text_177bf7fe0c')}</h2>
         </div>
-        <div className="overflow-x-auto">
-          <table data-admin-responsive-table className="w-full">
-            <thead>
-              <tr className="bg-surface-highlight">
+        <div className="overflow-x-auto max-h-[640px] overflow-auto">
+          <table data-admin-responsive-table className="w-full text-left border-collapse">
+            <thead className="sticky top-0 z-20 bg-surface-highlight">
+              <tr className="border-b border-border">
                 {revenueHeaders.map((header, index) => {
                   const keys: Array<AdminFinanceRevenueReportSortKey | null> = ['gymName', 'revenue', 'expenses', 'profit', null, 'trendPercent'];
                   const key = keys[index];
                   const active = Boolean(key && sortKey === key);
                   return (
-                    <th key={header} className="px-5 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider" aria-sort={key ? (active ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none') : undefined} data-testid={`admin_reports-admin_reports-revenue-header-map59-${index}`}>
+                    <th
+                      key={header}
+                      className={`px-5 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
+                        index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                      }`}
+                      aria-sort={key ? (active ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none') : undefined}
+                      data-testid={`admin_reports-admin_reports-revenue-header-map59-${index}`}
+                    >
                       {key ? <button type="button" onClick={() => handleSort(key)} className="inline-flex min-h-11 items-center gap-1.5 rounded text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" aria-label={t('reports.admin_finance_revenue_report.auto_sortBy', { header })} data-testid="reports-analytics-reports-analytics-revenue-handle-sort">
                         {header}{active ? (sortDir === 'asc' ? <ChevronUp size={18} aria-hidden="true" className="text-primary" strokeWidth={2} /> : <ChevronDown size={18} aria-hidden="true" className="text-primary" strokeWidth={2} />) : <ChevronsUpDown size={18} aria-hidden="true" className="text-disabled" strokeWidth={2} />}
                       </button> : header}
@@ -95,10 +106,13 @@ export default function AdminFinanceRevenueReportRevenue() {
             </thead>
             <tbody className="divide-y divide-border">
               {revenueByGym.map((row) => (
-                <tr key={row.gymId} className="hover:bg-surface-highlight motion-safe:transition-colors motion-safe:duration-base">
-                  <td className="px-5 py-4">
+                <tr key={row.gymId} className="hover:bg-surface-highlight/50 transition-colors group">
+                  <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-4">
                     <div>
-                      <p className="text-sm font-semibold text-primary">{row.gymName}</p>
+                      <div className="flex items-center gap-1.5">
+                        <p className="text-sm font-semibold text-primary">{row.gymName}</p>
+                        <CopyButton text={row.gymName} label={row.gymName} />
+                      </div>
                       <div className="mt-1 w-32">
                         <AdminNavigationLayoutProgressBar value={(row.revenue / maxRevenue) * 100} label={t('reports.admin_finance_revenue_report.auto_revenueShare', { gym: row.gymName })} />
                       </div>
@@ -175,32 +189,45 @@ export default function AdminFinanceRevenueReportRevenue() {
       </div>
 
       {/* Monthly Trend */}
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
-        <div className="px-5 py-4 border-b border-border">
+      <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
+        <div className="px-5 py-4 border-b border-border bg-surface-highlight/30">
           <h2 className="text-base font-semibold text-primary">{t('reports.admin_finance_revenue_report.text_d965c78fbc')}</h2>
         </div>
-        <div className="overflow-x-auto">
-          <table data-admin-responsive-table className="w-full">
-            <thead>
-              <tr className="bg-surface-highlight">
+        <div className="overflow-x-auto max-h-[640px] overflow-auto">
+          <table data-admin-responsive-table className="w-full text-left border-collapse">
+            <thead className="sticky top-0 z-20 bg-surface-highlight">
+              <tr className="border-b border-border">
                 {monthlyHeaders.map((header, index) => {
                   const keys: Array<MonthlySortKey | null> = ['month', 'revenue', 'expenses', 'profit', null];
                   const key = keys[index];
                   const active = Boolean(key && monthlySortKey === key);
-                  return <th key={header} className="px-5 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider" aria-sort={key ? (active ? (monthlySortDir === 'asc' ? 'ascending' : 'descending') : 'none') : undefined}>
-                    {key ? <button type="button" onClick={() => handleMonthlySort(key)} className="inline-flex min-h-11 items-center gap-1.5 rounded text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" aria-label={t('reports.admin_finance_revenue_report.auto_sortBy', { header })} data-testid={`admin_reports-admin_reports-revenue-monthly-sort-${index}`}>
-                      {header}{active ? (monthlySortDir === 'asc' ? <ChevronUp size={18} aria-hidden="true" className="text-primary" strokeWidth={2} /> : <ChevronDown size={18} aria-hidden="true" className="text-primary" strokeWidth={2} />) : <ChevronsUpDown size={18} aria-hidden="true" className="text-disabled" strokeWidth={2} />}
-                    </button> : header}
-                  </th>;
+                  return (
+                    <th
+                      key={header}
+                      className={`px-5 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
+                        index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                      }`}
+                      aria-sort={key ? (active ? (monthlySortDir === 'asc' ? 'ascending' : 'descending') : 'none') : undefined}
+                    >
+                      {key ? <button type="button" onClick={() => handleMonthlySort(key)} className="inline-flex min-h-11 items-center gap-1.5 rounded text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" aria-label={t('reports.admin_finance_revenue_report.auto_sortBy', { header })} data-testid={`admin_reports-admin_reports-revenue-monthly-sort-${index}`}>
+                        {header}{active ? (monthlySortDir === 'asc' ? <ChevronUp size={18} aria-hidden="true" className="text-primary" strokeWidth={2} /> : <ChevronDown size={18} aria-hidden="true" className="text-primary" strokeWidth={2} />) : <ChevronsUpDown size={18} aria-hidden="true" className="text-disabled" strokeWidth={2} />}
+                      </button> : header}
+                    </th>
+                  );
                 })}
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
               {reportData.monthlyRevenue.length === 0 ? (
-                <tr><td colSpan={5}><AdminReportsEmptyState title={t('reports.admin_finance_revenue_report.text_096b9d52b6')} description={t('reports.admin_finance_revenue_report.auto_a64dbf269d')} /></td></tr>
+                <tr><td colSpan={MONTHLY_REVENUE_COLUMN_COUNT}><AdminReportsEmptyState title={t('reports.admin_finance_revenue_report.text_096b9d52b6')} description={t('reports.admin_finance_revenue_report.auto_a64dbf269d')} /></td></tr>
               ) : monthlyRevenue.map((row) => (
-                <tr key={row.month} className="hover:bg-surface-highlight motion-safe:transition-colors motion-safe:duration-base">
-                  <td className="px-5 py-3 text-sm font-semibold text-primary">{row.month}</td>
+                <tr key={row.month} className="hover:bg-surface-highlight/50 transition-colors group">
+                  <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-3 text-sm font-semibold text-primary">
+                    <div className="flex items-center gap-1.5">
+                      <span>{row.month}</span>
+                      <CopyButton text={row.month} label={row.month} />
+                    </div>
+                  </td>
                   <td className="px-5 py-3 text-sm text-primary">{AdminFinanceRevenueReportFormatCurrency(row.revenue, undefined, locale)}</td>
                   <td className="px-5 py-3 text-sm text-danger">{AdminFinanceRevenueReportFormatCurrency(row.expenses, undefined, locale)}</td>
                   <td className="px-5 py-3 text-sm font-semibold text-success">{AdminFinanceRevenueReportFormatCurrency(row.profit, undefined, locale)}</td>

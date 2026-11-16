@@ -14,6 +14,9 @@ import { useMemo, useState } from 'react';
 import type { AdminSalesMembershipSortKey } from '@/app/frontend_admin/admin_sales/sales_membership_report/types/AdminSalesMembershipReportUiTypes';
 import type { AdminSalesSortDirection } from '@/app/frontend_admin/admin_sales/sales_membership_report/types/AdminSalesMembershipReportSortTypes';
 import { sortAdminSalesMembershipReportRows } from '@/app/frontend_admin/admin_sales/sales_membership_report/utils/AdminSalesMembershipReportSortRows';
+import { CopyButton } from '@/components/ui/CopyButton';
+
+const TABLE_COLUMN_COUNT = 5;
 
 /**
  * AdminSalesAnalyticsMembershipReport renders the admin sales membership report UI surface and coordinates only the state or handlers required by its owning module.
@@ -54,27 +57,29 @@ export default function AdminSalesAnalyticsMembershipReport() {
 
   if (membershipReportStatus === 'pending') {
     return (
-      <div className="overflow-x-auto" aria-busy="true" aria-label={t('sales.admin_sales_membership_report.text_a873abb3d3')}>
-        <table data-admin-responsive-table className="w-full">
-          <thead className="bg-input">
-            <tr>
-              {sortableColumns.map(({ key, label }) => (
-                <th key={key} className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-secondary">
-                  {label}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-border">
-            {Array.from({ length: 5 }, (_, index) => (
-              <tr key={`membership-report-skeleton-${index}`} className="motion-safe:animate-pulse bg-card motion-safe:duration-base">
-                {sortableColumns.map(({ key }) => (
-                  <td key={key} className="px-4 py-4"><div className="h-4 w-24 rounded bg-skeleton-base" /></td>
+      <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden" aria-busy="true" aria-label={t('sales.admin_sales_membership_report.text_a873abb3d3')}>
+        <div className="max-h-[640px] overflow-auto">
+          <table data-admin-responsive-table className="w-full text-sm">
+            <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+              <tr>
+                {sortableColumns.map(({ key, label }, idx) => (
+                  <th key={key} className={`px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-secondary whitespace-nowrap ${idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''}`}>
+                    {label}
+                  </th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {Array.from({ length: 5 }, (_, index) => (
+                <tr key={`membership-report-skeleton-${index}`} className="motion-safe:animate-pulse bg-card motion-safe:duration-base">
+                  {sortableColumns.map(({ key }, idx) => (
+                    <td key={key} className={`px-4 py-4 ${idx === 0 ? 'sticky start-0 z-10 bg-card border-e border-border' : ''}`}><div className="h-4 w-24 rounded bg-skeleton-base" /></td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
@@ -98,47 +103,54 @@ export default function AdminSalesAnalyticsMembershipReport() {
   }
 
   return (
-    <div className="overflow-x-auto">
-      <table data-admin-responsive-table className="w-full">
-        <thead className="bg-input">
-          <tr>
-            {sortableColumns.map(({ key, label } , __testIdIndex107) => (
-              <th key={key} scope="col" aria-sort={sortKey === key ? (sortDir === 'asc' ? 'ascending' : 'descending') : undefined} className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-secondary">
-                <button
-                  type="button"
-                  onClick={() => handleSort(key)}
-                  className="min-h-11 min-w-11 motion-safe:transition-all motion-safe:duration-base ease-in-out inline-flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95"
-                  aria-label={t('admin_sales_membership_report.auto_sortBy', { label })}
-                  title={t('admin_sales_membership_report.auto_sortBy', { label })}
-                 data-testid={`admin_sales-admin_sales-membership-report-click-map107-${__testIdIndex107}-1`}>
-                  {label}
-                  {sortKey === key
-                    ? (sortDir === 'asc' ? <ChevronUp size={18} aria-hidden="true" className="text-primary"  strokeWidth={2}/> : <ChevronDown size={18} aria-hidden="true" className="text-primary"  strokeWidth={2}/>)
-                    : <ChevronsUpDown size={18} aria-hidden="true" className="text-disabled"  strokeWidth={2}/>}
-                </button>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-border">
-          {sortedRows.map((row) => (
-            <tr key={row.id ?? row.plan ?? row.name} className="bg-card motion-safe:transition-colors hover:bg-surface-highlight motion-safe:duration-base">
-              <td className="px-4 py-3 text-sm font-medium text-primary">{displayValue(row.plan ?? row.name)}</td>
-              <td className="px-4 py-3 text-sm text-secondary"><span>{AdminSalesFormatCurrency(row.receivable ?? 0, undefined, locale)}</span></td>
-              <td className="px-4 py-3 text-sm font-medium text-success"><span>{AdminSalesFormatCurrency(row.received ?? 0, undefined, locale)}</span></td>
-              <td className="px-4 py-3 text-sm font-medium text-warning"><span>{AdminSalesFormatCurrency(row.remaining ?? 0, undefined, locale)}</span></td>
-              <td className="px-4 py-3 text-sm text-danger"><span>{AdminSalesFormatCurrency(row.refund ?? 0, undefined, locale)}</span></td>
+    <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+      <div className="max-h-[640px] overflow-auto">
+        <table data-admin-responsive-table className="w-full text-sm">
+          <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+            <tr>
+              {sortableColumns.map(({ key, label }, idx) => (
+                <th key={key} scope="col" aria-sort={sortKey === key ? (sortDir === 'asc' ? 'ascending' : 'descending') : undefined} className={`px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-secondary whitespace-nowrap ${idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''}`}>
+                  <button
+                    type="button"
+                    onClick={() => handleSort(key)}
+                    className="min-h-11 min-w-11 motion-safe:transition-all motion-safe:duration-base ease-in-out inline-flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95"
+                    aria-label={t('admin_sales_membership_report.auto_sortBy', { label })}
+                    title={t('admin_sales_membership_report.auto_sortBy', { label })}
+                   data-testid={`admin_sales-admin_sales-membership-report-click-map107-${idx}-1`}>
+                    {label}
+                    {sortKey === key
+                      ? (sortDir === 'asc' ? <ChevronUp size={18} aria-hidden="true" className="text-primary"  strokeWidth={2}/> : <ChevronDown size={18} aria-hidden="true" className="text-primary"  strokeWidth={2}/>)
+                      : <ChevronsUpDown size={18} aria-hidden="true" className="text-disabled"  strokeWidth={2}/>}
+                  </button>
+                </th>
+              ))}
             </tr>
-          ))}
-          <tr className="border-t-2 border-border bg-input font-semibold">
-            <td className="px-4 py-3 text-sm text-primary">{t('sales.admin_sales_membership_report.text_b25928c699')}</td>
-            <td className="px-4 py-3 text-sm text-primary">{(membershipTotals.totalReceivable == null ? displayValue(membershipTotals.totalReceivable) : AdminSalesFormatCurrency(membershipTotals.totalReceivable, undefined, locale))}</td>
-            <td className="px-4 py-3 text-sm text-success">{(membershipTotals.totalReceived == null ? displayValue(membershipTotals.totalReceived) : AdminSalesFormatCurrency(membershipTotals.totalReceived, undefined, locale))}</td>
-            <td className="px-4 py-3 text-sm text-warning">{(membershipTotals.remaining == null ? displayValue(membershipTotals.remaining) : AdminSalesFormatCurrency(membershipTotals.remaining, undefined, locale))}</td>
-            <td className="px-4 py-3 text-sm text-danger">{(membershipTotals.refunds == null ? displayValue(membershipTotals.refunds) : AdminSalesFormatCurrency(membershipTotals.refunds, undefined, locale))}</td>
-          </tr>
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="divide-y divide-border">
+            {sortedRows.map((row) => (
+              <tr key={row.id ?? row.plan ?? row.name} className="hover:bg-surface-highlight/50 transition-colors group">
+                <td className="px-4 py-3 text-sm font-medium text-primary sticky start-0 z-10 bg-card border-e border-border">
+                  <div className="flex items-center gap-2">
+                    <span>{displayValue(row.plan ?? row.name)}</span>
+                    <CopyButton text={String(row.plan ?? row.name ?? '')} label="Copy plan" />
+                  </div>
+                </td>
+                <td className="px-4 py-3 text-sm text-secondary whitespace-nowrap"><span>{AdminSalesFormatCurrency(row.receivable ?? 0, undefined, locale)}</span></td>
+                <td className="px-4 py-3 text-sm font-medium text-success whitespace-nowrap"><span>{AdminSalesFormatCurrency(row.received ?? 0, undefined, locale)}</span></td>
+                <td className="px-4 py-3 text-sm font-medium text-warning whitespace-nowrap"><span>{AdminSalesFormatCurrency(row.remaining ?? 0, undefined, locale)}</span></td>
+                <td className="px-4 py-3 text-sm text-danger whitespace-nowrap"><span>{AdminSalesFormatCurrency(row.refund ?? 0, undefined, locale)}</span></td>
+              </tr>
+            ))}
+            <tr className="border-t-2 border-border bg-surface-highlight font-semibold">
+              <td className="px-4 py-3 text-sm text-primary sticky start-0 z-10 bg-surface-highlight border-e border-border">{t('sales.admin_sales_membership_report.text_b25928c699')}</td>
+              <td className="px-4 py-3 text-sm text-primary whitespace-nowrap">{(membershipTotals.totalReceivable == null ? displayValue(membershipTotals.totalReceivable) : AdminSalesFormatCurrency(membershipTotals.totalReceivable, undefined, locale))}</td>
+              <td className="px-4 py-3 text-sm text-success whitespace-nowrap">{(membershipTotals.totalReceived == null ? displayValue(membershipTotals.totalReceived) : AdminSalesFormatCurrency(membershipTotals.totalReceived, undefined, locale))}</td>
+              <td className="px-4 py-3 text-sm text-warning whitespace-nowrap">{(membershipTotals.remaining == null ? displayValue(membershipTotals.remaining) : AdminSalesFormatCurrency(membershipTotals.remaining, undefined, locale))}</td>
+              <td className="px-4 py-3 text-sm text-danger whitespace-nowrap">{(membershipTotals.refunds == null ? displayValue(membershipTotals.refunds) : AdminSalesFormatCurrency(membershipTotals.refunds, undefined, locale))}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

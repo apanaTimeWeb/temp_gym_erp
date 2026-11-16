@@ -14,6 +14,9 @@ import { useAdminFinanceLogic } from '@/app/frontend_admin/admin_finance/finance
 import { PAYMENTS_TABLE_HEADERS, FINANCE_PAYMENT_TABLE_HEADER_LABEL_KEYS, FINANCE_ITEMS_PER_PAGE, FINANCE_METHOD_STYLES, FINANCE_STATUS_STYLES, FINANCE_PAYMENT_METHOD_LABEL_KEYS, FINANCE_PAYMENT_STATUS_LABEL_KEYS } from '@/app/frontend_admin/admin_finance/finance_payments/constants/AdminFinancePaymentsConstants';
 import AdminNavigationLayoutPagination from '@/app/frontend_admin/admin_finance/finance_payments/components/AdminFinancePaymentsPagination';
 import AdminFinanceEmptyState from '@/app/frontend_admin/admin_finance/finance_payments/components/empty_state/AdminFinancePaymentsEmptyState';
+import { CopyButton } from '@/components/ui/CopyButton';
+
+const TABLE_COLUMN_COUNT = 6;
 
 /**
  * AdminFinanceOverviewPaymentsTable renders the admin finance payments table UI surface and coordinates only the state or handlers required by its owning module.
@@ -35,43 +38,122 @@ export default function AdminFinanceOverviewPaymentsTable() {
 
   if (paymentsStatus === 'pending') {
     return (
-      <div className="overflow-x-auto" aria-busy="true" aria-label={t('finance.admin_finance_payments_table.text_bc48c55226')}>
-        <table className="w-full">
-          <thead className="bg-input text-secondary">
-            <tr>{PAYMENTS_TABLE_HEADERS.map((header,index) => { const keys: AdminFinancePaymentSortKey[]=['invoiceNo','member','amount','method','status','paidAt']; const key=keys[index]; const label=t(FINANCE_PAYMENT_TABLE_HEADER_LABEL_KEYS[header]); return <th key={header} scope="col" aria-sort={key ? (sortKey === key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none') : undefined} className="text-left text-xs font-semibold uppercase tracking-wider px-4 py-3">{label}{key && <button type="button" onClick={()=>handleSort(key)} className="min-h-11 min-w-11 motion-safe:transition-all motion-safe:duration-base ease-in-out ml-1 inline-flex align-middle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" aria-label={t('admin_finance_payments_table.auto_sortBy', { header: label })} title={t('admin_finance_payments_table.auto_sortBy', { header: label })} data-testid={`admin_finance-admin_finance-payments-table-click-map40-${index}-1`}>{sortKey===key?(sortDir==='asc'?<ChevronUp size={18} className="text-primary" strokeWidth={2}/>:<ChevronDown size={18} className="text-primary" strokeWidth={2}/>):<ChevronsUpDown size={18} className="text-disabled" strokeWidth={2}/>}</button>}</th>; })}</tr>
-          </thead>
-          <tbody className="divide-y divide-border">
-            {Array.from({ length: 5 }, (_, index) => (
-              <tr key={`payment-skeleton-${index}`}>
-                {PAYMENTS_TABLE_HEADERS.map((header) => <td key={header} className="px-4 py-4"><div className="h-4 rounded bg-skeleton-base motion-safe:animate-pulse motion-safe:duration-base" /></td>)}
+      <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+        <div className="overflow-x-auto max-h-[640px] overflow-auto" aria-busy="true" aria-label={t('finance.admin_finance_payments_table.text_bc48c55226')}>
+          <table className="w-full border-collapse">
+            <thead className="sticky top-0 z-20 bg-surface-highlight text-secondary">
+              <tr className="border-b border-border">
+                {PAYMENTS_TABLE_HEADERS.map((header, index) => {
+                  const keys: AdminFinancePaymentSortKey[] = ['invoiceNo', 'member', 'amount', 'method', 'status', 'paidAt'];
+                  const key = keys[index];
+                  const label = t(FINANCE_PAYMENT_TABLE_HEADER_LABEL_KEYS[header]);
+                  return (
+                    <th
+                      key={header}
+                      scope="col"
+                      aria-sort={key ? (sortKey === key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none') : undefined}
+                      className={`text-left text-xs font-semibold uppercase tracking-wider px-4 py-3 whitespace-nowrap ${
+                        index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                      }`}
+                    >
+                      {label}
+                      {key && (
+                        <button
+                          type="button"
+                          onClick={() => handleSort(key)}
+                          className="min-h-11 min-w-11 ml-1 inline-flex align-middle items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary active:scale-95"
+                          aria-label={t('admin_finance_payments_table.auto_sortBy', { header: label })}
+                          title={t('admin_finance_payments_table.auto_sortBy', { header: label })}
+                          data-testid={`admin_finance-admin_finance-payments-table-click-map40-${index}-1`}
+                        >
+                          {sortKey === key ? (
+                            sortDir === 'asc' ? <ChevronUp size={18} className="text-primary" strokeWidth={2} /> : <ChevronDown size={18} className="text-primary" strokeWidth={2} />
+                          ) : (
+                            <ChevronsUpDown size={18} className="text-disabled" strokeWidth={2} />
+                          )}
+                        </button>
+                      )}
+                    </th>
+                  );
+                })}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {Array.from({ length: 5 }, (_, index) => (
+                <tr key={`payment-skeleton-${index}`} className="animate-pulse">
+                  {PAYMENTS_TABLE_HEADERS.map((header, cIdx) => (
+                    <td key={header} className={`px-4 py-4 ${cIdx === 0 ? 'sticky start-0 z-10 bg-card border-e border-border' : ''}`}>
+                      <div className="h-4 rounded bg-skeleton-base" />
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
 
   if (paymentsStatus === 'error') {
-    return <div role="alert" className="rounded-2xl border border-border bg-card px-6 py-12 text-center"><p className="font-medium text-danger">{t('finance.admin_finance_payments_table.text_18d540a249')}</p><p className="mt-1 text-sm text-secondary">{t('finance.admin_finance_payments_table.text_11ee134422')}</p><button type="button" onClick={() => void loadAll()} className="mt-3 min-h-11 rounded-lg border border-border px-4 font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="finance-overview-finance-overview-payments-table-admin-finance-tabs-retry">{t('finance.admin_finance_tabs.retry')}</button></div>;
+    return <div role="alert" className="rounded-2xl border border-border bg-card px-6 py-12 text-center shadow-card"><p className="font-medium text-danger">{t('finance.admin_finance_payments_table.text_18d540a249')}</p><p className="mt-1 text-sm text-secondary">{t('finance.admin_finance_payments_table.text_11ee134422')}</p><button type="button" onClick={() => void loadAll()} className="mt-3 min-h-11 rounded-lg border border-border px-4 font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="finance-overview-finance-overview-payments-table-admin-finance-tabs-retry">{t('finance.admin_finance_tabs.retry')}</button></div>;
   }
 
   return (
-    <>
-      <div className="overflow-x-auto">
-        <table data-admin-responsive-table className="w-full">
-          <thead className="bg-input text-secondary">
-            <tr>{PAYMENTS_TABLE_HEADERS.map((header,index) => { const keys: AdminFinancePaymentSortKey[]=['invoiceNo','member','amount','method','status','paidAt']; const key=keys[index]; const label=t(FINANCE_PAYMENT_TABLE_HEADER_LABEL_KEYS[header]); return <th key={header} scope="col" aria-sort={key ? (sortKey === key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none') : undefined} className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">{label}{key && <button type="button" onClick={()=>handleSort(key)} className="min-h-11 min-w-11 motion-safe:transition-all motion-safe:duration-base ease-in-out ml-1 inline-flex align-middle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" aria-label={t('admin_finance_payments_table.auto_sortBy', { header: label })} title={t('admin_finance_payments_table.auto_sortBy', { header: label })} data-testid={`admin_finance-admin_finance-payments-table-click-2-map63-${index}-1`}>{sortKey===key?(sortDir==='asc'?<ChevronUp size={18} className="text-primary" strokeWidth={2}/>:<ChevronDown size={18} className="text-primary" strokeWidth={2}/>):<ChevronsUpDown size={18} className="text-disabled" strokeWidth={2}/>}</button>}</th>; })}</tr>
+    <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+      <div className="overflow-x-auto max-h-[640px] overflow-auto">
+        <table data-admin-responsive-table className="w-full border-collapse">
+          <thead className="sticky top-0 z-20 bg-surface-highlight text-secondary">
+            <tr className="border-b border-border">
+              {PAYMENTS_TABLE_HEADERS.map((header, index) => {
+                const keys: AdminFinancePaymentSortKey[] = ['invoiceNo', 'member', 'amount', 'method', 'status', 'paidAt'];
+                const key = keys[index];
+                const label = t(FINANCE_PAYMENT_TABLE_HEADER_LABEL_KEYS[header]);
+                return (
+                  <th
+                    key={header}
+                    scope="col"
+                    aria-sort={key ? (sortKey === key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none') : undefined}
+                    className={`px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider whitespace-nowrap ${
+                      index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    }`}
+                  >
+                    {label}
+                    {key && (
+                      <button
+                        type="button"
+                        onClick={() => handleSort(key)}
+                        className="min-h-11 min-w-11 ml-1 inline-flex align-middle items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary active:scale-95"
+                        aria-label={t('admin_finance_payments_table.auto_sortBy', { header: label })}
+                        title={t('admin_finance_payments_table.auto_sortBy', { header: label })}
+                        data-testid={`admin_finance-admin_finance-payments-table-click-2-map63-${index}-1`}
+                      >
+                        {sortKey === key ? (
+                          sortDir === 'asc' ? <ChevronUp size={18} className="text-primary" strokeWidth={2} /> : <ChevronDown size={18} className="text-primary" strokeWidth={2} />
+                        ) : (
+                          <ChevronsUpDown size={18} className="text-disabled" strokeWidth={2} />
+                        )}
+                      </button>
+                    )}
+                  </th>
+                );
+              })}
+            </tr>
           </thead>
           <tbody className="divide-y divide-border">
             {payments.length === 0 ? (
-              <tr><td colSpan={PAYMENTS_TABLE_HEADERS.length}><AdminFinanceEmptyState title={t('finance.admin_finance_payments_table.text_c1f531f996')} description={t('finance.admin_finance_payments_table.auto_ee688868e5')} /></td></tr>
+              <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminFinanceEmptyState title={t('finance.admin_finance_payments_table.text_c1f531f996')} description={t('finance.admin_finance_payments_table.auto_ee688868e5')} /></td></tr>
             ) : sortedPayments.map((payment) => {
               const methodStyle = FINANCE_METHOD_STYLES[payment.method] ?? { bg: 'bg-input', text: 'text-secondary' };
               const statusStyle = FINANCE_STATUS_STYLES[payment.status] ?? { bg: 'bg-input', text: 'text-secondary' };
               return (
-                <tr key={payment.id} className="bg-card hover:bg-surface-highlight motion-safe:transition-colors motion-safe:duration-base">
-                  <td className="px-4 py-3 text-sm font-mono text-secondary">{payment.invoiceNo}</td>
+                <tr key={payment.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                  <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-mono text-secondary">
+                    <div className="flex items-center gap-1.5">
+                      <span>{payment.invoiceNo}</span>
+                      <CopyButton text={payment.invoiceNo} label={payment.invoiceNo} />
+                    </div>
+                  </td>
                   <td className="px-4 py-3 text-sm font-medium text-primary">{payment.member?.name ?? `Member #${payment.memberId}`}</td>
                   <td className="px-4 py-3 text-sm font-bold text-success"><span>{AdminFinanceFormatCurrency(payment.amount, 'INR', locale) !== '—' ? AdminFinanceFormatCurrency(payment.amount, 'INR', locale) : (Number.isFinite(payment.amount) ? `₹${(payment.amount > 1000 ? payment.amount / 100 : payment.amount).toLocaleString(locale)}` : '—')}</span></td>
                   <td className="px-4 py-3"><span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${methodStyle.bg} ${methodStyle.text}`} data-testid="finance-overview-finance-overview-payments-table-status-badge">{FINANCE_PAYMENT_METHOD_LABEL_KEYS[payment.method] ? t(FINANCE_PAYMENT_METHOD_LABEL_KEYS[payment.method] as string) : payment.method}</span></td>
@@ -83,9 +165,9 @@ export default function AdminFinanceOverviewPaymentsTable() {
           </tbody>
         </table>
       </div>
-      <div className="mt-4 border-t border-border pt-4">
+      <div className="border-t border-border p-4 bg-surface-highlight/10">
         <AdminNavigationLayoutPagination currentPage={currentPage} totalPages={totalPages} totalItems={totalPayments} itemsPerPage={FINANCE_ITEMS_PER_PAGE} onPageChange={setCurrentPage} />
       </div>
-    </>
+    </div>
   );
 }

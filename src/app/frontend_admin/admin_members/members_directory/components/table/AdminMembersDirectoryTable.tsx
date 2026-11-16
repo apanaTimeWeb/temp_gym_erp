@@ -16,6 +16,9 @@ import { AdminMembersFormatCurrency } from '@/app/frontend_admin/admin_members/m
 
 import { maskSensitiveData } from '@/app/frontend_admin/admin_members/members_directory/utils/AdminMembersDirectoryMaskSensitiveData';
 import { ADMIN_MEMBERS_ITEMS_PER_PAGE, MEMBER_STATUS_LABEL_KEYS, MEMBER_STATUS_STYLES, MEMBER_TABLE_HEADER_KEYS } from '@/app/frontend_admin/admin_members/members_directory/constants/AdminMembersDirectoryConstants';
+import { CopyButton } from '@/components/ui/CopyButton';
+
+const TABLE_COLUMN_COUNT = 7;
 
 
 /**
@@ -58,13 +61,18 @@ export default function AdminMembersDirectoryTable() {
   }
 
   return (
-    <div className="bg-card rounded-xl border border-border overflow-hidden">
-      <div className="overflow-x-auto">
+    <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
+      <div className="overflow-x-auto max-h-[640px] overflow-auto">
         <table data-admin-responsive-table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="bg-surface-highlight border-b border-border">
-              {MEMBER_TABLE_HEADER_KEYS.map((key) => (
-                <th key={key} className="px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap">
+          <thead className="sticky top-0 z-20 bg-surface-highlight">
+            <tr className="border-b border-border">
+              {MEMBER_TABLE_HEADER_KEYS.map((key, idx) => (
+                <th
+                  key={key}
+                  className={`px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
+                    idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                  }`}
+                >
                   {t(key)}
                 </th>
               ))}
@@ -79,17 +87,20 @@ export default function AdminMembersDirectoryTable() {
                 aria-label={t('admin_members_table.auto_openProfile', { name: m.name })}
                 onClick={(event) => { if ((event.target as HTMLElement).closest('a,button')) return; router.push(memberProfileHref(m.id)); }}
                 onKeyDown={(event) => { if ((event.key === 'Enter' || event.key === ' ') && event.target === event.currentTarget) { event.preventDefault(); router.push(memberProfileHref(m.id)); } }}
-                className="hover:bg-surface-highlight motion-safe:transition-colors group motion-safe:duration-base cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                className="hover:bg-surface-highlight/50 transition-colors group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 data-testid={`admin_members-admin_members-table-row-map61-${__testIdIndex61}`}>
-                <td className="px-4 py-3">
+                <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-primary-subtle flex items-center justify-center text-primary text-xs font-bold flex-shrink-0" aria-hidden="true">
                       {m.name.charAt(0).toUpperCase()}
                     </div>
                     <div>
-                      <Link href={memberProfileHref(m.id)} aria-label={t('admin_members_table.auto_openProfile', { name: m.name })} className="text-sm font-semibold text-primary underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page rounded" data-testid="members-directory-members-directory-table-admin-members-table-auto-open-profile">
-                        {m.name}
-                      </Link>
+                      <div className="flex items-center gap-1.5">
+                        <Link href={memberProfileHref(m.id)} aria-label={t('admin_members_table.auto_openProfile', { name: m.name })} className="text-sm font-semibold text-primary underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page rounded" data-testid="members-directory-members-directory-table-admin-members-table-auto-open-profile">
+                          {m.name}
+                        </Link>
+                        <CopyButton text={m.name} label={m.name} />
+                      </div>
                       <p className="text-xs text-secondary">{maskSensitiveData(m.phone)}</p>
                     </div>
                   </div>
@@ -125,7 +136,7 @@ export default function AdminMembersDirectoryTable() {
           </tbody>
         </table>
       </div>
-      <div className="border-t border-border">
+      <div className="border-t border-border p-4 bg-surface-highlight/10">
         <AdminNavigationLayoutPagination
           currentPage={currentPage}
           totalPages={totalPages}

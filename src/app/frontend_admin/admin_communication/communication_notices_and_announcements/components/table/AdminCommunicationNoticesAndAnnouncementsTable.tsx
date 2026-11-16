@@ -22,6 +22,9 @@ import {
 } from '@/app/frontend_admin/admin_communication/communication_notices_and_announcements/constants/AdminCommunicationNoticesAndAnnouncementsConstants';
 import type { AnnouncementStatus, AnnouncementPriority } from '@/app/frontend_admin/admin_communication/communication_notices_and_announcements/types/AdminCommunicationNoticesAndAnnouncementsTypes';
 import AdminAnnouncementsEmptyState from '@/app/frontend_admin/admin_communication/communication_notices_and_announcements/components/empty_state/AdminCommunicationNoticesAndAnnouncementsEmptyState';
+import { CopyButton } from '@/components/ui/CopyButton';
+
+const TABLE_COLUMN_COUNT = 11;
 
 /**
  * AdminCommunicationNoticesAndAnnouncementsTable renders the admin announcements table UI surface and coordinates only the state or handlers required by its owning module.
@@ -82,7 +85,7 @@ export default function AdminCommunicationNoticesAndAnnouncementsTable() {
     else { setSortKey(field); setSortDirection(field === 'publishedAt' ? 'desc' : 'asc'); }
   };
 
-  if (status === 'pending') return <AdminNavigationLayoutTableSkeleton rows={6} cols={7} />;
+  if (status === 'pending') return <AdminNavigationLayoutTableSkeleton rows={6} cols={TABLE_COLUMN_COUNT} />;
 
   if (status === 'error' && !paginated.length) return (
     <div role="alert" className="bg-danger-bg border border-danger rounded-xl p-6 flex flex-wrap items-center justify-between gap-3">
@@ -152,15 +155,15 @@ export default function AdminCommunicationNoticesAndAnnouncementsTable() {
       </div>
 
       {/* Table */}
-      <div className="bg-card border border-border rounded-xl overflow-hidden">
-        <div className="overflow-x-auto">
+      <div className="bg-card border border-border rounded-2xl shadow-card overflow-hidden">
+        <div className="overflow-x-auto max-h-[640px] overflow-auto">
           <table data-admin-responsive-table className="w-full text-left border-collapse min-w-[920px] md:min-w-0">
-            <thead>
-              <tr className="bg-surface-highlight border-b border-border">
-                {ANNOUNCEMENT_HEADER_KEYS.map((key) => {
+            <thead className="sticky top-0 z-20 bg-surface-highlight">
+              <tr className="border-b border-border">
+                {ANNOUNCEMENT_HEADER_KEYS.map((key, idx) => {
                   const field = sortableFields[key];
                   const ariaSort = field !== sortKey ? 'none' : sortDirection === 'asc' ? 'ascending' : 'descending';
-                  return <th key={key} scope="col" aria-sort={field ? ariaSort : undefined} className="p-4 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap">
+                  return <th key={key} scope="col" aria-sort={field ? ariaSort : undefined} className={`p-4 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border w-10' : ''}`}>
                     {key === 'empty' ? '' : field ? <button type="button" onClick={() => activateSort(field)} className="inline-flex items-center gap-1.5 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label={t(`announcements.admin_announcements_table.header.${key}`)} data-testid="announcements-management-announcements-management-table-header-key">{t(`announcements.admin_announcements_table.header.${key}`)}<ArrowUpDown size={14} aria-hidden="true" /></button> : t(`announcements.admin_announcements_table.header.${key}`)}
                   </th>;
                 })}
@@ -169,17 +172,20 @@ export default function AdminCommunicationNoticesAndAnnouncementsTable() {
             <tbody className="divide-y divide-border">
               {paginated.length === 0 ? (
                 <tr>
-                  <td colSpan={11}><AdminAnnouncementsEmptyState hasFilters={hasFilters} onResetFilters={resetFilters} /></td>
+                  <td colSpan={TABLE_COLUMN_COUNT}><AdminAnnouncementsEmptyState hasFilters={hasFilters} onResetFilters={resetFilters} /></td>
                 </tr>
               ) : sortedAnnouncements.map((a , __testIdIndex145) => (
-                <tr key={a.id} className="hover:bg-input motion-safe:transition-colors group motion-safe:duration-base">
+                <tr key={a.id} className="hover:bg-surface-highlight/50 transition-colors group">
                   {/* Pin indicator */}
-                  <td className="p-4 w-8">
+                  <td className="p-4 w-10 sticky start-0 z-10 bg-card border-e border-border">
                     {a.isPinned && <Pin size={18} className="text-warning"  strokeWidth={2}/>}
                   </td>
                   {/* Title + preview */}
                   <td className="p-4 max-w-xs">
-                    <p className="text-sm font-semibold text-primary truncate">{a.title}</p>
+                    <div className="flex items-center gap-1.5">
+                      <p className="text-sm font-semibold text-primary truncate">{a.title}</p>
+                      <CopyButton text={a.title} label={a.title} />
+                    </div>
                     <p className="text-xs text-secondary truncate mt-0.5">{a.body.slice(0, 65)}…</p>
                   </td>
                   {/* Audience */}

@@ -14,6 +14,8 @@ import AdminSettingsEmptyState from '@/app/frontend_admin/admin_settings/setting
 import { ADMIN_SETTINGS_NOTIFICATION_CHANNELS, ADMIN_SETTINGS_NOTIFICATION_EVENTS } from '@/app/frontend_admin/admin_settings/settings_management/constants/AdminSettingsManagementConstants';
 import type { AdminSettingsNotificationsProps } from '@/app/frontend_admin/admin_settings/settings_management/types/AdminSettingsManagementNotificationsPropsTypes';
 
+const TABLE_COLUMN_COUNT = 5;
+
 /**
  * AdminSettingsManagementNotifications renders the admin settings notifications UI surface and coordinates only the state or handlers required by its owning module.
  * @remarks Business behavior remains inside the feature module and semantic theme tokens are consumed at the JSX boundary.
@@ -58,25 +60,25 @@ export function AdminSettingsManagementNotifications({ initialData }: AdminSetti
       </div>
 
       <div className="p-6 space-y-6">
-        <div className="overflow-x-auto">
-          <table data-admin-responsive-table className="w-full text-left border-collapse">
+        <div className="max-h-[640px] overflow-auto rounded-xl border border-border">
+          <table data-admin-responsive-table className="w-full text-left border-collapse text-sm">
             <thead>
-              <tr className="bg-surface-highlight border-b border-border">
-                <th scope="col" aria-sort={eventSort === 'asc' ? 'ascending' : 'descending'} className="px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider" data-testid="admin_settings-admin_settings-notifications-control-4">
+              <tr className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+                <th scope="col" aria-sort={eventSort === 'asc' ? 'ascending' : 'descending'} className="px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider sticky start-0 z-30 bg-surface-highlight border-e border-border whitespace-nowrap" data-testid="admin_settings-admin_settings-notifications-control-4">
                   <button type="button" onClick={() => setEventSort((current) => current === 'asc' ? 'desc' : 'asc')} className="flex min-h-11 items-center gap-1.5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="settings-management-settings-management-notifications-set-event-sort">
                     {t('settings.admin_settings_notifications.text_ad8919ace0')}
                     {eventSort === 'asc' ? <ChevronUp size={18} className="text-primary" aria-hidden="true" strokeWidth={2}/> : <ChevronDown size={18} className="text-primary" aria-hidden="true" strokeWidth={2}/>}
                   </button>
                 </th>
                 {channels.map(c => (
-                  <th key={c.key} scope="col" className={`px-4 py-3 text-xs font-semibold uppercase tracking-wider text-center ${c.color}`}>{c.label}</th>
+                  <th key={c.key} scope="col" className={`px-4 py-3 text-xs font-semibold uppercase tracking-wider text-center whitespace-nowrap ${c.color}`}>{c.label}</th>
                 ))}
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
-              {sortedEvents.length === 0 ? <tr><td colSpan={channels.length + 1}><AdminSettingsEmptyState /></td></tr> : sortedEvents.map((ev, __testIdIndex66) => (
-                <tr key={ev.key} className="hover:bg-surface-hover motion-safe:transition-colors motion-safe:duration-base">
-                  <td className="px-4 py-3 text-sm text-primary font-medium">{ev.label}</td>
+              {sortedEvents.length === 0 ? <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminSettingsEmptyState /></td></tr> : sortedEvents.map((ev, __testIdIndex66) => (
+                <tr key={ev.key} className="hover:bg-surface-highlight/50 transition-colors group">
+                  <td className="px-4 py-3 text-sm text-primary font-medium sticky start-0 z-10 bg-card border-e border-border whitespace-nowrap">{ev.label}</td>
                   {channels.map((c, __testIdIndex69) => {
                     const fieldName = `${c.key}${ev.key}` as keyof NotificationsSettingsType;
                     const isChecked = (formValues[fieldName] ?? initialData[fieldName]) as boolean;

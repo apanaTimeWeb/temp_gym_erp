@@ -9,6 +9,18 @@ import { formatNumber } from '@/app/frontend_admin/admin_sales/sales_membership_
 import { useAdminSalesMembershipGrowthReportLogic } from '@/app/frontend_admin/admin_sales/sales_membership_growth_report/hooks/useAdminSalesMembershipGrowthReportLogic';
 import AdminSalesMembershipGrowthReportSectionState from '@/app/frontend_admin/admin_sales/sales_membership_growth_report/components/main_view/AdminSalesMembershipGrowthReportSectionState';
 import { AdminSalesMembershipGrowthReportAnalyticsEmptyState as AdminSalesMembershipGrowthReportEmptyState } from '@/app/frontend_admin/admin_sales/sales_membership_growth_report/components/empty_state/AdminSalesMembershipGrowthReportEmptyState';
+import { CopyButton } from '@/components/ui/CopyButton';
+
+const TABLE_COLUMN_COUNT = 6;
+
+const TABLE_HEADERS = [
+  'reports.AdminAuditRepair.gym',
+  'reports.AdminAuditRepair.activeMembers',
+  'reports.AdminAuditRepair.newMembers',
+  'reports.AdminAuditRepair.renewals',
+  'reports.AdminAuditRepair.exits',
+  'reports.AdminAuditRepair.netGrowth',
+] as const;
 
 /**
  * AdminSalesMembershipGrowthReportAnalyticsMembership renders the admin reports membership UI surface and coordinates only the state or handlers required by its owning module.
@@ -86,37 +98,49 @@ export default function AdminSalesMembershipGrowthReportAnalyticsMembership() {
         </div>
       </div>
 
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
-        <div className="px-5 py-4 border-b border-border">
+      <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+        <div className="px-5 py-4 border-b border-border bg-surface-highlight/30">
           <h2 className="text-base font-semibold text-primary">{t('reports.admin_reports_membership.text_fd05c3efa5')}</h2>
           <p className="text-xs text-secondary mt-0.5">{t('reports.admin_reports_membership.text_e044ab4747')}</p>
         </div>
-        <div className="overflow-x-auto">
-          <table data-admin-responsive-table className="w-full">
+        <div className="max-h-[640px] overflow-auto">
+          <table data-admin-responsive-table className="w-full text-sm">
             <thead>
-              <tr className="bg-surface-highlight">
-                {['reports.AdminAuditRepair.gym', 'reports.AdminAuditRepair.activeMembers', 'reports.AdminAuditRepair.newMembers', 'reports.AdminAuditRepair.renewals', 'reports.AdminAuditRepair.exits', 'reports.AdminAuditRepair.netGrowth'].map(h => (
-                  <th key={h} className="px-5 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider">{t(h)}</th>
+              <tr className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+                {TABLE_HEADERS.map((h, hIdx) => (
+                  <th
+                    key={h}
+                    className={`px-5 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
+                      hIdx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    }`}
+                  >
+                    {t(h)}
+                  </th>
                 ))}
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
               {reportData.membershipGrowth.length === 0 ? (
-                <tr><td colSpan={6}><AdminSalesMembershipGrowthReportEmptyState title={t('reports.admin_reports_membership.emptyTitle')} description={t('reports.admin_reports_membership.emptyDescription')} /></td></tr>
+                <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminSalesMembershipGrowthReportEmptyState title={t('reports.admin_reports_membership.emptyTitle')} description={t('reports.admin_reports_membership.emptyDescription')} /></td></tr>
               ) : reportData.membershipGrowth.map((row , __testIdIndex41) => (
-                <tr key={row.gymId} className="hover:bg-surface-highlight motion-safe:transition-colors motion-safe:duration-base">
-                  <td className="px-5 py-4 text-sm font-semibold text-primary">{row.gymName}</td>
-                  <td className="px-5 py-4 text-sm text-primary">{formatNumber(row.activeMembers, locale)}</td>
-                  <td className="px-5 py-4">
+                <tr key={row.gymId} className="hover:bg-surface-highlight/50 transition-colors group">
+                  <td className="px-5 py-4 text-sm font-semibold text-primary sticky start-0 z-10 bg-card border-e border-border">
+                    <div className="flex items-center gap-2">
+                      <span>{row.gymName}</span>
+                      <CopyButton text={row.gymName} label="Copy gym name" />
+                    </div>
+                  </td>
+                  <td className="px-5 py-4 text-sm text-primary whitespace-nowrap">{formatNumber(row.activeMembers, locale)}</td>
+                  <td className="px-5 py-4 whitespace-nowrap">
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-success-bg text-success-text" data-testid={`admin_sales-adminreportsmembership-status-1-map41-${__testIdIndex41}-1`}>+{row.newMembers}</span>
                   </td>
-                  <td className="px-5 py-4">
+                  <td className="px-5 py-4 whitespace-nowrap">
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-info-bg text-info-text" data-testid={`admin_sales-adminreportsmembership-status-2-map41-${__testIdIndex41}-2`}>{row.renewals}</span>
                   </td>
-                  <td className="px-5 py-4">
+                  <td className="px-5 py-4 whitespace-nowrap">
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-danger-bg text-danger-text" data-testid={`admin_sales-adminreportsmembership-status-3-map41-${__testIdIndex41}-3`}>-{row.exits}</span>
                   </td>
-                  <td className="px-5 py-4">
+                  <td className="px-5 py-4 whitespace-nowrap">
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${row.netGrowth >= 0 ? 'bg-success-bg text-success-text' : 'bg-danger-bg text-danger-text'}`} data-testid={`admin_sales-adminreportsmembership-status-4-map41-${__testIdIndex41}-4`}>
                       {row.netGrowth >= 0 ? '+' : ''}{row.netGrowth}
                     </span>
@@ -125,21 +149,21 @@ export default function AdminSalesMembershipGrowthReportAnalyticsMembership() {
               ))}
             </tbody>
             <tfoot>
-              <tr className="bg-surface-highlight border-t-2 border-border">
-                <td className="px-5 py-3 text-sm font-bold text-primary">{t('reports.admin_reports_membership.text_b25928c699')}</td>
-                <td className="px-5 py-3 text-sm font-bold text-primary">
+              <tr className="bg-surface-highlight border-t-2 border-border font-bold">
+                <td className="px-5 py-3 text-sm text-primary sticky start-0 z-10 bg-surface-highlight border-e border-border">{t('reports.admin_reports_membership.text_b25928c699')}</td>
+                <td className="px-5 py-3 text-sm text-primary whitespace-nowrap">
                   {formatNumber(reportData.membershipGrowth.reduce((s: number, r) => s + r.activeMembers, 0), locale)}
                 </td>
-                <td className="px-5 py-3 text-sm font-bold text-success">
+                <td className="px-5 py-3 text-sm text-success whitespace-nowrap">
                   +{reportData.membershipGrowth.reduce((s: number, r) => s + r.newMembers, 0)}
                 </td>
-                <td className="px-5 py-3 text-sm font-bold text-info">
+                <td className="px-5 py-3 text-sm text-info whitespace-nowrap">
                   {reportData.membershipGrowth.reduce((s: number, r) => s + r.renewals, 0)}
                 </td>
-                <td className="px-5 py-3 text-sm font-bold text-danger">
+                <td className="px-5 py-3 text-sm text-danger whitespace-nowrap">
                   -{reportData.membershipGrowth.reduce((s: number, r) => s + r.exits, 0)}
                 </td>
-                <td className="px-5 py-3 text-sm font-bold text-success">
+                <td className="px-5 py-3 text-sm text-success whitespace-nowrap">
                   +{reportData.membershipGrowth.reduce((s: number, r) => s + r.netGrowth, 0)}
                 </td>
               </tr>

@@ -19,6 +19,9 @@ import { useAdminAuditLogsLogic } from '@/app/frontend_admin/admin_security/secu
 import { AUDIT_SEVERITY_STYLES } from '@/app/frontend_admin/admin_security/security_audit_logs_explorer/constants/AdminSecurityAuditLogsExplorerConstants';
 import { redactAdminAuditText } from '@/app/frontend_admin/admin_security/security_audit_logs_explorer/utils/AdminSecurityAuditLogsExplorerRedactMetadata';
 import type { AuditLog } from '@/app/frontend_admin/admin_security/security_audit_logs_explorer/types/AdminSecurityAuditLogsExplorerTypes';
+import { CopyButton } from '@/components/ui/CopyButton';
+
+const TABLE_COLUMN_COUNT = 6;
 
 function getActionIcon(action: string) {
   if (action.includes('DELETE') || action.includes('REFUND')) return <Trash2 size={18} strokeWidth={2} className="text-danger" />;
@@ -43,23 +46,32 @@ export default function AdminSecurityAuditLogsExplorerTable() {
   const locale = useLocale();
 
   const { logs, status, currentPage, setCurrentPage, totalPages, totalItems, openDetail, selectedLogId, closeDetail, detail, retryList } = useAdminAuditLogsLogic();
-  if (status === 'pending') return <AdminNavigationLayoutTableSkeleton rows={8} cols={6} />;
+  if (status === 'pending') return <AdminNavigationLayoutTableSkeleton rows={8} cols={TABLE_COLUMN_COUNT} />;
   if (status === 'error') return <div role="alert" className="rounded-xl border border-border bg-danger-bg p-6 text-sm text-danger"><p>{t('audit_logs.admin_audit_logs_table.text_8631a11f58')}</p><button type="button" onClick={() => void retryList()} className="mt-3 min-h-11 rounded-lg border border-border px-4" data-testid="audit-logs-explorer-audit-logs-explorer-table-retry-list">{t('audit_logs.AdminAuditRepair.retry')}</button></div>;
   return (
     <>
-      <div className="overflow-hidden rounded-xl border border-border bg-card">
-        <div className="overflow-x-auto">
-          <table data-admin-responsive-table className="w-full text-left">
-            <thead><tr className="border-b border-border bg-surface-highlight">
-              {['audit_logs.admin_audit_logs_table.auto_timestamp', 'audit_logs.admin_audit_logs_table.auto_action', 'audit_logs.admin_audit_logs_table.auto_actor', 'audit_logs.admin_audit_logs_table.auto_entity', 'audit_logs.admin_audit_logs_table.auto_details', 'audit_logs.admin_audit_logs_table.auto_severity'].map((heading) => <th key={heading} scope="col" className="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-secondary">{t(heading)}</th>)}
-            </tr></thead>
+      <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-card">
+        <div className="max-h-[640px] overflow-auto">
+          <table data-admin-responsive-table className="w-full text-left text-sm">
+            <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+              <tr>
+                {['audit_logs.admin_audit_logs_table.auto_timestamp', 'audit_logs.admin_audit_logs_table.auto_action', 'audit_logs.admin_audit_logs_table.auto_actor', 'audit_logs.admin_audit_logs_table.auto_entity', 'audit_logs.admin_audit_logs_table.auto_details', 'audit_logs.admin_audit_logs_table.auto_severity'].map((heading, idx) => (
+                  <th key={heading} scope="col" className={`px-4 py-3 text-xs font-semibold uppercase tracking-wider text-secondary whitespace-nowrap ${idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''}`}>{t(heading)}</th>
+                ))}
+              </tr>
+            </thead>
             <tbody className="divide-y divide-border">
-              {logs.length === 0 ? <tr><td colSpan={6}><AdminAuditLogsEmptyState /></td></tr> : logs.map((log: AuditLog) => (
+              {logs.length === 0 ? <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminAuditLogsEmptyState /></td></tr> : logs.map((log: AuditLog) => (
                 <tr
                   key={log.id}
-                  className="motion-safe:transition-colors motion-safe:duration-base hover:bg-surface-hover"
+                  className="hover:bg-surface-highlight/50 transition-colors group"
                   data-testid={`admin_audit_logs-admin_audit_logs-table-row-${log.id}`}>
-                  <td data-label={t('audit_logs.admin_audit_logs_table.auto_timestamp')} className="px-4 py-4 text-xs text-secondary whitespace-nowrap"><button type="button" onClick={() => openDetail(log.id)} className="underline underline-offset-2 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label={`${t('audit_logs.admin_audit_logs_table.auto_timestamp')}: ${formatDateTime(log.timestamp, locale)}`} data-testid="audit-logs-explorer-audit-logs-explorer-table-open-detail">{formatDateTime(log.timestamp, locale)}</button></td>
+                  <td data-label={t('audit_logs.admin_audit_logs_table.auto_timestamp')} className="px-4 py-4 text-xs text-secondary whitespace-nowrap sticky start-0 z-10 bg-card border-e border-border">
+                    <div className="flex items-center gap-2">
+                      <button type="button" onClick={() => openDetail(log.id)} className="underline underline-offset-2 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary font-medium text-primary hover:text-accent" aria-label={`${t('audit_logs.admin_audit_logs_table.auto_timestamp')}: ${formatDateTime(log.timestamp, locale)}`} data-testid="audit-logs-explorer-audit-logs-explorer-table-open-detail">{formatDateTime(log.timestamp, locale)}</button>
+                      <CopyButton text={log.id} label="Copy Log ID" />
+                    </div>
+                  </td>
                   <td data-label={t('audit_logs.admin_audit_logs_table.auto_action')} className="px-4 py-4"><div className="flex items-center gap-2.5"><span className="inline-flex min-h-9 min-w-9 items-center justify-center rounded-lg border border-border bg-input">{getActionIcon(log.action)}</span><div><p className="text-sm font-semibold text-primary">{redactAdminAuditText(log.action.replace(/_/g, ' '))}</p><p className="text-xs text-secondary">{redactAdminAuditText(log.entityType)}</p></div></div></td>
                   <td data-label={t('audit_logs.admin_audit_logs_table.auto_actor')} className="px-4 py-4 text-sm text-primary">{redactAdminAuditText(log.actor)}</td>
                   <td data-label={t('audit_logs.admin_audit_logs_table.auto_entity')} className="px-4 py-4 text-sm text-secondary">{redactAdminAuditText(`${log.entityType}${log.entityId ? ` · ${log.entityId}` : ''}`)}</td>

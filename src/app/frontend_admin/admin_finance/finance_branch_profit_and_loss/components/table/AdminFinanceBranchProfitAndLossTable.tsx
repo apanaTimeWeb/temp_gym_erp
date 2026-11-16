@@ -21,8 +21,10 @@ import type {
 } from '@/app/frontend_admin/admin_finance/finance_branch_profit_and_loss/types/AdminFinanceBranchProfitAndLossTypes';
 
 import type { AdminFinancePnlTableProps } from '@/app/frontend_admin/admin_finance/finance_branch_profit_and_loss/types/AdminFinanceBranchProfitAndLossTablePropsTypes';
+import { CopyButton } from '@/components/ui/CopyButton';
 
-const TOTAL_COLS = PNL_TABLE_HEADERS.length;
+const TABLE_COLUMN_COUNT = 8;
+const TOTAL_COLS = TABLE_COLUMN_COUNT;
 
 /**
  * AdminFinanceBranchProfitAndLossTable renders the admin finance pnl table UI surface and coordinates only the state or handlers required by its owning module.
@@ -45,15 +47,17 @@ export default function AdminFinanceBranchProfitAndLossTable({
   const t = useTranslations();
 
   return (
-    <div className="bg-card border border-border rounded-xl overflow-hidden">
-      <div className="overflow-x-auto">
+    <div className="bg-card border border-border rounded-2xl shadow-card overflow-hidden">
+      <div className="overflow-x-auto max-h-[640px] overflow-auto">
         <table data-admin-responsive-table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="bg-surface-highlight border-b border-border">
-              {PNL_TABLE_HEADERS.map((h , __testIdIndex50) => (
+          <thead className="sticky top-0 z-20 bg-surface-highlight">
+            <tr className="border-b border-border">
+              {PNL_TABLE_HEADERS.map((h , __testIdIndex50, idx) => (
                 <th
                   key={h.key}
-                  className="px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap"
+                  className={`px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
+                    idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                  }`}
                   aria-sort={h.sortable && sortKey === h.key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
                  data-testid={`admin_finance-admin_finance-pnl-table-header-map50-${__testIdIndex50}`}>
                   {h.sortable ? (
@@ -80,19 +84,22 @@ export default function AdminFinanceBranchProfitAndLossTable({
                 return (
                   <Fragment key={branch.branchId}>
                     <tr
-                      className={`group motion-safe:transition-colors ${
-                        isExpanded ? 'bg-surface-highlight' : 'hover:bg-input'
+                      className={`group transition-colors ${
+                        isExpanded ? 'bg-surface-highlight' : 'hover:bg-surface-highlight/50'
                       }`}
                      data-testid={`admin_finance-admin_finance-pnl-table-row-map77-${__testIdIndex77}`}>
 
                       {/* Branch Name */}
-                      <td className="px-4 py-3.5">
+                      <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3.5">
                         <div className="flex items-center gap-2.5">
                           <div className={`w-8 h-8 rounded-lg bg-primary-subtle flex items-center justify-center text-primary text-xs font-bold flex-shrink-0`}>
                             {branch.branchName.charAt(0)}
                           </div>
                           <div className="min-w-0">
-                            <p className="text-sm font-semibold text-primary truncate">{branch.branchName}</p>
+                            <div className="flex items-center gap-1.5">
+                              <p className="text-sm font-semibold text-primary truncate">{branch.branchName}</p>
+                              <CopyButton text={branch.branchName} label={branch.branchName} />
+                            </div>
                             <p className="text-xs text-disabled truncate">{branch.location}</p>
                           </div>
                         </div>

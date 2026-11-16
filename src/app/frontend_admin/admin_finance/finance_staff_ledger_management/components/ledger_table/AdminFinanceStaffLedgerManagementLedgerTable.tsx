@@ -13,6 +13,9 @@ import { useAdminFinanceStaffLedgerManagementLedgerLogic } from '@/app/frontend_
 import { ChevronDown, ChevronUp, ChevronsUpDown, FileText } from 'lucide-react';
 import type { AdminFinanceStaffLedgerManagementLedgerSortKey } from '@/app/frontend_admin/admin_finance/finance_staff_ledger_management/types/AdminFinanceStaffLedgerManagementTypes';
 import AdminFinanceStaffLedgerManagementEmptyState from '@/app/frontend_admin/admin_finance/finance_staff_ledger_management/components/empty_state/AdminFinanceStaffLedgerManagementEmptyState';
+import { CopyButton } from '@/components/ui/CopyButton';
+
+const TABLE_COLUMN_COUNT = 6;
 
 
 /**
@@ -85,17 +88,23 @@ export default function AdminFinanceStaffLedgerManagementLedgerTable() {
         </div>
       )}
 
-      <div className="border border-border rounded-xl overflow-hidden bg-card">
-        <div className="overflow-x-auto">
+      <div className="border border-border rounded-2xl overflow-hidden bg-card shadow-card">
+        <div className="overflow-x-auto max-h-[640px] overflow-auto">
           <table data-admin-responsive-table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-surface-highlight border-b border-border text-sm">
-                {ledgerColumns.map((column , __testIdIndex88) => {
+            <thead className="sticky top-0 z-20 bg-surface-highlight">
+              <tr className="border-b border-border text-sm">
+                {ledgerColumns.map((column , __testIdIndex88, idx) => {
                   const active = column.key !== null && sortKey === column.key;
                   return (
-                    <th key={column.label} className={`p-4 font-medium text-secondary whitespace-nowrap ${column.key ? 'select-none' : ''} ${column.key === 'balance' ? 'bg-surface-highlight text-right' : ''}`} aria-sort={active ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}>
+                    <th
+                      key={column.label}
+                      className={`p-4 font-medium text-secondary whitespace-nowrap ${
+                        idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                      } ${column.key ? 'select-none' : ''} ${column.key === 'balance' ? 'text-right' : ''}`}
+                      aria-sort={active ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
+                    >
                       {column.key ? (
-                        <button type="button" onClick={() => handleSort(column.key as AdminFinanceStaffLedgerManagementLedgerSortKey)} className="motion-safe:transition-all motion-safe:duration-base ease-in-out inline-flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11 motion-safe:active:scale-95" data-testid={`admin_hr-admin_hr-ledger-table-click-map88-${__testIdIndex88}-1`}>
+                        <button type="button" onClick={() => handleSort(column.key as AdminFinanceStaffLedgerManagementLedgerSortKey)} className="inline-flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded min-h-11 min-w-11 active:scale-95" data-testid={`admin_hr-admin_hr-ledger-table-click-map88-${__testIdIndex88}-1`}>
                           {column.label}
                           {active ? (sortDir === 'asc' ? <ChevronUp size={18} className="text-primary" aria-hidden="true"  strokeWidth={2}/> : <ChevronDown size={18} className="text-primary" aria-hidden="true"  strokeWidth={2}/>) : <ChevronsUpDown size={18} className="text-disabled" aria-hidden="true"  strokeWidth={2}/>}
                         </button>
@@ -107,18 +116,23 @@ export default function AdminFinanceStaffLedgerManagementLedgerTable() {
             </thead>
             <tbody className="text-sm divide-y divide-border">
               {loading ? (
-                <tr><td colSpan={6} className="text-center p-8 text-secondary">{t('hr.admin_hr_ledger_table.text_b3e27da8cc')}</td></tr>
+                <tr><td colSpan={TABLE_COLUMN_COUNT} className="text-center p-8 text-secondary">{t('hr.admin_hr_ledger_table.text_b3e27da8cc')}</td></tr>
               ) : error ? (
-                <tr><td colSpan={6} className="p-8 text-center">
+                <tr><td colSpan={TABLE_COLUMN_COUNT} className="p-8 text-center">
                   <p role="alert" className="text-danger mb-3">{error}</p>
                   <button type="button" onClick={() => { void retryLedger(); }} className="min-h-11 rounded-lg px-4 font-semibold underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="finance-staff-ledger-retry">{t('hr.HrError.text_042c862e44')}</button>
                 </td></tr>
               ) : sortedLedger.length === 0 ? (
-                <tr><td colSpan={6}><AdminFinanceStaffLedgerManagementEmptyState title={t('hr.admin_hr_ledger_table.text_d60c045dd2')} description={t('hr.admin_hr_ledger_table.auto_d9cf357274')} /></td></tr>
+                <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminFinanceStaffLedgerManagementEmptyState title={t('hr.admin_hr_ledger_table.text_d60c045dd2')} description={t('hr.admin_hr_ledger_table.auto_d9cf357274')} /></td></tr>
               ) : (
                 sortedLedger.map((entry , __testIdIndex109) => (
-                  <tr key={entry.id} className="hover:bg-surface-hover motion-safe:transition-colors motion-safe:duration-base">
-                    <td className="p-4 text-primary whitespace-nowrap">{formatDate(entry.date, locale)}</td>
+                  <tr key={entry.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                    <td className="sticky start-0 z-10 bg-card border-e border-border p-4 text-primary whitespace-nowrap">
+                      <div className="flex items-center gap-1.5">
+                        <span>{formatDate(entry.date, locale)}</span>
+                        <CopyButton text={formatDate(entry.date, locale)} label={formatDate(entry.date, locale)} />
+                      </div>
+                    </td>
                     <td className="p-4"><span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${ADMIN_FINANCE_STAFF_LEDGER_MANAGEMENT_LEDGER_ENTRY_STYLE_CLASSES[entry.type] ?? 'bg-input text-secondary'}`} data-testid={`admin_hr-adminhrledgertable-status-1-map109-${__testIdIndex109}-1`}>{entry.type}</span></td>
                     <td className="p-4 text-secondary max-w-48 truncate" title={entry.notes}>{displayValue(entry.notes)}</td>
                     <td className="p-4 text-success text-right">{entry.credit ? AdminFinanceStaffLedgerManagementFormatCurrency(entry.credit, undefined, locale) : '—'}</td>

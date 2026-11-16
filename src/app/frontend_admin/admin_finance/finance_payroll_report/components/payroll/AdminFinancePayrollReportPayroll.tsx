@@ -8,6 +8,9 @@ import { AdminFinancePayrollReportFormatCurrency } from '@/app/frontend_admin/ad
 import { useAdminFinancePayrollReportLogic } from '@/app/frontend_admin/admin_finance/finance_payroll_report/hooks/useAdminFinancePayrollReportLogic';
 import AdminReportsSectionState from '@/app/frontend_admin/admin_finance/finance_payroll_report/components/main_view/AdminFinancePayrollReportSectionState';
 import { AdminFinancePayrollReportEmptyState as AdminReportsEmptyState } from '@/app/frontend_admin/admin_finance/finance_payroll_report/components/empty_state/AdminFinancePayrollReportEmptyState';
+import { CopyButton } from '@/components/ui/CopyButton';
+
+const TABLE_COLUMN_COUNT = 7;
 
 /**
  * AdminFinancePayrollReportPayroll renders the admin reports payroll UI surface and coordinates only the state or handlers required by its owning module.
@@ -47,25 +50,37 @@ export default function AdminFinancePayrollReportPayroll() {
       </div>
 
       {/* Payroll Table */}
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
-        <div className="px-5 py-4 border-b border-border">
+      <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
+        <div className="px-5 py-4 border-b border-border bg-surface-highlight/30">
           <h2 className="text-base font-semibold text-primary">{t('reports.admin_finance_payroll_report.text_86bb288973')}</h2>
         </div>
-        <div className="overflow-x-auto">
-          <table data-admin-responsive-table className="w-full">
-            <thead>
-              <tr className="bg-surface-highlight">
-                {['reports.AdminAuditRepair.gym', 'reports.AdminAuditRepair.staffCount', 'reports.AdminAuditRepair.totalPayroll', 'reports.AdminAuditRepair.paid', 'reports.AdminAuditRepair.pending', 'reports.AdminAuditRepair.advances', 'reports.AdminAuditRepair.status'].map(h => (
-                  <th key={h} className="px-5 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider">{t(h)}</th>
+        <div className="overflow-x-auto max-h-[640px] overflow-auto">
+          <table data-admin-responsive-table className="w-full text-left border-collapse">
+            <thead className="sticky top-0 z-20 bg-surface-highlight">
+              <tr className="border-b border-border">
+                {['reports.AdminAuditRepair.gym', 'reports.AdminAuditRepair.staffCount', 'reports.AdminAuditRepair.totalPayroll', 'reports.AdminAuditRepair.paid', 'reports.AdminAuditRepair.pending', 'reports.AdminAuditRepair.advances', 'reports.AdminAuditRepair.status'].map((h, idx) => (
+                  <th
+                    key={h}
+                    className={`px-5 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
+                      idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    }`}
+                  >
+                    {t(h)}
+                  </th>
                 ))}
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
               {reportData.payrollSummary.length === 0 ? (
-                <tr><td colSpan={7}><AdminReportsEmptyState title={t('reports.admin_finance_payroll_report.text_9062d7cc94')} description={t('reports.admin_finance_payroll_report.auto_2a76b3d03a')} /></td></tr>
+                <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminReportsEmptyState title={t('reports.admin_finance_payroll_report.text_9062d7cc94')} description={t('reports.admin_finance_payroll_report.auto_2a76b3d03a')} /></td></tr>
               ) : reportData.payrollSummary.map((row , __testIdIndex62) => (
-                <tr key={row.gymId} className="hover:bg-surface-highlight motion-safe:transition-colors motion-safe:duration-base">
-                  <td className="px-5 py-4 text-sm font-semibold text-primary">{row.gymName}</td>
+                <tr key={row.gymId} className="hover:bg-surface-highlight/50 transition-colors group">
+                  <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-4 text-sm font-semibold text-primary">
+                    <div className="flex items-center gap-1.5">
+                      <span>{row.gymName}</span>
+                      <CopyButton text={row.gymName} label={row.gymName} />
+                    </div>
+                  </td>
                   <td className="px-5 py-4 text-sm text-primary">{row.totalStaff}</td>
                   <td className="px-5 py-4 text-sm font-semibold text-primary">{AdminFinancePayrollReportFormatCurrency(row.totalPayroll, undefined, locale)}</td>
                   <td className="px-5 py-4 text-sm text-success">{AdminFinancePayrollReportFormatCurrency(row.paid, undefined, locale)}</td>

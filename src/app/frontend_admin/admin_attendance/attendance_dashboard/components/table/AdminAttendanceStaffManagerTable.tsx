@@ -16,6 +16,9 @@ import {
 } from 'lucide-react';
 import { StaffAttendanceRecord, INITIAL_STAFF_ATTENDANCE } from '../../types/AdminAttendanceStaffManagerTypes';
 import AdminAttendanceStaffManagerModal from '../modal/AdminAttendanceStaffManagerModal';
+import { CopyButton } from '@/components/ui/CopyButton';
+
+const TABLE_COLUMN_COUNT = 9;
 
 export default function AdminAttendanceStaffManagerTable() {
   const t = useTranslations();
@@ -181,88 +184,93 @@ export default function AdminAttendanceStaffManagerTable() {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-xl border border-border">
-        <table className="w-full text-left border-collapse text-xs sm:text-sm">
-          <thead>
-            <tr className="border-b border-border bg-surface-highlight text-secondary">
-              <th className="p-3.5 font-bold uppercase tracking-wider text-xs">Staff / Manager Name</th>
-              <th className="p-3.5 font-bold uppercase tracking-wider text-xs">Role</th>
-              <th className="p-3.5 font-bold uppercase tracking-wider text-xs">Branch</th>
-              <th className="p-3.5 font-bold uppercase tracking-wider text-xs">Assigned Shift</th>
-              <th className="p-3.5 font-bold uppercase tracking-wider text-xs">Check-In</th>
-              <th className="p-3.5 font-bold uppercase tracking-wider text-xs">Check-Out</th>
-              <th className="p-3.5 font-bold uppercase tracking-wider text-xs">Total Duration</th>
-              <th className="p-3.5 font-bold uppercase tracking-wider text-xs">Attendance Status</th>
-              <th className="p-3.5 font-bold uppercase tracking-wider text-xs text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-border">
-            {filtered.length === 0 ? (
-              <tr>
-                <td colSpan={9} className="p-8 text-center text-secondary">
-                  No staff or manager attendance records match the selected filters.
-                </td>
+      <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+        <div className="max-h-[640px] overflow-auto">
+          <table data-admin-responsive-table className="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border shadow-xs">
+              <tr className="border-b border-border bg-surface-highlight text-secondary">
+                <th className="sticky start-0 z-30 bg-surface-highlight border-e border-border p-3.5 font-bold uppercase tracking-wider text-xs whitespace-nowrap">Staff / Manager Name</th>
+                <th className="p-3.5 font-bold uppercase tracking-wider text-xs whitespace-nowrap">Role</th>
+                <th className="p-3.5 font-bold uppercase tracking-wider text-xs whitespace-nowrap">Branch</th>
+                <th className="p-3.5 font-bold uppercase tracking-wider text-xs whitespace-nowrap">Assigned Shift</th>
+                <th className="p-3.5 font-bold uppercase tracking-wider text-xs whitespace-nowrap">Check-In</th>
+                <th className="p-3.5 font-bold uppercase tracking-wider text-xs whitespace-nowrap">Check-Out</th>
+                <th className="p-3.5 font-bold uppercase tracking-wider text-xs whitespace-nowrap">Total Duration</th>
+                <th className="p-3.5 font-bold uppercase tracking-wider text-xs whitespace-nowrap">Attendance Status</th>
+                <th className="p-3.5 font-bold uppercase tracking-wider text-xs text-right whitespace-nowrap">Actions</th>
               </tr>
-            ) : (
-              filtered.map((record) => (
-                <tr key={record.id} className="hover:bg-surface-hover motion-safe:transition-colors">
-                  <td className="p-3.5 font-semibold text-primary">
-                    <div className="flex items-center gap-2">
-                      <span className="w-7 h-7 rounded-full bg-primary-subtle text-primary font-bold flex items-center justify-center text-xs">
-                        {record.name.charAt(0)}
-                      </span>
-                      <div>
-                        <span>{record.name}</span>
-                        {record.adminNotes && (
-                          <p className="text-[10px] text-secondary font-normal italic truncate max-w-[140px]">
-                            {record.adminNotes}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="p-3.5">
-                    <span className={`px-2 py-0.5 rounded-lg text-xs font-bold ${
-                      record.role === 'Manager' ? 'bg-primary text-on-primary' : 'bg-surface-highlight text-primary border border-border'
-                    }`}>
-                      {record.role}
-                    </span>
-                  </td>
-                  <td className="p-3.5 text-secondary">{record.branchName}</td>
-                  <td className="p-3.5 text-secondary text-xs">{record.shift}</td>
-                  <td className="p-3.5 font-medium text-primary">{record.checkInTime}</td>
-                  <td className="p-3.5 text-secondary">{record.checkOutTime || '—'}</td>
-                  <td className="p-3.5 text-primary font-medium">{record.duration}</td>
-                  <td className="p-3.5">
-                    <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold ${
-                      record.status === 'present'
-                        ? 'bg-success-bg text-success-text'
-                        : record.status === 'late'
-                        ? 'bg-warning-bg text-warning'
-                        : 'bg-surface-highlight text-secondary border border-border'
-                    }`}>
-                      {record.status === 'present' && <CheckCircle2 size={12} />}
-                      {record.status === 'late' && <AlertCircle size={12} />}
-                      {record.status === 'on-leave' && <Calendar size={12} />}
-                      <span className="capitalize">{record.status}</span>
-                    </span>
-                  </td>
-                  <td className="p-3.5 text-right">
-                    <button
-                      type="button"
-                      onClick={() => handleOpenEditModal(record)}
-                      className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-border bg-card hover:bg-surface-highlight text-primary text-xs font-semibold shadow-xs motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                      aria-label={`Adjust attendance punch for ${record.name}`}
-                    >
-                      <Edit3 size={12} className="text-secondary" />
-                      <span>Adjust Punch</span>
-                    </button>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {filtered.length === 0 ? (
+                <tr>
+                  <td colSpan={TABLE_COLUMN_COUNT} className="p-8 text-center text-secondary">
+                    No staff or manager attendance records match the selected filters.
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                filtered.map((record) => (
+                  <tr key={record.id} className="hover:bg-surface-hover motion-safe:transition-colors group">
+                    <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-e border-border p-3.5 font-semibold text-primary">
+                      <div className="flex items-center gap-2">
+                        <span className="w-7 h-7 rounded-full bg-primary-subtle text-primary font-bold flex items-center justify-center text-xs shrink-0">
+                          {record.name.charAt(0)}
+                        </span>
+                        <div>
+                          <div className="flex items-center gap-1.5">
+                            <span>{record.name}</span>
+                            <CopyButton value={record.name} label="Copy staff name" className="opacity-0 group-hover:opacity-100" />
+                          </div>
+                          {record.adminNotes && (
+                            <p className="text-[10px] text-secondary font-normal italic truncate max-w-[140px]">
+                              {record.adminNotes}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </td>
+                    <td className="p-3.5">
+                      <span className={`px-2 py-0.5 rounded-lg text-xs font-bold ${
+                        record.role === 'Manager' ? 'bg-primary text-on-primary' : 'bg-surface-highlight text-primary border border-border'
+                      }`}>
+                        {record.role}
+                      </span>
+                    </td>
+                    <td className="p-3.5 text-secondary">{record.branchName}</td>
+                    <td className="p-3.5 text-secondary text-xs">{record.shift}</td>
+                    <td className="p-3.5 font-medium text-primary">{record.checkInTime}</td>
+                    <td className="p-3.5 text-secondary">{record.checkOutTime || '—'}</td>
+                    <td className="p-3.5 text-primary font-medium">{record.duration}</td>
+                    <td className="p-3.5">
+                      <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold ${
+                        record.status === 'present'
+                          ? 'bg-success-bg text-success-text'
+                          : record.status === 'late'
+                          ? 'bg-warning-bg text-warning'
+                          : 'bg-surface-highlight text-secondary border border-border'
+                      }`}>
+                        {record.status === 'present' && <CheckCircle2 size={12} />}
+                        {record.status === 'late' && <AlertCircle size={12} />}
+                        {record.status === 'on-leave' && <Calendar size={12} />}
+                        <span className="capitalize">{record.status}</span>
+                      </span>
+                    </td>
+                    <td className="p-3.5 text-right whitespace-nowrap">
+                      <button
+                        type="button"
+                        onClick={() => handleOpenEditModal(record)}
+                        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-border bg-card hover:bg-surface-highlight text-primary text-xs font-semibold shadow-xs motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        aria-label={`Adjust attendance punch for ${record.name}`}
+                      >
+                        <Edit3 size={12} className="text-secondary" />
+                        <span>Adjust Punch</span>
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <AdminAttendanceStaffManagerModal

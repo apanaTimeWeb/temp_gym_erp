@@ -14,6 +14,9 @@ import { useAdminBlacklistLogic } from '@/app/frontend_admin/admin_members/membe
 import type { BlacklistedMember } from '@/app/frontend_admin/admin_members/members_blacklist_management/types/AdminMembersBlacklistManagementTypes';
 import AdminNavigationLayoutTableSkeleton from '@/app/frontend_admin/admin_members/members_blacklist_management/components/AdminMembersBlacklistManagementTableSkeleton';
 import AdminNavigationLayoutPagination from '@/app/frontend_admin/admin_members/members_blacklist_management/components/AdminMembersBlacklistManagementPagination';
+import { CopyButton } from '@/components/ui/CopyButton';
+
+const TABLE_COLUMN_COUNT = 8;
 
 const HEADER_KEYS = [
   'blacklist.admin_blacklist_cross_gym_view.member',
@@ -60,7 +63,7 @@ export default function AdminMembersBlacklistManagementCrossGymView() {
     else { setSortKey(field); setSortDirection(field === 'blacklistedAt' ? 'desc' : 'asc'); }
   };
 
-  if (crossGymStatus === 'pending') return <AdminNavigationLayoutTableSkeleton rows={4} cols={HEADER_KEYS.length} />;
+  if (crossGymStatus === 'pending') return <AdminNavigationLayoutTableSkeleton rows={4} cols={TABLE_COLUMN_COUNT} />;
   if (crossGymStatus === 'error') return <div role="alert" className="space-y-3 rounded-xl border border-danger bg-danger-bg p-4 text-sm text-danger"><p>{t('blacklist.AdminRepair.crossGymLoadError')}</p><button type="button" onClick={() => void retryCrossGym()} className="min-h-11 rounded-lg border border-border px-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="blacklist-management-blacklist-management-cross-gym-view-retry-cross-gym">{t('blacklist.AdminRepair.retry')}</button></div>;
   if (crossGymError && !gymSpecificEntries.length) return <div role="alert">{t('blacklist.AdminRepair.crossGymLoadError')} <button type="button" onClick={() => void retryCrossGym()} data-testid="blacklist-management-blacklist-management-cross-gym-view-retry-cross-gym-2">{t('blacklist.AdminRepair.retry')}</button></div>;
 
@@ -85,15 +88,16 @@ export default function AdminMembersBlacklistManagementCrossGymView() {
           <span className="font-semibold">{t('blacklist.admin_blacklist_cross_gym_view.entriesCount', { count: crossGymTotalItems })}</span> {t('blacklist.admin_blacklist_cross_gym_view.text_80929f9c4f')}<span className="font-semibold">{t('blacklist.admin_blacklist_cross_gym_view.text_901bb4c2c3')}</span> {t('blacklist.admin_blacklist_cross_gym_view.text_fcc98f082f')}</p>
       </div>
 
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
-        <div className="overflow-x-auto">
-          <table data-admin-responsive-table className="w-full">
+      <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+        <div className="max-h-[640px] overflow-auto">
+          <table data-admin-responsive-table className="w-full text-sm">
             <thead>
-              <tr className="bg-warning-bg">
-                {HEADER_KEYS.map(h => {
+              <tr className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+                {HEADER_KEYS.map((h, hIdx) => {
                   const field = sortableFields[h];
                   const ariaSort = field !== sortKey ? 'none' : sortDirection === 'asc' ? 'ascending' : 'descending';
-                  return <th key={h} scope="col" aria-sort={field ? ariaSort : undefined} className="px-4 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap">
+                  const isFirst = hIdx === 0;
+                  return <th key={h} scope="col" aria-sort={field ? ariaSort : undefined} className={`px-4 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${isFirst ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''}`}>
                     {field ? <button type="button" onClick={() => activateSort(field)} className="inline-flex items-center gap-1.5 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label={t(h)} data-testid="blacklist-management-blacklist-management-cross-gym-view-button">{t(h)}<ArrowUpDown size={14} aria-hidden="true" /></button> : t(h)}
                   </th>;
                 })}
@@ -101,10 +105,15 @@ export default function AdminMembersBlacklistManagementCrossGymView() {
             </thead>
             <tbody className="divide-y divide-border">
               {sortedEntries.map((m: BlacklistedMember , __testIdIndex64) => (
-                <tr key={m.id} className="hover:bg-warning-bg motion-safe:transition-colors group motion-safe:duration-base">
-                  <td className="px-4 py-3">
-                    <p className="text-sm font-medium text-primary">{m.memberName}</p>
-                    <p className="text-xs text-secondary">{t('blacklist.admin_blacklist_cross_gym_view.text_d789a1e992')}{m.memberId}</p>
+                <tr key={m.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                  <td className="px-4 py-3 sticky start-0 z-10 bg-card border-e border-border">
+                    <div className="flex items-center gap-2">
+                      <div>
+                        <p className="text-sm font-medium text-primary">{m.memberName}</p>
+                        <p className="text-xs text-secondary">{t('blacklist.admin_blacklist_cross_gym_view.text_d789a1e992')}{m.memberId}</p>
+                      </div>
+                      <CopyButton text={m.memberId || m.memberName} label="Copy ID" />
+                    </div>
                   </td>
                   <td className="px-4 py-3">
                     <p className="text-sm text-primary">{maskSensitiveData(m.memberPhone)}</p>

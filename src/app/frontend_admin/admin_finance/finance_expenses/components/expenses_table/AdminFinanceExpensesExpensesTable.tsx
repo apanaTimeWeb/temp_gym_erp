@@ -15,6 +15,9 @@ import { maskAdminFinanceListAmount } from '@/app/frontend_admin/admin_finance/f
 import { EXPENSE_CATEGORIES, FINANCE_EXPENSE_CATEGORY_LABEL_KEYS, FINANCE_EXPENSE_CATEGORY_STYLES, FINANCE_EXPENSE_ITEMS_PER_PAGE } from '@/app/frontend_admin/admin_finance/finance_expenses/constants/AdminFinanceExpensesConstants';
 import AdminNavigationLayoutPagination from '@/app/frontend_admin/admin_finance/finance_expenses/components/AdminFinanceExpensesPagination';
 import AdminFinanceEmptyState from '@/app/frontend_admin/admin_finance/finance_expenses/components/empty_state/AdminFinanceExpensesEmptyState';
+import { CopyButton } from '@/components/ui/CopyButton';
+
+const TABLE_COLUMN_COUNT = 6;
 
 /**
  * AdminFinanceOverviewExpensesTable renders the admin finance expenses table UI surface and coordinates only the state or handlers required by its owning module.
@@ -59,13 +62,20 @@ export default function AdminFinanceOverviewExpensesTable() {
         <span className="text-xs text-secondary">{t('finance.admin_finance_expenses_table.text_51b38f2fd6')}</span>
       </div>
 
-      <div className="rounded-xl border border-border overflow-hidden">
-        <div className="overflow-x-auto">
+      <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+        <div className="overflow-x-auto max-h-[640px] overflow-auto">
           <table data-admin-responsive-table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-surface-highlight border-b border-border">
-                {['finance.admin_finance_expenses_table.date', 'finance.admin_finance_expenses_table.category', 'finance.admin_finance_expenses_table.branch', 'finance.admin_finance_expenses_table.amount', 'finance.admin_finance_expenses_table.notes', 'finance.admin_finance_expenses_table.recordedBy'].map((heading) => (
-                  <th key={heading} className="px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap">{t(heading)}</th>
+            <thead className="sticky top-0 z-20 bg-surface-highlight">
+              <tr className="border-b border-border">
+                {['finance.admin_finance_expenses_table.date', 'finance.admin_finance_expenses_table.category', 'finance.admin_finance_expenses_table.branch', 'finance.admin_finance_expenses_table.amount', 'finance.admin_finance_expenses_table.notes', 'finance.admin_finance_expenses_table.recordedBy'].map((heading, idx) => (
+                  <th
+                    key={heading}
+                    className={`px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
+                      idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    }`}
+                  >
+                    {t(heading)}
+                  </th>
                 ))}
               </tr>
             </thead>
@@ -73,19 +83,28 @@ export default function AdminFinanceOverviewExpensesTable() {
               {expensesStatus === 'pending' ? (
                 ['expense-row-1', 'expense-row-2', 'expense-row-3', 'expense-row-4', 'expense-row-5'].map((key) => (
                   <tr key={key} className="motion-safe:animate-pulse motion-safe:duration-base">
-                    {['expense-a', 'expense-b', 'expense-c', 'expense-d', 'expense-e', 'expense-f'].map((cell) => <td key={`${key}-${cell}`} className="px-4 py-4"><div className="h-4 rounded bg-skeleton-base" /></td>)}
+                    {['expense-a', 'expense-b', 'expense-c', 'expense-d', 'expense-e', 'expense-f'].map((cell, cIdx) => (
+                      <td key={`${key}-${cell}`} className={`px-4 py-4 ${cIdx === 0 ? 'sticky start-0 z-10 bg-card border-e border-border' : ''}`}>
+                        <div className="h-4 rounded bg-skeleton-base" />
+                      </td>
+                    ))}
                   </tr>
                 ))
               ) : expensesStatus === 'error' ? (
-                <tr><td colSpan={6} className="px-4 py-8 text-center"><p role="alert" className="text-danger">{t('finance.AdminFinanceLogic.genericError')}</p><button type="button" onClick={() => void loadAll()} className="mt-2 min-h-11 rounded-lg border border-border px-4 font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="finance-overview-finance-overview-expenses-table-admin-finance-tabs-retry">{t('finance.admin_finance_tabs.retry')}</button></td></tr>
+                <tr><td colSpan={TABLE_COLUMN_COUNT} className="px-4 py-8 text-center"><p role="alert" className="text-danger">{t('finance.AdminFinanceLogic.genericError')}</p><button type="button" onClick={() => void loadAll()} className="mt-2 min-h-11 rounded-lg border border-border px-4 font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="finance-overview-finance-overview-expenses-table-admin-finance-tabs-retry">{t('finance.admin_finance_tabs.retry')}</button></td></tr>
               ) : expenses.length === 0 ? (
-                <tr><td colSpan={6}><AdminFinanceEmptyState title={t('finance.admin_finance_expenses_table.text_15f519954e')} description={t('finance.admin_finance_expenses_table.auto_4508b993fb')} /></td></tr>
+                <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminFinanceEmptyState title={t('finance.admin_finance_expenses_table.text_15f519954e')} description={t('finance.admin_finance_expenses_table.auto_4508b993fb')} /></td></tr>
               ) : (
                 expenses.map((expense: Expense) => (
-                  <tr key={expense.id} className="hover:bg-surface-hover motion-safe:transition-colors motion-safe:duration-base">
-                    <td className="px-4 py-3 text-sm text-primary whitespace-nowrap">{formatDate(expense.date, locale)}</td>
+                  <tr key={expense.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                    <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-semibold text-primary whitespace-nowrap">{formatDate(expense.date, locale)}</td>
                     <td className="px-4 py-3"><span className={`text-xs font-bold px-2.5 py-1 rounded-full ${FINANCE_EXPENSE_CATEGORY_STYLES[expense.category as keyof typeof FINANCE_EXPENSE_CATEGORY_STYLES] ?? 'bg-input text-secondary'}`} data-testid="finance-overview-finance-overview-expenses-table-status-badge">{t(FINANCE_EXPENSE_CATEGORY_LABEL_KEYS[expense.category as keyof typeof FINANCE_EXPENSE_CATEGORY_LABEL_KEYS] ?? 'finance.AdminAuditRepair.other')}</span></td>
-                    <td className="px-4 py-3 text-sm text-primary">{expense.branchName ?? expense.branchId}</td>
+                    <td className="px-4 py-3 text-sm text-primary">
+                      <div className="flex items-center gap-1.5">
+                        <span>{expense.branchName ?? expense.branchId}</span>
+                        <CopyButton text={expense.branchName ?? expense.branchId} label={expense.branchName ?? expense.branchId} />
+                      </div>
+                    </td>
                     <td className="px-4 py-3 text-sm font-bold text-danger"><span>{AdminFinanceFormatCurrency(expense.amount, 'INR', locale) !== '—' ? AdminFinanceFormatCurrency(expense.amount, 'INR', locale) : (Number.isFinite(expense.amount) ? `₹${(expense.amount > 1000 ? expense.amount / 100 : expense.amount).toLocaleString(locale)}` : '—')}</span></td>
                     <td className="px-4 py-3 text-sm text-secondary max-w-xs truncate">{displayValue(expense.notes)}</td>
                     <td className="px-4 py-3 text-sm text-secondary">{expense.recordedBy}</td>
