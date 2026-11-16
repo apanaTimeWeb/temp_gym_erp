@@ -2,6 +2,7 @@
 'use client';
 import { MessageSquare, ArrowRight, Tag } from 'lucide-react';
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
+import CopyButton from '@/components/ui/CopyButton';
 import type { SupportTicket } from '@/app/frontend_manager/manager_help_support/support_tickets/types/manager_support_tickets.types';
 import { TICKET_PRIORITY_STYLES, TICKET_STATUS_STYLES } from '@/app/frontend_manager/manager_help_support/support_tickets/constants/manager_support_tickets.constants';
 
@@ -11,17 +12,23 @@ interface Props {
 }
 
 const TABLE_HEADERS = ['Ticket # & Subject', 'Category', 'Priority', 'Status', 'Messages', 'Last Updated', 'Action'];
+const TABLE_COLUMN_COUNT = 7;
 
 export default function ManagerSupportTicketsTable({ tickets, onSelectTicket }: Props) {
   return (
-    <div className="bg-card border border-border rounded-xl shadow-card overflow-hidden" data-testid="manager_support-table-container">
-      <div className="overflow-x-auto">
+    <div className="bg-card border border-border rounded-2xl shadow-card overflow-hidden" data-testid="manager_support-table-container">
+      <div className="max-h-[640px] overflow-auto">
         <ManagerInfrastructureResponsiveTable mobilePattern="horizontal-scroll" labels={TABLE_HEADERS}>
           <table className="w-full text-left border-collapse">
-            <thead className="bg-primary-subtle border-b border-border">
+            <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
               <tr>
-                {TABLE_HEADERS.map((h) => (
-                  <th key={h} className="px-5 py-3 text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap">
+                {TABLE_HEADERS.map((h, idx) => (
+                  <th
+                    key={h}
+                    className={`px-5 py-3 text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap ${
+                      idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    }`}
+                  >
                     {h}
                   </th>
                 ))}
@@ -30,7 +37,7 @@ export default function ManagerSupportTicketsTable({ tickets, onSelectTicket }: 
             <tbody className="divide-y divide-border">
               {tickets.length === 0 ? (
                 <tr>
-                  <td colSpan={TABLE_HEADERS.length} className="py-12 text-center text-sm text-text-secondary">
+                  <td colSpan={TABLE_COLUMN_COUNT} className="py-12 text-center text-sm text-text-secondary">
                     No support tickets found matching the selected filters.
                   </td>
                 </tr>
@@ -51,11 +58,14 @@ export default function ManagerSupportTicketsTable({ tickets, onSelectTicket }: 
                         }
                       }}
                       data-testid={`manager_support-ticket-row-${t.id}`}
-                      className="hover:bg-primary-subtle/40 cursor-pointer motion-safe:transition-all"
+                      className="hover:bg-surface-highlight/50 transition-colors group cursor-pointer"
                     >
-                      <td className="px-5 py-3.5 whitespace-nowrap">
-                        <span className="font-mono text-xs font-bold text-primary mr-2">{t.ticketNumber}</span>
-                        <span className="text-sm font-semibold text-text-primary">{t.subject}</span>
+                      <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-3.5 whitespace-nowrap">
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono text-xs font-bold text-primary">{t.ticketNumber}</span>
+                          <CopyButton value={t.ticketNumber} />
+                          <span className="text-sm font-semibold text-text-primary ml-1">{t.subject}</span>
+                        </div>
                       </td>
 
                       <td className="px-5 py-3.5 text-xs text-text-secondary whitespace-nowrap">

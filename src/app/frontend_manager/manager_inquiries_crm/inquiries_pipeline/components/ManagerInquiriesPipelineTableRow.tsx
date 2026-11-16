@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 
 import { useConfirm } from '@/components/ui/manager_confirm_provider/ManagerConfirmProvider';
 import ManagerSearchableDropdown from '@/components/ui/manager_searchable_dropdown/ManagerSearchableDropdown';
+import CopyButton from '@/components/ui/CopyButton';
 
 import { INQUIRIES_STATUS_LABEL_KEYS, INQUIRIES_TABLE_HEADER_KEYS } from '@/app/frontend_manager/manager_inquiries_crm/inquiries_pipeline/constants/manager_inquiries_pipeline_shared.constants';
 import { ManagerInfrastructureTableRowActionMenu } from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureTableContextMenu';
@@ -35,26 +36,28 @@ export default function ManagerInquiriesPipelineTableRow({ inq, mapIndex, select
         const trigger = event.currentTarget.querySelector<HTMLButtonElement>('[data-row-action-menu-trigger="true"]');
         if (trigger) { event.preventDefault(); trigger.click(); }
       }}
-                  data-testid={`manager_inquiries-inquiries-managerinquiriestable-row-${inq.id}`}
-                  key={inq.id}
-                  className={[rowCardClass, selected ? 'bg-primary-subtle' : 'hover:bg-primary-subtle', 'cursor-pointer motion-safe:transition-all motion-safe:duration-200 ease-in-out'].filter(Boolean).join(' ')}
-                >
-                  <td className={`px-5 py-3.5 w-12 ${cellBaseClass}`} data-label="" data-testid={`manager_inquiries-managerinquiriestable-cell-select-${mapIndex}`} onClick={(e) => e.stopPropagation()}>
-                    <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "w-4 h-4 rounded border-border text-text-primary focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_inquiries-inquiries-managerinquiriestable-input-toggleselectone-${mapIndex}`}
-                      type="checkbox"
-                      checked={selected}
-                      onChange={() => toggleSelectOne(inq.id)}
-                      
-                     aria-label={t("TEXT_SELECT_INQUIRY", { value: inq.name })}/>
-                  </td>
-                  <td className={`px-5 py-3.5 ${cellBaseClass}`} data-label={t(INQUIRIES_TABLE_HEADER_KEYS[0])} data-mobile-primary="true"><span className="sr-only md:hidden">{t(INQUIRIES_TABLE_HEADER_KEYS[0])}</span>
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm bg-warning text-on-warning" data-testid="manager_inquiries-managerinquiriestable-status-badge-1">
-                        {ManagerInquiriesPipelineDisplayValue(inq.name).charAt(0)}
-                      </div>
-                      <p className="text-sm font-semibold text-text-primary">{ManagerInquiriesPipelineDisplayValue(inq.name)}</p>
-                    </div>
-                  </td>
+      data-testid={`manager_inquiries-inquiries-managerinquiriestable-row-${inq.id}`}
+      key={inq.id}
+      className={[rowCardClass, selected ? 'bg-surface-highlight/70' : 'hover:bg-surface-highlight/50', 'transition-colors group cursor-pointer'].filter(Boolean).join(' ')}
+    >
+      <td className={`px-5 py-3.5 w-12 sticky start-0 z-10 bg-card border-e border-border ${cellBaseClass}`} data-label="" data-testid={`manager_inquiries-managerinquiriestable-cell-select-${mapIndex}`} onClick={(e) => e.stopPropagation()}>
+        <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "w-4 h-4 rounded border-border text-text-primary focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_inquiries-inquiries-managerinquiriestable-input-toggleselectone-${mapIndex}`}
+          type="checkbox"
+          checked={selected}
+          onChange={() => toggleSelectOne(inq.id)}
+          aria-label={t("TEXT_SELECT_INQUIRY", { value: inq.name })}/>
+      </td>
+      <td className={`px-5 py-3.5 ${cellBaseClass}`} data-label={t(INQUIRIES_TABLE_HEADER_KEYS[0])} data-mobile-primary="true"><span className="sr-only md:hidden">{t(INQUIRIES_TABLE_HEADER_KEYS[0])}</span>
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm bg-warning text-on-warning shrink-0" data-testid="manager_inquiries-managerinquiriestable-status-badge-1">
+            {ManagerInquiriesPipelineDisplayValue(inq.name).charAt(0)}
+          </div>
+          <div className="flex items-center gap-2">
+            <p className="text-sm font-semibold text-text-primary">{ManagerInquiriesPipelineDisplayValue(inq.name)}</p>
+            <CopyButton value={inq.name} />
+          </div>
+        </div>
+      </td>
                   <td className={`px-5 py-3.5 ${cellBaseClass}`} data-label={t(INQUIRIES_TABLE_HEADER_KEYS[1])}><span className="sr-only md:hidden">{t(INQUIRIES_TABLE_HEADER_KEYS[1])}</span>
                     <p className="text-sm text-text-primary">{ManagerInquiriesPipelineMaskSensitiveData(inq.phone, 'phone')}</p>
                     <p className="text-xs text-text-secondary">{ManagerInquiriesPipelineMaskSensitiveData(inq.email, 'email')}</p>

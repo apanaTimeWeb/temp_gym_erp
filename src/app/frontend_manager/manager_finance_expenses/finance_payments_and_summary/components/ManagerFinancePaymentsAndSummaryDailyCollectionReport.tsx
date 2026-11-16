@@ -7,6 +7,9 @@ import { ManagerEnvConfig } from '@/app/frontend_manager/manager_infrastructure/
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
 import { useManagerFinancePaymentsAndSummaryLogic } from '@/app/frontend_manager/manager_finance_expenses/finance_payments_and_summary/hooks/useManagerFinancePaymentsAndSummaryLogic';
 import { ManagerFinancePaymentsAndSummaryFormatCurrency, ManagerFinancePaymentsAndSummaryFormatDate } from '@/app/frontend_manager/manager_finance_expenses/finance_payments_and_summary/utils/ManagerFinancePaymentsAndSummaryFormatters';
+import CopyButton from '@/components/ui/CopyButton';
+
+const TABLE_COLUMN_COUNT = 6;
 
 export default function ManagerFinancePaymentsAndSummaryDailyCollectionReport() {
   const locale = useLocale();
@@ -91,13 +94,18 @@ export default function ManagerFinancePaymentsAndSummaryDailyCollectionReport() 
       </div>
 
       {/* Transaction List */}
-      <div className="overflow-x-auto">
+      <div className="max-h-[640px] overflow-auto">
         <ManagerInfrastructureResponsiveTable mobilePattern="horizontal-scroll" labels={TABLE_HEADERS}>
-          <table className="w-full text-left">
-            <thead className="bg-primary-subtle border-b border-border">
+          <table className="w-full text-left text-sm">
+            <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
               <tr>
-                {TABLE_HEADERS.map((h) => (
-                  <th key={h} className="px-5 py-3 text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap">
+                {TABLE_HEADERS.map((h, hIdx) => (
+                  <th
+                    key={h}
+                    className={`px-5 py-3 text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap ${
+                      hIdx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    }`}
+                  >
                     {h}
                   </th>
                 ))}
@@ -105,9 +113,14 @@ export default function ManagerFinancePaymentsAndSummaryDailyCollectionReport() 
             </thead>
             <tbody className="divide-y divide-border">
               {payments.slice(0, 5).map((p) => (
-                <tr key={p.id} className="hover:bg-primary-subtle/30">
-                  <td className="px-5 py-3.5 text-sm font-mono font-bold text-text-primary">{p.invoiceNumber}</td>
-                  <td className="px-5 py-3.5 text-sm text-text-primary">{p.member?.name || `Member #${p.memberId}`}</td>
+                <tr key={p.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                  <td className="px-5 py-3.5 text-sm font-mono font-bold text-text-primary whitespace-nowrap sticky start-0 z-10 bg-card border-e border-border">
+                    <div className="flex items-center gap-1.5">
+                      <span>{p.invoiceNumber}</span>
+                      <CopyButton value={p.invoiceNumber} label="Copy invoice number" />
+                    </div>
+                  </td>
+                  <td className="px-5 py-3.5 text-sm text-text-primary whitespace-nowrap">{p.member?.name || `Member #${p.memberId}`}</td>
                   <td className="px-5 py-3.5 whitespace-nowrap">
                     <span className="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-input text-text-primary border border-border">
                       {p.method}

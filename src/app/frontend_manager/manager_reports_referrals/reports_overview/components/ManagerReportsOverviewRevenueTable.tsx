@@ -16,6 +16,8 @@ import { ManagerReportsOverviewFormatCurrency } from '@/app/frontend_manager/man
  * @edge-case Preserves loading, empty, error, disabled, retry, and cancellation behavior defined by the owning module contract; does not introduce cross-feature business ownership.
  */
 
+const TABLE_COLUMN_COUNT = 4;
+
 /** @description Renders the ManagerReportsOverviewRevenueTable component for its owning Manager frontend boundary. @dependencies Local dependencies are owned by this feature module (4 documented module/import dependencies).. @edge-case Preserves empty state. */
 export function ManagerReportsOverviewRevenueTable() {
   const t = useTranslations('MANAGER_REPORTS_OVERVIEW');
@@ -24,29 +26,48 @@ export function ManagerReportsOverviewRevenueTable() {
 
   const { summary } = useManagerReportsOverviewLogic();
   const data = summary?.revenueData ?? [];
+  const headers = [t('COPY_MONTH'), t('COPY_REVENUE'), t('COPY_EXPENSES'), t('COPY_NET_PROFIT')];
+
   return (
-    <div data-testid="manager_reports-managerreportsrevenuetable-region" className="w-full overflow-x-auto"role="region" aria-label={t("COPY_RESPONSIVE_REPORT_TABLE_3")}>
-      <ManagerInfrastructureResponsiveTable mobilePattern="horizontal-scroll" labels={[t('COPY_MONTH'), t('COPY_REVENUE'), t('COPY_EXPENSES'), t('COPY_NET_PROFIT')]}>
-<table className="w-full">
-      <thead className="bg-primary-subtle">
-        <tr>
-          {[t('COPY_MONTH'), t('COPY_REVENUE'), t('COPY_EXPENSES'), t('COPY_NET_PROFIT')].map(h => (
-            <th key={h} className="text-left text-xs font-semibold text-text-secondary uppercase tracking-wider px-5 py-3">{h}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody className="divide-y divide-border">
-        {(() => { if (data.length === 0) { return <tr><td colSpan={4}><ManagerReportsOverviewEmptyState /></td></tr>; } return data.map(d => (
-          <tr key={d.month} className="hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-200 ease-in-out">
-            <td className="px-5 py-3.5 text-sm font-medium text-text-primary">{d.month}</td>
-            <td className="px-5 py-3.5 text-sm text-success-text font-semibold">{formatReportCurrency(d.revenue)}</td>
-            <td className="px-5 py-3.5 text-sm text-danger-text">{formatReportCurrency(d.expenses)}</td>
-            <td className={`px-5 py-3.5 text-sm font-semibold ${d.profit >= 0 ? 'text-success-text' : 'text-danger-text'}`}>{formatReportCurrency(d.profit)}</td>
-          </tr>
-        )); })()}
-      </tbody>
-      </table>
-</ManagerInfrastructureResponsiveTable>
+    <div data-testid="manager_reports-managerreportsrevenuetable-region" className="w-full rounded-2xl border border-border bg-card shadow-card overflow-hidden" role="region" aria-label={t("COPY_RESPONSIVE_REPORT_TABLE_3")}>
+      <div className="max-h-[640px] overflow-auto">
+        <ManagerInfrastructureResponsiveTable mobilePattern="horizontal-scroll" labels={headers}>
+          <table className="w-full text-left border-collapse">
+            <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+              <tr>
+                {headers.map((h, idx) => (
+                  <th
+                    key={h}
+                    className={`text-left text-xs font-semibold text-text-secondary uppercase tracking-wider px-5 py-3 whitespace-nowrap ${
+                      idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    }`}
+                  >
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {data.length === 0 ? (
+                <tr>
+                  <td colSpan={TABLE_COLUMN_COUNT}>
+                    <ManagerReportsOverviewEmptyState />
+                  </td>
+                </tr>
+              ) : (
+                data.map(d => (
+                  <tr key={d.month} className="hover:bg-surface-highlight/50 transition-colors group">
+                    <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-3.5 text-sm font-medium text-text-primary whitespace-nowrap">{d.month}</td>
+                    <td className="px-5 py-3.5 text-sm text-success-text font-semibold whitespace-nowrap">{formatReportCurrency(d.revenue)}</td>
+                    <td className="px-5 py-3.5 text-sm text-danger-text whitespace-nowrap">{formatReportCurrency(d.expenses)}</td>
+                    <td className={`px-5 py-3.5 text-sm font-semibold whitespace-nowrap ${d.profit >= 0 ? 'text-success-text' : 'text-danger-text'}`}>{formatReportCurrency(d.profit)}</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </ManagerInfrastructureResponsiveTable>
+      </div>
     </div>
   );
 }

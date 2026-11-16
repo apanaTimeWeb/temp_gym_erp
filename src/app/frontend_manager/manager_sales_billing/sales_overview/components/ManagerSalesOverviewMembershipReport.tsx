@@ -13,12 +13,6 @@ import ManagerSalesOverviewMembershipReportEmptyState from '@/app/frontend_manag
 import { useManagerSalesOverviewLogic } from '@/app/frontend_manager/manager_sales_billing/sales_overview/hooks/useManagerSalesOverviewLogic';
 import { ManagerSalesOverviewFormatCurrency } from '@/app/frontend_manager/manager_sales_billing/sales_overview/utils/ManagerSalesOverviewFormatters';
 
-
-/**
- * @description Renders/orchestrates the ManagerSalesOverviewMembershipReport user interface for the sales module without owning sibling business logic.
- * @dependencies @/app/frontend_manager/manager_sales_billing/manager_sales_utils/ManagerSalesOverviewFormatters; @/components/ui/manager_pagination/ManagerPagination; @/app/frontend_manager/manager_infrastructure/manager_infrastructure_constants/ManagerEnvConfig; @/app/frontend_manager/manager_infrastructure/manager_infrastructure_constants/ManagerPaginationDefaults; @/app/frontend_manager/manager_sales_billing/manager_sales_components/manager_sales_views/manager_sales_membership_report/ManagerSalesOverviewMembershipReportEmptyState
- * @edge-case Preserves loading, empty, error, disabled, retry, and cancellation behavior defined by the owning module contract; does not introduce cross-feature business ownership.
- */
 const SALES_MEMBERSHIP_REPORT_COLUMN_COUNT = 5;
 
 /** @description Renders the ManagerSalesOverviewMembershipReport component for its owning Manager frontend boundary. @dependencies Local dependencies are owned by this feature module (7 documented module/import dependencies).. @edge-case Preserves empty state, error state. */
@@ -33,7 +27,11 @@ export default function ManagerSalesOverviewMembershipReport() {
 
   if (isPending) {
     return (
-      <div className="space-y-2 p-4" aria-label={t("COPY_LOADING_MEMBERSHIP_REPORT")}><div className="h-10 rounded-lg bg-input motion-safe:animate-pulse" /><div className="h-10 rounded-lg bg-input motion-safe:animate-pulse" /><div className="h-10 rounded-lg bg-input motion-safe:animate-pulse" /></div>
+      <div className="space-y-2 p-4" aria-label={t("COPY_LOADING_MEMBERSHIP_REPORT")}>
+        <div className="h-10 rounded-lg bg-input motion-safe:animate-pulse" />
+        <div className="h-10 rounded-lg bg-input motion-safe:animate-pulse" />
+        <div className="h-10 rounded-lg bg-input motion-safe:animate-pulse" />
+      </div>
     );
   }
 
@@ -47,55 +45,60 @@ export default function ManagerSalesOverviewMembershipReport() {
   }
 
   return (
-  <>
- <div className="overflow-x-auto">
- <ManagerInfrastructureResponsiveTable mobilePattern="horizontal-scroll" labels={[t('COPY_PLAN'), t('COPY_TOTAL_RECEIVABLE'), t('COPY_AMOUNT_RECEIVED'), t('COPY_REMAINING'), t('COPY_REFUND')]}>
-<table className="w-full">
- <thead className="bg-input">
- <tr>
- {[t('COPY_PLAN'), t('COPY_TOTAL_RECEIVABLE'), t('COPY_AMOUNT_RECEIVED'), t('COPY_REMAINING'), t('COPY_REFUND')].map(h => (
- <th key={h} className="text-left text-xs font-semibold text-text-secondary uppercase tracking-wider px-4 py-3">
- {h}
- </th>
- ))}
- </tr>
- </thead>
-  <tbody className="divide-y divide-border">
-  {paginated.length > 0 ? (
-    paginated.map((r, index) => (
-      <tr key={`${r.plan}-${index}`} className="hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-200 ease-in-out">
-      <td className="px-4 py-3 text-sm font-medium text-text-primary">{r.plan || ''}</td>
-      <td className="px-4 py-3 text-sm text-text-secondary">{ManagerSalesOverviewFormatCurrency(r.receivable || 0, ManagerEnvConfig.currencyCode, locale)}</td>
-      <td className="px-4 py-3 text-sm font-medium text-success-text ">{ManagerSalesOverviewFormatCurrency(r.received || 0, ManagerEnvConfig.currencyCode, locale)}</td>
-      <td className="px-4 py-3 text-sm font-medium text-warning-text ">{ManagerSalesOverviewFormatCurrency(r.remaining || 0, ManagerEnvConfig.currencyCode, locale)}</td>
-      <td className="px-4 py-3 text-sm text-danger-text">{ManagerSalesOverviewFormatCurrency(r.refund || 0, ManagerEnvConfig.currencyCode, locale)}</td>
-      </tr>
-    ))
-  ) : (
-    <tr>
-      <td colSpan={SALES_MEMBERSHIP_REPORT_COLUMN_COUNT} className="px-4 py-8 text-center text-sm text-text-secondary">
-        <ManagerSalesOverviewMembershipReportEmptyState />
-      </td>
-    </tr>
-  )}
- <tr className="bg-input font-semibold border-t-2 border-border">
- <td className="px-4 py-3 text-sm text-text-primary">{t("COPY_TOTAL")}</td>
-          <td className="px-4 py-3 text-sm text-text-primary">{ManagerSalesOverviewFormatCurrency(membershipTotals.totalReceivable || 0, ManagerEnvConfig.currencyCode, locale)}</td>
-          <td className="px-4 py-3 text-sm text-success-text ">{ManagerSalesOverviewFormatCurrency(membershipTotals.totalReceived || 0, ManagerEnvConfig.currencyCode, locale)}</td>
-          <td className="px-4 py-3 text-sm text-warning-text ">{ManagerSalesOverviewFormatCurrency(membershipTotals.remaining || 0, ManagerEnvConfig.currencyCode, locale)}</td>
-          <td className="px-4 py-3 text-sm text-danger-text ">{ManagerSalesOverviewFormatCurrency(membershipTotals.refunds || 0, ManagerEnvConfig.currencyCode, locale)}</td>
- </tr>
-  </tbody>
-  </table>
-</ManagerInfrastructureResponsiveTable>
-  </div>
-  <div className="mt-4 pt-4 border-t border-border">
-      <ManagerPagination data-testid="manager_sales-managersalesmembershipreport-managerpagination-1" 
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
-      />
+    <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+      <div className="max-h-[640px] overflow-auto">
+        <ManagerInfrastructureResponsiveTable mobilePattern="horizontal-scroll" labels={[t('COPY_PLAN'), t('COPY_TOTAL_RECEIVABLE'), t('COPY_AMOUNT_RECEIVED'), t('COPY_REMAINING'), t('COPY_REFUND')]}>
+          <table className="w-full text-left border-collapse">
+            <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+              <tr>
+                {[t('COPY_PLAN'), t('COPY_TOTAL_RECEIVABLE'), t('COPY_AMOUNT_RECEIVED'), t('COPY_REMAINING'), t('COPY_REFUND')].map((h, idx) => (
+                  <th
+                    key={h}
+                    className={`text-left text-xs font-semibold text-text-secondary uppercase tracking-wider px-4 py-3 whitespace-nowrap ${
+                      idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    }`}
+                  >
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {paginated.length > 0 ? (
+                paginated.map((r, index) => (
+                  <tr key={`${r.plan}-${index}`} className="hover:bg-surface-highlight/50 transition-colors group">
+                    <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-medium text-text-primary whitespace-nowrap">{r.plan || ''}</td>
+                    <td className="px-4 py-3 text-sm text-text-secondary whitespace-nowrap">{ManagerSalesOverviewFormatCurrency(r.receivable || 0, ManagerEnvConfig.currencyCode, locale)}</td>
+                    <td className="px-4 py-3 text-sm font-medium text-success-text whitespace-nowrap">{ManagerSalesOverviewFormatCurrency(r.received || 0, ManagerEnvConfig.currencyCode, locale)}</td>
+                    <td className="px-4 py-3 text-sm font-medium text-warning-text whitespace-nowrap">{ManagerSalesOverviewFormatCurrency(r.remaining || 0, ManagerEnvConfig.currencyCode, locale)}</td>
+                    <td className="px-4 py-3 text-sm text-danger-text whitespace-nowrap">{ManagerSalesOverviewFormatCurrency(r.refund || 0, ManagerEnvConfig.currencyCode, locale)}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={SALES_MEMBERSHIP_REPORT_COLUMN_COUNT} className="px-4 py-8 text-center text-sm text-text-secondary">
+                    <ManagerSalesOverviewMembershipReportEmptyState />
+                  </td>
+                </tr>
+              )}
+              <tr className="bg-overlay font-semibold border-t-2 border-border">
+                <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm text-text-primary whitespace-nowrap">{t("COPY_TOTAL")}</td>
+                <td className="px-4 py-3 text-sm text-text-primary whitespace-nowrap">{ManagerSalesOverviewFormatCurrency(membershipTotals.totalReceivable || 0, ManagerEnvConfig.currencyCode, locale)}</td>
+                <td className="px-4 py-3 text-sm text-success-text whitespace-nowrap">{ManagerSalesOverviewFormatCurrency(membershipTotals.totalReceived || 0, ManagerEnvConfig.currencyCode, locale)}</td>
+                <td className="px-4 py-3 text-sm text-warning-text whitespace-nowrap">{ManagerSalesOverviewFormatCurrency(membershipTotals.remaining || 0, ManagerEnvConfig.currencyCode, locale)}</td>
+                <td className="px-4 py-3 text-sm text-danger-text whitespace-nowrap">{ManagerSalesOverviewFormatCurrency(membershipTotals.refunds || 0, ManagerEnvConfig.currencyCode, locale)}</td>
+              </tr>
+            </tbody>
+          </table>
+        </ManagerInfrastructureResponsiveTable>
+      </div>
+      <div className="border-t border-border px-4 py-3 bg-card">
+        <ManagerPagination data-testid="manager_sales-managersalesmembershipreport-managerpagination-1" 
+          currentPage={currentPage} 
+          totalPages={totalPages} 
+          onPageChange={setCurrentPage} 
+        />
+      </div>
     </div>
-  </>
   );
 }

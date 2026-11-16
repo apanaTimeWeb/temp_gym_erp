@@ -8,6 +8,7 @@ import ManagerReportsOverviewEmptyState from '@/app/frontend_manager/manager_rep
 import { useManagerReportsOverviewLogic } from '@/app/frontend_manager/manager_reports_referrals/reports_overview/hooks/useManagerReportsOverviewLogic';
 import { ManagerReportsOverviewFormatNumber, ManagerReportsOverviewFormatPercent } from '@/app/frontend_manager/manager_reports_referrals/reports_overview/utils/ManagerReportsOverviewFormatters';
 
+const TABLE_COLUMN_COUNT = 4;
 
 /** @description Renders the ManagerReportsOverviewAttendanceTable component for its owning Manager frontend boundary. @dependencies Local dependencies are owned by this feature module (3 documented module/import dependencies).. @edge-case Preserves empty state. */
 export function ManagerReportsOverviewAttendanceTable() {
@@ -15,29 +16,48 @@ export function ManagerReportsOverviewAttendanceTable() {
 
   const { summary } = useManagerReportsOverviewLogic();
   const data = (summary?.attendanceData ?? []).slice(-14);
+  const headers = [t('COPY_DATE'), t('COPY_PRESENT'), t('COPY_ABSENT'), t('COPY_RATE')];
+
   return (
-    <div data-testid="manager_reports-managerreportsattendancetable-region" className="w-full overflow-x-auto"role="region" aria-label={t("COPY_RESPONSIVE_REPORT_TABLE_4")}>
-      <ManagerInfrastructureResponsiveTable mobilePattern="horizontal-scroll" labels={[t('COPY_DATE'), t('COPY_PRESENT'), t('COPY_ABSENT'), t('COPY_RATE')]}>
-<table className="w-full">
-      <thead className="bg-primary-subtle">
-        <tr>
-          {[t('COPY_DATE'), t('COPY_PRESENT'), t('COPY_ABSENT'), t('COPY_RATE')].map(h => (
-            <th key={h} className="text-left text-xs font-semibold text-text-secondary uppercase tracking-wider px-5 py-3">{h}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody className="divide-y divide-border">
-        {data.length === 0 ? <tr><td colSpan={4}><ManagerReportsOverviewEmptyState /></td></tr> : data.map((d) => (
-          <tr key={d.date} className="hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-200 ease-in-out">
-            <td className="px-5 py-3.5 text-sm text-text-primary">{d.date}</td>
-            <td className="px-5 py-3.5 text-sm text-success-text font-semibold">{ManagerReportsOverviewFormatNumber(d.present)}</td>
-            <td className="px-5 py-3.5 text-sm text-danger-text">{ManagerReportsOverviewFormatNumber(d.absent)}</td>
-            <td className="px-5 py-3.5 text-sm font-semibold text-text-primary">{ManagerReportsOverviewFormatPercent(d.rate)}</td>
-          </tr>
-        ))}
-      </tbody>
-      </table>
-</ManagerInfrastructureResponsiveTable>
+    <div data-testid="manager_reports-managerreportsattendancetable-region" className="w-full rounded-2xl border border-border bg-card shadow-card overflow-hidden" role="region" aria-label={t("COPY_RESPONSIVE_REPORT_TABLE_4")}>
+      <div className="max-h-[640px] overflow-auto">
+        <ManagerInfrastructureResponsiveTable mobilePattern="horizontal-scroll" labels={headers}>
+          <table className="w-full text-left border-collapse">
+            <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+              <tr>
+                {headers.map((h, idx) => (
+                  <th
+                    key={h}
+                    className={`text-left text-xs font-semibold text-text-secondary uppercase tracking-wider px-5 py-3 whitespace-nowrap ${
+                      idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    }`}
+                  >
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {data.length === 0 ? (
+                <tr>
+                  <td colSpan={TABLE_COLUMN_COUNT}>
+                    <ManagerReportsOverviewEmptyState />
+                  </td>
+                </tr>
+              ) : (
+                data.map((d) => (
+                  <tr key={d.date} className="hover:bg-surface-highlight/50 transition-colors group">
+                    <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-3.5 text-sm text-text-primary whitespace-nowrap">{d.date}</td>
+                    <td className="px-5 py-3.5 text-sm text-success-text font-semibold whitespace-nowrap">{ManagerReportsOverviewFormatNumber(d.present)}</td>
+                    <td className="px-5 py-3.5 text-sm text-danger-text whitespace-nowrap">{ManagerReportsOverviewFormatNumber(d.absent)}</td>
+                    <td className="px-5 py-3.5 text-sm font-semibold text-text-primary whitespace-nowrap">{ManagerReportsOverviewFormatPercent(d.rate)}</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </ManagerInfrastructureResponsiveTable>
+      </div>
     </div>
   );
 }

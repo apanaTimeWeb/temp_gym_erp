@@ -40,25 +40,29 @@ export default function ManagerStaffPayrollAndAttendanceStaffTable() {
     return (
       <div className="flex flex-col h-full">
         <div className="hidden lg:block overflow-x-auto flex-1">
-          <ManagerInfrastructureResponsiveTable labels={[...translatedHeaders, t('COPY_ACTIONS_3')]}>
-            <table className="w-full">
-              <thead className="bg-input text-text-secondary">
-                <tr>
-                  {translatedHeaders.map((header, index) => <th key={STAFF_TABLE_HEADERS[index]} className={`text-xs font-semibold uppercase tracking-wider px-4 py-3 ${index === 4 || index === 5 ? 'text-right' : 'text-left'}`}>{header}</th>)}
-                  <th className="text-right text-xs font-semibold uppercase tracking-wider px-4 py-3">{t('COPY_ACTIONS_3')}</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {[...Array(5)].map((_, index) => (
-                  <tr key={`staff-loading-${index}`} className="motion-safe:animate-pulse">
-                    {Array.from({ length: STAFF_TABLE_HEADERS.length + 1 }, (_, cellIndex) => (
-                      <td key={`staff-loading-${index}-cell-${cellIndex}`} className="px-4 py-4"><div className="h-4 rounded bg-input w-24" /></td>
+          <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+            <div className="max-h-[640px] overflow-auto">
+              <ManagerInfrastructureResponsiveTable labels={[...translatedHeaders, t('COPY_ACTIONS_3')]}>
+                <table className="w-full">
+                  <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+                    <tr>
+                      {translatedHeaders.map((header, index) => <th key={STAFF_TABLE_HEADERS[index]} className={`text-xs font-semibold uppercase tracking-wider px-4 py-3 ${index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''} ${index === 4 || index === 5 ? 'text-right' : 'text-left'}`}>{header}</th>)}
+                      <th className="text-right text-xs font-semibold uppercase tracking-wider px-4 py-3">{t('COPY_ACTIONS_3')}</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-border">
+                    {[...Array(5)].map((_, index) => (
+                      <tr key={`staff-loading-${index}`} className="motion-safe:animate-pulse">
+                        {Array.from({ length: STAFF_TABLE_HEADERS.length + 1 }, (_, cellIndex) => (
+                          <td key={`staff-loading-${index}-cell-${cellIndex}`} className={`px-4 py-4 ${cellIndex === 0 ? 'sticky start-0 z-10 bg-card border-e border-border' : ''}`}><div className="h-4 rounded bg-input w-24" /></td>
+                        ))}
+                      </tr>
                     ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </ManagerInfrastructureResponsiveTable>
+                  </tbody>
+                </table>
+              </ManagerInfrastructureResponsiveTable>
+            </div>
+          </div>
         </div>
         <div className="lg:hidden flex-1 p-4 space-y-3" role="status" aria-live="polite" aria-busy="true">
           {[...Array(4)].map((_, index) => (

@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
 import ManagerPtAssignmentsEmptyState from '@/app/frontend_manager/manager_schedule_personal_training/pt_assignments/components/ManagerPtAssignmentsEmptyState';
 import { useConfirm } from '@/components/ui/manager_confirm_provider/ManagerConfirmProvider';
+import CopyButton from '@/components/ui/CopyButton';
 import type { ManagerPtAssignmentsTableProps } from '@/app/frontend_manager/manager_schedule_personal_training/pt_assignments/types/manager_pt_assignments_table.types';
 
 
@@ -38,80 +39,90 @@ export default function ManagerPtAssignmentsTable({ assignments, totalAssignment
   };
 
   return (
-    <div className="bg-card border border-border rounded-xl flex flex-col overflow-hidden">
-      <div className="px-5 py-4 border-b border-border flex items-center justify-between">
+    <div className="bg-card border border-border rounded-2xl flex flex-col overflow-hidden shadow-card">
+      <div className="px-5 py-4 border-b border-border flex items-center justify-between bg-overlay">
         <h2 className="text-base font-semibold text-text-primary">{t("COPY_ACTIVE_ASSIGNMENTS_TRACKING")}</h2>
         <span className="text-xs text-text-secondary font-medium">{totalAssignments}{t("COPY_TOTAL")}</span>
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="max-h-[640px] overflow-auto">
         <ManagerInfrastructureResponsiveTable labels={[t('COPY_MEMBER'), t('COPY_TRAINER_3'), t('COPY_PACKAGE'), t('COPY_PROGRESS'), t('COPY_ACTION')]}>
-<table className="w-full text-left border-collapse min-w-176">
-          <thead>
-            <tr className="bg-primary-subtle border-b border-border">
-              <th className="py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider">{t("COPY_MEMBER")}</th>
-              <th className="py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider">{t("COPY_TRAINER_3")}</th>
-              <th className="py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider">{t("COPY_PACKAGE")}</th>
-              <th className="py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider min-w-40">{t("COPY_PROGRESS")}</th>
-              <th className="py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider text-right">{t("COPY_ACTION")}</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-border">
-            {(() => { if (isPending) { return (
+          <table className="w-full text-left border-collapse min-w-176">
+            <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
               <tr>
-                <td colSpan={PT_ASSIGNMENTS_COLUMN_COUNT} className="py-16 text-center">
-                  <Loader2 size={18} strokeWidth={2} className="mx-auto text-primary motion-safe:animate-spin"/>
-                </td>
+                <th className="sticky start-0 z-30 bg-surface-highlight border-e border-border py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider">{t("COPY_MEMBER")}</th>
+                <th className="py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider">{t("COPY_TRAINER_3")}</th>
+                <th className="py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider">{t("COPY_PACKAGE")}</th>
+                <th className="py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider min-w-40">{t("COPY_PROGRESS")}</th>
+                <th className="py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider text-right">{t("COPY_ACTION")}</th>
               </tr>
-            ); } return (() => { if (assignments.length === 0) { return (
-              <tr>
-                <td colSpan={PT_ASSIGNMENTS_COLUMN_COUNT}>
-                  <ManagerPtAssignmentsEmptyState />
-                </td>
-              </tr>
-            ); } return (
-              assignments.map((a, mapIndex) => {
-                const pct = a.totalSessions > 0 ? Math.round((a.completedSessions / a.totalSessions) * 100) : 0;
-                const isMarking = markingId === a.id;
-                const isDone = a.completedSessions >= a.totalSessions;
-                
-                return (
-                  <tr key={a.id} className="hover:bg-input motion-safe:transition-all motion-safe:duration-200 ease-in-out">
-                    <td className="py-3 px-4 text-sm font-medium text-text-primary">{a.memberName}</td>
-                    <td className="py-3 px-4 text-sm text-text-secondary">{a.trainerName}</td>
-                    <td className="py-3 px-4 text-sm text-text-secondary">{a.packageName} ({a.totalSessions}{t("COPY_S")}</td>
-                    <td className="py-3 px-4 text-sm">
-                      <div className="flex items-center gap-2">
-                        <div className="flex-1 h-2 bg-input rounded-full overflow-hidden">
-                          <progress data-testid={`manager_pt-manager-pt-main-progress-${a.id}`}
-                            value={pct}
-                            max={100}
-                            aria-label={t("COPY_COMPLETED_SESSIONS_PROGRESS")}
-                            className={`h-full w-full overflow-hidden rounded-full ${isDone ? 'bg-success-bg' : 'bg-primary-subtle'}`}
-                          />
+            </thead>
+            <tbody className="divide-y divide-border">
+              {(() => {
+                if (isPending) {
+                  return (
+                    <tr>
+                      <td colSpan={PT_ASSIGNMENTS_COLUMN_COUNT} className="py-16 text-center">
+                        <Loader2 size={18} strokeWidth={2} className="mx-auto text-primary motion-safe:animate-spin"/>
+                      </td>
+                    </tr>
+                  );
+                }
+                if (assignments.length === 0) {
+                  return (
+                    <tr>
+                      <td colSpan={PT_ASSIGNMENTS_COLUMN_COUNT}>
+                        <ManagerPtAssignmentsEmptyState />
+                      </td>
+                    </tr>
+                  );
+                }
+                return assignments.map((a, mapIndex) => {
+                  const pct = a.totalSessions > 0 ? Math.round((a.completedSessions / a.totalSessions) * 100) : 0;
+                  const isMarking = markingId === a.id;
+                  const isDone = a.completedSessions >= a.totalSessions;
+                  
+                  return (
+                    <tr key={a.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                      <td className="sticky start-0 z-10 bg-card border-e border-border py-3 px-4 text-sm font-medium text-text-primary whitespace-nowrap">
+                        <div className="flex items-center gap-2">
+                          <span>{a.memberName}</span>
+                          <CopyButton value={a.memberName} />
                         </div>
-                        <span className="text-xs font-bold text-text-primary whitespace-nowrap w-10 text-right">
-                          {a.completedSessions}/{a.totalSessions}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4 text-right">
-                      <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-w-32 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-input hover:bg-primary-subtle hover:text-primary hover:border-primary border border-transparent text-primary rounded-lg motion-safe:transition-all disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_pt-pt-managerptassignmentstable-button-completed-${a.id}`}
-                        onClick={() => void handleMarkSessionWithConfirm(a)}
-                        disabled={isMarking || isDone}
-                        
-                       type="button">
-                        {isMarking && <Loader2 size={18} strokeWidth={2} className="motion-safe:animate-spin"/>}
-                        {isDone ? t('COPY_COMPLETED') : t('COPY_MARK_SESSION')}
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })
-            ); })(); })()}
-          </tbody>
-        </table>
-</ManagerInfrastructureResponsiveTable>
+                      </td>
+                      <td className="py-3 px-4 text-sm text-text-secondary whitespace-nowrap">{a.trainerName}</td>
+                      <td className="py-3 px-4 text-sm text-text-secondary whitespace-nowrap">{a.packageName} ({a.totalSessions}{t("COPY_S")}</td>
+                      <td className="py-3 px-4 text-sm">
+                        <div className="flex items-center gap-2">
+                          <div className="flex-1 h-2 bg-input rounded-full overflow-hidden">
+                            <progress data-testid={`manager_pt-manager-pt-main-progress-${a.id}`}
+                              value={pct}
+                              max={100}
+                              aria-label={t("COPY_COMPLETED_SESSIONS_PROGRESS")}
+                              className={`h-full w-full overflow-hidden rounded-full ${isDone ? 'bg-success-bg' : 'bg-primary-subtle'}`}
+                            />
+                          </div>
+                          <span className="text-xs font-bold text-text-primary whitespace-nowrap w-10 text-right">
+                            {a.completedSessions}/{a.totalSessions}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="py-3 px-4 text-right whitespace-nowrap">
+                        <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-w-32 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-input hover:bg-primary-subtle hover:text-primary hover:border-primary border border-transparent text-primary rounded-lg motion-safe:transition-all disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_pt-pt-managerptassignmentstable-button-completed-${a.id}`}
+                          onClick={() => void handleMarkSessionWithConfirm(a)}
+                          disabled={isMarking || isDone}
+                          type="button">
+                          {isMarking && <Loader2 size={18} strokeWidth={2} className="motion-safe:animate-spin"/>}
+                          {isDone ? t('COPY_COMPLETED') : t('COPY_MARK_SESSION')}
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                });
+              })()}
+            </tbody>
+          </table>
+        </ManagerInfrastructureResponsiveTable>
       </div>
 
       {/* Pagination Bar */}

@@ -5,7 +5,10 @@ import { Calendar, Clock, MapPin, CheckCircle2, XCircle, AlertCircle, Dumbbell, 
 import { useTranslations } from 'next-intl';
 
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
+import CopyButton from '@/components/ui/CopyButton';
 import type { PtAssignment, PtSessionLog, PtSessionStatus } from '@/app/frontend_manager/manager_schedule_personal_training/pt_assignments/types/manager_pt_assignments.types';
+
+const TABLE_COLUMN_COUNT = 6;
 
 interface Props {
   assignments: PtAssignment[];
@@ -115,8 +118,8 @@ export default function ManagerPtAssignmentsSessionsTracker({ assignments, onMar
   const TABLE_LABELS = ['Session & Client', 'Trainer & Package', 'Date & Time', 'Status', 'Focus Notes', 'Actions'];
 
   return (
-    <div className="bg-card border border-border rounded-xl flex flex-col overflow-hidden shadow-card" data-testid="manager_pt-sessions-tracker-card">
-      <div className="px-5 py-4 border-b border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+    <div className="bg-card border border-border rounded-2xl flex flex-col overflow-hidden shadow-card" data-testid="manager_pt-sessions-tracker-card">
+      <div className="px-5 py-4 border-b border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-overlay">
         <div>
           <h2 className="text-base font-semibold text-text-primary">Personal Training Sessions Tracker</h2>
           <p className="text-xs text-text-secondary mt-0.5">Track, complete, and review individual member training sessions</p>
@@ -141,13 +144,18 @@ export default function ManagerPtAssignmentsSessionsTracker({ assignments, onMar
         </div>
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="max-h-[640px] overflow-auto">
         <ManagerInfrastructureResponsiveTable mobilePattern="horizontal-scroll" labels={TABLE_LABELS}>
           <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-primary-subtle border-b border-border">
-                {TABLE_LABELS.map((label) => (
-                  <th key={label} className="py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap">
+            <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+              <tr>
+                {TABLE_LABELS.map((label, idx) => (
+                  <th
+                    key={label}
+                    className={`py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap ${
+                      idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    }`}
+                  >
                     {label}
                   </th>
                 ))}
@@ -156,7 +164,7 @@ export default function ManagerPtAssignmentsSessionsTracker({ assignments, onMar
             <tbody className="divide-y divide-border">
               {filteredSessions.length === 0 ? (
                 <tr>
-                  <td colSpan={TABLE_LABELS.length} className="py-12 text-center text-sm text-text-secondary">
+                  <td colSpan={TABLE_COLUMN_COUNT} className="py-12 text-center text-sm text-text-secondary">
                     No sessions match the selected filter.
                   </td>
                 </tr>
@@ -167,14 +175,17 @@ export default function ManagerPtAssignmentsSessionsTracker({ assignments, onMar
                   const isMarking = markingId === s.assignmentId;
 
                   return (
-                    <tr key={s.id} className="hover:bg-primary-subtle/30 motion-safe:transition-all">
-                      <td className="py-3.5 px-4 whitespace-nowrap">
+                    <tr key={s.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                      <td className="sticky start-0 z-10 bg-card border-e border-border py-3.5 px-4 whitespace-nowrap">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-full bg-primary-subtle text-primary font-bold text-xs flex items-center justify-center shrink-0">
                             #{s.sessionNumber}
                           </div>
                           <div>
-                            <p className="text-sm font-semibold text-text-primary">{s.memberName}</p>
+                            <div className="flex items-center gap-1.5">
+                              <p className="text-sm font-semibold text-text-primary">{s.memberName}</p>
+                              <CopyButton value={s.memberName} />
+                            </div>
                             <p className="text-xs text-text-secondary">Session #{s.sessionNumber}</p>
                           </div>
                         </div>

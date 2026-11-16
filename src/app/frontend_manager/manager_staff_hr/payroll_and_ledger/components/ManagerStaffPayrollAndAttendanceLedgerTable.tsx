@@ -72,53 +72,64 @@ export default function ManagerStaffPayrollAndAttendanceLedgerTable() {
         </div>
       )}
 
-      <div className="border border-border rounded-xl overflow-hidden bg-card">
-        <div className="overflow-x-auto">
+      <div className="rounded-2xl border border-border overflow-hidden bg-card shadow-card">
+        <div className="max-h-[640px] overflow-auto">
           <ManagerInfrastructureResponsiveTable labels={[t('COPY_DATE_1'), t('COPY_TRANSACTION_TYPE'), t('COPY_NOTES_1'), t('COPY_CREDIT'), t('COPY_DEBIT'), t('COPY_BALANCE')]}>
-<table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-input border-b border-border text-sm">
-                <th className="p-4 font-medium text-text-secondary whitespace-nowrap">{t("COPY_DATE_1")}</th>
-                <th className="p-4 font-medium text-text-secondary whitespace-nowrap">{t("COPY_TRANSACTION_TYPE")}</th>
-                <th className="p-4 font-medium text-text-secondary">{t("COPY_NOTES_1")}</th>
-                <th className="p-4 font-medium text-text-secondary text-right">{t("COPY_CREDIT")}</th>
-                <th className="p-4 font-medium text-text-secondary text-right">{t("COPY_DEBIT")}</th>
-                <th className="p-4 font-medium text-text-secondary text-right bg-primary-subtle">{t("COPY_BALANCE")}</th>
-              </tr>
-            </thead>
-            <tbody className="text-sm divide-y divide-border">
-              {(() => { if (loading) { return (
-                [1, 2, 3, 4, 5].map((skeletonRow) => (
-                  <tr key={`ledger-loading-row-${skeletonRow}`} className="motion-safe:animate-pulse">
-                    {Array.from({ length: HR_LEDGER_COLUMN_COUNT }, (_, cellIndex) => (
-                      <td key={`ledger-loading-row-${skeletonRow}-cell-${cellIndex + 1}`} className="p-4"><div className="h-4 w-full max-w-32 rounded bg-input" /></td>
-                    ))}
-                  </tr>
-                ))
-              ); } return (() => { if (isError) { return (
-                <tr><td colSpan={HR_LEDGER_COLUMN_COUNT} className="p-10 text-center text-danger-text">{ManagerInfrastructureGetErrorMessage(error, t('TEXT_GENERIC_ERROR'))}</td></tr>
-              ); } return (() => { if (ledger.length === 0) { return (
-                <tr><td colSpan={HR_LEDGER_COLUMN_COUNT} className="p-0"><ManagerStaffPayrollAndAttendanceLedgerEmptyState /></td></tr>
-              ); } return (
-                ledger.map(l => (
-                  <tr key={l.id} className="hover:bg-surface-highlight motion-safe:transition-all motion-safe:duration-200 ease-in-out">
-                    <td className="p-4 text-text-primary whitespace-nowrap">{ManagerStaffPayrollAndAttendanceFormatDate(l.date)}</td>
-                    <td className="p-4">
-                      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium 
-                        ${(() => { if (l.type.includes('Advance')) { return 'bg-danger text-on-danger'; } return (() => { if (l.type.includes('Salary Generated')) { return 'bg-info text-on-info'; } return (() => { if (l.type.includes('Due')) { return 'bg-warning text-on-warning'; } return 'bg-success text-on-success'; })(); })(); })()}`} data-testid="manager_hr-managerhrledgertable-status-badge-1">
-                        {l.type}
-                      </span>
-                    </td>
-                    <td className="p-4 text-text-secondary max-w-50 truncate" title={ManagerStaffPayrollAndAttendanceDisplayValue(l.notes)}>{ManagerStaffPayrollAndAttendanceDisplayValue(l.notes)}</td>
-                    <td className="p-4 text-right text-success-text font-medium">{l.credit > 0 ? `+${ManagerStaffPayrollAndAttendanceFormatCurrency(l.credit, ManagerEnvConfig.currencyCode, locale)}` : '—'}</td>
-                    <td className="p-4 text-right text-danger-text font-medium">{l.debit > 0 ? `-${ManagerStaffPayrollAndAttendanceFormatCurrency(l.debit, ManagerEnvConfig.currencyCode, locale)}` : '—'}</td>
-                    <td className="p-4 text-right font-bold text-primary bg-primary-subtle">{ManagerStaffPayrollAndAttendanceFormatCurrency(l.balance, ManagerEnvConfig.currencyCode, locale)}</td>
-                  </tr>
-                ))
-              ); })(); })(); })()}
-            </tbody>
-          </table>
-</ManagerInfrastructureResponsiveTable>
+            <table className="w-full text-left border-collapse">
+              <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border text-sm">
+                <tr>
+                  <th className="sticky start-0 z-30 bg-surface-highlight border-e border-border p-4 font-medium text-text-secondary whitespace-nowrap">{t("COPY_DATE_1")}</th>
+                  <th className="p-4 font-medium text-text-secondary whitespace-nowrap">{t("COPY_TRANSACTION_TYPE")}</th>
+                  <th className="p-4 font-medium text-text-secondary">{t("COPY_NOTES_1")}</th>
+                  <th className="p-4 font-medium text-text-secondary text-right">{t("COPY_CREDIT")}</th>
+                  <th className="p-4 font-medium text-text-secondary text-right">{t("COPY_DEBIT")}</th>
+                  <th className="p-4 font-medium text-text-secondary text-right bg-primary-subtle/50">{t("COPY_BALANCE")}</th>
+                </tr>
+              </thead>
+              <tbody className="text-sm divide-y divide-border">
+                {(() => {
+                  if (loading) {
+                    return (
+                      [1, 2, 3, 4, 5].map((skeletonRow) => (
+                        <tr key={`ledger-loading-row-${skeletonRow}`} className="motion-safe:animate-pulse">
+                          {Array.from({ length: HR_LEDGER_COLUMN_COUNT }, (_, cellIndex) => (
+                            <td key={`ledger-loading-row-${skeletonRow}-cell-${cellIndex + 1}`} className="p-4"><div className="h-4 w-full max-w-32 rounded bg-input" /></td>
+                          ))}
+                        </tr>
+                      ))
+                    );
+                  }
+                  if (isError) {
+                    return (
+                      <tr><td colSpan={HR_LEDGER_COLUMN_COUNT} className="p-10 text-center text-danger-text">{ManagerInfrastructureGetErrorMessage(error, t('TEXT_GENERIC_ERROR'))}</td></tr>
+                    );
+                  }
+                  if (ledger.length === 0) {
+                    return (
+                      <tr><td colSpan={HR_LEDGER_COLUMN_COUNT} className="p-0"><ManagerStaffPayrollAndAttendanceLedgerEmptyState /></td></tr>
+                    );
+                  }
+                  return (
+                    ledger.map(l => (
+                      <tr key={l.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                        <td className="sticky start-0 z-10 bg-card border-e border-border p-4 text-text-primary whitespace-nowrap">{ManagerStaffPayrollAndAttendanceFormatDate(l.date)}</td>
+                        <td className="p-4">
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium 
+                            ${(() => { if (l.type.includes('Advance')) { return 'bg-danger text-on-danger'; } return (() => { if (l.type.includes('Salary Generated')) { return 'bg-info text-on-info'; } return (() => { if (l.type.includes('Due')) { return 'bg-warning text-on-warning'; } return 'bg-success text-on-success'; })(); })(); })()}`} data-testid="manager_hr-managerhrledgertable-status-badge-1">
+                            {l.type}
+                          </span>
+                        </td>
+                        <td className="p-4 text-text-secondary max-w-50 truncate" title={ManagerStaffPayrollAndAttendanceDisplayValue(l.notes)}>{ManagerStaffPayrollAndAttendanceDisplayValue(l.notes)}</td>
+                        <td className="p-4 text-right text-success-text font-medium">{l.credit > 0 ? `+${ManagerStaffPayrollAndAttendanceFormatCurrency(l.credit, ManagerEnvConfig.currencyCode, locale)}` : '—'}</td>
+                        <td className="p-4 text-right text-danger-text font-medium">{l.debit > 0 ? `-${ManagerStaffPayrollAndAttendanceFormatCurrency(l.debit, ManagerEnvConfig.currencyCode, locale)}` : '—'}</td>
+                        <td className="p-4 text-right font-bold text-primary bg-primary-subtle/30">{ManagerStaffPayrollAndAttendanceFormatCurrency(l.balance, ManagerEnvConfig.currencyCode, locale)}</td>
+                      </tr>
+                    ))
+                  );
+                })()}
+              </tbody>
+            </table>
+          </ManagerInfrastructureResponsiveTable>
         </div>
       </div>
     </div>

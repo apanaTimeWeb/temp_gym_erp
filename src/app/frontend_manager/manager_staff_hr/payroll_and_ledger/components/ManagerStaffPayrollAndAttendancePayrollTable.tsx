@@ -9,6 +9,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
 import { useConfirm } from '@/components/ui/manager_confirm_provider/ManagerConfirmProvider';
 import ManagerPagination from '@/components/ui/manager_pagination/ManagerPagination';
+import CopyButton from '@/components/ui/CopyButton';
 
 import { ManagerEnvConfig } from '@/app/frontend_manager/manager_infrastructure/constants/ManagerInfrastructureEnvConfig';
 import { MANAGER_ITEMS_PER_PAGE } from '@/app/frontend_manager/manager_infrastructure/constants/ManagerInfrastructurePaginationDefaults';
@@ -113,27 +114,39 @@ export default function ManagerStaffPayrollAndAttendancePayrollTable() {
         <button data-testid="manager_hr-manager-hr-payroll-table-button-close" onClick={() => { void handleGeneratePayroll(); }} className="min-h-11 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium bg-primary text-on-primary rounded-lg motion-safe:transition-all hover:bg-primary-hover motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110" aria-label={t("COPY_GENERATE_PAYROLL_CURRENT_MONTH")} type="button">
           <RefreshCw size={18} strokeWidth={2}/>{t("COPY_GENERATE_PAYROLL_2")}</button>
       </div>
-      <ManagerInfrastructureResponsiveTable labels={[...PAYROLL_TABLE_HEADERS, t('COPY_ACTIONS_1')]}>
-<table className="w-full">
-          <thead className="bg-input text-text-secondary border-b border-border">
-            <tr>
-              {PAYROLL_TABLE_HEADERS.map(h => (
-                <th key={h} className={`text-xs font-semibold uppercase tracking-wider px-3 py-3 whitespace-nowrap ${['Base Salary', 'Net Payable', 'Paid Amount', 'Pending'].includes(h) ? 'text-right' : 'text-left'}`}>
-                  {h}
-                </th>
-              ))}
-              <th className="text-right text-xs font-semibold uppercase tracking-wider px-3 py-3 whitespace-nowrap">{t("COPY_ACTIONS_1")}</th>
-            </tr>
-          </thead>
+      <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+        <div className="max-h-[640px] overflow-auto">
+          <ManagerInfrastructureResponsiveTable labels={[...PAYROLL_TABLE_HEADERS, t('COPY_ACTIONS_1')]}>
+            <table className="w-full text-left border-collapse">
+              <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border text-text-secondary">
+                <tr>
+                  {PAYROLL_TABLE_HEADERS.map((h, idx) => (
+                    <th
+                      key={h}
+                      className={`text-xs font-semibold uppercase tracking-wider px-3 py-3 whitespace-nowrap ${
+                        idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border text-left' : ['Base Salary', 'Net Payable', 'Paid Amount', 'Pending'].includes(h) ? 'text-right' : 'text-left'
+                      }`}
+                    >
+                      {h}
+                    </th>
+                  ))}
+                  <th className="text-right text-xs font-semibold uppercase tracking-wider px-3 py-3 whitespace-nowrap">{t("COPY_ACTIONS_1")}</th>
+                </tr>
+              </thead>
           <tbody className="divide-y divide-border">
             {currentData.map((p, mapIndex) => (
-              <tr key={p.id} className="motion-safe:transition-all hover:bg-primary-subtle bg-card motion-safe:duration-200 ease-in-out">
-                <td className="px-3 py-3 whitespace-nowrap">
-                  <p className="text-sm font-medium text-text-primary">
-                    {p.staff?.name || `Staff #${p.staffId}`}
-                  </p>
-                  <div className="text-xs text-text-secondary">
-                    {ManagerStaffPayrollAndAttendanceDisplayValue(p.staff?.role)}
+              <tr key={p.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                <td className="sticky start-0 z-10 bg-card border-e border-border px-3 py-3 whitespace-nowrap">
+                  <div className="flex items-center gap-2">
+                    <div>
+                      <p className="text-sm font-medium text-text-primary">
+                        {p.staff?.name || `Staff #${p.staffId}`}
+                      </p>
+                      <div className="text-xs text-text-secondary">
+                        {ManagerStaffPayrollAndAttendanceDisplayValue(p.staff?.role)}
+                      </div>
+                    </div>
+                    <CopyButton value={p.staff?.name || `Staff #${p.staffId}`} />
                   </div>
                 </td>
                 <td className="px-3 py-3 text-sm text-text-primary whitespace-nowrap">{p.month}</td>
@@ -198,15 +211,19 @@ export default function ManagerStaffPayrollAndAttendancePayrollTable() {
               </tr>
             )}
           </tbody>
-        </table>
-</ManagerInfrastructureResponsiveTable>
-      <ManagerPagination data-testid="manager_hr-managerhrpayrolltable-managerpagination-1" 
-        currentPage={currentPage} 
-        totalPages={totalPages} 
-        totalItems={totalPayrolls} 
-        itemsPerPage={MANAGER_ITEMS_PER_PAGE} 
-        onPageChange={setCurrentPage} 
-      />
+            </table>
+          </ManagerInfrastructureResponsiveTable>
+        </div>
+        <div className="border-t border-border px-4 py-3 bg-card">
+          <ManagerPagination data-testid="manager_hr-managerhrpayrolltable-managerpagination-1" 
+            currentPage={currentPage} 
+            totalPages={totalPages} 
+            totalItems={totalPayrolls} 
+            itemsPerPage={MANAGER_ITEMS_PER_PAGE} 
+            onPageChange={setCurrentPage} 
+          />
+        </div>
+      </div>
     </div>
   );
 }

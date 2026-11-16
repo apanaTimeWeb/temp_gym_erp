@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Edit2, Loader2, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
+import CopyButton from '@/components/ui/CopyButton';
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
 import { useConfirm } from '@/components/ui/manager_confirm_provider/ManagerConfirmProvider';
 import ManagerPagination from '@/components/ui/manager_pagination/ManagerPagination';
@@ -40,6 +41,7 @@ export default function ManagerWorkoutPlansExerciseTable() {
   const exercises = data?.exercises ?? [];
   const totalExercises = data?.total ?? 0;
   const totalPages = Math.max(1, Math.ceil(totalExercises / MANAGER_ITEMS_PER_PAGE));
+  const TABLE_COLUMN_COUNT = 5;
   const headers = [t('COPY_EXERCISE_HEADER'), t('COPY_PRIMARY_MUSCLE_HEADER'), t('COPY_EQUIPMENT'), t('COPY_DIFFICULTY_1'), t('COPY_ACTIONS')];
 
   if (isPending) return <ManagerTableSkeleton rows={6} />;
@@ -70,40 +72,69 @@ export default function ManagerWorkoutPlansExerciseTable() {
       </div>
 
       <div className="hidden flex-1 overflow-x-auto lg:block">
-        <ManagerInfrastructureResponsiveTable labels={headers}>
-          <table className="w-full">
-            <thead className="bg-input"><tr>{headers.map((header) => <th key={header} className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-text-secondary">{header}</th>)}</tr></thead>
-            <tbody className="divide-y divide-border">
-              {exercises.map((exercise) => (
-                <tr key={exercise.id} data-testid={`manager_exercise-library-row-${exercise.id}`} className="cursor-pointer hover:bg-primary-subtle" tabIndex={0} onClick={() => openEditEx(exercise)} onKeyDown={(event) => {
-                  if (event.target !== event.currentTarget) return;
-                  if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openEditEx(exercise); }
-                }}>
-                  <td className="px-4 py-3 text-sm font-medium text-text-primary">{exercise.name}</td>
-                  <td className="px-4 py-3 text-sm text-text-secondary">{ManagerWorkoutPlansDisplayValue(exercise.muscleGroup?.join(', '))}</td>
-                  <td className="px-4 py-3 text-sm text-text-secondary">{ManagerWorkoutPlansDisplayValue(exercise.equipment)}</td>
-                  <td className="px-4 py-3"><span className="rounded-full border border-border bg-input px-2.5 py-1 text-xs font-semibold text-text-primary">{t(ManagerWorkoutPlansGetDifficultyLabelKey(exercise.difficulty))}</span></td>
-                  <td className="px-4 py-3"><div className="flex items-center gap-2">
-                    <button type="button" data-testid={`manager_exercise-library-edit-${exercise.id}`} aria-label={t('TEXT_EDIT_EXERCISE', { value: exercise.name })} onClick={(event) => { event.stopPropagation(); openEditEx(exercise); }} className="rounded-md p-2 text-info-text hover:bg-info-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"><Edit2 size={18} aria-hidden="true" /></button>
-                    <button type="button" data-testid={`manager_exercise-library-delete-${exercise.id}`} aria-label={t('TEXT_DELETE_EXERCISE', { value: exercise.name })} onClick={async (event) => {
-                      event.stopPropagation();
-                      const confirmed = await confirm({ title: t('COPY_DELETE_EXERCISE_1'), message: t('TEXT_DELETE_EXERCISE_CONFIRM_MESSAGE', { value: exercise.name }), type: 'danger', confirmText: t('COPY_DELETE_1') });
-                      if (!confirmed) return;
-                      try {
-                        const idempotencyKey = deleteKeyByIdRef.current.get(exercise.id) ?? ManagerInfrastructureIdempotency();
-                        deleteKeyByIdRef.current.set(exercise.id, idempotencyKey);
-                        const response = await deleteExercise({ id: exercise.id, idempotencyKey });
-                        deleteKeyByIdRef.current.delete(exercise.id);
-                        ManagerInfrastructureShowSuccessToast(response.message, `manager-workout-exercise-${exercise.id}-delete-success`);
-                      } catch (error: unknown) { ManagerInfrastructureShowErrorToast(error, `manager-workout-exercise-${exercise.id}-delete-error`); }
-                    }} className="rounded-md p-2 text-danger-text hover:bg-danger-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"><Trash2 size={18} aria-hidden="true" /></button>
-                  </div></td>
-                </tr>
-              ))}
-              {exercises.length === 0 && <tr><td colSpan={headers.length}><ManagerExerciseLibraryEmptyState search={search} /></td></tr>}
-            </tbody>
-          </table>
-        </ManagerInfrastructureResponsiveTable>
+        <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+          <div className="max-h-[640px] overflow-auto">
+            <ManagerInfrastructureResponsiveTable labels={headers}>
+              <table className="w-full">
+                <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+                  <tr>
+                    {headers.map((header, index) => (
+                      <th
+                        key={header}
+                        className={`px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-text-secondary ${
+                          index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                        }`}
+                      >
+                        {header}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {exercises.map((exercise) => (
+                    <tr
+                      key={exercise.id}
+                      data-testid={`manager_exercise-library-row-${exercise.id}`}
+                      className="cursor-pointer hover:bg-surface-highlight/50 transition-colors group"
+                      tabIndex={0}
+                      onClick={() => openEditEx(exercise)}
+                      onKeyDown={(event) => {
+                        if (event.target !== event.currentTarget) return;
+                        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openEditEx(exercise); }
+                      }}
+                    >
+                      <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-medium text-text-primary group-hover:bg-surface-highlight/50 transition-colors">
+                        <div className="flex items-center gap-2">
+                          <span>{exercise.name}</span>
+                          <CopyButton value={exercise.name} />
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-sm text-text-secondary">{ManagerWorkoutPlansDisplayValue(exercise.muscleGroup?.join(', '))}</td>
+                      <td className="px-4 py-3 text-sm text-text-secondary">{ManagerWorkoutPlansDisplayValue(exercise.equipment)}</td>
+                      <td className="px-4 py-3"><span className="rounded-full border border-border bg-input px-2.5 py-1 text-xs font-semibold text-text-primary">{t(ManagerWorkoutPlansGetDifficultyLabelKey(exercise.difficulty))}</span></td>
+                      <td className="px-4 py-3"><div className="flex items-center gap-2">
+                        <button type="button" data-testid={`manager_exercise-library-edit-${exercise.id}`} aria-label={t('TEXT_EDIT_EXERCISE', { value: exercise.name })} onClick={(event) => { event.stopPropagation(); openEditEx(exercise); }} className="rounded-md p-2 text-info-text hover:bg-info-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"><Edit2 size={18} aria-hidden="true" /></button>
+                        <button type="button" data-testid={`manager_exercise-library-delete-${exercise.id}`} aria-label={t('TEXT_DELETE_EXERCISE', { value: exercise.name })} onClick={async (event) => {
+                          event.stopPropagation();
+                          const confirmed = await confirm({ title: t('COPY_DELETE_EXERCISE_1'), message: t('TEXT_DELETE_EXERCISE_CONFIRM_MESSAGE', { value: exercise.name }), type: 'danger', confirmText: t('COPY_DELETE_1') });
+                          if (!confirmed) return;
+                          try {
+                            const idempotencyKey = deleteKeyByIdRef.current.get(exercise.id) ?? ManagerInfrastructureIdempotency();
+                            deleteKeyByIdRef.current.set(exercise.id, idempotencyKey);
+                            const response = await deleteExercise({ id: exercise.id, idempotencyKey });
+                            deleteKeyByIdRef.current.delete(exercise.id);
+                            ManagerInfrastructureShowSuccessToast(response.message, `manager-workout-exercise-${exercise.id}-delete-success`);
+                          } catch (error: unknown) { ManagerInfrastructureShowErrorToast(error, `manager-workout-exercise-${exercise.id}-delete-error`); }
+                        }} className="rounded-md p-2 text-danger-text hover:bg-danger-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"><Trash2 size={18} aria-hidden="true" /></button>
+                      </div></td>
+                    </tr>
+                  ))}
+                  {exercises.length === 0 && <tr><td colSpan={TABLE_COLUMN_COUNT}><ManagerExerciseLibraryEmptyState search={search} /></td></tr>}
+                </tbody>
+              </table>
+            </ManagerInfrastructureResponsiveTable>
+          </div>
+        </div>
       </div>
 
       <div className="flex-1 divide-y divide-border overflow-y-auto lg:hidden">

@@ -6,6 +6,7 @@ import { useTranslations, useLocale } from 'next-intl';
 
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
 import ManagerPagination from '@/components/ui/manager_pagination/ManagerPagination';
+import CopyButton from '@/components/ui/CopyButton';
 
 import { ManagerEnvConfig } from '@/app/frontend_manager/manager_sales_billing/sales_overview/constants/ManagerSalesOverviewLocalEnvConfig';
 import { MANAGER_ITEMS_PER_PAGE } from '@/app/frontend_manager/manager_sales_billing/sales_overview/constants/ManagerSalesOverviewLocalPaginationDefaults';
@@ -17,6 +18,8 @@ import { MANAGER_SALES_OVERVIEW_MEMBERSHIP_TABLE_HEADERS } from '@/app/frontend_
 import { useManagerSalesOverviewLogic } from '@/app/frontend_manager/manager_sales_billing/sales_overview/hooks/useManagerSalesOverviewLogic';
 import { ManagerSalesOverviewFormatCurrency, ManagerSalesOverviewFormatDate } from '@/app/frontend_manager/manager_sales_billing/sales_overview/utils/ManagerSalesOverviewFormatters';
 import type { SalesMemberSnapshot } from '@/app/frontend_manager/manager_sales_billing/sales_overview/types/manager_sales_overview_member_snapshot.types';
+
+const TABLE_COLUMN_COUNT = 7;
 
 
 
@@ -84,69 +87,82 @@ export default function ManagerSalesOverviewAllMemberships() {
             } motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110`)].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_sales-sales-managersalesallmemberships-button-primary-${mapIndex}`}
             key={f}
             onClick={() => setFilter(f)}
-            
            type="button">
             {f}
           </button>
         ))}
       </div>
 
-      <div className="overflow-x-auto">
-        <ManagerInfrastructureResponsiveTable labels={MANAGER_SALES_OVERVIEW_MEMBERSHIP_TABLE_HEADERS}>
-<table className="w-full">
-          <thead className="bg-input">
-            <tr>
-              {MANAGER_SALES_OVERVIEW_MEMBERSHIP_TABLE_HEADERS.map(h => (
-                <th key={h} className="text-left text-xs font-semibold text-text-secondary uppercase tracking-wider px-4 py-3">
-                  {h}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-border">
-            {filteredMemberships.map((r: SalesMemberSnapshot) => {
-              const expiryTimestamp = Date.parse(String(r.expiryDate ?? ''));
-              const daysLeft = Math.floor((expiryTimestamp - now) / 86400000);
-              const daysLeftLabel = !Number.isFinite(expiryTimestamp) ? '—' : expiryTimestamp < now ? t('COPY_EXPIRED') : new Intl.RelativeTimeFormat(locale, { numeric: 'auto' }).format(daysLeft, 'day');
-              const statusLabel = locale.startsWith('hi') ? ({ active: 'सक्रिय', pending: 'लंबित', inactive: 'निष्क्रिय', expired: 'समाप्त', suspended: 'निलंबित', frozen: 'स्थगित' }[String(r.status).toLowerCase()] ?? String(r.status)) : ({ active: 'Active', pending: 'Pending', inactive: 'Inactive', expired: 'Expired', suspended: 'Suspended', frozen: 'Frozen' }[String(r.status).toLowerCase()] ?? String(r.status));
-              return (
-              <tr key={r.id} className="hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-200 ease-in-out">
-                <td className="px-4 py-3 text-sm font-medium text-text-primary">{r.name || '—'}</td>
-                <td className="px-4 py-3 text-sm text-text-secondary">{typeof r.plan === 'object' && r.plan ? r.plan.name : (r.planId ? `Plan #${r.planId}` : t('COPY_STANDARD'))}</td>
-                <td className="px-4 py-3 text-sm text-text-secondary">{r.joinDate ? ManagerSalesOverviewFormatDate(r.joinDate, locale) : '—'}</td>
-                <td className="px-4 py-3 text-sm text-text-secondary">{r.expiryDate ? ManagerSalesOverviewFormatDate(r.expiryDate, locale) : '—'}</td>
-                <td className="px-4 py-3">
-                  <span className={`text-xs px-2.5 py-0.5 rounded-full font-semibold ${
-                    r.status === SALES_ACTIVE_STATUS
-                      ? 'bg-success text-on-success'
-                      : 'bg-danger text-on-danger'
-                  }`} data-testid="manager_sales-managersalesallmemberships-status-badge-1">
-                    {r.status}
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-sm font-medium text-text-primary">{ManagerSalesOverviewFormatCurrency(r.paidAmount || 0, ManagerEnvConfig.currencyCode, locale)}</td>
-                <td className={`px-4 py-3 text-sm font-medium ${getDaysLeftColorClass(Math.max(0, daysLeft))}`}>
-                  {daysLeftLabel}
-                </td>
-              </tr>
-              );
-            })}
-          </tbody>
-        </table>
-</ManagerInfrastructureResponsiveTable>
-      </div>
+      <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+        <div className="max-h-[640px] overflow-auto">
+          <ManagerInfrastructureResponsiveTable labels={MANAGER_SALES_OVERVIEW_MEMBERSHIP_TABLE_HEADERS}>
+            <table className="w-full text-left border-collapse">
+              <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+                <tr>
+                  {MANAGER_SALES_OVERVIEW_MEMBERSHIP_TABLE_HEADERS.map((h, idx) => (
+                    <th
+                      key={h}
+                      className={`text-left text-xs font-semibold text-text-secondary uppercase tracking-wider px-4 py-3 whitespace-nowrap ${
+                        idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                      }`}
+                    >
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {filteredMemberships.map((r: SalesMemberSnapshot) => {
+                  const expiryTimestamp = Date.parse(String(r.expiryDate ?? ''));
+                  const daysLeft = Math.floor((expiryTimestamp - now) / 86400000);
+                  const daysLeftLabel = !Number.isFinite(expiryTimestamp) ? '—' : expiryTimestamp < now ? t('COPY_EXPIRED') : new Intl.RelativeTimeFormat(locale, { numeric: 'auto' }).format(daysLeft, 'day');
+                  return (
+                    <tr key={r.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                      <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-medium text-text-primary whitespace-nowrap">
+                        <div className="flex items-center gap-2">
+                          <span>{r.name || '—'}</span>
+                          {r.name && <CopyButton value={r.name} />}
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-sm text-text-secondary whitespace-nowrap">{typeof r.plan === 'object' && r.plan ? r.plan.name : (r.planId ? `Plan #${r.planId}` : t('COPY_STANDARD'))}</td>
+                      <td className="px-4 py-3 text-sm text-text-secondary whitespace-nowrap">{r.joinDate ? ManagerSalesOverviewFormatDate(r.joinDate, locale) : '—'}</td>
+                      <td className="px-4 py-3 text-sm text-text-secondary whitespace-nowrap">{r.expiryDate ? ManagerSalesOverviewFormatDate(r.expiryDate, locale) : '—'}</td>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <span className={`text-xs px-2.5 py-0.5 rounded-full font-semibold ${
+                          r.status === SALES_ACTIVE_STATUS
+                            ? 'bg-success text-on-success'
+                            : 'bg-danger text-on-danger'
+                        }`} data-testid="manager_sales-managersalesallmemberships-status-badge-1">
+                          {r.status}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-sm font-medium text-text-primary whitespace-nowrap">{ManagerSalesOverviewFormatCurrency(r.paidAmount || 0, ManagerEnvConfig.currencyCode, locale)}</td>
+                      <td className={`px-4 py-3 text-sm font-medium whitespace-nowrap ${getDaysLeftColorClass(Math.max(0, daysLeft))}`}>
+                        {daysLeftLabel}
+                      </td>
+                    </tr>
+                  );
+                })}
+                {filteredMemberships.length === 0 && (
+                  <tr>
+                    <td colSpan={TABLE_COLUMN_COUNT} className="p-8 text-center">
+                      <ManagerSalesOverviewEmptyState message={t("COPY_NO_MEMBERSHIPS_FOUND")} subtext={t("COPY_TRY_ADJUSTING_FILTERS")} />
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </ManagerInfrastructureResponsiveTable>
+        </div>
 
-      {filteredMemberships.length === 0 && (
-        <ManagerSalesOverviewEmptyState message={t("COPY_NO_MEMBERSHIPS_FOUND")} subtext={t("COPY_TRY_ADJUSTING_FILTERS")} />
-      )}
-
-      <div className="mt-4 pt-4 border-t border-border">
+        <div className="border-t border-border px-4 py-3 bg-card">
           <ManagerPagination data-testid="manager_sales-managersalesallmemberships-managerpagination-1"
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={setCurrentPage}
           />
         </div>
+      </div>
     </div>
   );
 }

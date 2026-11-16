@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 
 import ManagerPagination from '@/components/ui/manager_pagination/ManagerPagination';
+import CopyButton from '@/components/ui/CopyButton';
 
 import { ManagerEnvConfig } from '@/app/frontend_manager/manager_infrastructure/constants/ManagerInfrastructureEnvConfig';
 import { MANAGER_ITEMS_PER_PAGE } from '@/app/frontend_manager/manager_infrastructure/constants/ManagerInfrastructurePaginationDefaults';
@@ -111,88 +112,104 @@ export default function ManagerStoreProductsOrderTable() {
 
   return (
     <>
-    <div className="flex flex-col h-full min-h-96 print:hidden">
+    <div className="flex flex-col h-full min-h-96 print:hidden gap-3">
       <label htmlFor="manager-store-orders-search" className="sr-only">{t('COPY_SEARCH')}</label>
       <input id="manager-store-orders-search" type="search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder={t('COPY_SEARCH')} className="min-h-11 w-full max-w-sm rounded-lg border border-border bg-input px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" />
-      <div className="overflow-x-auto flex-1 bg-card rounded-xl border border-border">
-        <ManagerInfrastructureResponsiveTable labels={[t('COPY_ORDER_ID'), t('COPY_TOTAL_1'), t('COPY_METHOD'), t('COPY_STATUS'), t('COPY_DATE_2'), t('COPY_RECEIPT')]}>
-<table className="w-full">
-          <thead className="bg-input">
-            <tr>
-              {[t('COPY_ORDER_ID'), t('COPY_TOTAL_1'), t('COPY_METHOD'), t('COPY_STATUS'), t('COPY_DATE_2'), t('COPY_RECEIPT')].map(h => (
-                <th key={h} className="text-left text-xs font-semibold text-text-secondary uppercase tracking-wider px-4 py-3">
-                  {h}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-border">
-            {orders.map((o, mapIndex) => (
-              <tr
-                data-testid={`manager_store-store-managerstoreordertable-row-${o.id}`}
-                key={o.id} 
-                className="hover:bg-primary-subtle motion-safe:transition-colors motion-safe:duration-200 ease-in-out"
-              >
-                <td className="px-4 py-3 text-sm font-mono text-text-primary">{t("COPY_ORD")}{String(o.id).padStart(4, '0')}
-                </td>
-                <td className="px-4 py-3 text-sm font-bold text-success-text ">
-                  {ManagerStoreProductsFormatCurrency(o.total, ManagerEnvConfig.currencyCode, locale)}
-                </td>
-                <td className="px-4 py-3 text-sm text-text-primary">
-                  {o.method}
-                </td>
-                <td className="px-4 py-3">
-                  <span data-testid={`manager_store-store-managerstoreordertable-status-primary-${mapIndex}`} className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${o.status === MANAGER_STORE_PRODUCTS_STATUS_VALUES.COMPLETED ? 'bg-success text-on-success' : o.status === STORE_PENDING_ORDER_STATUS ? 'bg-warning-bg text-warning-text' : 'bg-surface text-text-secondary'}`}>
-                    {o.status}
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-sm text-text-secondary">
-                  {ManagerStoreProductsFormatDate(o.createdAt)}
-                </td>
-                <td className="px-4 py-3 whitespace-nowrap">
-                  <div className="flex items-center gap-2">
-                    <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 min-w-11 inline-flex items-center justify-center p-1.5 rounded-lg bg-success text-on-success hover:bg-success motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_store-store-managerstoreordertable-button-whatsapp-receipt-${mapIndex}`} 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleWhatsApp(o);
-                      }}
-                      
-                      aria-label={t("TEXT_WHATSAPP_RECEIPT_ORDER", { value: `ORD-${o.id}` })}
-                      title={t("COPY_SEND_VIA_WHATSAPP")}
-                     type="button">
-                      <MessageCircle size={18} strokeWidth={2}/>
-                    </button>
-                    <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 min-w-11 inline-flex items-center justify-center p-1.5 rounded-lg bg-input text-text-secondary hover:text-primary motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_store-store-managerstoreordertable-button-print-receipt-${mapIndex}`} 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handlePrint(o);
-                      }}
-                      
-                      aria-label={t("TEXT_PRINT_RECEIPT_ORDER", { value: `ORD-${o.id}` })}
-                      title={t("COPY_PRINT_RECEIPT")}
-                     type="button">
-                      <Printer size={18} strokeWidth={2}/>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-            {orders.length === 0 && (
-              <tr>
-                <td colSpan={STORE_ORDER_COLUMN_COUNT}><ManagerStoreOrderManagementEmptyState message={t("COPY_NO_ORDERS_FOUND")} /></td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-</ManagerInfrastructureResponsiveTable>
+      <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+        <div className="max-h-[640px] overflow-auto">
+          <ManagerInfrastructureResponsiveTable labels={[t('COPY_ORDER_ID'), t('COPY_TOTAL_1'), t('COPY_METHOD'), t('COPY_STATUS'), t('COPY_DATE_2'), t('COPY_RECEIPT')]}>
+            <table className="w-full text-left border-collapse">
+              <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+                <tr>
+                  {[t('COPY_ORDER_ID'), t('COPY_TOTAL_1'), t('COPY_METHOD'), t('COPY_STATUS'), t('COPY_DATE_2'), t('COPY_RECEIPT')].map((h, idx) => (
+                    <th
+                      key={h}
+                      className={`text-left text-xs font-semibold text-text-secondary uppercase tracking-wider px-4 py-3 whitespace-nowrap ${
+                        idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                      }`}
+                    >
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {orders.map((o, mapIndex) => {
+                  const ordIdStr = `${t("COPY_ORD")}${String(o.id).padStart(4, '0')}`;
+                  return (
+                    <tr
+                      data-testid={`manager_store-store-managerstoreordertable-row-${o.id}`}
+                      key={o.id} 
+                      className="hover:bg-surface-highlight/50 transition-colors group"
+                    >
+                      <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-mono text-text-primary whitespace-nowrap">
+                        <div className="flex items-center gap-2">
+                          <span>{ordIdStr}</span>
+                          <CopyButton value={`ORD-${o.id}`} />
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-sm font-bold text-success-text whitespace-nowrap">
+                        {ManagerStoreProductsFormatCurrency(o.total, ManagerEnvConfig.currencyCode, locale)}
+                      </td>
+                      <td className="px-4 py-3 text-sm text-text-primary whitespace-nowrap">
+                        {o.method}
+                      </td>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <span data-testid={`manager_store-store-managerstoreordertable-status-primary-${mapIndex}`} className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${o.status === MANAGER_STORE_PRODUCTS_STATUS_VALUES.COMPLETED ? 'bg-success text-on-success' : o.status === STORE_PENDING_ORDER_STATUS ? 'bg-warning-bg text-warning-text' : 'bg-surface text-text-secondary'}`}>
+                          {o.status}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-sm text-text-secondary whitespace-nowrap">
+                        {ManagerStoreProductsFormatDate(o.createdAt)}
+                      </td>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <div className="flex items-center gap-2">
+                          <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 min-w-11 inline-flex items-center justify-center p-1.5 rounded-lg bg-success text-on-success hover:bg-success motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_store-store-managerstoreordertable-button-whatsapp-receipt-${mapIndex}`} 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleWhatsApp(o);
+                            }}
+                            aria-label={t("TEXT_WHATSAPP_RECEIPT_ORDER", { value: `ORD-${o.id}` })}
+                            title={t("COPY_SEND_VIA_WHATSAPP")}
+                           type="button">
+                            <MessageCircle size={18} strokeWidth={2}/>
+                          </button>
+                          <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 min-w-11 inline-flex items-center justify-center p-1.5 rounded-lg bg-input text-text-secondary hover:text-primary motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_store-store-managerstoreordertable-button-print-receipt-${mapIndex}`} 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handlePrint(o);
+                            }}
+                            aria-label={t("TEXT_PRINT_RECEIPT_ORDER", { value: `ORD-${o.id}` })}
+                            title={t("COPY_PRINT_RECEIPT")}
+                           type="button">
+                            <Printer size={18} strokeWidth={2}/>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+                {orders.length === 0 && (
+                  <tr>
+                    <td colSpan={STORE_ORDER_COLUMN_COUNT} className="p-8 text-center">
+                      <ManagerStoreOrderManagementEmptyState message={t("COPY_NO_ORDERS_FOUND")} />
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </ManagerInfrastructureResponsiveTable>
+        </div>
+        <div className="border-t border-border px-4 py-3 bg-card">
+          <ManagerPagination data-testid="manager_store-managerstoreordertable-managerpagination-1" 
+            currentPage={currentPage} 
+            totalPages={totalPages} 
+            totalItems={totalOrders} 
+            itemsPerPage={MANAGER_ITEMS_PER_PAGE} 
+            onPageChange={setCurrentPage} 
+          />
+        </div>
       </div>
-      <ManagerPagination data-testid="manager_store-managerstoreordertable-managerpagination-1" 
-        currentPage={currentPage} 
-        totalPages={totalPages} 
-        totalItems={totalOrders} 
-        itemsPerPage={MANAGER_ITEMS_PER_PAGE} 
-        onPageChange={setCurrentPage} 
-      />
     </div>
     {printData && (
       <section id="store-order-print-receipt" aria-label={t('COPY_PAYMENT_RECEIPT')} className="hidden print:block mx-auto w-full max-w-[80mm] bg-page p-4 font-mono text-sm text-text-primary">

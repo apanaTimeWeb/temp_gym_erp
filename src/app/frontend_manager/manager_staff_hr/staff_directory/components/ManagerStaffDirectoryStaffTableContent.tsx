@@ -4,6 +4,7 @@
 
 import { Edit2, Trash2, CheckCircle2, Ban, PlayCircle, Users } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
+import CopyButton from '@/components/ui/CopyButton';
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
 import { useConfirm } from '@/components/ui/manager_confirm_provider/ManagerConfirmProvider';
 import ManagerPagination from '@/components/ui/manager_pagination/ManagerPagination';
@@ -37,42 +38,52 @@ export default function ManagerStaffPayrollAndAttendanceStaffTableContent({ staf
   return (
     <>
       <div className="hidden lg:block flex-1">
-        <ManagerInfrastructureResponsiveTable labels={[...translatedHeaders, t('COPY_ACTIONS_3')]}>
-<table className="w-full">
-          <thead className="bg-input text-text-secondary border-b border-border">
-            <tr>
-              {translatedHeaders.map((header, index) => (
-                <th key={STAFF_TABLE_HEADERS[index]} className={`text-xs font-semibold uppercase tracking-wider px-3 py-3 whitespace-nowrap ${index === 4 || index === 5 ? 'text-right' : 'text-left'}`}>
-                  {header}
-                </th>
-              ))}
-              <th className="text-right text-xs font-semibold uppercase tracking-wider px-3 py-3 whitespace-nowrap">{t("COPY_ACTIONS_3")}</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-border">
-            {staff.map((s, mapIndex) => (
-              <tr
-                data-testid={`manager_hr-hr-managerhrstafftable-row-${s.id}`}
-                key={s.id}
-                className="motion-safe:transition-all hover:bg-surface-hover motion-safe:duration-200 ease-in-out"
-              >
-                <td className="px-3 py-3 whitespace-nowrap">
-                  <button
-                    type="button"
-                    onClick={() => setViewProfileData(s)}
-                    aria-label={t('TEXT_OPEN_STAFF_PROFILE', { value: s.name })}
-                    aria-haspopup="dialog"
-                    className="flex w-full items-center gap-2.5 rounded-md text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page"
-                  >
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-subtle text-sm font-bold text-primary shrink-0">
-                      {(s.name || '?').charAt(0).toUpperCase()}
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block text-sm font-medium text-text-primary">{ManagerStaffPayrollAndAttendanceDisplayValue(s.name)}</span>
-                      <span className="block text-xs text-text-secondary">{ManagerStaffPayrollAndAttendanceDisplayValue(s.email)}</span>
-                    </span>
-                  </button>
-                </td>
+        <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+          <div className="max-h-[640px] overflow-auto">
+            <ManagerInfrastructureResponsiveTable labels={[...translatedHeaders, t('COPY_ACTIONS_3')]}>
+              <table className="w-full">
+                <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+                  <tr>
+                    {translatedHeaders.map((header, index) => (
+                      <th
+                        key={STAFF_TABLE_HEADERS[index]}
+                        className={`text-xs font-semibold uppercase tracking-wider px-3 py-3 whitespace-nowrap ${
+                          index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                        } ${index === 4 || index === 5 ? 'text-right' : 'text-left'}`}
+                      >
+                        {header}
+                      </th>
+                    ))}
+                    <th className="text-right text-xs font-semibold uppercase tracking-wider px-3 py-3 whitespace-nowrap">{t("COPY_ACTIONS_3")}</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {staff.map((s, mapIndex) => (
+                    <tr
+                      data-testid={`manager_hr-hr-managerhrstafftable-row-${s.id}`}
+                      key={s.id}
+                      className="hover:bg-surface-highlight/50 transition-colors group"
+                    >
+                      <td className="sticky start-0 z-10 bg-card border-e border-border px-3 py-3 whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => setViewProfileData(s)}
+                            aria-label={t('TEXT_OPEN_STAFF_PROFILE', { value: s.name })}
+                            aria-haspopup="dialog"
+                            className="flex flex-1 items-center gap-2.5 rounded-md text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+                          >
+                            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-subtle text-sm font-bold text-primary shrink-0">
+                              {(s.name || '?').charAt(0).toUpperCase()}
+                            </span>
+                            <span className="min-w-0">
+                              <span className="block text-sm font-medium text-text-primary">{ManagerStaffPayrollAndAttendanceDisplayValue(s.name)}</span>
+                              <span className="block text-xs text-text-secondary">{ManagerStaffPayrollAndAttendanceDisplayValue(s.email)}</span>
+                            </span>
+                          </button>
+                          <CopyButton value={s.name || ''} />
+                        </div>
+                      </td>
                 <td className="px-3 py-3 text-sm text-text-primary whitespace-nowrap">{s.role}</td>
                 <td className="px-3 py-3 whitespace-nowrap">
                   {s.isActive === false ? (
@@ -153,8 +164,10 @@ export default function ManagerStaffPayrollAndAttendanceStaffTableContent({ staf
             )}
           </tbody>
         </table>
-</ManagerInfrastructureResponsiveTable>
-      </div>
+      </ManagerInfrastructureResponsiveTable>
+    </div>
+  </div>
+</div>
       <div className="lg:hidden flex-1 overflow-y-auto divide-y divide-border">
         {staff.map((s, mapIndex) => (
           <article key={`mobile-staff-${s.id}`} className="p-4 bg-card space-y-3">

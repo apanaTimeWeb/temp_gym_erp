@@ -5,8 +5,11 @@ import { useLocale } from 'next-intl';
 
 import { ManagerEnvConfig } from '@/app/frontend_manager/manager_infrastructure/constants/ManagerInfrastructureEnvConfig';
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
+import CopyButton from '@/components/ui/CopyButton';
 import { useManagerFinancePaymentsAndSummaryUiStore } from '@/app/frontend_manager/manager_finance_expenses/finance_payments_and_summary/state/useManagerFinancePaymentsAndSummaryUiStore';
 import { ManagerFinancePaymentsAndSummaryFormatCurrency } from '@/app/frontend_manager/manager_finance_expenses/finance_payments_and_summary/utils/ManagerFinancePaymentsAndSummaryFormatters';
+
+const TABLE_COLUMN_COUNT = 6;
 
 interface DefaulterRecord {
   id: string;
@@ -81,7 +84,7 @@ export default function ManagerFinancePaymentsAndSummaryDefaultersList() {
   };
 
   return (
-    <div className="bg-card border border-border rounded-xl shadow-card overflow-hidden" data-testid="manager_finance-defaulters-list">
+    <div className="bg-card border border-border rounded-2xl shadow-card overflow-hidden" data-testid="manager_finance-defaulters-list">
       <div className="px-6 py-5 border-b border-border flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-overlay">
         <div>
           <div className="flex items-center gap-2">
@@ -96,58 +99,76 @@ export default function ManagerFinancePaymentsAndSummaryDefaultersList() {
         </div>
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="max-h-[640px] overflow-auto">
         <ManagerInfrastructureResponsiveTable mobilePattern="horizontal-scroll" labels={TABLE_HEADERS}>
-          <table className="w-full text-left">
-            <thead className="bg-primary-subtle border-b border-border">
+          <table className="w-full text-left border-collapse">
+            <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
               <tr>
-                {TABLE_HEADERS.map((h) => (
-                  <th key={h} className="px-5 py-3 text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap">
+                {TABLE_HEADERS.map((h, idx) => (
+                  <th
+                    key={h}
+                    className={`px-5 py-3 text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap ${
+                      idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    }`}
+                  >
                     {h}
                   </th>
                 ))}
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
-              {DEFAULT_DEFAULTERS.map((d) => (
-                <tr key={d.id} className="hover:bg-primary-subtle/30">
-                  <td className="px-5 py-3.5 whitespace-nowrap">
-                    <p className="text-sm font-semibold text-text-primary">{d.memberName}</p>
-                    <p className="text-xs font-mono text-text-secondary">+91 {d.memberPhone}</p>
-                  </td>
-                  <td className="px-5 py-3.5 text-sm text-text-primary whitespace-nowrap">{d.planName}</td>
-                  <td className="px-5 py-3.5 text-sm font-bold text-danger-text whitespace-nowrap">{formatCurrency(d.dueAmount)}</td>
-                  <td className="px-5 py-3.5 text-xs text-text-secondary whitespace-nowrap">{d.dueDate}</td>
-                  <td className="px-5 py-3.5 whitespace-nowrap">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${
-                      d.daysOverdue > 30 ? 'bg-danger text-on-danger' : 'bg-warning-bg text-warning-text'
-                    }`}>
-                      {d.daysOverdue} days overdue
-                    </span>
-                  </td>
-                  <td className="px-5 py-3.5 whitespace-nowrap">
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => sendWhatsAppReminder(d)}
-                        title="Send WhatsApp Payment Reminder"
-                        className="p-1.5 rounded-lg bg-success text-on-success hover:brightness-110 active:scale-95 transition-all"
-                      >
-                        <MessageCircle size={16} strokeWidth={2} aria-hidden="true" />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setShowModal(true)}
-                        title="Collect Due Payment"
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-on-primary text-xs font-semibold hover:brightness-110 active:scale-95 transition-all"
-                      >
-                        <Banknote size={14} strokeWidth={2} aria-hidden="true" />
-                        Collect Due
-                      </button>
-                    </div>
+              {DEFAULT_DEFAULTERS.length === 0 ? (
+                <tr>
+                  <td colSpan={TABLE_COLUMN_COUNT} className="px-5 py-8 text-center text-sm text-text-secondary">
+                    No defaulters found.
                   </td>
                 </tr>
-              ))}
+              ) : (
+                DEFAULT_DEFAULTERS.map((d) => (
+                  <tr key={d.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                    <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-3.5 whitespace-nowrap">
+                      <div className="flex items-center gap-2">
+                        <div>
+                          <p className="text-sm font-semibold text-text-primary">{d.memberName}</p>
+                          <p className="text-xs font-mono text-text-secondary">+91 {d.memberPhone}</p>
+                        </div>
+                        <CopyButton value={d.memberPhone} />
+                      </div>
+                    </td>
+                    <td className="px-5 py-3.5 text-sm text-text-primary whitespace-nowrap">{d.planName}</td>
+                    <td className="px-5 py-3.5 text-sm font-bold text-danger-text whitespace-nowrap">{formatCurrency(d.dueAmount)}</td>
+                    <td className="px-5 py-3.5 text-xs text-text-secondary whitespace-nowrap">{d.dueDate}</td>
+                    <td className="px-5 py-3.5 whitespace-nowrap">
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${
+                        d.daysOverdue > 30 ? 'bg-danger text-on-danger' : 'bg-warning-bg text-warning-text'
+                      }`}>
+                        {d.daysOverdue} days overdue
+                      </span>
+                    </td>
+                    <td className="px-5 py-3.5 whitespace-nowrap">
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => sendWhatsAppReminder(d)}
+                          title="Send WhatsApp Payment Reminder"
+                          className="p-1.5 rounded-lg bg-success text-on-success hover:brightness-110 active:scale-95 transition-all"
+                        >
+                          <MessageCircle size={16} strokeWidth={2} aria-hidden="true" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setShowModal(true)}
+                          title="Collect Due Payment"
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-on-primary text-xs font-semibold hover:brightness-110 active:scale-95 transition-all"
+                        >
+                          <Banknote size={14} strokeWidth={2} aria-hidden="true" />
+                          Collect Due
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </ManagerInfrastructureResponsiveTable>

@@ -147,54 +147,56 @@ export default function ManagerStaffPayrollAndAttendanceAttendanceHistory() {
         </div>
       </div>
 
-      <div className="overflow-x-auto rounded-xl border border-border bg-card">
-        <ManagerInfrastructureResponsiveTable mobilePattern="horizontal-scroll" labels={[t('COPY_DATE_2'), t('COPY_STATUS_2'), t('COPY_CHECK'), t('COPY_CHECK_OUT')]}>
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="border-b border-border bg-surface-highlight">
-                <th className="p-4 text-xs font-semibold uppercase tracking-wide text-text-secondary">{t('COPY_DATE_2')}</th>
-                <th className="p-4 text-xs font-semibold uppercase tracking-wide text-text-secondary">{t('COPY_STATUS_2')}</th>
-                <th className="p-4 text-xs font-semibold uppercase tracking-wide text-text-secondary">{t('COPY_CHECK')}</th>
-                <th className="p-4 text-xs font-semibold uppercase tracking-wide text-text-secondary">{t('COPY_CHECK_OUT')}</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border text-sm">
-              {showRosterLoading || showAttendanceLoading ? (
-                [1, 2, 3, 4, 5].map((skeletonRow) => (
-                  <tr key={`attendance-loading-row-${skeletonRow}`} className="motion-safe:animate-pulse">
-                    {Array.from({ length: ATTENDANCE_COLUMN_COUNT }, (_, cellIndex) => (
-                      <td key={`attendance-loading-row-${skeletonRow}-cell-${cellIndex + 1}`} className="p-4"><div className="h-4 w-24 rounded bg-input" /></td>
-                    ))}
-                  </tr>
-                ))
-              ) : showRosterError ? (
-                <tr><td colSpan={ATTENDANCE_COLUMN_COUNT}><RetryState message={rosterError || t('TEXT_GENERIC_ERROR')} onRetry={() => { void retryRoster(); }} label={t('COPY_TRY_AGAIN')} /></td></tr>
-              ) : showNoStaff ? (
-                <tr><td colSpan={ATTENDANCE_COLUMN_COUNT}><ManagerStaffAttendanceEmptyState message={t('TEXT_NO_STAFF')} /></td></tr>
-              ) : isAttendanceError ? (
-                <tr><td colSpan={ATTENDANCE_COLUMN_COUNT}><RetryState message={ManagerInfrastructureGetErrorMessage(attendanceError, t('TEXT_GENERIC_ERROR'))} onRetry={() => { void retryAttendance(); }} label={t('COPY_TRY_AGAIN')} /></td></tr>
-              ) : history.length === 0 ? (
-                <tr><td colSpan={ATTENDANCE_COLUMN_COUNT}><ManagerStaffAttendanceEmptyState message={t('COPY_NO_ATTENDANCE_RECORDS_WERE_RETURNED_SELECTED_MONTH')} /></td></tr>
-              ) : (
-                history.map((record) => (
-                  <tr key={`${record.date}-${record.status}`}>
-                    <td className="p-4 text-text-primary">{ManagerStaffPayrollAndAttendanceFormatDate(record.date, locale)}</td>
-                    <td className="p-4">
-                      <span
-                        data-testid={`manager_hr-manager-hr-attendance-history-status-${record.date}-${record.status}`}
-                        className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-semibold ${getStatusClass(record.status ?? '')}`}
-                      >
-                        {ManagerStaffPayrollAndAttendanceDisplayValue(record.status)}
-                      </span>
-                    </td>
-                    <td className="p-4 text-text-secondary">{ManagerStaffPayrollAndAttendanceDisplayValue(record.checkIn)}</td>
-                    <td className="p-4 text-text-secondary">{ManagerStaffPayrollAndAttendanceDisplayValue(record.checkOut)}</td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </ManagerInfrastructureResponsiveTable>
+      <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+        <div className="max-h-[640px] overflow-auto">
+          <ManagerInfrastructureResponsiveTable mobilePattern="horizontal-scroll" labels={[t('COPY_DATE_2'), t('COPY_STATUS_2'), t('COPY_CHECK'), t('COPY_CHECK_OUT')]}>
+            <table className="w-full text-left border-collapse">
+              <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+                <tr>
+                  <th className="sticky start-0 z-30 bg-surface-highlight border-e border-border p-4 text-xs font-semibold uppercase tracking-wide text-text-secondary">{t('COPY_DATE_2')}</th>
+                  <th className="p-4 text-xs font-semibold uppercase tracking-wide text-text-secondary">{t('COPY_STATUS_2')}</th>
+                  <th className="p-4 text-xs font-semibold uppercase tracking-wide text-text-secondary">{t('COPY_CHECK')}</th>
+                  <th className="p-4 text-xs font-semibold uppercase tracking-wide text-text-secondary">{t('COPY_CHECK_OUT')}</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border text-sm">
+                {showRosterLoading || showAttendanceLoading ? (
+                  [1, 2, 3, 4, 5].map((skeletonRow) => (
+                    <tr key={`attendance-loading-row-${skeletonRow}`} className="motion-safe:animate-pulse">
+                      {Array.from({ length: ATTENDANCE_COLUMN_COUNT }, (_, cellIndex) => (
+                        <td key={`attendance-loading-row-${skeletonRow}-cell-${cellIndex + 1}`} className="p-4"><div className="h-4 w-24 rounded bg-input" /></td>
+                      ))}
+                    </tr>
+                  ))
+                ) : showRosterError ? (
+                  <tr><td colSpan={ATTENDANCE_COLUMN_COUNT}><RetryState message={rosterError || t('TEXT_GENERIC_ERROR')} onRetry={() => { void retryRoster(); }} label={t('COPY_TRY_AGAIN')} /></td></tr>
+                ) : showNoStaff ? (
+                  <tr><td colSpan={ATTENDANCE_COLUMN_COUNT}><ManagerStaffAttendanceEmptyState message={t('TEXT_NO_STAFF')} /></td></tr>
+                ) : isAttendanceError ? (
+                  <tr><td colSpan={ATTENDANCE_COLUMN_COUNT}><RetryState message={ManagerInfrastructureGetErrorMessage(attendanceError, t('TEXT_GENERIC_ERROR'))} onRetry={() => { void retryAttendance(); }} label={t('COPY_TRY_AGAIN')} /></td></tr>
+                ) : history.length === 0 ? (
+                  <tr><td colSpan={ATTENDANCE_COLUMN_COUNT}><ManagerStaffAttendanceEmptyState message={t('COPY_NO_ATTENDANCE_RECORDS_WERE_RETURNED_SELECTED_MONTH')} /></td></tr>
+                ) : (
+                  history.map((record) => (
+                    <tr key={`${record.date}-${record.status}`} className="hover:bg-surface-highlight/50 transition-colors group">
+                      <td className="sticky start-0 z-10 bg-card border-e border-border p-4 text-text-primary whitespace-nowrap">{ManagerStaffPayrollAndAttendanceFormatDate(record.date, locale)}</td>
+                      <td className="p-4">
+                        <span
+                          data-testid={`manager_hr-manager-hr-attendance-history-status-${record.date}-${record.status}`}
+                          className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-semibold ${getStatusClass(record.status ?? '')}`}
+                        >
+                          {ManagerStaffPayrollAndAttendanceDisplayValue(record.status)}
+                        </span>
+                      </td>
+                      <td className="p-4 text-text-secondary">{ManagerStaffPayrollAndAttendanceDisplayValue(record.checkIn)}</td>
+                      <td className="p-4 text-text-secondary">{ManagerStaffPayrollAndAttendanceDisplayValue(record.checkOut)}</td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </ManagerInfrastructureResponsiveTable>
+        </div>
       </div>
     </div>
   );

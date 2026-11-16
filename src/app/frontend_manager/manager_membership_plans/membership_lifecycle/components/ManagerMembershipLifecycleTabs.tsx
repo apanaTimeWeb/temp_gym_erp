@@ -6,6 +6,7 @@ import { Controller } from 'react-hook-form';
 
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
 import ManagerSearchableDropdown from '@/components/ui/manager_searchable_dropdown/ManagerSearchableDropdown';
+import CopyButton from '@/components/ui/CopyButton';
 
 import { ManagerInfrastructureGetErrorMessage } from '@/app/frontend_manager/manager_infrastructure/utils/ManagerInfrastructureGetErrorMessage';
 
@@ -48,15 +49,55 @@ export default function ManagerMembershipLifecycleTabs() {
       )}
 
       {activeTab === 'MEMBERSHIP_RENEW' && (
-        <div id="manager-membership-tabpanel-MEMBERSHIP_RENEW" role="tabpanel" aria-labelledby="manager-membership-tab-MEMBERSHIP_RENEW" className="bg-card border border-border rounded-xl p-6 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+        <div id="manager-membership-tabpanel-MEMBERSHIP_RENEW" role="tabpanel" aria-labelledby="manager-membership-tab-MEMBERSHIP_RENEW" className="bg-card border border-border rounded-2xl p-6 shadow-card">
           <h3 className="text-lg font-bold text-text-primary mb-4">{t("COPY_RENEW_MEMBERSHIPS")}</h3>
           {(() => { if (isPending) { return <div className="h-24 motion-safe:animate-pulse bg-input rounded-xl" aria-label={t("COPY_LOADING_RENEWALS")} />; } return (() => { if (isError) { return <p className="text-sm text-danger-text">{ManagerInfrastructureGetErrorMessage(error, t('TEXT_GENERIC_ERROR'))}</p>; } return (
-            <div className="overflow-x-auto">
-              <ManagerInfrastructureResponsiveTable labels={[t('COPY_MEMBER_NAME_1'), t('COPY_CURRENT_PLAN'), t('COPY_EXPIRY_DATE'), t('COPY_ACTION')]}>
-<table className="w-full text-left border-collapse"><thead><tr className="border-b border-border"><th className="py-3 px-4 text-sm font-medium text-text-secondary">{t("COPY_MEMBER_NAME_1")}</th><th className="py-3 px-4 text-sm font-medium text-text-secondary">{t("COPY_CURRENT_PLAN")}</th><th className="py-3 px-4 text-sm font-medium text-text-secondary">{t("COPY_EXPIRY_DATE")}</th><th className="py-3 px-4 text-sm font-medium text-text-secondary text-right">{t("COPY_ACTION")}</th></tr></thead>
-                <tbody className="divide-y divide-border">{(overview?.renewalCandidates ?? []).map((member, mapIndex) => <tr key={member.id}><td className="py-3 px-4 text-sm text-text-primary">{member.name}</td><td className="py-3 px-4 text-sm text-text-secondary">{member.planName}</td><td className="py-3 px-4 text-sm text-danger-text font-medium">{formatExpiry(member.expiryDate)}</td><td className="py-3 px-4 text-right"><button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 px-3 py-1.5 text-xs font-semibold bg-primary-subtle text-primary rounded-lg motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_plans-plans-managerplanstabs-button-member-name-${mapIndex}`} type="button" onClick={() => renewForm.setValue('memberId', member.id)} >{t("COPY_RENEW_NOW")}</button></td></tr>)}</tbody></table>
-</ManagerInfrastructureResponsiveTable>
-              <form aria-label={t("COPY_RENEW_MEMBERSHIPS")} data-testid="manager_plans-managerplanstabs-form-2" onSubmit={submitRenew} className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4 max-w-xl"><Controller control={renewForm.control} name="memberId" render={({ field }) => <ManagerSearchableDropdown dataTestId="manager_plans-managerplanstabs-managersearchabledropdown-3" options={memberOptions} value={String(field.value ?? '')} onChange={(value) => field.onChange(String(value))} placeholder={t("COPY_MEMBER")}  data-testid="manager_plans-managerplanstabs-searchable-dropdown-3"/>} /><Controller control={renewForm.control} name="planId" render={({ field }) => <ManagerSearchableDropdown dataTestId="manager_plans-managerplanstabs-managersearchabledropdown-4" options={planOptions} value={String(field.value ?? '')} onChange={(value) => field.onChange(String(value))} placeholder={t("COPY_PLAN_1")}  data-testid="manager_plans-managerplanstabs-searchable-dropdown-4"/>} /><input data-testid="manager_plans-manager-plans-main-input-date-1" type="date" aria-label={t("COPY_NEW_EXPIRY_DATE")} {...renewForm.register('newExpiryDate')} className="bg-input border border-border rounded-lg px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page" /><button data-testid="manager_plans-manager-plans-main-button-submit-2" type="submit" disabled={renewForm.formState.isSubmitting} className="min-w-32 bg-primary-subtle text-primary rounded-lg px-3 py-2 text-sm font-semibold disabled:opacity-60 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110">{renewForm.formState.isSubmitting ? t('COPY_RENEWING') : t('COPY_SUBMIT_RENEWAL')}</button></form>
+            <div className="rounded-xl border border-border bg-card shadow-card overflow-hidden">
+              <div className="max-h-[640px] overflow-auto">
+                <ManagerInfrastructureResponsiveTable labels={[t('COPY_MEMBER_NAME_1'), t('COPY_CURRENT_PLAN'), t('COPY_EXPIRY_DATE'), t('COPY_ACTION')]}>
+                  <table className="w-full text-left border-collapse">
+                    <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+                      <tr>
+                        <th className="sticky start-0 z-30 bg-surface-highlight border-e border-border py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap">{t("COPY_MEMBER_NAME_1")}</th>
+                        <th className="py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap">{t("COPY_CURRENT_PLAN")}</th>
+                        <th className="py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap">{t("COPY_EXPIRY_DATE")}</th>
+                        <th className="py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap text-right">{t("COPY_ACTION")}</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-border">
+                      {(overview?.renewalCandidates ?? []).length === 0 ? (
+                        <tr>
+                          <td colSpan={4} className="py-8 text-center text-sm text-text-secondary">
+                            No renewal candidates found.
+                          </td>
+                        </tr>
+                      ) : (
+                        (overview?.renewalCandidates ?? []).map((member, mapIndex) => (
+                          <tr key={member.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                            <td className="sticky start-0 z-10 bg-card border-e border-border py-3 px-4 text-sm text-text-primary whitespace-nowrap">
+                              <div className="flex items-center gap-2">
+                                <span>{member.name}</span>
+                                <CopyButton value={member.name} />
+                              </div>
+                            </td>
+                            <td className="py-3 px-4 text-sm text-text-secondary whitespace-nowrap">{member.planName}</td>
+                            <td className="py-3 px-4 text-sm text-danger-text font-medium whitespace-nowrap">{formatExpiry(member.expiryDate)}</td>
+                            <td className="py-3 px-4 text-right whitespace-nowrap">
+                              <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 px-3 py-1.5 text-xs font-semibold bg-primary-subtle text-primary rounded-lg motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_plans-plans-managerplanstabs-button-member-name-${mapIndex}`} type="button" onClick={() => renewForm.setValue('memberId', member.id)} >{t("COPY_RENEW_NOW")}</button>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </ManagerInfrastructureResponsiveTable>
+              </div>
+              <form aria-label={t("COPY_RENEW_MEMBERSHIPS")} data-testid="manager_plans-managerplanstabs-form-2" onSubmit={submitRenew} className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 border-t border-border bg-card max-w-xl">
+                <Controller control={renewForm.control} name="memberId" render={({ field }) => <ManagerSearchableDropdown dataTestId="manager_plans-managerplanstabs-managersearchabledropdown-3" options={memberOptions} value={String(field.value ?? '')} onChange={(value) => field.onChange(String(value))} placeholder={t("COPY_MEMBER")}  data-testid="manager_plans-managerplanstabs-searchable-dropdown-3"/>} />
+                <Controller control={renewForm.control} name="planId" render={({ field }) => <ManagerSearchableDropdown dataTestId="manager_plans-managerplanstabs-managersearchabledropdown-4" options={planOptions} value={String(field.value ?? '')} onChange={(value) => field.onChange(String(value))} placeholder={t("COPY_PLAN_1")}  data-testid="manager_plans-managerplanstabs-searchable-dropdown-4"/>} />
+                <input data-testid="manager_plans-manager-plans-main-input-date-1" type="date" aria-label={t("COPY_NEW_EXPIRY_DATE")} {...renewForm.register('newExpiryDate')} className="bg-input border border-border rounded-lg px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page" />
+                <button data-testid="manager_plans-manager-plans-main-button-submit-2" type="submit" disabled={renewForm.formState.isSubmitting} className="min-w-32 bg-primary-subtle text-primary rounded-lg px-3 py-2 text-sm font-semibold disabled:opacity-60 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110">{renewForm.formState.isSubmitting ? t('COPY_RENEWING') : t('COPY_SUBMIT_RENEWAL')}</button>
+              </form>
             </div>
           ); })(); })()}
         </div>
@@ -67,9 +108,58 @@ export default function ManagerMembershipLifecycleTabs() {
       )}
 
       {activeTab === 'EXPIRY_CHECK' && (
-        <div id="manager-membership-tabpanel-EXPIRY_CHECK" role="tabpanel" aria-labelledby="manager-membership-tab-EXPIRY_CHECK" className="bg-card border border-border rounded-xl p-6 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1"><h3 className="text-lg font-bold text-text-primary mb-4">{t("COPY_EXPIRING_MEMBERSHIPS")}</h3>{(() => { if (isPending) { return <div className="h-24 motion-safe:animate-pulse bg-input rounded-xl" aria-label={t("COPY_LOADING_EXPIRY_DATA")} />; } return (() => { if (isError) { return <p className="text-sm text-danger-text">{ManagerInfrastructureGetErrorMessage(error, t('TEXT_GENERIC_ERROR'))}</p>; } return <div className="overflow-x-auto"><ManagerInfrastructureResponsiveTable mobilePattern="horizontal-scroll" labels={[t('COPY_MEMBER_NAME_2'), t('COPY_PHONE'), t('COPY_PLAN_2'), t('COPY_EXPIRES')]}>
-<table className="w-full text-left border-collapse"><thead><tr className="border-b border-border"><th className="py-3 px-4 text-sm font-medium text-text-secondary">{t("COPY_MEMBER_NAME_2")}</th><th className="py-3 px-4 text-sm font-medium text-text-secondary">{t("COPY_PHONE")}</th><th className="py-3 px-4 text-sm font-medium text-text-secondary">{t("COPY_PLAN_2")}</th><th className="py-3 px-4 text-sm font-medium text-text-secondary">{t("COPY_EXPIRES")}</th></tr></thead><tbody className="divide-y divide-border">{(overview?.memberOptions ?? []).map(member => <tr key={member.id}><td className="py-3 px-4 text-sm text-text-primary">{member.name}</td><td className="py-3 px-4 text-sm text-text-secondary">{ManagerMembershipLifecycleMaskSensitiveData(member.phone, 'phone')}</td><td className="py-3 px-4 text-sm text-text-secondary">{member.planName}</td><td className="py-3 px-4 text-sm text-danger-text font-medium">{formatExpiry(member.expiryDate)}</td></tr>)}</tbody></table>
-</ManagerInfrastructureResponsiveTable></div>; })(); })()}</div>
+        <div id="manager-membership-tabpanel-EXPIRY_CHECK" role="tabpanel" aria-labelledby="manager-membership-tab-EXPIRY_CHECK" className="bg-card border border-border rounded-2xl p-6 shadow-card">
+          <h3 className="text-lg font-bold text-text-primary mb-4">{t("COPY_EXPIRING_MEMBERSHIPS")}</h3>
+          {(() => {
+            if (isPending) {
+              return <div className="h-24 motion-safe:animate-pulse bg-input rounded-xl" aria-label={t("COPY_LOADING_EXPIRY_DATA")} />;
+            }
+            if (isError) {
+              return <p className="text-sm text-danger-text">{ManagerInfrastructureGetErrorMessage(error, t('TEXT_GENERIC_ERROR'))}</p>;
+            }
+            return (
+              <div className="rounded-xl border border-border bg-card shadow-card overflow-hidden">
+                <div className="max-h-[640px] overflow-auto">
+                  <ManagerInfrastructureResponsiveTable mobilePattern="horizontal-scroll" labels={[t('COPY_MEMBER_NAME_2'), t('COPY_PHONE'), t('COPY_PLAN_2'), t('COPY_EXPIRES')]}>
+                    <table className="w-full text-left border-collapse">
+                      <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+                        <tr>
+                          <th className="sticky start-0 z-30 bg-surface-highlight border-e border-border py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap">{t("COPY_MEMBER_NAME_2")}</th>
+                          <th className="py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap">{t("COPY_PHONE")}</th>
+                          <th className="py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap">{t("COPY_PLAN_2")}</th>
+                          <th className="py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap">{t("COPY_EXPIRES")}</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-border">
+                        {(overview?.memberOptions ?? []).length === 0 ? (
+                          <tr>
+                            <td colSpan={4} className="py-8 text-center text-sm text-text-secondary">
+                              No expiring memberships found.
+                            </td>
+                          </tr>
+                        ) : (
+                          (overview?.memberOptions ?? []).map(member => (
+                            <tr key={member.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                              <td className="sticky start-0 z-10 bg-card border-e border-border py-3 px-4 text-sm text-text-primary whitespace-nowrap">
+                                <div className="flex items-center gap-2">
+                                  <span>{member.name}</span>
+                                  <CopyButton value={member.name} />
+                                </div>
+                              </td>
+                              <td className="py-3 px-4 text-sm text-text-secondary whitespace-nowrap">{ManagerMembershipLifecycleMaskSensitiveData(member.phone, 'phone')}</td>
+                              <td className="py-3 px-4 text-sm text-text-secondary whitespace-nowrap">{member.planName}</td>
+                              <td className="py-3 px-4 text-sm text-danger-text font-medium whitespace-nowrap">{formatExpiry(member.expiryDate)}</td>
+                            </tr>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
+                  </ManagerInfrastructureResponsiveTable>
+                </div>
+              </div>
+            );
+          })()}
+        </div>
       )}
 
       {activeTab === 'VIEW_PLANS' && (<><div id="manager-membership-tabpanel-VIEW_PLANS" role="tabpanel" aria-labelledby="manager-membership-tab-VIEW_PLANS" className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">{[{ label: t("COPY_TOTAL_PLANS"), value: plans.length, colorClass: 'text-primary' }, { label: t("COPY_ACTIVE_PLANS"), value: plans.filter((p) => p.isActive).length, colorClass: 'text-success-text' }, { label: t("COPY_INACTIVE_PLANS"), value: plans.filter((p) => !p.isActive).length, colorClass: 'text-danger-text' }].map((stat) => <div key={stat.label} className="bg-card border border-border rounded-xl p-4 flex items-center gap-4 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1"><p className="text-sm text-text-secondary">{stat.label}</p><p className={`text-kpi font-bold ml-auto ${stat.colorClass}`}>{stat.value}</p></div>)}</div><ManagerMembershipLifecycleToolbar /><ManagerMembershipLifecycleGrid /></>)}
