@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 
 import { SUPERADMIN_FEATURE_DEFINITIONS, SUPERADMIN_FEATURE_TIER_DEFINITIONS, SUPERADMIN_FEATURE_TIER_MATRIX } from '@/app/frontend_superadmin/superadmin_platform_configuration/platform_configuration_features_management/constants/superadmin_platform_configuration_features_management_tier_matrix.constants';
 
-
+const TABLE_COLUMN_COUNT = 1 + SUPERADMIN_FEATURE_TIER_DEFINITIONS.length;
 
 /**
  * @description Renders the documented SaaS-tier availability matrix as a read-only configuration view. It performs no mutations.
@@ -31,7 +31,7 @@ export default function SuperadminPlatformConfigurationFeaturesManagementTierMat
     <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card" aria-labelledby="superadmin-feature-tier-matrix-title">
       <div className="border-b border-border p-6">
         <h2 id="superadmin-feature-tier-matrix-title" className="flex items-center gap-2 text-lg font-bold text-primary">
-          <Layers size={18} className="text-primary" aria-hidden="true"/>  {t('ui.global_feature_tiering_5afd810')}
+          <Layers size={18} className="text-primary" aria-hidden="true"/> {t('ui.global_feature_tiering_5afd810')}
         </h2>
         <p className="mt-1 text-sm text-secondary">{t('ui.read_only_view_of_the_documented_feature_availab_dd0a5bb')}</p>
       </div>
@@ -41,26 +41,27 @@ export default function SuperadminPlatformConfigurationFeaturesManagementTierMat
           <caption className="sr-only">{t('ui.feature_availability_by_saas_subscription_tier_dd0fc6b')}</caption>
           <thead>
             <tr className="border-b border-border bg-surface-highlight" data-testid="superadmin_platform_configuration_features-superadmin-features-tier-matrix-tier-matrix-action-1">
-              <th scope="col" className="p-4 text-sm font-semibold text-primary">{t('ui.feature_9889145')}</th>
+              <th scope="col" className="sticky start-0 z-20 bg-surface-highlight border-e border-border p-4 text-start text-sm font-semibold text-primary">{t('ui.feature_9889145')}</th>
               {SUPERADMIN_FEATURE_TIER_DEFINITIONS.map((tier) => <th key={tier.id} scope="col" className="p-4 text-center text-sm font-semibold text-primary">{t(tier.labelKey)}</th>)}
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
             {SUPERADMIN_FEATURE_DEFINITIONS.map((feature) => (
-              <tr key={feature.id} className="motion-safe:transition-colors hover:bg-surface-hover" data-testid={`superadmin_platform_configuration_features-features-tier-matrix-item-feature-id-2-${String(feature.id)}`}>
-                <th scope="row" className="border-e border-border p-4 text-start text-sm font-medium text-primary">{t(feature.labelKey)}</th>
-                {SUPERADMIN_FEATURE_TIER_DEFINITIONS.map((tier) => {
-                  const enabled = SUPERADMIN_FEATURE_TIER_MATRIX[feature.id][tier.id];
-                  return (
-                    <td key={tier.id} className="border-e border-border p-4 text-center last:border-e-0" data-mobile-label={t('ui.mobile_feature')}>
-                      <span data-testid={`superadmin_platform_configuration_features-tier-${feature.id}-${tier.id}`} className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border ${enabled ? 'border-border bg-success-bg text-success' : 'border-border bg-surface-highlight text-disabled'}`} aria-label={t('ui.a11y_feature_tier', { feature: t(feature.labelKey), status: enabled ? t('ui.available') : t('ui.not_available'), tier: t(tier.labelKey) })}>
-                        {enabled ? <Check size={18} aria-hidden="true"/> : <Minus size={18} aria-hidden="true"/>}
-                      </span>
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
+                <tr key={feature.id} className="motion-safe:transition-colors hover:bg-surface-hover group" data-testid={`superadmin_platform_configuration_features-features-tier-matrix-item-feature-id-2-${String(feature.id)}`}>
+                  <th scope="row" className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-e border-border p-4 text-start text-sm font-medium text-primary transition-colors">{t(feature.labelKey)}</th>
+                  {SUPERADMIN_FEATURE_TIER_DEFINITIONS.map((tier) => {
+                    const enabled = SUPERADMIN_FEATURE_TIER_MATRIX[feature.id][tier.id];
+                    return (
+                      <td key={tier.id} className="border-e border-border p-4 text-center last:border-e-0" data-mobile-label={t('ui.mobile_feature')}>
+                        <span data-testid={`superadmin_platform_configuration_features-tier-${feature.id}-${tier.id}`} className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border ${enabled ? 'border-border bg-success-bg text-success' : 'border-border bg-surface-highlight text-disabled'}`} aria-label={t('ui.a11y_feature_tier', { feature: t(feature.labelKey), status: enabled ? t('ui.available') : t('ui.not_available'), tier: t(tier.labelKey) })}>
+                          {enabled ? <Check size={18} aria-hidden="true"/> : <Minus size={18} aria-hidden="true"/>}
+                        </span>
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))
+            }
           </tbody>
         </table>
       </div>

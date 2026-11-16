@@ -27,6 +27,9 @@ export interface SuperadminCommunicationBroadcastsTableProps {
     onEdit: (broadcast: Broadcast) => void;
     onDelete: (id: string) => void;
     onCreateClick: () => void;
+    currentPage?: number;
+    totalPages?: number;
+    onPageChange?: (page: number) => void;
 }
 export interface SuperadminBroadcastStatusBadgeProps {
     status: BroadcastStatus;

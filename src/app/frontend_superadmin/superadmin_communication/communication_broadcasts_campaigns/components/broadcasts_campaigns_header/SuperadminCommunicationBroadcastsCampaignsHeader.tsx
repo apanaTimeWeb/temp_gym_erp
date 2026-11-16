@@ -1,6 +1,6 @@
 // RESPONSIBILITY: Renders/orchestrates SuperadminCommunicationBroadcastsHeader within its owning Superadmin feature module; no direct backend implementation.
 'use client';
-import { Plus, Search, Megaphone } from 'lucide-react';
+import { Plus, Search, Megaphone, X } from 'lucide-react';
 /**
 
  * RESPONSIBILITY: React component SuperadminCommunicationBroadcastsHeader owned by the superadmin_communication_broadcasts feature boundary.
@@ -35,17 +35,56 @@ export default function SuperadminCommunicationBroadcastsCampaignsHeader({ searc
       </div>
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative">
-          <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary"/>
-          <input type="text" aria-label={t('ui.search_broadcasts_d23d02d2')} placeholder={t('ui.search_broadcasts_d23d02d2')} value={searchQuery} onChange={(e) => onSearchChange(e.target.value)} className="ps-9 pe-4 py-2 bg-input border border-border rounded-lg text-sm text-primary focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page focus:border-focus motion-safe:transition-colors  w-full sm:w-64  min-h-11" data-testid="superadmin_communication_broadcasts-superadmin-broadcasts-header-superadmin-broadcasts-header-text"/>
+          <Search size={18} className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-secondary" />
+          <input
+            type="text"
+            aria-label={t('ui.search_broadcasts_d23d02d2')}
+            placeholder={t('ui.search_broadcasts_d23d02d2')}
+            value={searchQuery}
+            onChange={(e) => onSearchChange(e.target.value)}
+            className="ps-9 pe-8 py-2 bg-input border border-border rounded-lg text-sm text-primary focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page focus:border-focus motion-safe:transition-colors w-full sm:w-64 min-h-11"
+            data-testid="superadmin_communication_broadcasts-superadmin-broadcasts-header-superadmin-broadcasts-header-text"
+          />
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => onSearchChange('')}
+              className="absolute end-2.5 top-1/2 -translate-y-1/2 p-1 text-secondary hover:text-primary rounded-md transition-colors"
+              aria-label="Clear search"
+            >
+              <X size={14} />
+            </button>
+          )}
         </div>
         
-        {onStatusFilterChange && (<select aria-label={t('ui.status_ec53a8c4')} value={statusFilter} onChange={(e) => onStatusFilterChange(e.target.value as BroadcastStatusFilter)} className="px-3 py-2 bg-input border border-border rounded-lg text-sm text-primary focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page focus:border-focus motion-safe:transition-colors min-h-11" data-testid="superadmin_communication_broadcasts-superadmin-broadcasts-header-superadmin-broadcasts-header-select">
+        {onStatusFilterChange && (
+          <select
+            aria-label={t('ui.status_ec53a8c4')}
+            value={statusFilter}
+            onChange={(e) => onStatusFilterChange(e.target.value as BroadcastStatusFilter)}
+            className="px-3 py-2 bg-input border border-border rounded-lg text-sm text-primary focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page focus:border-focus motion-safe:transition-colors min-h-11"
+            data-testid="superadmin_communication_broadcasts-superadmin-broadcasts-header-superadmin-broadcasts-header-select"
+          >
             <option value={SUPERADMIN_BROADCAST_STATUS_FILTER_CODES.ALL} data-testid="superadminbroadcastsheader-option-3882">{t('ui.all_status_162647d9')}</option>
             <option value={SUPERADMIN_BROADCAST_STATUS_FILTER_CODES.DRAFT} data-testid="superadminbroadcastsheader-option-3953">{t('ui.draft_f03ab16c')}</option>
             <option value={SUPERADMIN_BROADCAST_STATUS_FILTER_CODES.SCHEDULED} data-testid="superadminbroadcastsheader-option-4021">{t('ui.scheduled_2b7dabba')}</option>
             <option value={SUPERADMIN_BROADCAST_STATUS_FILTER_CODES.SENT} data-testid="superadminbroadcastsheader-option-4097">{t('ui.sent_7f8c0283')}</option>
             <option value={SUPERADMIN_BROADCAST_STATUS_FILTER_CODES.FAILED} data-testid="superadminbroadcastsheader-option-4163">{t('ui.failed_d7c8c85b')}</option>
-          </select>)}
+          </select>
+        )}
+
+        {(searchQuery || (statusFilter && statusFilter !== SUPERADMIN_BROADCAST_STATUS_FILTER_CODES.ALL)) && (
+          <button
+            type="button"
+            onClick={() => {
+              onSearchChange('');
+              if (onStatusFilterChange) onStatusFilterChange(SUPERADMIN_BROADCAST_STATUS_FILTER_CODES.ALL);
+            }}
+            className="text-xs text-secondary hover:text-danger font-semibold px-2.5 py-1.5 rounded-lg border border-border hover:bg-input transition-colors min-h-11"
+          >
+            Clear Filters
+          </button>
+        )}
 
         <button type="button" onClick={onCreateClick} className="flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary-hover text-on-primary font-medium rounded-lg motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11" data-testid="superadmin_communication_broadcasts-superadmin-broadcasts-header-broadcasts-header-new-broadcast">
           <Plus size={18}/>

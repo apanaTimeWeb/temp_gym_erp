@@ -41,10 +41,16 @@ export default function SuperadminCommunicationBroadcastsCampaignsMain() {
     return (<div className="flex flex-col gap-6 w-full" data-testid="superadmin_communication_broadcasts-superadmin-broadcasts-main-page-ready">
       <SuperadminCommunicationBroadcastsHeader searchQuery={searchQuery} onSearchChange={setSearchQuery} statusFilter={statusFilter} onStatusFilterChange={setStatusFilter} onCreateClick={openCreateModal}/>
 
-      {broadcasts.length === 0 ? (<SuperadminCommunicationBroadcastsEmptyState onCreateClick={openCreateModal}/>) : (<>
-          <SuperadminCommunicationBroadcastsTable onCreateClick={openCreateModal} broadcasts={broadcasts} onSend={handleSendBroadcast} onEdit={openEditModal} onDelete={handleDeleteBroadcast}/>
-          <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage}/>
-        </>)}
+      <SuperadminCommunicationBroadcastsTable
+        onCreateClick={openCreateModal}
+        broadcasts={broadcasts}
+        onSend={handleSendBroadcast}
+        onEdit={openEditModal}
+        onDelete={handleDeleteBroadcast}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
 
       <SuperadminCommunicationBroadcastsBroadcastModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} form={form} onSubmit={handleCreateBroadcast} isEditMode={!!editingId} isMutating={isMutating}/>
       <SuperadminCommunicationBroadcastsSendNowConfirmationDialog broadcast={sendConfirmationBroadcast} isPending={isConfirmingSend} onCancel={cancelSendConfirmation} onConfirm={confirmSendBroadcast}/>

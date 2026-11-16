@@ -14,6 +14,8 @@ import { formatDateTime } from '@/app/frontend_superadmin/superadmin_team/team_m
 
 import type { SuperadminTeamSectionProps } from '@/app/frontend_superadmin/superadmin_team/team_management/types/superadmin_team_management.types';
 
+const TABLE_COLUMN_COUNT = 5;
+
 /**
  * RESPONSIBILITY: React component SuperadminTeamMembersPanel owned by the superadmin_team feature boundary.
  * INTENT: Keep this file’s presentation, logic, and state responsibility isolated from unrelated business modules.
@@ -22,8 +24,6 @@ import type { SuperadminTeamSectionProps } from '@/app/frontend_superadmin/super
  * EDGE CASES: Preserve implemented loading, empty, error, disabled, cancellation, retry, and repeated-action behavior.
  * REPAIR CONSTRAINT: Cross-feature business dependencies require explicit documentation; do not move business logic into global UI infrastructure.
  */
-// RESPONSIBILITY: Renders the Superadmin team members panel section.
-
 
 /**
  * @description Owns the SuperadminTeamMembersPanel responsibility within the superadmin_role feature boundary.
@@ -32,57 +32,74 @@ import type { SuperadminTeamSectionProps } from '@/app/frontend_superadmin/super
  * @edge-cases Preserves documented loading, empty, error, disabled, cancellation, retry, and repeated-action behavior.
  */
 export default function SuperadminTeamManagementMembersPanel({ data }: SuperadminTeamSectionProps) {
- const formatterLocale = useFormatterLocale();
-
+  const formatterLocale = useFormatterLocale();
   const t = useTranslations('superadmin_team');
-    return (<Panel title={t('ui.team_members_8196446d')} description={t('ui.named_access_is_auditable_and_safer_than_sha_4f4a9116')}>
-  {data.users.length === 0 ? <SuperadminTeamMembersEmptyState /> : <div className="overflow-x-auto">
-    <table className="w-full text-sm">
-      <thead>
-        <tr className="border-b border-border text-start text-xs uppercase text-secondary">
-          <th className="px-3 py-3">
-            {t('ui.name_49ee3087')}</th>
-          <th className="px-3 py-3">
-            {t('ui.role_bbbabdbe')}</th>
-          <th className="px-3 py-3">
-            {t('ui.extra_sign_in_e1918e9e')}</th>
-          <th className="px-3 py-3">
-            {t('ui.last_sign_in_0d85ffff')}</th>
-          <th className="px-3 py-3">
-            {t('ui.status_ec53a8c4')}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.users.map(user => (<tr key={user.id} className="border-b border-border">
-            <td className="px-3 py-3">
-              <Tooltip content={user.name}>
-                <div className="max-w-56 truncate font-medium text-primary">
-                  {user.name}
-                </div>
-              </Tooltip>
-              <Tooltip content={maskSensitiveData(user.email, 'email')}>
-                <div className="max-w-56 truncate text-xs text-secondary">
-                  {maskSensitiveData(user.email, 'email')}
-                </div>
-              </Tooltip>
-            </td>
-            <td className="px-3 py-3 text-primary">
-              {user.role}
-            </td>
-            <td className="px-3 py-3 text-secondary">
-              {(() => { if (user.mfa === 'Required') { return (t('ui.mfa_required')); } if (user.mfa === 'Enabled') { return (t('ui.mfa_enabled')); } return (t('ui.mfa_unknown')); })()}
-            </td>
-            <td className="px-3 py-3 text-secondary">
-              {displayValue(user.lastLogin ? formatDateTime(user.lastLogin, formatterLocale) : null)}
-            </td>
-            <td className="px-3 py-3">
-              <span className={`rounded-full px-2 py-1 text-xs font-semibold ${getSuperadminTeamStatusBadgeClasses(user.status)}`}>
-                {(() => { if (user.status === 'ACTIVE') { return (t('ui.status_active')); } if (user.status === 'DISABLED') { return (t('ui.status_disabled')); } return (t('ui.status_unknown')); })()}
-              </span>
-            </td>
-          </tr>))}
-      </tbody>
-    </table>
-  </div>}
-    </Panel>);
+
+  return (
+    <Panel title={t('ui.team_members_8196446d')} description={t('ui.named_access_is_auditable_and_safer_than_sha_4f4a9116')}>
+      <div className="overflow-x-auto rounded-xl border border-border bg-card">
+        <table className="w-full text-sm border-collapse">
+          <thead>
+            <tr className="border-b border-border bg-primary-subtle text-start text-xs uppercase text-secondary">
+              <th className="sticky start-0 z-20 bg-primary-subtle border-e border-border px-4 py-3 text-start font-bold">
+                {t('ui.name_49ee3087')}
+              </th>
+              <th className="border-b border-border px-4 py-3 text-start font-bold">
+                {t('ui.role_bbbabdbe')}
+              </th>
+              <th className="border-b border-border px-4 py-3 text-start font-bold">
+                {t('ui.extra_sign_in_e1918e9e')}
+              </th>
+              <th className="border-b border-border px-4 py-3 text-start font-bold">
+                {t('ui.last_sign_in_0d85ffff')}
+              </th>
+              <th className="border-b border-border px-4 py-3 text-start font-bold">
+                {t('ui.status_ec53a8c4')}
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border">
+            {data.users.length === 0 ? (
+              <tr>
+                <td colSpan={TABLE_COLUMN_COUNT} className="p-4">
+                  <SuperadminTeamMembersEmptyState />
+                </td>
+              </tr>
+            ) : (
+              data.users.map((user) => (
+                <tr key={user.id} className="hover:bg-primary-subtle motion-safe:transition-colors group">
+                  <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-e border-border px-4 py-3 transition-colors">
+                    <Tooltip content={user.name}>
+                      <div className="max-w-56 truncate font-medium text-primary">
+                        {user.name}
+                      </div>
+                    </Tooltip>
+                    <Tooltip content={maskSensitiveData(user.email, 'email')}>
+                      <div className="max-w-56 truncate text-xs text-secondary">
+                        {maskSensitiveData(user.email, 'email')}
+                      </div>
+                    </Tooltip>
+                  </td>
+                  <td className="px-4 py-3 text-primary">
+                    {user.role}
+                  </td>
+                  <td className="px-4 py-3 text-secondary">
+                    {(() => { if (user.mfa === 'Required') { return (t('ui.mfa_required')); } if (user.mfa === 'Enabled') { return (t('ui.mfa_enabled')); } return (t('ui.mfa_unknown')); })()}
+                  </td>
+                  <td className="px-4 py-3 text-secondary">
+                    {displayValue(user.lastLogin ? formatDateTime(user.lastLogin, formatterLocale) : null)}
+                  </td>
+                  <td className="px-4 py-3">
+                    <span className={`rounded-full px-2 py-1 text-xs font-semibold ${getSuperadminTeamStatusBadgeClasses(user.status)}`}>
+                      {(() => { if (user.status === 'ACTIVE') { return (t('ui.status_active')); } if (user.status === 'DISABLED') { return (t('ui.status_disabled')); } return (t('ui.status_unknown')); })()}
+                    </span>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    </Panel>
+  );
 }
