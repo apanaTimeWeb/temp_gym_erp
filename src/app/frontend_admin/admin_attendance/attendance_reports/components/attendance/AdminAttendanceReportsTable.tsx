@@ -8,9 +8,9 @@ import AdminAttendanceReportsSortIcon from '@/app/frontend_admin/admin_attendanc
 import AdminAttendanceReportsProgressBar from '@/app/frontend_admin/admin_attendance/attendance_reports/components/progress_bar/AdminAttendanceReportsProgressBar';
 import { useAdminAttendanceReportsLogic } from '@/app/frontend_admin/admin_attendance/attendance_reports/hooks/useAdminAttendanceReportsLogic';
 import AdminAttendanceReportsSectionState from '@/app/frontend_admin/admin_attendance/attendance_reports/components/main_view/AdminAttendanceReportsSectionState';
-import { formatNumber, formatPercent1dp } from '@/app/frontend_admin\admin_attendance\attendance_reports\utils\AdminAttendanceReportsFormatters';
-import type { AttendanceSortKey, AdminAttendanceReportsReportData } from '@/app/frontend_admin\admin_attendance\attendance_reports\types\AdminAttendanceReportsTableTypes';
-import { useAdminAttendanceReportsTable } from '@/app/frontend_admin\admin_attendance\attendance_reports\hooks\useAdminAttendanceReportsTable';
+import { formatNumber, formatPercent1dp } from '@/app/frontend_admin/admin_attendance/attendance_reports/utils/AdminAttendanceReportsFormatters';
+import type { AttendanceSortKey, AdminAttendanceReportsReportData } from '@/app/frontend_admin/admin_attendance/attendance_reports/types/AdminAttendanceReportsTableTypes';
+import { useAdminAttendanceReportsTable } from '@/app/frontend_admin/admin_attendance/attendance_reports/hooks/useAdminAttendanceReportsTable';
 import { CopyButton } from '@/components/ui/CopyButton';
 
 const SUMMARY_TABLE_COLUMN_COUNT = 5;

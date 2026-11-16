@@ -52,11 +52,11 @@ export default function AdminFinanceBranchProfitAndLossTable({
         <table data-admin-responsive-table className="w-full text-left border-collapse">
           <thead className="sticky top-0 z-20 bg-surface-highlight">
             <tr className="border-b border-border">
-              {PNL_TABLE_HEADERS.map((h , __testIdIndex50, idx) => (
+              {PNL_TABLE_HEADERS.map((h, __testIdIndex50) => (
                 <th
                   key={h.key}
                   className={`px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
-                    idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    __testIdIndex50 === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
                   }`}
                   aria-sort={h.sortable && sortKey === h.key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
                  data-testid={`admin_finance-admin_finance-pnl-table-header-map50-${__testIdIndex50}`}>

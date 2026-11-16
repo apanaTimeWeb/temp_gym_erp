@@ -89,13 +89,13 @@ export default function AdminFinancePayoutsManagementSummaryTable() {
             <table data-admin-responsive-table className="w-full text-left border-collapse">
               <thead className="sticky top-0 z-20 bg-surface-highlight">
                 <tr className="border-b border-border">
-                  {tableColumns.map((h, __testIdIndex40, idx) => (
+                  {tableColumns.map((h, __testIdIndex40) => (
                     <th
                       key={h.key}
                       scope="col"
                       aria-sort={logic.payoutSortKey === h.key ? (logic.payoutSortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
                       className={`px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-secondary whitespace-nowrap ${
-                        idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                        __testIdIndex40 === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
                       }`}
                     >
                       <button

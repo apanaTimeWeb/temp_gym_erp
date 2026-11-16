@@ -150,5 +150,4 @@ export default function AdminMembersBlacklistManagementTable() {
       </div>
     </div>
   );
-  );
 }

@@ -93,13 +93,13 @@ export default function AdminFinanceStaffLedgerManagementLedgerTable() {
           <table data-admin-responsive-table className="w-full text-left border-collapse">
             <thead className="sticky top-0 z-20 bg-surface-highlight">
               <tr className="border-b border-border text-sm">
-                {ledgerColumns.map((column , __testIdIndex88, idx) => {
+                {ledgerColumns.map((column, __testIdIndex88) => {
                   const active = column.key !== null && sortKey === column.key;
                   return (
                     <th
                       key={column.label}
                       className={`p-4 font-medium text-secondary whitespace-nowrap ${
-                        idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                        __testIdIndex88 === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
                       } ${column.key ? 'select-none' : ''} ${column.key === 'balance' ? 'text-right' : ''}`}
                       aria-sort={active ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
                     >
