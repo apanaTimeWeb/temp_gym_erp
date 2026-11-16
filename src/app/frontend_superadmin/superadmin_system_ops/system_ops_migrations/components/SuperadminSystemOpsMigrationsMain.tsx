@@ -64,21 +64,34 @@ export default function SuperadminSystemOpsMigrationsMain() {
       </div>
     </div>
 
-    <div className="bg-card border border-border rounded-xl overflow-hidden shadow-card">
-      <div className="overflow-x-auto">
+    <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden flex flex-col">
+      <div className="overflow-x-auto flex-1">
         <table className={`w-full text-start border-collapse ${MOBILE_CARD_TABLE_CLASSES}`}>
-          <thead><tr className="bg-surface-hover border-b border-border" data-testid="superadmin_system_ops_migrations-superadmin-system-ops-migrations-main-migrations-main-action-2">
-            {[vm.t('ui.version'), vm.t('ui.description'), vm.t('ui.target'), vm.t('ui.status'), vm.t('ui.applied_date_3a20841')].map((heading) => (<th key={heading} scope="col" className="px-6 py-4 text-sm font-semibold text-secondary">{heading}</th>))}
-          </tr></thead>
+          <thead>
+            <tr className="bg-primary-subtle border-b border-border" data-testid="superadmin_system_ops_migrations-superadmin-system-ops-migrations-main-migrations-main-action-2">
+              <th scope="col" className="sticky start-0 z-20 bg-primary-subtle border-b border-e border-border px-6 py-3 text-xs font-bold uppercase tracking-wider text-secondary text-start">{vm.t('ui.version')}</th>
+              <th scope="col" className="border-b border-border px-6 py-3 text-xs font-bold uppercase tracking-wider text-secondary text-start">{vm.t('ui.description')}</th>
+              <th scope="col" className="border-b border-border px-6 py-3 text-xs font-bold uppercase tracking-wider text-secondary text-start">{vm.t('ui.target')}</th>
+              <th scope="col" className="border-b border-border px-6 py-3 text-xs font-bold uppercase tracking-wider text-secondary text-start">{vm.t('ui.status')}</th>
+              <th scope="col" className="border-b border-border px-6 py-3 text-xs font-bold uppercase tracking-wider text-secondary text-start">{vm.t('ui.applied_date_3a20841')}</th>
+            </tr>
+          </thead>
           <tbody className="divide-y divide-border">
-            {vm.migrations.map((migration) => (<tr key={migration.id} className="hover:bg-surface-hover motion-safe:transition-colors" data-testid={`superadmin_system_ops_migrations-system-ops-migrations-main-item-migration-id-3-${String(migration.id)}`}>
-              <td className="px-6 py-4" data-mobile-label={vm.t('ui.version')}><span className="font-mono font-bold text-primary">{migration.version}</span></td>
-              <td className="px-6 py-4" data-mobile-label={vm.t('ui.description')}><p className="text-sm text-primary">{migration.description}</p>{migration.errorLog ? <p className="text-xs text-danger mt-1 flex items-center gap-1"><AlertTriangle size={18} strokeWidth={2} aria-hidden="true" />{vm.t('ui.migration_failed_safe_summary')}</p> : null}</td>
-              <td className="px-6 py-4 text-sm text-secondary" data-mobile-label={vm.t('ui.target')}>{migration.targetTenants?.trim() || '—'}</td>
-              <td className="px-6 py-4" data-mobile-label={vm.t('ui.status')}><SuperadminSystemOpsMigrationsMigrationStatusBadge status={migration.status} /></td>
-              <td className="px-6 py-4 text-sm text-secondary" data-mobile-label={vm.t('ui.applied_date_3a20841')}>{formatDate(migration.appliedAt)}</td>
-            </tr>))}
-            {vm.migrations.length === 0 ? <tr data-testid="superadmin_system_ops_migrations-superadmin-system-ops-migrations-main-migrations-main-action-4"><td colSpan={TABLE_COLUMN_COUNT} className="px-6 py-3"><SuperadminSystemOpsMigrationsEmptyState /></td></tr> : null}
+            {vm.migrations.map((migration) => (
+              <tr key={migration.id} tabIndex={0} className="hover:bg-surface-hover group motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-inset" data-testid={`superadmin_system_ops_migrations-system-ops-migrations-main-item-migration-id-3-${String(migration.id)}`}>
+                <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-e border-border px-6 py-4 transition-colors" data-mobile-label={vm.t('ui.version')}>
+                  <span className="font-mono font-bold text-primary">{migration.version}</span>
+                </td>
+                <td className="border-b border-border px-6 py-4" data-mobile-label={vm.t('ui.description')}>
+                  <p className="text-sm text-primary">{migration.description}</p>
+                  {migration.errorLog ? <p className="text-xs text-danger mt-1 flex items-center gap-1"><AlertTriangle size={18} strokeWidth={2} aria-hidden="true" />{vm.t('ui.migration_failed_safe_summary')}</p> : null}
+                </td>
+                <td className="border-b border-border px-6 py-4 text-sm text-secondary" data-mobile-label={vm.t('ui.target')}>{migration.targetTenants?.trim() || '—'}</td>
+                <td className="border-b border-border px-6 py-4" data-mobile-label={vm.t('ui.status')}><SuperadminSystemOpsMigrationsMigrationStatusBadge status={migration.status} /></td>
+                <td className="border-b border-border px-6 py-4 text-sm text-secondary" data-mobile-label={vm.t('ui.applied_date_3a20841')}>{formatDate(migration.appliedAt)}</td>
+              </tr>
+            ))}
+            {vm.migrations.length === 0 ? <tr data-testid="superadmin_system_ops_migrations-superadmin-system-ops-migrations-main-migrations-main-action-4"><td colSpan={TABLE_COLUMN_COUNT} className="px-6 py-8 text-center"><SuperadminSystemOpsMigrationsEmptyState /></td></tr> : null}
           </tbody>
         </table>
       </div>

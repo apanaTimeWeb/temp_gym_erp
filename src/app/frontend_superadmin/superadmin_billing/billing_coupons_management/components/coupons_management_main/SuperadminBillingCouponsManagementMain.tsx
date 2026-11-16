@@ -37,7 +37,7 @@ export default function SuperadminBillingCouponsManagementMain() {
   return (<div className="flex w-full flex-col gap-6" data-testid="superadmin_coupons-superadmin-coupons-main-page-ready">
     <SuperadminBillingCouponsHeader searchQuery={searchQuery} onSearchChange={setSearchQuery} onCreateClick={() => setIsModalOpen(true)} statusFilter={statusFilter} onStatusFilterChange={setStatusFilter}/>
     <SuperadminBillingCouponsStatsBar activeCoupons={activeCoupons} totalRedeemed={totalRedeemed} totalCoupons={totalCoupons} activeKpi={activeKpi} onKpiClick={setActiveKpi}/>
-    {coupons.length === 0 ? <SuperadminBillingCouponsEmptyState onCreateClick={() => setIsModalOpen(true)}/> : <SuperadminBillingCouponsTable onCreateClick={() => setIsModalOpen(true)} coupons={coupons} onToggleStatus={handleToggleStatus} onEdit={(cpn) => { setSelectedCoupon(cpn); setIsEditModalOpen(true); }} onDelete={handleDeleteCoupon} onRestore={handleToggleRestore}/> }
+    <SuperadminBillingCouponsTable onCreateClick={() => setIsModalOpen(true)} coupons={coupons} onToggleStatus={handleToggleStatus} onEdit={(cpn) => { setSelectedCoupon(cpn); setIsEditModalOpen(true); }} onDelete={handleDeleteCoupon} onRestore={handleToggleRestore}/>
     <SuperadminBillingCouponsCouponModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} form={form} onSubmit={handleCreateCoupon} isSubmitting={isMutating}/>
     <SuperadminBillingCouponsCouponEditModal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} onSubmit={handleUpdateCoupon} coupon={selectedCoupon} isSubmitting={isMutating}/>
     <SuperadminBillingCouponsRedemptionDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} coupon={drawerCoupon}/>

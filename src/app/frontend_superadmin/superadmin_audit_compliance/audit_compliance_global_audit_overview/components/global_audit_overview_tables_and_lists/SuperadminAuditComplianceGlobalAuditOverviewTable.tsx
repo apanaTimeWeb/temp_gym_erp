@@ -23,25 +23,25 @@ export default function SuperadminAuditComplianceGlobalAuditOverviewTable({ logs
     <div className="overflow-x-auto flex-1">
       <table className="w-full text-start border-collapse">
         <thead>
-          <tr className="border-b border-border bg-header">
-            <th scope="col" className="sticky start-0 z-20 bg-header border-b border-e border-border whitespace-nowrap px-6 py-4 text-start text-xs font-semibold uppercase tracking-wider text-secondary">
+          <tr className="border-b border-border bg-primary-subtle">
+            <th scope="col" className="sticky start-0 z-20 bg-primary-subtle border-b border-e border-border whitespace-nowrap px-6 py-3 text-start text-xs font-bold uppercase tracking-wider text-secondary">
               {t('ui.timestamp_a3d5de3e')}
             </th>
-            <th scope="col" className="border-b border-border px-6 py-4 text-start text-xs font-semibold uppercase tracking-wider text-secondary">
+            <th scope="col" className="border-b border-border px-6 py-3 text-start text-xs font-bold uppercase tracking-wider text-secondary">
               {t('ui.severity_007cc954')}
             </th>
-            <th scope="col" className="border-b border-border px-6 py-4 text-start text-xs font-semibold uppercase tracking-wider text-secondary">
+            <th scope="col" className="border-b border-border px-6 py-3 text-start text-xs font-bold uppercase tracking-wider text-secondary">
               {t('ui.action_amp_resource_7092f2db')}
             </th>
-            <th scope="col" className="border-b border-border px-6 py-4 text-start text-xs font-semibold uppercase tracking-wider text-secondary">
+            <th scope="col" className="border-b border-border px-6 py-3 text-start text-xs font-bold uppercase tracking-wider text-secondary">
               {t('ui.actor_origin_ip_ba2d92b2')}
             </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-border">
           {logs.map((log) => (
-            <tr key={log.id} className="group motion-safe:transition-colors hover:bg-surface-hover">
-              <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-b border-e border-border whitespace-nowrap px-6 py-4 transition-colors">
+            <tr key={log.id} tabIndex={0} className="group motion-safe:transition-colors hover:bg-surface-hover focus-visible:bg-surface-hover focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-inset">
+              <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-e border-border whitespace-nowrap px-6 py-4 transition-colors">
                 <span className="font-mono text-sm text-secondary">
                   {formatSuperadminAuditComplianceGlobalAuditTimestamp(log.timestamp, locale)}
                 </span>

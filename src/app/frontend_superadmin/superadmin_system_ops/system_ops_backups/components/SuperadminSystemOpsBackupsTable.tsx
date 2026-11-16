@@ -104,8 +104,8 @@ export default function SuperadminSystemOpsBackupsTable({
       <div className="overflow-x-auto flex-1">
         <table className={`w-full text-start border-collapse min-w-full ${MOBILE_CARD_TABLE_CLASSES}`}>
           <thead>
-            <tr className="bg-header border-b border-border text-sm" data-testid="superadmin_system_ops_backups-superadmin-system-ops-backups-table-backups-table-action-1">
-              <th className="sticky start-0 z-20 bg-header border-b border-border w-12 p-4 text-center">
+            <tr className="bg-primary-subtle border-b border-border text-sm" data-testid="superadmin_system_ops_backups-superadmin-system-ops-backups-table-backups-table-action-1">
+              <th className="sticky start-0 z-20 bg-primary-subtle border-b border-border w-12 px-4 py-3 text-center">
                 <input
                   type="checkbox"
                   aria-label={t('ui.select_all_backups') ?? 'Select all backups'}
@@ -116,15 +116,15 @@ export default function SuperadminSystemOpsBackupsTable({
                   data-testid="superadmin_system_ops_backups-table-select-all"
                 />
               </th>
-              <th className="sticky start-12 z-20 bg-header border-b border-e border-border p-4 font-semibold text-secondary text-start">
+              <th className="sticky start-12 z-20 bg-primary-subtle border-b border-e border-border px-4 py-3 font-bold text-secondary text-xs uppercase tracking-wider text-start">
                 {t('ui.backup_id_f321e1e')}
               </th>
-              <th className="border-b border-border p-4 font-semibold text-secondary text-start">{t('ui.gym_7af44a9')}</th>
-              <th className="border-b border-border p-4 font-semibold text-secondary text-start">{t('ui.database_name_9627a1b')}</th>
-              <th className="border-b border-border p-4 font-semibold text-secondary text-start">{t('ui.size_mb_1e94325')}</th>
-              <th className="border-b border-border p-4 font-semibold text-secondary text-start">{t('ui.status_b2c5243')}</th>
-              <th className="border-b border-border p-4 font-semibold text-secondary text-start">{t('ui.timestamp_4442a67')}</th>
-              <th className="border-b border-border p-4 font-semibold text-secondary text-end">{t('ui.actions_1e45db1')}</th>
+              <th className="border-b border-border px-4 py-3 font-bold text-secondary text-xs uppercase tracking-wider text-start">{t('ui.gym_7af44a9')}</th>
+              <th className="border-b border-border px-4 py-3 font-bold text-secondary text-xs uppercase tracking-wider text-start">{t('ui.database_name_9627a1b')}</th>
+              <th className="border-b border-border px-4 py-3 font-bold text-secondary text-xs uppercase tracking-wider text-start">{t('ui.size_mb_1e94325')}</th>
+              <th className="border-b border-border px-4 py-3 font-bold text-secondary text-xs uppercase tracking-wider text-start">{t('ui.status_b2c5243')}</th>
+              <th className="border-b border-border px-4 py-3 font-bold text-secondary text-xs uppercase tracking-wider text-start">{t('ui.timestamp_4442a67')}</th>
+              <th className="border-b border-border px-4 py-3 font-bold text-secondary text-xs uppercase tracking-wider text-end">{t('ui.actions_1e45db1')}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
@@ -133,10 +133,11 @@ export default function SuperadminSystemOpsBackupsTable({
               return (
                 <tr
                   key={backup.id}
-                  className={`hover:bg-surface-hover motion-safe:transition-colors group ${isSelected ? 'bg-primary-subtle/50' : ''}`}
+                  tabIndex={0}
+                  className={`hover:bg-surface-hover motion-safe:transition-colors group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ${isSelected ? 'bg-primary-subtle/50 border-s-4 border-s-primary' : ''}`}
                   data-testid={`superadmin_system_ops_backups-system-ops-backups-table-item-backup-id-2-${String(backup.id)}`}
                 >
-                  <td className="sticky start-0 z-10 w-12 bg-card group-hover:bg-surface-hover border-b border-border p-4 text-center transition-colors">
+                  <td className="sticky start-0 z-10 w-12 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-border px-4 py-3 text-center transition-colors">
                     <input
                       type="checkbox"
                       aria-label={`Select backup ${backup.id}`}
@@ -150,8 +151,8 @@ export default function SuperadminSystemOpsBackupsTable({
                       data-testid={`superadmin_system_ops_backups-select-row-${backup.id}`}
                     />
                   </td>
-                  <td className="sticky start-12 z-10 bg-card group-hover:bg-surface-hover border-b border-e border-border p-4 text-xs font-mono text-secondary transition-colors" data-mobile-label={t('ui.mobile_backup_id')}>
-                    <div className="flex items-center gap-1.5">
+                  <td className="sticky start-12 z-10 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-e border-border px-4 py-3.5 text-xs font-mono text-secondary transition-colors" data-mobile-label={t('ui.mobile_backup_id')}>
+                    <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
                       <span>{backup.id}</span>
                       <CopyButton value={backup.id} label={`Copy backup ID ${backup.id}`} />
                     </div>

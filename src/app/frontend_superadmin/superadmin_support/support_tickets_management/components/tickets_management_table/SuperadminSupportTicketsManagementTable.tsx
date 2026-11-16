@@ -124,8 +124,8 @@ export default function SuperadminSupportTicketsManagementTable({
       <div className="overflow-x-auto flex-1">
         <table className={`w-full text-start border-collapse min-w-max ${MOBILE_CARD_TABLE_CLASSES}`}>
           <thead>
-            <tr className="bg-header border-b border-border text-sm" data-testid="superadmin_support_tickets-superadmin-tickets-table-tickets-table-action-1">
-              <th className="sticky start-0 z-20 bg-header border-b border-border w-12 p-4 text-center">
+            <tr className="bg-primary-subtle border-b border-border text-sm" data-testid="superadmin_support_tickets-superadmin-tickets-table-tickets-table-action-1">
+              <th className="sticky start-0 z-20 bg-primary-subtle border-b border-border w-12 px-4 py-3 text-center">
                 <input
                   type="checkbox"
                   aria-label={t('ui.select_all_tickets') ?? 'Select all tickets'}
@@ -136,16 +136,16 @@ export default function SuperadminSupportTicketsManagementTable({
                   data-testid="superadmin_support_tickets-table-select-all"
                 />
               </th>
-              <th className="sticky start-12 z-20 bg-header border-b border-e border-border p-4 font-semibold text-secondary text-start">
+              <th className="sticky start-12 z-20 bg-primary-subtle border-b border-e border-border px-4 py-3 text-start font-bold text-xs uppercase tracking-wider text-secondary">
                 {t('ui.ticket_id_bfe2ba9')}
               </th>
-              <th className="p-4 font-semibold text-secondary text-start">{t('ui.gym_4f5e8a8')}</th>
-              <th className="p-4 font-semibold text-secondary text-start">{t('ui.subject_5f39e42')}</th>
-              <th className="p-4 font-semibold text-secondary text-start">{t('ui.priority_292b027')}</th>
-              <th className="p-4 font-semibold text-secondary text-start">{t('ui.status_b9a439d')}</th>
-              <th className="p-4 font-semibold text-secondary text-start">{t('ui.response_time_22cd6ee')}</th>
-              <th className="p-4 font-semibold text-secondary text-start">{t('ui.last_updated_a6d2b1f')}</th>
-              <th className="p-4 font-semibold text-secondary text-end">{t('ui.actions_67b65eb')}</th>
+              <th className="px-4 py-3 font-bold text-secondary text-start text-xs uppercase tracking-wider">{t('ui.gym_4f5e8a8')}</th>
+              <th className="px-4 py-3 font-bold text-secondary text-start text-xs uppercase tracking-wider">{t('ui.subject_5f39e42')}</th>
+              <th className="px-4 py-3 font-bold text-secondary text-start text-xs uppercase tracking-wider">{t('ui.priority_292b027')}</th>
+              <th className="px-4 py-3 font-bold text-secondary text-start text-xs uppercase tracking-wider">{t('ui.status_b9a439d')}</th>
+              <th className="px-4 py-3 font-bold text-secondary text-start text-xs uppercase tracking-wider">{t('ui.response_time_22cd6ee')}</th>
+              <th className="px-4 py-3 font-bold text-secondary text-start text-xs uppercase tracking-wider">{t('ui.last_updated_a6d2b1f')}</th>
+              <th className="px-4 py-3 font-bold text-secondary text-end text-xs uppercase tracking-wider">{t('ui.actions_67b65eb')}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
@@ -165,7 +165,7 @@ export default function SuperadminSupportTicketsManagementTable({
                     tabIndex={0}
                     aria-label={t('ui.a11y_open_ticket', { id: ticket.id })}
                     data-testid={`superadmin_support_tickets-table-${ticket.id}-open`}
-                    className={`hover:bg-surface-hover focus-visible:bg-surface-hover focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary motion-safe:transition-colors cursor-pointer group ${isSelected ? 'bg-primary-subtle/50' : ''}`}
+                    className={`hover:bg-surface-hover focus-visible:bg-surface-hover focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary motion-safe:transition-colors cursor-pointer group ${isSelected ? 'bg-primary-subtle/50 border-s-4 border-s-primary' : ''}`}
                     onClick={() => onInspect(ticket.id)}
                     onKeyDown={(event) => {
                       if (event.target !== event.currentTarget) return;
@@ -175,7 +175,7 @@ export default function SuperadminSupportTicketsManagementTable({
                       }
                     }}
                   >
-                    <td className="sticky start-0 z-10 w-12 bg-card group-hover:bg-surface-hover border-b border-border p-4 text-center transition-colors">
+                    <td className="sticky start-0 z-10 w-12 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-border px-4 py-3 text-center transition-colors">
                       <input
                         type="checkbox"
                         aria-label={`Select ticket ${ticket.id}`}
@@ -189,8 +189,8 @@ export default function SuperadminSupportTicketsManagementTable({
                         data-testid={`superadmin_support_tickets-select-row-${ticket.id}`}
                       />
                     </td>
-                    <td className="sticky start-12 z-10 bg-card group-hover:bg-surface-hover border-b border-e border-border p-4 transition-colors" data-mobile-label={t('ui.mobile_ticket_id')}>
-                      <span className="flex items-center gap-1.5 text-sm font-mono font-medium text-primary">
+                    <td className="sticky start-12 z-10 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-e border-border px-4 py-3.5 transition-colors font-mono text-sm" data-mobile-label={t('ui.mobile_ticket_id')}>
+                      <span className="flex items-center gap-1.5 font-mono text-sm font-semibold text-primary">
                         <span>{ticket.id}</span>
                         <CopyButton value={ticket.id} label={`Copy ticket ID ${ticket.id}`} data-testid={`superadmin_support_tickets-tickets-table-copy-id-${ticket.id}`} />
                       </span>

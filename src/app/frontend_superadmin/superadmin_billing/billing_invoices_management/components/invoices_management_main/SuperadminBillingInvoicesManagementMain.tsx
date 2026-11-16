@@ -9,7 +9,7 @@
  * REPAIR CONSTRAINT: Cross-feature business dependencies require explicit documentation; do not move business logic into global UI infrastructure.
  */
 // RESPONSIBILITY: Root orchestrator for the Invoices page. Composes child views from useSuperadminBillingInvoicesManagementMain.
-import { Search } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { SearchableDropdown } from '@/components/ui/SearchableDropdown';
@@ -39,7 +39,7 @@ export default function SuperadminBillingInvoicesManagementMain() {
   return (<div className="relative space-y-6" data-testid="superadmin_billing_invoices-superadmin-invoices-main-page-ready">
     <SuperadminBillingInvoicesHeader onLogPaymentClick={() => setShowAddModal(true)}/>
     <SuperadminBillingInvoicesStatsBar totalsByCurrency={totalsByCurrency} overdueCount={overdueCount}/>
-    <div className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
+    <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden flex flex-col">
       <div className="flex flex-col items-center justify-between gap-4 border-b border-border bg-input p-4 md:flex-row">
         <div className="flex w-full rounded-lg border border-border bg-input p-1 md:w-auto">
           <button type="button" onClick={() => setActiveTab(SUPERADMIN_BILLING_INVOICES_TAB_CODES.ALL)} aria-current={activeTab === SUPERADMIN_BILLING_INVOICES_TAB_CODES.ALL ? 'page' : undefined} className={`flex-1 rounded-md px-4 py-2 text-sm font-medium motion-safe:transition-colors md:flex-none ${activeTab === SUPERADMIN_BILLING_INVOICES_TAB_CODES.ALL ? 'bg-page text-primary shadow-card' : 'text-secondary hover:bg-page hover:text-primary'} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11`} data-testid="superadmin_billing_invoices-superadmin-invoices-main-invoices-main-all-invoices">{t('ui.all_invoices_cf44752e')}</button>
@@ -47,11 +47,55 @@ export default function SuperadminBillingInvoicesManagementMain() {
         </div>
       </div>
       {activeTab === 'AGING' ? <SuperadminBillingInvoicesAgingReport invoices={invoices}/> : <>
-        <div className="flex gap-4 border-b border-border p-4">
-          <div className="relative max-w-md flex-1"><Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary" aria-hidden="true"/><label htmlFor="superadmin-invoices-search" className="sr-only">{t('ui.search_by_invoice_id_or_gym_name_26bd2806')}</label><input id="superadmin-invoices-search" type="search" placeholder={t('ui.search_by_invoice_id_or_gym_name_50f3a18b')} className="w-full rounded-lg border border-border bg-input py-2 ps-9 pe-4 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11" value={search} onChange={(e) => setSearch(e.target.value)} data-testid="superadmin_billing_invoices-superadmin-invoices-main-main-superadmin-invoices-search"/></div>
-          <div className="w-40 rounded-lg bg-input"><SearchableDropdown data-testid="superadmin_billing_invoices-superadmin-invoices-main-status-filter" options={SUPERADMIN_INVOICE_STATUS_OPTIONS.map((option) => ({ label: t(option.labelKey), value: option.value }))} value={statusFilter || ''} onChange={(val) => setStatusFilter(val ? String(val) : null)} className="border-border bg-transparent"/></div>
+        <div className="p-4 border-b border-border bg-surface-highlight/30 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5 flex-wrap flex-1">
+            <div className="relative min-w-[240px] sm:w-72">
+              <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" aria-hidden="true"/>
+              <label htmlFor="superadmin-invoices-search" className="sr-only">{t('ui.search_by_invoice_id_or_gym_name_26bd2806')}</label>
+              <input
+                id="superadmin-invoices-search"
+                type="search"
+                placeholder={t('ui.search_by_invoice_id_or_gym_name_50f3a18b')}
+                className="w-full pl-9 pr-8 py-2 bg-input border border-border rounded-xl text-xs sm:text-sm text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary min-h-10"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                data-testid="superadmin_billing_invoices-superadmin-invoices-main-main-superadmin-invoices-search"
+              />
+              {search && (
+                <button
+                  type="button"
+                  onClick={() => setSearch('')}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-secondary hover:text-primary p-1 rounded-md cursor-pointer"
+                  aria-label="Clear search query"
+                >
+                  <X size={14} />
+                </button>
+              )}
+            </div>
+            <div className="w-40 rounded-xl bg-input">
+              <SearchableDropdown
+                data-testid="superadmin_billing_invoices-superadmin-invoices-main-status-filter"
+                options={SUPERADMIN_INVOICE_STATUS_OPTIONS.map((option) => ({ label: t(option.labelKey), value: option.value }))}
+                value={statusFilter || ''}
+                onChange={(val) => setStatusFilter(val ? String(val) : null)}
+                className="border-border bg-transparent"
+              />
+            </div>
+            {(Boolean(search) || Boolean(statusFilter)) && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSearch('');
+                  setStatusFilter(null);
+                }}
+                className="text-xs text-secondary hover:text-danger font-semibold px-2.5 py-1.5 rounded-lg border border-border hover:bg-input transition-colors cursor-pointer"
+              >
+                {t('ui.clear_all_filters') || 'Clear All'}
+              </button>
+            )}
+          </div>
         </div>
-        {filteredInvoices.length === 0 ? <SuperadminBillingInvoicesEmptyState onLogPaymentClick={() => setShowAddModal(true)}/> : <SuperadminBillingInvoicesTable onLogPaymentClick={() => setShowAddModal(true)} invoices={filteredInvoices} currentPage={currentPage} totalPages={Math.ceil(total / pageLimit) || 1} onPageChange={setPage} total={total} pageSize={pageLimit}/>}
+        <SuperadminBillingInvoicesTable onLogPaymentClick={() => setShowAddModal(true)} invoices={filteredInvoices} currentPage={currentPage} totalPages={Math.ceil(total / pageLimit) || 1} onPageChange={setPage} total={total} pageSize={pageLimit}/>
       </>}
     </div>
     {showAddModal ? <SuperadminBillingInvoicesLogPaymentModal onClose={() => setShowAddModal(false)} selectedGym={selectedGym} isGymDropdownOpen={isGymDropdownOpen} setIsGymDropdownOpen={setIsGymDropdownOpen} gymSearchTerm={gymSearchTerm} setGymSearchTerm={setGymSearchTerm} filteredTenantsForDropdown={filteredTenantsForDropdown} handleSelectGym={handleSelectGym} onSave={handleSavePayment} isSaving={isLoggingPayment}/> : null}

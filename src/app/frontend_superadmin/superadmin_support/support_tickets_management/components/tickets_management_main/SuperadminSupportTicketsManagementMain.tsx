@@ -36,9 +36,14 @@ export default function SuperadminSupportTicketsManagementMain() {
   return (<div className="space-y-6" data-testid="superadmin_support_tickets-superadmin-tickets-main-page-ready">
     {vm.closeError ? <p role="alert" className="rounded-lg border border-danger bg-danger-bg px-4 py-3 text-sm text-danger" data-testid="superadmin_support_tickets-superadmin-tickets-main-close-error">{vm.t('ui.action_failed_retry')}</p> : null}
     <SuperadminSupportTicketsHeader search={vm.search} setSearch={vm.setSearch} showFilter={vm.showFilter} setShowFilter={vm.setShowFilter} statusFilter={vm.statusFilter} setStatusFilter={vm.setStatusFilter} priorityFilter={vm.priorityFilter} setPriorityFilter={vm.setPriorityFilter} onFilterChange={() => vm.setCurrentPage(1)} />
-    <div className="flex flex-col min-h-96 rounded-xl border border-border bg-card shadow-card">
+    <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden flex flex-col min-h-96">
       <SuperadminSupportTicketsManagementErrorBoundary variant="inline"><SuperadminSupportTicketsTable tickets={vm.paginatedTickets} onInspect={vm.setDetailModalTicketId} onReply={vm.setReplyModalTicketId} onClose={vm.handleCloseTicket} onAssign={vm.handleOpenAssign} /></SuperadminSupportTicketsManagementErrorBoundary>
-      <Pagination currentPage={vm.currentPage} totalPages={vm.totalPages} onPageChange={vm.setCurrentPage}  data-testid="superadmin_support_tickets-superadmin-tickets-main-superadmin-tickets-main-pagination"/>
+      <div className="border-t border-border px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-card/60">
+        <p className="text-xs text-secondary" aria-live="polite">
+          {vm.t('ui.showing_page', { page: vm.currentPage, total: vm.totalPages }) || `Page ${vm.currentPage} of ${vm.totalPages}`}
+        </p>
+        <Pagination currentPage={vm.currentPage} totalPages={vm.totalPages} onPageChange={vm.setCurrentPage} data-testid="superadmin_support_tickets-superadmin-tickets-main-superadmin-tickets-main-pagination"/>
+      </div>
     </div>
     <SuperadminSupportTicketsDetailModal ticketId={vm.detailModalTicketId} onClose={() => vm.setDetailModalTicketId(null)} onReply={(ticketId) => { vm.setDetailModalTicketId(null); vm.setReplyModalTicketId(ticketId); }} />
     <SuperadminSupportTicketsReplyModal isOpen={Boolean(vm.replyModalTicketId)} onClose={() => vm.setReplyModalTicketId(null)} ticketId={vm.replyModalTicketId} />

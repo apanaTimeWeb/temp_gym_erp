@@ -1,7 +1,7 @@
 // RESPONSIBILITY: Renders/orchestrates SuperadminSupportTicketsHeader within its owning Superadmin feature module; no direct backend implementation.
 'use client';
 // RESPONSIBILITY: Renders the header and filter/search controls for Support Tickets
-import { Search, Filter } from 'lucide-react';
+import { Search, Filter, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { SUPERADMIN_SUPPORT_TICKETS_ALL_FILTER, SUPERADMIN_SUPPORT_TICKETS_PRIORITY_CODES, SUPERADMIN_SUPPORT_TICKETS_STATUS_CODES } from '@/app/frontend_superadmin/superadmin_support/support_tickets_management/constants/superadmin_support_tickets_management.constants';
@@ -29,11 +29,24 @@ export default function SuperadminSupportTicketsManagementHeader({ search, setSe
       <div className="p-4 border-b border-border flex gap-4 flex-wrap">
         <div className="relative flex-1 max-w-md">
           <label htmlFor="superadmin_support_tickets-search" className="sr-only">{t('ui.search_tickets_or_superadmin_gyms_bf66cf1')}</label>
-          <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary"/>
-          <input  id="superadmin_support_tickets-search" type="text" placeholder={t('ui.search_tickets_or_superadmin_gyms_bf66cf1') } className="min-h-11 w-full ps-9 pe-4 py-2 bg-input border border-border rounded-lg text-sm text-primary focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page focus:border-focus motion-safe:transition-all motion-safe:duration-base ease-in-out" value={search} onChange={(e) => {
+          <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none"/>
+          <input  id="superadmin_support_tickets-search" type="text" placeholder={t('ui.search_tickets_or_superadmin_gyms_bf66cf1') } className="min-h-11 w-full ps-9 pe-8 py-2 bg-input border border-border rounded-lg text-sm text-primary focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page focus:border-focus motion-safe:transition-all motion-safe:duration-base ease-in-out" value={search} onChange={(e) => {
             setSearch(e.target.value);
             onFilterChange();
         }} data-testid="superadmin_support_tickets-superadmin-tickets-header-tickets-header-filter-1"/>
+          {search && (
+            <button
+              type="button"
+              onClick={() => {
+                setSearch('');
+                onFilterChange();
+              }}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-secondary hover:text-primary p-1 rounded-md cursor-pointer"
+              aria-label="Clear search query"
+            >
+              <X size={14} />
+            </button>
+          )}
         </div>
         <div className="relative">
           <button  type="button" onClick={() => setShowFilter(!showFilter)} className="min-h-11 flex items-center gap-2 px-4 py-2 bg-transparent border border-border rounded-lg text-sm font-medium text-secondary hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" data-testid="superadmin_support_tickets-superadmin-tickets-header-header-filter-2-1">

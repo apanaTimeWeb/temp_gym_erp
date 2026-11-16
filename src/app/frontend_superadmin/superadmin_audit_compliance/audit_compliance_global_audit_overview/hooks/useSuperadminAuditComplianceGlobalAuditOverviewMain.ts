@@ -56,7 +56,7 @@ export function useSuperadminAuditComplianceGlobalAuditOverviewMain() {
     severityOptions: SUPERADMIN_AUDIT_SEVERITY_OPTIONS.map((value) => ({ value, label: value === SUPERADMIN_AUDIT_FILTER_ALL ? t('ui.all_severities') : t(`ui.severity_${value.toLowerCase()}`) })),
     actorTypeOptions: SUPERADMIN_AUDIT_ACTOR_OPTIONS.map((value) => ({ value, label: value === SUPERADMIN_AUDIT_FILTER_ALL ? t('ui.all_actors') : t(`ui.actor_type_${value.toLowerCase()}`) })),
     setSearch, setSeverityFilter, setActorTypeFilter, setCurrentPage,
-    logs: query.logs, totalPages: query.totalPages, isPending: query.isPending, isFetching: query.isFetching, queryError: query.error, refetch: query.refetch,
+    logs: query.logs, total: query.total, totalPages: query.totalPages, isPending: query.isPending, isFetching: query.isFetching, queryError: query.error, refetch: query.refetch,
     requestExport: exportMutation.requestExport, isExporting: exportMutation.isRequesting, exportError: exportMutation.error, resetExportError: exportMutation.reset,
   };
 }
