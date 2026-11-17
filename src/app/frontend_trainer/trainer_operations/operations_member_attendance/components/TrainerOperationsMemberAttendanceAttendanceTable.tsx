@@ -56,6 +56,7 @@ import type { TrainerAttendanceTableProps } from '@/app/frontend_trainer/trainer
  * @edge-case Preserves documented loading, empty, error, accessibility, responsive, and recovery behavior without inventing business fallbacks.
  */
 const TABLE_COLUMNS = TRAINER_ATTENDANCE_TABLE_HEADERS.length;
+const TABLE_COLUMN_COUNT = TABLE_COLUMNS;
 /**
  * @description Owns the attendance feature UI responsibility represented by SORT_FIELDS, keeping feature behavior, state, and data ownership inside the Trainer module.
  * @dependencies Uses only documented attendance module dependencies and approved global infrastructure/UI primitives.

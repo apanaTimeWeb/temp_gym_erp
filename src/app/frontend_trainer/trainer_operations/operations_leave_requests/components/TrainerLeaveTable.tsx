@@ -86,6 +86,7 @@ export function TrainerLeaveTable({ leaveRequests, openLeaveModal }: TrainerLeav
   const pendingCount = leaveRequests.filter((l) => l.status.toUpperCase() === 'PENDING').length;
   const rejectedCount = leaveRequests.filter((l) => l.status.toUpperCase() === 'REJECTED').length;
   const hasActiveFilters = statusFilter !== 'ALL' || typeFilter !== 'ALL' || searchQuery.trim() !== '';
+  const TABLE_COLUMN_COUNT = 7;
 
   return (
     <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
@@ -146,7 +147,7 @@ export function TrainerLeaveTable({ leaveRequests, openLeaveModal }: TrainerLeav
           <tbody className="divide-y divide-border">
             {filteredLeaves.length === 0 ? (
               <tr data-testid="trainer_schedule-TrainerScheduleLeaveRequests-row-2">
-                <td colSpan={7} className="p-0 border-b-0">
+                <td colSpan={TABLE_COLUMN_COUNT} className="p-0 border-b-0">
                   {leaveRequests.length === 0 ? (
                     <TrainerScheduleEmptyState />
                   ) : (
@@ -181,7 +182,7 @@ export function TrainerLeaveTable({ leaveRequests, openLeaveModal }: TrainerLeav
                     >
                       <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-4 text-xs font-bold text-primary whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
                         <div className="flex items-center gap-2">
-                          <span>{leave.id}</span>
+                          <span className="font-bold text-primary text-sm font-mono">{leave.id}</span>
                           <CopyButton value={leave.id} />
                         </div>
                       </td>
@@ -225,7 +226,7 @@ export function TrainerLeaveTable({ leaveRequests, openLeaveModal }: TrainerLeav
                     {/* Inline Expandable Details Row */}
                     {expanded && (
                       <tr className="bg-primary/5 border-b border-primary/20">
-                        <td colSpan={7} className="p-0">
+                        <td colSpan={TABLE_COLUMN_COUNT} className="p-0">
                           <TrainerLeaveExpandedDetails
                             leave={leave}
                             locale={locale}
