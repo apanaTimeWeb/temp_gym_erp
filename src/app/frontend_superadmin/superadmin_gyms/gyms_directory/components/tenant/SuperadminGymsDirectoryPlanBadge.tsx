@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { findPlan } from '../../constants/plans';
+import { findPlan } from '../../constants/SuperadminGymsDirectoryPlans';
 
 export interface SuperadminGymsDirectoryPlanBadgeProps {
   planIdOrName?: string;

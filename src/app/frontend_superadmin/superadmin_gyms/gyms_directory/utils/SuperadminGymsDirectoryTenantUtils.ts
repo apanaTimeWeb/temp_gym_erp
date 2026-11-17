@@ -1,5 +1,5 @@
-import { PLANS_MASTER, findPlan } from '../constants/plans';
-import type { Tenant, Plan } from '../types/tenant';
+import { PLANS_MASTER, findPlan } from '../constants/SuperadminGymsDirectoryPlans';
+import type { Tenant, Plan } from '../types/SuperadminGymsDirectoryTenantTypes';
 
 /**
  * Calculates Monthly Recurring Revenue (MRR) for a tenant.

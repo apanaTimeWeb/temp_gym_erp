@@ -1,5 +1,5 @@
 import { QueryClient, useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { mockTenantDb } from '../mocks/mockTenantDb';
+import { mockTenantDb } from '../mocks/SuperadminGymsDirectoryMockTenantDb';
 import type {
   Tenant,
   TenantEvent,
@@ -9,7 +9,7 @@ import type {
   CreateTenantInput,
   UpdateTenantInput,
   ProvisioningStepProgress,
-} from '../types/tenant';
+} from '../types/SuperadminGymsDirectoryTenantTypes';
 
 const fallbackQueryClient = new QueryClient({
   defaultOptions: { queries: { retry: false } },

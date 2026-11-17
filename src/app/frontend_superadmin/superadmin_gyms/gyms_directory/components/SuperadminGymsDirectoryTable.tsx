@@ -26,8 +26,8 @@ import {
   usePlans,
   useChangeAccessStatus,
   useDeleteTenant,
-} from '../services/tenantService';
-import { PLANS_MASTER } from '../constants/plans';
+} from '../services/SuperadminGymsDirectoryTenantService';
+import { PLANS_MASTER } from '../constants/SuperadminGymsDirectoryPlans';
 import {
   StatusBadge,
   PlanBadge,
@@ -45,8 +45,8 @@ import {
   formatIstFullDateTime,
   formatCurrency,
   maskEmail,
-} from '../utils/tenant';
-import type { Tenant, ListParams } from '../types/tenant';
+} from '../utils/SuperadminGymsDirectoryTenantUtils';
+import type { Tenant, ListParams } from '../types/SuperadminGymsDirectoryTenantTypes';
 
 // Column visibility keys
 type ColumnKey =
@@ -1351,7 +1351,7 @@ export default function SuperadminGymsDirectoryTable() {
           confirmLabel={targetStatus === 'ACTIVE' ? 'Activate Gym' : 'Deactivate Gym'}
           isDanger={targetStatus === 'INACTIVE'}
           requireReason={true}
-          onConfirm={({ reason, note }) => executeStatusChange(reason, note)}
+          onConfirm={({ reason, note }: { reason: string; note: string }) => executeStatusChange(reason, note)}
           onClose={() => setConfirmStatusTenant(null)}
           isLoading={changeStatusMutation.isPending}
         />
@@ -1368,7 +1368,7 @@ export default function SuperadminGymsDirectoryTable() {
           requireReason={true}
           confirmationMatchText={confirmDeleteTenant.gymName}
           confirmationPrompt={`Type "${confirmDeleteTenant.gymName}" to confirm permanent deletion:`}
-          onConfirm={({ reason, note }) => executeDelete(reason, note)}
+          onConfirm={({ reason, note }: { reason: string; note: string }) => executeDelete(reason, note)}
           onClose={() => setConfirmDeleteTenant(null)}
           isLoading={deleteMutation.isPending}
         />

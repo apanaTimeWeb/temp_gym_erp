@@ -3,16 +3,16 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { X, ChevronRight, Eye, EyeOff, Loader2, AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
-import { usePlans, useUpdateTenant } from '../../services/tenantService';
+import { usePlans, useUpdateTenant } from '../../services/SuperadminGymsDirectoryTenantService';
 import { ConfirmDialog } from './SuperadminGymsDirectoryConfirmDialog';
 import {
   validateGymName,
   validateEmail,
   validateIndianPhone,
   validatePassword,
-} from '../../utils/validators';
-import { formatIstDate } from '../../utils/tenant';
-import type { Tenant, UpdateTenantInput } from '../../types/tenant';
+} from '../../utils/SuperadminGymsDirectoryValidators';
+import { formatIstDate } from '../../utils/SuperadminGymsDirectoryTenantUtils';
+import type { Tenant, UpdateTenantInput } from '../../types/SuperadminGymsDirectoryTenantTypes';
 
 export interface SuperadminGymsDirectoryTenantEditModalProps {
   isOpen: boolean;

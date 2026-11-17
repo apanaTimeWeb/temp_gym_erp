@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useQuery } from '@tanstack/react-query';
-import { usePlans, tenantService } from '../services/tenantService';
+import { usePlans, tenantService } from '../services/SuperadminGymsDirectoryTenantService';
 import { SUPERADMIN_GYMS_DIRECTORY_ROUTES as SUPERADMIN_GYMS_MANAGEMENT_ROUTES } from '@/app/frontend_superadmin/superadmin_gyms/gyms_directory/config/superadmin_gyms_directory.url_config';
 import {
   validateGymName,
@@ -31,9 +31,9 @@ import {
   formatAadhaar,
   validatePassword,
   generateStrongPassword,
-} from '../utils/validators';
-import { formatCurrency } from '../utils/tenant';
-import type { ProvisioningStepProgress, CreateTenantInput } from '../types/tenant';
+} from '../utils/SuperadminGymsDirectoryValidators';
+import { formatCurrency } from '../utils/SuperadminGymsDirectoryTenantUtils';
+import type { ProvisioningStepProgress, CreateTenantInput } from '../types/SuperadminGymsDirectoryTenantTypes';
 
 interface StepState {
   key: string;

@@ -9,7 +9,7 @@ import {
   ShieldCheck,
   ShieldAlert,
 } from 'lucide-react';
-import type { TenantAccessStatus, TenantSubscriptionState } from '../../types/tenant';
+import type { TenantAccessStatus, TenantSubscriptionState } from '../../types/SuperadminGymsDirectoryTenantTypes';
 
 export interface SuperadminGymsDirectoryStatusBadgeProps {
   type: 'access' | 'subscription';

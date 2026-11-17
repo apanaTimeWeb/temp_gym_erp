@@ -1,6 +1,6 @@
-import { PLANS_MASTER } from '../constants/plans';
-import { INITIAL_SEEDED_TENANTS, INITIAL_SEEDED_EVENTS } from './seedTenants';
-import { getMrr } from '../utils/tenant';
+import { PLANS_MASTER } from '../constants/SuperadminGymsDirectoryPlans';
+import { INITIAL_SEEDED_TENANTS, INITIAL_SEEDED_EVENTS } from './SuperadminGymsDirectorySeedTenants';
+import { getMrr } from '../utils/SuperadminGymsDirectoryTenantUtils';
 import type {
   Tenant,
   TenantEvent,
@@ -10,7 +10,7 @@ import type {
   CreateTenantInput,
   UpdateTenantInput,
   ProvisioningStepProgress,
-} from '../types/tenant';
+} from '../types/SuperadminGymsDirectoryTenantTypes';
 
 // In-memory data stores
 let tenantsStore: Tenant[] = [...INITIAL_SEEDED_TENANTS];

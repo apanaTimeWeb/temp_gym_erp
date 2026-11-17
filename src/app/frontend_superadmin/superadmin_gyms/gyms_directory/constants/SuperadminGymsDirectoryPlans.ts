@@ -1,4 +1,4 @@
-import type { Plan } from '../types/tenant';
+import type { Plan } from '../types/SuperadminGymsDirectoryTenantTypes';
 
 /**
  * Canonical Plans Master

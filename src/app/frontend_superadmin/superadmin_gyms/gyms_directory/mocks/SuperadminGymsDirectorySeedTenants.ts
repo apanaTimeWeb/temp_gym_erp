@@ -1,4 +1,4 @@
-import type { Tenant, TenantEvent } from '../types/tenant';
+import type { Tenant, TenantEvent } from '../types/SuperadminGymsDirectoryTenantTypes';
 
 // Reference date anchor (2026-11-15)
 const BASE_DATE = new Date('2026-11-15T00:00:00.000Z');

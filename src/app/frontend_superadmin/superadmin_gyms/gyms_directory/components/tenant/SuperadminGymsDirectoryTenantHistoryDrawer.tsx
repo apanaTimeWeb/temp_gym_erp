@@ -19,7 +19,7 @@ import {
   Trash2,
   Calendar,
 } from 'lucide-react';
-import { useTenantEvents, usePlans } from '../../services/tenantService';
+import { useTenantEvents, usePlans } from '../../services/SuperadminGymsDirectoryTenantService';
 import { StatusBadge } from './SuperadminGymsDirectoryStatusBadge';
 import { PlanBadge } from './SuperadminGymsDirectoryPlanBadge';
 import { DaysLeftBadge } from './SuperadminGymsDirectoryDaysLeftBadge';
@@ -32,8 +32,8 @@ import {
   formatIstFullDateTime,
   formatCurrency,
   maskEmail,
-} from '../../utils/tenant';
-import type { Tenant, TenantEvent } from '../../types/tenant';
+} from '../../utils/SuperadminGymsDirectoryTenantUtils';
+import type { Tenant, TenantEvent } from '../../types/SuperadminGymsDirectoryTenantTypes';
 
 export interface SuperadminGymsDirectoryTenantHistoryDrawerProps {
   isOpen: boolean;

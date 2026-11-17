@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { AlertCircle, Clock, Calendar } from 'lucide-react';
-import { getDaysLeft } from '../../utils/tenant';
+import { getDaysLeft } from '../../utils/SuperadminGymsDirectoryTenantUtils';
 
 export interface SuperadminGymsDirectoryDaysLeftBadgeProps {
   expiryDateStr?: string | null;

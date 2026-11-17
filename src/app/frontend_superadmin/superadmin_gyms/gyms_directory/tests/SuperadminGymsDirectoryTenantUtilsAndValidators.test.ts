@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getMrr, getDaysLeft, formatIstDate, formatCurrency, maskEmail } from '../utils/tenant';
+import { getMrr, getDaysLeft, formatIstDate, formatCurrency, maskEmail } from '../utils/SuperadminGymsDirectoryTenantUtils';
 import {
   validateVerhoeff,
   generateVerhoeffChecksum,
@@ -8,9 +8,9 @@ import {
   validateIndianPhone,
   validatePassword,
   generateStrongPassword,
-} from '../utils/validators';
-import { PLANS_MASTER } from '../constants/plans';
-import type { Tenant } from '../types/tenant';
+} from '../utils/SuperadminGymsDirectoryValidators';
+import { PLANS_MASTER } from '../constants/SuperadminGymsDirectoryPlans';
+import type { Tenant } from '../types/SuperadminGymsDirectoryTenantTypes';
 
 describe('Tenant MRR Calculation (getMrr)', () => {
   const baseTenant: Tenant = {
