@@ -5,7 +5,7 @@
 import React, { createContext, useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import AdminNavigationLayoutConfirmModal from '@/app/frontend_admin/admin_billing/billing_coupons_management/components/feedback/AdminBillingCouponsManagementConfirmModal';
 import type { AdminConfirmContextType, AdminConfirmOptions } from '@/app/frontend_admin/admin_billing/billing_coupons_management/types/AdminBillingCouponsManagementConfirmTypes';
-import type { AdminBillingCouponsManagementConfirmProviderProps } from '@/app/frontend_admin/admin_billing/billing_coupons_management/types/admin_billing_coupons_management_confirm_provider.types';
+import type { AdminBillingCouponsManagementConfirmProviderProps } from '@/app/frontend_admin/admin_billing/billing_coupons_management/types/AdminBillingCouponsManagementConfirmProviderTypes';
 
 import { ConfirmContext } from '@/app/frontend_admin/admin_navigation/components/feedback/AdminNavigationLayoutConfirmProvider';
 export { ConfirmContext };

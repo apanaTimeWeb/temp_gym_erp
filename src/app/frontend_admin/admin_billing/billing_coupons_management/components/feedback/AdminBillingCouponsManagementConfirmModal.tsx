@@ -7,7 +7,7 @@ import { useEffect, useId, useRef, useState } from 'react';
 import { useAdminBillingCouponsManagementDialogAccessibility } from '@/app/frontend_admin/admin_billing/billing_coupons_management/hooks/useAdminBillingCouponsManagementDialogAccessibility';
 import { AlertTriangle } from 'lucide-react';
 import type { AdminConfirmType } from '@/app/frontend_admin/admin_billing/billing_coupons_management/types/AdminBillingCouponsManagementConfirmTypes';
-import type { AdminBillingCouponsManagementConfirmModalProps } from '@/app/frontend_admin/admin_billing/billing_coupons_management/types/admin_billing_coupons_management_confirm_modal.types';
+import type { AdminBillingCouponsManagementConfirmModalProps } from '@/app/frontend_admin/admin_billing/billing_coupons_management/types/AdminBillingCouponsManagementConfirmModalTypes';
 
 /**
  * AdminNavigationLayoutConfirmModal renders the admin confirm modal UI surface and coordinates only the state or handlers required by its owning module.
