@@ -10,7 +10,7 @@ import TrainerInfrastructureSearchableDropdown from '@/app/frontend_trainer/trai
 import { TRAINER_MEMBERS_MEMBER_STATUS_OPTIONS, TRAINER_MEMBERS_MEMBER_PROGRESS_OPTIONS } from '@/app/frontend_trainer/trainer_members/members_directory_and_profile/config/TrainerMembersDirectoryAndProfileConstants';
 
 import { useTrainerMembersToolbar } from '@/app/frontend_trainer/trainer_members/members_directory_and_profile/hooks/useTrainerMembersDirectoryAndProfileToolbar';
-import TrainerMembersBroadcastModal from './TrainerMembersBroadcastModal';
+import TrainerMembersDirectoryAndProfileBroadcastModal from './TrainerMembersDirectoryAndProfileBroadcastModal';
 
 /**
  * @description Renders the toolbar for searching and filtering members.
@@ -115,7 +115,7 @@ export default function TrainerMembersToolbar() {
           <RefreshCw size={18}  strokeWidth={2}/> {t("TEXT_REFRESH")}</button>
       </div>
 
-      <TrainerMembersBroadcastModal
+      <TrainerMembersDirectoryAndProfileBroadcastModal
         isOpen={showBroadcastModal}
         onClose={() => setShowBroadcastModal(false)}
       />

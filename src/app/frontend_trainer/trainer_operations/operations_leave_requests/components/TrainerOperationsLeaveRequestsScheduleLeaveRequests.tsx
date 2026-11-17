@@ -9,8 +9,8 @@ import { useTranslations } from 'next-intl';
 import TrainerScheduleLoadingSkeleton from '@/app/frontend_trainer/trainer_operations/operations_leave_requests/components/TrainerOperationsLeaveRequestsScheduleLoadingSkeleton';
 import { useTrainerScheduleQuery } from '@/app/frontend_trainer/trainer_operations/operations_leave_requests/hooks/useTrainerOperationsLeaveRequestsScheduleQuery';
 import { useTrainerScheduleStore } from '@/app/frontend_trainer/trainer_operations/operations_leave_requests/state/useTrainerOperationsLeaveRequestsScheduleStore';
-import { TrainerLeaveKpis } from './TrainerLeaveKpis';
-import { TrainerLeaveTable } from './TrainerLeaveTable';
+import { TrainerOperationsLeaveRequestsLeaveKpis } from './TrainerOperationsLeaveRequestsLeaveKpis';
+import { TrainerOperationsLeaveRequestsLeaveTable } from './TrainerOperationsLeaveRequestsLeaveTable';
 
 export default function TrainerScheduleLeaveRequests() {
   const t = useTranslations('TRAINER_SCHEDULE');
@@ -61,13 +61,13 @@ export default function TrainerScheduleLeaveRequests() {
 
   return (
     <div className="space-y-6">
-      <TrainerLeaveKpis
+      <TrainerOperationsLeaveRequestsLeaveKpis
         totalRequests={totalRequests}
         approvedLeaves={approvedLeaves}
         pendingLeaves={pendingLeaves}
         leaveBalance={leaveBalance}
       />
-      <TrainerLeaveTable
+      <TrainerOperationsLeaveRequestsLeaveTable
         leaveRequests={leaveRequests}
         openLeaveModal={openLeaveModal}
       />

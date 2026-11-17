@@ -4,17 +4,17 @@ import { CheckCircle2, Clock } from 'lucide-react';
 import CopyButton from '@/components/ui/CopyButton';
 import type { TrainerAttendanceRecord } from '@/app/frontend_trainer/trainer_operations/operations_trainer_attendance/types/TrainerOperationsTrainerAttendanceAttendanceTypes';
 
-interface TrainerAttendanceQuarterlyRecordsTableProps {
+export interface TrainerOperationsTrainerAttendanceQuarterlyRecordsTableProps {
   rangeRecords: TrainerAttendanceRecord[];
   startDate: string;
   endDate: string;
 }
 
-export function TrainerAttendanceQuarterlyRecordsTable({
+export function TrainerOperationsTrainerAttendanceQuarterlyRecordsTable({
   rangeRecords,
   startDate,
   endDate,
-}: TrainerAttendanceQuarterlyRecordsTableProps) {
+}: TrainerOperationsTrainerAttendanceQuarterlyRecordsTableProps) {
   const TABLE_COLUMN_COUNT = 6;
 
   return (
@@ -86,3 +86,6 @@ export function TrainerAttendanceQuarterlyRecordsTable({
     </div>
   );
 }
+
+export const TrainerAttendanceQuarterlyRecordsTable = TrainerOperationsTrainerAttendanceQuarterlyRecordsTable;
+export type TrainerAttendanceQuarterlyRecordsTableProps = TrainerOperationsTrainerAttendanceQuarterlyRecordsTableProps;

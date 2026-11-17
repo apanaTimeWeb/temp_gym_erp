@@ -3,19 +3,19 @@
 import { Calendar, CheckCircle2, Clock, FileText, Award } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-interface TrainerLeaveKpisProps {
+export interface TrainerOperationsLeaveRequestsLeaveKpisProps {
   totalRequests: number;
   approvedLeaves: number;
   pendingLeaves: number;
   leaveBalance: number;
 }
 
-export function TrainerLeaveKpis({
+export function TrainerOperationsLeaveRequestsLeaveKpis({
   totalRequests,
   approvedLeaves,
   pendingLeaves,
   leaveBalance,
-}: TrainerLeaveKpisProps) {
+}: TrainerOperationsLeaveRequestsLeaveKpisProps) {
   const t = useTranslations('TRAINER_SCHEDULE');
   const maxAllowance = 15;
   const usedPercentage = Math.min(100, Math.round((approvedLeaves / maxAllowance) * 100));
@@ -97,3 +97,6 @@ export function TrainerLeaveKpis({
     </div>
   );
 }
+
+export const TrainerLeaveKpis = TrainerOperationsLeaveRequestsLeaveKpis;
+export type TrainerLeaveKpisProps = TrainerOperationsLeaveRequestsLeaveKpisProps;

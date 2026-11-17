@@ -7,18 +7,18 @@ import { useLocale, useTranslations } from 'next-intl';
 import CopyButton from '@/components/ui/CopyButton';
 import TrainerInfrastructureTooltip from './TrainerOperationsLeaveRequestsTrainerInfrastructureTooltip';
 import TrainerScheduleEmptyState from './TrainerOperationsLeaveRequestsScheduleEmptyState';
-import { TrainerLeaveFilterBar } from './TrainerLeaveFilterBar';
-import { TrainerLeaveMobileCard } from './TrainerLeaveMobileCard';
-import { TrainerLeaveExpandedDetails } from './TrainerLeaveExpandedDetails';
+import { TrainerOperationsLeaveRequestsLeaveFilterBar } from './TrainerOperationsLeaveRequestsLeaveFilterBar';
+import { TrainerOperationsLeaveRequestsLeaveMobileCard } from './TrainerOperationsLeaveRequestsLeaveMobileCard';
+import { TrainerOperationsLeaveRequestsLeaveExpandedDetails } from './TrainerOperationsLeaveRequestsLeaveExpandedDetails';
 import { TrainerScheduleFormatDate } from '../utils/TrainerOperationsLeaveRequestsScheduleFormatDate';
 import type { TrainerScheduleLeaveRequest } from '../types/TrainerOperationsLeaveRequestsScheduleTypes';
 
-interface TrainerLeaveTableProps {
+export interface TrainerOperationsLeaveRequestsLeaveTableProps {
   leaveRequests: TrainerScheduleLeaveRequest[];
   openLeaveModal: () => void;
 }
 
-export function TrainerLeaveTable({ leaveRequests, openLeaveModal }: TrainerLeaveTableProps) {
+export function TrainerOperationsLeaveRequestsLeaveTable({ leaveRequests, openLeaveModal }: TrainerOperationsLeaveRequestsLeaveTableProps) {
   const t = useTranslations('TRAINER_SCHEDULE');
   const locale = useLocale();
 
@@ -111,7 +111,7 @@ export function TrainerLeaveTable({ leaveRequests, openLeaveModal }: TrainerLeav
       </div>
 
       {/* Filter and Search Bar */}
-      <TrainerLeaveFilterBar
+      <TrainerOperationsLeaveRequestsLeaveFilterBar
         statusFilter={statusFilter}
         setStatusFilter={setStatusFilter}
         typeFilter={typeFilter}
@@ -227,7 +227,7 @@ export function TrainerLeaveTable({ leaveRequests, openLeaveModal }: TrainerLeav
                     {expanded && (
                       <tr className="bg-primary/5 border-b border-primary/20">
                         <td colSpan={TABLE_COLUMN_COUNT} className="p-0">
-                          <TrainerLeaveExpandedDetails
+                          <TrainerOperationsLeaveRequestsLeaveExpandedDetails
                             leave={leave}
                             locale={locale}
                             daysCount={daysCount}
@@ -258,7 +258,7 @@ export function TrainerLeaveTable({ leaveRequests, openLeaveModal }: TrainerLeav
             const statusBadgeClass = getStatusBadgeClass(leave.status);
             const daysCount = calculateDays(leave.startDate, leave.endDate);
             return (
-              <TrainerLeaveMobileCard
+              <TrainerOperationsLeaveRequestsLeaveMobileCard
                 key={leave.id}
                 leave={leave}
                 statusBadgeClass={statusBadgeClass}
@@ -280,3 +280,6 @@ export function TrainerLeaveTable({ leaveRequests, openLeaveModal }: TrainerLeav
     </div>
   );
 }
+
+export const TrainerLeaveTable = TrainerOperationsLeaveRequestsLeaveTable;
+export type TrainerLeaveTableProps = TrainerOperationsLeaveRequestsLeaveTableProps;

@@ -16,7 +16,7 @@ import { displayValue } from '@/lib/display_value';
 import { TrainerProgressTrackingFormatNumber, TrainerProgressTrackingFormatDate } from '@/app/frontend_trainer/trainer_coaching/coaching_individual_progress/utils/TrainerCoachingIndividualProgressProgressTrackingDisplayFormatters';
 import type { TrainerProgressTrackingTableProps } from '@/app/frontend_trainer/trainer_coaching/coaching_individual_progress/types/TrainerCoachingIndividualProgressProgressTrackingTableProps';
 import type { TrainerProgressTrackingProgressEntry, TrainerProgressTrackingProgressSortField } from '@/app/frontend_trainer/trainer_coaching/coaching_individual_progress/types/TrainerCoachingIndividualProgressProgressTrackingTypes';
-import { TrainerProgressTrackingFilterBar } from './TrainerProgressTrackingFilterBar';
+import { TrainerCoachingIndividualProgressProgressTrackingFilterBar } from './TrainerCoachingIndividualProgressProgressTrackingFilterBar';
 
 export default function TrainerProgressTrackingTable({
   entries,
@@ -87,7 +87,7 @@ export default function TrainerProgressTrackingTable({
 
   return (
     <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden space-y-0">
-      <TrainerProgressTrackingFilterBar
+      <TrainerCoachingIndividualProgressProgressTrackingFilterBar
         dateRangeFilter={dateRangeFilter}
         setDateRangeFilter={setDateRangeFilter}
         bmiCategoryFilter={bmiCategoryFilter}

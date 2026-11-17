@@ -3,7 +3,7 @@
 import { Search, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-interface TrainerLeaveFilterBarProps {
+export interface TrainerOperationsLeaveRequestsLeaveFilterBarProps {
   statusFilter: 'ALL' | 'PENDING' | 'APPROVED' | 'REJECTED';
   setStatusFilter: (val: 'ALL' | 'PENDING' | 'APPROVED' | 'REJECTED') => void;
   typeFilter: string;
@@ -18,7 +18,7 @@ interface TrainerLeaveFilterBarProps {
   onClearFilters: () => void;
 }
 
-export function TrainerLeaveFilterBar({
+export function TrainerOperationsLeaveRequestsLeaveFilterBar({
   statusFilter,
   setStatusFilter,
   typeFilter,
@@ -31,7 +31,7 @@ export function TrainerLeaveFilterBar({
   rejectedCount,
   hasActiveFilters,
   onClearFilters,
-}: TrainerLeaveFilterBarProps) {
+}: TrainerOperationsLeaveRequestsLeaveFilterBarProps) {
   const t = useTranslations('TRAINER_SCHEDULE');
 
   return (
@@ -134,3 +134,6 @@ export function TrainerLeaveFilterBar({
     </div>
   );
 }
+
+export const TrainerLeaveFilterBar = TrainerOperationsLeaveRequestsLeaveFilterBar;
+export type TrainerLeaveFilterBarProps = TrainerOperationsLeaveRequestsLeaveFilterBarProps;

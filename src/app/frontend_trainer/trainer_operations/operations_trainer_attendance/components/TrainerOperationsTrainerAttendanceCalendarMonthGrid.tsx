@@ -5,17 +5,17 @@ import { useTranslations } from 'next-intl';
 import { TRAINER_ATTENDANCE_CALENDAR_STATUS } from '../utils/TrainerOperationsTrainerAttendanceAttendanceConstants';
 import type { TrainerAttendanceCalendarDay } from '../types/TrainerOperationsTrainerAttendanceAttendanceInteractionTypes';
 
-interface MonthGridProps {
+export interface TrainerOperationsTrainerAttendanceCalendarMonthGridProps {
   weekDays: string[];
   firstDayIndex: number;
   daysArray: TrainerAttendanceCalendarDay[];
 }
 
-export function TrainerAttendanceCalendarMonthGrid({
+export function TrainerOperationsTrainerAttendanceCalendarMonthGrid({
   weekDays,
   firstDayIndex,
   daysArray,
-}: MonthGridProps) {
+}: TrainerOperationsTrainerAttendanceCalendarMonthGridProps) {
   const t = useTranslations('TRAINER_ATTENDANCE');
 
   return (
@@ -106,3 +106,6 @@ export function TrainerAttendanceCalendarMonthGrid({
     </div>
   );
 }
+
+export const TrainerAttendanceCalendarMonthGrid = TrainerOperationsTrainerAttendanceCalendarMonthGrid;
+export type MonthGridProps = TrainerOperationsTrainerAttendanceCalendarMonthGridProps;

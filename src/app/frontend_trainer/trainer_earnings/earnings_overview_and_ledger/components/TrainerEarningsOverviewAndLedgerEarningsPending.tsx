@@ -14,7 +14,7 @@ import { TrainerEarningsFormatDate } from '@/app/frontend_trainer/trainer_earnin
 import { TrainerEarningsFormatCurrency } from '@/app/frontend_trainer/trainer_earnings/earnings_overview_and_ledger/utils/TrainerEarningsOverviewAndLedgerEarningsFormatCurrency';
 
 import TrainerInfrastructureSkeletonBlock from '@/app/frontend_trainer/trainer_earnings/earnings_overview_and_ledger/components/TrainerEarningsOverviewAndLedgerTrainerInfrastructureSkeletonBlock';
-import TrainerEarningsAdvanceModal from './TrainerEarningsAdvanceModal';
+import TrainerEarningsOverviewAndLedgerAdvanceModal from './TrainerEarningsOverviewAndLedgerAdvanceModal';
 
 /**
  * @description Renders the TrainerEarningsPending UI for the owning Trainer feature; data access remains in the feature API/query layer.
@@ -82,7 +82,7 @@ export default function TrainerEarningsPending() {
         )}
       </div>
 
-      <TrainerEarningsAdvanceModal
+      <TrainerEarningsOverviewAndLedgerAdvanceModal
         isOpen={showAdvanceModal}
         onClose={() => setShowAdvanceModal(false)}
         onSuccess={() => void refetch()}

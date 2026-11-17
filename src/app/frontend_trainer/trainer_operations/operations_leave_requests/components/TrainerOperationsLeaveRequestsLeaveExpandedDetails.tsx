@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { TrainerScheduleFormatDate } from '../utils/TrainerOperationsLeaveRequestsScheduleFormatDate';
 import type { TrainerScheduleLeaveRequest } from '../types/TrainerOperationsLeaveRequestsScheduleTypes';
 
-interface TrainerLeaveExpandedDetailsProps {
+export interface TrainerOperationsLeaveRequestsLeaveExpandedDetailsProps {
   leave: TrainerScheduleLeaveRequest;
   locale: string;
   daysCount: number;
@@ -14,7 +14,7 @@ interface TrainerLeaveExpandedDetailsProps {
   onClose: () => void;
 }
 
-export function TrainerLeaveExpandedDetails({
+export function TrainerOperationsLeaveRequestsLeaveExpandedDetails({
   leave,
   locale,
   daysCount,
@@ -22,7 +22,7 @@ export function TrainerLeaveExpandedDetails({
   leaveTypeLabel,
   statusLabel,
   onClose,
-}: TrainerLeaveExpandedDetailsProps) {
+}: TrainerOperationsLeaveRequestsLeaveExpandedDetailsProps) {
   const t = useTranslations('TRAINER_SCHEDULE');
 
   return (
@@ -82,3 +82,6 @@ export function TrainerLeaveExpandedDetails({
     </div>
   );
 }
+
+export const TrainerLeaveExpandedDetails = TrainerOperationsLeaveRequestsLeaveExpandedDetails;
+export type TrainerLeaveExpandedDetailsProps = TrainerOperationsLeaveRequestsLeaveExpandedDetailsProps;

@@ -2,7 +2,7 @@
 
 import { Search, X } from 'lucide-react';
 
-interface FilterBarProps {
+export interface TrainerCoachingIndividualProgressProgressTrackingFilterBarProps {
   dateRangeFilter: 'all' | '30d' | '3m' | '6m' | 'this_year';
   setDateRangeFilter: (val: 'all' | '30d' | '3m' | '6m' | 'this_year') => void;
   bmiCategoryFilter: 'all' | 'normal' | 'overweight' | 'underweight' | 'body_fat';
@@ -13,7 +13,7 @@ interface FilterBarProps {
   totalEntries: number;
 }
 
-export function TrainerProgressTrackingFilterBar({
+export function TrainerCoachingIndividualProgressProgressTrackingFilterBar({
   dateRangeFilter,
   setDateRangeFilter,
   bmiCategoryFilter,
@@ -22,7 +22,7 @@ export function TrainerProgressTrackingFilterBar({
   setSearchQuery,
   filteredCount,
   totalEntries,
-}: FilterBarProps) {
+}: TrainerCoachingIndividualProgressProgressTrackingFilterBarProps) {
   const hasActiveFilters = dateRangeFilter !== 'all' || bmiCategoryFilter !== 'all' || searchQuery.trim() !== '';
 
   return (
@@ -109,3 +109,6 @@ export function TrainerProgressTrackingFilterBar({
     </div>
   );
 }
+
+export const TrainerProgressTrackingFilterBar = TrainerCoachingIndividualProgressProgressTrackingFilterBar;
+export type FilterBarProps = TrainerCoachingIndividualProgressProgressTrackingFilterBarProps;

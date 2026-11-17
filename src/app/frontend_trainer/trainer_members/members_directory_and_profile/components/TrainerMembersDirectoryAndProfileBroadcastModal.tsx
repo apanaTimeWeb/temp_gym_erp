@@ -2,15 +2,15 @@
 import React, { useState } from 'react';
 import { X, Send, Megaphone, Loader2, CheckCircle2, MessageSquare, Mail, Bell, ShieldCheck } from 'lucide-react';
 
-interface TrainerMembersBroadcastModalProps {
+export interface TrainerMembersDirectoryAndProfileBroadcastModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export default function TrainerMembersBroadcastModal({
+export default function TrainerMembersDirectoryAndProfileBroadcastModal({
   isOpen,
   onClose,
-}: TrainerMembersBroadcastModalProps) {
+}: TrainerMembersDirectoryAndProfileBroadcastModalProps) {
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
   const [audience, setAudience] = useState<'ALL' | 'PT_ONLY' | 'ATTENTION_ONLY'>('ALL');
@@ -235,4 +235,7 @@ export default function TrainerMembersBroadcastModal({
     </div>
   );
 }
+
+export const TrainerMembersBroadcastModal = TrainerMembersDirectoryAndProfileBroadcastModal;
+export type TrainerMembersBroadcastModalProps = TrainerMembersDirectoryAndProfileBroadcastModalProps;
 

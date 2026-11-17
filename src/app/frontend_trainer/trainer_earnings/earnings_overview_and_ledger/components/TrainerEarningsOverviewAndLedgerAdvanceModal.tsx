@@ -3,17 +3,17 @@ import React, { useState } from 'react';
 import { X, IndianRupee, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import { apiFetch } from '@/lib/api';
 
-interface TrainerEarningsAdvanceModalProps {
+export interface TrainerEarningsOverviewAndLedgerAdvanceModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSuccess: () => void;
 }
 
-export default function TrainerEarningsAdvanceModal({
+export default function TrainerEarningsOverviewAndLedgerAdvanceModal({
   isOpen,
   onClose,
   onSuccess,
-}: TrainerEarningsAdvanceModalProps) {
+}: TrainerEarningsOverviewAndLedgerAdvanceModalProps) {
   const [amount, setAmount] = useState<string>('15000');
   const [reason, setReason] = useState<string>('');
   const [needByDate, setNeedByDate] = useState<string>(
@@ -189,4 +189,7 @@ export default function TrainerEarningsAdvanceModal({
     </div>
   );
 }
+
+export const TrainerEarningsAdvanceModal = TrainerEarningsOverviewAndLedgerAdvanceModal;
+export type TrainerEarningsAdvanceModalProps = TrainerEarningsOverviewAndLedgerAdvanceModalProps;
 

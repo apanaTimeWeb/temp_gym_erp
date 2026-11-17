@@ -12,8 +12,8 @@ import { useLocale, useTranslations } from 'next-intl';
 import { getUser } from '@/lib/api';
 import { buildTrainerAttendanceCalendarDays, buildTrainerAttendanceCalendarRecordMap, getTrainerAttendanceCalendarSummary } from '@/app/frontend_trainer/trainer_operations/operations_trainer_attendance/utils/TrainerOperationsTrainerAttendanceAttendanceCalendarUtils';
 import type { TrainerAttendanceMyAttendanceCalendarProps } from '@/app/frontend_trainer/trainer_operations/operations_trainer_attendance/types/TrainerOperationsTrainerAttendanceAttendanceMyAttendanceCalendarTypes';
-import { TrainerAttendanceCalendarMonthGrid } from './TrainerAttendanceCalendarMonthGrid';
-import { TrainerAttendanceQuarterlyRecordsTable } from './TrainerAttendanceQuarterlyRecordsTable';
+import { TrainerOperationsTrainerAttendanceCalendarMonthGrid } from './TrainerOperationsTrainerAttendanceCalendarMonthGrid';
+import { TrainerOperationsTrainerAttendanceQuarterlyRecordsTable } from './TrainerOperationsTrainerAttendanceQuarterlyRecordsTable';
 
 export default function TrainerAttendanceMyAttendanceCalendar({ records }: TrainerAttendanceMyAttendanceCalendarProps) {
   const t = useTranslations('TRAINER_ATTENDANCE');
@@ -156,7 +156,7 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
 
       {/* If All 3-Month Records view is selected, render the full multi-month table */}
       {isThreeMonthsRange && quarterViewTab === 'all_records' ? (
-        <TrainerAttendanceQuarterlyRecordsTable
+        <TrainerOperationsTrainerAttendanceQuarterlyRecordsTable
           rangeRecords={rangeRecords}
           startDate={startDate}
           endDate={endDate}
@@ -246,7 +246,7 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
           </div>
 
           {/* Monthly Calendar View */}
-          <TrainerAttendanceCalendarMonthGrid
+          <TrainerOperationsTrainerAttendanceCalendarMonthGrid
             weekDays={weekDays}
             firstDayIndex={firstDayIndex}
             daysArray={daysArray}
