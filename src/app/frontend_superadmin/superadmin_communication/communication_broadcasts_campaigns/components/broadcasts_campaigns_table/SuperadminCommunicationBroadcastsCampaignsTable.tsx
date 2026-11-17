@@ -41,7 +41,7 @@ export default function SuperadminCommunicationBroadcastsCampaignsTable({
     <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-sm flex flex-col min-h-96">
       <div className="overflow-x-auto flex-1">
         <table className="w-full text-start border-collapse">
-          <thead>
+          <thead className="sticky top-0 z-20 bg-primary-subtle border-b border-border shadow-xs">
             <tr className="bg-primary-subtle border-b border-border">
               <th className="sticky start-0 z-20 bg-primary-subtle border-b border-e border-border px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-start">
                 {t('ui.title_b78a3223')}

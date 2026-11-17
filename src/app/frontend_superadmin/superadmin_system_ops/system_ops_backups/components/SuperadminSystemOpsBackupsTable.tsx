@@ -103,7 +103,7 @@ export default function SuperadminSystemOpsBackupsTable({
       )}
       <div className="overflow-x-auto flex-1">
         <table className={`w-full text-start border-collapse min-w-full ${MOBILE_CARD_TABLE_CLASSES}`}>
-          <thead>
+          <thead className="sticky top-0 z-20 bg-primary-subtle border-b border-border shadow-xs">
             <tr className="bg-primary-subtle border-b border-border text-sm" data-testid="superadmin_system_ops_backups-superadmin-system-ops-backups-table-backups-table-action-1">
               <th className="sticky start-0 z-20 bg-primary-subtle border-b border-border w-12 px-4 py-3 text-center">
                 <input

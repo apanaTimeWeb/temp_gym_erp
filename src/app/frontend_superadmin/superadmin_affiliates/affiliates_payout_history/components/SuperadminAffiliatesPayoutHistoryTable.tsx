@@ -63,7 +63,7 @@ export default function SuperadminAffiliatesPayoutHistoryTable({ payouts, isPend
     <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-sm flex flex-col min-h-96">
       <div className="overflow-x-auto flex-1">
         <table className={`w-full min-w-max border-collapse text-start ${MOBILE_CARD_TABLE_CLASSES}`}>
-          <thead>
+          <thead className="sticky top-0 z-20 bg-primary-subtle border-b border-border shadow-xs">
             <tr className="border-b border-border bg-primary-subtle text-secondary" data-testid="superadmin_affiliates-superadmin-affiliates-payout-history-payout-history-action-1">
               <th className="sticky start-0 z-20 bg-primary-subtle border-b border-e border-border p-4 text-xs font-semibold uppercase tracking-wider text-start">
                 {t('ui.date_ba31778')}

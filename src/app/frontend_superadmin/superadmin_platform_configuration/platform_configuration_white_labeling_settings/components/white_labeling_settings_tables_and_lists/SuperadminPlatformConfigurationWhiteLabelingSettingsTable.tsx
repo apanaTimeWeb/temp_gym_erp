@@ -43,7 +43,7 @@ export default function SuperadminPlatformConfigurationWhiteLabelingSettingsTabl
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-start">
             <caption className="sr-only">{t('ui.white_labeling_custom_domains_e5d66331')}</caption>
-            <thead>
+            <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border shadow-xs">
               <tr className="border-b border-border bg-surface-highlight">
                 <th className="sticky start-0 z-20 bg-surface-highlight border-b border-e border-border w-48 p-4 text-xs font-semibold uppercase tracking-wider text-secondary text-start">
                   {t('ui.gym_name_4ad76c40')}

@@ -153,7 +153,7 @@ export default function SuperadminBillingCouponsManagementTable({
       )}
       <div className="overflow-x-auto flex-1">
         <table className="w-full text-start border-collapse">
-          <thead>
+          <thead className="sticky top-0 z-20 bg-primary-subtle border-b border-border shadow-xs">
             <tr className="bg-primary-subtle border-b border-border">
               <th className="sticky start-0 z-20 bg-primary-subtle border-b border-border w-12 px-4 py-3 text-center">
                 <input

@@ -11,13 +11,15 @@ import {
 } from 'lucide-react';
 import type { TenantAccessStatus, TenantSubscriptionState } from '../../types/tenant';
 
-interface StatusBadgeProps {
+export interface SuperadminGymsDirectoryStatusBadgeProps {
   type: 'access' | 'subscription';
   status: TenantAccessStatus | TenantSubscriptionState | string;
   className?: string;
 }
 
-export function StatusBadge({ type, status, className = '' }: StatusBadgeProps) {
+export type StatusBadgeProps = SuperadminGymsDirectoryStatusBadgeProps;
+
+export function SuperadminGymsDirectoryStatusBadge({ type, status, className = '' }: SuperadminGymsDirectoryStatusBadgeProps) {
   const s = (status || '').toUpperCase();
 
   if (type === 'access') {
@@ -89,3 +91,5 @@ export function StatusBadge({ type, status, className = '' }: StatusBadgeProps) 
       );
   }
 }
+
+export const StatusBadge = SuperadminGymsDirectoryStatusBadge;

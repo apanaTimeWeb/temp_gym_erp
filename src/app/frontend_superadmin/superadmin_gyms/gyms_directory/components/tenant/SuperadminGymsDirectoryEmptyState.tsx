@@ -3,19 +3,21 @@
 import React from 'react';
 import { SearchX } from 'lucide-react';
 
-interface EmptyStateProps {
+export interface SuperadminGymsDirectoryEmptyStateProps {
   title?: string;
   description?: string;
   onClearFilters?: () => void;
   actionText?: string;
 }
 
-export function EmptyState({
+export type EmptyStateProps = SuperadminGymsDirectoryEmptyStateProps;
+
+export function SuperadminGymsDirectoryEmptyState({
   title = 'No gyms found',
   description = 'Try adjusting your search criteria or clearing active filters.',
   onClearFilters,
   actionText = 'Clear filters',
-}: EmptyStateProps) {
+}: SuperadminGymsDirectoryEmptyStateProps) {
   return (
     <div
       role="status"
@@ -38,3 +40,5 @@ export function EmptyState({
     </div>
   );
 }
+
+export const EmptyState = SuperadminGymsDirectoryEmptyState;

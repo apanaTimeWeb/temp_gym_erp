@@ -20,11 +20,11 @@ import {
   Calendar,
 } from 'lucide-react';
 import { useTenantEvents, usePlans } from '../../services/tenantService';
-import { StatusBadge } from './StatusBadge';
-import { PlanBadge } from './PlanBadge';
-import { DaysLeftBadge } from './DaysLeftBadge';
-import { ErrorState } from './ErrorState';
-import { EmptyState } from './EmptyState';
+import { StatusBadge } from './SuperadminGymsDirectoryStatusBadge';
+import { PlanBadge } from './SuperadminGymsDirectoryPlanBadge';
+import { DaysLeftBadge } from './SuperadminGymsDirectoryDaysLeftBadge';
+import { ErrorState } from './SuperadminGymsDirectoryErrorState';
+import { EmptyState } from './SuperadminGymsDirectoryEmptyState';
 import CopyButton from '@/components/ui/CopyButton';
 import {
   getMrr,
@@ -35,12 +35,14 @@ import {
 } from '../../utils/tenant';
 import type { Tenant, TenantEvent } from '../../types/tenant';
 
-interface TenantHistoryDrawerProps {
+export interface SuperadminGymsDirectoryTenantHistoryDrawerProps {
   isOpen: boolean;
   tenant: Tenant | null;
   initialTab?: 'overview' | 'subscription' | 'history';
   onClose: () => void;
 }
+
+export type TenantHistoryDrawerProps = SuperadminGymsDirectoryTenantHistoryDrawerProps;
 
 function TenantHistoryDrawerContent({
   tenant,
@@ -521,12 +523,12 @@ function TenantHistoryDrawerContent({
   );
 }
 
-export function TenantHistoryDrawer({
+export function SuperadminGymsDirectoryTenantHistoryDrawer({
   isOpen,
   tenant,
   initialTab = 'history',
   onClose,
-}: TenantHistoryDrawerProps) {
+}: SuperadminGymsDirectoryTenantHistoryDrawerProps) {
   if (!isOpen || !tenant) return null;
   return (
     <TenantHistoryDrawerContent
@@ -537,3 +539,5 @@ export function TenantHistoryDrawer({
     />
   );
 }
+
+export const TenantHistoryDrawer = SuperadminGymsDirectoryTenantHistoryDrawer;

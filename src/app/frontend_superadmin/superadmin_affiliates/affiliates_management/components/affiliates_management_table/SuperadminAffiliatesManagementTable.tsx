@@ -109,7 +109,7 @@ export default function SuperadminAffiliatesManagementTable({
       )}
       <div className="overflow-x-auto flex-1">
         <table className={`w-full text-start border-collapse ${MOBILE_CARD_TABLE_CLASSES}`}>
-          <thead>
+          <thead className="sticky top-0 z-20 bg-primary-subtle border-b border-border shadow-xs">
             <tr className="bg-primary-subtle border-b border-border" data-testid="superadmin_affiliates-superadmin-affiliates-table-affiliates-table-action-1">
               <th className="sticky start-0 z-20 bg-primary-subtle border-b border-border w-12 px-4 py-3 text-center">
                 <input

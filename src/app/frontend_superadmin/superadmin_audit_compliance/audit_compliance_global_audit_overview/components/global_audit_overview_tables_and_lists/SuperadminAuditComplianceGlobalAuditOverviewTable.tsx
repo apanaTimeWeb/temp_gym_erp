@@ -22,7 +22,7 @@ export default function SuperadminAuditComplianceGlobalAuditOverviewTable({ logs
   return (
     <div className="overflow-x-auto flex-1">
       <table className="w-full text-start border-collapse">
-        <thead>
+        <thead className="sticky top-0 z-20 bg-primary-subtle border-b border-border shadow-xs">
           <tr className="border-b border-border bg-primary-subtle">
             <th scope="col" className="sticky start-0 z-20 bg-primary-subtle border-b border-e border-border whitespace-nowrap px-6 py-3 text-start text-xs font-bold uppercase tracking-wider text-secondary">
               {t('ui.timestamp_a3d5de3e')}

@@ -4,12 +4,14 @@ import React from 'react';
 import { AlertCircle, Clock, Calendar } from 'lucide-react';
 import { getDaysLeft } from '../../utils/tenant';
 
-interface DaysLeftBadgeProps {
+export interface SuperadminGymsDirectoryDaysLeftBadgeProps {
   expiryDateStr?: string | null;
   className?: string;
 }
 
-export function DaysLeftBadge({ expiryDateStr, className = '' }: DaysLeftBadgeProps) {
+export type DaysLeftBadgeProps = SuperadminGymsDirectoryDaysLeftBadgeProps;
+
+export function SuperadminGymsDirectoryDaysLeftBadge({ expiryDateStr, className = '' }: SuperadminGymsDirectoryDaysLeftBadgeProps) {
   const result = getDaysLeft(expiryDateStr);
 
   if (result.isExpired) {
@@ -46,3 +48,5 @@ export function DaysLeftBadge({ expiryDateStr, className = '' }: DaysLeftBadgePr
     </span>
   );
 }
+
+export const DaysLeftBadge = SuperadminGymsDirectoryDaysLeftBadge;

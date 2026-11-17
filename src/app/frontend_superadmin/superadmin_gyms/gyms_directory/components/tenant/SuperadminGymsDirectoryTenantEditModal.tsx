@@ -4,7 +4,7 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { X, ChevronRight, Eye, EyeOff, Loader2, AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { usePlans, useUpdateTenant } from '../../services/tenantService';
-import { ConfirmDialog } from './ConfirmDialog';
+import { ConfirmDialog } from './SuperadminGymsDirectoryConfirmDialog';
 import {
   validateGymName,
   validateEmail,
@@ -14,12 +14,14 @@ import {
 import { formatIstDate } from '../../utils/tenant';
 import type { Tenant, UpdateTenantInput } from '../../types/tenant';
 
-interface TenantEditModalProps {
+export interface SuperadminGymsDirectoryTenantEditModalProps {
   isOpen: boolean;
   tenant: Tenant | null;
   onClose: () => void;
   onSuccess?: () => void;
 }
+
+export type TenantEditModalProps = SuperadminGymsDirectoryTenantEditModalProps;
 
 function TenantEditModalContent({
   tenant,
@@ -589,12 +591,12 @@ function TenantEditModalContent({
   );
 }
 
-export function TenantEditModal({
+export function SuperadminGymsDirectoryTenantEditModal({
   isOpen,
   tenant,
   onClose,
   onSuccess,
-}: TenantEditModalProps) {
+}: SuperadminGymsDirectoryTenantEditModalProps) {
   if (!isOpen || !tenant) return null;
   return (
     <TenantEditModalContent
@@ -605,3 +607,5 @@ export function TenantEditModal({
     />
   );
 }
+
+export const TenantEditModal = SuperadminGymsDirectoryTenantEditModal;

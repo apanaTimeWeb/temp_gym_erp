@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AlertTriangle, X, Loader2 } from 'lucide-react';
 
-export interface ConfirmDialogProps {
+export interface SuperadminGymsDirectoryConfirmDialogProps {
   isOpen: boolean;
   title: string;
   description: string;
@@ -20,6 +20,8 @@ export interface ConfirmDialogProps {
   onConfirm: (data: { reason: string; note: string }) => void | Promise<void>;
   onClose: () => void;
 }
+
+export type ConfirmDialogProps = SuperadminGymsDirectoryConfirmDialogProps;
 
 const DEFAULT_REASONS = [
   'Non-payment of subscription dues',
@@ -262,7 +264,9 @@ function ConfirmDialogContent({
   );
 }
 
-export function ConfirmDialog(props: ConfirmDialogProps) {
+export function SuperadminGymsDirectoryConfirmDialog(props: SuperadminGymsDirectoryConfirmDialogProps) {
   if (!props.isOpen) return null;
   return <ConfirmDialogContent key="open" {...props} />;
 }
+
+export const ConfirmDialog = SuperadminGymsDirectoryConfirmDialog;

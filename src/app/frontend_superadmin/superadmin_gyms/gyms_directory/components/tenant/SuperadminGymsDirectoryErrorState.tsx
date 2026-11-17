@@ -3,19 +3,21 @@
 import React from 'react';
 import { AlertCircle, RefreshCw } from 'lucide-react';
 
-interface ErrorStateProps {
+export interface SuperadminGymsDirectoryErrorStateProps {
   title?: string;
   message?: string;
   onRetry?: () => void;
   retryText?: string;
 }
 
-export function ErrorState({
+export type ErrorStateProps = SuperadminGymsDirectoryErrorStateProps;
+
+export function SuperadminGymsDirectoryErrorState({
   title = 'Failed to load data',
   message = 'An error occurred while communicating with the server. Please check your connection and try again.',
   onRetry,
   retryText = 'Retry',
-}: ErrorStateProps) {
+}: SuperadminGymsDirectoryErrorStateProps) {
   return (
     <div
       role="alert"
@@ -39,3 +41,5 @@ export function ErrorState({
     </div>
   );
 }
+
+export const ErrorState = SuperadminGymsDirectoryErrorState;

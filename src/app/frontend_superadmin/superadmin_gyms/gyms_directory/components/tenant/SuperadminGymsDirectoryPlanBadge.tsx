@@ -3,12 +3,14 @@
 import React from 'react';
 import { findPlan } from '../../constants/plans';
 
-interface PlanBadgeProps {
+export interface SuperadminGymsDirectoryPlanBadgeProps {
   planIdOrName?: string;
   className?: string;
 }
 
-export function PlanBadge({ planIdOrName, className = '' }: PlanBadgeProps) {
+export type PlanBadgeProps = SuperadminGymsDirectoryPlanBadgeProps;
+
+export function SuperadminGymsDirectoryPlanBadge({ planIdOrName, className = '' }: SuperadminGymsDirectoryPlanBadgeProps) {
   const plan = findPlan(planIdOrName);
   const planKey = (plan?.id || planIdOrName || 'starter').toLowerCase();
   const displayName = plan?.name || planIdOrName?.toUpperCase() || 'STARTER';
@@ -41,3 +43,5 @@ export function PlanBadge({ planIdOrName, className = '' }: PlanBadgeProps) {
     </span>
   );
 }
+
+export const PlanBadge = SuperadminGymsDirectoryPlanBadge;

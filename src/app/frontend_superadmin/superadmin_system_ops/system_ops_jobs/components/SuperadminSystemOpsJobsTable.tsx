@@ -56,7 +56,7 @@ export default function SuperadminSystemOpsJobsTable({ jobs, allJobsFiltered, se
       )}
       <div className="overflow-x-auto flex-1">
       <table className={`w-full text-start border-collapse min-w-full ${MOBILE_CARD_TABLE_CLASSES}`}>
-        <thead>
+        <thead className="sticky top-0 z-20 bg-primary-subtle border-b border-border shadow-xs">
           <tr className="bg-primary-subtle border-b border-border text-sm" data-testid="superadmin_system_ops_jobs-superadmin-system-ops-jobs-table-jobs-table-action-1">
             <th className="sticky start-0 z-20 bg-primary-subtle border-b border-border p-4 w-12 text-center">
               <input  type="checkbox" aria-label={t('ui.select_all_visible_jobs_33ef689')} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page rounded border-border text-primary cursor-pointer w-4 h-4 min-h-11 min-w-11 motion-safe:transition-all motion-safe:duration-base ease-in-out" checked={jobs.length > 0 && jobs.every((job) => selectedJobIds.has(job.id))} onChange={() => toggleAll(jobs.map((job) => job.id))} data-testid="superadmin_system_ops_jobs-superadmin-system-ops-jobs-table-jobs-table-select-all"/>

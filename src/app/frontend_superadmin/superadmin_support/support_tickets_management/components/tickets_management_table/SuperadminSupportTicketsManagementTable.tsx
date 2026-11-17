@@ -123,7 +123,7 @@ export default function SuperadminSupportTicketsManagementTable({
       )}
       <div className="overflow-x-auto flex-1">
         <table className={`w-full text-start border-collapse min-w-max ${MOBILE_CARD_TABLE_CLASSES}`}>
-          <thead>
+          <thead className="sticky top-0 z-20 bg-primary-subtle border-b border-border shadow-xs">
             <tr className="bg-primary-subtle border-b border-border text-sm" data-testid="superadmin_support_tickets-superadmin-tickets-table-tickets-table-action-1">
               <th className="sticky start-0 z-20 bg-primary-subtle border-b border-border w-12 px-4 py-3 text-center">
                 <input

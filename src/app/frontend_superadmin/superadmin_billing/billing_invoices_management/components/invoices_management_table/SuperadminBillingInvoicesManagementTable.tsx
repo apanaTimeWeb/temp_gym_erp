@@ -123,7 +123,7 @@ export default function SuperadminBillingInvoicesManagementTable({
       {/* Scrollable Viewport with Sticky Start Columns */}
       <div className="overflow-x-auto flex-1">
         <table className="w-full text-start border-collapse min-w-full">
-          <thead>
+          <thead className="sticky top-0 z-20 bg-primary-subtle border-b border-border shadow-xs">
             <tr className="bg-primary-subtle border-b border-border text-sm">
               {/* 1. Multi-Select Checkbox (Sticky Start-0) */}
               <th className="w-12 px-4 py-3 text-center sticky start-0 z-20 bg-primary-subtle border-b border-border">
