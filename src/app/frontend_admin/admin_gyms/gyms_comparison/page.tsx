@@ -6,9 +6,9 @@ import { useState, useMemo } from 'react';
 import { useLocale } from 'next-intl';
 import { Building2, BarChart3, Download, Printer, Search, X } from 'lucide-react';
 import { MOCK_BRANCHES } from '@/app/frontend_admin/admin_gyms/gyms_branches_directory/mocks/fixtures/AdminGymsBranchesDirectoryMockFixtures';
-import { GymsComparisonKpis } from './components/GymsComparisonKpis';
-import { GymsComparisonCharts } from './components/GymsComparisonCharts';
-import { GymsComparisonTable } from './components/GymsComparisonTable';
+import { AdminGymsComparisonKpis } from './components/AdminGymsComparisonKpis';
+import { AdminGymsComparisonCharts } from './components/AdminGymsComparisonCharts';
+import { AdminGymsComparisonTable } from './components/AdminGymsComparisonTable';
 
 export default function GymsComparisonPage() {
   const locale = useLocale();
@@ -105,7 +105,7 @@ export default function GymsComparisonPage() {
       </header>
 
       {/* Benchmark Summary KPI Cards */}
-      <GymsComparisonKpis formatCurrency={formatCurrency} />
+      <AdminGymsComparisonKpis formatCurrency={formatCurrency} />
 
       {/* Branch Filter Selector */}
       <section className="rounded-2xl border border-border bg-card p-4 space-y-3">
@@ -203,7 +203,7 @@ export default function GymsComparisonPage() {
       </section>
 
       {/* Side-by-Side Visual Benchmarking Chart */}
-      <GymsComparisonCharts
+      <AdminGymsComparisonCharts
         branches={branches}
         maxRevenue={maxRevenue}
         maxMembers={maxMembers}
@@ -211,7 +211,7 @@ export default function GymsComparisonPage() {
       />
 
       {/* Comprehensive Side-by-Side Comparison Table */}
-      <GymsComparisonTable
+      <AdminGymsComparisonTable
         branches={branches}
         metricFilter={metricFilter}
         formatCurrency={formatCurrency}

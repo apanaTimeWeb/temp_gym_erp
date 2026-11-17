@@ -2,8 +2,8 @@
 'use client';
 import { Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import ManagerWorkoutPlansExerciseTable from '@/app/frontend_manager/manager_workout_diet_library/exercise_library/components/ManagerWorkoutPlansExerciseTable';
-import ManagerWorkoutPlansExerciseModal from '@/app/frontend_manager/manager_workout_diet_library/exercise_library/components/ManagerWorkoutPlansExerciseModal';
+import ManagerExerciseLibraryExerciseTable from '@/app/frontend_manager/manager_workout_diet_library/exercise_library/components/ManagerExerciseLibraryExerciseTable';
+import ManagerExerciseLibraryExerciseModal from '@/app/frontend_manager/manager_workout_diet_library/exercise_library/components/ManagerExerciseLibraryExerciseModal';
 import { useManagerWorkoutPlansLogic } from '@/app/frontend_manager/manager_workout_diet_library/exercise_library/hooks/useManagerWorkoutPlansLogic';
 
 export default function ExerciseLibraryMain() {
@@ -17,8 +17,8 @@ export default function ExerciseLibraryMain() {
           <Plus size={18} aria-hidden="true" />{t('COPY_ADD_EXERCISE')}
         </button>
       </div>
-      <ManagerWorkoutPlansExerciseTable />
-      <ManagerWorkoutPlansExerciseModal />
+      <ManagerExerciseLibraryExerciseTable />
+      <ManagerExerciseLibraryExerciseModal />
     </section>
   );
 }

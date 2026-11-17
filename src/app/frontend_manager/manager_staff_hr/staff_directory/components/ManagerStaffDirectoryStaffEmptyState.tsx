@@ -9,11 +9,11 @@ import type { ManagerStaffPayrollAndAttendanceStaffEmptyStateProps } from '@/app
 
 /** @description Empty-state presentation for the Manager HR staff list, including search-adjustment messaging. */
 /**
- * @description Renders ManagerStaffPayrollAndAttendanceStaffEmptyState, the manager hr UI responsibility owned by this module.
+ * @description Renders ManagerStaffDirectoryStaffEmptyState, the manager hr UI responsibility owned by this module.
  * @dependencies Consumes module-owned hooks/state and approved zero-business UI primitives; no business behavior is delegated to global components.
  * @edge-case Handles the documented loading, empty, error, disabled, keyboard, responsive, and recovery states without introducing cross-feature ownership.
  */
-export default function ManagerStaffPayrollAndAttendanceStaffEmptyState({ hasSearch }: ManagerStaffPayrollAndAttendanceStaffEmptyStateProps) {
+export default function ManagerStaffDirectoryStaffEmptyState({ hasSearch }: ManagerStaffPayrollAndAttendanceStaffEmptyStateProps) {
   const t = useTranslations('MANAGER_STAFF_PAYROLL_AND_ATTENDANCE');
   return (
     <ManagerEmptyState
@@ -24,3 +24,6 @@ export default function ManagerStaffPayrollAndAttendanceStaffEmptyState({ hasSea
     />
   );
 }
+
+export const ManagerStaffPayrollAndAttendanceStaffEmptyState = ManagerStaffDirectoryStaffEmptyState;
+

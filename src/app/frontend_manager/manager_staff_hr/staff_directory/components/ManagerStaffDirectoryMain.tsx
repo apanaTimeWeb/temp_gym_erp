@@ -3,9 +3,9 @@
 
 import { useTranslations } from 'next-intl';
 
-import ManagerStaffPayrollAndAttendanceStaffTable from '@/app/frontend_manager/manager_staff_hr/staff_directory/components/ManagerStaffDirectoryStaffTable';
-import ManagerStaffPayrollAndAttendanceStaffModal from '@/app/frontend_manager/manager_staff_hr/staff_directory/components/ManagerStaffDirectoryStaffModal';
-import ManagerStaffPayrollAndAttendanceStaffProfileModal from '@/app/frontend_manager/manager_staff_hr/staff_directory/components/ManagerStaffDirectoryStaffProfileModal';
+import ManagerStaffDirectoryStaffTable from '@/app/frontend_manager/manager_staff_hr/staff_directory/components/ManagerStaffDirectoryStaffTable';
+import ManagerStaffDirectoryStaffModal from '@/app/frontend_manager/manager_staff_hr/staff_directory/components/ManagerStaffDirectoryStaffModal';
+import ManagerStaffDirectoryStaffProfileModal from '@/app/frontend_manager/manager_staff_hr/staff_directory/components/ManagerStaffDirectoryStaffProfileModal';
 import ManagerStaffDirectoryLocalToast from '@/app/frontend_manager/manager_staff_hr/staff_directory/components/ManagerStaffDirectoryLocalToast';
 import { HR_ROLE_FILTER_OPTIONS } from '@/app/frontend_manager/manager_staff_hr/staff_directory/constants/manager_staff_payroll_and_attendance_shared.constants';
 import { ManagerStaffDirectoryProvider } from '@/app/frontend_manager/manager_staff_hr/staff_directory/hooks/useManagerStaffDirectoryUIState';
@@ -80,9 +80,9 @@ export default function StaffDirectoryMain() {
           dismissLabel={t('COPY_CANCEL_1')}
         />
 
-        <ManagerStaffPayrollAndAttendanceStaffTable />
-        <ManagerStaffPayrollAndAttendanceStaffModal />
-        <ManagerStaffPayrollAndAttendanceStaffProfileModal />
+        <ManagerStaffDirectoryStaffTable />
+        <ManagerStaffDirectoryStaffModal />
+        <ManagerStaffDirectoryStaffProfileModal />
       </section>
     </ManagerStaffDirectoryProvider>
   );

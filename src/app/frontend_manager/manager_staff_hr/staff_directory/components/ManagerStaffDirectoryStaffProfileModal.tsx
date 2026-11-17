@@ -1,4 +1,4 @@
-// RESPONSIBILITY: Renders ManagerStaffPayrollAndAttendanceStaffProfileModal's feature UI and orchestrates presentation through module-owned state/hooks; it does not own API transport or business rules.
+// RESPONSIBILITY: Renders ManagerStaffDirectoryStaffProfileModal's feature UI and orchestrates presentation through module-owned state/hooks; it does not own API transport or business rules.
 'use client';
 import { X, Edit2, Phone, Mail, Calendar, MapPin, IndianRupee, Hash } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
@@ -11,8 +11,8 @@ import { useManagerStaffDirectoryContext } from '@/app/frontend_manager/manager_
 import { ManagerStaffPayrollAndAttendanceFormatCurrency, ManagerStaffPayrollAndAttendanceFormatDate, ManagerStaffPayrollAndAttendanceMaskSensitiveData } from '@/app/frontend_manager/manager_staff_hr/staff_directory/utils/ManagerStaffDirectoryFormatters';
 
 
-/** @description Renders the ManagerStaffPayrollAndAttendanceStaffProfileModal component for its owning Manager frontend boundary. @dependencies Local dependencies are owned by this feature module (4 documented module/import dependencies).. @edge-case Preserves modal lifecycle. */
-export default function ManagerStaffPayrollAndAttendanceStaffProfileModal() {
+/** @description Renders the ManagerStaffDirectoryStaffProfileModal component for its owning Manager frontend boundary. @dependencies Local dependencies are owned by this feature module (4 documented module/import dependencies).. @edge-case Preserves modal lifecycle. */
+export default function ManagerStaffDirectoryStaffProfileModal() {
   const t = useTranslations('MANAGER_STAFF_PAYROLL_AND_ATTENDANCE');
   const locale = useLocale();
 
@@ -144,3 +144,6 @@ export default function ManagerStaffPayrollAndAttendanceStaffProfileModal() {
     </div>
   );
 }
+
+export const ManagerStaffPayrollAndAttendanceStaffProfileModal = ManagerStaffDirectoryStaffProfileModal;
+

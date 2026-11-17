@@ -8,15 +8,15 @@ import { useTranslations } from 'next-intl';
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
 import { STAFF_TABLE_HEADERS } from '@/app/frontend_manager/manager_staff_hr/staff_directory/constants/manager_staff_payroll_and_attendance_shared.constants';
 
-import ManagerStaffPayrollAndAttendanceStaffTableContent from '@/app/frontend_manager/manager_staff_hr/staff_directory/components/ManagerStaffDirectoryStaffTableContent';
+import ManagerStaffDirectoryStaffTableContent from '@/app/frontend_manager/manager_staff_hr/staff_directory/components/ManagerStaffDirectoryStaffTableContent';
 import { useManagerStaffDirectoryContext } from '@/app/frontend_manager/manager_staff_hr/staff_directory/hooks/useManagerStaffDirectoryUIState';
 
 // Rule 71 FIX: toggleStaffStatus now uses useConfirm() modal before firing.
 // Rule 48 FIX: Uses ManagerEmptyState component for empty state.
 
 
-/** @description Renders the ManagerStaffPayrollAndAttendanceStaffTable component for its owning Manager frontend boundary. @dependencies Local dependencies are owned by this feature module (8 documented module/import dependencies).. @edge-case Preserves loading state, empty state, modal lifecycle, responsive behavior. */
-export default function ManagerStaffPayrollAndAttendanceStaffTable() {
+/** @description Renders the ManagerStaffDirectoryStaffTable component for its owning Manager frontend boundary. @dependencies Local dependencies are owned by this feature module (8 documented module/import dependencies).. @edge-case Preserves loading state, empty state, modal lifecycle, responsive behavior. */
+export default function ManagerStaffDirectoryStaffTable() {
   const t = useTranslations('MANAGER_STAFF_PAYROLL_AND_ATTENDANCE');
   const staffTableHeaderKeys = [
     'TEXT_STAFF_FIELD_FULL_NAME',
@@ -99,7 +99,7 @@ export default function ManagerStaffPayrollAndAttendanceStaffTable() {
          type="button">
           <Download size={18} strokeWidth={2}/>{t("COPY_EXPORT_CSV")}</button>
       </div>
-      <ManagerStaffPayrollAndAttendanceStaffTableContent
+      <ManagerStaffDirectoryStaffTableContent
         staff={staff}
         totalStaff={totalStaff}
         debouncedSearch={debouncedSearch}
@@ -113,3 +113,6 @@ export default function ManagerStaffPayrollAndAttendanceStaffTable() {
     </div>
   );
 }
+
+export const ManagerStaffPayrollAndAttendanceStaffTable = ManagerStaffDirectoryStaffTable;
+

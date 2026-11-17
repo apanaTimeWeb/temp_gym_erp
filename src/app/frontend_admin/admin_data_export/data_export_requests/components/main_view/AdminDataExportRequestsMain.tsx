@@ -15,7 +15,7 @@ import {
   generateDataPayload,
   triggerDownload,
 } from '../../utils/AdminDataExportDownloadUtils';
-import { AdminDataExportPresets } from '../presets/AdminDataExportPresets';
+import { AdminDataExportRequestsPresets } from '../presets/AdminDataExportRequestsPresets';
 
 export default function AdminDataExportRequestsMain() {
   const t = useTranslations('data-export.AdminDataExportPage');
@@ -259,7 +259,7 @@ export default function AdminDataExportRequestsMain() {
       </section>
 
       {/* QUICK PRESET DATASETS */}
-      <AdminDataExportPresets />
+      <AdminDataExportRequestsPresets />
     </main>
   );
 }

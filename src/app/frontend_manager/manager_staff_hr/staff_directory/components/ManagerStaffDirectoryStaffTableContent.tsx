@@ -10,7 +10,7 @@ import { useConfirm } from '@/components/ui/manager_confirm_provider/ManagerConf
 import ManagerPagination from '@/components/ui/manager_pagination/ManagerPagination';
 import { ManagerEnvConfig } from '@/app/frontend_manager/manager_infrastructure/constants/ManagerInfrastructureEnvConfig';
 import { MANAGER_ITEMS_PER_PAGE } from '@/app/frontend_manager/manager_infrastructure/constants/ManagerInfrastructurePaginationDefaults';
-import ManagerStaffPayrollAndAttendanceStaffEmptyState from '@/app/frontend_manager/manager_staff_hr/staff_directory/components/ManagerStaffDirectoryStaffEmptyState';
+import ManagerStaffDirectoryStaffEmptyState from '@/app/frontend_manager/manager_staff_hr/staff_directory/components/ManagerStaffDirectoryStaffEmptyState';
 import { STAFF_TABLE_HEADERS } from '@/app/frontend_manager/manager_staff_hr/staff_directory/constants/manager_staff_payroll_and_attendance_shared.constants';
 import { ManagerStaffPayrollAndAttendanceDisplayValue, ManagerStaffPayrollAndAttendanceFormatCurrency, ManagerStaffPayrollAndAttendanceFormatDate, ManagerStaffPayrollAndAttendanceMaskSensitiveData } from '@/app/frontend_manager/manager_staff_hr/staff_directory/utils/ManagerStaffDirectoryFormatters';
 import type { Staff } from '@/app/frontend_manager/manager_staff_hr/staff_directory/types/manager_staff_hr_staff_directory.types';
@@ -20,7 +20,7 @@ type Props = {
   openEdit: (staff: Staff) => void; deleteStaff: (id: string) => Promise<void>; toggleStaffStatus: (staff: Staff) => Promise<void>;
   setViewProfileData: (staff: Staff | null) => void;
 };
-export default function ManagerStaffPayrollAndAttendanceStaffTableContent({ staff, totalStaff, debouncedSearch, currentPage, setCurrentPage, openEdit, deleteStaff, toggleStaffStatus, setViewProfileData }: Props) {
+export default function ManagerStaffDirectoryStaffTableContent({ staff, totalStaff, debouncedSearch, currentPage, setCurrentPage, openEdit, deleteStaff, toggleStaffStatus, setViewProfileData }: Props) {
   const t = useTranslations('MANAGER_STAFF_PAYROLL_AND_ATTENDANCE');
   const locale = useLocale();
   const { confirm } = useConfirm();
@@ -158,7 +158,7 @@ export default function ManagerStaffPayrollAndAttendanceStaffTableContent({ staf
             {staff.length === 0 && (
               <tr>
                 <td colSpan={STAFF_TABLE_HEADERS.length + 1} className="p-0 border-b-0">
-                  <ManagerStaffPayrollAndAttendanceStaffEmptyState hasSearch={Boolean(debouncedSearch)} />
+                  <ManagerStaffDirectoryStaffEmptyState hasSearch={Boolean(debouncedSearch)} />
                 </td>
               </tr>
             )}
@@ -202,7 +202,7 @@ export default function ManagerStaffPayrollAndAttendanceStaffTableContent({ staf
           </article>
         ))}
         {staff.length === 0 && (
-          <div className="p-0"><ManagerStaffPayrollAndAttendanceStaffEmptyState hasSearch={Boolean(debouncedSearch)} /></div>
+          <div className="p-0"><ManagerStaffDirectoryStaffEmptyState hasSearch={Boolean(debouncedSearch)} /></div>
         )}
       </div>
       <ManagerPagination data-testid="manager_hr-managerhrstafftable-managerpagination-1" 
@@ -215,3 +215,6 @@ export default function ManagerStaffPayrollAndAttendanceStaffTableContent({ staf
     </>
   );
 }
+
+export const ManagerStaffPayrollAndAttendanceStaffTableContent = ManagerStaffDirectoryStaffTableContent;
+
