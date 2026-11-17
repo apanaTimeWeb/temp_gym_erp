@@ -3,7 +3,7 @@
 // DATA FLOW: props (from TrainerAttendanceMain) → URL state via useTrainerAttendanceFilters setters
 import { useEffect, useState } from 'react';
 
-import { RefreshCw, Search, Calendar as CalendarIcon, List, Plus, LogIn, LogOut, Loader2 } from 'lucide-react';
+import { RefreshCw, Search, Calendar as CalendarIcon, List, Plus, LogIn, LogOut, Loader2, X } from 'lucide-react';
 
 import { useTranslations } from 'next-intl';
 
@@ -42,6 +42,7 @@ export default function TrainerAttendanceToolbar({
 
   useEffect(() => { setLocalSearch(search); }, [search]);
 
+  const hasFilter = Boolean(localSearch.trim()) || filterDate !== 'ALL_TIME';
 
   return (
     <div className="border-b border-border flex flex-col sm:flex-row justify-between items-start sm:items-center flex-wrap">
@@ -63,7 +64,7 @@ export default function TrainerAttendanceToolbar({
       </div>
 
       {/* Controls */}
-      <div className="px-4 py-2.5 flex flex-wrap gap-2 items-center ">
+      <div className="px-4 py-2.5 flex flex-wrap gap-2.5 items-center ">
         {/* My Attendance view toggle */}
         {tab === 'MY_ATTENDANCE' && setViewMode && (
           <div className="flex bg-input border border-border rounded-lg p-0.5 ">
@@ -83,15 +84,25 @@ export default function TrainerAttendanceToolbar({
         )}
 
         {/* Search */}
-        <div className="relative ">
-          <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary "  strokeWidth={2}/>
+        <div className="relative min-w-[200px] sm:w-64">
+          <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none"  strokeWidth={2}/>
           <label htmlFor="trainer-attendance-search" className="sr-only ">{t('TEXT_SEARCH_PLACEHOLDER')}</label>
           <input
             id="trainer-attendance-search"
             value={localSearch}
             onChange={e => { const value = e.target.value; setLocalSearch(value); setSearch(value); }}
             placeholder={t('TEXT_SEARCH_PLACEHOLDER')}
-            className="ps-9 pe-3 py-2 border border-border bg-input text-primary rounded-lg text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring w-40 sm:w-56  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_attendance-trainerattendancetoolbar-input_4"/>
+            className="ps-9 pe-8 py-2 border border-border bg-input text-primary rounded-lg text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring w-full motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out" data-testid="trainer_attendance-trainerattendancetoolbar-input_4"/>
+          {localSearch && (
+            <button
+              type="button"
+              onClick={() => { setLocalSearch(''); setSearch(''); }}
+              className="absolute end-2.5 top-1/2 -translate-y-1/2 text-secondary hover:text-primary p-0.5 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring"
+              aria-label="Clear search"
+            >
+              <X size={14} />
+            </button>
+          )}
         </div>
 
         {/* Date filter */}
@@ -103,6 +114,20 @@ export default function TrainerAttendanceToolbar({
           ariaLabel={t("TEXT_FILTER_BY_DATE")}
           className="w-36 "
          testId="trainer-attendance-attendance-toolbar-filter"/>
+
+        {hasFilter && (
+          <button
+            type="button"
+            onClick={() => {
+              setLocalSearch('');
+              setSearch('');
+              setFilterDate('ALL_TIME');
+            }}
+            className="min-h-9 inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-secondary hover:text-danger rounded-lg border border-border hover:bg-input motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+          >
+            <X size={12} /> Clear All
+          </button>
+        )}
 
         {/* Refresh */}
         <button type="button"

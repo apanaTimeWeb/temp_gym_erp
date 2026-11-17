@@ -1,6 +1,6 @@
 "use client";
 // RESPONSIBILITY: Renders the toolbar for searching and filtering members.
-import { Search, RefreshCw, Megaphone, Download } from 'lucide-react';
+import { Search, RefreshCw, Megaphone, Download, X } from 'lucide-react';
 import { useState } from 'react';
 
 import { useTranslations } from 'next-intl';
@@ -35,18 +35,30 @@ export default function TrainerMembersToolbar() {
     handleRefresh
   } = useTrainerMembersToolbar();
 
+  const hasActiveFilters = Boolean(localSearch.trim()) || statusFilter !== 'All' || progressStatusFilter !== 'All';
+
   return (
     <div className="bg-card rounded-xl shadow-card border border-border p-4 flex flex-wrap gap-3 items-center justify-between ">
-      <div className="relative ">
-        <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary "  strokeWidth={2}/>
+      <div className="relative min-w-[240px] sm:w-72">
+        <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" strokeWidth={2}/>
         <label htmlFor="trainer-members-search" className="sr-only ">{t("TEXT_SEARCH_BY_NAME_OR_PHONE")}</label>
         <input id="trainer-members-search" 
           value={localSearch} 
           onChange={e => setLocalSearch(e.target.value)} 
           placeholder={t("TEXT_SEARCH_BY_NAME_OR_PHONE")} 
-          className="ps-9 pe-3 py-2.5 border border-border rounded-xl text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none w-full sm:w-64 bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_members-trainermemberstoolbar-input_1"/>
+          className="ps-9 pe-8 py-2.5 border border-border rounded-xl text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring w-full bg-input text-primary motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out" data-testid="trainer_members-trainermemberstoolbar-input_1"/>
+        {localSearch && (
+          <button
+            type="button"
+            onClick={() => setLocalSearch('')}
+            className="absolute end-2.5 top-1/2 -translate-y-1/2 text-secondary hover:text-primary p-1 rounded-md focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring"
+            aria-label="Clear search"
+          >
+            <X size={15} />
+          </button>
+        )}
       </div>
-      <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto items-center flex-wrap">
+      <div className="flex flex-col sm:flex-row gap-2.5 w-full sm:w-auto items-center flex-wrap">
         <TrainerInfrastructureSearchableDropdown
           value={statusFilter}
           onChange={(val: string | number) => setStatusFilter(String(val))}
@@ -62,6 +74,21 @@ export default function TrainerMembersToolbar() {
           ariaLabel={t("TEXT_PROGRESS_STATUS")}
          testId="trainer-members-members-toolbar-progress-status-filter"/>
         
+        {hasActiveFilters && (
+          <button
+            type="button"
+            onClick={() => {
+              setLocalSearch('');
+              setStatusFilter('All');
+              setProgressStatusFilter('All');
+            }}
+            className="min-h-11 inline-flex items-center gap-1.5 px-3 py-2.5 text-xs font-semibold text-secondary hover:text-danger rounded-xl border border-border hover:bg-input motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            data-testid="trainer-members-clear-all"
+          >
+            <X size={14} /> Clear All
+          </button>
+        )}
+
         <button
           type="button"
           onClick={() => setShowBroadcastModal(true)}

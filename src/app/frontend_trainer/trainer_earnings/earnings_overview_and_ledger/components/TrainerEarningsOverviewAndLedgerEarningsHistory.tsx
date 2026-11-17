@@ -211,9 +211,10 @@ export default function TrainerEarningsHistory() {
                       >
                         <td className="sticky start-0 z-10 bg-card border-e border-border py-3 px-4 text-sm text-secondary whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
                           <div className="flex items-center gap-2">
-                            <span>{TrainerEarningsFormatDate(row.date, locale)}</span>
+                            <span className="font-bold text-primary text-sm">{TrainerEarningsFormatDate(row.date, locale)}</span>
                             <CopyButton value={TrainerEarningsFormatDate(row.date, locale)} />
                           </div>
+                          <p className="text-xs text-secondary font-mono flex items-center gap-1.5 mt-0.5">#{row.id.slice(-6)}</p>
                         </td>
                         <td className="py-3 px-4">
                           <TrainerInfrastructureTooltip content={row.description}>

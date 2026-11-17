@@ -92,9 +92,10 @@ export default function TrainerProgressTrackingComparisonTable({ snapshots }: Tr
                         <div className="w-7 h-7 rounded-full bg-primary-subtle flex items-center justify-center text-primary text-xs font-bold shrink-0" aria-hidden="true">
                           {snapshot.memberName.charAt(0)}
                         </div>
-                        <span>{snapshot.memberName}</span>
+                        <span className="font-bold text-primary text-sm">{snapshot.memberName}</span>
                         <CopyButton value={snapshot.memberName} />
                       </div>
+                      <p className="text-xs text-secondary font-mono flex items-center gap-1.5 mt-0.5 ms-9">#{snapshot.memberId.slice(-6)}</p>
                     </td>
                     <td className="px-4 py-3">
                       <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border ${trend.cls}`}>

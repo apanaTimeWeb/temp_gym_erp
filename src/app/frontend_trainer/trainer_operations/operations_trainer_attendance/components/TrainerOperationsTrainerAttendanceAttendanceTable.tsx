@@ -167,11 +167,15 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
                         <div className="min-w-0">
                           <div className="flex items-center gap-2">
                             <TrainerInfrastructureTooltip content={String(displayValue(personName))}>
-                              <div className="text-sm font-medium text-primary truncate max-w-52">{displayValue(personName)}</div>
+                              <div className="text-sm font-bold text-primary truncate max-w-52">{displayValue(personName)}</div>
                             </TrainerInfrastructureTooltip>
                             <CopyButton value={String(personName ?? '')} />
                           </div>
-                          <div className="text-xs text-secondary">{record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? t('TEXT_MEMBER') : t('TEXT_STAFF')}</div>
+                          <div className="text-xs text-secondary font-mono flex items-center gap-1.5 mt-0.5">
+                            <span>#{record.id.slice(-6)}</span>
+                            <span>·</span>
+                            <span>{record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? t('TEXT_MEMBER') : t('TEXT_STAFF')}</span>
+                          </div>
                         </div>
                       </div>
                     </td>

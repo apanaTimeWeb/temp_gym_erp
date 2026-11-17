@@ -155,16 +155,17 @@ export default function TrainerWorkoutExerciseTable() {
                     <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-medium text-primary whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
                       <div className="flex items-center gap-2">
                         <TrainerInfrastructureTooltip content={String(displayValue(exercise.name))}>
-                          <span className="truncate max-w-xs inline-block">{displayValue(exercise.name)}</span>
+                          <span className="truncate max-w-xs inline-block font-bold text-primary text-sm">{displayValue(exercise.name)}</span>
                         </TrainerInfrastructureTooltip>
                         <CopyButton value={String(exercise.name ?? '')} />
                       </div>
+                      <p className="text-xs text-secondary font-mono flex items-center gap-1.5 mt-0.5">#{exercise.id.slice(-6)}</p>
                     </td>
                     <td className="px-4 py-3 text-sm text-secondary">{Array.isArray(exercise.muscleGroup) ? displayValue(exercise.muscleGroup.join(', ')) : displayValue(exercise.muscleGroup)}</td>
                     <td className="px-4 py-3"><span className="text-xs bg-input text-secondary border border-border px-2 py-1 rounded-full">{displayValue(exercise.equipment)}</span></td>
                     <td className="px-4 py-3"><span className={`text-xs px-2.5 py-0.5 rounded-full font-semibold ${TRAINER_WORKOUT_DIFFICULTY_STYLES[exercise.difficulty as keyof typeof TRAINER_WORKOUT_DIFFICULTY_STYLES] ?? 'bg-input text-secondary'}`}>{displayValue(exercise.difficulty)}</span></td>
                     <td className="px-4 py-3">
-                      <div className="flex gap-1">
+                      <div className="flex items-center gap-1.5 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100 motion-safe:transition-opacity">
                         <button type="button" aria-label={t('TEXT_EDIT_EXERCISE_ARIA', { name: exercise.name })} title={t('TEXT_EDIT_EXERCISE_ARIA', { name: exercise.name })} onClick={(event) => { event.stopPropagation(); openExerciseEditor(exercise.id); }} className="min-w-11 min-h-11 inline-flex items-center justify-center p-1.5 text-secondary hover:text-primary hover:bg-input rounded-md motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid={`trainer_workout-exercise-table-edit-${exercise.id}`}><Edit2 size={18} strokeWidth={2} aria-hidden="true" /></button>
                         <button type="button" aria-label={t('TEXT_DELETE_EXERCISE_ARIA', { name: exercise.name })} title={t('TEXT_DELETE_EXERCISE_ARIA', { name: exercise.name })} onClick={(event) => { event.stopPropagation(); void handleDelete(exercise.id); }} className="min-w-11 min-h-11 inline-flex items-center justify-center p-1.5 text-secondary hover:text-danger hover:bg-danger-bg rounded-md motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid={`trainer_workout-exercise-table-delete-${exercise.id}`}><Trash2 size={18} strokeWidth={2} aria-hidden="true" /></button>
                       </div>

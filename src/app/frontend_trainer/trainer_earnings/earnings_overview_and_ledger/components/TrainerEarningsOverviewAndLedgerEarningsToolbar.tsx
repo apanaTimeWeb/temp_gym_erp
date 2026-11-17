@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, FileText, Search } from 'lucide-react';
+import { Download, FileText, Search, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { TrainerEarningsDateField } from '@/app/frontend_trainer/trainer_earnings/earnings_overview_and_ledger/types/TrainerEarningsOverviewAndLedgerEarningsDateRangeTypes';
 
@@ -26,13 +26,23 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
   handleDateChange,
 }: TrainerEarningsToolbarProps) {
   const t = useTranslations('TRAINER_EARNINGS');
+  const hasActiveFilters = Boolean(draftSearch.trim()) || statusFilter !== 'ALL' || typeFilter !== 'ALL' || Boolean(startDate) || Boolean(endDate);
+
+  const handleClearAll = () => {
+    setDraftSearch('');
+    updateUrlParam('search', null);
+    updateUrlParam('status', null);
+    updateUrlParam('type', null);
+    updateUrlParam('startDate', null);
+    updateUrlParam('endDate', null);
+  };
 
   return (
-    <div className="p-4 border-b border-border bg-header flex flex-col xl:flex-row gap-3 items-start xl:items-center justify-between">
+    <div className="p-4 border-b border-border bg-surface-highlight/30 flex flex-col xl:flex-row gap-3 items-start xl:items-center justify-between">
       <h2 className="text-section-title font-semibold text-primary">{t("TEXT_EARNINGS_LEDGER")}</h2>
-      <div className="flex flex-col sm:flex-row gap-3 w-full xl:w-auto xl:items-center flex-wrap">
-        <div className="relative w-full sm:w-64">
-          <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary" aria-hidden="true" strokeWidth={2} />
+      <div className="flex flex-col sm:flex-row gap-2.5 w-full xl:w-auto xl:items-center flex-wrap">
+        <div className="relative w-full sm:w-64 min-w-[200px]">
+          <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none w-4 h-4" aria-hidden="true" strokeWidth={2} />
           <label htmlFor="trainer-earnings-search" className="sr-only">{t("TEXT_SEARCH_EARNINGS_DESCRIPTIONS")}</label>
           <input
             id="trainer-earnings-search"
@@ -40,16 +50,26 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
             placeholder={t("TEXT_SEARCH_DESCRIPTIONS")}
             value={draftSearch}
             onChange={(event) => setDraftSearch(event.target.value)}
-            className="w-full min-h-11 ps-9 pe-4 bg-input border border-border rounded-lg text-sm text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+            className="w-full min-h-10 pl-9 pr-8 py-2 bg-input border border-border rounded-xl text-xs sm:text-sm text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all"
             data-testid="trainer_earnings-earnings-history_search"
           />
+          {draftSearch && (
+            <button
+              type="button"
+              onClick={() => { setDraftSearch(''); updateUrlParam('search', null); }}
+              aria-label="Clear search"
+              className="absolute end-2.5 top-1/2 -translate-y-1/2 text-secondary hover:text-primary p-1 rounded-md"
+            >
+              <X size={14} aria-hidden="true" />
+            </button>
+          )}
         </div>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2.5">
           <select
             id="trainer-earnings-status-filter"
             value={statusFilter}
             onChange={(e) => updateUrlParam('status', e.target.value === 'ALL' ? null : e.target.value)}
-            className="min-h-11 px-3 bg-input border border-border rounded-lg text-xs font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            className="min-h-10 px-3 bg-input border border-border rounded-xl text-xs font-medium text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
             aria-label="Filter by Status"
             data-testid="trainer_earnings-filter-status"
           >
@@ -63,7 +83,7 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
             id="trainer-earnings-type-filter"
             value={typeFilter}
             onChange={(e) => updateUrlParam('type', e.target.value === 'ALL' ? null : e.target.value)}
-            className="min-h-11 px-3 bg-input border border-border rounded-lg text-xs font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            className="min-h-10 px-3 bg-input border border-border rounded-xl text-xs font-medium text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
             aria-label="Filter by Type"
             data-testid="trainer_earnings-filter-type"
           >
@@ -80,24 +100,34 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
             type="date"
             value={startDate}
             onChange={(event) => handleDateChange('startDate', event.target.value)}
-            className="min-h-11 px-2 bg-input border border-border rounded-lg text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+            className="min-h-10 px-2.5 bg-input border border-border rounded-xl text-xs sm:text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             data-testid="trainer_earnings-earnings-history_start_date"
           />
-          <span className="text-secondary text-sm" aria-hidden="true">{t("TEXT_TO")}</span>
+          <span className="text-secondary text-xs sm:text-sm" aria-hidden="true">{t("TEXT_TO")}</span>
           <label htmlFor="trainer-earnings-history-end-date" className="sr-only">{t("TEXT_END_DATE_89D10C")}</label>
           <input
             id="trainer-earnings-history-end-date"
             type="date"
             value={endDate}
             onChange={(event) => handleDateChange('endDate', event.target.value)}
-            className="min-h-11 px-2 bg-input border border-border rounded-lg text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+            className="min-h-10 px-2.5 bg-input border border-border rounded-xl text-xs sm:text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             data-testid="trainer_earnings-earnings-history_end_date"
           />
+
+          {hasActiveFilters && (
+            <button
+              type="button"
+              onClick={handleClearAll}
+              className="text-xs text-secondary hover:text-danger font-semibold px-2.5 py-1.5 rounded-lg border border-border hover:bg-input transition-colors"
+            >
+              Clear All
+            </button>
+          )}
 
           <a
             href="/__mocks__/trainer/earnings_export.csv"
             download="trainer_earnings_statement.csv"
-            className="min-h-11 inline-flex items-center gap-1.5 px-3 py-2 bg-input hover:bg-input/80 text-primary border border-border rounded-lg text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all"
+            className="min-h-10 inline-flex items-center gap-1.5 px-3 py-1.5 bg-input hover:bg-input/80 text-primary border border-border rounded-xl text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all"
             data-testid="trainer_earnings-export-csv-button"
           >
             <Download size={14} />
@@ -106,7 +136,7 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
           <a
             href="/__mocks__/trainer/earnings_statement.pdf"
             download="trainer_earnings_statement.pdf"
-            className="min-h-11 inline-flex items-center gap-1.5 px-3 py-2 bg-input hover:bg-input/80 text-primary border border-border rounded-lg text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all"
+            className="min-h-10 inline-flex items-center gap-1.5 px-3 py-1.5 bg-input hover:bg-input/80 text-primary border border-border rounded-xl text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all"
             data-testid="trainer_earnings-export-pdf-button"
           >
             <FileText size={14} />

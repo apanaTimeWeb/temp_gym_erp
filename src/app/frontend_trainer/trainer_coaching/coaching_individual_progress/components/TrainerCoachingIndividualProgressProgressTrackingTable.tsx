@@ -154,13 +154,14 @@ export default function TrainerProgressTrackingTable({
                               aria-expanded={expanded}
                               aria-controls={expanded ? `trainer-progress-entry-notes-${entry.id}` : undefined}
                               onClick={() => setExpandedId((current) => current === entry.id ? null : entry.id)}
-                              className="min-h-11 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring underline-offset-2 hover:underline"
+                              className="min-h-11 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring underline-offset-2 hover:underline font-bold text-primary text-sm"
                               data-testid={`trainer_progress_tracking-progress-table-expand-${entry.id}`}
                             >
                               {TrainerProgressTrackingFormatDate(entry.date, locale)}
                             </button>
                             <CopyButton value={entry.date} />
                           </div>
+                          <p className="text-xs text-secondary font-mono flex items-center gap-1.5 mt-0.5">#{entry.id.slice(-6)}</p>
                         </td>
                         <td className="px-4 py-3 text-primary">{TrainerProgressTrackingFormatNumber(entry.weightKg, locale)}</td>
                         <td className="px-4 py-3 text-primary">{TrainerProgressTrackingFormatNumber(entry.heightCm, locale)}</td>
@@ -174,7 +175,7 @@ export default function TrainerProgressTrackingTable({
                           </TrainerInfrastructureTooltip>
                         </td>
                         <td className="px-4 py-3">
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100 motion-safe:transition-opacity">
                             <button
                               type="button"
                               onClick={(e) => { e.stopPropagation(); onEdit(entry); }}

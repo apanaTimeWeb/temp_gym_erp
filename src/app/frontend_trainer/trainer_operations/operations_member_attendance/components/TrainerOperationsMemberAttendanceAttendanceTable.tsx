@@ -143,11 +143,15 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
                         <div className="min-w-0">
                           <div className="flex items-center gap-2">
                             <TrainerInfrastructureTooltip content={String(displayValue(personName))}>
-                              <div className="text-sm font-medium text-primary truncate max-w-52">{displayValue(personName)}</div>
+                              <div className="text-sm font-bold text-primary truncate max-w-52">{displayValue(personName)}</div>
                             </TrainerInfrastructureTooltip>
                             <CopyButton value={String(personName ?? '')} />
                           </div>
-                          <div className="text-xs text-secondary">{record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? t('TEXT_MEMBER') : t('TEXT_STAFF')}</div>
+                          <div className="text-xs text-secondary font-mono flex items-center gap-1.5 mt-0.5">
+                            <span>#{record.id.slice(-6)}</span>
+                            <span>·</span>
+                            <span>{record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? t('TEXT_MEMBER') : t('TEXT_STAFF')}</span>
+                          </div>
                         </div>
                       </div>
                     </td>
@@ -164,7 +168,7 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
                             e.stopPropagation();
                             void onCheckOut(record.id);
                           }}
-                          className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-lg bg-warning-bg text-warning-text hover:brightness-105 border border-warning/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:active:scale-95 transition-all"
+                          className="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100 motion-safe:transition-opacity inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-lg bg-warning-bg text-warning-text hover:brightness-105 border border-warning/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:active:scale-95"
                           title={t('TEXT_CHECK_OUT')}
                         >
                           <LogOut size={13} strokeWidth={2} aria-hidden="true" />

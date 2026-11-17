@@ -210,8 +210,12 @@ export function TrainerLeaveTable({ leaveRequests, openLeaveModal }: TrainerLeav
                       <td className="px-4 py-4 text-center whitespace-nowrap">
                         <button
                           type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setExpandedId((curr) => (curr === leave.id ? null : leave.id));
+                          }}
                           aria-label={expanded ? t('TEXT_COLLAPSE') : t('TEXT_EXPAND')}
-                          className="p-1 rounded-lg hover:bg-input text-secondary hover:text-primary motion-safe:transition-colors"
+                          className="p-1.5 rounded-lg hover:bg-input text-secondary hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                         >
                           {expanded ? <ChevronUp size={16} strokeWidth={2.5} /> : <ChevronDown size={16} strokeWidth={2.5} />}
                         </button>
