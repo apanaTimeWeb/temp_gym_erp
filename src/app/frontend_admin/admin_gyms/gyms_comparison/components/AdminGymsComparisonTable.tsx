@@ -17,6 +17,7 @@ export function AdminGymsComparisonTable({
   metricFilter,
   formatCurrency,
 }: AdminGymsComparisonTableProps) {
+  const TABLE_COLUMN_COUNT = 1 + branches.length;
   return (
     <section className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
       <div className="border-b border-border px-6 py-4">
