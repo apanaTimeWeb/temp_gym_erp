@@ -270,6 +270,13 @@ export function TrainerLeaveTable({ leaveRequests, openLeaveModal }: TrainerLeav
           })
         )}
       </div>
+
+      {/* In-Card Bottom-Pinned Footer Summary */}
+      <div className="border-t border-border px-4 py-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between bg-card/60 text-xs text-secondary">
+        <p>
+          Showing <span className="font-semibold text-primary">{filteredLeaves.length}</span> of <span className="font-semibold text-primary">{totalRequests}</span> leave requests
+        </p>
+      </div>
     </div>
   );
 }
