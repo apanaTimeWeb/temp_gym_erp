@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ADMIN_FINANCE_REVENUE_REPORT_ROUTES, ADMIN_FINANCE_REVENUE_REPORT_API } from '@/app/frontend_admin/admin_finance/finance_revenue_report/config/finance_revenue_report.url_config';
+import { ADMIN_FINANCE_REVENUE_REPORT_ROUTES, ADMIN_FINANCE_REVENUE_REPORT_API } from '@/app/frontend_admin/admin_finance/finance_revenue_report/config/admin_finance_revenue_report.url_config';
 
 describe('finance_revenue_report route and API ownership contract', () => {
   it('declares the canonical route under its owning business domain', () => {

@@ -1,6 +1,6 @@
 // RESPONSIBILITY: Owns only the attendance report API operation. Binary export remains disabled until its host transport contract is verified.
 import { adminAttendanceReportsAnalyticsApiFetch as apiFetch } from '@/app/frontend_admin/admin_attendance/attendance_reports/utils/AdminAttendanceReportsApiResponse';
-import { ADMIN_ATTENDANCE_REPORTS_API } from '@/app/frontend_admin/admin_attendance/attendance_reports/config/attendance_reports.url_config';
+import { ADMIN_ATTENDANCE_REPORTS_API } from '@/app/frontend_admin/admin_attendance/attendance_reports/config/admin_attendance_reports.url_config';
 import type { AdminAttendanceReportsExportParams, AdminAttendanceReportsQueryParams, AttendanceReportData } from '@/app/frontend_admin/admin_attendance/attendance_reports/types/AdminAttendanceReportsTypes';
 import { reportAttendanceDataSchema } from '@/app/frontend_admin/admin_attendance/attendance_reports/schemas/AdminAttendanceReportsSchemas';
 

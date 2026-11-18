@@ -48,14 +48,7 @@ export async function adminHrManagementApiFetch<T>(
 ): Promise<AdminHrManagementApiSuccess<T>> {
   const response = await apiFetch<T>(endpoint, options) as ApiResponse<T>;
   if (!response || typeof response !== 'object' || typeof response.success !== 'boolean') {
-    throw new AdminHrManagementApiResponseError({
-      success: false,
-      message: 'The server returned an invalid API response envelope.',
-      data: null,
-      errorCode: 'INVALID_API_ENVELOPE',
-      statusCode: 502,
-      requestId: 'client-invalid-envelope',
-    });
+    throw new AdminHrManagementApiResponseError({ success: false, message: 'The server returned an invalid API response envelope.', data: null, errorCode: 'INVALID_API_ENVELOPE', statusCode: 502, requestId: 'client-invalid-envelope' });
   }
   if (response.success === false) {
     const failure = response as unknown as Partial<AdminHrManagementApiFailureShape>;
@@ -72,26 +65,12 @@ export async function adminHrManagementApiFetch<T>(
       )
     );
     if (!hasCanonicalFailureFields || !validationErrorsAreCanonical) {
-      throw new AdminHrManagementApiResponseError({
-        success: false,
-        message: 'The server failure response does not satisfy the required API envelope.',
-        data: null,
-        errorCode: 'INVALID_API_ENVELOPE',
-        statusCode: 502,
-        requestId: typeof failure.requestId === 'string' && failure.requestId.trim() ? failure.requestId : 'client-invalid-envelope',
-      });
+      throw new AdminHrManagementApiResponseError({ success: false, message: 'The server failure response does not satisfy the required API envelope.', data: null, errorCode: 'INVALID_API_ENVELOPE', statusCode: 502, requestId: typeof failure.requestId === 'string' && failure.requestId.trim() ? failure.requestId : 'client-invalid-envelope' });
     }
     throw new AdminHrManagementApiResponseError(failure as AdminHrManagementApiFailureShape);
   }
   if (typeof response.message !== 'string' || !Object.prototype.hasOwnProperty.call(response, 'data') || typeof response.requestId !== 'string' || !response.requestId.trim()) {
-    throw new AdminHrManagementApiResponseError({
-      success: false,
-      message: 'The server response does not satisfy the required success envelope.',
-      data: null,
-      errorCode: 'INVALID_API_ENVELOPE',
-      statusCode: 502,
-      requestId: 'client-invalid-envelope',
-    });
+    throw new AdminHrManagementApiResponseError({ success: false, message: 'The server response does not satisfy the required success envelope.', data: null, errorCode: 'INVALID_API_ENVELOPE', statusCode: 502, requestId: 'client-invalid-envelope' });
   }
   return response as unknown as AdminHrManagementApiSuccess<T>;
 }

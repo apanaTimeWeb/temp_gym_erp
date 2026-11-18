@@ -181,7 +181,7 @@ Co-located test sources verified in this leaf:
 
 Test execution requires the host package manifest, installed test runner/dependencies, and authenticated runtime. Integrated execution is `DEFERRED_TO_HOST_RUNTIME` for this isolated role ZIP.
 
-**RBG131 coupon regression additions (authored, host tests NOT EXECUTED):** `tests/components/TestsRbg131CouponConfirmationQueue.test.tsx`, `tests/components/TestsRbg131CouponModalSafety.test.tsx`, `tests/components/TestsRbg131CouponPaginationBoundary.test.tsx`, `tests/hooks/TestsRbg131CouponUrlRapidEdits.test.tsx`; existing coupon-logic hook test updated for awaited `mutateAsync`. Source-level stand-in checks cover FIFO modal identity, typed phrase, single-flight coupon writes, URL coalescing and pagination. The client-side action lock does not prove backend idempotency or RBAC, and no live payment/coupon write was performed.
+**RBG131 coupon regression additions (authored, host tests NOT EXECUTED):** `tests/components/AdminBillingCouponsConfirmationQueue.test.tsx`, `tests/components/AdminBillingCouponsModalSafety.test.tsx`, `tests/components/AdminBillingCouponsPaginationBoundary.test.tsx`, `tests/hooks/AdminBillingCouponsUrlRapidEdits.test.tsx`; existing coupon-logic hook test updated for awaited `mutateAsync`. Source-level stand-in checks cover FIFO modal identity, typed phrase, single-flight coupon writes, URL coalescing and pagination. The client-side action lock does not prove backend idempotency or RBAC, and no live payment/coupon write was performed.
 
 ## 17. Architecture Exceptions
 

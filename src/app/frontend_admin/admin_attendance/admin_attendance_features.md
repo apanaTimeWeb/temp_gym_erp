@@ -71,7 +71,7 @@ Canonical module root: `admin_attendance/`. This inventory is regenerated from t
 | `admin_attendance/attendance_reports/components/progress_bar/` | Feature-owned implementation files. | AdminAttendanceReportsProgressBar.tsx |
 | `admin_attendance/attendance_reports/components/searchable_dropdown/` | Accessible searchable dropdown components. | AdminAttendanceReportsSearchableDropdown.tsx |
 | `admin_attendance/attendance_reports/components/shell/` | Shell and not-found components. | AdminAttendanceReportsNotFound.tsx |
-| `admin_attendance/attendance_reports/config/` | Route and URL configuration. | attendance_reports.url_config.ts |
+| `admin_attendance/attendance_reports/config/` | Route and URL configuration. | admin_attendance_reports.url_config.ts |
 | `admin_attendance/attendance_reports/constants/` | Constants and query-key registries. | AdminAttendanceReportsConstants.ts, AdminAttendanceReportsQueryKeys.ts |
 | `admin_attendance/attendance_reports/contracts/` | Host contract stubs. | host-stubs.d.ts |
 | `admin_attendance/attendance_reports/hooks/` | Feature data-flow and interaction hooks. | useAdminAttendanceReportsBranchReference.ts, useAdminAttendanceReportsLogic.ts, useAdminAttendanceReportsMutations.ts, useAdminAttendanceReportsTable.ts |

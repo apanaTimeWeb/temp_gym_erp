@@ -48,14 +48,7 @@ export async function adminFinanceRevenueReportApiFetch<T>(
 ): Promise<AdminFinanceRevenueReportApiSuccess<T>> {
   const response = await apiFetch<T>(endpoint, options) as ApiResponse<T>;
   if (!response || typeof response !== 'object' || typeof response.success !== 'boolean') {
-    throw new AdminFinanceRevenueReportApiResponseError({
-      success: false,
-      message: 'The server returned an invalid API response envelope.',
-      data: null,
-      errorCode: 'INVALID_API_ENVELOPE',
-      statusCode: 502,
-      requestId: 'client-invalid-envelope',
-    });
+    throw new AdminFinanceRevenueReportApiResponseError({ success: false, message: 'The server returned an invalid API response envelope.', data: null, errorCode: 'INVALID_API_ENVELOPE', statusCode: 502, requestId: 'client-invalid-envelope' });
   }
   if (response.success === false) {
     const failure = response as unknown as Partial<AdminFinanceRevenueReportApiFailureShape>;
@@ -72,26 +65,12 @@ export async function adminFinanceRevenueReportApiFetch<T>(
       )
     );
     if (!hasCanonicalFailureFields || !validationErrorsAreCanonical) {
-      throw new AdminFinanceRevenueReportApiResponseError({
-        success: false,
-        message: 'The server failure response does not satisfy the required API envelope.',
-        data: null,
-        errorCode: 'INVALID_API_ENVELOPE',
-        statusCode: 502,
-        requestId: typeof failure.requestId === 'string' && failure.requestId.trim() ? failure.requestId : 'client-invalid-envelope',
-      });
+      throw new AdminFinanceRevenueReportApiResponseError({ success: false, message: 'The server failure response does not satisfy the required API envelope.', data: null, errorCode: 'INVALID_API_ENVELOPE', statusCode: 502, requestId: typeof failure.requestId === 'string' && failure.requestId.trim() ? failure.requestId : 'client-invalid-envelope' });
     }
     throw new AdminFinanceRevenueReportApiResponseError(failure as AdminFinanceRevenueReportApiFailureShape);
   }
   if (typeof response.message !== 'string' || !Object.prototype.hasOwnProperty.call(response, 'data') || typeof response.requestId !== 'string' || !response.requestId.trim()) {
-    throw new AdminFinanceRevenueReportApiResponseError({
-      success: false,
-      message: 'The server response does not satisfy the required success envelope.',
-      data: null,
-      errorCode: 'INVALID_API_ENVELOPE',
-      statusCode: 502,
-      requestId: 'client-invalid-envelope',
-    });
+    throw new AdminFinanceRevenueReportApiResponseError({ success: false, message: 'The server response does not satisfy the required success envelope.', data: null, errorCode: 'INVALID_API_ENVELOPE', statusCode: 502, requestId: 'client-invalid-envelope' });
   }
   return response as unknown as AdminFinanceRevenueReportApiSuccess<T>;
 }

@@ -49,12 +49,8 @@ export async function adminAttendanceDashboardApiFetch<T>(
   const response = await apiFetch<T>(endpoint, options) as ApiResponse<T>;
   if (!response || typeof response !== 'object' || typeof response.success !== 'boolean') {
     throw new AdminAttendanceDashboardApiResponseError({
-      success: false,
-      message: 'The server returned an invalid API response envelope.',
-      data: null,
-      errorCode: 'INVALID_API_ENVELOPE',
-      statusCode: 502,
-      requestId: 'client-invalid-envelope',
+      success: false, message: 'The server returned an invalid API response envelope.',
+      data: null, errorCode: 'INVALID_API_ENVELOPE', statusCode: 502, requestId: 'client-invalid-envelope',
     });
   }
   if (response.success === false) {
@@ -73,11 +69,8 @@ export async function adminAttendanceDashboardApiFetch<T>(
     );
     if (!hasCanonicalFailureFields || !validationErrorsAreCanonical) {
       throw new AdminAttendanceDashboardApiResponseError({
-        success: false,
-        message: 'The server failure response does not satisfy the required API envelope.',
-        data: null,
-        errorCode: 'INVALID_API_ENVELOPE',
-        statusCode: 502,
+        success: false, message: 'The server failure response does not satisfy the required API envelope.',
+        data: null, errorCode: 'INVALID_API_ENVELOPE', statusCode: 502,
         requestId: typeof failure.requestId === 'string' && failure.requestId.trim() ? failure.requestId : 'client-invalid-envelope',
       });
     }
@@ -85,12 +78,8 @@ export async function adminAttendanceDashboardApiFetch<T>(
   }
   if (typeof response.message !== 'string' || !Object.prototype.hasOwnProperty.call(response, 'data') || typeof response.requestId !== 'string' || !response.requestId.trim()) {
     throw new AdminAttendanceDashboardApiResponseError({
-      success: false,
-      message: 'The server response does not satisfy the required success envelope.',
-      data: null,
-      errorCode: 'INVALID_API_ENVELOPE',
-      statusCode: 502,
-      requestId: 'client-invalid-envelope',
+      success: false, message: 'The server response does not satisfy the required success envelope.',
+      data: null, errorCode: 'INVALID_API_ENVELOPE', statusCode: 502, requestId: 'client-invalid-envelope',
     });
   }
   return response as unknown as AdminAttendanceDashboardApiSuccess<T>;

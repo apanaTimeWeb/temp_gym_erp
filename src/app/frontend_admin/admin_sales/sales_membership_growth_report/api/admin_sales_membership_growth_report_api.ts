@@ -1,6 +1,6 @@
 // RESPONSIBILITY: Owns only the membership report API operation. Binary export remains disabled until its host transport contract is verified.
 import { adminSalesMembershipGrowthReportAnalyticsApiFetch as apiFetch } from '@/app/frontend_admin/admin_sales/sales_membership_growth_report/utils/AdminSalesMembershipGrowthReportApiResponse';
-import { ADMIN_SALES_MEMBERSHIP_GROWTH_REPORT_API } from '@/app/frontend_admin/admin_sales/sales_membership_growth_report/config/sales_membership_growth_report.url_config';
+import { ADMIN_SALES_MEMBERSHIP_GROWTH_REPORT_API } from '@/app/frontend_admin/admin_sales/sales_membership_growth_report/config/admin_sales_membership_growth_report.url_config';
 import type { AdminSalesMembershipGrowthReportExportParams, AdminSalesMembershipGrowthReportQueryParams, MembershipReportData } from '@/app/frontend_admin/admin_sales/sales_membership_growth_report/types/AdminSalesMembershipGrowthReportTypes';
 import { reportMembershipDataSchema } from '@/app/frontend_admin/admin_sales/sales_membership_growth_report/schemas/AdminSalesMembershipGrowthReportSchemas';
 

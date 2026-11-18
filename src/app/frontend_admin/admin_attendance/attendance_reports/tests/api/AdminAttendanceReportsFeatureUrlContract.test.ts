@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ADMIN_DASHBOARD_URL, ADMIN_ATTENDANCE_REPORTS_ROUTES, ADMIN_ATTENDANCE_REPORTS_API } from '@/app/frontend_admin/admin_attendance/attendance_reports/config/attendance_reports.url_config';
+import { ADMIN_DASHBOARD_URL, ADMIN_ATTENDANCE_REPORTS_ROUTES, ADMIN_ATTENDANCE_REPORTS_API } from '@/app/frontend_admin/admin_attendance/attendance_reports/config/admin_attendance_reports.url_config';
 
 describe('attendance_reports route and API ownership contract', () => {
   it('keeps the dashboard fallback within its own canonical URL contract', () => {

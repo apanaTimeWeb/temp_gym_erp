@@ -4,7 +4,7 @@
 
 import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { ADMIN_DASHBOARD_URL } from '@/app/frontend_admin/admin_attendance/attendance_reports/config/attendance_reports.url_config';
+import { ADMIN_DASHBOARD_URL } from '@/app/frontend_admin/admin_attendance/attendance_reports/config/admin_attendance_reports.url_config';
 // Distinguishes between 403 Forbidden (permission denied) and generic errors.
 // Never expose raw error messages or stack traces to the user.
 

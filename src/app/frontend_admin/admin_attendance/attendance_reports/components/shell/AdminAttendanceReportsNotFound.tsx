@@ -2,7 +2,7 @@
 // RESPONSIBILITY: Reusable 404 Not Found template for admin modules
 // DATA FLOW: Next.js route/lifecycle or owning module entry → feature-local components/hooks/contracts → host integration boundary (admin_navigation/components/shell/AdminAttendanceReportsNotFound.tsx)
 
-import { ADMIN_DASHBOARD_URL } from '@/app/frontend_admin/admin_attendance/attendance_reports/config/attendance_reports.url_config';
+import { ADMIN_DASHBOARD_URL } from '@/app/frontend_admin/admin_attendance/attendance_reports/config/admin_attendance_reports.url_config';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { AlertCircle } from 'lucide-react';

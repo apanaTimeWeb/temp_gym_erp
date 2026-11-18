@@ -126,7 +126,7 @@ Updated during Admin v46 domain-ownership correction after review identified tha
 Branch-reference mock now returns {items} with report gymId-aligned IDs; aggregate report still lacks dated rows and cannot truthfully simulate period-specific data.
 
 ### RBG 28 URL-contract physical reconciliation
-- Canonical source: `config/sales_membership_growth_report.url_config.ts` owns the API and dashboard fallback route. The unimported shell-only duplicate was removed after a full supplied-tree import scan. No endpoint values or route destinations were changed.
+- Canonical source: `config/admin_admin_sales_membership_growth_report.url_config.ts` owns the API and dashboard fallback route. The unimported shell-only duplicate was removed after a full supplied-tree import scan. No endpoint values or route destinations were changed.
 
 ### RBG 86 — Browser download lifecycle
 The scoped report export mutation preserves existing binary transport fail-closed behavior and localized API failure feedback. When a verified Blob is returned, the temporary anchor is mounted only for click and removed in `finally`; its object URL is always revoked. Browser click/setup failures use existing localized export error feedback without surfacing raw error text. Actual browser integration and Blob backend contract remain NOT_VERIFIED.

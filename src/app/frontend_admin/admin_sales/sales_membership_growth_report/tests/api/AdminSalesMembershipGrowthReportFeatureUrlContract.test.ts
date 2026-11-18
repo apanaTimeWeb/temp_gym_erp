@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ADMIN_DASHBOARD_URL, ADMIN_SALES_MEMBERSHIP_GROWTH_REPORT_ROUTES, ADMIN_SALES_MEMBERSHIP_GROWTH_REPORT_API } from '@/app/frontend_admin/admin_sales/sales_membership_growth_report/config/sales_membership_growth_report.url_config';
+import { ADMIN_DASHBOARD_URL, ADMIN_SALES_MEMBERSHIP_GROWTH_REPORT_ROUTES, ADMIN_SALES_MEMBERSHIP_GROWTH_REPORT_API } from '@/app/frontend_admin/admin_sales/sales_membership_growth_report/config/admin_sales_membership_growth_report.url_config';
 
 describe('sales_membership_growth_report route and API ownership contract', () => {
   it('keeps the dashboard fallback within its own canonical URL contract', () => {

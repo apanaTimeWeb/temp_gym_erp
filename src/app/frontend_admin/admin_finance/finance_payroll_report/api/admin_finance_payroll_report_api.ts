@@ -1,6 +1,6 @@
 // RESPONSIBILITY: Owns only the payroll report API operation. Binary export remains disabled until its host transport contract is verified.
 import { adminFinancePayrollReportApiFetch as apiFetch } from '@/app/frontend_admin/admin_finance/finance_payroll_report/utils/AdminFinancePayrollReportApiResponse';
-import { ADMIN_FINANCE_PAYROLL_REPORT_API } from '@/app/frontend_admin/admin_finance/finance_payroll_report/config/finance_payroll_report.url_config';
+import { ADMIN_FINANCE_PAYROLL_REPORT_API } from '@/app/frontend_admin/admin_finance/finance_payroll_report/config/admin_finance_payroll_report.url_config';
 import type { AdminFinancePayrollReportExportParams, AdminFinancePayrollReportQueryParams, PayrollReportData } from '@/app/frontend_admin/admin_finance/finance_payroll_report/types/AdminFinancePayrollReportTypes';
 import { reportPayrollDataSchema } from '@/app/frontend_admin/admin_finance/finance_payroll_report/schemas/AdminFinancePayrollReportSchemas';
 
