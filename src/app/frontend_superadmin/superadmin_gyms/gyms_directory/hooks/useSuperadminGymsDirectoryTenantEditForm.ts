@@ -4,14 +4,10 @@ import { useState, useMemo } from 'react';
 import { toast } from 'sonner';
 import { useUpdateTenant } from '../services/SuperadminGymsDirectoryTenantService';
 import {
-  validateGymName,
-  validateEmail,
-  validateIndianPhone,
-  validatePassword,
-} from '../utils/SuperadminGymsDirectoryValidators';
-import {
   computeTenantChanges,
   buildSensitiveComparison,
+  validateTenantEditField,
+  checkTenantEditFormValid,
 } from '../utils/SuperadminGymsDirectoryTenantDiff';
 import type { Tenant, Plan, UpdateTenantInput } from '../types/SuperadminGymsDirectoryTenantTypes';
 
@@ -56,76 +52,19 @@ export function useSuperadminGymsDirectoryTenantEditForm({
     [plans, planId]
   );
 
-  const validateField = (field: string) => {
-    setTouched((prev) => ({ ...prev, [field]: true }));
-    const newErrors = { ...errors };
-
-    switch (field) {
-      case 'gymName': {
-        const res = validateGymName(gymName);
-        newErrors.gymName = res.isValid ? undefined : res.error;
-        break;
-      }
-      case 'ownerName': {
-        newErrors.ownerName =
-          !ownerName || ownerName.trim().length < 2
-            ? 'Owner name must be at least 2 characters'
-            : undefined;
-        break;
-      }
-      case 'adminEmail': {
-        const res = validateEmail(adminEmail);
-        newErrors.adminEmail = res.isValid ? undefined : res.error;
-        break;
-      }
-      case 'phone': {
-        const res = validateIndianPhone(phone);
-        newErrors.phone = res.isValid ? undefined : res.error;
-        break;
-      }
-      case 'password': {
-        newErrors.password = password ? validatePassword(password).error : undefined;
-        break;
-      }
-      case 'accessStatus': {
-        newErrors.statusReason =
-          accessStatus !== tenant.accessStatus && !statusReason.trim()
-            ? 'A reason is required when changing access status'
-            : undefined;
-        break;
-      }
-    }
-    setErrors(newErrors);
-  };
-
-  const changedFields = useMemo(
-    () =>
-      computeTenantChanges(tenant, {
-        gymName,
-        ownerName,
-        adminEmail,
-        phone,
-        planId,
-        planExpiresAt,
-        accessStatus,
-        statusReason,
-        password,
-      }),
-    [tenant, gymName, ownerName, adminEmail, phone, planId, planExpiresAt, accessStatus, statusReason, password]
+  const formValues = useMemo(
+    () => ({ gymName, ownerName, adminEmail, phone, planId, planExpiresAt, accessStatus, statusReason, password }),
+    [gymName, ownerName, adminEmail, phone, planId, planExpiresAt, accessStatus, statusReason, password]
   );
 
-  const isDirty = Object.keys(changedFields).length > 0;
-  const isFormValid = useMemo(() => {
-    if (!gymName || gymName.trim().length < 3 || gymName.trim().length > 80) return false;
-    if (!ownerName || ownerName.trim().length < 2) return false;
-    if (!adminEmail || !validateEmail(adminEmail).isValid) return false;
-    if (!phone || !validateIndianPhone(phone).isValid) return false;
-    if (!planId) return false;
-    if (password && !validatePassword(password).isValid) return false;
-    if (accessStatus !== tenant.accessStatus && !statusReason.trim()) return false;
-    return true;
-  }, [gymName, ownerName, adminEmail, phone, planId, password, tenant, accessStatus, statusReason]);
+  const validateField = (field: string) => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+    setErrors((prev) => ({ ...prev, [field]: validateTenantEditField(field, formValues, tenant.accessStatus) }));
+  };
 
+  const changedFields = useMemo(() => computeTenantChanges(tenant, formValues), [tenant, formValues]);
+  const isDirty = Object.keys(changedFields).length > 0;
+  const isFormValid = useMemo(() => checkTenantEditFormValid(formValues, tenant.accessStatus), [formValues, tenant.accessStatus]);
   const canSave = isDirty && isFormValid && !updateMutation.isPending;
 
   const executeSave = async (payload: Partial<UpdateTenantInput>, confirmReason?: string) => {
@@ -158,38 +97,11 @@ export function useSuperadminGymsDirectoryTenantEditForm({
   };
 
   return {
-    gymName,
-    setGymName,
-    ownerName,
-    setOwnerName,
-    adminEmail,
-    setAdminEmail,
-    phone,
-    setPhone,
-    planId,
-    setPlanId,
-    planExpiresAt,
-    setPlanExpiresAt,
-    accessStatus,
-    setAccessStatus,
-    password,
-    setPassword,
-    showPassword,
-    setShowPassword,
-    statusReason,
-    setStatusReason,
-    showConfirmDialog,
-    setShowConfirmDialog,
-    confirmChanges,
-    errors,
-    touched,
-    validateField,
-    selectedPlan,
-    changedFields,
-    canSave,
-    handleSubmit,
-    executeSave,
-    updateMutation,
+    gymName, setGymName, ownerName, setOwnerName, adminEmail, setAdminEmail, phone, setPhone,
+    planId, setPlanId, planExpiresAt, setPlanExpiresAt, accessStatus, setAccessStatus, password,
+    setPassword, showPassword, setShowPassword, statusReason, setStatusReason, showConfirmDialog,
+    setShowConfirmDialog, confirmChanges, errors, touched, validateField, selectedPlan, changedFields,
+    canSave, handleSubmit, executeSave, updateMutation,
   };
 }
 

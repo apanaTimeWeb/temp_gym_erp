@@ -3,6 +3,7 @@
 import React from 'react';
 import { Eye, EyeOff, Sparkles, Copy, Check, AlertCircle } from 'lucide-react';
 import { formatAadhaar } from '../utils/SuperadminGymsDirectoryValidators';
+import { SuperadminGymsDirectoryPasswordStrengthBar } from './SuperadminGymsDirectoryPasswordStrengthBar';
 import type { PasswordValidationResult } from '../utils/SuperadminGymsDirectoryValidators';
 
 export interface SuperadminGymsDirectoryAddGymCoreSectionProps {
@@ -260,42 +261,7 @@ export function SuperadminGymsDirectoryAddGymCoreSection({
 
           {/* Password Strength Meter */}
           {temporaryPassword && (
-            <div className="mt-2 space-y-1">
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="text-secondary">Password Strength:</span>
-                <span
-                  className={`font-bold ${
-                    passwordResult.strength === 'Strong'
-                      ? 'text-success'
-                      : passwordResult.strength === 'Good'
-                        ? 'text-primary'
-                        : passwordResult.strength === 'Fair'
-                          ? 'text-warning'
-                          : 'text-danger'
-                  }`}
-                >
-                  {passwordResult.strength}
-                </span>
-              </div>
-              <div className="h-1.5 w-full bg-input rounded-full overflow-hidden flex gap-1">
-                {[1, 2, 3, 4].map((step) => (
-                  <div
-                    key={step}
-                    className={`h-full flex-1 rounded-full transition-colors ${
-                      passwordResult.score >= step
-                        ? step === 4
-                          ? 'bg-success'
-                          : step === 3
-                            ? 'bg-primary'
-                            : step === 2
-                              ? 'bg-warning'
-                              : 'bg-danger'
-                        : 'bg-border'
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
+            <SuperadminGymsDirectoryPasswordStrengthBar passwordResult={passwordResult} />
           )}
 
           {touched.temporaryPassword && errors.temporaryPassword && (

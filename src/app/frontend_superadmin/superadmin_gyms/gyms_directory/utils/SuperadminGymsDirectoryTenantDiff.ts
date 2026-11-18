@@ -1,4 +1,10 @@
 import { formatIstDate } from './SuperadminGymsDirectoryTenantUtils';
+import {
+  validateGymName,
+  validateEmail,
+  validateIndianPhone,
+  validatePassword,
+} from './SuperadminGymsDirectoryValidators';
 import type { Tenant, Plan, UpdateTenantInput } from '../types/SuperadminGymsDirectoryTenantTypes';
 
 export interface TenantEditFormValues {
@@ -13,12 +19,49 @@ export interface TenantEditFormValues {
   password: string;
 }
 
+export function validateTenantEditField(
+  field: string,
+  values: TenantEditFormValues,
+  originalStatus: string
+): string | undefined {
+  switch (field) {
+    case 'gymName':
+      return validateGymName(values.gymName).isValid ? undefined : validateGymName(values.gymName).error;
+    case 'ownerName':
+      return !values.ownerName || values.ownerName.trim().length < 2
+        ? 'Owner name must be at least 2 characters'
+        : undefined;
+    case 'adminEmail':
+      return validateEmail(values.adminEmail).isValid ? undefined : validateEmail(values.adminEmail).error;
+    case 'phone':
+      return validateIndianPhone(values.phone).isValid ? undefined : validateIndianPhone(values.phone).error;
+    case 'password':
+      return values.password ? validatePassword(values.password).error : undefined;
+    case 'accessStatus':
+      return values.accessStatus !== originalStatus && !values.statusReason.trim()
+        ? 'A reason is required when changing access status'
+        : undefined;
+    default:
+      return undefined;
+  }
+}
+
+export function checkTenantEditFormValid(values: TenantEditFormValues, originalStatus: string): boolean {
+  if (!values.gymName || values.gymName.trim().length < 3 || values.gymName.trim().length > 80) return false;
+  if (!values.ownerName || values.ownerName.trim().length < 2) return false;
+  if (!values.adminEmail || !validateEmail(values.adminEmail).isValid) return false;
+  if (!values.phone || !validateIndianPhone(values.phone).isValid) return false;
+  if (!values.planId) return false;
+  if (values.password && !validatePassword(values.password).isValid) return false;
+  if (values.accessStatus !== originalStatus && !values.statusReason.trim()) return false;
+  return true;
+}
+
 export function computeTenantChanges(
   tenant: Tenant,
   values: TenantEditFormValues
 ): Partial<UpdateTenantInput> {
   const changes: Partial<UpdateTenantInput> = {};
-
   if (values.gymName.trim() !== tenant.gymName) changes.gymName = values.gymName.trim();
   if (values.ownerName.trim() !== tenant.ownerName) changes.ownerName = values.ownerName.trim();
   if (values.adminEmail.trim().toLowerCase() !== tenant.ownerEmail.toLowerCase()) {
@@ -37,10 +80,7 @@ export function computeTenantChanges(
     changes.statusChangeReason = values.statusReason.trim();
   }
 
-  if (values.password.trim()) {
-    changes.temporaryPassword = values.password.trim();
-  }
-
+  if (values.password.trim()) changes.temporaryPassword = values.password.trim();
   return changes;
 }
 
@@ -58,11 +98,7 @@ export function buildSensitiveComparison(
   }
 
   if (changedFields.accessStatus) {
-    sensitive.push({
-      field: 'Access Status',
-      from: tenant.accessStatus,
-      to: changedFields.accessStatus,
-    });
+    sensitive.push({ field: 'Access Status', from: tenant.accessStatus, to: changedFields.accessStatus });
   }
 
   if (changedFields.planExpiresAt) {
@@ -74,11 +110,7 @@ export function buildSensitiveComparison(
   }
 
   if (changedFields.temporaryPassword) {
-    sensitive.push({
-      field: 'Password',
-      from: '••••••••',
-      to: 'New Password Set',
-    });
+    sensitive.push({ field: 'Password', from: '••••••••', to: 'New Password Set' });
   }
 
   return sensitive;
