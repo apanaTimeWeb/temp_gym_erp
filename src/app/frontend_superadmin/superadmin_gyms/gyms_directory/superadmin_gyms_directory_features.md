@@ -180,3 +180,19 @@ Feature-local route suspense skeletons, error UI boundaries and Next.js error pr
 
 Canonical schema/type/constant casing and imports, error-message privacy, explicit cache reconciliation, early-return rendering and standalone host contracts were repaired where applicable. Root evidence records executed checks and outstanding release verification; no 8/8 runtime score is claimed.
 
+## 23. Tenant Service & Endpoint Mapping Reference
+
+The Gyms Directory frontend features a strict service layer abstraction (`services/SuperadminGymsDirectoryTenantService.ts`). UI components and custom React hooks consume only the service and hooks, never touching internal mock handlers directly.
+
+| Service Function | HTTP Method | Endpoint | Request Body / Query Params | Expected Response | Description |
+| :--- | :---: | :--- | :--- | :--- | :--- |
+| `listTenants(params)` | `GET` | `/api/v1/superadmin/gyms` | Query: `?page=1&limit=20&search=...&status=...&planId=...&sortBy=...&sortOrder=...` | `ListResponse<Tenant>` | Retrieves paginated, sorted, and filtered list of tenants. |
+| `getTenant(id)` | `GET` | `/api/v1/superadmin/gyms/:id` | None | `Tenant` | Fetches full single tenant details by ID. |
+| `createTenant(payload, onProgress)` | `POST` | `/api/v1/superadmin/gyms/provision` | `CreateTenantInput` (`gymName`, `ownerName`, `adminEmail`, `phone`, `temporaryPassword`, `planId`, `memberCount`, `startType`, `trialDays`, `startDate`, `expiryDate`, `city`, `state`, `gstNumber`, `sendWelcomeEmail`) | `Tenant` | Initiates multi-step isolated tenant database provisioning with progress streaming (e.g. SSE / WebSocket / chunked transfer). |
+| `updateTenant(id, payload)` | `PATCH` | `/api/v1/superadmin/gyms/:id` | Partial `UpdateTenantInput` (only changed fields, plus `statusChangeReason` / `statusChangeNote`) | `Tenant` | Updates specific tenant details. Logs a `TenantEvent`. |
+| `changeAccessStatus(id, accessStatus, reason, note)` | `PATCH` | `/api/v1/superadmin/gyms/:id/access` | `{ accessStatus: 'ACTIVE' \| 'INACTIVE', reason: string, note?: string }` | `Tenant` | Activates or deactivates gym tenant access. Mandatory reason required. |
+| `getEvents(tenantId, eventType)` | `GET` | `/api/v1/superadmin/gyms/:id/events` | Query: `?eventType=...` (optional filter) | `TenantEvent[]` | Returns audit timeline events for tenant, ordered newest first. |
+| `deleteTenant(id, reason, note)` | `DELETE` | `/api/v1/superadmin/gyms/:id` | Body / Headers: `{ reason: string, note?: string }` | `{ success: boolean }` | Permanently deletes or archives tenant account after name confirmation. |
+| `checkEmailExists(email)` | `GET` | `/api/v1/superadmin/gyms/check-email` | Query: `?email=...` | `{ exists: boolean }` | Checks for debounced email collision during onboarding. |
+| `getPlans()` | `GET` | `/api/v1/superadmin/plans` | None | `Plan[]` | Retrieves the canonical SaaS plans master list. |
+
