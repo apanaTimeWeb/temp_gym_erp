@@ -1,7 +1,6 @@
 // DATA FLOW: URL/local UI state or feature input → feature hook → module-owned TanStack Query/Zustand mutation/query → observable UI result.
 'use client';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 
 import { useTranslations } from 'next-intl';
 
@@ -12,12 +11,11 @@ import { useManagerInfrastructureDebounce } from '@/app/frontend_manager/manager
 import { ManagerInfrastructureGetErrorMessage } from '@/app/frontend_manager/manager_workout_diet_library/library_diet_plans/utils/ManagerLibraryDietPlansLocalGetErrorMessage';
 import { ManagerInfrastructureIdempotency } from '@/app/frontend_manager/manager_workout_diet_library/library_diet_plans/utils/ManagerLibraryDietPlansLocalIdempotency';
 
-import { isManagerLibraryDietPlansView, resolveManagerLibraryDietPlansView } from '@/app/frontend_manager/manager_workout_diet_library/library_diet_plans/utils/ManagerLibraryDietPlansResolveView';
-import { MANAGER_LIBRARY_DIET_PLANS_LEGACY_TAB_QUERY_PARAM, MANAGER_LIBRARY_DIET_PLANS_PAGE_QUERY_PARAM, MANAGER_LIBRARY_DIET_PLANS_SEARCH_QUERY_PARAM, MANAGER_LIBRARY_DIET_PLANS_VIEW_QUERY_PARAM } from '@/app/frontend_manager/manager_workout_diet_library/library_diet_plans/constants/manager_library_diet_plans_view.constants';
+import { useManagerLibraryDietPlansUrlState } from '@/app/frontend_manager/manager_workout_diet_library/library_diet_plans/hooks/useManagerLibraryDietPlansUrlState';
 import { useManagerLibraryDietPlansMutations } from '@/app/frontend_manager/manager_workout_diet_library/library_diet_plans/hooks/useManagerLibraryDietPlansMutations';
 import { useManagerLibraryDietPlansQuery, useManagerLibraryDietPlansExercisesQuery } from '@/app/frontend_manager/manager_workout_diet_library/library_diet_plans/hooks/useManagerLibraryDietPlansQueries';
 import { useManagerLibraryDietPlansUiStore } from '@/app/frontend_manager/manager_workout_diet_library/library_diet_plans/state/useManagerLibraryDietPlansUiStore';
-import type { DietPlan, Exercise, LibraryView, ManagerLibraryDietPlansViewModel } from '@/app/frontend_manager/manager_workout_diet_library/library_diet_plans/types/manager_library_diet_plans.types';
+import type { DietPlan, Exercise, ManagerLibraryDietPlansViewModel } from '@/app/frontend_manager/manager_workout_diet_library/library_diet_plans/types/manager_library_diet_plans.types';
 
 
 /** Orchestrates the owning Manager feature behavior while preserving its documented state boundary. */
@@ -36,26 +34,9 @@ import type { DietPlan, Exercise, LibraryView, ManagerLibraryDietPlansViewModel 
 export function useManagerLibraryDietPlansLogic(): ManagerLibraryDietPlansViewModel {
   const t = useTranslations('MANAGER_LIBRARY_DIET_PLANS');
   const { confirm } = useConfirm();
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
   const ui = useManagerLibraryDietPlansUiStore();
-  const viewValue = searchParams.get(MANAGER_LIBRARY_DIET_PLANS_VIEW_QUERY_PARAM);
-  const legacyTabValue = searchParams.get(MANAGER_LIBRARY_DIET_PLANS_LEGACY_TAB_QUERY_PARAM);
-  const view: LibraryView = resolveManagerLibraryDietPlansView(viewValue ?? legacyTabValue);
-  const search = searchParams.get(MANAGER_LIBRARY_DIET_PLANS_SEARCH_QUERY_PARAM) ?? '';
-  const currentPage = Math.max(Number(searchParams.get(MANAGER_LIBRARY_DIET_PLANS_PAGE_QUERY_PARAM) ?? '1') || 1, 1);
+  const { view, search, currentPage, setView, setSearch, setCurrentPage } = useManagerLibraryDietPlansUrlState();
 
-  // Normalize invalid view IDs and legacy tab bookmarks to a single canonical URL.
-  useEffect(() => {
-    const needsLegacyMigration = legacyTabValue !== null;
-    const needsInvalidViewNormalization = viewValue !== null && !isManagerLibraryDietPlansView(viewValue);
-    if (!needsLegacyMigration && !needsInvalidViewNormalization) return;
-    const next = new URLSearchParams(searchParams.toString());
-    next.set(MANAGER_LIBRARY_DIET_PLANS_VIEW_QUERY_PARAM, resolveManagerLibraryDietPlansView(viewValue ?? legacyTabValue));
-    next.delete(MANAGER_LIBRARY_DIET_PLANS_LEGACY_TAB_QUERY_PARAM);
-    router.replace(`${pathname}?${next.toString()}`, { scroll: false });
-  }, [legacyTabValue, pathname, router, searchParams, viewValue]);
   const debouncedSearch = useManagerInfrastructureDebounce(search, 300);
   const params = useMemo(() => ({ search: debouncedSearch, page: String(currentPage), limit: String(MANAGER_ITEMS_PER_PAGE) }), [currentPage, debouncedSearch]);
   const dietQuery = useManagerLibraryDietPlansQuery(params);
@@ -64,17 +45,6 @@ export function useManagerLibraryDietPlansLogic(): ManagerLibraryDietPlansViewMo
   const deletionIdempotencyKeys = useRef(new Map<string, string>());
   const saveDietKeyRef = useRef<string | null>(null);
   const saveExerciseKeyRef = useRef<string | null>(null);
-
-  const setUrlParam = useCallback((key: string, value: string | null) => {
-    const next = new URLSearchParams(searchParams.toString());
-    if (value) next.set(key, value); else next.delete(key);
-    if (key === MANAGER_LIBRARY_DIET_PLANS_VIEW_QUERY_PARAM) next.delete(MANAGER_LIBRARY_DIET_PLANS_LEGACY_TAB_QUERY_PARAM);
-    if (key !== MANAGER_LIBRARY_DIET_PLANS_PAGE_QUERY_PARAM) next.set(MANAGER_LIBRARY_DIET_PLANS_PAGE_QUERY_PARAM, '1');
-    router.replace(next.size ? `${pathname}?${next.toString()}` : pathname, { scroll: false });
-  }, [pathname, router, searchParams]);
-  const setView = useCallback((nextView: LibraryView) => setUrlParam(MANAGER_LIBRARY_DIET_PLANS_VIEW_QUERY_PARAM, nextView), [setUrlParam]);
-  const setSearch = useCallback((value: string) => setUrlParam(MANAGER_LIBRARY_DIET_PLANS_SEARCH_QUERY_PARAM, value || null), [setUrlParam]);
-  const setCurrentPage = useCallback((page: number) => setUrlParam(MANAGER_LIBRARY_DIET_PLANS_PAGE_QUERY_PARAM, String(Math.max(1, page))), [setUrlParam]);
 
   const saveDietPlan = useCallback(async (data: Partial<DietPlan>) => {
     const response = await mutations.saveDiet.mutateAsync({ id: ui.editDietId, data, idempotencyKey: (saveDietKeyRef.current ??= ManagerInfrastructureIdempotency()) });

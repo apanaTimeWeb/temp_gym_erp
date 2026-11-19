@@ -12,7 +12,7 @@ import { useManagerInfrastructureUnsavedChangesGuard } from '@/app/frontend_mana
 import { ManagerInfrastructureFromManagerMinorUnits } from '@/app/frontend_manager/manager_members/members_directory/utils/ManagerMembersDirectoryLocalFromMinorUnits';
 import { ManagerInfrastructureIdempotency } from '@/app/frontend_manager/manager_members/members_directory/utils/ManagerMembersDirectoryLocalIdempotency';
 
-import { ManagerMembersDirectoryCreateDefaultForm } from '@/app/frontend_manager/manager_members/members_directory/utils/ManagerMembersDirectoryCreateDefaultForm';
+import { ManagerMembersDirectoryNormalizeEditData } from '@/app/frontend_manager/manager_members/members_directory/utils/ManagerMembersDirectoryNormalizeEditData';
 import { ManagerMembersDirectoryCalculatePriceForCycle as getPriceForCycle } from '@/app/frontend_manager/manager_members/members_directory/utils/ManagerMembersDirectoryCalculatePriceForCycle';
 import { managerMembersFormSchema } from '@/app/frontend_manager/manager_members/members_directory/schemas/manager_members_directory_form.schemas';
 import { ManagerMembersDirectoryCalculateMemberExpiryDate } from '@/app/frontend_manager/manager_members/members_directory/utils/ManagerMembersDirectoryCalculateMemberExpiryDate';
@@ -38,7 +38,7 @@ export function useManagerMembersDirectoryModalForm(
 
   const useFormReturn = useForm<MemberFormValues>({
     resolver: zodResolver(managerMembersFormSchema),
-    defaultValues: editData || ManagerMembersDirectoryCreateDefaultForm()
+    defaultValues: ManagerMembersDirectoryNormalizeEditData(editData)
   });
 
   const {
@@ -57,37 +57,7 @@ export function useManagerMembersDirectoryModalForm(
   // EFFECT: Dependency list is limited to the values that control this effect.
   useEffect(() => {
     if (showAddModal) {
-      const normalizedPhone = editData?.phone ? editData.phone.replace(/[\s-+]/g, '').slice(-10) : '';
-      const rawGender = String(editData?.gender || '').toUpperCase();
-      const normalizedGender = (['MALE', 'FEMALE', 'OTHER'].includes(rawGender) ? rawGender : 'MALE') as MemberFormValues['gender'];
-      const cycleMap: Record<string, MemberFormValues['billingCycle']> = {
-        Monthly: 'ONE_MONTH',
-        ONE_MONTH: 'ONE_MONTH',
-        Quarterly: 'THREE_MONTHS',
-        THREE_MONTHS: 'THREE_MONTHS',
-        Semiannual: 'SIX_MONTHS',
-        SIX_MONTHS: 'SIX_MONTHS',
-        Annual: 'TWELVE_MONTHS',
-        TWELVE_MONTHS: 'TWELVE_MONTHS',
-        CUSTOM: 'CUSTOM',
-      };
-      const normalizedCycle = editData?.billingCycle ? (cycleMap[editData.billingCycle] || 'ONE_MONTH') : 'ONE_MONTH';
-      const normalizedJoinDate = editData?.joinDate ? (editData.joinDate.includes('T') ? editData.joinDate.split('T')[0] : editData.joinDate.slice(0, 10)) : '';
-      const normalizedExpiryDate = editData?.expiryDate ? (editData.expiryDate.includes('T') ? editData.expiryDate.split('T')[0] : editData.expiryDate.slice(0, 10)) : '';
-
-      reset({
-        ...ManagerMembersDirectoryCreateDefaultForm(),
-        ...(editData || {}),
-        ...(normalizedPhone ? { phone: normalizedPhone } : {}),
-        gender: editData ? normalizedGender : 'MALE',
-        billingCycle: editData ? normalizedCycle : 'ONE_MONTH',
-        joinDate: normalizedJoinDate || ManagerMembersDirectoryCreateDefaultForm().joinDate,
-        expiryDate: normalizedExpiryDate || ManagerMembersDirectoryCreateDefaultForm().expiryDate,
-        totalAmount: editData?.totalAmount ? ManagerInfrastructureFromManagerMinorUnits(editData.totalAmount) : 0,
-        paidAmount: editData?.paidAmount ? ManagerInfrastructureFromManagerMinorUnits(editData.paidAmount) : 0,
-        pendingAmount: editData?.pendingAmount ? ManagerInfrastructureFromManagerMinorUnits(editData.pendingAmount) : 0,
-        advanceAmount: editData?.advanceAmount ? ManagerInfrastructureFromManagerMinorUnits(editData.advanceAmount) : 0,
-      });
+      reset(ManagerMembersDirectoryNormalizeEditData(editData));
     }
   }, [showAddModal, editData, reset]);
 
@@ -128,14 +98,9 @@ export function useManagerMembersDirectoryModalForm(
       }
     } else {
       // Remove fields that should not be updated during edit
-      delete payload.totalAmount;
-      delete payload.paidAmount;
-      delete payload.pendingAmount;
-      delete payload.joinDate;
-      delete payload.expiryDate;
-      delete payload.planId;
-      delete payload.billingCycle;
-      delete payload.customDays;
+      (['totalAmount', 'paidAmount', 'pendingAmount', 'joinDate', 'expiryDate', 'planId', 'billingCycle', 'customDays'] as const).forEach(
+        (field) => delete payload[field]
+      );
     }
     const requiresPaymentConfirmation = !editId && Number(data.paidAmount) > 0;
     if (requiresPaymentConfirmation) {

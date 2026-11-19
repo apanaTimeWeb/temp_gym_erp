@@ -1,6 +1,7 @@
 // RESPONSIBILITY: Renders ManagerMembersDirectoryMemberProfilePictureUpload's feature UI and orchestrates presentation through module-owned state/hooks; it does not own API transport or business rules.
 'use client';
 import { useState, useRef, type ChangeEvent } from 'react';
+import Image from 'next/image';
 import { Camera, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -51,7 +52,7 @@ export default function ManagerMembersDirectoryMemberProfilePictureUpload() {
       <div className="w-24 h-24 rounded-full bg-input border-2 border-dashed border-border flex flex-col items-center justify-center text-text-secondary mb-3 relative overflow-hidden group motion-safe:transition-all motion-safe:duration-200 ease-in-out hover:border-primary">
         {previewUrl ? (
           <>
-            <img src={previewUrl} alt="Member preview" className="w-full h-full object-cover" />
+            <Image src={previewUrl} alt="Member preview" width={96} height={96} unoptimized className="w-full h-full object-cover" />
             <button
               type="button"
               onClick={handleRemove}
