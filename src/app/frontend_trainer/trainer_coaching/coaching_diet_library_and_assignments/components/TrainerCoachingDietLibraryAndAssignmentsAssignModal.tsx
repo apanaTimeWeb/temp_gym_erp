@@ -16,6 +16,7 @@ import { useTrainerInfrastructureUnsavedChangesGuard } from '@/app/frontend_trai
 
 import { useTrainerInfrastructureDialogFocusTrap } from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/hooks/TrainerCoachingDietLibraryAndAssignmentsuseTrainerInfrastructureDialogFocusTrap';
 
+import { TrainerCoachingDietLibraryAndAssignmentsSelectedChips } from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/components/TrainerCoachingDietLibraryAndAssignmentsSelectedChips';
 import type { TrainerLibraryAssignModalProps } from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/types/TrainerCoachingDietLibraryAndAssignmentsAssignModalProps';
 
 /**
@@ -141,43 +142,12 @@ export default function TrainerLibraryAssignModal({
 
         <div className="min-h-0 flex-1 overflow-y-auto custom-scrollbar py-2 space-y-3">
           {/* Selected Members Chips Tray */}
-          {selectedMemberIds.length > 0 && (
-            <div className="py-2 border-b border-border">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold text-secondary uppercase tracking-wider">
-                  Selected ({selectedMemberIds.length})
-                </span>
-                <button
-                  type="button"
-                  onClick={() => { setValue('memberIds', [], { shouldDirty: true, shouldValidate: true }); setValue('memberId', ''); }}
-                  className="text-xs text-danger hover:underline font-medium"
-                >
-                  Clear all
-                </button>
-              </div>
-              <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto custom-scrollbar p-1">
-                {selectedMemberIds.map((id) => {
-                  const member = members.find((m) => m.id === id);
-                  return (
-                    <span
-                      key={id}
-                      className="inline-flex items-center gap-1.5 bg-primary-subtle border border-border text-primary text-xs font-medium px-2.5 py-1 rounded-full"
-                    >
-                      <span>{member?.name ?? id}</span>
-                      <button
-                        type="button"
-                        onClick={() => removeMember(id)}
-                        aria-label={`Remove ${member?.name ?? id}`}
-                        className="hover:text-danger rounded-full p-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring"
-                      >
-                        <X size={12} strokeWidth={2.5} />
-                      </button>
-                    </span>
-                  );
-                })}
-              </div>
-            </div>
-          )}
+          <TrainerCoachingDietLibraryAndAssignmentsSelectedChips
+            selectedMemberIds={selectedMemberIds}
+            members={members}
+            onRemoveMember={removeMember}
+            onClearAll={() => { setValue('memberIds', [], { shouldDirty: true, shouldValidate: true }); setValue('memberId', ''); }}
+          />
 
           {/* Member Search & Selection Toolbar */}
           <div className="space-y-2">

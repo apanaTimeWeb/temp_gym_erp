@@ -3,47 +3,23 @@
 // DATA FLOW: Members selected-member state -> profile view -> feature-local member API contract
 
 import { useState } from 'react';
-
-import { Apple, Plus, Check, Loader2, MessageCircle, RefreshCw, Flame, Utensils, CheckCircle2, Droplets, CheckSquare, Square } from 'lucide-react';
-
+import { Apple, Plus, Check, Loader2, MessageCircle, RefreshCw, Flame, Utensils } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import { displayValue } from '@/lib/display_value';
 import { useTrainerInfrastructureIdempotencyKey } from '@/app/frontend_trainer/trainer_members/members_directory_and_profile/hooks/TrainerMembersDirectoryAndProfileuseTrainerInfrastructureIdempotencyKey';
-
 import TrainerInfrastructureSearchableDropdown from '@/app/frontend_trainer/trainer_members/members_directory_and_profile/components/TrainerMembersDirectoryAndProfileTrainerInfrastructureSearchableDropdown';
-
 import { useTrainerMembersMutations } from '@/app/frontend_trainer/trainer_members/members_directory_and_profile/hooks/useTrainerMembersDirectoryAndProfileMutations';
-
 import { useTrainerMembersMemberDietPlansQuery } from '@/app/frontend_trainer/trainer_members/members_directory_and_profile/hooks/useTrainerMembersDirectoryAndProfileProfileQueries';
-
 import { useTrainerMembersSelectedMember } from '@/app/frontend_trainer/trainer_members/members_directory_and_profile/hooks/useTrainerMembersDirectoryAndProfileSelectedMember';
-
-
 import { TrainerMembersFormatNumber } from '@/app/frontend_trainer/trainer_members/members_directory_and_profile/utils/TrainerMembersDirectoryAndProfileDisplayFormatters';
-
 import { TrainerMembersBuildWhatsAppUrl } from '@/app/frontend_trainer/trainer_members/members_directory_and_profile/utils/TrainerMembersDirectoryAndProfileBuildWhatsAppUrl';
-
-
-
-
-
-
-
-
-
-
-
+import { TrainerMembersDirectoryAndProfileDailyAdherenceTracker } from '@/app/frontend_trainer/trainer_members/members_directory_and_profile/components/TrainerMembersDirectoryAndProfileDailyAdherenceTracker';
 
 /**
  * @description Renders the member's assigned diet plan and handles diet plan assignment for trainers.
  * @dependencies Members selected-member state -> profile view -> feature-local member API contract
- * @edge-case Preserves the owning feature’s loading, empty, error, permission, and recovery behavior instead of inventing fallback business data.
- */
-/**
- * @description Owns the members feature UI responsibility represented by TrainerMembersProfileDiet, keeping feature behavior, state, and data ownership inside the Trainer module.
- * @dependencies Uses only documented members module dependencies and approved global infrastructure/UI primitives.
- * @edge-case Preserves documented loading, empty, error, accessibility, responsive, and recovery behavior without inventing business fallbacks.
+ * @edge-case Preserves the owning feature's loading, empty, error, permission, and recovery behavior instead of inventing fallback business data.
  */
 export default function TrainerMembersProfileDiet() {
   const locale = useLocale();
@@ -106,32 +82,20 @@ export default function TrainerMembersProfileDiet() {
     if (!diet) return;
     const mealsText = Array.isArray(diet.meals) 
       ? diet.meals.map((m: string | { name?: string; time?: string; items?: string; description?: string }, i: number) => typeof m === 'string' ? `• ${m}` : `• *${m.name || `${t('TEXT_MEAL')} ${i + 1}`}* (${m.time || ''}): ${m.items || m.description || ''}`).join('\n')
-      : t('TEXT_FOLLOW_BALANCED_NUTRITION');;
+      : t('TEXT_FOLLOW_BALANCED_NUTRITION');
 
     const text = [
       t('TEXT_WHATSAPP_DIET_HEADER', { name: selectedMember.name.toUpperCase() }),
       t('TEXT_WHATSAPP_DIET_PLAN', { plan: diet.name }),
       t('TEXT_WHATSAPP_DIET_GOAL', { goal: String(displayValue(diet.goal)) }),
       t('TEXT_WHATSAPP_DIET_CALORIES', { calories: String(displayValue(diet.calories)) }),
-      t('TEXT_WHATSAPP_DIET_MACROS', {
-        protein: String(displayValue(diet.protein)),
-        carbs: String(displayValue(diet.carbs)),
-        fats: String(displayValue(diet.fats)),
-      }),
-      '',
-      t('TEXT_WHATSAPP_MEAL_SCHEDULE'),
-      mealsText,
+      t('TEXT_WHATSAPP_DIET_MACROS', { protein: String(displayValue(diet.protein)), carbs: String(displayValue(diet.carbs)), fats: String(displayValue(diet.fats)) }),
+      '', t('TEXT_WHATSAPP_MEAL_SCHEDULE'), mealsText,
     ].join('\n');
     const handoffUrl = TrainerMembersBuildWhatsAppUrl(selectedMember.phone ?? '', text);
     if (handoffUrl) {
       const popup = window.open(handoffUrl, '_blank', 'noopener,noreferrer');
-      if (popup) {
-        try {
-          popup.opener = null;
-        } catch {
-          // ignore restricted environments
-        }
-      }
+      if (popup) { try { popup.opener = null; } catch { /* ignore */ } }
     }
   };
 
@@ -298,117 +262,18 @@ export default function TrainerMembersProfileDiet() {
           </div>
 
           {/* Daily Meal Adherence & Hydration Tracker */}
-          <div className="bg-floating border border-border rounded-xl p-5 space-y-4" data-testid="trainer_members-meal-adherence-tracker">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-border">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 size={18} className="text-success" />
-                <div>
-                  <h4 className="text-sm font-bold text-primary">Today&apos;s Meal Adherence &amp; Hydration Log</h4>
-                  <p className="text-xs text-secondary">Track client meal consumption and daily water goal adherence</p>
-                </div>
-              </div>
-              {logSaved ? (
-                <span className="text-xs font-bold text-success bg-success-bg px-2.5 py-1 rounded-full flex items-center gap-1">
-                  <Check size={14} /> Log Saved
-                </span>
-              ) : (
-                <button
-                  type="button"
-                  onClick={handleSaveCompliance}
-                  className="px-3.5 py-1.5 bg-primary text-on-primary rounded-lg text-xs font-semibold hover:bg-primary-hover transition-colors"
-                >
-                  Save Today&apos;s Adherence
-                </button>
-              )}
-            </div>
-
-            {/* Checklist of today's meals */}
-            <div className="space-y-2">
-              <p className="text-xs font-semibold text-secondary uppercase tracking-wider">Meals Check-in</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {(diet.meals && diet.meals.length > 0 ? diet.meals : ['Breakfast: High Protein Oats', 'Lunch: Grilled Chicken & Quinoa', 'Dinner: Salmon with Greens', 'Snack: Greek Yogurt & Berries']).map((meal, index) => {
-                  const mealTitle = typeof meal === 'string' ? meal : meal.name || `Meal ${index + 1}`;
-                  const isChecked = !!consumedMeals[index];
-                  return (
-                    <button
-                      key={`compliance-meal-${index}`}
-                      type="button"
-                      onClick={() => toggleMealConsumed(index)}
-                      className={`p-3 rounded-xl border text-start flex items-center justify-between gap-2 transition-all ${
-                        isChecked
-                          ? 'bg-success-bg/40 border-success/40 text-primary'
-                          : 'bg-card border-border text-secondary hover:border-primary'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <span className="text-xs font-bold text-secondary">#{index + 1}</span>
-                        <span className="text-xs font-semibold text-primary">{mealTitle}</span>
-                      </div>
-                      <span className={`text-xs font-bold px-2 py-0.5 rounded-md ${
-                        isChecked ? 'bg-success text-on-primary' : 'bg-input text-secondary'
-                      }`}>
-                        {isChecked ? 'Consumed' : 'Pending'}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Hydration Tracker */}
-            <div className="bg-card border border-border rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-info-bg text-info flex items-center justify-center">
-                  <Droplets size={22} />
-                </div>
-                <div>
-                  <p className="text-xs font-semibold text-secondary uppercase">Hydration Tracker</p>
-                  <p className="text-base font-bold text-primary">
-                    {(waterMl / 1000).toFixed(1)}L <span className="text-xs text-secondary font-normal">/ 3.5L Daily Target</span>
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => addWater(250)}
-                  className="px-2.5 py-1.5 rounded-lg border border-border text-xs font-semibold text-primary hover:bg-input transition-colors"
-                >
-                  +250 ml
-                </button>
-                <button
-                  type="button"
-                  onClick={() => addWater(500)}
-                  className="px-2.5 py-1.5 rounded-lg border border-border text-xs font-semibold text-primary hover:bg-input transition-colors"
-                >
-                  +500 ml
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setWaterMl(0)}
-                  className="px-2 py-1.5 text-xs text-secondary hover:text-danger"
-                >
-                  Reset
-                </button>
-              </div>
-            </div>
-
-            {/* Trainer Coaching Adherence Note */}
-            <div className="space-y-1">
-              <label htmlFor="adherence-notes" className="text-xs font-semibold text-secondary uppercase">
-                Trainer Diet Feedback / Daily Note
-              </label>
-              <textarea
-                id="adherence-notes"
-                rows={2}
-                value={complianceNote}
-                onChange={(e) => setComplianceNote(e.target.value)}
-                placeholder="Log hunger cues, cravings, digestion feedback, or adherence adjustments..."
-                className="w-full px-3 py-2 rounded-xl bg-card border border-border text-xs text-primary placeholder:text-secondary/60 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring"
-              />
-            </div>
-          </div>
+          <TrainerMembersDirectoryAndProfileDailyAdherenceTracker
+            dietMeals={diet.meals}
+            consumedMeals={consumedMeals}
+            onToggleMeal={toggleMealConsumed}
+            waterMl={waterMl}
+            onAddWater={addWater}
+            onResetWater={() => setWaterMl(0)}
+            complianceNote={complianceNote}
+            onChangeComplianceNote={setComplianceNote}
+            logSaved={logSaved}
+            onSaveCompliance={handleSaveCompliance}
+          />
         </div>
       ) : !isAssigning ? (
         <div className="bg-card border border-dashed border-border rounded-2xl p-12 text-center space-y-3">

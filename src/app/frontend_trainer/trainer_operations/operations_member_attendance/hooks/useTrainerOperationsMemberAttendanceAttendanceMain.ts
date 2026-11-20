@@ -4,39 +4,18 @@
 import { useState } from 'react';
 
 import { useTrainerAttendanceFilters } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/hooks/useTrainerOperationsMemberAttendanceAttendanceFilters';
-
 import { useTrainerAttendanceMutations } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/hooks/useTrainerOperationsMemberAttendanceAttendanceMutations';
-
 import { useTrainerAttendanceMyHistoryQuery, useTrainerAttendanceRecordsQuery, useTrainerAttendanceStatsQuery, useTrainerAttendanceMembersQuery } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/hooks/useTrainerOperationsMemberAttendanceAttendanceQuery';
-
 import { useTrainerAttendanceStore } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/state/useTrainerOperationsMemberAttendanceAttendanceStore';
-
 import { useTrainerInfrastructureFeedback } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/hooks/TrainerOperationsMemberAttendanceuseTrainerInfrastructureFeedback';
-
 import { useTrainerInfrastructureIdempotencyKey } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/hooks/TrainerOperationsMemberAttendanceuseTrainerInfrastructureIdempotencyKey';
-
 import { checkOutTrainerAttendance } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/api/TrainerOperationsMemberAttendanceAttendanceApi';
-
 import type { TrainerAttendanceCreateDto, TrainerAttendanceMemberBasic } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/types/TrainerOperationsMemberAttendanceAttendanceTypes';
-
-
-
-
-
-
-
-
-
 
 /**
  * @description Coordinates Attendance data queries, feature mutations, UI-only modal state, and refresh feedback for the Trainer Attendance route.
  * @dependencies Attendance filters, TanStack Query hooks, mutation commands, module UI store, idempotency key utility, and global feedback infrastructure.
  * @edge-cases Keeps refresh state local, closes the modal only after a confirmed mutation, and preserves backend-driven success/error messages.
- */
-/**
- * @description Manages TrainerAttendanceMain state and data flow for the attendance feature while keeping server data in TanStack Query and UI-only state at the module boundary.
- * @dependencies Uses only documented attendance module dependencies and approved global infrastructure/UI primitives.
- * @edge-case Preserves documented loading, empty, error, retry, URL-state, and cleanup behavior on repeated interaction.
  */
 export function useTrainerAttendanceMain({ forcedTab }: { forcedTab?: 'MEMBERS' | 'MY_ATTENDANCE' } = {}) {
   const filters = useTrainerAttendanceFilters();
@@ -81,10 +60,7 @@ export function useTrainerAttendanceMain({ forcedTab }: { forcedTab?: 'MEMBERS' 
   const handleQuickMark = async (member: TrainerAttendanceMemberBasic) => {
     const now = new Date();
     const dateStr = [now.getFullYear(), String(now.getMonth() + 1).padStart(2, '0'), String(now.getDate()).padStart(2, '0')].join('-');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const timeStr = `${hours}:${minutes}`;
-
+    const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
     await handleMarkAttendance({
       type: 'MEMBER',
       memberId: String(member.id),
@@ -99,9 +75,7 @@ export function useTrainerAttendanceMain({ forcedTab }: { forcedTab?: 'MEMBERS' 
     const key = mutationKeys.begin(actionId);
     try {
       const now = new Date();
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const timeStr = `${hours}:${minutes}`;
+      const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
       const response = await checkOutTrainerAttendance(recordId, timeStr, key);
       mutationKeys.clear(actionId);
       void recordsQuery.refetch();
@@ -146,39 +120,13 @@ export function useTrainerAttendanceMain({ forcedTab }: { forcedTab?: 'MEMBERS' 
   };
 
   return {
-    filters,
-    tab,
-    search,
-    filterDate,
-    currentPage,
-    sortBy,
-    sortDirection,
-    recordsQuery,
-    myAttendanceHistoryQuery,
-    myAttendanceRecords: myAttendanceHistoryQuery.data ?? [],
-    stats,
-    statsQuery,
-    members,
-    membersQuery,
-    markAttendancePending,
-    selfCheckInPending,
-    selfCheckOutPending,
-    openModal,
-    closeModal: handleCloseModal,
-    selectedMemberId,
-    setSelectedMemberId,
-    openModalForMember,
-    handleQuickMark,
-    handleCheckOutRecord,
-    viewMode,
-    setViewMode,
-    showModal,
-    handleMarkAttendance,
-    handleSelfCheckIn,
-    handleSelfCheckOut,
-    handleRefresh,
-    isRefreshing,
-    records: recordsQuery.data?.records ?? [],
-    totalRecords: recordsQuery.data?.total ?? 0,
+    filters, tab, search, filterDate, currentPage, sortBy, sortDirection,
+    recordsQuery, myAttendanceHistoryQuery, myAttendanceRecords: myAttendanceHistoryQuery.data ?? [],
+    stats, statsQuery, members, membersQuery,
+    markAttendancePending, selfCheckInPending, selfCheckOutPending,
+    openModal, closeModal: handleCloseModal, selectedMemberId, setSelectedMemberId, openModalForMember,
+    handleQuickMark, handleCheckOutRecord, viewMode, setViewMode, showModal,
+    handleMarkAttendance, handleSelfCheckIn, handleSelfCheckOut, handleRefresh, isRefreshing,
+    records: recordsQuery.data?.records ?? [], totalRecords: recordsQuery.data?.total ?? 0,
   };
 }

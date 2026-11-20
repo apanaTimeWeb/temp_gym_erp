@@ -4,7 +4,7 @@
 // Bug #19 fix: Adds TrainerSessionsIsSpecificFilter() type guard for TrainerSessionsSessionFilter vs TrainerSessionsSessionType conflation.
 import { CalendarCheck, CalendarX, TrendingUp, Users } from 'lucide-react';
 
-import type { TrainerSessionsSessionType, TrainerSessionsSessionStatus, TrainerSessionsSessionFilter } from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/types/TrainerCoachingSessionsTypes';
+import type { TrainerSessionsSessionType, TrainerSessionsSessionStatus, TrainerSessionsSessionFilter, LiveWorkoutExercise } from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/types/TrainerCoachingSessionsTypes';
 
 
 
@@ -50,3 +50,26 @@ export const TRAINER_SESSIONS_KPI_CARD_CONFIG = [
   { key: 'no-shows', labelKey: 'TEXT_NO_SHOWS_MONTH', icon: CalendarX, iconClass: 'text-danger', bgClass: 'bg-danger-bg' },
   { key: 'attendance', labelKey: 'TEXT_AVG_ATTENDANCE', icon: Users, iconClass: 'text-info', bgClass: 'bg-info-bg' },
 ] as const;
+
+export const TRAINER_SESSIONS_DEFAULT_LIVE_EXERCISES: LiveWorkoutExercise[] = [
+  {
+    id: 'ex-1',
+    name: 'Barbell Bench Press',
+    targetSets: 3,
+    sets: [
+      { id: 's-1-1', setNumber: 1, targetWeightKg: 60, actualWeightKg: 60, targetReps: 10, actualReps: 10, rpe: 7, completed: true },
+      { id: 's-1-2', setNumber: 2, targetWeightKg: 65, actualWeightKg: 65, targetReps: 8, actualReps: 8, rpe: 8, completed: true },
+      { id: 's-1-3', setNumber: 3, targetWeightKg: 70, actualWeightKg: 70, targetReps: 6, actualReps: 6, rpe: 9, completed: false },
+    ],
+  },
+  {
+    id: 'ex-2',
+    name: 'Incline Dumbbell Press',
+    targetSets: 3,
+    sets: [
+      { id: 's-2-1', setNumber: 1, targetWeightKg: 22, actualWeightKg: 22, targetReps: 12, actualReps: 12, rpe: 7, completed: false },
+      { id: 's-2-2', setNumber: 2, targetWeightKg: 24, actualWeightKg: 24, targetReps: 10, actualReps: 10, rpe: 8, completed: false },
+      { id: 's-2-3', setNumber: 3, targetWeightKg: 24, actualWeightKg: 24, targetReps: 10, actualReps: 10, rpe: 9, completed: false },
+    ],
+  },
+];

@@ -2,57 +2,25 @@
 // RESPONSIBILITY: Modal for recording a member attendance entry.
 // DATA FLOW: props (from TrainerAttendanceMain) → react-hook-form + zod → onSubmit mutation
 import { useEffect, useId, useRef, useState } from 'react';
-
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import { X, CheckCircle, Loader2, Users } from 'lucide-react';
-
 import { useTranslations } from 'next-intl';
-
 import { useForm, Controller } from 'react-hook-form';
 
 import { TRAINER_ATTENDANCE_RECORD_TYPE } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/utils/TrainerOperationsMemberAttendanceAttendanceConstants';
-
 import { TrainerAttendanceFormSchema } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/schemas/TrainerOperationsMemberAttendanceAttendanceFormSchema';
-
 import { TrainerAttendanceEmptyForm } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/utils/TrainerOperationsMemberAttendanceAttendanceEmptyForm';
-
-import { TrainerAttendanceMaskSensitiveData } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/utils/TrainerOperationsMemberAttendanceAttendanceDisplayFormatters';
-
 import { useTrainerInfrastructureUnsavedChangesGuard } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/hooks/TrainerOperationsMemberAttendanceuseTrainerInfrastructureUnsavedChangesGuard';
-
 import TrainerInfrastructureSearchableDropdown from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/components/TrainerOperationsMemberAttendanceTrainerInfrastructureSearchableDropdown';
-
 import { useTrainerInfrastructureDialogFocusTrap } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/hooks/TrainerOperationsMemberAttendanceuseTrainerInfrastructureDialogFocusTrap';
-
+import { TrainerAttendanceMaskSensitiveData } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/utils/TrainerOperationsMemberAttendanceAttendanceDisplayFormatters';
+import { TrainerOperationsMemberAttendanceTraineeChecklist } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/components/TrainerOperationsMemberAttendanceTraineeChecklist';
 import type { TrainerAttendanceModalProps } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/types/TrainerOperationsMemberAttendanceAttendanceModalProps';
-
 import type { TrainerAttendanceFormValues } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/types/TrainerOperationsMemberAttendanceAttendanceTypes';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /**
  * @description Modal for recording a new attendance entry (member or staff).
  * @dependencies props (from TrainerAttendanceMain) → react-hook-form + zod → onSubmit mutation
- * @edge-case Preserves the owning feature’s loading, empty, error, permission, and recovery behavior instead of inventing fallback business data.
- */
-/**
- * @description Renders and coordinates the attendance feature form/modal surface for AttendanceModal, including validation, async submission, and safe recovery.
- * @dependencies Uses only documented attendance module dependencies and approved global infrastructure/UI primitives.
  * @edge-case Preserves entered values after validation/API failure and blocks duplicate submission while pending.
  */
 export default function TrainerAttendanceModal({ isOpen, onClose, members, membersLoading, membersError, onRetryMembers, saving, onSubmit, testId = 'trainer-attendance-attendance-modal-root', initialMemberId = '' }: TrainerAttendanceModalProps) {
@@ -184,75 +152,18 @@ export default function TrainerAttendanceModal({ isOpen, onClose, members, membe
             ) : members.length === 0 ? (
               <p className="text-sm text-secondary py-2" data-testid="trainer_attendance-members-empty">{t('TEXT_NO_MEMBERS_AVAILABLE')}</p>
             ) : mode === 'multi' ? (
-              <div className="space-y-2">
-                <div className="flex items-center justify-between gap-2">
-                  <input
-                    type="text"
-                    value={memberFilterText}
-                    onChange={(e) => setMemberFilterText(e.target.value)}
-                    placeholder="Search trainees to check off..."
-                    className="flex-1 px-3 py-1.5 bg-input border border-border rounded-lg text-xs text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
-                  />
-                  {filteredMembers.length > 0 && (
-                    <button
-                      type="button"
-                      onClick={() => handleSelectAllFiltered(filteredMembers.map((m) => m.id))}
-                      className="px-2 py-1 text-2xs font-semibold bg-input border border-border rounded text-primary hover:bg-primary-subtle shrink-0"
-                    >
-                      {filteredMembers.every((m) => selectedMemberIds.includes(m.id)) ? 'Deselect' : 'Select All'}
-                    </button>
-                  )}
-                </div>
-
-                <div className="max-h-40 overflow-y-auto custom-scrollbar border border-border rounded-xl p-2 space-y-1 bg-card">
-                  {filteredMembers.length === 0 ? (
-                    <p className="text-xs text-secondary text-center py-3">No matching trainees found</p>
-                  ) : (
-                    filteredMembers.map((m) => {
-                      const isChecked = selectedMemberIds.includes(m.id);
-                      return (
-                        <label
-                          key={m.id}
-                          className={`flex items-center gap-2.5 p-2 rounded-lg cursor-pointer motion-safe:transition-all ${
-                            isChecked
-                              ? 'bg-primary-subtle border border-primary/30'
-                              : 'hover:bg-input border border-transparent'
-                          }`}
-                        >
-                          <input
-                            type="checkbox"
-                            checked={isChecked}
-                            onChange={() => toggleMemberCheckbox(m.id)}
-                            className="w-4 h-4 rounded text-primary border-border focus:ring-focus-ring"
-                          />
-                          <div className="flex-1 min-w-0">
-                            <span className="text-sm font-semibold text-primary block truncate">{m.name}</span>
-                            {m.phone && <span className="text-2xs text-secondary">{TrainerAttendanceMaskSensitiveData(m.phone)}</span>}
-                          </div>
-                        </label>
-                      );
-                    })
-                  )}
-                </div>
-
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-primary">
-                    {selectedMemberIds.length} trainee(s) checked for batch check-in
-                  </span>
-                  {selectedMemberIds.length > 0 && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSelectedMemberIds([]);
-                        setValue('memberId', '', { shouldValidate: true });
-                      }}
-                      className="text-2xs text-secondary hover:text-danger underline"
-                    >
-                      Clear Selection
-                    </button>
-                  )}
-                </div>
-              </div>
+              <TrainerOperationsMemberAttendanceTraineeChecklist
+                filteredMembers={filteredMembers}
+                selectedMemberIds={selectedMemberIds}
+                memberFilterText={memberFilterText}
+                onFilterChange={setMemberFilterText}
+                onToggleMember={toggleMemberCheckbox}
+                onSelectAllFiltered={handleSelectAllFiltered}
+                onClearAll={() => {
+                  setSelectedMemberIds([]);
+                  setValue('memberId', '', { shouldValidate: true });
+                }}
+              />
             ) : (
               <Controller
                 name="memberId"
