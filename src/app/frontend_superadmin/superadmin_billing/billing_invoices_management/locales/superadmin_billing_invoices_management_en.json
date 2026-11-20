@@ -5,6 +5,7 @@
       "namespace": "superadmin_billing_invoices"
     },
     "ui": {
+      "select_all_rows": "Select all invoices",
       "failed_to_load_view_f0191174": "Failed to load view",
       "an_unexpected_error_occurred_while_rendering_1a97607b": "An unexpected error occurred while rendering this module. Please try again or contact support if the issue persists.",
       "try_again_d876a9fe": "Try Again",

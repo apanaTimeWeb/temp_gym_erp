@@ -5,6 +5,7 @@
       "namespace": "superadmin_coupons"
     },
     "ui": {
+      "select_all_coupons": "सभी कूपन चुनें",
       "failed_to_load_view_f0191174": "लोड करने में विफल देखें",
       "an_unexpected_error_occurred_while_rendering_1a97607b": "इस मॉड्यूल को दिखाते समय एक अप्रत्याशित त्रुटि हुई। कृपया फिर से प्रयास करें या समस्या बनी रहने पर सहायता से संपर्क करें।",
       "try_again_d876a9fe": "फिर से प्रयास करें",
