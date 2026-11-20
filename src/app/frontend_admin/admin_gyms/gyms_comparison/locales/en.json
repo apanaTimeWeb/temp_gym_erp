@@ -1,0 +1,14 @@
+{
+  "admin_gyms_comparison": {
+    "title": "Gyms Comparison & Benchmarking",
+    "description": "Side-by-side performance benchmarking across all gym branches",
+    "export_csv": "Export CSV",
+    "print": "Print Comparison",
+    "search_branches": "Search branches...",
+    "filter_all": "All Metrics",
+    "filter_financial": "Financial",
+    "filter_operations": "Operations",
+    "empty_state": "No branches selected for comparison",
+    "select_branches": "Select at least 2 branches to compare metrics"
+  }
+}
