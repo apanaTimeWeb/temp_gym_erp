@@ -63,7 +63,7 @@ export const superadminAffiliatesHandlers = [
     const raw = await request.json();
     const parsed = AffiliateSchema.safeParse(raw);
     if (!parsed.success) return HttpResponse.json<ApiResponse<Affiliate> | ApiResponse<null>>({ success: false, message: 'Invalid affiliate payload', data: null, errorCode: 'VALIDATION_ERROR', statusCode: StatusCodes.BAD_REQUEST, requestId: crypto.randomUUID()}, { status: StatusCodes.BAD_REQUEST });
-    const { bankDetails, ...restParsedData } = parsed.data;
+    const { bankDetails, payoutDetails, ...restParsedData } = parsed.data;
     const newAffiliate: Affiliate = {
       ...restParsedData,
       id: `a${Date.now()}`,
@@ -74,10 +74,10 @@ export const superadminAffiliatesHandlers = [
       joinedAt: new Date().toISOString(),
       phone: '',
       currency: parsed.data.currency || 'INR',
-      commissionRate: 10,
+      commissionRate: parsed.data.commissionRate ?? 10,
       referralCount: 0,
       conversionRate: 0,
-      bankDetails: bankDetails ? JSON.stringify(bankDetails) : undefined,
+      bankDetails: payoutDetails || (bankDetails ? JSON.stringify(bankDetails) : undefined),
     };
     mockAffiliates = [newAffiliate, ...mockAffiliates];
     return HttpResponse.json<ApiResponse<Affiliate> | ApiResponse<null>>({ success: true, message: 'Affiliate created successfully', data: newAffiliate, requestId: crypto.randomUUID()});
@@ -92,12 +92,14 @@ export const superadminAffiliatesHandlers = [
     let updatedAffiliate: Affiliate | null = null;
     mockAffiliates = mockAffiliates.map((affiliate) => {
       if (affiliate.id === id) {
-        const { bankDetails, ...restParsedData } = parsed.data;
+        const { bankDetails, payoutDetails, ...restParsedData } = parsed.data;
         updatedAffiliate = {
           ...affiliate,
           ...restParsedData,
         };
-        if (bankDetails !== undefined) {
+        if (payoutDetails !== undefined) {
+          updatedAffiliate.bankDetails = payoutDetails;
+        } else if (bankDetails !== undefined) {
           updatedAffiliate.bankDetails = bankDetails ? JSON.stringify(bankDetails) : undefined;
         }
         return updatedAffiliate;

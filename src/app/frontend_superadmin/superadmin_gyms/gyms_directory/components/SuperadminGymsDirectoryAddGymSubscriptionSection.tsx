@@ -6,53 +6,27 @@ import { formatCurrency } from '../utils/SuperadminGymsDirectoryTenantUtils';
 import type { Plan } from '../types/SuperadminGymsDirectoryTenantTypes';
 
 export interface SuperadminGymsDirectoryAddGymSubscriptionSectionProps {
-  planId: string;
-  setPlanId: (val: string) => void;
-  planSelectRef: React.RefObject<HTMLSelectElement | null>;
-  plans: Plan[];
-  loadingPlans: boolean;
-  selectedPlan: Plan | undefined;
-  memberCount: number;
-  setMemberCount: (val: number) => void;
-  memberCountInputRef: React.RefObject<HTMLInputElement | null>;
-  startType: 'TRIAL' | 'PAID';
-  setStartType: (val: 'TRIAL' | 'PAID') => void;
-  trialDays: number;
-  setTrialDays: (val: number) => void;
-  startDate: string;
-  setStartDate: (val: string) => void;
-  expiryDate: string;
-  isProvisioning: boolean;
-  provisioningDone: boolean;
-  errors: { [key: string]: string | undefined };
-  touched: { [key: string]: boolean };
-  handleBlur: (field: string) => void;
-  setErrors: React.Dispatch<React.SetStateAction<{ [key: string]: string | undefined }>>;
+  planId: string; setPlanId: (val: string) => void; planSelectRef: React.RefObject<HTMLSelectElement | null>;
+  plans: Plan[]; loadingPlans: boolean; selectedPlan: Plan | undefined;
+  memberCount: number; setMemberCount: (val: number) => void; memberCountInputRef: React.RefObject<HTMLInputElement | null>;
+  startType: 'TRIAL' | 'PAID'; setStartType: (val: 'TRIAL' | 'PAID') => void;
+  trialDays: number; setTrialDays: (val: number) => void;
+  billingCycle: 'MONTHLY' | 'ANNUAL'; setBillingCycle: (val: 'MONTHLY' | 'ANNUAL') => void;
+  currency: string; setCurrency: (val: string) => void;
+  timezone: string; setTimezone: (val: string) => void;
+  startDate: string; setStartDate: (val: string) => void;
+  expiryDate: string; isProvisioning: boolean; provisioningDone: boolean;
+  errors: { [key: string]: string | undefined }; touched: { [key: string]: boolean };
+  handleBlur: (field: string) => void; setErrors: React.Dispatch<React.SetStateAction<{ [key: string]: string | undefined }>>;
 }
 
 export function SuperadminGymsDirectoryAddGymSubscriptionSection({
-  planId,
-  setPlanId,
-  planSelectRef,
-  plans,
-  loadingPlans,
-  selectedPlan,
-  memberCount,
-  setMemberCount,
-  memberCountInputRef,
-  startType,
-  setStartType,
-  trialDays,
-  setTrialDays,
-  startDate,
-  setStartDate,
-  expiryDate,
-  isProvisioning,
-  provisioningDone,
-  errors,
-  touched,
-  handleBlur,
-  setErrors,
+  planId, setPlanId, planSelectRef, plans, loadingPlans, selectedPlan,
+  memberCount, setMemberCount, memberCountInputRef, startType, setStartType,
+  trialDays, setTrialDays, billingCycle, setBillingCycle,
+  currency, setCurrency, timezone, setTimezone,
+  startDate, setStartDate, expiryDate, isProvisioning, provisioningDone,
+  errors, touched, handleBlur, setErrors,
 }: SuperadminGymsDirectoryAddGymSubscriptionSectionProps) {
   return (
     <div>
@@ -178,18 +152,61 @@ export function SuperadminGymsDirectoryAddGymSubscriptionSection({
           </div>
         ) : (
           <div>
-            <label className="block text-sm font-semibold text-secondary mb-1">
+            <label htmlFor="provision-billing-cycle" className="block text-sm font-semibold text-secondary mb-1">
               Billing Cycle
             </label>
-            <input
-              type="text"
-              readOnly
-              disabled
-              value="Standard Monthly (30 Days)"
-              className="w-full min-h-11 bg-input border border-border text-disabled rounded-lg px-4 py-2 text-sm"
-            />
+            <select
+              id="provision-billing-cycle"
+              value={billingCycle}
+              onChange={(e) => setBillingCycle(e.target.value as 'MONTHLY' | 'ANNUAL')}
+              disabled={isProvisioning || provisioningDone}
+              className="w-full min-h-11 bg-card border border-border text-primary rounded-lg px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              <option value="MONTHLY">Standard Monthly (Billed per month)</option>
+              <option value="ANNUAL">Annual Billing (Billed yearly - Save 15%)</option>
+            </select>
           </div>
         )}
+
+        {/* Currency */}
+        <div>
+          <label htmlFor="provision-currency" className="block text-sm font-semibold text-secondary mb-1">
+            Billing Currency
+          </label>
+          <select
+            id="provision-currency"
+            value={currency}
+            onChange={(e) => setCurrency(e.target.value)}
+            disabled={isProvisioning || provisioningDone}
+            className="w-full min-h-11 bg-card border border-border text-primary rounded-lg px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary font-mono"
+          >
+            <option value="INR">INR (₹) - Indian Rupee</option>
+            <option value="USD">USD ($) - US Dollar</option>
+            <option value="AED">AED - UAE Dirham</option>
+            <option value="EUR">EUR (€) - Euro</option>
+            <option value="SGD">SGD (S$) - Singapore Dollar</option>
+          </select>
+        </div>
+
+        {/* Timezone */}
+        <div>
+          <label htmlFor="provision-timezone" className="block text-sm font-semibold text-secondary mb-1">
+            Facility Timezone
+          </label>
+          <select
+            id="provision-timezone"
+            value={timezone}
+            onChange={(e) => setTimezone(e.target.value)}
+            disabled={isProvisioning || provisioningDone}
+            className="w-full min-h-11 bg-card border border-border text-primary rounded-lg px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary font-mono"
+          >
+            <option value="Asia/Kolkata">Asia/Kolkata (IST +05:30)</option>
+            <option value="Asia/Dubai">Asia/Dubai (GST +04:00)</option>
+            <option value="UTC">UTC (Universal Coordinated Time +00:00)</option>
+            <option value="America/New_York">America/New_York (EST/EDT -05:00)</option>
+            <option value="Asia/Singapore">Asia/Singapore (SGT +08:00)</option>
+          </select>
+        </div>
 
         {/* Start Date */}
         <div>

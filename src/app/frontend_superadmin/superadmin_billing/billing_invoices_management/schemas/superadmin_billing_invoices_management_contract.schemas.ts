@@ -54,6 +54,10 @@ export const CreateManualPaymentDtoSchema = z.object({
     amount: z.number().finite().positive().refine((amount) => Math.abs(amount * 100 - Math.round(amount * 100)) <= 1e-8),
     planName: z.string().min(1),
     currency: SuperadminBillingInvoicesCurrencyCodeSchema.optional(),
+    paymentMethod: z.string().optional(),
+    referenceNumber: z.string().optional(),
+    paymentDate: z.string().optional(),
+    notes: z.string().optional(),
 });
 export const InvoiceLineItemSchema = z.object({
     description: z.string(),

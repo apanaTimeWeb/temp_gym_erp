@@ -46,12 +46,18 @@ export function useSuperadminSupportTicketsManagementTicketReply() {
     mutationFn: async ({ id, values }: SuperadminSupportTicketsReplyMutationInput) => {
       const validated = replySchema.parse(values);
       const normalizedReply = validated.replyText.trim();
-      const identity = JSON.stringify([id, normalizedReply]);
+      const identity = JSON.stringify([id, normalizedReply, validated.isInternalNote, validated.statusOnReply]);
       if (idempotencyKeyRef.current?.identity !== identity) {
         idempotencyKeyRef.current = { identity, idempotencyKey: crypto.randomUUID() };
       }
 
-      const response = await replyToTicket(id, normalizedReply, idempotencyKeyRef.current.idempotencyKey);
+      const hasOptions = Boolean(validated.isInternalNote || validated.statusOnReply);
+      const response = hasOptions
+        ? await replyToTicket(id, normalizedReply, idempotencyKeyRef.current.idempotencyKey, {
+            isInternalNote: validated.isInternalNote,
+            statusOnReply: validated.statusOnReply,
+          })
+        : await replyToTicket(id, normalizedReply, idempotencyKeyRef.current.idempotencyKey);
       if (!response.success) {
         // Keep the key for this exact intent so a retry is idempotent.
         throw createSuperadminSupportTicketsFormApiError(response, t('ui.action_failed_retry'));
@@ -60,7 +66,7 @@ export function useSuperadminSupportTicketsManagementTicketReply() {
     },
     onSuccess: async (_response, variables) => {
       const validated = replySchema.parse(variables.values);
-      const identity = JSON.stringify([variables.id, validated.replyText.trim()]);
+      const identity = JSON.stringify([variables.id, validated.replyText.trim(), validated.isInternalNote, validated.statusOnReply]);
       if (idempotencyKeyRef.current?.identity === identity) idempotencyKeyRef.current = null;
 
       // A confirmed server success must not be reported as a failed reply merely because

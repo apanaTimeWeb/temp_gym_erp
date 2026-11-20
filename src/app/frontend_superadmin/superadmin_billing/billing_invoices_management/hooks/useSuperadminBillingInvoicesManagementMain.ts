@@ -18,9 +18,11 @@ import type { InvoicesTab } from '@/app/frontend_superadmin/superadmin_billing/b
 export function useSuperadminBillingInvoicesManagementMain() {
   const [activeTab, setActiveTab] = useState<InvoicesTab>(SUPERADMIN_BILLING_INVOICES_TAB_CODES.ALL);
   const page = useSuperadminBillingInvoicesManagementPage();
-  const handleSavePayment = async (amount: number): Promise<boolean> => {
+  const handleSavePayment = async (amount: number, details?: { paymentMethod?: string; referenceNumber?: string; paymentDate?: string; notes?: string }): Promise<boolean> => {
     if (!page.selectedGym) return false;
-    const recorded = await page.handleLogManualPayment(page.selectedGym.id, amount, page.selectedGym.plan);
+    const recorded = details !== undefined
+      ? await page.handleLogManualPayment(page.selectedGym.id, amount, page.selectedGym.plan, details)
+      : await page.handleLogManualPayment(page.selectedGym.id, amount, page.selectedGym.plan);
     if (recorded) page.setShowAddModal(false);
     return recorded;
   };

@@ -33,6 +33,8 @@ export const AffiliateSchema = z.object({
   email: z.string().min(1, 'ui.validation_email_required').email('ui.validation_email_invalid'),
   referralCode: z.string().min(4, 'ui.validation_referral_code_min_4').max(16, 'ui.validation_referral_code_max_16').regex(/^[A-Za-z0-9]+$/, 'ui.validation_referral_code_alphanumeric'),
   currency: z.string().optional(),
+  commissionRate: z.number().min(0, 'validation.nonNegative').max(100, 'validation.invalid').optional(),
+  payoutDetails: z.string().trim().optional(),
   bankDetails: z.record(z.string(), z.unknown()).nullable().optional(),
 });
 

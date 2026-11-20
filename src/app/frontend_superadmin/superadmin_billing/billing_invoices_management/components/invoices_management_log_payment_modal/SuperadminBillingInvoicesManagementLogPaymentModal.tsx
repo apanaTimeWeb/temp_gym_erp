@@ -145,6 +145,34 @@ export default function SuperadminBillingInvoicesManagementLogPaymentModal({
               {errors.amount?.message && <p id="superadmin-invoices-payment-amount-error" className="mt-1 text-xs text-danger" role="alert" data-testid="superadmin_billing_invoices-log-payment-amount-error">{errors.amount.message}</p>}
               {!selectedGym && <p className="mt-1 text-xs text-danger" role="status" data-testid="superadmin_billing_invoices-log-payment-gym-required">{t('ui.select_a_gym_before_saving_the_payment_ceab5dc8')}</p>}
             </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="superadmin-invoices-payment-method" className="mb-1.5 block text-sm font-medium text-secondary">{t('ui.payment_method')}</label>
+                <select id="superadmin-invoices-payment-method" {...register('paymentMethod')} className="min-h-11 w-full rounded-lg border border-border bg-input px-3 py-2.5 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                  <option value="BANK_TRANSFER">{t('ui.payment_method_bank')}</option>
+                  <option value="UPI">{t('ui.payment_method_upi')}</option>
+                  <option value="CHEQUE">{t('ui.payment_method_cheque')}</option>
+                  <option value="CASH">{t('ui.payment_method_cash')}</option>
+                  <option value="CARD">{t('ui.payment_method_card')}</option>
+                </select>
+              </div>
+
+              <div>
+                <label htmlFor="superadmin-invoices-payment-date" className="mb-1.5 block text-sm font-medium text-secondary">{t('ui.payment_date')}</label>
+                <input id="superadmin-invoices-payment-date" type="date" {...register('paymentDate')} className="min-h-11 w-full rounded-lg border border-border bg-input px-3 py-2 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" />
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="superadmin-invoices-reference-number" className="mb-1.5 block text-sm font-medium text-secondary">{t('ui.reference_number')}</label>
+              <input id="superadmin-invoices-reference-number" type="text" {...register('referenceNumber')} placeholder={t('ui.reference_placeholder')} className="min-h-11 w-full rounded-lg border border-border bg-input px-4 py-2.5 text-sm text-primary placeholder:text-disabled focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary font-mono" />
+            </div>
+
+            <div>
+              <label htmlFor="superadmin-invoices-notes" className="mb-1.5 block text-sm font-medium text-secondary">{t('ui.payment_notes')}</label>
+              <input id="superadmin-invoices-notes" type="text" {...register('notes')} placeholder={t('ui.payment_notes_placeholder')} className="min-h-11 w-full rounded-lg border border-border bg-input px-4 py-2.5 text-sm text-primary placeholder:text-disabled focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" />
+            </div>
           </div>
 
           <div className="flex shrink-0 justify-end gap-3 border-t border-border bg-header p-5">

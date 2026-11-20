@@ -44,6 +44,8 @@ export const SupportTicketSchema = z.object({
 
 export const replySchema = z.object({
     replyText: z.string().trim().min(1, 'Please enter a reply message.'),
+    isInternalNote: z.boolean().optional(),
+    statusOnReply: TicketStatusSchema.optional().or(z.literal('')),
 });
 
 export const TicketAssigneeInputSchema = z.object({

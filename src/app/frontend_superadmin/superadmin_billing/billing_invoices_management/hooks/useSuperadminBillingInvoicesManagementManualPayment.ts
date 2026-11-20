@@ -26,7 +26,17 @@ export function useSuperadminBillingInvoicesManagementManualPayment() {
   const { confirm } = useConfirm();
   const idempotencyKeyRef = useRef<{ fingerprint: string; key: string } | null>(null);
   const mutation = useMutation({
-    mutationFn: (data: { gymId: string; amount: number; planName: string; idempotencyKey: string }) => invoicesApi.createManualPayment({ gymId: data.gymId, amount: data.amount, planName: data.planName, currency: 'INR' }, data.idempotencyKey),
+    mutationFn: (data: { gymId: string; amount: number; planName: string; idempotencyKey: string; paymentMethod?: string; referenceNumber?: string; paymentDate?: string; notes?: string }) =>
+      invoicesApi.createManualPayment({
+        gymId: data.gymId,
+        amount: data.amount,
+        planName: data.planName,
+        currency: 'INR',
+        paymentMethod: data.paymentMethod,
+        referenceNumber: data.referenceNumber,
+        paymentDate: data.paymentDate,
+        notes: data.notes,
+      }, data.idempotencyKey),
     onSuccess: async (response) => {
       if (!response.success || !response.data) throw createSuperadminBillingInvoicesManagementFormApiError(response);
       await queryClient.invalidateQueries({ queryKey: SUPERADMIN_BILLING_INVOICES_QUERY_KEYS.all });
@@ -41,7 +51,12 @@ export function useSuperadminBillingInvoicesManagementManualPayment() {
     },
   });
 
-  const handleLogManualPayment = async (gymId: string, amount: number, planName: string) => {
+  const handleLogManualPayment = async (
+    gymId: string,
+    amount: number,
+    planName: string,
+    details?: { paymentMethod?: string; referenceNumber?: string; paymentDate?: string; notes?: string }
+  ) => {
     const confirmed = await confirm({
       title: t('ui.record_manual_payment_title_repair'),
       message: t('ui.record_manual_payment_message_repair', { amount, planName }),
@@ -50,9 +65,9 @@ export function useSuperadminBillingInvoicesManagementManualPayment() {
       cancelText: t('ui.cancel_action_repair'),
     });
     if (!confirmed) return false;
-    const fingerprint = JSON.stringify({ gymId, amount, planName, currency: 'INR' });
+    const fingerprint = JSON.stringify({ gymId, amount, planName, currency: 'INR', ...details });
     if (!idempotencyKeyRef.current || idempotencyKeyRef.current.fingerprint !== fingerprint) idempotencyKeyRef.current = { fingerprint, key: crypto.randomUUID() };
-    await mutation.mutateAsync({ gymId, amount, planName, idempotencyKey: idempotencyKeyRef.current.key });
+    await mutation.mutateAsync({ gymId, amount, planName, idempotencyKey: idempotencyKeyRef.current.key, ...details });
     return true;
   };
 

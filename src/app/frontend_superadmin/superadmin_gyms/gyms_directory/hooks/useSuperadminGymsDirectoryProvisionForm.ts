@@ -9,27 +9,23 @@ import { computeAddGymExpiryDate, validateAddGymField, buildCreateTenantPayload 
 import { INITIAL_PROVISION_STEPS } from '../components/SuperadminGymsDirectoryAddGymConsole';
 
 export function useSuperadminGymsDirectoryProvisionForm() {
-  const [gymName, setGymName] = useState(''), [ownerName, setOwnerName] = useState('');
-  const [adminEmail, setAdminEmail] = useState(''), [phone, setPhone] = useState('');
-  const [temporaryPassword, setTemporaryPassword] = useState(''), [showPassword, setShowPassword] = useState(false);
-  const [copiedPassword, setCopiedPassword] = useState(false), [planId, setPlanId] = useState('');
-  const [memberCount, setMemberCount] = useState<number>(50);
-  const [startType, setStartType] = useState<'TRIAL' | 'PAID'>('TRIAL');
-  const [trialDays, setTrialDays] = useState<number>(14);
+  const [gymName, setGymName] = useState(''), [tenantSlug, setTenantSlug] = useState(''), [ownerName, setOwnerName] = useState('');
+  const [adminEmail, setAdminEmail] = useState(''), [phone, setPhone] = useState(''), [temporaryPassword, setTemporaryPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false), [copiedPassword, setCopiedPassword] = useState(false);
+  const [planId, setPlanId] = useState(''), [memberCount, setMemberCount] = useState<number>(50);
+  const [startType, setStartType] = useState<'TRIAL' | 'PAID'>('TRIAL'), [trialDays, setTrialDays] = useState<number>(14);
   const [startDate, setStartDate] = useState<string>(() => new Date().toISOString().split('T')[0]);
-  const [city, setCity] = useState(''), [state, setState] = useState('');
-  const [gstNumber, setGstNumber] = useState(''), [rawAadhaar, setRawAadhaar] = useState('');
+  const [currency, setCurrency] = useState('INR'), [timezone, setTimezone] = useState('Asia/Kolkata');
+  const [address, setAddress] = useState(''), [city, setCity] = useState(''), [state, setState] = useState(''), [postalCode, setPostalCode] = useState('');
+  const [gstNumber, setGstNumber] = useState(''), [rawAadhaar, setRawAadhaar] = useState(''), [billingCycle, setBillingCycle] = useState<'MONTHLY' | 'ANNUAL'>('MONTHLY');
   const [sendWelcomeEmail, setSendWelcomeEmail] = useState(true);
 
   const [errors, setErrors] = useState<{ [key: string]: string | undefined }>({});
   const [touched, setTouched] = useState<{ [key: string]: boolean }>({});
   const [debouncedEmail, setDebouncedEmail] = useState('');
 
-  const [isProvisioning, setIsProvisioning] = useState(false);
-  const [provisioningDone, setProvisioningDone] = useState(false);
-  const [provisioningFailed, setProvisioningFailed] = useState(false);
-  const [steps, setSteps] = useState(INITIAL_PROVISION_STEPS);
-  const [consoleLogs, setConsoleLogs] = useState<string[]>([]);
+  const [isProvisioning, setIsProvisioning] = useState(false), [provisioningDone, setProvisioningDone] = useState(false), [provisioningFailed, setProvisioningFailed] = useState(false);
+  const [steps, setSteps] = useState(INITIAL_PROVISION_STEPS), [consoleLogs, setConsoleLogs] = useState<string[]>([]);
 
   const gymNameInputRef = useRef<HTMLInputElement>(null), ownerNameInputRef = useRef<HTMLInputElement>(null);
   const adminEmailInputRef = useRef<HTMLInputElement>(null), phoneInputRef = useRef<HTMLInputElement>(null);
@@ -51,7 +47,7 @@ export function useSuperadminGymsDirectoryProvisionForm() {
   const emailExistsError = emailExists ? 'This email is already registered to another gym' : null;
   const expiryDate = useMemo(() => computeAddGymExpiryDate(startDate, startType, trialDays), [startDate, startType, trialDays]);
   const passwordResult = useMemo(() => validatePassword(temporaryPassword), [temporaryPassword]);
-  const formValues = useMemo(() => ({ gymName, ownerName, adminEmail, phone, temporaryPassword, planId, memberCount, rawAadhaar }), [gymName, ownerName, adminEmail, phone, temporaryPassword, planId, memberCount, rawAadhaar]);
+  const formValues = useMemo(() => ({ gymName, tenantSlug, ownerName, adminEmail, phone, temporaryPassword, planId, memberCount, rawAadhaar }), [gymName, tenantSlug, ownerName, adminEmail, phone, temporaryPassword, planId, memberCount, rawAadhaar]);
   const isDirty = useMemo(() => [gymName, ownerName, adminEmail, phone, temporaryPassword, city, rawAadhaar].some((v) => v.length > 0), [gymName, ownerName, adminEmail, phone, temporaryPassword, city, rawAadhaar]);
 
   useEffect(() => {
@@ -87,7 +83,7 @@ export function useSuperadminGymsDirectoryProvisionForm() {
     e.preventDefault();
     if (isProvisioning) return;
 
-    const fields = ['gymName', 'ownerName', 'adminEmail', 'phone', 'temporaryPassword', 'planId', 'memberCount', 'rawAadhaar'];
+    const fields = ['gymName', 'tenantSlug', 'ownerName', 'adminEmail', 'phone', 'temporaryPassword', 'planId', 'memberCount', 'rawAadhaar'];
     const newErrors: { [key: string]: string | undefined } = {};
     fields.forEach((f) => { newErrors[f] = validateField(f); });
     setTouched(fields.reduce((acc, f) => ({ ...acc, [f]: true }), {}));
@@ -106,7 +102,10 @@ export function useSuperadminGymsDirectoryProvisionForm() {
       return;
     }
 
-    const payload = buildCreateTenantPayload({ ...formValues, startType, trialDays, startDate, expiryDate, city, state, gstNumber, sendWelcomeEmail });
+    const payload = buildCreateTenantPayload({
+      ...formValues, startType, trialDays, startDate, expiryDate, city, state, gstNumber,
+      sendWelcomeEmail, currency, timezone, address, postalCode, billingCycle,
+    });
     setIsProvisioning(true);
     setProvisioningFailed(false);
     setProvisioningDone(false);
@@ -132,12 +131,13 @@ export function useSuperadminGymsDirectoryProvisionForm() {
   };
 
   return {
-    gymName, setGymName, ownerName, setOwnerName, adminEmail, setAdminEmail, phone, setPhone,
+    gymName, setGymName, tenantSlug, setTenantSlug, ownerName, setOwnerName, adminEmail, setAdminEmail, phone, setPhone,
     temporaryPassword, setTemporaryPassword, showPassword, setShowPassword, copiedPassword,
     planId, setPlanId, memberCount, setMemberCount, startType, setStartType, trialDays, setTrialDays,
-    startDate, setStartDate, city, setCity, state, setState, gstNumber, setGstNumber, rawAadhaar, setRawAadhaar,
-    sendWelcomeEmail, setSendWelcomeEmail, errors, setErrors, touched, isCheckingEmail, emailExistsError,
-    expiryDate, passwordResult, isProvisioning, provisioningDone, provisioningFailed, steps, consoleLogs,
+    startDate, setStartDate, currency, setCurrency, timezone, setTimezone, address, setAddress,
+    city, setCity, state, setState, postalCode, setPostalCode, gstNumber, setGstNumber, rawAadhaar, setRawAadhaar,
+    billingCycle, setBillingCycle, sendWelcomeEmail, setSendWelcomeEmail, errors, setErrors, touched, isCheckingEmail,
+    emailExistsError, expiryDate, passwordResult, isProvisioning, provisioningDone, provisioningFailed, steps, consoleLogs,
     gymNameInputRef, ownerNameInputRef, adminEmailInputRef, phoneInputRef, temporaryPasswordInputRef,
     planSelectRef, memberCountInputRef, aadhaarInputRef, handleBlur, handleGeneratePassword, handleCopyPassword,
     handleProvision,

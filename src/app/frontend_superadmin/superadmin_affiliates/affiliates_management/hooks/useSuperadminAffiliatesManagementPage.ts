@@ -63,12 +63,12 @@ export const useSuperadminAffiliatesManagementPage = () => {
     const [editingAffiliate, setEditingAffiliate] = useState<Affiliate | null>(null);
     const form = useForm<AffiliateFormData>({
         resolver: zodResolver(AffiliateSchema),
-        defaultValues: { name: '', email: '', referralCode: '' },
+        defaultValues: { name: '', email: '', referralCode: '', commissionRate: 10, payoutDetails: '' },
     });
     const handleCloseModal = useCallback(() => {
         setIsModalOpen(false);
         setEditingAffiliate(null);
-        form.reset({ name: '', email: '', referralCode: '' });
+        form.reset({ name: '', email: '', referralCode: '', commissionRate: 10, payoutDetails: '' });
     }, [form]);
     const { isMutating, handleAddAffiliate, handleEditAffiliate, handleToggleAffiliateStatus, handleDeleteAffiliate, handlePayCommission, } = useSuperadminAffiliatesManagementMutations(setIsModalOpen, setEditingAffiliate, form, editingAffiliate);
     const openEditModal = useCallback((affiliate: Affiliate) => {
@@ -77,6 +77,8 @@ export const useSuperadminAffiliatesManagementPage = () => {
             name: affiliate.name,
             email: affiliate.email,
             referralCode: affiliate.referralCode,
+            commissionRate: affiliate.commissionRate ?? 10,
+            payoutDetails: affiliate.bankDetails ?? '',
         });
         setIsModalOpen(true);
     }, [form]);

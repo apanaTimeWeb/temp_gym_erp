@@ -18,5 +18,6 @@ export const SubscriptionPlanSchema = z.object({
     trialDays: z.number(),
     setupFee: z.number().int().nonnegative(),
     currency: z.string().regex(/^[A-Z]{3}$/, 'validation.currency_invalid'),
+    maxBranches: z.number().int().positive().optional(),
     isArchived: z.boolean().optional(),
 });

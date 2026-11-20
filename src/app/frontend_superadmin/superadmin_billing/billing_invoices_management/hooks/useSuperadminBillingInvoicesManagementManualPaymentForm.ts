@@ -17,20 +17,34 @@ import type { SuperadminBillingInvoicesManualPaymentFormValues } from '@/app/fro
  * @dependencies React Hook Form, Zod resolver, and the parent feature mutation callback.
  * @edge-case Failed mutations do not reset the entered amount; the form resets only after the parent confirms the payment was recorded.
  */
-export function useSuperadminBillingInvoicesManagementManualPaymentForm(onSave: (amount: number) => Promise<boolean>, unsavedChangesMessage = 'Unsaved manual payment changes') {
+export function useSuperadminBillingInvoicesManagementManualPaymentForm(
+  onSave: (amount: number, details?: { paymentMethod?: string; referenceNumber?: string; paymentDate?: string; notes?: string }) => Promise<boolean>,
+  unsavedChangesMessage = 'Unsaved manual payment changes'
+) {
   const form = useForm<SuperadminBillingInvoicesManualPaymentFormValues>({
     resolver: zodResolver(SuperadminBillingInvoicesManualPaymentFormSchema) as any,
-    defaultValues: { amount: undefined },
+    defaultValues: {
+      amount: undefined,
+      paymentMethod: 'BANK_TRANSFER',
+      referenceNumber: '',
+      paymentDate: new Date().toISOString().split('T')[0],
+      notes: '',
+    },
   });
 
   useSuperadminBillingInvoicesManagementUnsavedChangesGuard(form.formState.isDirty && !form.formState.isSubmitting, unsavedChangesMessage);
 
   const handleSubmit = form.handleSubmit(async (values) => {
     try {
-      const recorded = await onSave(values.amount);
+      const recorded = await onSave(values.amount, {
+        paymentMethod: values.paymentMethod,
+        referenceNumber: values.referenceNumber,
+        paymentDate: values.paymentDate,
+        notes: values.notes,
+      });
       if (recorded) form.reset();
     } catch (error: unknown) {
-      applySuperadminBillingInvoicesManagementFormApiErrors(error, form.setError, ['amount']);
+      applySuperadminBillingInvoicesManagementFormApiErrors(error, form.setError, ['amount', 'paymentMethod', 'referenceNumber', 'paymentDate', 'notes']);
     }
   });
 

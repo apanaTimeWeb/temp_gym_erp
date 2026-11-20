@@ -42,10 +42,15 @@ export const ticketsApi = {
     }),
 };
 
-export async function replyToTicket(id: string, replyText: string, idempotencyKey: string): Promise<ApiResponse<SupportTicket>> {
+export async function replyToTicket(
+  id: string,
+  replyText: string,
+  idempotencyKey: string,
+  options?: { isInternalNote?: boolean; statusOnReply?: string }
+): Promise<ApiResponse<SupportTicket>> {
     return apiFetch<SupportTicket>(SUPERADMIN_SUPPORT_TICKETS_MANAGEMENT_API.REPLY(id), {
         method: 'POST',
-        body: JSON.stringify({ replyText }),
+        body: JSON.stringify({ replyText, ...options }),
         headers: { 'Idempotency-Key': idempotencyKey },
         dataSchema: SupportTicketSchema,
     });

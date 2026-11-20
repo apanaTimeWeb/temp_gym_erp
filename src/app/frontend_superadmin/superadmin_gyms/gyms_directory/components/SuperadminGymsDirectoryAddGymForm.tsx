@@ -84,6 +84,8 @@ export default function SuperadminGymsDirectoryAddGymForm() {
                   gymName={form.gymName}
                   setGymName={form.setGymName}
                   gymNameInputRef={form.gymNameInputRef}
+                  tenantSlug={form.tenantSlug}
+                  setTenantSlug={form.setTenantSlug}
                   ownerName={form.ownerName}
                   setOwnerName={form.setOwnerName}
                   ownerNameInputRef={form.ownerNameInputRef}
@@ -128,6 +130,12 @@ export default function SuperadminGymsDirectoryAddGymForm() {
                   setStartType={form.setStartType}
                   trialDays={form.trialDays}
                   setTrialDays={form.setTrialDays}
+                  billingCycle={form.billingCycle}
+                  setBillingCycle={form.setBillingCycle}
+                  currency={form.currency}
+                  setCurrency={form.setCurrency}
+                  timezone={form.timezone}
+                  setTimezone={form.setTimezone}
                   startDate={form.startDate}
                   setStartDate={form.setStartDate}
                   expiryDate={form.expiryDate}
@@ -140,10 +148,14 @@ export default function SuperadminGymsDirectoryAddGymForm() {
                 />
 
                 <SuperadminGymsDirectoryAddGymTaxSection
+                  address={form.address}
+                  setAddress={form.setAddress}
                   city={form.city}
                   setCity={form.setCity}
                   state={form.state}
                   setState={form.setState}
+                  postalCode={form.postalCode}
+                  setPostalCode={form.setPostalCode}
                   gstNumber={form.gstNumber}
                   setGstNumber={form.setGstNumber}
                   sendWelcomeEmail={form.sendWelcomeEmail}

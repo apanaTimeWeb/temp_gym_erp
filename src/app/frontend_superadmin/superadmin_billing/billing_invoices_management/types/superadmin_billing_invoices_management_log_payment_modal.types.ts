@@ -10,6 +10,6 @@ export interface SuperadminBillingInvoicesLogPaymentModalProps {
   setGymSearchTerm: (term: string) => void;
   filteredTenantsForDropdown: SuperadminBillingInvoicesTenant[];
   handleSelectGym: (id: string) => void;
-  onSave: (amount: number) => Promise<boolean>;
+  onSave: (amount: number, details?: { paymentMethod?: string; referenceNumber?: string; paymentDate?: string; notes?: string }) => Promise<boolean>;
   isSaving: boolean;
 }

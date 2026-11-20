@@ -7,71 +7,28 @@ import { SuperadminGymsDirectoryPasswordStrengthBar } from './SuperadminGymsDire
 import type { PasswordValidationResult } from '../utils/SuperadminGymsDirectoryValidators';
 
 export interface SuperadminGymsDirectoryAddGymCoreSectionProps {
-  gymName: string;
-  setGymName: (val: string) => void;
-  gymNameInputRef: React.RefObject<HTMLInputElement | null>;
-  ownerName: string;
-  setOwnerName: (val: string) => void;
-  ownerNameInputRef: React.RefObject<HTMLInputElement | null>;
-  adminEmail: string;
-  setAdminEmail: (val: string) => void;
-  adminEmailInputRef: React.RefObject<HTMLInputElement | null>;
-  isCheckingEmail: boolean;
-  emailExistsError: string | null;
-  phone: string;
-  setPhone: (val: string) => void;
-  phoneInputRef: React.RefObject<HTMLInputElement | null>;
-  rawAadhaar: string;
-  setRawAadhaar: (val: string) => void;
-  aadhaarInputRef: React.RefObject<HTMLInputElement | null>;
-  temporaryPassword: string;
-  setTemporaryPassword: (val: string) => void;
-  temporaryPasswordInputRef: React.RefObject<HTMLInputElement | null>;
-  showPassword: boolean;
-  setShowPassword: (val: boolean) => void;
-  copiedPassword: boolean;
-  passwordResult: PasswordValidationResult;
-  handleGeneratePassword: () => void;
-  handleCopyPassword: () => void;
-  isProvisioning: boolean;
-  provisioningDone: boolean;
-  errors: { [key: string]: string | undefined };
-  touched: { [key: string]: boolean };
-  handleBlur: (field: string) => void;
+  gymName: string; setGymName: (val: string) => void; gymNameInputRef: React.RefObject<HTMLInputElement | null>;
+  tenantSlug: string; setTenantSlug: (val: string) => void;
+  ownerName: string; setOwnerName: (val: string) => void; ownerNameInputRef: React.RefObject<HTMLInputElement | null>;
+  adminEmail: string; setAdminEmail: (val: string) => void; adminEmailInputRef: React.RefObject<HTMLInputElement | null>;
+  isCheckingEmail: boolean; emailExistsError: string | null;
+  phone: string; setPhone: (val: string) => void; phoneInputRef: React.RefObject<HTMLInputElement | null>;
+  rawAadhaar: string; setRawAadhaar: (val: string) => void; aadhaarInputRef: React.RefObject<HTMLInputElement | null>;
+  temporaryPassword: string; setTemporaryPassword: (val: string) => void; temporaryPasswordInputRef: React.RefObject<HTMLInputElement | null>;
+  showPassword: boolean; setShowPassword: (val: boolean) => void; copiedPassword: boolean;
+  passwordResult: PasswordValidationResult; handleGeneratePassword: () => void; handleCopyPassword: () => void;
+  isProvisioning: boolean; provisioningDone: boolean;
+  errors: { [key: string]: string | undefined }; touched: { [key: string]: boolean }; handleBlur: (field: string) => void;
 }
 
 export function SuperadminGymsDirectoryAddGymCoreSection({
-  gymName,
-  setGymName,
-  gymNameInputRef,
-  ownerName,
-  setOwnerName,
-  ownerNameInputRef,
-  adminEmail,
-  setAdminEmail,
-  adminEmailInputRef,
-  isCheckingEmail,
-  emailExistsError,
-  phone,
-  setPhone,
-  phoneInputRef,
-  rawAadhaar,
-  setRawAadhaar,
-  aadhaarInputRef,
-  temporaryPassword,
-  setTemporaryPassword,
-  temporaryPasswordInputRef,
-  showPassword,
-  setShowPassword,
-  copiedPassword,
-  passwordResult,
-  handleGeneratePassword,
-  handleCopyPassword,
-  isProvisioning,
-  provisioningDone,
-  errors,
-  touched,
-  handleBlur,
+  gymName, setGymName, gymNameInputRef, tenantSlug, setTenantSlug,
+  ownerName, setOwnerName, ownerNameInputRef, adminEmail, setAdminEmail, adminEmailInputRef,
+  isCheckingEmail, emailExistsError, phone, setPhone, phoneInputRef,
+  rawAadhaar, setRawAadhaar, aadhaarInputRef, temporaryPassword, setTemporaryPassword, temporaryPasswordInputRef,
+  showPassword, setShowPassword, copiedPassword, passwordResult,
+  handleGeneratePassword, handleCopyPassword, isProvisioning, provisioningDone,
+  errors, touched, handleBlur,
 }: SuperadminGymsDirectoryAddGymCoreSectionProps) {
   return (
     <div>
@@ -98,6 +55,33 @@ export function SuperadminGymsDirectoryAddGymCoreSection({
           {touched.gymName && errors.gymName && (
             <p className="text-xs text-danger mt-1 flex items-center gap-1">
               <AlertCircle size={12} /> {errors.gymName}
+            </p>
+          )}
+        </div>
+
+        {/* Workspace Slug */}
+        <div>
+          <label htmlFor="provision-tenant-slug" className="block text-sm font-semibold text-secondary mb-1">
+            Tenant Subdomain / Slug <span className="text-xs font-normal text-disabled">(Optional)</span>
+          </label>
+          <div className="flex rounded-lg border border-border bg-card overflow-hidden focus-within:ring-2 focus-within:ring-primary">
+            <input
+              id="provision-tenant-slug"
+              type="text"
+              value={tenantSlug}
+              onChange={(e) => setTenantSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
+              onBlur={() => handleBlur('tenantSlug')}
+              placeholder="e.g. titancore"
+              disabled={isProvisioning || provisioningDone}
+              className="flex-1 min-h-11 bg-transparent px-4 py-2 text-sm text-primary placeholder:text-disabled focus-visible:outline-none font-mono"
+            />
+            <span className="bg-muted px-3 py-2 text-xs text-disabled flex items-center border-s border-border select-none font-mono">
+              .gymsmart360.com
+            </span>
+          </div>
+          {touched.tenantSlug && errors.tenantSlug && (
+            <p className="text-xs text-danger mt-1 flex items-center gap-1">
+              <AlertCircle size={12} /> {errors.tenantSlug}
             </p>
           )}
         </div>

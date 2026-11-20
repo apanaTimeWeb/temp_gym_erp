@@ -90,8 +90,15 @@ export function useSuperadminBillingInvoicesManagementPage() {
   );
   const { isLoggingPayment, handleLogManualPayment } = useSuperadminBillingInvoicesManagementManualPayment();
 
-  const handleLogManualPaymentAndResetSelection = async (gymId: string, amount: number, planName: string) => {
-    const completed = await handleLogManualPayment(gymId, amount, planName);
+  const handleLogManualPaymentAndResetSelection = async (
+    gymId: string,
+    amount: number,
+    planName: string,
+    details?: { paymentMethod?: string; referenceNumber?: string; paymentDate?: string; notes?: string }
+  ) => {
+    const completed = details !== undefined
+      ? await handleLogManualPayment(gymId, amount, planName, details)
+      : await handleLogManualPayment(gymId, amount, planName);
     if (completed) setSelectedGymId('');
     return completed;
   };

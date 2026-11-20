@@ -19,6 +19,10 @@ export interface CreateManualPaymentDto {
   amount: number;
   planName: string;
   currency?: string;
+  paymentMethod?: string;
+  referenceNumber?: string;
+  paymentDate?: string;
+  notes?: string;
 }
 
 export type CreateManualPaymentPayload = z.infer<typeof CreateManualPaymentDtoSchema>;

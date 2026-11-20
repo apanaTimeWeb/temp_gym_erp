@@ -34,6 +34,13 @@ export interface Tenant {
   createdAt: string;
 
   // Optional business metadata
+  tenantSlug?: string;
+  subdomain?: string;
+  currency?: string;
+  timezone?: string;
+  address?: string;
+  postalCode?: string;
+  billingCycle?: 'MONTHLY' | 'ANNUAL';
   city?: string;
   state?: string;
   gstNumber?: string;
@@ -92,6 +99,9 @@ export interface ListResponse<T = Tenant> {
 
 export interface CreateTenantInput {
   gymName: string;
+  tenantSlug?: string;
+  currency?: string;
+  timezone?: string;
   ownerName: string;
   adminEmail: string;
   phone: string;
@@ -106,6 +116,9 @@ export interface CreateTenantInput {
   gstNumber?: string;
   city?: string;
   state?: string;
+  address?: string;
+  postalCode?: string;
+  billingCycle?: 'MONTHLY' | 'ANNUAL';
   sendWelcomeEmail?: boolean;
 }
 

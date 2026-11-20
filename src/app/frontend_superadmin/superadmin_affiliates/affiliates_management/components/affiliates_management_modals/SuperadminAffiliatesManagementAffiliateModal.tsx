@@ -66,6 +66,17 @@ export const SuperadminAffiliatesAffiliateModal: React.FC<SuperadminAffiliatesAf
               {errors.referralCode && <span id="superadmin-affiliate-referral-code-error" className="text-xs text-danger" role="alert">{errors.referralCode.message ? t(String(errors.referralCode.message)) : t('validation.invalid')}</span>}
               <p className="text-xs text-secondary">{t('ui.superadmin_gyms_using_this_code_at_checkout_will_be_tracked_b3e726e')}</p>
             </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="superadmin-affiliate-commission" className="text-sm font-bold text-secondary">{t('ui.commission_rate')}</label>
+              <input id="superadmin-affiliate-commission" type="number" min="0" max="100" step="0.5" {...register('commissionRate', { valueAsNumber: true })} className="min-h-11 w-full px-4 py-2.5 bg-input border border-border rounded-lg text-sm text-primary focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page focus:border-focus motion-safe:transition-colors" placeholder="10" />
+              {errors.commissionRate && <span className="text-xs text-danger" role="alert">{errors.commissionRate.message ? t(String(errors.commissionRate.message)) : t('validation.invalid')}</span>}
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="superadmin-affiliate-payout" className="text-sm font-bold text-secondary">{t('ui.payout_details')}</label>
+              <input id="superadmin-affiliate-payout" type="text" {...register('payoutDetails')} className="min-h-11 w-full px-4 py-2.5 bg-input border border-border rounded-lg text-sm text-primary focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page focus:border-focus motion-safe:transition-colors font-mono" placeholder={t('ui.payout_details_placeholder')} />
+            </div>
           </div>
 
           <div className="flex shrink-0 justify-end gap-3 p-5 border-t border-border">

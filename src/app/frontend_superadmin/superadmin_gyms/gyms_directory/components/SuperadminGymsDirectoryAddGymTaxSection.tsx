@@ -3,10 +3,14 @@
 import React from 'react';
 
 export interface SuperadminGymsDirectoryAddGymTaxSectionProps {
+  address: string;
+  setAddress: (val: string) => void;
   city: string;
   setCity: (val: string) => void;
   state: string;
   setState: (val: string) => void;
+  postalCode: string;
+  setPostalCode: (val: string) => void;
   gstNumber: string;
   setGstNumber: (val: string) => void;
   sendWelcomeEmail: boolean;
@@ -16,10 +20,14 @@ export interface SuperadminGymsDirectoryAddGymTaxSectionProps {
 }
 
 export function SuperadminGymsDirectoryAddGymTaxSection({
+  address,
+  setAddress,
   city,
   setCity,
   state,
   setState,
+  postalCode,
+  setPostalCode,
   gstNumber,
   setGstNumber,
   sendWelcomeEmail,
@@ -30,9 +38,25 @@ export function SuperadminGymsDirectoryAddGymTaxSection({
   return (
     <div>
       <h2 className="text-sm font-bold text-primary uppercase tracking-wider mb-4 border-b border-border pb-2">
-        Optional Tax & Location Details
+        Location & Tax Details
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Street Address */}
+        <div className="sm:col-span-2">
+          <label htmlFor="provision-address" className="block text-sm font-semibold text-secondary mb-1">
+            Facility Street Address
+          </label>
+          <input
+            id="provision-address"
+            type="text"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder="e.g. 101 Fitness Boulevard, Andheri West"
+            disabled={isProvisioning || provisioningDone}
+            className="w-full min-h-11 bg-card border border-border text-primary rounded-lg px-4 py-2 text-sm placeholder:text-disabled focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          />
+        </div>
+
         <div>
           <label htmlFor="provision-city" className="block text-sm font-semibold text-secondary mb-1">
             City
@@ -64,8 +88,23 @@ export function SuperadminGymsDirectoryAddGymTaxSection({
         </div>
 
         <div>
+          <label htmlFor="provision-postal" className="block text-sm font-semibold text-secondary mb-1">
+            Postal / PIN Code
+          </label>
+          <input
+            id="provision-postal"
+            type="text"
+            value={postalCode}
+            onChange={(e) => setPostalCode(e.target.value.replace(/[^0-9a-zA-Z -]/g, '').slice(0, 10))}
+            placeholder="e.g. 400053"
+            disabled={isProvisioning || provisioningDone}
+            className="w-full min-h-11 bg-card border border-border text-primary rounded-lg px-4 py-2 text-sm placeholder:text-disabled focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary font-mono"
+          />
+        </div>
+
+        <div>
           <label htmlFor="provision-gst" className="block text-sm font-semibold text-secondary mb-1">
-            GSTIN
+            GSTIN / Tax ID
           </label>
           <input
             id="provision-gst"

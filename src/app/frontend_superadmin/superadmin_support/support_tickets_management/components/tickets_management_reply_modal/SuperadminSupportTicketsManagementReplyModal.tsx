@@ -25,7 +25,7 @@ import type { SuperadminSupportTicketsReplyModalProps } from '@/app/frontend_sup
 export default function SuperadminSupportTicketsManagementReplyModal({ isOpen, onClose, ticketId }: SuperadminSupportTicketsReplyModalProps) {
   const t = useTranslations('superadmin_support_tickets');
   const { sendReply, isSending, error: replyError, abandonReplyIntent } = useSuperadminSupportTicketsManagementTicketReply();
-  const { register, handleSubmit, reset, setError, formState: { errors, isDirty } } = useForm<SuperadminSupportTicketsReplyFormValues>({ resolver: zodResolver(replySchema), defaultValues: { replyText: '' } });
+  const { register, handleSubmit, reset, setError, formState: { errors, isDirty } } = useForm<SuperadminSupportTicketsReplyFormValues>({ resolver: zodResolver(replySchema), defaultValues: { replyText: '', isInternalNote: false, statusOnReply: '' } });
   useSuperadminSupportTicketsManagementUnsavedChangesGuard(Boolean(isOpen && isDirty && !isSending), t('ui.unsent_ticket_reply_leave'));
   const handleClose = () => {
     if (isSending) return;
@@ -39,7 +39,12 @@ export default function SuperadminSupportTicketsManagementReplyModal({ isOpen, o
 
   const handleSubmitForm = async (values: SuperadminSupportTicketsReplyFormValues) => {
     try {
-      const response = await sendReply({ id: ticketId, values });
+      const payloadValues: SuperadminSupportTicketsReplyFormValues = {
+        replyText: values.replyText,
+        ...(values.isInternalNote ? { isInternalNote: true } : {}),
+        ...(values.statusOnReply ? { statusOnReply: values.statusOnReply } : {}),
+      };
+      const response = await sendReply({ id: ticketId, values: payloadValues });
       toast.success(response.message, { id: `superadmin-ticket-reply-${ticketId}` });
       abandonReplyIntent();
       reset();
@@ -64,6 +69,40 @@ export default function SuperadminSupportTicketsManagementReplyModal({ isOpen, o
               <label htmlFor="superadmin-ticket-reply-text" className="block text-sm font-medium text-secondary mb-2">{t('ui.your_message_5fbe072')}</label>
               <textarea id="superadmin-ticket-reply-text" {...register('replyText')} aria-invalid={Boolean(errors.replyText)} aria-describedby={replyError ? 'superadmin-ticket-reply-error' : undefined} className="min-h-11 w-full px-3 py-2 bg-input border border-border rounded-md text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary min-h-32 motion-safe:transition-all motion-safe:duration-base ease-in-out" placeholder={t('ui.type_your_reply_here_5d5b10c')} disabled={isSending}  data-testid="superadmin_support_tickets-superadmin-tickets-reply-modal-tickets-reply-modal-reply"/>
               {errors.replyText || replyError ? <p id="superadmin-ticket-reply-error" className="text-xs text-danger mt-1" role="alert">{errors.replyText?.message ?? t('ui.action_failed_retry')}</p> : null}
+            </div>
+
+            {/* Internal Note Toggle */}
+            <div className="flex items-center gap-2">
+              <input
+                id="superadmin-ticket-reply-internal"
+                type="checkbox"
+                {...register('isInternalNote')}
+                disabled={isSending}
+                className="rounded border-border text-primary focus:ring-primary cursor-pointer"
+              />
+              <label htmlFor="superadmin-ticket-reply-internal" className="text-xs text-secondary cursor-pointer select-none">
+                {t('ui.internal_note')}
+              </label>
+            </div>
+
+            {/* Status Update on Reply */}
+            <div>
+              <label htmlFor="superadmin-ticket-reply-status" className="block text-sm font-medium text-secondary mb-1.5">
+                {t('ui.update_status_on_reply')}
+              </label>
+              <select
+                id="superadmin-ticket-reply-status"
+                {...register('statusOnReply')}
+                disabled={isSending}
+                className="min-h-11 w-full px-3 py-2 bg-input border border-border rounded-md text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              >
+                <option value="">{t('ui.status_keep_current')}</option>
+                <option value="OPEN">{t('ui.status_open')}</option>
+                <option value="IN_PROGRESS">{t('ui.status_in_progress')}</option>
+                <option value="WAITING">{t('ui.status_waiting')}</option>
+                <option value="RESOLVED">{t('ui.status_resolved')}</option>
+                <option value="CLOSED">{t('ui.status_closed')}</option>
+              </select>
             </div>
           </div>
           <div className="flex shrink-0 gap-3 justify-end p-5 border-t border-border">
