@@ -15,23 +15,12 @@ import type { UseFormReturn } from 'react-hook-form';
 
 
 // DATA FLOW: Superadmin UI → useSuperadminCommunicationBroadcastsCampaignsMutations → Superadmin module API/state → consuming component
-// DATA FLOW: feature API/schema → hook/context → useSuperadminCommunicationBroadcastsCampaignsMutations consumers.
 // RESPONSIBILITY: Encapsulates functionality for useSuperadminCommunicationBroadcastsCampaignsMutations.ts
-
-
-/**
- * Purpose: Encapsulates functionality for useSuperadminCommunicationBroadcastsCampaignsMutations.ts.
- * Inputs: values defined by the exported hook signature.
- * Output: the hook's typed state/actions/query contract.
- * Side effects: remain scoped to the owning feature or approved application infrastructure.
- * Invariant: does not move feature business state into unrelated modules.
- */
 /**
  * @description Manages broadcasts state, queries, and UI interactions for useSuperadminCommunicationBroadcastsCampaignsMutations.
  * @dependencies Consumes only owning-module state/API contracts and approved global infrastructure.
  * @edge-case Preserves loading, error, cancellation, retry, and repeated-action behavior.
  */
-// DATA FLOW: Module API/query/store state → useSuperadminCommunicationBroadcastsCampaignsMutations → consuming feature component.
 export const useSuperadminCommunicationBroadcastsCampaignsMutations = ({ setIsModalOpen, setEditingId, form, gyms, setQueueRecipients, setQueueBroadcastId, setQueueTitle, setQueueModalOpen }: {
     setIsModalOpen: (val: boolean) => void;
     setEditingId: (val: string | null) => void;

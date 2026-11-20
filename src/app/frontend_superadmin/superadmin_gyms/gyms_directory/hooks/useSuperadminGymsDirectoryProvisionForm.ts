@@ -5,30 +5,20 @@ import { toast } from 'sonner';
 import { useQuery } from '@tanstack/react-query';
 import { tenantService } from '../services/SuperadminGymsDirectoryTenantService';
 import { validateEmail, validatePassword, generateStrongPassword } from '../utils/SuperadminGymsDirectoryValidators';
-import {
-  computeAddGymExpiryDate,
-  validateAddGymField,
-  buildCreateTenantPayload,
-} from '../utils/SuperadminGymsDirectoryAddGymValidation';
+import { computeAddGymExpiryDate, validateAddGymField, buildCreateTenantPayload } from '../utils/SuperadminGymsDirectoryAddGymValidation';
 import { INITIAL_PROVISION_STEPS } from '../components/SuperadminGymsDirectoryAddGymConsole';
 
 export function useSuperadminGymsDirectoryProvisionForm() {
-  const [gymName, setGymName] = useState('');
-  const [ownerName, setOwnerName] = useState('');
-  const [adminEmail, setAdminEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [temporaryPassword, setTemporaryPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [copiedPassword, setCopiedPassword] = useState(false);
-  const [planId, setPlanId] = useState('');
+  const [gymName, setGymName] = useState(''), [ownerName, setOwnerName] = useState('');
+  const [adminEmail, setAdminEmail] = useState(''), [phone, setPhone] = useState('');
+  const [temporaryPassword, setTemporaryPassword] = useState(''), [showPassword, setShowPassword] = useState(false);
+  const [copiedPassword, setCopiedPassword] = useState(false), [planId, setPlanId] = useState('');
   const [memberCount, setMemberCount] = useState<number>(50);
   const [startType, setStartType] = useState<'TRIAL' | 'PAID'>('TRIAL');
   const [trialDays, setTrialDays] = useState<number>(14);
   const [startDate, setStartDate] = useState<string>(() => new Date().toISOString().split('T')[0]);
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [gstNumber, setGstNumber] = useState('');
-  const [rawAadhaar, setRawAadhaar] = useState('');
+  const [city, setCity] = useState(''), [state, setState] = useState('');
+  const [gstNumber, setGstNumber] = useState(''), [rawAadhaar, setRawAadhaar] = useState('');
   const [sendWelcomeEmail, setSendWelcomeEmail] = useState(true);
 
   const [errors, setErrors] = useState<{ [key: string]: string | undefined }>({});
@@ -41,14 +31,10 @@ export function useSuperadminGymsDirectoryProvisionForm() {
   const [steps, setSteps] = useState(INITIAL_PROVISION_STEPS);
   const [consoleLogs, setConsoleLogs] = useState<string[]>([]);
 
-  const gymNameInputRef = useRef<HTMLInputElement>(null);
-  const ownerNameInputRef = useRef<HTMLInputElement>(null);
-  const adminEmailInputRef = useRef<HTMLInputElement>(null);
-  const phoneInputRef = useRef<HTMLInputElement>(null);
-  const temporaryPasswordInputRef = useRef<HTMLInputElement>(null);
-  const planSelectRef = useRef<HTMLSelectElement>(null);
-  const memberCountInputRef = useRef<HTMLInputElement>(null);
-  const aadhaarInputRef = useRef<HTMLInputElement>(null);
+  const gymNameInputRef = useRef<HTMLInputElement>(null), ownerNameInputRef = useRef<HTMLInputElement>(null);
+  const adminEmailInputRef = useRef<HTMLInputElement>(null), phoneInputRef = useRef<HTMLInputElement>(null);
+  const temporaryPasswordInputRef = useRef<HTMLInputElement>(null), planSelectRef = useRef<HTMLSelectElement>(null);
+  const memberCountInputRef = useRef<HTMLInputElement>(null), aadhaarInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedEmail(adminEmail.trim()), 400);
@@ -70,10 +56,7 @@ export function useSuperadminGymsDirectoryProvisionForm() {
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (isDirty && !provisioningDone && !isProvisioning) {
-        e.preventDefault();
-        e.returnValue = '';
-      }
+      if (isDirty && !provisioningDone && !isProvisioning) { e.preventDefault(); e.returnValue = ''; }
     };
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
