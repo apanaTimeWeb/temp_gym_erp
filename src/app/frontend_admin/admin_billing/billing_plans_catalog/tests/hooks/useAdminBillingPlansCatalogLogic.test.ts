@@ -72,4 +72,75 @@ describe('useAdminPlansLogic', () => {
       idempotencyKey: 'intent:create-plan',
     });
   });
+
+  it('populates advanced plan fields on openEdit and maps them on save', async () => {
+    const { result } = renderHook(() => useAdminPlansLogic());
+    act(() => result.current.openEdit({
+      id: 'p2',
+      name: 'Platinum',
+      tier: 'Gold',
+      price1Month: 200,
+      price3Month: 500,
+      price6Month: 900,
+      price12Month: 1600,
+      priceCustom: 2000,
+      features: ['Pool', 'Sauna'],
+      isActive: true,
+      freezeAllowed: true,
+      joiningFee: 500,
+      ptSessionsIncluded: 4,
+      taxRate: 18,
+    }));
+
+    expect(setEditId).toHaveBeenCalledWith('p2');
+    expect(setForm).toHaveBeenCalledWith({
+      name: 'Platinum',
+      tier: 'Gold',
+      price1Month: '200',
+      price3Month: '500',
+      price6Month: '900',
+      price12Month: '1600',
+      priceCustom: '2000',
+      features: 'Pool\nSauna',
+      freezeAllowed: true,
+      joiningFee: '500',
+      ptSessionsIncluded: '4',
+      taxRate: '18',
+    });
+    expect(setShowModal).toHaveBeenCalledWith(true);
+
+    await act(async () => result.current.savePlan({
+      name: 'Platinum',
+      tier: 'Gold',
+      price1Month: '200',
+      price3Month: '500',
+      price6Month: '900',
+      price12Month: '1600',
+      priceCustom: '2000',
+      features: 'Pool\nSauna',
+      freezeAllowed: true,
+      joiningFee: '500',
+      ptSessionsIncluded: '4',
+      taxRate: '18',
+    }));
+
+    expect(createPlan).toHaveBeenCalledWith({
+      payload: {
+        name: 'Platinum',
+        tier: 'Gold',
+        price1Month: 200,
+        price3Month: 500,
+        price6Month: 900,
+        price12Month: 1600,
+        priceCustom: 2000,
+        isActive: true,
+        features: ['Pool', 'Sauna'],
+        freezeAllowed: true,
+        joiningFee: 500,
+        ptSessionsIncluded: 4,
+        taxRate: 18,
+      },
+      idempotencyKey: 'intent:create-plan',
+    });
+  });
 });
