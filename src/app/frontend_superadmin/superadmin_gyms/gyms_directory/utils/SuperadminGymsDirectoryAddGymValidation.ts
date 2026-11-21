@@ -80,6 +80,7 @@ export function buildCreateTenantPayload(
     currency: values.currency || 'INR',
     timezone: values.timezone || 'Asia/Kolkata',
     billingCycle: values.billingCycle || 'MONTHLY',
+    aadharNumber: values.rawAadhaar?.trim() || undefined,
     gstNumber: values.gstNumber.trim() || undefined,
     sendWelcomeEmail: values.sendWelcomeEmail,
   };

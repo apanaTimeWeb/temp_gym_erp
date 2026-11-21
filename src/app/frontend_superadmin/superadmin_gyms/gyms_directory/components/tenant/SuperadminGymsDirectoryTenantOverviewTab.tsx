@@ -39,6 +39,12 @@ export function SuperadminGymsDirectoryTenantOverviewTab({
             <span className="text-secondary text-xs block">GST Number</span>
             <span className="font-mono text-primary">{tenant.gstNumber || 'Unregistered'}</span>
           </div>
+          {tenant.aadharNumber && (
+            <div>
+              <span className="text-secondary text-xs block">Aadhaar (UIDAI)</span>
+              <span className="font-mono text-primary">•••• •••• {tenant.aadharNumber.slice(-4)}</span>
+            </div>
+          )}
         </div>
       </div>
 

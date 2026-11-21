@@ -268,6 +268,7 @@ export const mockTenantDb = {
       currency: payload.currency || 'INR',
       timezone: payload.timezone || 'Asia/Kolkata',
       billingCycle: payload.billingCycle || 'MONTHLY',
+      aadharNumber: payload.aadharNumber,
       gstNumber: payload.gstNumber,
       startType: payload.startType,
       trialDays: payload.trialDays,
