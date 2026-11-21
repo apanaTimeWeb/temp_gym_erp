@@ -4,14 +4,18 @@
 export const TIERS = ['Bronze', 'Silver', 'Gold'] as const;
 
 export const EMPTY_PLAN_FORM: import('@/app/frontend_admin/admin_billing/billing_plans_catalog/types/AdminBillingPlansCatalogTypes').PlanFormValues = { 
- name: '', 
- tier: 'Gold', 
- price1Month: '', 
- price3Month: '', 
- price6Month: '', 
- price12Month: '', 
- priceCustom: '', 
- features: '' 
+  name: '', 
+  tier: 'Gold', 
+  price1Month: '', 
+  price3Month: '', 
+  price6Month: '', 
+  price12Month: '', 
+  priceCustom: '', 
+  features: '',
+  freezeAllowed: false,
+  joiningFee: '',
+  ptSessionsIncluded: '',
+  taxRate: '',
 };
 
 export const PLANS_ITEMS_PER_PAGE = 10;

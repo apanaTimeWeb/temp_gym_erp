@@ -114,6 +114,85 @@ export default function AdminBillingPlansCatalogModal({ logic }: AdminPlansModal
               </div>
             ))}
           </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label htmlFor="admin-plan-joining-fee" className="block text-sm font-medium text-secondary mb-1">
+                {t('plans.admin_plans_modal.joiningFeeLabel')}
+              </label>
+              <input
+                id="admin-plan-joining-fee"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder={t('plans.admin_plans_modal.joiningFeePlaceholder')}
+                aria-invalid={Boolean(errors.joiningFee)}
+                aria-describedby={errors.joiningFee ? 'admin-plan-joining-fee-error' : undefined}
+                onKeyDown={(e) => { if (e.key === '-' || e.key === 'e' || e.key === '+') e.preventDefault(); }}
+                {...register('joiningFee')}
+                className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-primary motion-safe:transition-colors ${
+                  errors.joiningFee ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-primary'
+                }`}
+                data-testid="admin_plans-modal-joining-fee"
+              />
+              {errors.joiningFee && <p id="admin-plan-joining-fee-error" role="alert" className="text-danger text-xs mt-1">{getValidationMessage(errors.joiningFee.message)}</p>}
+            </div>
+            <div>
+              <label htmlFor="admin-plan-pt-sessions" className="block text-sm font-medium text-secondary mb-1">
+                {t('plans.admin_plans_modal.ptSessionsLabel')}
+              </label>
+              <input
+                id="admin-plan-pt-sessions"
+                type="number"
+                min="0"
+                step="1"
+                placeholder={t('plans.admin_plans_modal.ptSessionsPlaceholder')}
+                aria-invalid={Boolean(errors.ptSessionsIncluded)}
+                aria-describedby={errors.ptSessionsIncluded ? 'admin-plan-pt-sessions-error' : undefined}
+                onKeyDown={(e) => { if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') e.preventDefault(); }}
+                {...register('ptSessionsIncluded')}
+                className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-primary motion-safe:transition-colors ${
+                  errors.ptSessionsIncluded ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-primary'
+                }`}
+                data-testid="admin_plans-modal-pt-sessions"
+              />
+              {errors.ptSessionsIncluded && <p id="admin-plan-pt-sessions-error" role="alert" className="text-danger text-xs mt-1">{getValidationMessage(errors.ptSessionsIncluded.message)}</p>}
+            </div>
+            <div>
+              <label htmlFor="admin-plan-tax-rate" className="block text-sm font-medium text-secondary mb-1">
+                {t('plans.admin_plans_modal.taxRateLabel')}
+              </label>
+              <input
+                id="admin-plan-tax-rate"
+                type="number"
+                min="0"
+                max="100"
+                step="0.1"
+                placeholder={t('plans.admin_plans_modal.taxRatePlaceholder')}
+                aria-invalid={Boolean(errors.taxRate)}
+                aria-describedby={errors.taxRate ? 'admin-plan-tax-rate-error' : undefined}
+                onKeyDown={(e) => { if (e.key === '-' || e.key === 'e' || e.key === '+') e.preventDefault(); }}
+                {...register('taxRate')}
+                className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-primary motion-safe:transition-colors ${
+                  errors.taxRate ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-primary'
+                }`}
+                data-testid="admin_plans-modal-tax-rate"
+              />
+              {errors.taxRate && <p id="admin-plan-tax-rate-error" role="alert" className="text-danger text-xs mt-1">{getValidationMessage(errors.taxRate.message)}</p>}
+            </div>
+          </div>
+          <div className="flex items-center gap-3 p-3 rounded-xl border border-border bg-input/50">
+            <input
+              id="admin-plan-freeze-allowed"
+              type="checkbox"
+              {...register('freezeAllowed')}
+              className="h-4 w-4 rounded border-border text-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page cursor-pointer"
+              data-testid="admin_plans-modal-freeze-allowed"
+            />
+            <label htmlFor="admin-plan-freeze-allowed" className="text-sm cursor-pointer select-none">
+              <span className="font-medium text-primary block">{t('plans.admin_plans_modal.freezeAllowedTitle')}</span>
+              <span className="text-xs text-secondary block">{t('plans.admin_plans_modal.freezeAllowedDescription')}</span>
+            </label>
+          </div>
           <div>
             <label htmlFor="admin-plan-features" className="block text-sm font-medium text-secondary mb-1">{t('plans.admin_plans_modal.text_4696ca3454')}</label>
             <textarea

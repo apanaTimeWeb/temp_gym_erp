@@ -76,23 +76,19 @@ export function useAdminPlansLogic(): PlansContextType {
   useEffect(() => {
     if (plansQuery.status === 'success' && currentPage > totalPages) setCurrentPage(totalPages);
   }, [plansQuery.status, currentPage, totalPages, setCurrentPage]);
-  const openAdd = useCallback(() => {
-    setEditId(null);
-    setForm(EMPTY_PLAN_FORM);
-    setShowModal(true);
-  }, []);
+  const openAdd = useCallback(() => { setEditId(null); setForm(EMPTY_PLAN_FORM); setShowModal(true); }, []);
 
   const openEdit = useCallback((p: Plan) => {
     setEditId(p.id);
     setForm({
       name: p.name,
       tier: (TIERS.includes(p.tier as any) ? p.tier : 'Gold') as PlanFormValues['tier'],
-      price1Month: String(p.price1Month),
-      price3Month: String(p.price3Month),
-      price6Month: String(p.price6Month),
-      price12Month: String(p.price12Month),
-      priceCustom: String(p.priceCustom ?? 0),
-      features: p.features.join('\n'),
+      price1Month: String(p.price1Month), price3Month: String(p.price3Month),
+      price6Month: String(p.price6Month), price12Month: String(p.price12Month), priceCustom: String(p.priceCustom ?? 0),
+      features: p.features.join('\n'), freezeAllowed: Boolean(p.freezeAllowed),
+      joiningFee: p.joiningFee !== undefined ? String(p.joiningFee) : '',
+      ptSessionsIncluded: p.ptSessionsIncluded !== undefined ? String(p.ptSessionsIncluded) : '',
+      taxRate: p.taxRate !== undefined ? String(p.taxRate) : '',
     });
     setShowModal(true);
   }, []);
@@ -107,15 +103,15 @@ export function useAdminPlansLogic(): PlansContextType {
 
   const savePlan = useCallback(async (data: PlanFormValues, onValidationError?: (error: unknown) => void) => runSingleFlight(async () => {
     const payload: Partial<Plan> & { priceCustom?: number } = {
-      name: data.name,
-      tier: data.tier,
-      price1Month: Number(data.price1Month),
-      price3Month: Number(data.price3Month),
-      price6Month: Number(data.price6Month),
-      price12Month: Number(data.price12Month),
-      priceCustom: Number(data.priceCustom),
+      name: data.name, tier: data.tier,
+      price1Month: Number(data.price1Month), price3Month: Number(data.price3Month),
+      price6Month: Number(data.price6Month), price12Month: Number(data.price12Month), priceCustom: Number(data.priceCustom),
       ...(editId ? {} : { isActive: true }),
       features: data.features.split('\n').map((s: string) => s.trim()).filter(Boolean),
+      ...(data.freezeAllowed !== undefined ? { freezeAllowed: Boolean(data.freezeAllowed) } : {}),
+      ...(data.joiningFee ? { joiningFee: Number(data.joiningFee) } : {}),
+      ...(data.ptSessionsIncluded ? { ptSessionsIncluded: Number(data.ptSessionsIncluded) } : {}),
+      ...(data.taxRate ? { taxRate: Number(data.taxRate) } : {}),
     };
 
     if (editId) {
