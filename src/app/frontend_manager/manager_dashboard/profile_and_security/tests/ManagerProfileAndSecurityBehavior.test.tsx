@@ -12,10 +12,13 @@ import { managerMswServer } from '@/app/frontend_manager/manager_infrastructure/
 
 import { ManagerProfileAndSecurityApi } from '@/app/frontend_manager/manager_dashboard/profile_and_security/api/manager_profile_and_security.api';
 import ManagerProfileAndSecurityMain from '@/app/frontend_manager/manager_dashboard/profile_and_security/components/ManagerProfileAndSecurityMain';
-
+import { resetManagerProfileAndSecurityMockState } from '@/app/frontend_manager/manager_dashboard/profile_and_security/mocks/handlers/ManagerProfileAndSecurityMockHandlers';
 
 beforeAll(() => managerMswServer.listen({ onUnhandledRequest: 'error' }));
-afterEach(() => managerMswServer.resetHandlers());
+afterEach(() => {
+  managerMswServer.resetHandlers();
+  resetManagerProfileAndSecurityMockState();
+});
 afterAll(() => managerMswServer.close());
 
 describe('Manager Profile user-visible behavior', () => {
