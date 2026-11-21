@@ -149,6 +149,8 @@
     "TEXT_CHANNEL_EMAIL": "ईमेल",
     "TEXT_DEFAULT_MESSAGE_SUBJECT": "GymSmart की ओर से संदेश",
     "TEXT_INQUIRY_SINGULAR": "पूछताछ",
-    "TEXT_INQUIRY_PLURAL": "पूछताछ"
+    "TEXT_INQUIRY_PLURAL": "पूछताछ",
+    "COPY_MEDICAL_HISTORY_NOTES_OPTIONAL": "चिकित्सकीय इतिहास / टिप्पणियाँ (वैकल्पिक)",
+    "COPY_E_G_ASTHMA_KNEE_INJURY_HIGH_BP": "उदाहरण: अस्थमा, घुटने की चोट, उच्च रक्तचाप…"
   }
 }

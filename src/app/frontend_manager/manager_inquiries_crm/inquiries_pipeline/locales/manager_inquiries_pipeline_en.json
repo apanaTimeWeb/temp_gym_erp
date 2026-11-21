@@ -149,6 +149,8 @@
     "TEXT_CHANNEL_EMAIL": "Email",
     "TEXT_DEFAULT_MESSAGE_SUBJECT": "Message from GymSmart",
     "TEXT_INQUIRY_SINGULAR": "inquiry",
-    "TEXT_INQUIRY_PLURAL": "inquiries"
+    "TEXT_INQUIRY_PLURAL": "inquiries",
+    "COPY_MEDICAL_HISTORY_NOTES_OPTIONAL": "Medical History / Notes (Optional)",
+    "COPY_E_G_ASTHMA_KNEE_INJURY_HIGH_BP": "e.g., Asthma, knee injury, high BP..."
   }
 }

@@ -155,6 +155,18 @@ export default function ManagerInquiriesPipelineConvertLeadForm({
         <label htmlFor="manager-managerinquiriesconvertleadform-field-6" className="block text-sm font-medium text-text-secondary mb-0.5">{t("COPY_AMOUNT_PAID")}</label>
         <input id="manager-managerinquiriesconvertleadform-field-6" className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "w-full border rounded-xl px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-text-primary motion-safe:transition-all motion-safe:duration-200"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_inquiries-convert-lead-modal-input-number-3" type="number" min="0" max={MANAGER_INQUIRY_MAX_AMOUNT_MAJOR_UNITS} step="0.01" onKeyDown={(e) => { if (e.key === '-' || e.key === 'e' || e.key === '+') e.preventDefault(); }} {...register('paidAmount', { valueAsNumber: true })}  />
       </div>
+
+      <div className="sm:col-span-2">
+        <label htmlFor="manager-convert-lead-medical-history" className="block text-sm font-medium text-text-secondary mb-0.5">{t("COPY_MEDICAL_HISTORY_NOTES_OPTIONAL")}</label>
+        <textarea
+          id="manager-convert-lead-medical-history"
+          data-testid="manager_inquiries-convert-lead-modal-textarea-medical-history"
+          rows={2}
+          placeholder={t("COPY_E_G_ASTHMA_KNEE_INJURY_HIGH_BP")}
+          {...register('medicalHistory')}
+          className="w-full border rounded-xl px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-text-primary motion-safe:transition-all motion-safe:duration-200 border-border focus-visible:ring-focus-ring resize-none"
+        />
+      </div>
     </div>
   );
 }

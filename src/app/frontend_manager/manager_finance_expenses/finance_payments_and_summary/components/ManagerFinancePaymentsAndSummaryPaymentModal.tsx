@@ -19,7 +19,8 @@ export default function ManagerFinancePaymentsAndSummaryPaymentModal() {
   const ui = useManagerFinancePaymentsAndSummaryPaymentForm();
   const dialogRef = useRef<HTMLDivElement>(null);
   useManagerInfrastructureDialogFocusTrap({ dialogRef, isOpen: true, onClose: ui.close });
-  const { register, formState: { errors, isSubmitting } } = ui.form;
+  const { register, watch, formState: { errors, isSubmitting } } = ui.form;
+  const paymentType = watch('paymentType');
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop p-4 overflow-y-auto" role="presentation">
       <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="manager-finance-record-payment-title" data-testid="manager_finance-managerfinancepaymentmodal-dialog" className="my-auto flex max-h-dialog-desktop w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-border bg-overlay shadow-dialog">
@@ -39,6 +40,33 @@ export default function ManagerFinancePaymentsAndSummaryPaymentModal() {
               <option value="DUE_SETTLEMENT">Due Settlement (Past Overdue Payment)</option>
             </select>
           </div>
+          {paymentType === 'PARTIAL' && (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <label htmlFor="manager-finance-payment-remaining-due" className="block text-sm font-medium text-text-secondary">{t('TEXT_REMAINING_DUE')}</label>
+                <input
+                  id="manager-finance-payment-remaining-due"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  {...register('remainingDue', { valueAsNumber: true })}
+                  data-testid="manager_finance-managerfinancepaymentmodal-input-remaining-due"
+                  className="mt-1 w-full rounded-lg border border-border bg-input px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+                  placeholder="0.00"
+                />
+              </div>
+              <div>
+                <label htmlFor="manager-finance-payment-next-due-date" className="block text-sm font-medium text-text-secondary">{t('TEXT_NEXT_DUE_DATE')}</label>
+                <input
+                  id="manager-finance-payment-next-due-date"
+                  type="date"
+                  {...register('nextDueDate')}
+                  data-testid="manager_finance-managerfinancepaymentmodal-input-next-due-date"
+                  className="mt-1 w-full rounded-lg border border-border bg-input px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+                />
+              </div>
+            </div>
+          )}
           <div><label htmlFor="manager-finance-payment-amount" className="block text-sm font-medium text-text-secondary">{t('TEXT_AMOUNT')}</label><input id="manager-finance-payment-amount" type="number" min="0.01" step="0.01" {...register('amount', { valueAsNumber: true })} data-testid="manager_finance-managerfinancepaymentmodal-input-amount" className="mt-1 w-full rounded-lg border border-border bg-input px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page" aria-invalid={errors.amount ? 'true' : undefined} aria-describedby={errors.amount ? 'managerfinancepaymentmodal-amount-error' : undefined} />{errors.amount && <p id="managerfinancepaymentmodal-amount-error" role="alert" data-testid="manager_finance-managerfinancepaymentmodal-error-amount" className="mt-1 text-xs text-danger-text">{errors.amount.message}</p>}</div>
           <div><label htmlFor="manager-finance-payment-method" className="block text-sm font-medium text-text-secondary">{t('TEXT_METHOD')}</label><select id="manager-finance-payment-method" {...register('method')} data-testid="manager_finance-managerfinancepaymentmodal-select-method" className="mt-1 w-full rounded-lg border border-border bg-input px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page"><option value="UPI" data-testid="manager_finance-manager-finance-payment-modal-option-1">{t('TEXT_UPI')}</option><option value="Cash" data-testid="manager_finance-manager-finance-payment-modal-option-2">{t('COPY_CASH')}</option><option value="Card" data-testid="manager_finance-manager-finance-payment-modal-option-3">{t('COPY_CARD')}</option><option value="NetBanking" data-testid="manager_finance-manager-finance-payment-modal-option-4">{t('COPY_NETBANKING')}</option><option value="Cheque" data-testid="manager_finance-manager-finance-payment-modal-option-5">{t('TEXT_CHEQUE')}</option><option value="Other" data-testid="manager_finance-manager-finance-payment-modal-option-6">{t('TEXT_OTHER')}</option></select></div>
           <div><label htmlFor="manager-finance-payment-paid-at" className="block text-sm font-medium text-text-secondary">{t('TEXT_PAID_AT')}</label><input id="manager-finance-payment-paid-at" type="date" {...register('paidAt')} data-testid="manager_finance-managerfinancepaymentmodal-input-paid-at" className="mt-1 w-full rounded-lg border border-border bg-input px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page" /></div>

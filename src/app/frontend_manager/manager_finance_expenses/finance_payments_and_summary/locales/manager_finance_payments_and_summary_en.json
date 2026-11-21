@@ -55,6 +55,8 @@
     "COPY_SUMMARY": "Summary",
     "COPY_REVENUE": "Revenue",
     "COPY_DUE": "Due",
-    "COPY_PARTIAL": "Partially paid"
+    "COPY_PARTIAL": "Partially paid",
+    "TEXT_REMAINING_DUE": "Remaining Due (₹)",
+    "TEXT_NEXT_DUE_DATE": "Next Due Date"
   }
 }

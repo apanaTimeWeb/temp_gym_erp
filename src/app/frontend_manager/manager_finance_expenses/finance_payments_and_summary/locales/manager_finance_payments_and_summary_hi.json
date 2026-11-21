@@ -55,6 +55,8 @@
     "COPY_SUMMARY": "सारांश",
     "COPY_REVENUE": "राजस्व",
     "COPY_DUE": "बकाया",
-    "COPY_PARTIAL": "आंशिक भुगतान"
+    "COPY_PARTIAL": "आंशिक भुगतान",
+    "TEXT_REMAINING_DUE": "शेष बकाया (₹)",
+    "TEXT_NEXT_DUE_DATE": "अगली देय तिथि"
   }
 }
