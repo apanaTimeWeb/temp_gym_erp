@@ -1,7 +1,8 @@
 // RESPONSIBILITY: Renders the Lead Profile / Details slide-over drawer for an inquiry; mutation and state remain in module-owned hooks.
 'use client';
 import { useRef } from 'react';
-import { X, Phone, Mail, MessageCircle, Calendar, UserCheck, Edit2, Tag, Clock } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { X, Phone, Mail, MessageCircle, Calendar, UserCheck, UserPlus, Edit2, Tag, Clock } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { useManagerInfrastructureDialogFocusTrap } from '@/app/frontend_manager/manager_infrastructure/hooks/useManagerInfrastructureDialogFocusTrap';
@@ -12,6 +13,7 @@ import { INQUIRIES_STATUS_LABEL_KEYS } from '@/app/frontend_manager/manager_inqu
 
 export default function ManagerInquiriesPipelineLeadDetailsDrawer() {
   const t = useTranslations('MANAGER_INQUIRIES_PIPELINE');
+  const router = useRouter();
   const selectedLead = useManagerInquiriesPipelineUiStore((state) => state.selectedLead);
   const setSelectedLead = useManagerInquiriesPipelineUiStore((state) => state.setSelectedLead);
   const setConvertLead = useManagerInquiriesPipelineUiStore((state) => state.setConvertLead);
@@ -27,6 +29,18 @@ export default function ManagerInquiriesPipelineLeadDetailsDrawer() {
   if (!selectedLead) return null;
 
   const closeDrawer = () => setSelectedLead(null);
+
+  const handleFullEnrollment = () => {
+    closeDrawer();
+    const params = new URLSearchParams();
+    params.set('action', 'add_member');
+    if (selectedLead.name) params.set('name', selectedLead.name);
+    if (selectedLead.phone) params.set('phone', (selectedLead.phone || '').replace(/[\s-]/g, ''));
+    if (selectedLead.email) params.set('email', selectedLead.email);
+    if (selectedLead.notes) params.set('notes', selectedLead.notes);
+    if (selectedLead.interest) params.set('plan', selectedLead.interest);
+    router.push(`/frontend_manager/manager_members/members_directory?${params.toString()}`);
+  };
 
   const statusLabel = INQUIRIES_STATUS_LABEL_KEYS[selectedLead.status as keyof typeof INQUIRIES_STATUS_LABEL_KEYS]
     ? t(INQUIRIES_STATUS_LABEL_KEYS[selectedLead.status as keyof typeof INQUIRIES_STATUS_LABEL_KEYS])
@@ -173,15 +187,27 @@ export default function ManagerInquiriesPipelineLeadDetailsDrawer() {
             </button>
           </div>
 
-          <button
-            type="button"
-            onClick={() => { closeDrawer(); setConvertLead(selectedLead); }}
-            data-testid="manager_inquiries-lead-details-button-convert"
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-on-primary text-sm font-semibold hover:brightness-110 active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
-          >
-            <UserCheck size={18} strokeWidth={2} aria-hidden="true" />
-            {t('COPY_CONVERT_MEMBER_2')}
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={handleFullEnrollment}
+              data-testid="manager_inquiries-lead-details-button-full-enroll"
+              title="Open full member enrollment form with pre-filled lead data"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-surface hover:bg-surface-hover border border-border text-text-primary text-sm font-semibold active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            >
+              <UserPlus size={16} strokeWidth={2} aria-hidden="true" />
+              <span>Full Enrollment</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => { closeDrawer(); setConvertLead(selectedLead); }}
+              data-testid="manager_inquiries-lead-details-button-convert"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-on-primary text-sm font-semibold hover:brightness-110 active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            >
+              <UserCheck size={18} strokeWidth={2} aria-hidden="true" />
+              {t('COPY_CONVERT_MEMBER_2')}
+            </button>
+          </div>
         </div>
       </div>
     </div>

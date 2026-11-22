@@ -1,7 +1,8 @@
 // RESPONSIBILITY: Renders ManagerInquiriesPipelineConvertLeadSuccess's feature UI and orchestrates presentation through module-owned state/hooks; it does not own API transport or business rules.
 'use client';
+import { useRouter } from 'next/navigation';
 import { MANAGER_INQUIRIES_PIPELINE_API } from '@/app/frontend_manager/manager_inquiries_crm/inquiries_pipeline/config/manager_inquiries_pipeline.url_config';
-import { CheckCircle2, Phone } from 'lucide-react';
+import { CheckCircle2, Phone, UserCheck } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 
 import { ManagerEnvConfig } from '@/app/frontend_manager/manager_infrastructure/constants/ManagerInfrastructureEnvConfig';
@@ -18,6 +19,16 @@ import type { ManagerInquiriesPipelineConvertLeadSuccessProps } from '@/app/fron
 export default function ManagerInquiriesPipelineConvertLeadSuccess({ successData, closeConvert }: ManagerInquiriesPipelineConvertLeadSuccessProps) {
   const t = useTranslations('MANAGER_INQUIRIES_PIPELINE');
   const locale = useLocale();
+  const router = useRouter();
+
+  const handleViewProfile = () => {
+    closeConvert();
+    if (successData?.gymId && successData.gymId !== '—') {
+      router.push(`/frontend_manager/manager_members/members_directory?view=member-profile&id=${encodeURIComponent(successData.gymId)}`);
+    } else {
+      router.push('/frontend_manager/manager_members/members_directory');
+    }
+  };
 
   const handleSendWhatsApp = () => {
     if (!successData || !successData.phone) return;
@@ -69,10 +80,25 @@ export default function ManagerInquiriesPipelineConvertLeadSuccess({ successData
             </div>
           </div>
 
-          <button data-testid="manager_inquiries-convert-lead-modal-convert"
-            onClick={closeConvert}
-            className="px-8 py-2.5 text-sm font-bold rounded-xl border border-border text-text-secondary hover:bg-primary-subtle hover:text-primary motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"
-           type="button">{t("COPY_DONE_CLOSE")}</button>
+          <div className="w-full flex flex-col sm:flex-row gap-3">
+            <button
+              data-testid="manager_inquiries-convert-lead-modal-view-profile"
+              onClick={handleViewProfile}
+              className="flex-1 py-2.5 text-sm font-bold rounded-xl bg-primary text-on-primary flex items-center justify-center gap-2 hover:brightness-110 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none"
+              type="button"
+            >
+              <UserCheck size={18} strokeWidth={2} aria-hidden="true" />
+              <span>View Member Profile</span>
+            </button>
+            <button
+              data-testid="manager_inquiries-convert-lead-modal-convert"
+              onClick={closeConvert}
+              className="px-6 py-2.5 text-sm font-bold rounded-xl border border-border text-text-secondary hover:bg-primary-subtle hover:text-primary motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"
+              type="button"
+            >
+              {t("COPY_DONE_CLOSE")}
+            </button>
+          </div>
         </div>
       </div>
     </div>

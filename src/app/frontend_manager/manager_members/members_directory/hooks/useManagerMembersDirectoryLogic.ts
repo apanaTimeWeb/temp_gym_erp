@@ -14,7 +14,7 @@ import { ManagerMembersDirectoryCreateDefaultForm } from '@/app/frontend_manager
 import { ManagerMembersDirectoryMessageTemplates as MSG_TEMPLATES } from '@/app/frontend_manager/manager_members/members_directory/utils/ManagerMembersDirectoryMessageTemplates';
 import { useManagerMembersDirectoryMutations } from '@/app/frontend_manager/manager_members/members_directory/hooks/useManagerMembersDirectoryMutations';
 import { useManagerMembersDirectoryPrintLogic } from '@/app/frontend_manager/manager_members/members_directory/hooks/useManagerMembersDirectoryPrintLogic';
-import { useFetchMember } from '@/app/frontend_manager/manager_members/members_directory/hooks/useManagerMembersDirectoryQueries';
+import { useFetchMember, useFetchPlans } from '@/app/frontend_manager/manager_members/members_directory/hooks/useManagerMembersDirectoryQueries';
 import { useManagerMembersDirectoryUrlState } from '@/app/frontend_manager/manager_members/members_directory/hooks/useManagerMembersDirectoryUrlState';
 import { useManagerMembersDirectoryUiStore } from '@/app/frontend_manager/manager_members/members_directory/state/useManagerMembersDirectoryUiStore';
 import { downloadManagerMembersDirectoryCsv, printManagerMembersDirectoryPdf } from '@/app/frontend_manager/manager_members/members_directory/utils/ManagerMembersDirectoryExportUtils';
@@ -36,6 +36,7 @@ export function useManagerMembersDirectoryLogic(): ManagerMembersDirectoryViewMo
 
   const ui = useManagerMembersDirectoryUiStore();
   const queryClient = useQueryClient();
+  const { data: plans = [] } = useFetchPlans();
   const activeMemberId = urlState.memberProfileId ?? ui.selectedMemberId;
   const { data: selectedMember = null } = useFetchMember(activeMemberId);
   const setSelectedMember = useCallback((member: Member | null) => {
@@ -64,11 +65,39 @@ export function useManagerMembersDirectoryLogic(): ManagerMembersDirectoryViewMo
     const name = urlState.searchParams.get('name') || '';
     const phone = urlState.searchParams.get('phone') || '';
     const email = urlState.searchParams.get('email') || '';
+    const address = urlState.searchParams.get('address') || '';
+    const medicalHistory = urlState.searchParams.get('medicalHistory') || urlState.searchParams.get('notes') || '';
+    const rawGender = (urlState.searchParams.get('gender') || '').toUpperCase();
+    const gender: 'MALE' | 'FEMALE' | 'OTHER' = ['MALE', 'FEMALE', 'OTHER'].includes(rawGender)
+      ? (rawGender as 'MALE' | 'FEMALE' | 'OTHER')
+      : 'MALE';
+
+    const planParam = urlState.searchParams.get('planId') || urlState.searchParams.get('plan') || '';
+    let resolvedPlanId = '';
+    if (planParam) {
+      const match = plans.find((p) =>
+        String(p.id) === planParam ||
+        p.name.toLowerCase() === planParam.toLowerCase() ||
+        p.name.toLowerCase().includes(planParam.toLowerCase()) ||
+        planParam.toLowerCase().includes(p.name.toLowerCase())
+      );
+      resolvedPlanId = match ? String(match.id) : planParam;
+    }
+
     ui.setEditId(null);
-    ui.setEditData({ ...ManagerMembersDirectoryCreateDefaultForm(), name, phone, email });
+    ui.setEditData({
+      ...ManagerMembersDirectoryCreateDefaultForm(),
+      name,
+      phone,
+      email,
+      address,
+      gender,
+      medicalHistory,
+      ...(resolvedPlanId ? { planId: resolvedPlanId } : {}),
+    });
     ui.setShowAddModal(true);
-    urlState.clearUrlParams(['action', 'name', 'phone', 'email']);
-  }, [ui.setEditId, ui.setEditData, ui.setShowAddModal, urlState.searchParams, urlState.clearUrlParams]);
+    urlState.clearUrlParams(['action', 'name', 'phone', 'email', 'address', 'medicalHistory', 'notes', 'gender', 'plan', 'planId']);
+  }, [plans, ui.setEditId, ui.setEditData, ui.setShowAddModal, urlState.searchParams, urlState.clearUrlParams]);
 
   const openAdd = ui.openAdd;
   const openEdit = ui.openEdit;

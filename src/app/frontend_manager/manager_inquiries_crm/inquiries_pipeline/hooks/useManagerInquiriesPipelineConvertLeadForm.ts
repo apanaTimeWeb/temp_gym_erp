@@ -73,16 +73,25 @@ export function useManagerInquiriesPipelineConvertLeadForm() {
     if (activeLead) {
       const today = new Date().toISOString().split('T')[0] || '';
       const initialExpiry = calculateManagerInquiryExpiryDate(today, 'ONE_MONTH') || '';
+      const leadInterest = (activeLead.interest || '').toLowerCase().trim();
+      const matchingPlan = plans.find(
+        (p) =>
+          String(p.id) === activeLead.interest ||
+          p.name.toLowerCase() === leadInterest ||
+          (leadInterest && (p.name.toLowerCase().includes(leadInterest) || leadInterest.includes(p.name.toLowerCase())))
+      );
       form.reset({
         ...EMPTY_CONVERT_FORM,
         name: activeLead.name,
         phone: (activeLead.phone || '').replace(/[\s-]/g, ''),
         email: activeLead.email || '',
+        planId: matchingPlan ? String(matchingPlan.id) : '',
+        medicalHistory: activeLead.notes || '',
         joinDate: today,
         expiryDate: initialExpiry,
       });
     }
-  }, [activeLead, form]);
+  }, [activeLead, form, plans]);
   useEffect(() => { if (!planId || !billingCycle) return; const selectedPlan = plans.find((plan) => String(plan.id) === String(planId)); const price = getPriceForCycleSnapshot(selectedPlan, billingCycle, Number(customDays) || 0); form.setValue('totalAmount', price, { shouldValidate: true }); form.setValue('paidAmount', price, { shouldValidate: true }); }, [billingCycle, customDays, form, planId, plans]);
 // EFFECT: Effect lifecycle and dependency list are intentionally scoped to values that control this side effect.
   useEffect(() => { if (!joinDate || !billingCycle) { form.setValue('expiryDate', '', { shouldValidate: true }); return; } const expiryDate = calculateManagerInquiryExpiryDate(joinDate, billingCycle, Number(customDays) || 0); form.setValue('expiryDate', expiryDate ?? '', { shouldValidate: true }); }, [billingCycle, customDays, form, joinDate]);

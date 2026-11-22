@@ -1,6 +1,7 @@
 // RESPONSIBILITY: Renders ManagerInquiriesPipelineConvertLeadModal's feature UI and orchestrates presentation through module-owned state/hooks; it does not own API transport or business rules.
 'use client';
-import { X, Save } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { X, Save, ExternalLink } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import ManagerInquiriesPipelineConvertLeadForm from '@/app/frontend_manager/manager_inquiries_crm/inquiries_pipeline/components/ManagerInquiriesPipelineConvertLeadForm';
@@ -10,9 +11,23 @@ import { useManagerInquiriesPipelineConvertLeadForm } from '@/app/frontend_manag
 /** @description Renders the ManagerInquiriesPipelineConvertLeadModal component for its owning Manager frontend boundary. @dependencies Local dependencies are owned by this feature module (3 documented module/import dependencies).. @edge-case Preserves loading state, modal lifecycle. */
 export default function ManagerInquiriesPipelineConvertLeadModal() {
   const t = useTranslations('MANAGER_INQUIRIES_PIPELINE');
+  const router = useRouter();
 
   const { activeLead, plans, plansLoading, form, planId, billingCycle, customDays, saving, successData, submit, handleClose, closeConvert } = useManagerInquiriesPipelineConvertLeadForm();
   if (!activeLead) return null;
+
+  const handleOpenInDirectory = () => {
+    handleClose();
+    const params = new URLSearchParams();
+    params.set('action', 'add_member');
+    if (activeLead.name) params.set('name', activeLead.name);
+    if (activeLead.phone) params.set('phone', (activeLead.phone || '').replace(/[\s-]/g, ''));
+    if (activeLead.email) params.set('email', activeLead.email);
+    if (activeLead.notes) params.set('notes', activeLead.notes);
+    if (activeLead.interest) params.set('plan', activeLead.interest);
+    router.push(`/frontend_manager/manager_members/members_directory?${params.toString()}`);
+  };
+
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay-backdrop overflow-y-auto">
       <div className="my-auto bg-overlay rounded-2xl shadow-dialog w-full max-w-xl overflow-hidden border border-border max-h-dialog-desktop flex flex-col" role="dialog" aria-modal="true" aria-labelledby="managerinquiriesconvertleadmodal-dialog-title">
@@ -21,9 +36,21 @@ export default function ManagerInquiriesPipelineConvertLeadModal() {
             <h3 className="text-lg font-bold text-text-primary" id="managerinquiriesconvertleadmodal-dialog-title">{t("COPY_CONVERT_MEMBER_1")}</h3>
             <p className="text-xs text-text-secondary mt-0.5">{t("COPY_COMPLETE_ADMISSION")}{activeLead.name}</p>
           </div>
-          <button data-testid="manager_inquiries-convert-lead-modal-close-1" type="button" onClick={handleClose} aria-label={t("COPY_CLOSE_CONVERSION_FORM")} className="p-2 rounded-full hover:bg-primary-subtle text-text-secondary motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110">
-            <X size={18} strokeWidth={2}/>
-          </button>
+          <div className="flex items-center gap-1">
+            <button
+              type="button"
+              onClick={handleOpenInDirectory}
+              data-testid="manager_inquiries-convert-lead-modal-button-directory"
+              title="Open full member enrollment form with pre-filled lead data"
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-text-secondary hover:text-primary hover:bg-primary-subtle transition-all"
+            >
+              <ExternalLink size={14} />
+              <span className="hidden sm:inline">Full Enrollment Form</span>
+            </button>
+            <button data-testid="manager_inquiries-convert-lead-modal-close-1" type="button" onClick={handleClose} aria-label={t("COPY_CLOSE_CONVERSION_FORM")} className="p-2 rounded-full hover:bg-primary-subtle text-text-secondary motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110">
+              <X size={18} strokeWidth={2}/>
+            </button>
+          </div>
         </div>
         {(() => {
           if (successData) {

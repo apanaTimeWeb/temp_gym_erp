@@ -63,6 +63,7 @@ export function useManagerMembersDirectoryUrlState() {
 
   // Remove legacy PII-bearing search parameters from previously shared/bookmarked URLs.
   useEffect(() => {
+    if (searchParams.get('action') === 'add_member') return;
     const piiParams = ['search', 'name', 'phone', 'email'];
     if (!piiParams.some((key) => searchParams.has(key))) return;
     const next = new URLSearchParams(searchParams.toString());

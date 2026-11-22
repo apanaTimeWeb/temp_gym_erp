@@ -1,6 +1,6 @@
 // RESPONSIBILITY: Renders ManagerMembersDirectoryAddPaymentModal's feature UI and orchestrates presentation through module-owned state/hooks; it does not own API transport or business rules.
 'use client';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 
 import { X } from 'lucide-react';
@@ -12,6 +12,7 @@ import { ManagerEnvConfig } from '@/app/frontend_manager/manager_members/members
 import { useManagerInfrastructureUnsavedChangesGuard } from '@/app/frontend_manager/manager_members/members_directory/hooks/useManagerMembersDirectoryLocalUnsavedChangesGuard';
 import { ManagerInfrastructureIdempotency } from '@/app/frontend_manager/manager_members/members_directory/utils/ManagerMembersDirectoryLocalIdempotency';
 import { ManagerInfrastructureToManagerMinorUnits } from '@/app/frontend_manager/manager_members/members_directory/utils/ManagerMembersDirectoryLocalToMinorUnits';
+import { ManagerInfrastructureFromManagerMinorUnits } from '@/app/frontend_manager/manager_members/members_directory/utils/ManagerMembersDirectoryLocalFromMinorUnits';
 
 import { MEMBER_PAYMENT_METHOD_OPTIONS } from '@/app/frontend_manager/manager_members/members_directory/constants/manager_members_directory_ui.constants';
 import { useManagerMembersDirectoryLogic } from '@/app/frontend_manager/manager_members/members_directory/hooks/useManagerMembersDirectoryLogic';
@@ -30,6 +31,14 @@ export default function ManagerMembersDirectoryAddPaymentModal() {
   const [amount, setAmount] = useState<number | ''>('');
   const [method, setMethod] = useState('UPI');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (showPaymentModal && selectedMember && selectedMember.pendingAmount > 0) {
+      setAmount(ManagerInfrastructureFromManagerMinorUnits(selectedMember.pendingAmount));
+    } else if (showPaymentModal) {
+      setAmount('');
+    }
+  }, [showPaymentModal, selectedMember]);
 
   const { confirmAndClose } = useManagerInfrastructureUnsavedChangesGuard(!!amount && !isSubmitting);
   const handleClose = () => { void confirmAndClose(() => { idempotencyKeyRef.current = null; idempotencyPayloadRef.current = null; setAmount(''); setMethod('UPI'); setShowPaymentModal(false); }); };
