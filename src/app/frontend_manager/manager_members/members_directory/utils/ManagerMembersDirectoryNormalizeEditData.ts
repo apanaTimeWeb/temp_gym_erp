@@ -43,5 +43,6 @@ export function ManagerMembersDirectoryNormalizeEditData(
     paidAmount: editData.paidAmount ? ManagerInfrastructureFromManagerMinorUnits(editData.paidAmount) : 0,
     pendingAmount: editData.pendingAmount ? ManagerInfrastructureFromManagerMinorUnits(editData.pendingAmount) : 0,
     advanceAmount: editData.advanceAmount ? ManagerInfrastructureFromManagerMinorUnits(editData.advanceAmount) : 0,
+    paymentMethod: editData.paymentMethod || 'UPI',
   };
 }

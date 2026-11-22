@@ -8,7 +8,8 @@ import type { AdminHrStaffModalField } from '@/app/frontend_admin/admin_hr/hr_st
 export const EMPTY_STAFF: Partial<Staff> = {
   name: '', email: '', phone: '', role: '', salary: 0, branch: '', gender: 'MALE',
   address: '', joinDate: format(new Date(), 'yyyy-MM-dd'), temporaryPassword: '', isActive: true,
-  aadhaar: '', upiId: '', assignedBranches: [], primaryBranchId: '',
+  aadhaar: '', upiId: '', bankAccountNumber: '', bankName: '', ifscCode: '', panNumber: '',
+  assignedBranches: [], primaryBranchId: '',
 };
 
 export const STAFF_TABLE_HEADER_LABEL_KEYS: Record<string, string> = {

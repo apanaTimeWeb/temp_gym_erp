@@ -8,5 +8,6 @@ export function ManagerMembersDirectoryCreateDefaultForm(): MemberFormValues {
   return {
     name: '', email: '', phone: '', address: '', aadhaar: '', gender: 'MALE', billingCycle: 'ONE_MONTH', planId: '',
     joinDate: today.toISOString().split('T')[0] || '', expiryDate: nextMonth.toISOString().split('T')[0] || '', medicalHistory: '',
+    paymentMethod: 'UPI',
   };
 }

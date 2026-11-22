@@ -23,6 +23,9 @@ export interface Staff {
   aadhaar?: string;
   upiId?: string;
   bankAccountNumber?: string;
+  bankName?: string;
+  ifscCode?: string;
+  panNumber?: string;
   advanceSalary?: number;
   joinDate: string;
   joiningDate?: string;

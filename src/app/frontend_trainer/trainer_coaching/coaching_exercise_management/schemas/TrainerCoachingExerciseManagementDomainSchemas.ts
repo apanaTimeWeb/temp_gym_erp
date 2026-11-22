@@ -31,6 +31,7 @@ export const TrainerWorkoutUpdateExerciseSchema = TrainerWorkoutCreateExerciseSc
 export const TrainerWorkoutEMPTY_EXERCISE_FORM: z.input<typeof TrainerWorkoutCreateExerciseSchema> = { 
   name: '', 
   muscle: '', 
+  category: 'Strength',
   equipment: 'Barbell', 
   difficulty: 'Beginner',
   instructions: '',

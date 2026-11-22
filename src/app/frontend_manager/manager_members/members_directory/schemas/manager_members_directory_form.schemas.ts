@@ -21,6 +21,7 @@ const managerMembersFormBaseSchema = z.object({
   billingCycle: z.enum(MANAGER_MEMBERS_DIRECTORY_BILLING_CYCLE_VALUES), customDays: z.number().min(1, 'Please enter valid days').max(MANAGER_MEMBER_MAX_CUSTOM_DAYS, 'Custom days are too high').optional().or(z.literal(0)), planId: z.string().min(1, 'Please select a plan'),
   totalAmount: z.number().min(0).max(MANAGER_MEMBER_MAX_AMOUNT_MAJOR_UNITS, 'Amount is too large').optional(), paidAmount: z.number().min(0, 'Amount must be valid').max(MANAGER_MEMBER_MAX_AMOUNT_MAJOR_UNITS, 'Amount is too large').optional(), pendingAmount: z.number().min(0).max(MANAGER_MEMBER_MAX_AMOUNT_MAJOR_UNITS, 'Amount is too large').optional(), advanceAmount: z.number().min(0).max(MANAGER_MEMBER_MAX_AMOUNT_MAJOR_UNITS, 'Amount is too large').optional(),
   joinDate: z.string().optional(), expiryDate: z.string().optional(), medicalHistory: z.string().optional(), status: z.enum(MANAGER_MEMBERS_DIRECTORY_STATUS_OPTION_VALUES).optional(),
+  paymentMethod: z.string().optional(),
 });
 export const managerMembersFormSchema = managerMembersFormBaseSchema.superRefine((value, context) => {
   if (value.billingCycle === 'CUSTOM' && (!value.customDays || value.customDays < 1)) context.addIssue({ code: z.ZodIssueCode.custom, path: ['customDays'], message: 'Custom billing cycle requires a valid number of days' });

@@ -139,6 +139,22 @@ export default function AdminHrManagementStaffProfileModal() {
                     {displayValue(editData.upiId)}
                   </span>
                 </div>
+                {Boolean(editData.panNumber) && (
+                  <div className="flex items-center gap-3 bg-input p-3 rounded-xl border border-border">
+                    <span className="text-xs font-bold border border-border text-secondary rounded px-1">PAN</span>
+                    <span className="text-sm font-medium text-primary truncate max-w-40" title={editData.panNumber}>
+                      {displayValue(editData.panNumber)}
+                    </span>
+                  </div>
+                )}
+                {Boolean(editData.bankAccountNumber) && (
+                  <div className="flex items-center gap-3 bg-input p-3 rounded-xl border border-border">
+                    <Building2 size={18} className="text-secondary" strokeWidth={2}/>
+                    <span className="text-sm font-medium text-primary truncate max-w-40" title={editData.bankAccountNumber}>
+                      {editData.bankName ? `${editData.bankName} - ` : ''}{displayValue(editData.bankAccountNumber)}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           </div>

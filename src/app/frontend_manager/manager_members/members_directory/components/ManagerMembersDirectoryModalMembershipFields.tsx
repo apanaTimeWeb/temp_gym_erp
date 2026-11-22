@@ -7,7 +7,7 @@ import ManagerSearchableDropdown from '@/components/ui/manager_searchable_dropdo
 import { ManagerEnvConfig } from '@/app/frontend_manager/manager_members/members_directory/constants/ManagerMembersDirectoryLocalEnvConfig';
 import { BILLING_CYCLE_CUSTOM } from '@/app/frontend_manager/manager_members/members_directory/constants/manager_members_directory_billing_cycle.constants';
 import { MANAGER_MEMBER_MAX_AMOUNT_MAJOR_UNITS, MANAGER_MEMBER_MAX_CUSTOM_DAYS } from '@/app/frontend_manager/manager_members/members_directory/constants/manager_members_directory_validation.constants';
-import { MEMBERS_CYCLE_LABELS } from '@/app/frontend_manager/manager_members/members_directory/constants/manager_members_directory_ui.constants';
+import { MEMBERS_CYCLE_LABELS, MEMBER_PAYMENT_METHOD_OPTIONS } from '@/app/frontend_manager/manager_members/members_directory/constants/manager_members_directory_ui.constants';
 import { ManagerMembersDirectoryCalculatePriceForCycle as getPriceForCycle } from '@/app/frontend_manager/manager_members/members_directory/utils/ManagerMembersDirectoryCalculatePriceForCycle';
 import { ManagerMembersDirectoryFormatCurrency } from '@/app/frontend_manager/manager_members/members_directory/utils/ManagerMembersDirectoryFormatters';
 import type { MemberFormValues } from '@/app/frontend_manager/manager_members/members_directory/schemas/manager_members_directory_form.schemas';
@@ -152,6 +152,28 @@ export default function ManagerMembersDirectoryModalMembershipFields({ formState
                 
               />
             </div>
+
+            {!editId && (
+              <div className="sm:col-span-2">
+                <label className="block text-sm font-medium text-text-secondary mb-0.5">{t("COPY_PAYMENT_METHOD_2")}</label>
+                <Controller
+                  name="paymentMethod"
+                  control={useFormReturn.control}
+                  render={({ field }) => (
+                    <ManagerSearchableDropdown
+                      ariaLabel={t("COPY_PAYMENT_METHOD_2")}
+                      dataTestId="manager_members-managermembersmodal-payment-method-dropdown"
+                      options={MEMBER_PAYMENT_METHOD_OPTIONS.map((opt) => ({
+                        value: opt.value,
+                        label: t(opt.labelKey),
+                      }))}
+                      value={field.value || 'UPI'}
+                      onChange={field.onChange}
+                    />
+                  )}
+                />
+              </div>
+            )}
             
             <div className="sm:col-span-2">
               <label htmlFor="manager-managermembersmodal-field-7" className="block text-sm font-medium text-text-secondary mb-0.5">{t("COPY_MEDICAL_HISTORY_NOTES_OPTIONAL")}</label>

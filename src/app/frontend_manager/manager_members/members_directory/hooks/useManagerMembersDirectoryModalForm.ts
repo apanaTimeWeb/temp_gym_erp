@@ -98,7 +98,7 @@ export function useManagerMembersDirectoryModalForm(
       }
     } else {
       // Remove fields that should not be updated during edit
-      (['totalAmount', 'paidAmount', 'pendingAmount', 'joinDate', 'expiryDate', 'planId', 'billingCycle', 'customDays'] as const).forEach(
+      (['totalAmount', 'paidAmount', 'pendingAmount', 'joinDate', 'expiryDate', 'planId', 'billingCycle', 'customDays', 'paymentMethod'] as const).forEach(
         (field) => delete payload[field]
       );
     }

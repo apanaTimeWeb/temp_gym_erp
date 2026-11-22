@@ -20,7 +20,7 @@ import TrainerInfrastructureSearchableDropdown from '@/app/frontend_trainer/trai
 
 import { useTrainerInfrastructureDialogFocusTrap } from '@/app/frontend_trainer/trainer_coaching/coaching_exercise_management/hooks/TrainerCoachingExerciseManagementuseTrainerInfrastructureDialogFocusTrap';
 
-import { TRAINER_WORKOUT_EQUIPMENT_OPTIONS, TRAINER_WORKOUT_EXERCISE_DIFFICULTY_OPTIONS } from '@/app/frontend_trainer/trainer_coaching/coaching_exercise_management/config/TrainerCoachingExerciseManagementConstants';
+import { TRAINER_WORKOUT_EQUIPMENT_OPTIONS, TRAINER_WORKOUT_EXERCISE_DIFFICULTY_OPTIONS, TRAINER_WORKOUT_EXERCISE_CATEGORY_OPTIONS } from '@/app/frontend_trainer/trainer_coaching/coaching_exercise_management/config/TrainerCoachingExerciseManagementConstants';
 
 import { useTrainerWorkoutFilters } from '@/app/frontend_trainer/trainer_coaching/coaching_exercise_management/hooks/useTrainerCoachingExerciseManagementFilters';
 
@@ -73,6 +73,7 @@ export default function TrainerWorkoutExerciseModal() {
       if (editExercise) {
         reset({
           name: editExercise.name,
+          category: editExercise.category ?? 'Strength',
           muscle: editExercise.muscleGroup?.[0] ?? '',
           equipment: editExercise.equipment ?? 'Bodyweight',
           difficulty: editExercise.difficulty,
@@ -136,17 +137,33 @@ export default function TrainerWorkoutExerciseModal() {
               } bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_workout-trainerworkoutexercisemodal-input_3"/>
             {errors.name && <p id="trainer-workout-exercise-name-error" role="alert" className="text-danger text-xs mt-1 " data-testid={"trainer_workout-exercise_modal-error_state_109_1"}>{t(errors.name?.message || '')}</p>}
           </div>
-          <div>
-            <label htmlFor="trainer-workout-exercise-muscle" className="block text-sm font-medium text-secondary mb-1 ">{t("TEXT_PRIMARY_MUSCLE")}</label>
-            <input id="trainer-workout-exercise-muscle"
-              type="text" 
-              placeholder={t("TEXT_E_G_CHEST_QUADRICEPS")} 
-              {...register('muscle')}
-              aria-invalid={Boolean(errors.muscle)} aria-describedby={errors.muscle ? "trainer-workout-exercise-muscle-error" : undefined}
-              className={`w-full px-3 py-2 border rounded-lg focus-visible:outline-none focus-visible:ring-2 ${
-                errors.muscle ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-focus-ring'
-              } bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_workout-trainerworkoutexercisemodal-input_4"/>
-            {errors.muscle && <p id="trainer-workout-exercise-muscle-error" role="alert" className="text-danger text-xs mt-1 " data-testid={"trainer_workout-exercise_modal-error_state_121_2"}>{t(errors.muscle?.message || '')}</p>}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="trainer-workout-exercise-muscle" className="block text-sm font-medium text-secondary mb-1 ">{t("TEXT_PRIMARY_MUSCLE")}</label>
+              <input id="trainer-workout-exercise-muscle"
+                type="text" 
+                placeholder={t("TEXT_E_G_CHEST_QUADRICEPS")} 
+                {...register('muscle')}
+                aria-invalid={Boolean(errors.muscle)} aria-describedby={errors.muscle ? "trainer-workout-exercise-muscle-error" : undefined}
+                className={`w-full px-3 py-2 border rounded-lg focus-visible:outline-none focus-visible:ring-2 ${
+                  errors.muscle ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-focus-ring'
+                } bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_workout-trainerworkoutexercisemodal-input_4"/>
+              {errors.muscle && <p id="trainer-workout-exercise-muscle-error" role="alert" className="text-danger text-xs mt-1 " data-testid={"trainer_workout-exercise_modal-error_state_121_2"}>{t(errors.muscle?.message || '')}</p>}
+            </div>
+            <div>
+              <label htmlFor="trainer-workout-exercise-category" className="block text-sm font-medium text-secondary mb-1 ">{t("TEXT_CATEGORY")}</label>
+              <Controller
+                name="category"
+                control={control}
+                render={({ field }) => (
+                  <TrainerInfrastructureSearchableDropdown
+                    value={field.value || 'Strength'}
+                    onChange={field.onChange}
+                    options={TRAINER_WORKOUT_EXERCISE_CATEGORY_OPTIONS.map(c => ({ label: t(c.labelKey), value: c.value }))}
+                    id="trainer-workout-exercise-category" ariaLabel={t("TEXT_CATEGORY")} testId="trainer-workout-workout-exercise-modal-category"/>
+                )}
+              />
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-4 ">
             <div>

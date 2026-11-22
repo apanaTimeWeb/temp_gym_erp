@@ -27,6 +27,11 @@ export const TRAINER_WORKOUT_CATEGORY_OPTIONS = {
     { value: 'Mobility', labelKey: 'TEXT_MOBILITY' },
   ],
 } as const;
+export const TRAINER_WORKOUT_EXERCISE_CATEGORY_OPTIONS = [
+  { value: 'Strength', labelKey: 'TEXT_STRENGTH' },
+  { value: 'Cardio', labelKey: 'TEXT_CARDIO' },
+  { value: 'Mobility', labelKey: 'TEXT_MOBILITY' },
+] as const;
 export const TRAINER_WORKOUT_WORKOUT_TAB_OPTIONS = [
   { value: 'plans', labelKey: 'TEXT_WORKOUT_PLANS' },
   { value: 'exercises', labelKey: 'TEXT_EXERCISE_LIBRARY' },

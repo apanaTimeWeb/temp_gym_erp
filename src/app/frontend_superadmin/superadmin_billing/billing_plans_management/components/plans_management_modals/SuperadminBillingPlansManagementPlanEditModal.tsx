@@ -58,8 +58,11 @@ export default function SuperadminBillingPlansManagementPlanEditModal() {
                 name: selectedPlan.name,
                 priceMonthly: fromSuperadminBillingPlansMinorUnits(selectedPlan.priceMonthly, selectedPlan.currency),
                 priceAnnual: fromSuperadminBillingPlansMinorUnits(selectedPlan.priceAnnual, selectedPlan.currency),
+                setupFee: fromSuperadminBillingPlansMinorUnits(selectedPlan.setupFee ?? 0, selectedPlan.currency),
+                currency: selectedPlan.currency || 'INR',
                 maxMembers: selectedPlan.maxMembers,
                 maxStaff: selectedPlan.maxStaff,
+                maxBranches: selectedPlan.maxBranches ?? 1,
                 dbLimitGb: selectedPlan.dbLimitGb ?? 1.0,
                 binaryLimitGb: selectedPlan.binaryLimitGb ?? 10.0,
                 features: selectedPlan.features?.length > 0
@@ -101,11 +104,25 @@ export default function SuperadminBillingPlansManagementPlanEditModal() {
     const isSubmitting = isUpdating;
     const handleSubmitForm: SubmitHandler<SuperadminBillingPlansFormValues> = async (data) => {
       try {
-        await updatePlan({ id: selectedPlan.id, payload: { ...data, priceMonthly: toSuperadminBillingPlansMinorUnits(data.priceMonthly, selectedPlan.currency), priceAnnual: toSuperadminBillingPlansMinorUnits(data.priceAnnual, selectedPlan.currency), features: data.features.map(f => f.value), currency: selectedPlan.currency, isPublic: selectedPlan.isPublic, trialDays: selectedPlan.trialDays, setupFee: selectedPlan.setupFee } });
+        const planCurrency = data.currency || selectedPlan.currency || 'INR';
+        await updatePlan({
+          id: selectedPlan.id,
+          payload: {
+            ...data,
+            priceMonthly: toSuperadminBillingPlansMinorUnits(data.priceMonthly, planCurrency),
+            priceAnnual: toSuperadminBillingPlansMinorUnits(data.priceAnnual, planCurrency),
+            setupFee: toSuperadminBillingPlansMinorUnits(data.setupFee ?? 0, planCurrency),
+            maxBranches: data.maxBranches || 1,
+            features: data.features.map(f => f.value),
+            currency: planCurrency,
+            isPublic: selectedPlan.isPublic,
+            trialDays: selectedPlan.trialDays,
+          }
+        });
         reset();
         closeEditModal();
       } catch (error: unknown) {
-        applySuperadminBillingPlansManagementFormApiErrors(error, setError, ['name', 'priceMonthly', 'priceAnnual', 'maxMembers', 'maxStaff', 'dbLimitGb', 'binaryLimitGb', 'features.*.value']);
+        applySuperadminBillingPlansManagementFormApiErrors(error, setError, ['name', 'priceMonthly', 'priceAnnual', 'setupFee', 'currency', 'maxMembers', 'maxStaff', 'maxBranches', 'dbLimitGb', 'binaryLimitGb', 'features.*.value']);
       }
     };
     return (<div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-labelledby="superadmin-plans-edit-title" tabIndex={-1} ref={dialogRef} data-testid="superadmin_billing_plans-plan-edit-modal-dialog">
@@ -135,8 +152,26 @@ export default function SuperadminBillingPlansManagementPlanEditModal() {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            {(['maxMembers', 'maxStaff'] as const).map(field => (<div key={field} className="space-y-2">
-                <label htmlFor={`plan-edit-${field}`} className="block text-sm font-medium text-secondary">{field === 'maxMembers' ? t('ui.max_members_675c60aa') : t('ui.max_staff_d35f8519')} <span className="text-danger">{t('ui.text_3389dae3')}</span></label>
+            <div className="space-y-2">
+              <label htmlFor="plan-edit-currency" className="block text-sm font-medium text-secondary">{t('ui.currency')}</label>
+              <select id="plan-edit-currency" {...register('currency')} className="w-full bg-input border border-border rounded-xl px-4 py-3 text-primary focus:border-focus outline-none font-mono">
+                <option value="INR">INR (₹)</option>
+                <option value="USD">USD ($)</option>
+                <option value="AED">AED</option>
+                <option value="EUR">EUR (€)</option>
+                <option value="SGD">SGD (S$)</option>
+              </select>
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="plan-edit-setupFee" className="block text-sm font-medium text-secondary">{t('ui.setup_fee')}</label>
+              <input id="plan-edit-setupFee" type="number" min="0" step="0.01" onKeyDown={(e) => { if (e.key === '-' || e.key === 'e' || e.key === '+') e.preventDefault(); }} {...register('setupFee', { valueAsNumber: true })} className="w-full bg-input border border-border rounded-xl px-4 py-3 text-primary focus:border-focus outline-none" />
+              {errors.setupFee && <p role="alert" className="text-danger text-xs">{validationMessage(errors.setupFee.message)}</p>}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-4">
+            {(['maxMembers', 'maxStaff', 'maxBranches'] as const).map(field => (<div key={field} className="space-y-2">
+                <label htmlFor={`plan-edit-${field}`} className="block text-sm font-medium text-secondary">{field === 'maxMembers' ? t('ui.max_members_675c60aa') : field === 'maxStaff' ? t('ui.max_staff_d35f8519') : t('ui.max_branches')} <span className="text-danger">{t('ui.text_3389dae3')}</span></label>
                 <input id={`plan-edit-${field}`} aria-invalid={Boolean(errors[field])} aria-describedby={errors[field] ? `plan-edit-${field}-error` : undefined} type="number" min="1" step="1" onKeyDown={(e) => { if (e.key === '-' || e.key === 'e' || e.key === '+')
             e.preventDefault(); }} {...register(field, { valueAsNumber: true })} className="w-full bg-input border border-border rounded-xl px-4 py-3 text-primary focus:border-focus outline-none motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="superadmin_billing_plans-superadmin-plans-plan-edit-modal-edit-modal-number-2"/>
                 {errors[field] && <p id={`plan-edit-${field}-error`} role="alert" className="text-danger text-xs">{validationMessage(errors[field]?.message)}</p>}
