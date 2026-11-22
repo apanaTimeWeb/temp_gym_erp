@@ -47,11 +47,15 @@ export interface Staff {
   paymentCycle?: PaymentCycle;
   currentDue?: number;
   // CRITICAL Indian payroll & KYC fields (DB columns)
+  bankName?: string;
   bankAccountNumber?: string;
   ifscCode?: string;
   panNumber?: string;
   department?: string;
   emergencyContact?: StaffEmergencyContact;
+  emergencyContactName?: string;
+  emergencyContactPhone?: string;
+  certifications?: string[];
   documents?: StaffDocument[];
 }
 

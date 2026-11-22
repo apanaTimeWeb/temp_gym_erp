@@ -18,6 +18,7 @@ export const attendanceSchema = z.object({
   trainerId: z.string().optional(),
   trainerName: z.string().optional(),
   type: z.enum(MANAGER_ATTENDANCE_TRACKING_RECORD_TYPE_VALUES),
+  sessionType: z.enum(['General', 'PT', 'Class']).optional(),
   status: z.enum(MANAGER_ATTENDANCE_TRACKING_RECORD_STATUS_VALUES).optional(),
   member: z.object({ name: z.string() }).optional(),
   staff: z.object({ name: z.string() }).optional(),

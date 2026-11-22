@@ -124,6 +124,44 @@ export default function ManagerStaffDirectoryStaffProfileModal() {
                 <p className="text-sm font-semibold text-text-primary whitespace-pre-line">{s.address || t('COPY_N')}</p>
               </div>
             </div>
+
+            {(s.emergencyContactName || s.emergencyContactPhone || s.emergencyContact) && (
+              <div className="sm:col-span-2 p-3 rounded-xl bg-input border border-border">
+                <p className="text-xs font-bold uppercase tracking-wider text-text-secondary mb-1.5">Emergency Contact</p>
+                <p className="text-sm font-semibold text-text-primary">
+                  {s.emergencyContactName || s.emergencyContact?.name || 'Contact'}:{' '}
+                  <span className="font-mono text-text-secondary">
+                    {ManagerStaffPayrollAndAttendanceMaskSensitiveData(s.emergencyContactPhone || s.emergencyContact?.phone, 'phone')}
+                  </span>
+                  {s.emergencyContact?.relation && <span className="text-xs text-text-secondary ml-1">({s.emergencyContact.relation})</span>}
+                </p>
+              </div>
+            )}
+
+            {(s.bankAccountNumber || s.panNumber || s.bankName) && (
+              <div className="sm:col-span-2 p-3 rounded-xl bg-input border border-border space-y-1.5">
+                <p className="text-xs font-bold uppercase tracking-wider text-text-secondary mb-1">Bank &amp; Tax Information</p>
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  {s.bankName && <div><span className="text-text-secondary">Bank: </span><span className="font-semibold text-text-primary">{s.bankName}</span></div>}
+                  {s.bankAccountNumber && <div><span className="text-text-secondary">Account: </span><span className="font-mono font-semibold text-text-primary">{ManagerStaffPayrollAndAttendanceMaskSensitiveData(s.bankAccountNumber, 'identifier')}</span></div>}
+                  {s.ifscCode && <div><span className="text-text-secondary">IFSC: </span><span className="font-mono font-semibold text-text-primary">{s.ifscCode}</span></div>}
+                  {s.panNumber && <div><span className="text-text-secondary">PAN: </span><span className="font-mono font-semibold text-text-primary">{ManagerStaffPayrollAndAttendanceMaskSensitiveData(s.panNumber, 'identifier')}</span></div>}
+                </div>
+              </div>
+            )}
+
+            {s.certifications && s.certifications.length > 0 && (
+              <div className="sm:col-span-2">
+                <p className="text-xs font-bold uppercase tracking-wider text-text-secondary mb-1.5">Certifications</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {s.certifications.map((cert) => (
+                    <span key={cert} className="px-2 py-0.5 rounded-md text-xs font-medium bg-primary-subtle text-primary border border-primary/20">
+                      {cert}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
           
           <div className="mt-8 pt-6 border-t border-border flex justify-between items-center">

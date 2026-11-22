@@ -23,4 +23,6 @@ export const managerHrStaffFormSchema = z.object({
   panNumber: z.string().regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid PAN number format').optional().or(z.literal('')),
   emergencyContactName: z.string().optional().or(z.literal('')),
   emergencyContactPhone: z.string().regex(/^\d{10}$/, 'Emergency phone must be 10 digits').optional().or(z.literal('')),
+  department: z.string().optional().or(z.literal('')),
+  certifications: z.array(z.string()).optional(),
 });

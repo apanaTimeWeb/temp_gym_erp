@@ -16,6 +16,7 @@ export const managerAttendanceFormSchema = z.object({
   endDate: z.string().optional(),
   status: z.enum(MANAGER_ATTENDANCE_TRACKING_RECORD_STATUS_VALUES),
   checkIn: z.string().optional(),
+  sessionType: z.enum(['General', 'PT', 'Class']).optional(),
 }).superRefine((data, ctx) => {
   if (data.type === 'MEMBER' && !data.memberId) ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Member is required', path: ['memberId'] });
   if (data.type === 'STAFF' && !data.staffId) ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Staff is required', path: ['staffId'] });

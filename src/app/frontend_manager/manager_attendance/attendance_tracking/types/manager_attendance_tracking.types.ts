@@ -23,6 +23,7 @@ export interface Attendance {
   trainerId?: string;
   trainerName?: string;
   type: string;
+  sessionType?: 'General' | 'PT' | 'Class';
   status?: string;
   member?: { name: string };
   staff?: { name: string };

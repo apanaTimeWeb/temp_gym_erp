@@ -88,6 +88,26 @@ export default function ManagerAttendanceTrackingModal() {
             {errors.staffId && watchType === 'STAFF' && <p className="text-danger-text text-xs mt-1">{errors.staffId.message}</p>}
           </div>
 
+          {watchType === 'MEMBER' && (
+            <div>
+              <label className="block text-sm font-medium text-text-secondary mb-2">Session Type</label>
+              <div className="flex gap-4">
+                {(['General', 'PT', 'Class'] as const).map((sType) => (
+                  <label key={sType} className="flex items-center gap-2 text-sm text-text-primary cursor-pointer">
+                    <input
+                      data-testid={`manager_attendance-attendance-modal-input-radio-session-${sType.toLowerCase()}`}
+                      type="radio"
+                      value={sType}
+                      {...register('sessionType')}
+                      className="text-text-primary focus-visible:ring-focus-ring"
+                    />
+                    <span>{sType === 'PT' ? 'Personal Training (PT)' : sType}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+
           {watchType === 'STAFF' && (
             <div>
               <label className="block text-sm font-medium text-text-secondary mb-2">{t("COPY_STATUS_2")}</label>

@@ -156,9 +156,16 @@ export default function ManagerAttendanceTrackingTable() {
                       </td>
                       {/* Type */}
                       <td className="px-2.5 py-3 whitespace-nowrap">
-                        <span data-testid={`manager_attendance-attendance-attendancetable-type-${r.id}`} className={`inline-flex px-2 py-0.5 rounded-full text-xs font-semibold ${getAttendanceTypeBadgeSurface(r.type as ManagerAttendanceTrackingPersonType)}`}>
-                          {r.type}
-                        </span>
+                        <div className="flex items-center gap-1.5">
+                          <span data-testid={`manager_attendance-attendance-attendancetable-type-${r.id}`} className={`inline-flex px-2 py-0.5 rounded-full text-xs font-semibold ${getAttendanceTypeBadgeSurface(r.type as ManagerAttendanceTrackingPersonType)}`}>
+                            {r.type}
+                          </span>
+                          {r.type === 'MEMBER' && r.sessionType && (
+                            <span className="inline-flex px-1.5 py-0.5 rounded text-[10px] font-bold bg-primary-subtle text-primary border border-primary/20">
+                              {r.sessionType}
+                            </span>
+                          )}
+                        </div>
                       </td>
                       {/* Status */}
                       <td className="px-2.5 py-3 whitespace-nowrap">
