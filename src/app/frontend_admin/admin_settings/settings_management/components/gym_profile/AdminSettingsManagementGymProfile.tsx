@@ -30,7 +30,10 @@ export function AdminSettingsManagementGymProfile({ initialData }: AdminSettings
     { label: t('settings.AdminAuditRepair.ownerName'), field: 'ownerName' as const, type: 'text' },
     { label: t('settings.AdminAuditRepair.phoneNumber'), field: 'phone' as const, type: 'tel' },
     { label: t('settings.AdminAuditRepair.email'), field: 'email' as const, type: 'email' },
+    { label: 'Address', field: 'address' as const, type: 'text' },
     { label: t('settings.AdminAuditRepair.city'), field: 'city' as const, type: 'text' },
+    { label: 'State', field: 'state' as const, type: 'text' },
+    { label: 'Postal Code', field: 'postalCode' as const, type: 'text' },
     { label: t('settings.AdminAuditRepair.gstNumber'), field: 'gstNumber' as const, type: 'text' },
   ];
 

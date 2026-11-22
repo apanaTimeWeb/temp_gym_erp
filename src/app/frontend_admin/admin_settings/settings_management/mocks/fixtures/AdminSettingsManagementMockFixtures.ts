@@ -4,7 +4,7 @@
 // RESPONSIBILITY: Owns module-specific MSW fixture data for the Admin settings feature.
 
 export const MOCK_ADMIN_SETTINGS = {
-  profile: { gymName: 'Smart Gym Corp', ownerName: 'Admin', phone: '9876543210', email: 'admin@smartgym.com', city: 'Mumbai', gstNumber: '' },
+  profile: { gymName: 'Smart Gym Corp', ownerName: 'Admin', phone: '9876543210', email: 'admin@smartgym.com', address: '123 Marine Drive', city: 'Mumbai', state: 'Maharashtra', postalCode: '400020', gstNumber: '' },
   notifications: {
     sms: true, email: true, whatsapp: true,
     smsonJoin: true, emailonJoin: true, whatsapponJoin: true,

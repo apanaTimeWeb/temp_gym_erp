@@ -12,7 +12,10 @@ export const GymProfileSchema = z.object({
   ownerName: z.string().min(2, '__i18n:settings.validation.ownerNameMin'),
   phone: z.string().regex(/^\d{10}$/, '__i18n:settings.validation.phoneInvalid'),
   email: z.string().email('__i18n:settings.validation.emailInvalid'),
+  address: z.string().optional().or(z.literal('')),
   city: z.string().min(2, '__i18n:settings.validation.cityMin'),
+  state: z.string().optional().or(z.literal('')),
+  postalCode: z.string().optional().or(z.literal('')),
   gstNumber: z.string().length(15, '__i18n:settings.validation.gstNumberLength').optional().or(z.literal('')),
 });
 
@@ -90,7 +93,7 @@ export const AdminSettingsResponseSchema = z.object({
   success: z.boolean().default(true),
   message: z.string().default(''),
   data: z.object({
-    profile: GymProfileSchema.optional().default({ gymName: '', ownerName: '', phone: '', email: '', city: '', gstNumber: '' }),
+    profile: GymProfileSchema.optional().default({ gymName: '', ownerName: '', phone: '', email: '', address: '', city: '', state: '', postalCode: '', gstNumber: '' }),
     notifications: NotificationsSettingsSchema.optional().default({
       sms: false, email: false, whatsapp: false,
       smsonJoin: false, emailonJoin: false, whatsapponJoin: false,
