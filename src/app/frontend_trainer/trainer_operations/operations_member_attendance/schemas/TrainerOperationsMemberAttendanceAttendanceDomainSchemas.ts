@@ -23,6 +23,7 @@ export const TrainerAttendanceRecordSchema = z.object({
   durationMinutes: z.number().optional(),
   checkInMethod: z.string().optional(),
   notes: z.string().optional(),
+  sessionType: z.enum(['General', 'PT', 'Class']).optional(),
   staffId: z.union([z.string(), z.number()]).transform(String).optional(),
   memberId: z.union([z.string(), z.number()]).transform(String).optional(),
   member: TrainerAttendanceMemberSchema.optional(),
@@ -55,6 +56,7 @@ export const TrainerAttendanceCreateDtoSchema = z.object({
   checkIn: z.string().optional(),
   checkOut: z.string().optional(),
   notes: z.string().optional(),
+  sessionType: z.enum(['General', 'PT', 'Class']).optional(),
   isSelfCheckIn: z.boolean().optional(),
 }).superRefine((data, ctx) => {
   if (data.isSelfCheckIn && !data.staffId?.trim()) {

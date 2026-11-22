@@ -28,6 +28,12 @@ export interface AdminMember {
   totalVisits?: number;
   dateOfBirth?: string;
   address?: string;
+  bloodGroup?: string;
+  aadhaar?: string;
+  assignedTrainerName?: string;
+  isPT?: boolean;
+  medicalHistory?: string;
+  emergencyContact?: { name: string; phone: string };
 }
 
 export interface AdminMembersSummary {

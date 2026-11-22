@@ -17,6 +17,7 @@ export function TrainerAttendanceEmptyForm(initialMemberId = '') {
     date: localDate,
     checkIn: localTime,
     checkOut: '',
+    sessionType: 'PT' as const,
     notes: '',
   };
 }

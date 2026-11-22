@@ -91,6 +91,21 @@ export default function ManagerMembershipLifecycleCrudModal() {
             ))}
           </fieldset>
 
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div>
+              <label htmlFor="manager-plans-crud-joiningFee" className="block text-sm font-medium text-text-secondary">Admission Fee ({ManagerEnvConfig.currencyCode})</label>
+              <input id="manager-plans-crud-joiningFee" type="number" min="0" step="0.01" {...register('joiningFee', { valueAsNumber: true })} className={fieldClassName} />
+            </div>
+            <div>
+              <label htmlFor="manager-plans-crud-priceCustom" className="block text-sm font-medium text-text-secondary">Custom Daily Rate ({ManagerEnvConfig.currencyCode})</label>
+              <input id="manager-plans-crud-priceCustom" type="number" min="0" step="0.01" {...register('priceCustom', { valueAsNumber: true })} className={fieldClassName} />
+            </div>
+            <div>
+              <label htmlFor="manager-plans-crud-ptSessions" className="block text-sm font-medium text-text-secondary">PT Sessions Included</label>
+              <input id="manager-plans-crud-ptSessions" type="number" min="0" step="1" {...register('ptSessionsIncluded', { valueAsNumber: true })} className={fieldClassName} />
+            </div>
+          </div>
+
           <div>
             <label htmlFor="manager-plans-crud-features" className="block text-sm font-medium text-text-secondary">{t('CRUD_PLAN_FEATURES')}</label>
             <textarea id="manager-plans-crud-features" {...register('featuresText')} rows={4} data-testid="manager_plans-managerplanscrudmodal-textarea-features" aria-invalid={errors.featuresText ? 'true' : undefined} aria-describedby={errors.featuresText ? 'manager-plans-crud-features-error' : undefined} placeholder={t('CRUD_PLAN_FEATURES_PLACEHOLDER')} className={fieldClassName} />
@@ -98,10 +113,16 @@ export default function ManagerMembershipLifecycleCrudModal() {
             {errors.featuresText && <p id="manager-plans-crud-features-error" role="alert" className="mt-1 text-xs text-danger-text">{errorText(errors.featuresText.message)}</p>}
           </div>
 
-          <label htmlFor="manager-plans-crud-active" className="flex min-h-11 items-center gap-3 text-sm text-text-primary">
-            <input id="manager-plans-crud-active" type="checkbox" {...register('isActive')} data-testid="manager_plans-managerplanscrudmodal-checkbox-active" className="h-4 w-4 rounded border-border text-primary focus-visible:ring-2 focus-visible:ring-focus-ring" />
-            {t('CRUD_PLAN_ACTIVE')}
-          </label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <label htmlFor="manager-plans-crud-active" className="flex min-h-11 items-center gap-3 text-sm text-text-primary">
+              <input id="manager-plans-crud-active" type="checkbox" {...register('isActive')} data-testid="manager_plans-managerplanscrudmodal-checkbox-active" className="h-4 w-4 rounded border-border text-primary focus-visible:ring-2 focus-visible:ring-focus-ring" />
+              {t('CRUD_PLAN_ACTIVE')}
+            </label>
+            <label htmlFor="manager-plans-crud-freeze" className="flex min-h-11 items-center gap-3 text-sm text-text-primary">
+              <input id="manager-plans-crud-freeze" type="checkbox" {...register('freezeAllowed')} className="h-4 w-4 rounded border-border text-primary focus-visible:ring-2 focus-visible:ring-focus-ring" />
+              Permit Membership Freeze
+            </label>
+          </div>
 
           <div className="sticky bottom-0 bg-overlay flex flex-wrap justify-end gap-3 border-t border-border pt-4 shrink-0">
             <button type="button" onClick={close} disabled={submitPending} data-testid="manager_plans-managerplanscrudmodal-button-cancel" className="min-h-11 rounded-lg border border-border px-4 py-2 text-sm font-medium text-text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring disabled:cursor-not-allowed disabled:opacity-60">{t('COPY_CANCEL')}</button>

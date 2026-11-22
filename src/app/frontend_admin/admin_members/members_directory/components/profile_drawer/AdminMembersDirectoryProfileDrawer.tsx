@@ -7,7 +7,7 @@ import { useEffect, useRef } from 'react';
 import { MEMBER_STATUS_LABEL_KEYS, MEMBER_STATUS_STYLES } from '@/app/frontend_admin/admin_members/members_directory/constants/AdminMembersDirectoryConstants';
 import { formatDate } from '@/app/frontend_admin/admin_members/members_directory/utils/AdminMembersDirectoryFormatters';
 
-import { X, Phone, Mail, Building2, Calendar, IndianRupee, User } from 'lucide-react';
+import { X, Phone, Mail, Building2, Calendar, IndianRupee, User, HeartPulse, ShieldAlert, Dumbbell, MapPin } from 'lucide-react';
 import type { AdminMembersProfileDrawerProps } from '@/app/frontend_admin/admin_members/members_directory/types/AdminMembersDirectoryProfileDrawerTypes';
 import { AdminMembersFormatCurrency } from '@/app/frontend_admin/admin_members/members_directory/utils/AdminMembersDirectoryFormatCurrency';
 
@@ -82,9 +82,21 @@ export default function AdminMembersDirectoryProfileDrawer({ member, status, err
             </div>
             <div>
               <h3 className="text-lg font-bold text-primary">{member.name}</h3>
-              <span className={`text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider ${MEMBER_STATUS_STYLES[member.status] ?? 'bg-input text-secondary'}`} data-testid="members-directory-members-directory-profile-drawer-status-badge">
-                {MEMBER_STATUS_LABEL_KEYS[member.status] ? t(MEMBER_STATUS_LABEL_KEYS[member.status] as string) : member.status}
-              </span>
+              <div className="flex flex-wrap items-center gap-1.5 mt-1">
+                <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider ${MEMBER_STATUS_STYLES[member.status] ?? 'bg-input text-secondary'}`} data-testid="members-directory-members-directory-profile-drawer-status-badge">
+                  {MEMBER_STATUS_LABEL_KEYS[member.status] ? t(MEMBER_STATUS_LABEL_KEYS[member.status] as string) : member.status}
+                </span>
+                {member.bloodGroup && (
+                  <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-danger-bg text-danger border border-danger/30">
+                    🩸 {member.bloodGroup}
+                  </span>
+                )}
+                {member.isPT && (
+                  <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-primary-subtle text-primary border border-primary/30">
+                    PT Trainee
+                  </span>
+                )}
+              </div>
             </div>
           </div>
 
@@ -103,9 +115,21 @@ export default function AdminMembersDirectoryProfileDrawer({ member, status, err
               <User size={18} className="text-secondary flex-shrink-0"  strokeWidth={2}/>
               <span className="text-sm text-primary">{member.gender}</span>
             </div>
+            {member.dateOfBirth && (
+              <div className="flex items-center gap-3">
+                <Calendar size={18} className="text-secondary flex-shrink-0" strokeWidth={2}/>
+                <span className="text-sm text-primary">DOB: {formatDate(member.dateOfBirth, locale)}</span>
+              </div>
+            )}
+            {member.address && (
+              <div className="flex items-start gap-3">
+                <MapPin size={18} className="text-secondary flex-shrink-0 mt-0.5" strokeWidth={2}/>
+                <span className="text-sm text-primary break-words">{member.address}</span>
+              </div>
+            )}
           </div>
 
-          {/* Membership */}
+          {/* Membership & Coaching */}
           <div className="bg-input rounded-xl border border-border p-4 space-y-3">
             <p className="text-xs font-semibold text-secondary uppercase tracking-wider">{t('members.admin_members_profile_drawer.text_53bc9670e7')}</p>
             <div className="flex items-center gap-3">
@@ -121,6 +145,15 @@ export default function AdminMembersDirectoryProfileDrawer({ member, status, err
                 </p>
               </div>
             </div>
+            {member.assignedTrainerName && (
+              <div className="flex items-center gap-3">
+                <Dumbbell size={18} className="text-primary flex-shrink-0" strokeWidth={2}/>
+                <div>
+                  <span className="text-xs text-secondary block">Assigned Trainer</span>
+                  <span className="text-sm font-semibold text-primary">{member.assignedTrainerName}</span>
+                </div>
+              </div>
+            )}
             {member.pendingAmount > 0 && (
               <div className="flex items-center gap-3">
                 <IndianRupee size={18} className="text-danger flex-shrink-0"  strokeWidth={2}/>
@@ -128,6 +161,31 @@ export default function AdminMembersDirectoryProfileDrawer({ member, status, err
               </div>
             )}
           </div>
+
+          {/* Emergency Contact & Medical */}
+          {(member.emergencyContact || member.medicalHistory) && (
+            <div className="bg-input rounded-xl border border-border p-4 space-y-3">
+              <p className="text-xs font-semibold text-secondary uppercase tracking-wider">Safety & Health</p>
+              {member.emergencyContact && (
+                <div className="flex items-start gap-3">
+                  <ShieldAlert size={18} className="text-warning flex-shrink-0 mt-0.5" strokeWidth={2}/>
+                  <div>
+                    <span className="text-xs text-secondary block">Emergency Contact</span>
+                    <span className="text-sm font-semibold text-primary">{member.emergencyContact.name} ({member.emergencyContact.phone})</span>
+                  </div>
+                </div>
+              )}
+              {member.medicalHistory && (
+                <div className="flex items-start gap-3">
+                  <HeartPulse size={18} className="text-danger flex-shrink-0 mt-0.5" strokeWidth={2}/>
+                  <div>
+                    <span className="text-xs text-secondary block">Medical History</span>
+                    <span className="text-sm text-primary">{member.medicalHistory}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Role boundary: renewal/payment/freeze actions belong to Manager workflows per the Admin feature contract. */}
           </>

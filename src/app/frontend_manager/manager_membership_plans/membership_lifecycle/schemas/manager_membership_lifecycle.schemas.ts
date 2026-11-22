@@ -13,6 +13,10 @@ export const planSchema = z.object({
   price3Month: z.number().int().nonnegative(),
   price6Month: z.number().int().nonnegative(),
   price12Month: z.number().int().nonnegative(),
+  priceCustom: z.number().nonnegative().optional(),
+  joiningFee: z.number().nonnegative().optional(),
+  ptSessionsIncluded: z.number().int().nonnegative().optional(),
+  freezeAllowed: z.boolean().optional(),
   features: z.array(z.string()),
   isActive: z.boolean() });
 

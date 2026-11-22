@@ -78,6 +78,11 @@ export function useSuperadminGymsDirectoryGymEditModal() {
                 phone: selectedGym.phone,
                 plan: selectedGym.plan,
                 temporaryPassword: '',
+                address: selectedGym.address || '',
+                city: selectedGym.city || '',
+                state: selectedGym.state || '',
+                postalCode: selectedGym.postalCode || '',
+                gstNumber: selectedGym.gstNumber || selectedGym.gstin || '',
             });
         }
     }, [selectedGym, isEditModalOpen, reset]);
@@ -97,7 +102,7 @@ export function useSuperadminGymsDirectoryGymEditModal() {
             closeEditModal();
         },
         onError: (err: unknown) => {
-            applySuperadminGymsDirectoryFormApiErrors(err, setError, ['name', 'ownerName', 'adminEmail', 'phone', 'plan', 'temporaryPassword']);
+            applySuperadminGymsDirectoryFormApiErrors(err, setError, ['name', 'ownerName', 'adminEmail', 'phone', 'plan', 'temporaryPassword', 'address', 'city', 'state', 'postalCode', 'gstNumber']);
             toast.error(resolveSuperadminGymsDirectoryFeedback(err, t('ui.action_failed_retry')), { id: 'failed-to-update-gym' });
         }
     });

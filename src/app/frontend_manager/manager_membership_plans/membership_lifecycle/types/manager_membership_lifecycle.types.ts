@@ -34,6 +34,10 @@ export interface Plan {
   price1Month: number; price3Month: number;
   price6Month: number; price12Month: number;
   features: string[]; isActive: boolean;
+  priceCustom?: number;
+  joiningFee?: number;
+  ptSessionsIncluded?: number;
+  freezeAllowed?: boolean;
 }
 
 export type ManagerMembershipLifecycleTabId = 'VIEW_PLANS' | 'MEMBERSHIP_ACTIVATE' | 'MEMBERSHIP_RENEW' | 'MEMBERSHIP_FREEZE' | 'EXPIRY_CHECK';

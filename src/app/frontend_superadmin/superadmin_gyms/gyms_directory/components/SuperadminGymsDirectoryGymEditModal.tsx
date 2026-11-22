@@ -103,6 +103,36 @@ export default function SuperadminGymsDirectoryGymEditModal() {
             {errors.plan && <p id="superadmin-gyms-edit-plan-error" role="alert" className="text-xs text-danger mt-1">{validationMessage(errors.plan.message)}</p>}
             {plansError && <div role="alert" className="mt-2 flex items-center gap-2 text-xs text-danger"><span>{t('ui.failed_to_load_view_f0191174')}</span><button type="button" onClick={() => void retryPlans()} className="min-h-11 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">{t('ui.retry_6327b4e5')}</button></div>}
           </div>
+
+          <div className="pt-2 border-t border-border">
+            <h3 className="text-xs font-bold text-secondary uppercase tracking-wider mb-3">Location & Tax Details</h3>
+            <div className="space-y-3">
+              <div>
+                <label htmlFor="superadmin-gyms-edit-address" className="block text-xs font-semibold text-secondary mb-1">Facility Address</label>
+                <input type="text" {...register('address')} id="superadmin-gyms-edit-address" className="w-full bg-input border border-border rounded-lg px-3 py-2 text-sm text-primary focus:border-focus focus:outline-none min-h-10" placeholder="Street Address" />
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label htmlFor="superadmin-gyms-edit-city" className="block text-xs font-semibold text-secondary mb-1">City</label>
+                  <input type="text" {...register('city')} id="superadmin-gyms-edit-city" className="w-full bg-input border border-border rounded-lg px-3 py-2 text-sm text-primary focus:border-focus focus:outline-none min-h-10" placeholder="City" />
+                </div>
+                <div>
+                  <label htmlFor="superadmin-gyms-edit-state" className="block text-xs font-semibold text-secondary mb-1">State</label>
+                  <input type="text" {...register('state')} id="superadmin-gyms-edit-state" className="w-full bg-input border border-border rounded-lg px-3 py-2 text-sm text-primary focus:border-focus focus:outline-none min-h-10" placeholder="State" />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label htmlFor="superadmin-gyms-edit-postal" className="block text-xs font-semibold text-secondary mb-1">PIN / Postal Code</label>
+                  <input type="text" {...register('postalCode')} id="superadmin-gyms-edit-postal" className="w-full bg-input border border-border rounded-lg px-3 py-2 text-sm text-primary focus:border-focus focus:outline-none min-h-10 font-mono" placeholder="400053" />
+                </div>
+                <div>
+                  <label htmlFor="superadmin-gyms-edit-gst" className="block text-xs font-semibold text-secondary mb-1">GSTIN / Tax ID</label>
+                  <input type="text" {...register('gstNumber')} id="superadmin-gyms-edit-gst" className="w-full bg-input border border-border rounded-lg px-3 py-2 text-sm text-primary focus:border-focus focus:outline-none min-h-10 uppercase font-mono" placeholder="27ABCDE1234F1Z5" />
+                </div>
+              </div>
+            </div>
+          </div>
           </div>
 
           <div className="flex shrink-0 justify-end gap-3 pt-4 border-t border-border mt-4">

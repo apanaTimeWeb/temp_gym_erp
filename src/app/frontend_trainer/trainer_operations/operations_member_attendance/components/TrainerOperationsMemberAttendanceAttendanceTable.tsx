@@ -152,6 +152,12 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
                             <span>#{record.id.slice(-6)}</span>
                             <span>·</span>
                             <span>{record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? t('TEXT_MEMBER') : t('TEXT_STAFF')}</span>
+                            {record.sessionType && (
+                              <>
+                                <span>·</span>
+                                <span className="font-semibold text-primary">{record.sessionType}</span>
+                              </>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -197,7 +203,7 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
           return (
             <article key={record.id} className="bg-card rounded-xl border border-border p-4 shadow-card" data-testid={`trainer_attendance-table-card${record.id}`}>
               <div className="flex items-start justify-between gap-3">
-                <div className="flex items-center gap-3 min-w-0"><div className="w-9 h-9 rounded-full bg-primary-subtle flex items-center justify-center text-primary font-bold text-sm shrink-0" aria-hidden="true">{initial}</div><div className="min-w-0"><TrainerInfrastructureTooltip content={String(displayValue(personName))}><h3 className="text-sm font-semibold text-primary break-words">{displayValue(personName)}</h3></TrainerInfrastructureTooltip><p className="text-xs text-secondary">{record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? t('TEXT_MEMBER') : t('TEXT_STAFF')}</p></div></div>
+                <div className="flex items-center gap-3 min-w-0"><div className="w-9 h-9 rounded-full bg-primary-subtle flex items-center justify-center text-primary font-bold text-sm shrink-0" aria-hidden="true">{initial}</div><div className="min-w-0"><TrainerInfrastructureTooltip content={String(displayValue(personName))}><h3 className="text-sm font-semibold text-primary break-words">{displayValue(personName)}</h3></TrainerInfrastructureTooltip><p className="text-xs text-secondary">{record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? t('TEXT_MEMBER') : t('TEXT_STAFF')}{record.sessionType ? ` · ${record.sessionType}` : ''}</p></div></div>
                 <span className={`shrink-0 inline-flex px-2.5 py-1 rounded-full text-xs font-semibold ${record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? 'bg-info-bg text-info' : 'bg-success-bg text-success'}`} data-testid={`trainer_attendance-table-type-mobile-${record.id}`}>{record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? t('TEXT_MEMBER') : t('TEXT_STAFF')}</span>
               </div>
               <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">

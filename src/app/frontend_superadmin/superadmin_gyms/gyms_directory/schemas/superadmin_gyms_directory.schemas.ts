@@ -16,6 +16,11 @@ export const gymEditSchema = z.object({
     temporaryPassword: z.string().optional().refine(val => !val || val.length >= 8, {
         message: 'validation.passwordMin',
     }),
+    address: z.string().optional(),
+    city: z.string().optional(),
+    state: z.string().optional(),
+    postalCode: z.string().optional(),
+    gstNumber: z.string().optional(),
 });
 export type GymEditFormValues = z.infer<typeof gymEditSchema>;
 export const gymWhatsappSchema = z.object({

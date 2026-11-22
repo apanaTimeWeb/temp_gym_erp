@@ -16,6 +16,7 @@ export const TrainerAttendanceFormSchema = z.object({
   date: z.string().min(1, 'ERR_DATE_REQUIRED'),
   checkIn: z.string().min(1, 'ERR_TIME_REQUIRED'),
   checkOut: z.string().optional(),
+  sessionType: z.enum(['General', 'PT', 'Class']).optional(),
   notes: z.string().optional(),
 }).superRefine((data, ctx) => {
   if (!data.memberId?.trim()) {

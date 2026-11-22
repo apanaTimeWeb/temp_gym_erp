@@ -2,8 +2,10 @@
 'use client';
 
 import { CheckCircle, XCircle, Send, Pencil, Trash2 } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
+import { ManagerEnvConfig } from '@/app/frontend_manager/manager_infrastructure/constants/ManagerInfrastructureEnvConfig';
+import { ManagerMembershipLifecycleFormatCurrency } from '@/app/frontend_manager/manager_membership_plans/membership_lifecycle/utils/ManagerMembershipLifecycleFormatters';
 import ManagerMembershipLifecyclePlanFeatures from '@/app/frontend_manager/manager_membership_plans/membership_lifecycle/components/ManagerMembershipLifecyclePlanFeatures';
 import ManagerMembershipLifecyclePlanPricing from '@/app/frontend_manager/manager_membership_plans/membership_lifecycle/components/ManagerMembershipLifecyclePlanPricing';
 import { MANAGER_MEMBERSHIP_LIFECYCLE_TIER_STYLES } from '@/app/frontend_manager/manager_membership_plans/membership_lifecycle/constants/manager_membership_lifecycle.constants';
@@ -13,6 +15,7 @@ import type { ManagerMembershipLifecyclePlanCardProps } from '@/app/frontend_man
 /** @description Shows status, pricing and features for a plan, with create-contract edit/delete actions kept inside the Plans feature boundary. */
 export default function ManagerMembershipLifecyclePlanCard({ plan }: ManagerMembershipLifecyclePlanCardProps) {
   const t = useTranslations('MANAGER_MEMBERSHIP_LIFECYCLE');
+  const locale = useLocale();
   const { openRequestModal, openEditPlan, deletePlan, saving } = useManagerMembershipLifecycleLogic();
   const tier = MANAGER_MEMBERSHIP_LIFECYCLE_TIER_STYLES[plan.tier.toUpperCase()];
   const features = Array.isArray(plan.features)
@@ -49,6 +52,32 @@ export default function ManagerMembershipLifecyclePlanCard({ plan }: ManagerMemb
       </header>
 
       <ManagerMembershipLifecyclePlanPricing plan={plan} />
+
+      {(plan.joiningFee !== undefined || plan.priceCustom !== undefined || plan.ptSessionsIncluded !== undefined || plan.freezeAllowed !== undefined) && (
+        <div className="flex flex-wrap gap-2 text-xs">
+          {plan.joiningFee !== undefined && (
+            <span className="rounded-md bg-secondary-subtle/50 px-2.5 py-1 font-medium text-text-secondary">
+              + Admission: {ManagerMembershipLifecycleFormatCurrency(plan.joiningFee, ManagerEnvConfig.currencyCode, locale)}
+            </span>
+          )}
+          {plan.priceCustom !== undefined && (
+            <span className="rounded-md bg-secondary-subtle/50 px-2.5 py-1 font-medium text-text-secondary">
+              Custom: {ManagerMembershipLifecycleFormatCurrency(plan.priceCustom, ManagerEnvConfig.currencyCode, locale)}
+            </span>
+          )}
+          {plan.ptSessionsIncluded !== undefined && plan.ptSessionsIncluded > 0 && (
+            <span className="rounded-md bg-primary-subtle px-2.5 py-1 font-medium text-primary">
+              🎯 {plan.ptSessionsIncluded} PT Sessions
+            </span>
+          )}
+          {plan.freezeAllowed !== undefined && (
+            <span className={`rounded-md px-2.5 py-1 font-medium ${plan.freezeAllowed ? 'bg-info-bg text-info-text' : 'bg-input text-text-secondary'}`}>
+              {plan.freezeAllowed ? '❄️ Freeze Allowed' : '🚫 Freeze Disabled'}
+            </span>
+          )}
+        </div>
+      )}
+
       <ManagerMembershipLifecyclePlanFeatures planId={plan.id} features={features} />
 
       <footer className="mt-auto border-t border-border pt-3">

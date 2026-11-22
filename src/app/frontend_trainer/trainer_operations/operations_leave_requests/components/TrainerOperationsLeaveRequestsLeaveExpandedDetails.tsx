@@ -1,5 +1,6 @@
 "use client";
 
+import { ExternalLink } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { TrainerScheduleFormatDate } from '../utils/TrainerOperationsLeaveRequestsScheduleFormatDate';
 import type { TrainerScheduleLeaveRequest } from '../types/TrainerOperationsLeaveRequestsScheduleTypes';
@@ -78,6 +79,21 @@ export function TrainerOperationsLeaveRequestsLeaveExpandedDetails({
             {leave.managerNotes || t('TEXT_NO_MANAGER_NOTES')}
           </p>
         </div>
+        {leave.attachmentUrl && (
+          <div className="p-3 rounded-xl bg-input/40 border border-border md:col-span-3">
+            <span className="font-semibold text-secondary uppercase block mb-1">
+              Supporting Document
+            </span>
+            <a
+              href={leave.attachmentUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+            >
+              <ExternalLink size={14} /> View Supporting Document
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -69,7 +69,7 @@ export default function TrainerScheduleRequestLeaveModal() {
     formState: { errors, isDirty }
   } = useForm<TrainerScheduleCreateLeaveDto>({
     resolver: zodResolver(TrainerScheduleCreateLeaveDtoSchema),
-    defaultValues: { leaveType: 'Casual Leave', startDate: '', endDate: '', reason: '' },
+    defaultValues: { leaveType: 'Casual Leave', startDate: '', endDate: '', reason: '', attachmentUrl: '' },
     mode: 'onTouched',
   });
 
@@ -85,7 +85,7 @@ export default function TrainerScheduleRequestLeaveModal() {
 // Effect contract: synchronize modal form values when the modal opens for a fresh leave request.
   useEffect(() => {
     if (showLeaveModal) {
-      reset({ leaveType: 'Casual Leave', startDate: '', endDate: '', reason: '' });
+      reset({ leaveType: 'Casual Leave', startDate: '', endDate: '', reason: '', attachmentUrl: '' });
     }
   }, [showLeaveModal, reset]);
 
@@ -101,7 +101,7 @@ export default function TrainerScheduleRequestLeaveModal() {
       const response = await requestLeave({ data, idempotencyKey: actionKeys.begin('request-leave') });
       showSuccess(response.message, 'trainer-schedule-leave-success');
       actionKeys.clear('request-leave');
-      reset({ leaveType: 'Casual Leave', startDate: '', endDate: '', reason: '' });
+      reset({ leaveType: 'Casual Leave', startDate: '', endDate: '', reason: '', attachmentUrl: '' });
       closeLeaveModal();
     } catch (error) {
       showError(error, 'trainer-schedule-leave-error');
@@ -178,6 +178,21 @@ export default function TrainerScheduleRequestLeaveModal() {
               className={`w-full bg-input border rounded-xl px-4 py-3 text-sm text-primary focus-visible:outline-none focus-visible:ring-1 motion-safe:transition-all resize-none ${errors.reason ? 'border-border focus-visible:border-border focus-visible:ring-focus-ring' : 'border-border focus-visible:border-focus focus-visible:ring-focus-ring'}`}
              data-testid="trainer_schedule-trainerschedulerequestleavemodal-textarea_7"/>
             {errors.reason && <p id="trainer-leave-reason-error" className="text-danger text-xs mt-1" data-testid={"trainer_schedule-request-leave-modal-error-state-141"}>{t(errors.reason?.message || '')}</p>}
+          </div>
+
+          <div>
+            <label htmlFor="trainer-leave-attachment-url" className="block text-sm font-bold text-primary mb-1.5">Supporting Document URL (Optional)</label>
+            <input
+              id="trainer-leave-attachment-url"
+              type="url"
+              placeholder="https://example.com/document.pdf"
+              aria-invalid={Boolean(errors.attachmentUrl)}
+              aria-describedby={errors.attachmentUrl ? "trainer-leave-attachment-url-error" : undefined}
+              {...register('attachmentUrl')}
+              className={`w-full bg-input border rounded-xl px-4 py-3 text-sm text-primary focus-visible:outline-none focus-visible:ring-1 motion-safe:transition-all ${errors.attachmentUrl ? 'border-border focus-visible:border-border focus-visible:ring-focus-ring' : 'border-border focus-visible:border-focus focus-visible:ring-focus-ring'}`}
+              data-testid="trainer_schedule-trainerschedulerequestleavemodal-input_attachment"
+            />
+            {errors.attachmentUrl && <p id="trainer-leave-attachment-url-error" className="text-danger text-xs mt-1">{t(errors.attachmentUrl?.message || '')}</p>}
           </div>
         </form>
 

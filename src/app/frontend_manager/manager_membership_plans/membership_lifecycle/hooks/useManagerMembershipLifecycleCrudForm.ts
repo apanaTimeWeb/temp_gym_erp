@@ -28,7 +28,7 @@ export function useManagerMembershipLifecycleCrudForm(plan: Plan | null, open: b
   const idempotencyKeyRef = useRef<{ fingerprint: string; key: string } | null>(null);
   const form = useForm<ManagerMembershipLifecycleCrudFormInput, unknown, ManagerMembershipLifecycleCrudFormOutput>({
     resolver: zodResolver(managerPlansCrudFormSchema),
-    defaultValues: { name: '', tier: 'BASIC', price1Month: 0, price3Month: 0, price6Month: 0, price12Month: 0, featuresText: '', isActive: true },
+    defaultValues: { name: '', tier: 'BASIC', price1Month: 0, price3Month: 0, price6Month: 0, price12Month: 0, priceCustom: 0, joiningFee: 0, ptSessionsIncluded: 0, freezeAllowed: true, featuresText: '', isActive: true },
     mode: 'onSubmit'
   });
   const previousPlanId = useRef<string | null>(null);
@@ -41,7 +41,33 @@ export function useManagerMembershipLifecycleCrudForm(plan: Plan | null, open: b
     const planId = plan?.id ?? null;
     if (wasOpen && planId === previousPlanId.current) return;
     previousPlanId.current = planId;
-    form.reset(plan ? { name: plan.name, tier: plan.tier, price1Month: ManagerInfrastructureFromManagerMinorUnits(plan.price1Month), price3Month: ManagerInfrastructureFromManagerMinorUnits(plan.price3Month), price6Month: ManagerInfrastructureFromManagerMinorUnits(plan.price6Month), price12Month: ManagerInfrastructureFromManagerMinorUnits(plan.price12Month), featuresText: plan.features.join('\n'), isActive: plan.isActive } : { name: '', tier: 'BASIC', price1Month: 0, price3Month: 0, price6Month: 0, price12Month: 0, featuresText: '', isActive: true });
+    form.reset(plan ? {
+      name: plan.name,
+      tier: plan.tier,
+      price1Month: ManagerInfrastructureFromManagerMinorUnits(plan.price1Month),
+      price3Month: ManagerInfrastructureFromManagerMinorUnits(plan.price3Month),
+      price6Month: ManagerInfrastructureFromManagerMinorUnits(plan.price6Month),
+      price12Month: ManagerInfrastructureFromManagerMinorUnits(plan.price12Month),
+      priceCustom: plan.priceCustom ? ManagerInfrastructureFromManagerMinorUnits(plan.priceCustom) : 0,
+      joiningFee: plan.joiningFee ? ManagerInfrastructureFromManagerMinorUnits(plan.joiningFee) : 0,
+      ptSessionsIncluded: plan.ptSessionsIncluded ?? 0,
+      freezeAllowed: plan.freezeAllowed ?? true,
+      featuresText: plan.features.join('\n'),
+      isActive: plan.isActive
+    } : {
+      name: '',
+      tier: 'BASIC',
+      price1Month: 0,
+      price3Month: 0,
+      price6Month: 0,
+      price12Month: 0,
+      priceCustom: 0,
+      joiningFee: 0,
+      ptSessionsIncluded: 0,
+      freezeAllowed: true,
+      featuresText: '',
+      isActive: true
+    });
   }, [form, open, plan]);
   const saving = createPlan.isPending || updatePlan.isPending;
   const { confirmAndClose } = useManagerInfrastructureUnsavedChangesGuard(open && form.formState.isDirty && !saving);
@@ -49,7 +75,20 @@ export function useManagerMembershipLifecycleCrudForm(plan: Plan | null, open: b
     if (!saving) void confirmAndClose(onClose);
   };
   const submit = form.handleSubmit(async (values) => {
-    const payload = { name: values.name, tier: values.tier, price1Month: ManagerInfrastructureToManagerMinorUnits(values.price1Month), price3Month: ManagerInfrastructureToManagerMinorUnits(values.price3Month), price6Month: ManagerInfrastructureToManagerMinorUnits(values.price6Month), price12Month: ManagerInfrastructureToManagerMinorUnits(values.price12Month), features: values.featuresText.split('\n').map((value) => value.trim()).filter(Boolean), isActive: values.isActive } satisfies Partial<Plan>;
+    const payload = {
+      name: values.name,
+      tier: values.tier,
+      price1Month: ManagerInfrastructureToManagerMinorUnits(values.price1Month),
+      price3Month: ManagerInfrastructureToManagerMinorUnits(values.price3Month),
+      price6Month: ManagerInfrastructureToManagerMinorUnits(values.price6Month),
+      price12Month: ManagerInfrastructureToManagerMinorUnits(values.price12Month),
+      priceCustom: ManagerInfrastructureToManagerMinorUnits(values.priceCustom || 0),
+      joiningFee: ManagerInfrastructureToManagerMinorUnits(values.joiningFee || 0),
+      ptSessionsIncluded: values.ptSessionsIncluded || 0,
+      freezeAllowed: values.freezeAllowed ?? true,
+      features: values.featuresText.split('\n').map((value) => value.trim()).filter(Boolean),
+      isActive: values.isActive
+    } satisfies Partial<Plan>;
     const fingerprint = JSON.stringify({ planId: plan?.id ?? null, payload });
     if (idempotencyKeyRef.current?.fingerprint !== fingerprint) idempotencyKeyRef.current = { fingerprint, key: ManagerInfrastructureIdempotency() };
     const key = idempotencyKeyRef.current.key;

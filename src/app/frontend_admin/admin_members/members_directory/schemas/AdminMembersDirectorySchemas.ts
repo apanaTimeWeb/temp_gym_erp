@@ -10,6 +10,11 @@ export const memberSearchSchema = z.object({
 export const memberStatusSchema = z.enum(['active', 'expired', 'pending', 'frozen']);
 export const adminMemberGenderSchema = z.enum(['Male', 'Female', 'Other']);
 
+export const adminMemberEmergencyContactSchema = z.object({
+  name: z.string(),
+  phone: z.string(),
+});
+
 export const adminMemberSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -29,6 +34,12 @@ export const adminMemberSchema = z.object({
   totalVisits: z.number().optional(),
   dateOfBirth: z.string().optional(),
   address: z.string().optional(),
+  bloodGroup: z.string().optional(),
+  aadhaar: z.string().optional(),
+  assignedTrainerName: z.string().optional(),
+  isPT: z.boolean().optional(),
+  medicalHistory: z.string().optional(),
+  emergencyContact: adminMemberEmergencyContactSchema.optional(),
 });
 
 export const adminMembersBranchReferenceSchema = z.object({

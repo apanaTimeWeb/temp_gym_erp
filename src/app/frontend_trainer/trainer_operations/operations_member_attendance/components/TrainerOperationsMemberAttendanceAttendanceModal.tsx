@@ -94,6 +94,7 @@ export default function TrainerAttendanceModal({ isOpen, onClose, members, membe
         checkIn: data.checkIn,
         checkOut: data.checkOut,
         notes: data.notes,
+        sessionType: data.sessionType,
       });
     }
   };
@@ -225,6 +226,19 @@ export default function TrainerAttendanceModal({ isOpen, onClose, members, membe
                 {...register('checkOut')}
                 aria-invalid={Boolean(errors.checkOut)}
                 className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_attendance-trainerattendancemodal-input_7"/>
+            </div>
+            <div>
+              <label htmlFor="attendance-session-type" className="block text-sm font-medium text-secondary mb-1">Session Type</label>
+              <select
+                id="attendance-session-type"
+                {...register('sessionType')}
+                className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-primary motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+                data-testid="trainer_attendance-session-type-select"
+              >
+                <option value="PT">Personal Training (PT)</option>
+                <option value="General">General Workout</option>
+                <option value="Class">Group Class</option>
+              </select>
             </div>
             <div>
               <label htmlFor="attendance-notes" className="block text-sm font-medium text-secondary mb-1 ">{t("TEXT_NOTES")}</label>
