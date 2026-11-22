@@ -2,7 +2,7 @@
 'use client';
 import { useState } from 'react';
 
-import { MessageCircle, Mail, Snowflake, Stethoscope, Ban, UserCheck } from 'lucide-react';
+import { MessageCircle, Mail, Snowflake, Stethoscope, Ban, UserCheck, Phone } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 
 import ManagerSearchableDropdown from '@/components/ui/manager_searchable_dropdown/ManagerSearchableDropdown';
@@ -93,7 +93,7 @@ export default function ManagerMembersDirectoryProfileOverview() {
       <div className="flex flex-col gap-6">
         <div>
           <h3 className="text-sm font-semibold text-text-primary mb-4 uppercase tracking-wider opacity-80">{t("COPY_QUICK_ACTIONS")}</h3>
-          <div className="grid grid-cols-2 gap-3 mb-5">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
             <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "flex items-center justify-center gap-2 p-3 text-sm font-semibold text-on-success rounded-xl motion-safe:transition-all motion-safe:hover:-translate-y-0.5 hover:shadow-card bg-success motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_members-member-profile-overview-button-message" 
               onClick={() => openMsg(selectedMember, 'whatsapp')} 
                
@@ -103,6 +103,14 @@ export default function ManagerMembersDirectoryProfileOverview() {
               onClick={() => openMsg(selectedMember, 'email')}
              type="button">
               <Mail size={18} strokeWidth={2}/>{t("COPY_EMAIL_3")}</button>
+            {selectedMember.phone ? (
+              <a
+                href={`tel:${selectedMember.phone.replace(/[^0-9+]/g, '')}`}
+                className="flex items-center justify-center gap-2 p-3 text-sm font-semibold text-text-primary rounded-xl bg-input border border-border hover:bg-surface-hover motion-safe:transition-all motion-safe:hover:-translate-y-0.5 hover:shadow-card motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none"
+              >
+                <Phone size={18} strokeWidth={2}/> Call
+              </a>
+            ) : null}
             {selectedMember.status !== MANAGER_MEMBERS_DIRECTORY_STATUS_FROZEN ? (
               <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "flex items-center justify-center gap-2 p-3 text-sm font-semibold text-on-info bg-info border border-info rounded-xl motion-safe:transition-all motion-safe:hover:-translate-y-0.5 hover:shadow-card motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_members-member-profile-button-freeze-1" 
                 onClick={() => freezeMember(true)} 

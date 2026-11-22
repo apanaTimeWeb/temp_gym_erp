@@ -2,7 +2,7 @@
 'use client';
 import { useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { X, Phone, Mail, MessageCircle, Calendar, UserCheck, UserPlus, Edit2, Tag, Clock } from 'lucide-react';
+import { X, Phone, Mail, MessageCircle, Calendar, UserCheck, UserPlus, Edit2, Tag, Clock, PhoneCall } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { useManagerInfrastructureDialogFocusTrap } from '@/app/frontend_manager/manager_infrastructure/hooks/useManagerInfrastructureDialogFocusTrap';
@@ -101,9 +101,21 @@ export default function ManagerInquiriesPipelineLeadDetailsDrawer() {
           <div className="bg-surface rounded-xl p-4 border border-border space-y-3">
             <h3 className="text-xs font-bold uppercase tracking-wider text-text-secondary">Contact Information</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-              <div className="flex items-center gap-2 text-text-primary">
-                <Phone size={16} className="text-primary shrink-0" aria-hidden="true" />
-                <span className="font-mono">{ManagerInquiriesPipelineMaskSensitiveData(selectedLead.phone, 'phone')}</span>
+              <div className="flex items-center justify-between text-text-primary">
+                <div className="flex items-center gap-2">
+                  <Phone size={16} className="text-primary shrink-0" aria-hidden="true" />
+                  <span className="font-mono">{ManagerInquiriesPipelineMaskSensitiveData(selectedLead.phone, 'phone')}</span>
+                </div>
+                {selectedLead.phone && (
+                  <a
+                    href={`tel:${selectedLead.phone.replace(/[^0-9+]/g, '')}`}
+                    className="p-1 rounded text-text-secondary hover:text-text-primary hover:bg-surface-hover transition-colors"
+                    title="Call Lead"
+                    aria-label={`Call ${selectedLead.phone}`}
+                  >
+                    <PhoneCall size={14} />
+                  </a>
+                )}
               </div>
               <div className="flex items-center gap-2 text-text-primary">
                 <Mail size={16} className="text-info shrink-0" aria-hidden="true" />
@@ -161,6 +173,16 @@ export default function ManagerInquiriesPipelineLeadDetailsDrawer() {
         {/* Drawer Footer Actions */}
         <div className="shrink-0 p-4 border-t border-border bg-overlay flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
+            {selectedLead.phone && (
+              <a
+                href={`tel:${selectedLead.phone.replace(/[^0-9+]/g, '')}`}
+                title="Call Lead"
+                aria-label={`Call ${selectedLead.phone}`}
+                className="p-2.5 rounded-lg bg-input text-text-primary hover:bg-surface-hover active:scale-95 transition-all border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              >
+                <PhoneCall size={18} strokeWidth={2} aria-hidden="true" />
+              </a>
+            )}
             <button
               type="button"
               onClick={() => openMsg(selectedLead, 'whatsapp')}
