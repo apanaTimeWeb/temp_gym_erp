@@ -1,7 +1,8 @@
 // RESPONSIBILITY: Renders ManagerReferralsRewardsTable's feature UI and orchestrates presentation through module-owned state/hooks; it does not own API transport or business rules.
 'use client';
 
-import { Search, Check, IndianRupee } from 'lucide-react';
+import Link from 'next/link';
+import { Search, Check, IndianRupee, UserPlus, MessageCircle } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 
 import ManagerInfrastructureResponsiveTable from '@/app/frontend_manager/manager_infrastructure/components/ManagerInfrastructureResponsiveTable';
@@ -105,8 +106,24 @@ export default function ManagerReferralsRewardsTable() {
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <p className="font-medium text-text-primary">{ref.refereeName}</p>
-                        <p className="text-xs text-text-secondary">{ManagerReferralsRewardsMaskSensitiveData(ref.refereePhone, 'phone')}</p>
+                        <div className="flex items-center justify-between gap-2">
+                          <div>
+                            <p className="font-medium text-text-primary">{ref.refereeName}</p>
+                            <p className="text-xs text-text-secondary">{ManagerReferralsRewardsMaskSensitiveData(ref.refereePhone, 'phone')}</p>
+                          </div>
+                          {ref.refereePhone && (
+                            <a
+                              href={`https://wa.me/${ref.refereePhone.replace(/\D/g, '')}?text=${encodeURIComponent(`Hi ${ref.refereeName}, greetings from our fitness center! ${ref.referrerName} referred you.`)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-1 rounded text-text-secondary hover:text-success-text hover:bg-success-bg/20 transition-colors"
+                              title={`WhatsApp ${ref.refereeName}`}
+                              aria-label={`WhatsApp ${ref.refereeName}`}
+                            >
+                              <MessageCircle size={15} />
+                            </a>
+                          )}
+                        </div>
                       </td>
                       <td className="px-6 py-4 text-text-secondary">{ManagerReferralsRewardsFormatDate(ref.dateReferred, locale)}</td>
                       <td className="px-6 py-4">
@@ -128,10 +145,27 @@ export default function ManagerReferralsRewardsTable() {
                         ); })()}
                       </td>
                       <td className="px-6 py-4 text-right">
-                        {(() => { if (ref.rewardStatus === MANAGER_REFERRAL_REWARD_STATUS_CLAIMED) return (<span className="inline-flex items-center gap-1 text-success-text text-xs font-bold">
-                            <Check size={18} strokeWidth={2}/>{t("COPY_CLAIMED")}</span>); return (() => { if (canClaim) return (<button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "inline-flex items-center gap-1 px-3 py-1.5 bg-primary-subtle text-primary rounded text-xs font-bold hover:bg-primary-hover motion-safe:transition-all disabled:opacity-50 motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_referrals-referrals-managerreferralstable-button-claimed-${mapIndex}`} onClick={() => claimReward(ref.id)} disabled={isClaiming}  type="button">
+                        {(() => { 
+                          if (ref.rewardStatus === MANAGER_REFERRAL_REWARD_STATUS_CLAIMED) return (<span className="inline-flex items-center gap-1 text-success-text text-xs font-bold">
+                            <Check size={18} strokeWidth={2}/>{t("COPY_CLAIMED")}</span>); 
+                          if (canClaim) return (<button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "inline-flex items-center gap-1 px-3 py-1.5 bg-primary-subtle text-primary rounded text-xs font-bold hover:bg-primary-hover motion-safe:transition-all disabled:opacity-50 motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_referrals-referrals-managerreferralstable-button-claimed-${mapIndex}`} onClick={() => claimReward(ref.id)} disabled={isClaiming}  type="button">
                             <IndianRupee size={18} strokeWidth={2}/>{t("COPY_CLAIM")}{ManagerReferralsRewardsFormatCurrency(ref.rewardAmount ?? 0, ManagerEnvConfig.currencyCode, locale)}
-                          </button>); return (<span className="text-text-secondary text-xs italic">{t("COPY_AWAITING_JOIN")}</span>); })(); })()}
+                          </button>); 
+                          if (ref.status !== MANAGER_REFERRAL_STATUS_REJECTED) return (
+                            <div className="inline-flex items-center gap-2 justify-end">
+                              <span className="text-text-secondary text-xs italic">{t("COPY_AWAITING_JOIN")}</span>
+                              <Link
+                                href={`/frontend_manager/manager_members/members_directory?action=add_member&name=${encodeURIComponent(ref.refereeName)}&phone=${encodeURIComponent(ref.refereePhone.replace(/[\s-]/g, ''))}`}
+                                className="inline-flex items-center gap-1 px-2.5 py-1 bg-primary text-on-primary rounded text-xs font-semibold hover:bg-primary-hover transition-colors"
+                                data-testid={`manager_referrals-enroll-btn-${ref.id}`}
+                              >
+                                <UserPlus size={13} />
+                                <span>Enroll</span>
+                              </Link>
+                            </div>
+                          );
+                          return (<span className="text-text-secondary text-xs italic">{t("COPY_REJECTED")}</span>); 
+                        })()}
                       </td>
                     </tr>
                   );

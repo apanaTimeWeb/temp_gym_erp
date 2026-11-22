@@ -4,6 +4,8 @@ export const TrainerProfileFormSchema = z.object({
   name: z.string().trim().min(1, "ERR_FULL_NAME_REQUIRED"),
   phone: z.string().trim().max(30, "ERR_PHONE_TOO_LONG"),
   specialization: z.array(z.string().trim()).max(10, "ERR_SPECIALIZATIONS_LIMIT"),
+  bio: z.string().trim().max(500).optional(),
+  experienceYears: z.number().min(0).max(50).optional(),
   bankName: z.string().trim().max(100).optional(),
   accountNumber: z.string().trim().max(30).optional(),
   ifscCode: z.string().trim().max(20).optional(),

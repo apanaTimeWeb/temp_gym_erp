@@ -50,6 +50,32 @@ export default function TrainerProfilePersonalView({ profileForm, user, saveProf
             </div>
           )}
         />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="trainer-profile-experience" className="block text-sm font-medium text-secondary mb-1.5">Experience (Years)</label>
+            <input
+              id="trainer-profile-experience"
+              type="number"
+              min="0"
+              max="50"
+              {...profileForm.register('experienceYears', { valueAsNumber: true })}
+              placeholder="e.g. 5"
+              className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              data-testid="trainer_profile-trainerprofilemain-input-experience"
+            />
+          </div>
+          <div>
+            <label htmlFor="trainer-profile-bio" className="block text-sm font-medium text-secondary mb-1.5">Professional Bio</label>
+            <textarea
+              id="trainer-profile-bio"
+              rows={3}
+              {...profileForm.register('bio')}
+              placeholder="Brief summary of fitness philosophy, coaching experience, and accomplishments..."
+              className="w-full px-4 py-2 bg-input border border-border rounded-lg text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring resize-none"
+              data-testid="trainer_profile-trainerprofilemain-input-bio"
+            />
+          </div>
+        </div>
       </div>
 
       <div className="pt-4 border-t border-border space-y-4">
