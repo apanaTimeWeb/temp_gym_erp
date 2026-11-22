@@ -12,7 +12,7 @@ import React, { useMemo, useState } from 'react';
 import type { Staff } from '@/app/frontend_admin/admin_hr/hr_staff_management/types/AdminHrStaffManagementTypes';
 import { useAdminHrViewModel } from '@/app/frontend_admin/admin_hr/hr_staff_management/hooks/useAdminHrStaffManagementViewModel';
 import { useAdminHrStaffProfileBranches } from '@/app/frontend_admin/admin_hr/hr_staff_management/hooks/useAdminHrStaffManagementStaffProfileBranches';
-import { ChevronDown, ChevronUp, X, Building2, User, Phone, Mail, MapPin, Calendar, Activity, CheckCircle2, Ban, Edit2, IndianRupee, Hash } from 'lucide-react';
+import { ChevronDown, ChevronUp, X, Building2, User, Phone, Mail, MapPin, Calendar, Activity, CheckCircle2, Ban, Edit2, IndianRupee, Hash, PhoneCall, MessageCircle } from 'lucide-react';
 import AdminHrEmptyState from '@/app/frontend_admin/admin_hr/hr_staff_management/components/empty_state/AdminHrStaffManagementEmptyState';
 import { CopyButton } from '@/components/ui/CopyButton';
 
@@ -93,13 +93,49 @@ export default function AdminHrManagementStaffProfileModal() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="flex items-center gap-3 bg-input p-3 rounded-xl border border-border">
-                  <Phone size={18} className="text-secondary"  strokeWidth={2}/>
-                  <span className="text-sm font-medium text-primary">{displayValue(editData.phone)}</span>
+                <div className="flex items-center justify-between gap-3 bg-input p-3 rounded-xl border border-border">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <Phone size={18} className="text-secondary shrink-0" strokeWidth={2}/>
+                    <span className="text-sm font-medium text-primary">{displayValue(editData.phone)}</span>
+                  </div>
+                  {editData.phone && (
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <a
+                        href={`tel:${editData.phone.replace(/[^0-9+]/g, '')}`}
+                        className="p-1.5 rounded-lg hover:bg-surface-hover text-secondary hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        title="Call"
+                        aria-label={`Call ${editData.phone}`}
+                      >
+                        <PhoneCall size={14} />
+                      </a>
+                      <a
+                        href={`https://wa.me/${editData.phone.replace(/[^0-9]/g, '')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-1.5 rounded-lg hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                        title="WhatsApp"
+                        aria-label={`WhatsApp ${editData.phone}`}
+                      >
+                        <MessageCircle size={14} />
+                      </a>
+                    </div>
+                  )}
                 </div>
-                <div className="flex items-center gap-3 bg-input p-3 rounded-xl border border-border">
-                  <Mail size={18} className="text-secondary"  strokeWidth={2}/>
-                  <span className="text-sm font-medium text-primary truncate">{displayValue(editData.email)}</span>
+                <div className="flex items-center justify-between gap-3 bg-input p-3 rounded-xl border border-border">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <Mail size={18} className="text-secondary shrink-0" strokeWidth={2}/>
+                    <span className="text-sm font-medium text-primary truncate">{displayValue(editData.email)}</span>
+                  </div>
+                  {editData.email && (
+                    <a
+                      href={`mailto:${editData.email}`}
+                      className="p-1.5 rounded-lg hover:bg-surface-hover text-secondary hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shrink-0"
+                      title="Email"
+                      aria-label={`Email ${editData.email}`}
+                    >
+                      <Mail size={14} />
+                    </a>
+                  )}
                 </div>
                 <div className="flex items-center gap-3 bg-input p-3 rounded-xl border border-border">
                   <Calendar size={18} className="text-secondary"  strokeWidth={2}/>

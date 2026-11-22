@@ -7,7 +7,7 @@ import { useEffect, useRef } from 'react';
 import { MEMBER_STATUS_LABEL_KEYS, MEMBER_STATUS_STYLES } from '@/app/frontend_admin/admin_members/members_directory/constants/AdminMembersDirectoryConstants';
 import { formatDate } from '@/app/frontend_admin/admin_members/members_directory/utils/AdminMembersDirectoryFormatters';
 
-import { X, Phone, Mail, Building2, Calendar, IndianRupee, User, HeartPulse, ShieldAlert, Dumbbell, MapPin } from 'lucide-react';
+import { X, Phone, Mail, Building2, Calendar, IndianRupee, User, HeartPulse, ShieldAlert, Dumbbell, MapPin, PhoneCall, MessageCircle } from 'lucide-react';
 import type { AdminMembersProfileDrawerProps } from '@/app/frontend_admin/admin_members/members_directory/types/AdminMembersDirectoryProfileDrawerTypes';
 import { AdminMembersFormatCurrency } from '@/app/frontend_admin/admin_members/members_directory/utils/AdminMembersDirectoryFormatCurrency';
 
@@ -103,13 +103,49 @@ export default function AdminMembersDirectoryProfileDrawer({ member, status, err
           {/* Contact */}
           <div className="bg-input rounded-xl border border-border p-4 space-y-3">
             <p className="text-xs font-semibold text-secondary uppercase tracking-wider">{t('members.admin_members_profile_drawer.text_e873f4db37')}</p>
-            <div className="flex items-center gap-3">
-              <Phone size={18} className="text-secondary flex-shrink-0"  strokeWidth={2}/>
-              <span className="text-sm text-primary">{displayValue(member.phone)}</span>
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <Phone size={18} className="text-secondary flex-shrink-0" strokeWidth={2}/>
+                <span className="text-sm text-primary">{displayValue(member.phone)}</span>
+              </div>
+              {member.phone && (
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <a
+                    href={`tel:${member.phone.replace(/[^0-9+]/g, '')}`}
+                    className="p-1.5 rounded-lg bg-surface hover:bg-surface-hover text-secondary hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    title="Call"
+                    aria-label={`Call ${member.phone}`}
+                  >
+                    <PhoneCall size={14} />
+                  </a>
+                  <a
+                    href={`https://wa.me/${member.phone.replace(/[^0-9]/g, '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                    title="WhatsApp"
+                    aria-label={`WhatsApp ${member.phone}`}
+                  >
+                    <MessageCircle size={14} />
+                  </a>
+                </div>
+              )}
             </div>
-            <div className="flex items-center gap-3">
-              <Mail size={18} className="text-secondary flex-shrink-0"  strokeWidth={2}/>
-              <span className="text-sm text-primary truncate">{displayValue(member.email)}</span>
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <Mail size={18} className="text-secondary flex-shrink-0" strokeWidth={2}/>
+                <span className="text-sm text-primary truncate">{displayValue(member.email)}</span>
+              </div>
+              {member.email && (
+                <a
+                  href={`mailto:${member.email}`}
+                  className="p-1.5 rounded-lg bg-surface hover:bg-surface-hover text-secondary hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shrink-0"
+                  title="Email"
+                  aria-label={`Email ${member.email}`}
+                >
+                  <Mail size={14} />
+                </a>
+              )}
             </div>
             <div className="flex items-center gap-3">
               <User size={18} className="text-secondary flex-shrink-0"  strokeWidth={2}/>
@@ -167,12 +203,24 @@ export default function AdminMembersDirectoryProfileDrawer({ member, status, err
             <div className="bg-input rounded-xl border border-border p-4 space-y-3">
               <p className="text-xs font-semibold text-secondary uppercase tracking-wider">Safety & Health</p>
               {member.emergencyContact && (
-                <div className="flex items-start gap-3">
-                  <ShieldAlert size={18} className="text-warning flex-shrink-0 mt-0.5" strokeWidth={2}/>
-                  <div>
-                    <span className="text-xs text-secondary block">Emergency Contact</span>
-                    <span className="text-sm font-semibold text-primary">{member.emergencyContact.name} ({member.emergencyContact.phone})</span>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-start gap-3 min-w-0">
+                    <ShieldAlert size={18} className="text-warning flex-shrink-0 mt-0.5" strokeWidth={2}/>
+                    <div>
+                      <span className="text-xs text-secondary block">Emergency Contact</span>
+                      <span className="text-sm font-semibold text-primary">{member.emergencyContact.name} ({member.emergencyContact.phone})</span>
+                    </div>
                   </div>
+                  {member.emergencyContact.phone && (
+                    <a
+                      href={`tel:${member.emergencyContact.phone.replace(/[^0-9+]/g, '')}`}
+                      className="p-1.5 rounded-lg bg-surface hover:bg-surface-hover text-secondary hover:text-primary motion-safe:transition-colors shrink-0 mt-0.5"
+                      title="Call Emergency Contact"
+                      aria-label={`Call emergency contact ${member.emergencyContact.phone}`}
+                    >
+                      <PhoneCall size={14} />
+                    </a>
+                  )}
                 </div>
               )}
               {member.medicalHistory && (

@@ -42,6 +42,10 @@ export function useSuperadminGymsDetailGhostLoginWorkflow() {
     onError: (error: unknown) => toast.error(resolveSuperadminGymsDetailFeedback(error, feedback('errors.unexpected')), { id: 'superadmin-gym-ghost-login-error' }),
   });
   const startGhostLogin = (gym: GhostLoginGym) => {
+    try {
+      localStorage.setItem('ghost_login_tenant_id', gym.id);
+      localStorage.setItem('ghost_login_gym_name', gym.name);
+    } catch { /* Safe fallback */ }
     const keys = keysByGym.current.get(gym.id) ?? { impersonateKey: crypto.randomUUID(), cookieKey: crypto.randomUUID() };
     keysByGym.current.set(gym.id, keys);
     mutation.mutate({ gymId: gym.id, ...keys });
