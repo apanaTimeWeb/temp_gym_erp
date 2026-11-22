@@ -16,7 +16,7 @@ export const SupportTicketMessageSchema = z.object({
     id: z.string().min(1),
     senderId: z.string(),
     senderName: z.string(),
-    senderRole: z.enum(['TENANT', 'SUPERADMIN', 'SYSTEM']),
+    senderRole: z.enum(['TENANT', 'SUPERADMIN', 'SYSTEM', 'ADMIN', 'MANAGER']),
     content: z.string(),
     attachments: z.array(z.string()).optional(),
     createdAt: z.string(),

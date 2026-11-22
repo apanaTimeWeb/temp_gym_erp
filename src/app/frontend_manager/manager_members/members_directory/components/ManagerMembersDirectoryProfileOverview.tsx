@@ -2,7 +2,7 @@
 'use client';
 import { useState } from 'react';
 
-import { MessageCircle, Mail, Snowflake, Stethoscope, Ban, UserCheck, Phone } from 'lucide-react';
+import { MessageCircle, Mail, Snowflake, Stethoscope, Ban, UserCheck, Phone, ShieldAlert } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 
 import ManagerSearchableDropdown from '@/components/ui/manager_searchable_dropdown/ManagerSearchableDropdown';
@@ -35,7 +35,19 @@ export default function ManagerMembersDirectoryProfileOverview() {
   const advance = selectedMember.advanceAmount || 0;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div className="flex flex-col gap-5">
+      {(selectedMember.isBlacklisted || selectedMember.status === 'BANNED') && (
+        <div className="flex items-start gap-3 p-4 rounded-xl bg-danger-bg border border-danger shadow-card text-danger">
+          <ShieldAlert size={20} className="shrink-0 mt-0.5" />
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider">Blacklisted Member Account</p>
+            <p className="text-sm text-text-primary mt-0.5">
+              {selectedMember.blacklistReason || 'This member has been flagged or blacklisted by gym administration. Check with Head Admin before facility access or renewals.'}
+            </p>
+          </div>
+        </div>
+      )}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div className="flex flex-col gap-6">
         <div>
           <h3 className="text-sm font-semibold text-text-primary mb-4 uppercase tracking-wider opacity-80">{t("COPY_MEMBER_SUMMARY")}</h3>
@@ -168,5 +180,6 @@ export default function ManagerMembersDirectoryProfileOverview() {
         </div>
       </div>
     </div>
+  </div>
  );
 }

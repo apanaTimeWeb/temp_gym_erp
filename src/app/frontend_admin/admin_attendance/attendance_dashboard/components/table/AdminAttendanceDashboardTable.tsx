@@ -149,9 +149,16 @@ export default function AdminAttendanceDashboardTable() {
                   </span>
                 </td>
                 <td className="px-4 py-3">
-                  <span className="text-sm text-primary whitespace-nowrap">
-                    {formatAttendanceTime(r.checkInTime, locale)}
-                  </span>
+                  <div className="flex items-center gap-1.5 whitespace-nowrap">
+                    <span className="text-sm text-primary">
+                      {formatAttendanceTime(r.checkInTime, locale)}
+                    </span>
+                    {r.checkInMethod && (
+                      <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-primary-subtle text-primary border border-primary/20">
+                        {r.checkInMethod}
+                      </span>
+                    )}
+                  </div>
                 </td>
                 <td className="px-4 py-3">
                   <span className="text-sm text-primary whitespace-nowrap">

@@ -105,8 +105,41 @@ export default function AdminFinanceOverviewExpensesTable() {
                         <CopyButton text={expense.branchName ?? expense.branchId} label={expense.branchName ?? expense.branchId} />
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-sm font-bold text-danger"><span>{AdminFinanceFormatCurrency(expense.amount, 'INR', locale) !== '—' ? AdminFinanceFormatCurrency(expense.amount, 'INR', locale) : (Number.isFinite(expense.amount) ? `₹${(expense.amount > 1000 ? expense.amount / 100 : expense.amount).toLocaleString(locale)}` : '—')}</span></td>
-                    <td className="px-4 py-3 text-sm text-secondary max-w-xs truncate">{displayValue(expense.notes)}</td>
+                    <td className="px-4 py-3 text-sm font-bold text-danger">
+                      <div>
+                        <span>{AdminFinanceFormatCurrency(expense.amount, 'INR', locale) !== '—' ? AdminFinanceFormatCurrency(expense.amount, 'INR', locale) : (Number.isFinite(expense.amount) ? `₹${(expense.amount > 1000 ? expense.amount / 100 : expense.amount).toLocaleString(locale)}` : '—')}</span>
+                        {(expense.status || expense.paymentMode) && (
+                          <div className="flex items-center gap-1.5 mt-1">
+                            {expense.status && (
+                              <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
+                                expense.status.toUpperCase() === 'PAID' ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning'
+                              }`}>
+                                {expense.status}
+                              </span>
+                            )}
+                            {expense.paymentMode && (
+                              <span className="text-[10px] px-1.5 py-0.5 bg-input border border-border/60 rounded text-secondary font-normal">
+                                {expense.paymentMode}
+                              </span>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-sm text-secondary max-w-xs">
+                      <p className="truncate">{displayValue(expense.notes)}</p>
+                      {(expense.vendor || expense.billNumber || expense.receiptUrl) && (
+                        <div className="flex flex-wrap items-center gap-1.5 mt-0.5 text-xs">
+                          {expense.vendor && <span className="text-secondary/80 font-medium">Vendor: {expense.vendor}</span>}
+                          {expense.billNumber && <span className="text-secondary/70">Ref: {expense.billNumber}</span>}
+                          {expense.receiptUrl && (
+                            <a href={expense.receiptUrl} target="_blank" rel="noopener noreferrer" className="text-primary underline text-[11px] font-medium hover:opacity-80">
+                              Receipt
+                            </a>
+                          )}
+                        </div>
+                      )}
+                    </td>
                     <td className="px-4 py-3 text-sm text-secondary">{expense.recordedBy}</td>
                   </tr>
                 ))

@@ -86,6 +86,11 @@ export default function AdminMembersDirectoryProfileDrawer({ member, status, err
                 <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider ${MEMBER_STATUS_STYLES[member.status] ?? 'bg-input text-secondary'}`} data-testid="members-directory-members-directory-profile-drawer-status-badge">
                   {MEMBER_STATUS_LABEL_KEYS[member.status] ? t(MEMBER_STATUS_LABEL_KEYS[member.status] as string) : member.status}
                 </span>
+                {member.isBlacklisted && (
+                  <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-danger text-on-danger">
+                    Blacklisted
+                  </span>
+                )}
                 {member.bloodGroup && (
                   <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-danger-bg text-danger border border-danger/30">
                     🩸 {member.bloodGroup}
@@ -99,6 +104,16 @@ export default function AdminMembersDirectoryProfileDrawer({ member, status, err
               </div>
             </div>
           </div>
+
+          {member.isBlacklisted && (
+            <div className="flex items-start gap-2.5 p-3 rounded-xl bg-danger-bg border border-danger/40 text-danger">
+              <ShieldAlert size={18} className="shrink-0 mt-0.5" />
+              <div>
+                <p className="text-xs font-bold uppercase tracking-wide">Blacklisted Member</p>
+                <p className="text-xs text-danger/90 mt-0.5">{member.blacklistReason || 'This member has been blacklisted from facilities by gym administration.'}</p>
+              </div>
+            </div>
+          )}
 
           {/* Contact */}
           <div className="bg-input rounded-xl border border-border p-4 space-y-3">

@@ -5,7 +5,7 @@
 import { useLocale, useTranslations } from 'next-intl';
 import { formatDate } from '@/app/frontend_admin/admin_sales/sales_store_sales/utils/AdminSalesStoreSalesFormatters';
 import { useState } from 'react';
-import { Package, ShoppingCart, IndianRupee, TrendingUp, ChevronDown, ChevronUp, RefreshCw } from 'lucide-react';
+import { Package, ShoppingCart, IndianRupee, TrendingUp, ChevronDown, ChevronUp, RefreshCw, Phone, MessageCircle } from 'lucide-react';
 import { AdminSalesFormatCurrency } from '@/app/frontend_admin/admin_sales/sales_store_sales/utils/AdminSalesStoreSalesFormatCurrency';
 
 import { useAdminSalesLogic } from '@/app/frontend_admin/admin_sales/sales_store_sales/hooks/useAdminSalesStoreSalesLogic';
@@ -98,6 +98,40 @@ export default function AdminSalesAnalyticsStoreSales() {
                       {(order.items ?? []).map((item) => <div key={item.id} className="flex items-center justify-between gap-4 text-sm"><span className="text-primary min-w-0 truncate">{item.product.name} <span className="text-secondary">× {item.qty}</span></span><span className="text-secondary font-medium shrink-0">{AdminSalesFormatCurrency(item.price * item.qty, 'INR', locale)}</span></div>)}
                     </div>
                     <div className="flex justify-between mt-3 pt-2 border-t border-border"><span className="text-sm font-semibold text-primary">{t('sales.admin_sales_store_sales.text_b25928c699')}</span><span className="text-sm font-bold text-primary">{AdminSalesFormatCurrency(order.total, 'INR', locale)}</span></div>
+                    {order.gstAmount && order.gstAmount > 0 ? (
+                      <div className="flex justify-between pt-1 text-xs text-secondary">
+                        <span>GST Included / Applied</span>
+                        <span>{AdminSalesFormatCurrency(order.gstAmount, 'INR', locale)}</span>
+                      </div>
+                    ) : null}
+                    {order.returnStatus && order.returnStatus !== 'NONE' && (
+                      <div className="pt-2">
+                        <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-danger-bg text-danger border border-danger/30">
+                          Return Status: {order.returnStatus}
+                        </span>
+                      </div>
+                    )}
+                    {order.customerPhone && (
+                      <div className="flex flex-wrap items-center justify-between gap-2 pt-2 mt-2 border-t border-border text-xs">
+                        <span className="text-secondary font-medium">Customer: {order.customerPhone}</span>
+                        <div className="flex items-center gap-1.5">
+                          <a
+                            href={`https://wa.me/${order.customerPhone.replace(/[^0-9]/g, '')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 px-2 py-1 rounded bg-success-bg text-success hover:underline font-semibold"
+                          >
+                            <MessageCircle size={14} /> WhatsApp
+                          </a>
+                          <a
+                            href={`tel:${order.customerPhone.replace(/[^0-9+]/g, '')}`}
+                            className="inline-flex items-center gap-1 px-2 py-1 rounded bg-input border border-border text-primary hover:underline font-semibold"
+                          >
+                            <Phone size={14} /> Call
+                          </a>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
               </article>

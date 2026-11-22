@@ -21,6 +21,7 @@ export interface AdminAttendanceRecord {
   trainerId?: string;
   trainerName?: string;
   sessionType?: AdminAttendanceSessionType;
+  checkInMethod?: 'QR' | 'Manual' | 'Biometric';
 }
 
 export interface AdminAttendanceSummary {

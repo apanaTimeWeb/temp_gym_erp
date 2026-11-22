@@ -34,6 +34,8 @@ export interface AdminMember {
   isPT?: boolean;
   medicalHistory?: string;
   emergencyContact?: { name: string; phone: string };
+  isBlacklisted?: boolean;
+  blacklistReason?: string;
 }
 
 export interface AdminMembersSummary {
