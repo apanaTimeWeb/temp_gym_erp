@@ -370,6 +370,11 @@ export const mockTenantDb = {
     if (payload.ownerName) updated.ownerName = payload.ownerName;
     if (payload.adminEmail) updated.ownerEmail = payload.adminEmail;
     if (payload.phone) updated.phone = payload.phone;
+    if (payload.city !== undefined) updated.city = payload.city;
+    if (payload.state !== undefined) updated.state = payload.state;
+    if (payload.address !== undefined) updated.address = payload.address;
+    if (payload.postalCode !== undefined) updated.postalCode = payload.postalCode;
+    if (payload.gstNumber !== undefined) updated.gstNumber = payload.gstNumber;
 
     // General update event if non-status fields changed
     eventsStore.unshift({

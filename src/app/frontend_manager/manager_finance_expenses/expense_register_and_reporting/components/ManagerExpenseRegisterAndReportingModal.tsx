@@ -171,6 +171,37 @@ export default function ManagerExpenseRegisterAndReportingModal() {
                 className="w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-text-primary motion-safe:transition-all border-border focus-visible:ring-focus-ring motion-safe:duration-200 ease-in-out"
               />
             </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="manager-expense-vendor-name" className="block text-sm font-medium text-text-secondary mb-1">Vendor / Payee</label>
+                <input
+                  id="manager-expense-vendor-name"
+                  data-testid="manager_expenses-vendor-name-input"
+                  type="text"
+                  placeholder="e.g. FitEquipment Co."
+                  {...register('vendorName')}
+                  className="w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-text-primary motion-safe:transition-all border-border focus-visible:ring-focus-ring motion-safe:duration-200 ease-in-out"
+                />
+              </div>
+              <div>
+                <label htmlFor="manager-expense-payment-mode" className="block text-sm font-medium text-text-secondary mb-1">Payment Mode</label>
+                <select
+                  id="manager-expense-payment-mode"
+                  data-testid="manager_expenses-payment-mode-select"
+                  {...register('paymentMode')}
+                  className="w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-text-primary motion-safe:transition-all border-border focus-visible:ring-focus-ring motion-safe:duration-200 ease-in-out"
+                >
+                  <option value="Cash">Cash</option>
+                  <option value="UPI">UPI</option>
+                  <option value="Card">Card</option>
+                  <option value="NetBanking">NetBanking</option>
+                  <option value="Cheque">Cheque</option>
+                  <option value="Bank Transfer">Bank Transfer</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
             
             <div>
               <div className="flex items-center justify-between mb-1">

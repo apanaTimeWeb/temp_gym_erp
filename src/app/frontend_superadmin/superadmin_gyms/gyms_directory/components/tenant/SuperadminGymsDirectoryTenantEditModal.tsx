@@ -138,6 +138,16 @@ function TenantEditModalContent({
               touched={form.touched}
               validateField={form.validateField}
               originalAccessStatus={tenant.accessStatus}
+              city={form.city}
+              setCity={form.setCity}
+              state={form.state}
+              setState={form.setState}
+              address={form.address}
+              setAddress={form.setAddress}
+              postalCode={form.postalCode}
+              setPostalCode={form.setPostalCode}
+              gstNumber={form.gstNumber}
+              setGstNumber={form.setGstNumber}
             />
           </form>
 

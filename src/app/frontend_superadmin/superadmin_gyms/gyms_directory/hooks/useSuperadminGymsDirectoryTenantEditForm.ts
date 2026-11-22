@@ -38,6 +38,11 @@ export function useSuperadminGymsDirectoryTenantEditForm({
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [statusReason, setStatusReason] = useState('');
+  const [city, setCity] = useState(tenant.city || '');
+  const [state, setState] = useState(tenant.state || '');
+  const [address, setAddress] = useState(tenant.address || '');
+  const [postalCode, setPostalCode] = useState(tenant.postalCode || '');
+  const [gstNumber, setGstNumber] = useState(tenant.gstNumber || '');
 
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [confirmChanges, setConfirmChanges] = useState<
@@ -53,8 +58,38 @@ export function useSuperadminGymsDirectoryTenantEditForm({
   );
 
   const formValues = useMemo(
-    () => ({ gymName, ownerName, adminEmail, phone, planId, planExpiresAt, accessStatus, statusReason, password }),
-    [gymName, ownerName, adminEmail, phone, planId, planExpiresAt, accessStatus, statusReason, password]
+    () => ({
+      gymName,
+      ownerName,
+      adminEmail,
+      phone,
+      planId,
+      planExpiresAt,
+      accessStatus,
+      statusReason,
+      password,
+      city,
+      state,
+      address,
+      postalCode,
+      gstNumber,
+    }),
+    [
+      gymName,
+      ownerName,
+      adminEmail,
+      phone,
+      planId,
+      planExpiresAt,
+      accessStatus,
+      statusReason,
+      password,
+      city,
+      state,
+      address,
+      postalCode,
+      gstNumber,
+    ]
   );
 
   const validateField = (field: string) => {
@@ -99,8 +134,9 @@ export function useSuperadminGymsDirectoryTenantEditForm({
   return {
     gymName, setGymName, ownerName, setOwnerName, adminEmail, setAdminEmail, phone, setPhone,
     planId, setPlanId, planExpiresAt, setPlanExpiresAt, accessStatus, setAccessStatus, password,
-    setPassword, showPassword, setShowPassword, statusReason, setStatusReason, showConfirmDialog,
-    setShowConfirmDialog, confirmChanges, errors, touched, validateField, selectedPlan, changedFields,
+    setPassword, showPassword, setShowPassword, statusReason, setStatusReason,
+    city, setCity, state, setState, address, setAddress, postalCode, setPostalCode, gstNumber, setGstNumber,
+    showConfirmDialog, setShowConfirmDialog, confirmChanges, errors, touched, validateField, selectedPlan, changedFields,
     canSave, handleSubmit, executeSave, updateMutation,
   };
 }

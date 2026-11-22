@@ -82,7 +82,13 @@ export default function ManagerExpenseRegisterAndReportingTable() {
                         </td>
                         <td className="px-3 py-3 text-sm font-semibold text-text-primary whitespace-nowrap">
                           {e.title}
-                          {e.referenceNo && <span className="block text-xs font-normal text-text-secondary mt-0.5">{t("COPY_REF")}{e.referenceNo}</span>}
+                          {(e.vendorName || e.referenceNo || e.paymentMode) && (
+                            <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
+                              {e.vendorName && <span className="text-xs font-medium text-text-secondary">Vendor: {e.vendorName}</span>}
+                              {e.referenceNo && <span className="text-xs font-normal text-text-secondary">({t("COPY_REF")}{e.referenceNo})</span>}
+                              {e.paymentMode && <span className="text-xs px-1.5 py-0.2 bg-input border border-border/60 rounded text-text-secondary">{e.paymentMode}</span>}
+                            </div>
+                          )}
                         </td>
                         <td className="px-3 py-3 text-sm text-text-secondary whitespace-nowrap">{e.category === 'Electricity' ? t('COPY_CATEGORY_ELECTRICITY') : e.category === 'Rent' ? t('COPY_CATEGORY_RENT') : e.category === 'Water Bill' ? t('COPY_CATEGORY_WATER_BILL') : e.category === 'Equipment Maintenance' ? t('COPY_CATEGORY_EQUIPMENT_MAINTENANCE') : e.category === 'Salary/Payroll' ? t('COPY_CATEGORY_SALARY_PAYROLL') : e.category === 'Marketing' ? t('COPY_CATEGORY_MARKETING') : e.category === 'Office Supplies' ? t('COPY_CATEGORY_OFFICE_SUPPLIES') : t('COPY_CATEGORY_MISCELLANEOUS')}</td>
                         <td className="px-3 py-3 text-sm font-bold text-text-primary whitespace-nowrap">{ManagerExpenseRegisterAndReportingFormatCurrency(e.amount, ManagerEnvConfig.currencyCode, locale)}</td>

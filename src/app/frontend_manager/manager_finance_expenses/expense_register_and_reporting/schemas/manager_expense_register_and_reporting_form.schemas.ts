@@ -17,4 +17,7 @@ export const managerExpensesFormSchema = z.object({
   referenceNo: z.string().optional(),
   notes: z.string().optional(),
   receiptUrl: z.string().url('Must be a valid URL').optional().or(z.literal('')),
+  vendorName: z.string().optional(),
+  paymentMode: z.enum(['Cash', 'UPI', 'Card', 'NetBanking', 'Cheque', 'Bank Transfer', 'Other']).optional(),
+  taxAmount: z.number().finite().nonnegative().optional(),
 });

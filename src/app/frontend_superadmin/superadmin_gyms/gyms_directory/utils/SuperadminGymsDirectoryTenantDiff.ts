@@ -17,6 +17,11 @@ export interface TenantEditFormValues {
   accessStatus: 'ACTIVE' | 'INACTIVE';
   statusReason: string;
   password: string;
+  city?: string;
+  state?: string;
+  address?: string;
+  postalCode?: string;
+  gstNumber?: string;
 }
 
 export function validateTenantEditField(
@@ -81,6 +86,23 @@ export function computeTenantChanges(
   }
 
   if (values.password.trim()) changes.temporaryPassword = values.password.trim();
+
+  if (values.city !== undefined && values.city.trim() !== (tenant.city || '').trim()) {
+    changes.city = values.city.trim();
+  }
+  if (values.state !== undefined && values.state.trim() !== (tenant.state || '').trim()) {
+    changes.state = values.state.trim();
+  }
+  if (values.address !== undefined && values.address.trim() !== (tenant.address || '').trim()) {
+    changes.address = values.address.trim();
+  }
+  if (values.postalCode !== undefined && values.postalCode.trim() !== (tenant.postalCode || '').trim()) {
+    changes.postalCode = values.postalCode.trim();
+  }
+  if (values.gstNumber !== undefined && values.gstNumber.trim().toUpperCase() !== (tenant.gstNumber || '').trim().toUpperCase()) {
+    changes.gstNumber = values.gstNumber.trim().toUpperCase();
+  }
+
   return changes;
 }
 
