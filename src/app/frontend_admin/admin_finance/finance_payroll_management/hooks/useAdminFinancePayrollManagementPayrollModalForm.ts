@@ -42,8 +42,15 @@ export function useAdminFinancePayrollManagementPayrollModalForm() {
     if (!selectedStaffId || !selectedMonth) return;
     const selectedStaff = staff.find((item) => String(item.id) === String(selectedStaffId));
     if (selectedStaff) {
-      setValue('amount', AdminFinancePayrollManagementFromMinorUnits(selectedStaff.salary), { shouldDirty: true });
-      setCalculationInfo('');
+      const baseSalaryMajor = AdminFinancePayrollManagementFromMinorUnits(selectedStaff.salary);
+      const advanceMajor = selectedStaff.advanceSalary ? AdminFinancePayrollManagementFromMinorUnits(selectedStaff.advanceSalary) : 0;
+      const netAmountMajor = Math.max(0, baseSalaryMajor - advanceMajor);
+      setValue('amount', netAmountMajor, { shouldDirty: true });
+      if (advanceMajor > 0) {
+        setCalculationInfo(`Base Salary: ₹${baseSalaryMajor.toLocaleString()} | Advance Deducted: -₹${advanceMajor.toLocaleString()} | Net Payable: ₹${netAmountMajor.toLocaleString()}`);
+      } else {
+        setCalculationInfo(`Base Salary: ₹${baseSalaryMajor.toLocaleString()} (No advance deductions)`);
+      }
     }
   }, [selectedMonth, selectedStaffId, setValue, staff]);
 

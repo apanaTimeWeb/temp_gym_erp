@@ -44,6 +44,7 @@ export default function TrainerSessionsAttendanceModal({ session, onClose, onSub
 
   const members = session.enrolledMembers ?? [];
   const allSelected = members.length > 0 && attendedIds.size === members.length;
+  const hasExhaustedSelected = members.some((m) => attendedIds.has(m.id) && m.remainingSessions !== undefined && m.remainingSessions <= 0);
 
   const handleToggleAttendance = (memberId: string) => {
     setAttendedIds((current) => {
@@ -131,7 +132,18 @@ export default function TrainerSessionsAttendanceModal({ session, onClose, onSub
                       onClick={() => handleToggleAttendance(member.id)}
                       className={`w-full flex items-center justify-between gap-3 min-h-11 p-3 rounded-xl border text-start motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page disabled:opacity-60 ${isPresent ? 'border-focus bg-surface-highlight' : 'border-border bg-input hover:border-focus'} motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95`}
                      data-testid={`trainer_sessions-session-attendance-member-${member.id}`}>
-                      <span className="text-sm font-medium text-primary truncate">{member.name}</span>
+                      <div className="flex items-center gap-2 truncate">
+                        <span className="text-sm font-medium text-primary truncate">{member.name}</span>
+                        {member.remainingSessions !== undefined && (
+                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                            member.remainingSessions === 0 ? 'bg-danger-bg text-danger border border-danger/30' :
+                            member.remainingSessions === 1 ? 'bg-warning-bg text-warning border border-warning/30' :
+                            'bg-success-bg text-success border border-success/30'
+                          }`}>
+                            {member.remainingSessions === 0 ? '0 Left' : `${member.remainingSessions} Left`}
+                          </span>
+                        )}
+                      </div>
                       <span className={`w-6 h-6 rounded-md flex items-center justify-center shrink-0 border ${isPresent ? 'bg-primary border-focus text-on-primary' : 'border-border text-transparent'}`} aria-hidden="true">
                         {isPresent && <Check size={18} strokeWidth={2} />}
                       </span>
@@ -139,6 +151,13 @@ export default function TrainerSessionsAttendanceModal({ session, onClose, onSub
                   );
                 })}
               </div>
+
+              {hasExhaustedSelected && (
+                <div className="p-3 rounded-xl bg-danger-bg border border-danger/30 text-xs text-danger flex items-center gap-2" role="alert">
+                  <span className="font-bold">⚠️ Warning:</span>
+                  <span>1 or more selected members have exhausted their PT package (0 sessions left).</span>
+                </div>
+              )}
             </div>
           )}
         </div>

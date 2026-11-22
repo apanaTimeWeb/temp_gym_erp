@@ -12,6 +12,10 @@ export interface PlanSnapshot {
   price6Month: number;
   price12Month: number;
   priceCustom?: number;
+  joiningFee?: number;
+  taxRate?: number;
+  ptSessionsIncluded?: number;
+  freezeAllowed?: boolean;
 }
 
 export interface PaymentSnapshot {

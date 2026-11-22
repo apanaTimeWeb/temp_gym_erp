@@ -74,15 +74,36 @@ export default function ManagerMembersDirectoryModalMembershipFields({ formState
             )}
 
             {watchPlanId && (
-              <div data-testid="manager_members-manager-members-modal-status" className="sm:col-span-2 bg-warning-bg rounded-xl p-4 text-sm border border-warning flex justify-between items-center">
-                <div>
-                  <span className="font-semibold text-warning-text">{t("COPY_CALCULATED_PRICE")}</span>
-                  <span className="text-warning-text ml-1 font-bold">
-                    {ManagerMembersDirectoryFormatCurrency(getPriceForCycle(selectedPlan, watchBillingCycle, Number(watchCustomDays) || 0), ManagerEnvConfig.currencyCode, locale)}
-                  </span>
+              <div data-testid="manager_members-manager-members-modal-status" className="sm:col-span-2 bg-warning-bg rounded-xl p-4 text-sm border border-warning flex flex-col gap-2">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <span className="font-semibold text-warning-text">{t("COPY_CALCULATED_PRICE")}</span>
+                    <span className="text-warning-text ml-1 font-bold">
+                      {ManagerMembersDirectoryFormatCurrency(getPriceForCycle(selectedPlan, watchBillingCycle, Number(watchCustomDays) || 0), ManagerEnvConfig.currencyCode, locale)}
+                    </span>
+                  </div>
+                  {watchBillingCycle === BILLING_CYCLE_CUSTOM && (
+                    <div className="text-warning-text text-xs opacity-80">{t("COPY_PER_DAY")}{ManagerMembersDirectoryFormatCurrency(selectedPlan?.priceCustom || 0, ManagerEnvConfig.currencyCode, locale)} × {watchCustomDays || 0}{t("COPY_DAYS_2")}</div>
+                  )}
                 </div>
-                {watchBillingCycle === BILLING_CYCLE_CUSTOM && (
-                  <div className="text-warning-text text-xs opacity-80">{t("COPY_PER_DAY")}{ManagerMembersDirectoryFormatCurrency(selectedPlan?.priceCustom || 0, ManagerEnvConfig.currencyCode, locale)} × {watchCustomDays || 0}{t("COPY_DAYS_2")}</div>
+                {(Boolean(selectedPlan?.joiningFee) || Boolean(selectedPlan?.ptSessionsIncluded) || selectedPlan?.freezeAllowed !== undefined) && (
+                  <div className="flex flex-wrap gap-2 pt-2 border-t border-warning/30 text-xs text-warning-text">
+                    {Boolean(selectedPlan?.joiningFee) && (
+                      <span className="bg-warning/20 px-2 py-0.5 rounded font-medium">
+                        + Admission Fee: {ManagerMembersDirectoryFormatCurrency((selectedPlan?.joiningFee || 0) * 100, ManagerEnvConfig.currencyCode, locale)}
+                      </span>
+                    )}
+                    {Boolean(selectedPlan?.ptSessionsIncluded) && (
+                      <span className="bg-warning/20 px-2 py-0.5 rounded font-medium">
+                        🎯 {selectedPlan?.ptSessionsIncluded} PT Sessions Included
+                      </span>
+                    )}
+                    {selectedPlan?.freezeAllowed !== undefined && (
+                      <span className="bg-warning/20 px-2 py-0.5 rounded font-medium">
+                        {selectedPlan.freezeAllowed ? '❄️ Freeze Permitted' : '🚫 No Freeze'}
+                      </span>
+                    )}
+                  </div>
                 )}
               </div>
             )}

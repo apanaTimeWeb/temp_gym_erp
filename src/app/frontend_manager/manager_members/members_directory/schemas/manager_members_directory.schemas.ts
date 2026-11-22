@@ -17,7 +17,12 @@ export const planSnapshotSchema = z.object({
   price3Month: z.number().int().nonnegative(),
   price6Month: z.number().int().nonnegative(),
   price12Month: z.number().int().nonnegative(),
-  priceCustom: z.number().int().nonnegative().optional() });
+  priceCustom: z.number().int().nonnegative().optional(),
+  joiningFee: z.number().nonnegative().optional(),
+  taxRate: z.number().nonnegative().optional(),
+  ptSessionsIncluded: z.number().int().nonnegative().optional(),
+  freezeAllowed: z.boolean().optional(),
+});
 
 export const paymentSnapshotSchema = z.object({
   id: z.string(),

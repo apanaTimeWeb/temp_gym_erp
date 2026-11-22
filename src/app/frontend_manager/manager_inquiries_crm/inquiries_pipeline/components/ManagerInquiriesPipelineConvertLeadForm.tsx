@@ -156,6 +156,29 @@ export default function ManagerInquiriesPipelineConvertLeadForm({
         <input id="manager-managerinquiriesconvertleadform-field-6" className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "w-full border rounded-xl px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-text-primary motion-safe:transition-all motion-safe:duration-200"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_inquiries-convert-lead-modal-input-number-3" type="number" min="0" max={MANAGER_INQUIRY_MAX_AMOUNT_MAJOR_UNITS} step="0.01" onKeyDown={(e) => { if (e.key === '-' || e.key === 'e' || e.key === '+') e.preventDefault(); }} {...register('paidAmount', { valueAsNumber: true })}  />
       </div>
 
+      <div>
+        <label className="block text-sm font-medium text-text-secondary mb-0.5">{t("COPY_METHOD") || 'Payment Method'}</label>
+        <Controller
+          name="paymentMethod"
+          control={control}
+          render={({ field }) => (
+            <ManagerSearchableDropdown
+              ariaLabel={t("COPY_METHOD") || 'Payment Method'}
+              dataTestId="manager_inquiries-convert-lead-payment-method"
+              options={[
+                { label: 'UPI / QR', value: 'UPI' },
+                { label: 'Cash', value: 'CASH' },
+                { label: 'Debit / Credit Card', value: 'CARD' },
+                { label: 'Net Banking', value: 'NET_BANKING' },
+              ]}
+              value={field.value || 'UPI'}
+              onChange={field.onChange}
+              data-testid="manager_inquiries-convert-lead-payment-method-dropdown"
+            />
+          )}
+        />
+      </div>
+
       <div className="sm:col-span-2">
         <label htmlFor="manager-convert-lead-medical-history" className="block text-sm font-medium text-text-secondary mb-0.5">{t("COPY_MEDICAL_HISTORY_NOTES_OPTIONAL")}</label>
         <textarea
