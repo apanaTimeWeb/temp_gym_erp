@@ -17,6 +17,8 @@ export const TrainerLibraryDietPlanSchema = z.object({
         time: z.string().optional(),
         items: z.string().optional(),
         description: z.string().optional(),
+        calories: z.number().optional(),
+        foods: z.array(z.string()).optional(),
       }),
     ])
   ),

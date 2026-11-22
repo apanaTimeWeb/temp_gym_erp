@@ -79,4 +79,7 @@ export interface Expense {
   billNumber?: string;
   approvedBy?: string;
   receiptUrl?: string;
+  paymentMode?: string;
+  status?: string;
+  taxAmount?: number;
 }

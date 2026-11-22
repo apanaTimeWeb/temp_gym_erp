@@ -66,7 +66,10 @@ export const expenseSchema = z.object({
     vendor: z.string().optional(),
     billNumber: z.string().optional(),
     approvedBy: z.string().optional(),
-    receiptUrl: z.string().optional()
+    receiptUrl: z.string().optional(),
+    paymentMode: z.string().optional(),
+    status: z.string().optional(),
+    taxAmount: z.number().int().optional(),
 });
 
 export const financeInitialDataSchema = z.object({

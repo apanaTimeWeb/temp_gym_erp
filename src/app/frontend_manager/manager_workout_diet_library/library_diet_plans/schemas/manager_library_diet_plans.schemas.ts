@@ -9,6 +9,8 @@ export const dietMealSchema = z.object({
   time: z.string().optional(),
   name: z.string().optional(),
   calories: z.number().optional(),
+  items: z.string().optional(),
+  description: z.string().optional(),
   foods: z.array(z.string()).optional() });
 
 export const dietPlanSchema = z.object({
