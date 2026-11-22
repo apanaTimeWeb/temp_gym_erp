@@ -91,7 +91,7 @@ export default function ManagerMembershipLifecycleCrudModal() {
             ))}
           </fieldset>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div>
               <label htmlFor="manager-plans-crud-joiningFee" className="block text-sm font-medium text-text-secondary">Admission Fee ({ManagerEnvConfig.currencyCode})</label>
               <input id="manager-plans-crud-joiningFee" type="number" min="0" step="0.01" {...register('joiningFee', { valueAsNumber: true })} className={fieldClassName} />
@@ -99,6 +99,10 @@ export default function ManagerMembershipLifecycleCrudModal() {
             <div>
               <label htmlFor="manager-plans-crud-priceCustom" className="block text-sm font-medium text-text-secondary">Custom Daily Rate ({ManagerEnvConfig.currencyCode})</label>
               <input id="manager-plans-crud-priceCustom" type="number" min="0" step="0.01" {...register('priceCustom', { valueAsNumber: true })} className={fieldClassName} />
+            </div>
+            <div>
+              <label htmlFor="manager-plans-crud-taxRate" className="block text-sm font-medium text-text-secondary">Tax / GST (%)</label>
+              <input id="manager-plans-crud-taxRate" type="number" min="0" max="100" step="0.1" {...register('taxRate', { valueAsNumber: true })} placeholder="e.g. 18" className={fieldClassName} />
             </div>
             <div>
               <label htmlFor="manager-plans-crud-ptSessions" className="block text-sm font-medium text-text-secondary">PT Sessions Included</label>

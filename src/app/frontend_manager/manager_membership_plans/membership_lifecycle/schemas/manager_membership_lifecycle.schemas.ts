@@ -15,6 +15,7 @@ export const planSchema = z.object({
   price12Month: z.number().int().nonnegative(),
   priceCustom: z.number().nonnegative().optional(),
   joiningFee: z.number().nonnegative().optional(),
+  taxRate: z.number().nonnegative().optional(),
   ptSessionsIncluded: z.number().int().nonnegative().optional(),
   freezeAllowed: z.boolean().optional(),
   features: z.array(z.string()),

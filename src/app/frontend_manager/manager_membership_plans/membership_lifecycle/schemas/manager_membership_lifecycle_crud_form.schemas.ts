@@ -14,6 +14,7 @@ export const managerPlansCrudFormSchema = z.object({
   price12Month: z.coerce.number().nonnegative(),
   priceCustom: z.coerce.number().nonnegative().optional().default(0),
   joiningFee: z.coerce.number().nonnegative().optional().default(0),
+  taxRate: z.coerce.number().min(0).max(100).optional().default(0),
   ptSessionsIncluded: z.coerce.number().int().nonnegative().optional().default(0),
   freezeAllowed: z.boolean().optional().default(true),
   featuresText: z.string().max(1000).default(''),

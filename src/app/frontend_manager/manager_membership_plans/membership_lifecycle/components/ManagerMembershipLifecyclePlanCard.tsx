@@ -53,11 +53,16 @@ export default function ManagerMembershipLifecyclePlanCard({ plan }: ManagerMemb
 
       <ManagerMembershipLifecyclePlanPricing plan={plan} />
 
-      {(plan.joiningFee !== undefined || plan.priceCustom !== undefined || plan.ptSessionsIncluded !== undefined || plan.freezeAllowed !== undefined) && (
+      {(plan.joiningFee !== undefined || plan.priceCustom !== undefined || plan.taxRate !== undefined || plan.ptSessionsIncluded !== undefined || plan.freezeAllowed !== undefined) && (
         <div className="flex flex-wrap gap-2 text-xs">
           {plan.joiningFee !== undefined && (
             <span className="rounded-md bg-secondary-subtle/50 px-2.5 py-1 font-medium text-text-secondary">
               + Admission: {ManagerMembershipLifecycleFormatCurrency(plan.joiningFee, ManagerEnvConfig.currencyCode, locale)}
+            </span>
+          )}
+          {plan.taxRate !== undefined && plan.taxRate > 0 && (
+            <span className="rounded-md bg-warning-bg px-2.5 py-1 font-medium text-warning-text">
+              + Tax: {plan.taxRate}% GST
             </span>
           )}
           {plan.priceCustom !== undefined && (

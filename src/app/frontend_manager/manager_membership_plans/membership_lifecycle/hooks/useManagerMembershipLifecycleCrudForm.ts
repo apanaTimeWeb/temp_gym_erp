@@ -28,7 +28,7 @@ export function useManagerMembershipLifecycleCrudForm(plan: Plan | null, open: b
   const idempotencyKeyRef = useRef<{ fingerprint: string; key: string } | null>(null);
   const form = useForm<ManagerMembershipLifecycleCrudFormInput, unknown, ManagerMembershipLifecycleCrudFormOutput>({
     resolver: zodResolver(managerPlansCrudFormSchema),
-    defaultValues: { name: '', tier: 'BASIC', price1Month: 0, price3Month: 0, price6Month: 0, price12Month: 0, priceCustom: 0, joiningFee: 0, ptSessionsIncluded: 0, freezeAllowed: true, featuresText: '', isActive: true },
+    defaultValues: { name: '', tier: 'BASIC', price1Month: 0, price3Month: 0, price6Month: 0, price12Month: 0, priceCustom: 0, joiningFee: 0, taxRate: 0, ptSessionsIncluded: 0, freezeAllowed: true, featuresText: '', isActive: true },
     mode: 'onSubmit'
   });
   const previousPlanId = useRef<string | null>(null);
@@ -50,6 +50,7 @@ export function useManagerMembershipLifecycleCrudForm(plan: Plan | null, open: b
       price12Month: ManagerInfrastructureFromManagerMinorUnits(plan.price12Month),
       priceCustom: plan.priceCustom ? ManagerInfrastructureFromManagerMinorUnits(plan.priceCustom) : 0,
       joiningFee: plan.joiningFee ? ManagerInfrastructureFromManagerMinorUnits(plan.joiningFee) : 0,
+      taxRate: plan.taxRate ?? 0,
       ptSessionsIncluded: plan.ptSessionsIncluded ?? 0,
       freezeAllowed: plan.freezeAllowed ?? true,
       featuresText: plan.features.join('\n'),
@@ -63,6 +64,7 @@ export function useManagerMembershipLifecycleCrudForm(plan: Plan | null, open: b
       price12Month: 0,
       priceCustom: 0,
       joiningFee: 0,
+      taxRate: 0,
       ptSessionsIncluded: 0,
       freezeAllowed: true,
       featuresText: '',
@@ -84,6 +86,7 @@ export function useManagerMembershipLifecycleCrudForm(plan: Plan | null, open: b
       price12Month: ManagerInfrastructureToManagerMinorUnits(values.price12Month),
       priceCustom: ManagerInfrastructureToManagerMinorUnits(values.priceCustom || 0),
       joiningFee: ManagerInfrastructureToManagerMinorUnits(values.joiningFee || 0),
+      taxRate: values.taxRate || 0,
       ptSessionsIncluded: values.ptSessionsIncluded || 0,
       freezeAllowed: values.freezeAllowed ?? true,
       features: values.featuresText.split('\n').map((value) => value.trim()).filter(Boolean),

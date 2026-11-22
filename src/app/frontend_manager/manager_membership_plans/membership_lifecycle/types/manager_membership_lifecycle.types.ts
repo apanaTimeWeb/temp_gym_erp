@@ -36,6 +36,7 @@ export interface Plan {
   features: string[]; isActive: boolean;
   priceCustom?: number;
   joiningFee?: number;
+  taxRate?: number;
   ptSessionsIncluded?: number;
   freezeAllowed?: boolean;
 }
