@@ -39,7 +39,38 @@ export default function ManagerMembersDirectoryRenewModal() {
             <div><label className="block text-sm font-medium text-text-secondary mb-1.5">{t("COPY_PLAN_2")}</label><Controller name="planId" control={control} render={({ field }) => <ManagerSearchableDropdown ariaLabel={t("COPY_PLAN_2")} ariaInvalid={Boolean(errors.planId)} ariaDescribedBy={errors.planId ? 'managermembersrenewmodal-planId-error' : undefined} dataTestId="manager_members-managermembersrenewmodal-managersearchabledropdown-1" options={plans.map((plan) => ({ value: String(plan.id), label: plan.name }))} value={field.value} onChange={field.onChange} placeholder={t("COPY_SELECT_PLAN_1")}  data-testid="manager_members-managermembersrenewmodal-searchable-dropdown-1"/>} />{errors.planId && <p id="managermembersrenewmodal-planId-error" className="text-danger-text text-xs mt-1">{errors.planId.message}</p>}</div>
             <div><label className="block text-sm font-medium text-text-secondary mb-1.5">{t("COPY_BILLING_CYCLE_1")}</label><Controller name="billingCycle" control={control} render={({ field }) => <ManagerSearchableDropdown ariaLabel={t("COPY_BILLING_CYCLE_1")} ariaInvalid={Boolean(errors.billingCycle)} ariaDescribedBy={errors.billingCycle ? 'managermembersrenewmodal-billingCycle-error' : undefined} dataTestId="manager_members-managermembersrenewmodal-managersearchabledropdown-2" value={field.value} onChange={field.onChange} options={Object.entries(cycleLabels).map(([value, labelKey]) => ({ value, label: t(labelKey) }))}  data-testid="manager_members-managermembersrenewmodal-searchable-dropdown-2"/>} />{errors.billingCycle && <p id="managermembersrenewmodal-billingCycle-error" className="text-danger-text text-xs mt-1">{errors.billingCycle.message}</p>}</div>
             {billingCycle === BILLING_CYCLE_CUSTOM && <div className="sm:col-span-2"><label htmlFor="manager-renew-custom-days" className="block text-sm font-medium text-text-secondary mb-1.5">{t("COPY_CUSTOM_DAYS_2")}</label><input data-testid="manager_members-manager-renew-modal-manager-renew-custom-days" id="manager-renew-custom-days" type="number" min="1" max={MANAGER_MEMBER_MAX_CUSTOM_DAYS} step="1" {...register('customDays', { valueAsNumber: true })} className="w-full border rounded-xl px-4 py-3 text-sm bg-input text-text-primary border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page" aria-invalid={errors.customDays ? 'true' : undefined} aria-describedby={errors.customDays ? 'managermembersrenewmodal-customDays-error' : undefined} />{errors.customDays && <p id="managermembersrenewmodal-customDays-error" className="text-danger-text text-xs mt-1">{errors.customDays.message}</p>}</div>}
-            {planId && <div className="sm:col-span-2 bg-primary-subtle rounded-xl p-4 text-sm border border-border-focus flex justify-between items-center"><span className="font-semibold text-text-primary">{actionType === 'renew' ? t('TEXT_RENEWAL_LABEL') : t('TEXT_UPGRADE_LABEL')}{t("COPY_PRICE")}</span><span className="text-text-primary font-bold">{ManagerMembersDirectoryFormatCurrency(calculatedPrice, ManagerEnvConfig.currencyCode, locale)}</span>{!selectedPlan && <span className="sr-only">{t("COPY_SELECTED_PLAN_DETAILS_UNAVAILABLE")}</span>}</div>}
+            {planId && (
+              <div className="sm:col-span-2 bg-primary-subtle rounded-xl p-4 text-sm border border-border-focus flex flex-col gap-2">
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold text-text-primary">
+                    {actionType === 'renew' ? t('TEXT_RENEWAL_LABEL') : t('TEXT_UPGRADE_LABEL')}{t("COPY_PRICE")}
+                  </span>
+                  <span className="text-text-primary font-bold">
+                    {ManagerMembersDirectoryFormatCurrency(calculatedPrice, ManagerEnvConfig.currencyCode, locale)}
+                  </span>
+                </div>
+                {selectedPlan && (Boolean(selectedPlan.taxRate) || Boolean(selectedPlan.ptSessionsIncluded) || selectedPlan.freezeAllowed !== undefined) && (
+                  <div className="flex flex-wrap gap-2 pt-2 border-t border-border-focus/30 text-xs">
+                    {Boolean(selectedPlan.taxRate && selectedPlan.taxRate > 0) && (
+                      <span className="bg-primary/20 px-2 py-0.5 rounded font-medium text-text-primary">
+                        🏛️ + Tax: {selectedPlan.taxRate}% GST
+                      </span>
+                    )}
+                    {Boolean(selectedPlan.ptSessionsIncluded) && (
+                      <span className="bg-primary/20 px-2 py-0.5 rounded font-medium text-text-primary">
+                        🎯 {selectedPlan.ptSessionsIncluded} PT Sessions Included
+                      </span>
+                    )}
+                    {selectedPlan.freezeAllowed !== undefined && (
+                      <span className="bg-primary/20 px-2 py-0.5 rounded font-medium text-text-primary">
+                        {selectedPlan.freezeAllowed ? '❄️ Freeze Permitted' : '🚫 No Freeze'}
+                      </span>
+                    )}
+                  </div>
+                )}
+                {!selectedPlan && <span className="sr-only">{t("COPY_SELECTED_PLAN_DETAILS_UNAVAILABLE")}</span>}
+              </div>
+            )}
             <div><label htmlFor="manager-renew-paid" className="block text-sm font-medium text-text-secondary mb-1.5">{t("COPY_AMOUNT_PAID_1")}</label><input data-testid="manager_members-manager-renew-modal-manager-renew-paid" id="manager-renew-paid" type="number" min="0" max={MANAGER_MEMBER_MAX_AMOUNT_MAJOR_UNITS} step="0.01" {...register('paidAmount', { valueAsNumber: true })} className="w-full border rounded-xl px-4 py-3 text-sm bg-input text-text-primary border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page" aria-invalid={errors.paidAmount ? 'true' : undefined} aria-describedby={errors.paidAmount ? 'managermembersrenewmodal-paidAmount-error' : undefined} />{errors.paidAmount && <p id="managermembersrenewmodal-paidAmount-error" className="text-danger-text text-xs mt-1">{errors.paidAmount.message}</p>}</div>
             <div><label className="block text-sm font-medium text-text-secondary mb-1.5">{t("COPY_PAYMENT_METHOD_2")}</label><Controller name="paymentMethod" control={control} render={({ field }) => <ManagerSearchableDropdown ariaLabel={t("COPY_PAYMENT_METHOD_2")} ariaInvalid={Boolean(errors.paymentMethod)} ariaDescribedBy={errors.paymentMethod ? 'managermembersrenewmodal-paymentMethod-error' : undefined} dataTestId="manager_members-managermembersrenewmodal-managersearchabledropdown-3" value={field.value} onChange={field.onChange} options={paymentMethods.map((option) => ({ value: option.value, label: t(option.labelKey) }))}  data-testid="manager_members-managermembersrenewmodal-searchable-dropdown-3"/>} />{errors.paymentMethod && <p id="managermembersrenewmodal-paymentMethod-error" className="text-danger-text text-xs mt-1">{errors.paymentMethod.message}</p>}</div>
             <div className="sm:col-span-2 pt-4 border-t border-border"><label htmlFor="manager-renew-expiry" className="block text-sm font-medium text-text-secondary mb-1.5">{t("COPY_NEW_EXPIRY_DATE")}</label><input data-testid="manager_members-manager-renew-modal-manager-renew-expiry" id="manager-renew-expiry" type="date" {...register('newExpiryDate')} readOnly aria-readonly="true" className="w-full border rounded-xl px-4 py-3 text-sm font-bold bg-success-bg text-success-text border-success opacity-50 cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page" /><p className="text-xs text-text-secondary mt-1">{t("COPY_CALCULATED_SELECTED_PLAN_BILLING_CYCLE")}</p></div>

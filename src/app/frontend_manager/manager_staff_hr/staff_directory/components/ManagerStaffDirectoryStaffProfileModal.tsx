@@ -1,6 +1,6 @@
 // RESPONSIBILITY: Renders ManagerStaffDirectoryStaffProfileModal's feature UI and orchestrates presentation through module-owned state/hooks; it does not own API transport or business rules.
 'use client';
-import { X, Edit2, Phone, Mail, Calendar, MapPin, IndianRupee, Hash } from 'lucide-react';
+import { X, Edit2, Phone, Mail, Calendar, MapPin, IndianRupee, Hash, PhoneCall, MessageCircle } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 
 import ManagerTooltip from '@/components/ui/manager_tooltip/ManagerTooltip';
@@ -53,20 +53,56 @@ export default function ManagerStaffDirectoryStaffProfileModal() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6">
-            <div className="flex items-start gap-3">
-              <Phone size={18} strokeWidth={2} className="text-text-secondary mt-0.5"/>
-              <div>
-                <p className="text-xs text-text-secondary mb-0.5">{t("COPY_PHONE_1")}</p>
-                <p className="text-sm font-semibold text-text-primary">{ManagerStaffPayrollAndAttendanceMaskSensitiveData(s.phone, 'phone')}</p>
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-start gap-3 min-w-0">
+                <Phone size={18} strokeWidth={2} className="text-text-secondary mt-0.5 shrink-0"/>
+                <div className="min-w-0">
+                  <p className="text-xs text-text-secondary mb-0.5">{t("COPY_PHONE_1")}</p>
+                  <p className="text-sm font-semibold text-text-primary truncate">{ManagerStaffPayrollAndAttendanceMaskSensitiveData(s.phone, 'phone')}</p>
+                </div>
               </div>
+              {s.phone && (
+                <div className="flex items-center gap-1.5 shrink-0 mt-0.5">
+                  <a
+                    href={`tel:${s.phone.replace(/[^0-9+]/g, '')}`}
+                    className="p-1.5 rounded-lg bg-surface hover:bg-surface-hover text-text-secondary hover:text-text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                    title="Call Staff"
+                    aria-label={`Call ${s.phone}`}
+                  >
+                    <PhoneCall size={14} />
+                  </a>
+                  <a
+                    href={`https://wa.me/${s.phone.replace(/[^0-9]/g, '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                    title="WhatsApp Staff"
+                    aria-label={`WhatsApp ${s.phone}`}
+                  >
+                    <MessageCircle size={14} />
+                  </a>
+                </div>
+              )}
             </div>
             
-            <div className="flex items-start gap-3">
-              <Mail size={18} strokeWidth={2} className="text-text-secondary mt-0.5"/>
-              <div>
-                <p className="text-xs text-text-secondary mb-0.5">{t("COPY_EMAIL")}</p>
-                <ManagerTooltip content={ManagerStaffPayrollAndAttendanceMaskSensitiveData(s.email, 'email')}><p className="text-sm font-semibold text-text-primary truncate max-w-40">{ManagerStaffPayrollAndAttendanceMaskSensitiveData(s.email, 'email')}</p></ManagerTooltip>
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-start gap-3 min-w-0">
+                <Mail size={18} strokeWidth={2} className="text-text-secondary mt-0.5 shrink-0"/>
+                <div className="min-w-0">
+                  <p className="text-xs text-text-secondary mb-0.5">{t("COPY_EMAIL")}</p>
+                  <ManagerTooltip content={ManagerStaffPayrollAndAttendanceMaskSensitiveData(s.email, 'email')}><p className="text-sm font-semibold text-text-primary truncate max-w-32">{ManagerStaffPayrollAndAttendanceMaskSensitiveData(s.email, 'email')}</p></ManagerTooltip>
+                </div>
               </div>
+              {s.email && (
+                <a
+                  href={`mailto:${s.email}`}
+                  className="p-1.5 rounded-lg bg-surface hover:bg-surface-hover text-text-secondary hover:text-text-primary transition-colors shrink-0 mt-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                  title="Email Staff"
+                  aria-label={`Email ${s.email}`}
+                >
+                  <Mail size={14} />
+                </a>
+              )}
             </div>
             
             <div className="flex items-start gap-3">
@@ -126,15 +162,27 @@ export default function ManagerStaffDirectoryStaffProfileModal() {
             </div>
 
             {(s.emergencyContactName || s.emergencyContactPhone || s.emergencyContact) && (
-              <div className="sm:col-span-2 p-3 rounded-xl bg-input border border-border">
-                <p className="text-xs font-bold uppercase tracking-wider text-text-secondary mb-1.5">Emergency Contact</p>
-                <p className="text-sm font-semibold text-text-primary">
-                  {s.emergencyContactName || s.emergencyContact?.name || 'Contact'}:{' '}
-                  <span className="font-mono text-text-secondary">
-                    {ManagerStaffPayrollAndAttendanceMaskSensitiveData(s.emergencyContactPhone || s.emergencyContact?.phone, 'phone')}
-                  </span>
-                  {s.emergencyContact?.relation && <span className="text-xs text-text-secondary ml-1">({s.emergencyContact.relation})</span>}
-                </p>
+              <div className="sm:col-span-2 p-3 rounded-xl bg-input border border-border flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wider text-text-secondary mb-1">Emergency Contact</p>
+                  <p className="text-sm font-semibold text-text-primary">
+                    {s.emergencyContactName || s.emergencyContact?.name || 'Contact'}:{' '}
+                    <span className="font-mono text-text-secondary">
+                      {ManagerStaffPayrollAndAttendanceMaskSensitiveData(s.emergencyContactPhone || s.emergencyContact?.phone, 'phone')}
+                    </span>
+                    {s.emergencyContact?.relation && <span className="text-xs text-text-secondary ml-1">({s.emergencyContact.relation})</span>}
+                  </p>
+                </div>
+                {(s.emergencyContactPhone || s.emergencyContact?.phone) && (
+                  <a
+                    href={`tel:${(s.emergencyContactPhone || s.emergencyContact?.phone || '').replace(/[^0-9+]/g, '')}`}
+                    className="p-1.5 rounded-lg bg-surface hover:bg-surface-hover text-text-secondary hover:text-text-primary transition-colors shrink-0"
+                    title="Call Emergency Contact"
+                    aria-label={`Call emergency contact ${s.emergencyContactPhone || s.emergencyContact?.phone}`}
+                  >
+                    <PhoneCall size={14} />
+                  </a>
+                )}
               </div>
             )}
 

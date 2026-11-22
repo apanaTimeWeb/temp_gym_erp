@@ -86,11 +86,16 @@ export default function ManagerMembersDirectoryModalMembershipFields({ formState
                     <div className="text-warning-text text-xs opacity-80">{t("COPY_PER_DAY")}{ManagerMembersDirectoryFormatCurrency(selectedPlan?.priceCustom || 0, ManagerEnvConfig.currencyCode, locale)} × {watchCustomDays || 0}{t("COPY_DAYS_2")}</div>
                   )}
                 </div>
-                {(Boolean(selectedPlan?.joiningFee) || Boolean(selectedPlan?.ptSessionsIncluded) || selectedPlan?.freezeAllowed !== undefined) && (
+                {(Boolean(selectedPlan?.joiningFee) || Boolean(selectedPlan?.ptSessionsIncluded) || Boolean(selectedPlan?.taxRate) || selectedPlan?.freezeAllowed !== undefined) && (
                   <div className="flex flex-wrap gap-2 pt-2 border-t border-warning/30 text-xs text-warning-text">
                     {Boolean(selectedPlan?.joiningFee) && (
                       <span className="bg-warning/20 px-2 py-0.5 rounded font-medium">
                         + Admission Fee: {ManagerMembersDirectoryFormatCurrency((selectedPlan?.joiningFee || 0) * 100, ManagerEnvConfig.currencyCode, locale)}
+                      </span>
+                    )}
+                    {Boolean(selectedPlan?.taxRate && selectedPlan.taxRate > 0) && (
+                      <span className="bg-warning/20 px-2 py-0.5 rounded font-medium">
+                        🏛️ + Tax: {selectedPlan?.taxRate}% GST
                       </span>
                     )}
                     {Boolean(selectedPlan?.ptSessionsIncluded) && (
