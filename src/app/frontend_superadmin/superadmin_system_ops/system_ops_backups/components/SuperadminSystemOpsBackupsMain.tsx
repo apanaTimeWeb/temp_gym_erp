@@ -61,7 +61,7 @@ export default function SuperadminSystemOpsBackupsMain() {
     </div>
     <SuperadminSystemOpsBackupsErrorBoundary variant="inline">
       <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden flex flex-col min-h-96">
-        <div className="p-4 border-b border-border flex flex-col sm:flex-row gap-4 justify-between items-center bg-surface-highlight/30">
+        <div className="p-4 border-b border-border flex flex-col sm:flex-row gap-4 justify-between items-center bg-card">
           <div className="relative w-full max-w-md">
             <label htmlFor="superadmin-backups-search" className="sr-only">{t('ui.search_by_gym_name_or_database_d36489b')}</label>
             <Search size={18} strokeWidth={2} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" />
@@ -127,7 +127,7 @@ export default function SuperadminSystemOpsBackupsMain() {
             />
           );
         })()}
-        <div className="border-t border-border px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-card/60">
+        <div className="border-t border-border px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-card">
           <p className="text-xs text-secondary" aria-live="polite">
             Showing <span className="font-semibold text-primary">{formatCount(startRow)}</span>–<span className="font-semibold text-primary">{formatCount(endRow)}</span> of <span className="font-semibold text-primary">{formatCount(totalRecords)}</span> backups
           </p>

@@ -38,7 +38,7 @@ export default function SuperadminSupportTicketsManagementMain() {
     <SuperadminSupportTicketsHeader search={vm.search} setSearch={vm.setSearch} showFilter={vm.showFilter} setShowFilter={vm.setShowFilter} statusFilter={vm.statusFilter} setStatusFilter={vm.setStatusFilter} priorityFilter={vm.priorityFilter} setPriorityFilter={vm.setPriorityFilter} onFilterChange={() => vm.setCurrentPage(1)} />
     <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden flex flex-col min-h-96">
       <SuperadminSupportTicketsManagementErrorBoundary variant="inline"><SuperadminSupportTicketsTable tickets={vm.paginatedTickets} onInspect={vm.setDetailModalTicketId} onReply={vm.setReplyModalTicketId} onClose={vm.handleCloseTicket} onAssign={vm.handleOpenAssign} /></SuperadminSupportTicketsManagementErrorBoundary>
-      <div className="border-t border-border px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-card/60">
+      <div className="border-t border-border px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-card">
         <p className="text-xs text-secondary" aria-live="polite">
           {vm.t('ui.showing_page', { page: vm.currentPage, total: vm.totalPages }) || `Page ${vm.currentPage} of ${vm.totalPages}`}
         </p>

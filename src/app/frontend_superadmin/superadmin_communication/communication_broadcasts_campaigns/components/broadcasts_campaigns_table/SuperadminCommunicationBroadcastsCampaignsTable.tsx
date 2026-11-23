@@ -194,7 +194,7 @@ export default function SuperadminCommunicationBroadcastsCampaignsTable({
         </table>
       </div>
       {totalPages !== undefined && onPageChange && totalPages > 1 && (
-        <div className="p-4 border-t border-border flex flex-wrap items-center justify-between gap-3 bg-surface-highlight/10">
+        <div className="p-4 border-t border-border flex flex-wrap items-center justify-between gap-3 bg-card">
           <Pagination currentPage={currentPage ?? 1} totalPages={totalPages} onPageChange={onPageChange} />
         </div>
       )}

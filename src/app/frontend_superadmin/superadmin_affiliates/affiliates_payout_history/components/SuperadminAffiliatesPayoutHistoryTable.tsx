@@ -160,7 +160,7 @@ export default function SuperadminAffiliatesPayoutHistoryTable({ payouts, isPend
 
       {/* In-Card Bottom-Pinned Pagination Bar */}
       {!isPending && !isError && totalRecords > 0 && (
-        <div className="border-t border-border px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-card/60">
+        <div className="border-t border-border px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-card">
           <p className="text-xs text-secondary" aria-live="polite">
             {t('ui.pagination_summary', {
               start: formatCount(startRow),

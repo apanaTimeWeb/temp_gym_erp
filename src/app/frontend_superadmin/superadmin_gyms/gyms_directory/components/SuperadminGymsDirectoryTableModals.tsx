@@ -2,7 +2,9 @@
 
 import React from 'react';
 import type { Tenant } from '../types/SuperadminGymsDirectoryTenantTypes';
-import { ConfirmDialog, TenantHistoryDrawer, TenantEditModal } from './tenant';
+import { SuperadminGymsDirectoryConfirmDialog as ConfirmDialog } from './tenant/SuperadminGymsDirectoryConfirmDialog';
+import { SuperadminGymsDirectoryTenantHistoryDrawer as TenantHistoryDrawer } from './tenant/SuperadminGymsDirectoryTenantHistoryDrawer';
+import { SuperadminGymsDirectoryTenantEditModal as TenantEditModal } from './tenant/SuperadminGymsDirectoryTenantEditModal';
 
 export interface SuperadminGymsDirectoryTableModalsProps {
   selectedTenantForDrawer: Tenant | null;

@@ -105,7 +105,6 @@ export function SuperadminGymsDirectoryTableToolbar({
           {isColumnDropdownOpen && (
             <div
               className="absolute end-0 top-full mt-1.5 w-60 bg-card border border-border rounded-xl shadow-2xl p-2 z-50 space-y-1"
-              style={{ backgroundColor: 'var(--color-card, var(--bg-card, #111111))' }}
             >
               <p className="text-xs font-semibold text-disabled px-2 py-1 uppercase tracking-wider">
                 Show / Hide Columns

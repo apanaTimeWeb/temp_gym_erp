@@ -35,7 +35,7 @@ export default function SuperadminAuditComplianceGlobalAuditOverviewMain() {
     <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden flex flex-col">
       <SuperadminAuditComplianceGlobalAuditFilters search={vm.search} severityFilter={vm.severityFilter} actorTypeFilter={vm.actorTypeFilter} severityOptions={vm.severityOptions} actorTypeOptions={vm.actorTypeOptions} setSearch={vm.setSearch} setSeverityFilter={vm.setSeverityFilter} setActorTypeFilter={vm.setActorTypeFilter}/>
       <SuperadminAuditComplianceGlobalAuditTable logs={vm.logs}/>
-      <div className="border-t border-border px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-card/60">
+      <div className="border-t border-border px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-card">
         <p className="text-xs text-secondary" aria-live="polite">
           Showing <span className="font-semibold text-primary">{formatCount(startRow)}</span>–<span className="font-semibold text-primary">{formatCount(endRow)}</span> of <span className="font-semibold text-primary">{formatCount(totalRecords)}</span> records
         </p>

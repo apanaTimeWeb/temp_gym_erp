@@ -47,7 +47,7 @@ export default function SuperadminBillingInvoicesManagementMain() {
         </div>
       </div>
       {activeTab === 'AGING' ? <SuperadminBillingInvoicesAgingReport invoices={invoices}/> : <>
-        <div className="p-4 border-b border-border bg-surface-highlight/30 flex flex-wrap items-center justify-between gap-3">
+        <div className="p-4 border-b border-border bg-card flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2.5 flex-wrap flex-1">
             <div className="relative min-w-[240px] sm:w-72">
               <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" aria-hidden="true"/>

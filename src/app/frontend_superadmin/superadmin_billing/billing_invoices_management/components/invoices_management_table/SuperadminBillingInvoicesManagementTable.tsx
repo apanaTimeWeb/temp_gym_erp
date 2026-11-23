@@ -101,7 +101,7 @@ export default function SuperadminBillingInvoicesManagementTable({
     <div className="flex flex-col min-h-96">
       {/* Batch Action Floating / Top Bar */}
       {selectedIds.size > 0 && (
-        <div className="p-3 bg-primary/10 border-b border-primary/20 flex flex-wrap items-center justify-between gap-3 motion-safe:animate-fadeIn">
+        <div className="p-3 bg-primary-subtle border-b border-border flex flex-wrap items-center justify-between gap-3 motion-safe:animate-fadeIn">
           <div className="flex items-center gap-2">
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary text-on-primary">
               {selectedIds.size} Selected
@@ -192,7 +192,7 @@ export default function SuperadminBillingInvoicesManagementTable({
       </div>
 
       {/* In-Card Bottom-Pinned Pagination Bar */}
-      <div className="border-t border-border px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-card/60">
+      <div className="border-t border-border px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-card">
         <p className="text-xs text-secondary" aria-live="polite">
           Showing <span className="font-semibold text-primary">{new Intl.NumberFormat(locale).format(startRow)}</span>–<span className="font-semibold text-primary">{new Intl.NumberFormat(locale).format(endRow)}</span> of <span className="font-semibold text-primary">{new Intl.NumberFormat(locale).format(effectiveTotal)}</span> invoices
         </p>

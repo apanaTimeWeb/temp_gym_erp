@@ -124,7 +124,7 @@ export function SuperadminCommunicationMessagingCenterMessagesTab({ search, setS
         </div>
 
         {isFetching && <div className="border-t border-border px-5 py-2 text-xs text-secondary">{t('ui.refreshing_message_results_b3e8951')}</div>}
-        <div className="p-4 border-t border-border flex flex-wrap items-center justify-between gap-3 bg-surface-highlight/10">
+        <div className="p-4 border-t border-border flex flex-wrap items-center justify-between gap-3 bg-card">
           <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} totalItems={totalItems} itemsPerPage={10} data-testid="superadmin_communication_messaging-superadmin-messaging-messages-tab-messaging-messages-tab-pagination"/>
         </div>
       </div>

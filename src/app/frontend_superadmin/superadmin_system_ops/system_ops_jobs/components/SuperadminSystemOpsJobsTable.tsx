@@ -39,7 +39,7 @@ export default function SuperadminSystemOpsJobsTable({ jobs, allJobsFiltered, se
     return (
     <div className="flex flex-col flex-1">
       {selectedJobIds.size > 0 && (
-        <div className="p-3 bg-primary/10 border-b border-primary/20 flex flex-wrap items-center justify-between gap-3 motion-safe:animate-fadeIn">
+        <div className="p-3 bg-primary-subtle border-b border-border flex flex-wrap items-center justify-between gap-3 motion-safe:animate-fadeIn">
           <div className="flex items-center gap-2">
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary text-on-primary">
               {selectedJobIds.size} {t('ui.selected') ?? 'Selected'}
@@ -73,7 +73,7 @@ export default function SuperadminSystemOpsJobsTable({ jobs, allJobsFiltered, se
           {jobs.length === 0 ? <SuperadminSystemOpsJobsEmptyState isFiltered={allJobsFiltered}/> : jobs.map((job, index) => {
             const statusKey = job.status as keyof typeof SUPERADMIN_JOBS_STATUS_STYLES;
             const isSelected = selectedJobIds.has(job.id);
-            return (<tr key={job.id} tabIndex={0} aria-label={t('ui.a11y_inspect_job', { id: job.id })} data-testid={`superadmin_system_ops_jobs-table-${job.id}-inspect`} onClick={() => onInspect(job)} onKeyDown={(event) => { if (event.target !== event.currentTarget) return; if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onInspect(job); } }} className={`hover:bg-surface-hover motion-safe:transition-colors group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ${isSelected ? 'bg-primary-subtle/50 border-s-4 border-s-primary' : ''}`}>
+            return (<tr key={job.id} tabIndex={0} aria-label={t('ui.a11y_inspect_job', { id: job.id })} data-testid={`superadmin_system_ops_jobs-table-${job.id}-inspect`} onClick={() => onInspect(job)} onKeyDown={(event) => { if (event.target !== event.currentTarget) return; if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onInspect(job); } }} className={`hover:bg-surface-hover motion-safe:transition-colors group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ${isSelected ? 'bg-primary-subtle border-s-4 border-s-primary' : ''}`}>
                 <td className="sticky start-0 z-10 w-12 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-border p-4 text-center transition-colors" onClick={(e) => e.stopPropagation()} data-testid={`superadmin_system_ops_jobs-superadminjobstable-click-action-${index}`} data-mobile-label={t('ui.mobile_select_all_visible_jobs')}>
                   <input  type="checkbox" aria-label={t('ui.a11y_select_job', { id: job.id })} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page rounded border-border text-primary cursor-pointer w-4 h-4 min-h-11 min-w-11 motion-safe:transition-all motion-safe:duration-base ease-in-out" checked={selectedJobIds.has(job.id)} onChange={() => toggleSelection(job.id)} data-testid={`superadmin_system_ops_jobs-jobs-table-control-${index}`}/>
                 </td>

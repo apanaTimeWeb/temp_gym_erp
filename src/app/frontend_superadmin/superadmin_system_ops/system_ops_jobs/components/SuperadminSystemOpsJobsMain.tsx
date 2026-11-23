@@ -54,7 +54,7 @@ export default function SuperadminSystemOpsJobsMain() {
 
     <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden flex flex-col min-h-96">
       <SuperadminSystemOpsJobsTable jobs={paginatedJobs} allJobsFiltered={statusFilter !== SUPERADMIN_JOBS_FILTER_STATUS_CODES.ALL || queueFilter !== SUPERADMIN_JOBS_FILTER_QUEUE_CODES.ALL} selectedJobIds={selectedJobIds} toggleSelection={toggleSelection} toggleAll={toggleAll} onInspect={setInspectJob} onRetry={handleRetryJob} onCancel={handleCancelJob} onDelete={handleDeleteJob}/>
-      <div className="border-t border-border px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-card/60">
+      <div className="border-t border-border px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-card">
         <p className="text-xs text-secondary" aria-live="polite">
           Showing <span className="font-semibold text-primary">{formatCount(startRow)}</span>–<span className="font-semibold text-primary">{formatCount(endRow)}</span> of <span className="font-semibold text-primary">{formatCount(totalRecords)}</span> jobs
         </p>

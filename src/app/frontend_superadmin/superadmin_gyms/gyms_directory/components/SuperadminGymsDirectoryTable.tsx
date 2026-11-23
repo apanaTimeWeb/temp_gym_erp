@@ -13,7 +13,8 @@ import {
   useDeleteTenant,
 } from '../services/SuperadminGymsDirectoryTenantService';
 import { PLANS_MASTER } from '../constants/SuperadminGymsDirectoryPlans';
-import { EmptyState, ErrorState } from './tenant';
+import { SuperadminGymsDirectoryEmptyState as EmptyState } from './tenant/SuperadminGymsDirectoryEmptyState';
+import { SuperadminGymsDirectoryErrorState as ErrorState } from './tenant/SuperadminGymsDirectoryErrorState';
 import type { Tenant, ListParams } from '../types/SuperadminGymsDirectoryTenantTypes';
 import {
   type ColumnKey,
@@ -174,7 +175,7 @@ export default function SuperadminGymsDirectoryTable() {
   };
 
   const renderSortIndicator = (col: string) => {
-    if (effectiveSortBy !== col) return <ArrowUpDown size={12} className="opacity-60 text-white/70" aria-hidden="true" />;
+    if (effectiveSortBy !== col) return <ArrowUpDown size={12} className="text-secondary" aria-hidden="true" />;
     return effectiveSortOrder === 'asc' ? <ArrowUp size={12} className="text-yellow-400 font-bold" aria-hidden="true" /> : <ArrowDown size={12} className="text-yellow-400 font-bold" aria-hidden="true" />;
   };
 
@@ -205,7 +206,7 @@ export default function SuperadminGymsDirectoryTable() {
         {isLoading && (
           <div className="p-4 space-y-3">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="h-12 bg-skeleton-base animate-pulse rounded-lg border border-border/50" />
+              <div key={i} className="h-12 bg-skeleton-base animate-pulse rounded-lg border border-border" />
             ))}
           </div>
         )}

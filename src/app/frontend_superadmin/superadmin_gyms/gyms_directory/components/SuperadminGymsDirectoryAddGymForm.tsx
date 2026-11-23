@@ -40,7 +40,7 @@ export default function SuperadminGymsDirectoryAddGymForm() {
         }
       `}</style>
       {/* Header Bar */}
-      <div className="sticky top-0 z-30 shrink-0 bg-page/95 backdrop-blur-md pb-2 pt-0.5 border-b border-border/60">
+      <div className="sticky top-0 z-30 shrink-0 bg-page pb-2 pt-0.5 border-b border-border">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <div>
             <div className="flex items-center gap-1.5 text-base sm:text-lg font-bold">

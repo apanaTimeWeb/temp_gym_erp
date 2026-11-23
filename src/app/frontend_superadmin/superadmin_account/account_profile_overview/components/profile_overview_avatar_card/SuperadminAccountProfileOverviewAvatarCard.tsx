@@ -69,7 +69,7 @@ export default function SuperadminAccountProfileOverviewAvatarCard({ profile }: 
           <span className="superadmin-page-title text-primary">{initials}</span>
         )}
         <label
-          className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 motion-safe:transition-opacity cursor-pointer text-white"
+          className="absolute inset-0 flex flex-col items-center justify-center bg-black opacity-0 group-hover:opacity-75 motion-safe:transition-opacity cursor-pointer text-white"
           title="Change Avatar"
         >
           <Camera size={20} aria-hidden="true" />

@@ -57,7 +57,7 @@ export default function SuperadminBillingCouponsManagementTableRow({ coupon, onT
         });
         window.open(SUPERADMIN_BILLING_COUPONS_MANAGEMENT_EXTERNAL.WHATSAPP_SHARE(waText), '_blank', 'noopener,noreferrer');
     };
-    return (<tr tabIndex={0} aria-label={t('ui.edit_coupon_aria', { code: cpn.code })} className={`hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ${cpn.isDeleted ? 'opacity-50 grayscale' : ''} ${isSelected ? 'bg-primary-subtle/50' : ''}`} onClick={() => { if (!cpn.isDeleted)
+    return (<tr tabIndex={0} aria-label={t('ui.edit_coupon_aria', { code: cpn.code })} className={`hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ${cpn.isDeleted ? 'opacity-50 grayscale' : ''} ${isSelected ? 'bg-primary-subtle' : ''}`} onClick={() => { if (!cpn.isDeleted)
         onEdit(cpn); }} onKeyDown={(event) => { if (event.target !== event.currentTarget) return; if (!cpn.isDeleted && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); onEdit(cpn); } }} data-testid={`superadmin_coupons-table-row-${cpn.id}`}>
       <td className="sticky start-0 z-10 w-12 bg-card group-hover:bg-surface-hover border-b border-border px-4 py-3 text-center transition-colors">
         <input

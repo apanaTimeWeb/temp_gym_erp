@@ -2,7 +2,9 @@
 
 import React from 'react';
 import CopyButton from '@/components/ui/CopyButton';
-import { StatusBadge, PlanBadge, DaysLeftBadge } from './tenant';
+import { SuperadminGymsDirectoryStatusBadge as StatusBadge } from './tenant/SuperadminGymsDirectoryStatusBadge';
+import { SuperadminGymsDirectoryPlanBadge as PlanBadge } from './tenant/SuperadminGymsDirectoryPlanBadge';
+import { SuperadminGymsDirectoryDaysLeftBadge as DaysLeftBadge } from './tenant/SuperadminGymsDirectoryDaysLeftBadge';
 import {
   getMrr,
   formatIstDate,

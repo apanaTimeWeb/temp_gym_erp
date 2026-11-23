@@ -103,7 +103,7 @@ function TenantEditModalContent({
               onClick={onClose}
               disabled={form.updateMutation.isPending}
               aria-label="Close dialog"
-              className="h-8 w-8 min-h-8 min-w-8 p-1.5 rounded-lg border border-border/80 text-secondary hover:text-primary hover:bg-surface-hover motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary flex items-center justify-center cursor-pointer disabled:opacity-50 shrink-0"
+              className="h-8 w-8 min-h-8 min-w-8 p-1.5 rounded-lg border border-border text-secondary hover:text-primary hover:bg-surface-hover motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary flex items-center justify-center cursor-pointer disabled:opacity-50 shrink-0"
             >
               <X size={16} />
             </button>

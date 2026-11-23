@@ -1,7 +1,9 @@
 'use client';
 
 import React from 'react';
-import { Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
+import { SuperadminGymsDirectoryTenantEditLocationFields } from './SuperadminGymsDirectoryTenantEditLocationFields';
+import { SuperadminGymsDirectoryTenantEditPasswordFields } from './SuperadminGymsDirectoryTenantEditPasswordFields';
 import type { Plan } from '../../types/SuperadminGymsDirectoryTenantTypes';
 
 export interface SuperadminGymsDirectoryTenantEditFormFieldsProps {
@@ -234,7 +236,7 @@ export function SuperadminGymsDirectoryTenantEditFormFields({
         </select>
 
         {accessStatus !== originalAccessStatus && (
-          <div className="mt-3 p-3 bg-page border border-warning/40 rounded-lg space-y-2">
+          <div className="mt-3 p-3 bg-page border border-warning rounded-lg space-y-2">
             <label htmlFor="edit-status-reason" className="block text-xs font-semibold text-warning">
               Reason for changing access status <span className="text-danger">*</span>
             </label>
@@ -255,125 +257,30 @@ export function SuperadminGymsDirectoryTenantEditFormFields({
         )}
       </div>
 
-      {/* Address & Location */}
-      {setAddress && (
-        <div>
-          <label htmlFor="edit-address" className="block text-sm font-semibold text-secondary mb-1">
-            Facility Address
-          </label>
-          <input
-            id="edit-address"
-            type="text"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            placeholder="e.g. 123 Fitness Ave, Sector 4"
-            className="w-full min-h-11 bg-input border border-border rounded-lg px-4 py-2 text-sm text-primary placeholder:text-disabled focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-          />
-        </div>
-      )}
-
-      {/* City & State */}
-      {(setCity || setState) && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {setCity && (
-            <div>
-              <label htmlFor="edit-city" className="block text-sm font-semibold text-secondary mb-1">
-                City
-              </label>
-              <input
-                id="edit-city"
-                type="text"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                placeholder="e.g. Mumbai"
-                className="w-full min-h-11 bg-input border border-border rounded-lg px-4 py-2 text-sm text-primary placeholder:text-disabled focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-              />
-            </div>
-          )}
-          {setState && (
-            <div>
-              <label htmlFor="edit-state" className="block text-sm font-semibold text-secondary mb-1">
-                State
-              </label>
-              <input
-                id="edit-state"
-                type="text"
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-                placeholder="e.g. Maharashtra"
-                className="w-full min-h-11 bg-input border border-border rounded-lg px-4 py-2 text-sm text-primary placeholder:text-disabled focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-              />
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Postal Code & GST Number */}
-      {(setPostalCode || setGstNumber) && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {setPostalCode && (
-            <div>
-              <label htmlFor="edit-postal-code" className="block text-sm font-semibold text-secondary mb-1">
-                PIN / Postal Code
-              </label>
-              <input
-                id="edit-postal-code"
-                type="text"
-                value={postalCode}
-                onChange={(e) => setPostalCode(e.target.value)}
-                placeholder="e.g. 400001"
-                className="w-full min-h-11 bg-input border border-border rounded-lg px-4 py-2 text-sm text-primary placeholder:text-disabled focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-              />
-            </div>
-          )}
-          {setGstNumber && (
-            <div>
-              <label htmlFor="edit-gst-number" className="block text-sm font-semibold text-secondary mb-1">
-                GSTIN / Tax ID
-              </label>
-              <input
-                id="edit-gst-number"
-                type="text"
-                value={gstNumber}
-                onChange={(e) => setGstNumber(e.target.value.toUpperCase())}
-                placeholder="e.g. 27AAAAA0000A1Z5"
-                className="w-full min-h-11 bg-input border border-border rounded-lg px-4 py-2 text-sm text-primary uppercase placeholder:text-disabled focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary font-mono"
-              />
-            </div>
-          )}
-        </div>
-      )}
+      {/* Location & Tax Fields */}
+      <SuperadminGymsDirectoryTenantEditLocationFields
+        address={address}
+        setAddress={setAddress}
+        city={city}
+        setCity={setCity}
+        state={state}
+        setState={setState}
+        postalCode={postalCode}
+        setPostalCode={setPostalCode}
+        gstNumber={gstNumber}
+        setGstNumber={setGstNumber}
+      />
 
       {/* Reset Password (Optional) */}
-      <div>
-        <label htmlFor="edit-password" className="block text-sm font-semibold text-secondary mb-1">
-          Reset Password <span className="font-normal text-disabled">(Optional)</span>
-        </label>
-        <div className="relative">
-          <input
-            id="edit-password"
-            type={showPassword ? 'text' : 'password'}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            onBlur={() => validateField('password')}
-            placeholder="Leave blank to keep current password"
-            className="w-full min-h-11 bg-input border border-border rounded-lg px-4 py-2 pe-11 text-sm text-primary placeholder:text-disabled focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-          />
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            aria-label={showPassword ? 'Hide password' : 'Show password'}
-            className="absolute end-2 top-1/2 -translate-y-1/2 min-h-9 min-w-9 p-2 text-secondary hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
-          >
-            {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-          </button>
-        </div>
-        {touched.password && errors.password && (
-          <p className="text-xs text-danger mt-1 flex items-center gap-1">
-            <AlertCircle size={12} /> {errors.password}
-          </p>
-        )}
-      </div>
+      <SuperadminGymsDirectoryTenantEditPasswordFields
+        password={password}
+        setPassword={setPassword}
+        showPassword={showPassword}
+        setShowPassword={setShowPassword}
+        errors={errors}
+        touched={touched}
+        validateField={validateField}
+      />
     </div>
   );
 }

@@ -75,7 +75,7 @@ export default function SuperadminGymsDetailOverviewSection({ gym, locale }: Sup
                   href={`https://wa.me/${gym.phone.replace(/[^0-9]/g, '')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-lg bg-success-bg text-success border border-success/30 hover:underline transition-colors"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-lg bg-success-bg text-success border border-success hover:underline transition-colors"
                 >
                   <MessageCircle size={13} /> WhatsApp
                 </a>
@@ -84,7 +84,7 @@ export default function SuperadminGymsDetailOverviewSection({ gym, locale }: Sup
             {gym.adminEmail ? (
               <a
                 href={`mailto:${gym.adminEmail}`}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-lg bg-primary-subtle text-primary border border-primary/30 hover:underline transition-colors"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-lg bg-primary-subtle text-primary border border-primary hover:underline transition-colors"
               >
                 <Mail size={13} /> Email
               </a>

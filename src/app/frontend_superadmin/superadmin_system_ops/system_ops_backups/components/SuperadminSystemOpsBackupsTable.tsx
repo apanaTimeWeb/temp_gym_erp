@@ -86,7 +86,7 @@ export default function SuperadminSystemOpsBackupsTable({
   return (
     <div className="flex flex-col flex-1">
       {selectedIds.size > 0 && (
-        <div className="p-3 bg-primary/10 border-b border-primary/20 flex flex-wrap items-center justify-between gap-3 motion-safe:animate-fadeIn">
+        <div className="p-3 bg-primary-subtle border-b border-border flex flex-wrap items-center justify-between gap-3 motion-safe:animate-fadeIn">
           <div className="flex items-center gap-2">
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary text-on-primary">
               {selectedIds.size} {t('ui.selected') ?? 'Selected'}
@@ -134,7 +134,7 @@ export default function SuperadminSystemOpsBackupsTable({
                 <tr
                   key={backup.id}
                   tabIndex={0}
-                  className={`hover:bg-surface-hover motion-safe:transition-colors group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ${isSelected ? 'bg-primary-subtle/50 border-s-4 border-s-primary' : ''}`}
+                  className={`hover:bg-surface-hover motion-safe:transition-colors group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ${isSelected ? 'bg-primary-subtle border-s-4 border-s-primary' : ''}`}
                   data-testid={`superadmin_system_ops_backups-system-ops-backups-table-item-backup-id-2-${String(backup.id)}`}
                 >
                   <td className="sticky start-0 z-10 w-12 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-border px-4 py-3 text-center transition-colors">

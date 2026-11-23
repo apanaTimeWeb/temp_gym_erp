@@ -101,7 +101,7 @@ export function SuperadminGymsDirectoryAddGymConsole({
           <button
             type="button"
             onClick={onRetry}
-            className="w-full min-h-11 rounded-lg bg-danger text-on-danger font-bold text-xs inline-flex items-center justify-center gap-2 hover:bg-danger/90 cursor-pointer"
+            className="w-full min-h-11 rounded-lg bg-danger text-on-danger font-bold text-xs inline-flex items-center justify-center gap-2 hover:brightness-110 cursor-pointer"
           >
             <RefreshCw size={14} /> Retry Provisioning
           </button>
@@ -110,7 +110,7 @@ export function SuperadminGymsDirectoryAddGymConsole({
 
       {/* Success: Go to Gyms button */}
       {provisioningDone && (
-        <div className="p-3 bg-success-bg/30 border border-success/40 rounded-lg space-y-3">
+        <div className="p-3 bg-success-bg border border-border rounded-lg space-y-3">
           <p className="text-xs text-success-text font-bold flex items-center gap-1.5">
             <CheckCircle2 size={16} /> Gym provisioned and ready!
           </p>

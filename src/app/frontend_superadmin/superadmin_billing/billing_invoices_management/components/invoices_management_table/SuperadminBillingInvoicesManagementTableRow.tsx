@@ -67,7 +67,7 @@ export default function SuperadminBillingInvoicesManagementTableRow({ invoice: i
     };
     return (<tr
       tabIndex={0}
-      className={`hover:bg-card focus-visible:bg-card motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ${isSelected ? 'bg-primary-subtle/50 border-l-4 border-l-primary' : ''}`}
+      className={`hover:bg-card focus-visible:bg-card motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ${isSelected ? 'bg-primary-subtle border-l-4 border-l-primary' : ''}`}
       data-testid={`superadmin_billing_invoices-table-row-${inv.id}`}
     >
       {/* 1. Multi-Select Checkbox Column */}

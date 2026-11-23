@@ -21,7 +21,7 @@ export function SuperadminGymsDirectoryErrorState({
   return (
     <div
       role="alert"
-      className="flex flex-col items-center justify-center p-12 text-center rounded-xl border border-danger/30 bg-danger-bg/20 my-6"
+      className="flex flex-col items-center justify-center p-12 text-center rounded-xl border border-danger bg-danger-bg my-6"
     >
       <div className="w-14 h-14 rounded-full bg-danger-bg flex items-center justify-center text-danger mb-4 border border-danger">
         <AlertCircle size={28} aria-hidden="true" />

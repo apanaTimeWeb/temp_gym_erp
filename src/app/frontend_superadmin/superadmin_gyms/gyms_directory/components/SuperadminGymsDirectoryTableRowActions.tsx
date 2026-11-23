@@ -58,7 +58,7 @@ export function SuperadminGymsDirectoryTableRowActions({
             onClick={(e) => handleStatusButtonClick(e, gym)}
             aria-label={`Deactivate ${gymDisplayName}`}
             title={`Deactivate ${gymDisplayName}`}
-            className="h-8 w-8 min-h-8 min-w-8 p-1.5 text-red-500 hover:text-red-400 hover:bg-red-500/10 border border-red-500/30 rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 cursor-pointer flex items-center justify-center shrink-0"
+            className="h-8 w-8 min-h-8 min-w-8 p-1.5 text-danger hover:brightness-110 hover:bg-danger-bg border border-danger rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger cursor-pointer flex items-center justify-center shrink-0"
           >
             <Power size={14} />
           </button>
@@ -68,7 +68,7 @@ export function SuperadminGymsDirectoryTableRowActions({
             onClick={(e) => handleStatusButtonClick(e, gym)}
             aria-label={isReactivation ? `Reactivate ${gymDisplayName}` : `Activate ${gymDisplayName}`}
             title={isReactivation ? `Reactivate ${gymDisplayName}` : `Activate ${gymDisplayName}`}
-            className="h-8 w-8 min-h-8 min-w-8 p-1.5 text-emerald-500 hover:text-emerald-400 hover:bg-emerald-500/10 border border-emerald-500/30 rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 cursor-pointer flex items-center justify-center shrink-0"
+            className="h-8 w-8 min-h-8 min-w-8 p-1.5 text-success hover:brightness-110 hover:bg-success-bg border border-success rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-success cursor-pointer flex items-center justify-center shrink-0"
           >
             <Power size={14} />
           </button>
@@ -80,7 +80,7 @@ export function SuperadminGymsDirectoryTableRowActions({
           onClick={(e) => handleOpenEditModal(e, gym)}
           aria-label={`Edit ${gymDisplayName}`}
           title={`Edit ${gymDisplayName}`}
-          className="h-8 w-8 min-h-8 min-w-8 p-1.5 text-secondary hover:text-primary hover:bg-surface-hover border border-border/80 rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer flex items-center justify-center shrink-0"
+          className="h-8 w-8 min-h-8 min-w-8 p-1.5 text-secondary hover:text-primary hover:bg-surface-hover border border-border rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer flex items-center justify-center shrink-0"
         >
           <Pencil size={14} />
         </button>
@@ -96,7 +96,7 @@ export function SuperadminGymsDirectoryTableRowActions({
             aria-label={`More actions for ${gymDisplayName}`}
             aria-expanded={activeKebabId === gym.id}
             title="More actions"
-            className="h-8 w-8 min-h-8 min-w-8 p-1.5 text-secondary hover:text-primary hover:bg-surface-hover border border-border/80 rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer flex items-center justify-center shrink-0"
+            className="h-8 w-8 min-h-8 min-w-8 p-1.5 text-secondary hover:text-primary hover:bg-surface-hover border border-border rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer flex items-center justify-center shrink-0"
           >
             <MoreVertical size={14} className="pointer-events-none" />
           </button>
@@ -144,7 +144,7 @@ export function SuperadminGymsDirectoryTableRowActions({
                   setActiveKebabId(null);
                   handleDeleteClick(e, gym);
                 }}
-                className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-red-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg cursor-pointer"
+                className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-danger hover:brightness-110 hover:bg-danger-bg rounded-lg cursor-pointer"
               >
                 <Trash2 size={14} />
                 <span>Delete Gym</span>

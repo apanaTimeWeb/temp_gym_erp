@@ -136,7 +136,7 @@ export default function SuperadminBillingCouponsManagementTable({
   return (
     <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-sm flex flex-col min-h-96">
       {selectedIds.size > 0 && (
-        <div className="p-3 bg-primary/10 border-b border-primary/20 flex flex-wrap items-center justify-between gap-3 motion-safe:animate-fadeIn">
+        <div className="p-3 bg-primary-subtle border-b border-border flex flex-wrap items-center justify-between gap-3 motion-safe:animate-fadeIn">
           <div className="flex items-center gap-2">
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary text-on-primary">
               {selectedIds.size} {t('ui.selected') ?? 'Selected'}
@@ -200,7 +200,7 @@ export default function SuperadminBillingCouponsManagementTable({
           </tbody>
         </table>
       </div>
-      <div className="flex flex-col gap-3 border-t border-border bg-surface-highlight/10 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-3 border-t border-border bg-card px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs text-secondary" aria-live="polite">
           {t('ui.pagination_summary', { start: formatCount(resultStart), end: formatCount(resultEnd), total: formatCount(coupons.length) })}
         </p>
