@@ -24,6 +24,7 @@ export interface Announcement {
   deliveryStatus?: string;
   pushNotificationSent?: boolean;
   acknowledgedCount?: number;
+  isPlatformNotice?: boolean;
 }
 
 export interface AnnouncementFormValues {

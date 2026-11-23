@@ -57,6 +57,9 @@ export default function SuperadminBillingPlansManagementList() {
             </div>
             <div className="mb-6 flex-1 space-y-3">
               <p className="border-b border-border pb-2 text-sm font-medium text-secondary">{t('ui.max_members_675c60aa')} <span className="text-primary">{plan.maxMembers}</span></p>
+              {plan.maxBranches ? (
+                <p className="border-b border-border pb-2 text-sm font-medium text-secondary">Max Branches: <span className="text-primary">{plan.maxBranches}</span></p>
+              ) : null}
               <p className="border-b border-border pb-2 text-sm font-medium text-secondary">{t('ui.max_staff_d35f8519')} <span className="text-primary">{plan.maxStaff}</span></p>
               <p className="border-b border-border pb-2 text-sm font-medium text-secondary">{t('ui.db_limit_gb_8738c0c7')} <span className="text-primary">{plan.dbLimitGb ?? t('ui.unlimited')}</span></p>
               <p className="border-b border-border pb-2 text-sm font-medium text-secondary">{t('ui.binary_limit_gb_7822511b')} <span className="text-primary">{plan.binaryLimitGb ?? t('ui.unlimited')}</span></p>

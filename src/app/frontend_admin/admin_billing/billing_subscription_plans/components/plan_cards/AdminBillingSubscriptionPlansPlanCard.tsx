@@ -51,6 +51,24 @@ export default function AdminSubscriptionsManagementPlanCard({ plan, onUpgrade, 
       </div>
 
       <ul className="space-y-2 flex-1">
+        {plan.gymLimit > 0 && (
+          <li className="flex items-start gap-2 text-sm text-secondary font-medium">
+            <CheckCircle size={18} className="text-success shrink-0 mt-0.5"  strokeWidth={2}/>
+            <span>Up to {plan.gymLimit} Gym Branch{plan.gymLimit > 1 ? 'es' : ''}</span>
+          </li>
+        )}
+        {plan.memberLimit > 0 && (
+          <li className="flex items-start gap-2 text-sm text-secondary font-medium">
+            <CheckCircle size={18} className="text-success shrink-0 mt-0.5"  strokeWidth={2}/>
+            <span>Up to {plan.memberLimit} Active Members</span>
+          </li>
+        )}
+        {plan.staffLimit > 0 && (
+          <li className="flex items-start gap-2 text-sm text-secondary font-medium">
+            <CheckCircle size={18} className="text-success shrink-0 mt-0.5"  strokeWidth={2}/>
+            <span>Up to {plan.staffLimit} Staff Accounts</span>
+          </li>
+        )}
         {plan.features.map(f => (
           <li key={f} className="flex items-start gap-2 text-sm text-secondary">
             <CheckCircle size={18} className="text-success shrink-0 mt-0.5"  strokeWidth={2}/>

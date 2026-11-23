@@ -8,7 +8,7 @@ import { useTranslations } from 'next-intl';
 import { formatDate } from '@/app/frontend_admin/admin_communication/communication_notices_and_announcements/utils/AdminCommunicationNoticesAndAnnouncementsFormatters';
 import { formatNumber } from '@/app/frontend_admin/admin_communication/communication_notices_and_announcements/utils/AdminCommunicationNoticesAndAnnouncementsFormatters';
 
-import { Search, Plus, Pin, PinOff, Edit2, Trash2, Eye, Megaphone, RotateCcw, ArrowUpDown } from 'lucide-react';
+import { Search, Plus, Pin, PinOff, Edit2, Trash2, Eye, Megaphone, RotateCcw, ArrowUpDown, Shield } from 'lucide-react';
 import AdminNavigationLayoutPagination from '@/app/frontend_admin/admin_communication/communication_notices_and_announcements/components/AdminCommunicationNoticesAndAnnouncementsPagination';
 import AdminNavigationLayoutTableSkeleton from '@/app/frontend_admin/admin_communication/communication_notices_and_announcements/components/AdminCommunicationNoticesAndAnnouncementsTableSkeleton';
 import { useAdminAnnouncementsLogic } from '@/app/frontend_admin/admin_communication/communication_notices_and_announcements/hooks/useAdminCommunicationNoticesAndAnnouncementsLogic';
@@ -182,9 +182,14 @@ export default function AdminCommunicationNoticesAndAnnouncementsTable() {
                   </td>
                   {/* Title + preview */}
                   <td className="p-4 max-w-xs">
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-1.5 flex-wrap">
                       <p className="text-sm font-semibold text-primary truncate">{a.title}</p>
                       <CopyButton text={a.title} label={a.title} />
+                      {(a.createdBy === 'SUPERADMIN' || a.isPlatformNotice) && (
+                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-primary-subtle text-primary border border-primary/20 uppercase tracking-wider">
+                          <Shield size={10} /> Platform
+                        </span>
+                      )}
                     </div>
                     <p className="text-xs text-secondary truncate mt-0.5">{a.body.slice(0, 65)}…</p>
                   </td>
@@ -239,20 +244,26 @@ export default function AdminCommunicationNoticesAndAnnouncementsTable() {
                        data-testid={`admin_announcements-admin_announcements-table-click-3-map145-${__testIdIndex145}-1`}>
                         {a.isPinned ? <PinOff size={18}  strokeWidth={2}/> : <Pin size={18}  strokeWidth={2}/>}
                       </button>
-                      <button type="button"
-                        onClick={() => openEdit(a)}
-                        className="min-h-11 min-w-11 p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-input motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out motion-safe:active:scale-95"
-                        aria-label={t('announcements.admin_announcements_table.text_e8b9965bfd')}
-                       data-testid={`admin_announcements-admin_announcements-table-click-4-map145-${__testIdIndex145}-2`}>
-                        <Edit2 size={18}  strokeWidth={2}/>
-                      </button>
-                      <button type="button"
-                        onClick={() => deleteAnnouncement(a.id, a.title)}
-                        className="min-h-11 min-w-11 p-1.5 rounded-lg text-secondary hover:text-danger hover:bg-danger-bg motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out motion-safe:active:scale-95"
-                        aria-label={t('announcements.admin_announcements_table.text_bec58ef798')}
-                       data-testid={`admin_announcements-admin_announcements-table-click-5-map145-${__testIdIndex145}-3`}>
-                        <Trash2 size={18}  strokeWidth={2}/>
-                      </button>
+                      {a.createdBy === 'SUPERADMIN' || a.isPlatformNotice ? (
+                        <span className="text-[11px] text-secondary italic px-2">Managed by Platform</span>
+                      ) : (
+                        <>
+                          <button type="button"
+                            onClick={() => openEdit(a)}
+                            className="min-h-11 min-w-11 p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-input motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out motion-safe:active:scale-95"
+                            aria-label={t('announcements.admin_announcements_table.text_e8b9965bfd')}
+                           data-testid={`admin_announcements-admin_announcements-table-click-4-map145-${__testIdIndex145}-2`}>
+                            <Edit2 size={18}  strokeWidth={2}/>
+                          </button>
+                          <button type="button"
+                            onClick={() => deleteAnnouncement(a.id, a.title)}
+                            className="min-h-11 min-w-11 p-1.5 rounded-lg text-secondary hover:text-danger hover:bg-danger-bg motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out motion-safe:active:scale-95"
+                            aria-label={t('announcements.admin_announcements_table.text_bec58ef798')}
+                           data-testid={`admin_announcements-admin_announcements-table-click-5-map145-${__testIdIndex145}-3`}>
+                            <Trash2 size={18}  strokeWidth={2}/>
+                          </button>
+                        </>
+                      )}
                     </div>
                   </td>
                 </tr>

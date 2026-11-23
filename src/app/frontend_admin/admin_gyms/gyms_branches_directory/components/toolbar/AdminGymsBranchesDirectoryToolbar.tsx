@@ -18,7 +18,7 @@ import { BRANCH_STATUS_OPTIONS, BRANCH_TIME_RANGE_OPTIONS } from '@/app/frontend
 export default function AdminGymsBranchesDirectoryToolbar() {
   const t = useTranslations();
 
-  const { search, setSearch, statusFilter, setStatusFilter, timeRange, setTimeRange, startDate, setStartDate, endDate, setEndDate } = useAdminBranchesLogic();
+  const { branches, search, setSearch, statusFilter, setStatusFilter, timeRange, setTimeRange, startDate, setStartDate, endDate, setEndDate } = useAdminBranchesLogic();
 
   return (
     <div className="flex flex-col gap-4 rounded-xl border border-border bg-card p-4">
@@ -28,7 +28,7 @@ export default function AdminGymsBranchesDirectoryToolbar() {
             <Calendar className="h-5 w-5 text-primary" aria-hidden="true"  size={18} strokeWidth={2}/>
           </div>
           <div>
-            <h2 className="text-base font-bold text-primary">{t('branches.admin_branches_toolbar.text_b6d6b08977')}</h2>
+            <h2 className="text-base font-bold text-primary">{t('branches.admin_branches_toolbar.text_b6d6b08977')}{branches.length > 0 ? ` (${branches.length})` : ''}</h2>
             <span className="mt-0.5 flex items-center gap-1 text-xs text-secondary">
               <ShieldCheck size={18} className="text-success" aria-hidden="true"  strokeWidth={2}/> {t('branches.admin_branches_toolbar.text_377d867c5c')}</span>
           </div>
