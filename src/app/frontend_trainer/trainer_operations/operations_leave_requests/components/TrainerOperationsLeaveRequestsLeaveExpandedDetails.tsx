@@ -79,6 +79,22 @@ export function TrainerOperationsLeaveRequestsLeaveExpandedDetails({
             {leave.managerNotes || t('TEXT_NO_MANAGER_NOTES')}
           </p>
         </div>
+        {leave.rejectedReason && (
+          <div className="p-3 rounded-xl bg-danger-bg border border-danger/30 text-danger">
+            <span className="font-semibold uppercase block mb-1 text-xs">
+              Rejection Reason
+            </span>
+            <p className="text-sm font-semibold">{leave.rejectedReason}</p>
+          </div>
+        )}
+        {leave.approvedBy && (
+          <div className="p-3 rounded-xl bg-success-bg border border-success/30 text-success">
+            <span className="font-semibold uppercase block mb-1 text-xs">
+              Approved By
+            </span>
+            <p className="text-sm font-semibold">{leave.approvedBy}</p>
+          </div>
+        )}
         {leave.attachmentUrl && (
           <div className="p-3 rounded-xl bg-input/40 border border-border md:col-span-3">
             <span className="font-semibold text-secondary uppercase block mb-1">

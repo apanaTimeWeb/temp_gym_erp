@@ -36,7 +36,7 @@ export function useManagerMembersDirectoryLogic(): ManagerMembersDirectoryViewMo
 
   const ui = useManagerMembersDirectoryUiStore();
   const queryClient = useQueryClient();
-  const { data: plans = [] } = useFetchPlans();
+  const { data: plans = [], isLoading: isPlansLoading } = useFetchPlans();
   const activeMemberId = urlState.memberProfileId ?? ui.selectedMemberId;
   const { data: selectedMember = null } = useFetchMember(activeMemberId);
   const setSelectedMember = useCallback((member: Member | null) => {
@@ -61,6 +61,7 @@ export function useManagerMembersDirectoryLogic(): ManagerMembersDirectoryViewMo
 // EFFECT: Effect lifecycle and dependency list are intentionally scoped to values that control this side effect.
   useEffect(() => {
     if (urlState.searchParams.get('action') !== 'add_member') return;
+    if (isPlansLoading) return;
 
     const name = urlState.searchParams.get('name') || '';
     const phone = urlState.searchParams.get('phone') || '';
@@ -97,7 +98,7 @@ export function useManagerMembersDirectoryLogic(): ManagerMembersDirectoryViewMo
     });
     ui.setShowAddModal(true);
     urlState.clearUrlParams(['action', 'name', 'phone', 'email', 'address', 'medicalHistory', 'notes', 'gender', 'plan', 'planId']);
-  }, [plans, ui.setEditId, ui.setEditData, ui.setShowAddModal, urlState.searchParams, urlState.clearUrlParams]);
+  }, [plans, isPlansLoading, ui.setEditId, ui.setEditData, ui.setShowAddModal, urlState.searchParams, urlState.clearUrlParams]);
 
   const openAdd = ui.openAdd;
   const openEdit = ui.openEdit;

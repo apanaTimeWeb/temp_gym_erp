@@ -48,7 +48,18 @@ export default function TrainerMembersProfileOverview() {
   const latest = progressEntries.at(-1);
   const previous = progressEntries.at(-2);
   const weightChange = latest && previous ? latest.weightKg - previous.weightKg : null;
-  return <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
+  const isRestricted = Boolean(selectedMember.isBlacklisted || selectedMember.status === 'BANNED' || selectedMember.status === 'SUSPENDED');
+  return <div className="space-y-5">
+    {isRestricted && (
+      <div className="bg-danger/10 border border-danger/30 rounded-xl p-3.5 flex items-start gap-3 text-xs text-danger font-medium" role="alert" data-testid="trainer_members-blacklist-alert">
+        <AlertTriangle size={18} className="shrink-0 mt-0.5 text-danger" />
+        <div>
+          <p className="font-bold text-sm">Account Restricted ({selectedMember.status})</p>
+          <p className="mt-0.5">{selectedMember.blacklistReason || 'This member has active facility or PT access restrictions. Please consult facility management before conducting sessions.'}</p>
+        </div>
+      </div>
+    )}
+    <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
     <div className="xl:col-span-2 space-y-5">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="bg-card border border-border p-4 rounded-xl"><p className="text-xs text-secondary mb-1">{t("TEXT_FITNESS_GOAL")}</p><p className="text-sm font-semibold text-primary">{displayValue(selectedMember.fitnessGoal)}</p></div>
@@ -112,5 +123,6 @@ export default function TrainerMembersProfileOverview() {
       </div></div>
     </div>
     <div><h3 className="font-semibold text-primary mb-3">{t("TEXT_MEMBER_ACTIONS")}</h3><div className="bg-floating rounded-xl p-4 mb-4 border border-border"><div className="flex items-center gap-3"><div className="w-10 h-10 rounded-full bg-primary-subtle text-primary flex items-center justify-center"><Target size={18}  strokeWidth={2}/></div><div><p className="text-xs text-secondary">{t("TEXT_COACHING_STATUS")}</p><p className="text-sm font-semibold text-primary">{t(TRAINER_MEMBERS_MEMBER_PROGRESS_STATUS_LABEL_KEYS[selectedMember.progressStatus ?? ''] ?? 'TEXT_PROGRESS_UNKNOWN')}</p></div></div></div><div className="flex flex-col gap-2">{selectedMember.phone && (<a href={`tel:${selectedMember.phone.replace(/[^0-9+]/g, '')}`} className="min-h-11 flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-xl justify-center bg-input text-primary border border-border hover:bg-surface-hover motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"><Phone size={18} strokeWidth={2}/> Call Member</a>)}<button type="button" onClick={() => openMsg({ name: selectedMember.name, phone: selectedMember.phone, email: selectedMember.email }, 'whatsapp', '')} className="min-h-11 flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-on-success rounded-xl justify-center bg-success motion-safe:transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_members-trainermembersprofileoverview-button_1"><MessageCircle size={18}  strokeWidth={2}/>{t("TEXT_SEND_WHATSAPP")}</button><button type="button" onClick={() => openMsg({ name: selectedMember.name, phone: selectedMember.phone, email: selectedMember.email }, 'email', '')} className="min-h-11 flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-on-success rounded-xl justify-center bg-info text-on-info motion-safe:transition-colors hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_members-trainermembersprofileoverview-button_2"><Mail size={18}  strokeWidth={2}/>{t("TEXT_SEND_EMAIL")}</button></div></div>
+  </div>
   </div>;
 }

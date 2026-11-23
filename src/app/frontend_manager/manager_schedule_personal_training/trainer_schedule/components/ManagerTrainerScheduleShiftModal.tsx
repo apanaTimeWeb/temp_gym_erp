@@ -65,6 +65,23 @@ export default function ManagerTrainerScheduleShiftModal() {
               {SHIFT_STATUS_OPTIONS.map((status) => <option key={status} value={status} data-testid={`manager_schedule-managerscheduleshiftmodal-option-status-${status}`}>{status}</option>)}
             </select>
           </div>
+          {form.watch('status') === 'Leave' && (
+            <div>
+              <label htmlFor="manager-managerscheduleshiftmodal-field-substitute" className="block text-sm font-medium text-text-secondary mb-1">Substitute Trainer (Optional)</label>
+              <ManagerSearchableDropdown
+                ariaLabel="Substitute Trainer"
+                dataTestId="manager_schedule-managerscheduleshiftmodal-substitute-dropdown"
+                value={form.getValues('substituteTrainerId') || ''}
+                onChange={(value) => form.setValue('substituteTrainerId', String(value), { shouldDirty: true })}
+                options={trainers.filter((tr) => tr.trainerId !== form.getValues('trainerId')).map((tr) => ({ value: tr.trainerId, label: `${tr.trainerName} — ${tr.trainerRole}` }))}
+                placeholder="Select substitute trainer"
+              />
+            </div>
+          )}
+          <div>
+            <label htmlFor="manager-managerscheduleshiftmodal-field-location" className="block text-sm font-medium text-text-secondary mb-1">Location / Studio (Optional)</label>
+            <input id="manager-managerscheduleshiftmodal-field-location" data-testid="manager_schedule-manager-schedule-shift-modal-input-location" {...register('location')} placeholder="Main Gym Floor, Studio A, etc." className="w-full bg-input border border-border rounded-lg px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page" />
+          </div>
           <div>
             <label htmlFor="manager-managerscheduleshiftmodal-field-6" className="block text-sm font-medium text-text-secondary mb-1">{t("COPY_NOTES")}</label>
             <input id="manager-managerscheduleshiftmodal-field-6" data-testid="manager_schedule-manager-schedule-shift-modal-input-value" {...register('notes')} className="w-full bg-input border border-border rounded-lg px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page" />
