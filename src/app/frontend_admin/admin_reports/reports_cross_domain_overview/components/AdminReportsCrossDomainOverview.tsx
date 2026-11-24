@@ -162,7 +162,7 @@ export default function AdminReportsCrossDomainOverview() {
             {branchMetrics.map((branch) => {
               const widthPct = Math.round((branch.revenue / maxRevenue) * 100);
               return (
-                <div key={branch.name} className="p-3.5 rounded-xl border border-border bg-surface-highlight/60 space-y-2">
+                <div key={branch.name} className="p-3.5 rounded-xl border border-border bg-surface-highlight space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-primary text-xs">{branch.name}</span>
                     <span className="text-xs font-semibold text-success">{branch.profitMargin} Net</span>
@@ -176,7 +176,7 @@ export default function AdminReportsCrossDomainOverview() {
                       <div className="h-full bg-primary rounded-full" style={{ width: `${widthPct}%` }} />
                     </div>
                   </div>
-                  <div className="flex items-center justify-between text-[11px] text-secondary pt-1 border-t border-border/50">
+                  <div className="flex items-center justify-between text-[11px] text-secondary pt-1 border-t border-border">
                     <span>{branch.members} active</span>
                     <span className="text-success font-medium">{branch.netGrowth} new</span>
                     <span>{branch.occupancy} cap</span>
@@ -199,7 +199,7 @@ export default function AdminReportsCrossDomainOverview() {
             <Link
               key={report.id}
               href={report.href}
-              className="group flex flex-col justify-between rounded-2xl border border-border bg-card p-5 shadow-card hover:border-primary/50 hover:bg-surface-hover hover:shadow-lg motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="group flex flex-col justify-between rounded-2xl border border-border bg-card p-5 shadow-card hover:border-primary hover:bg-surface-hover hover:shadow-lg motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">

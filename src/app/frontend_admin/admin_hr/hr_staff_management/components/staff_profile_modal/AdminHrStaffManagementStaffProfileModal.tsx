@@ -3,6 +3,7 @@
 // DATA FLOW: feature data/state and user input → AdminHrManagementStaffProfileModal → accessible UI/events routed to owning hooks (admin_hr/hr_staff_management/components/staff_profile_modal/AdminHrManagementStaffProfileModal.tsx)
 
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { formatDate } from '@/app/frontend_admin/admin_hr/hr_staff_management/utils/AdminHrStaffManagementFormatters';
 import { AdminHrFormatCurrency } from '@/app/frontend_admin/admin_hr/hr_staff_management/utils/AdminHrStaffManagementFormatCurrency';
 
@@ -112,7 +113,7 @@ export default function AdminHrManagementStaffProfileModal() {
                         href={`https://wa.me/${editData.phone.replace(/[^0-9]/g, '')}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-1.5 rounded-lg hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                        className="p-1.5 rounded-lg hover:bg-success-bg text-emerald-600 dark:text-emerald-400 motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                         title="WhatsApp"
                         aria-label={`WhatsApp ${editData.phone}`}
                       >
@@ -157,11 +158,29 @@ export default function AdminHrManagementStaffProfileModal() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 bg-input p-3 rounded-xl border border-border">
-                  <IndianRupee size={18} className="text-secondary"  strokeWidth={2}/>
-                  <span className="text-sm font-medium text-primary">
-                    {t('hr.admin_hr_staff_profile_modal.text_42b8e99f3c')}{AdminHrFormatCurrency(editData.salary || 0, undefined, locale)}
-                  </span>
+                <div className="flex items-center justify-between gap-3 bg-input p-3 rounded-xl border border-border">
+                  <div className="flex items-center gap-3">
+                    <IndianRupee size={18} className="text-secondary"  strokeWidth={2}/>
+                    <span className="text-sm font-medium text-primary">
+                      {t('hr.admin_hr_staff_profile_modal.text_42b8e99f3c')}{AdminHrFormatCurrency(editData.salary || 0, undefined, locale)}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <Link
+                      href={`/frontend_admin/admin_finance/finance_salary_advance_management?search=${encodeURIComponent(editData.name || '')}`}
+                      className="px-2 py-1 text-xs font-semibold rounded bg-card hover:bg-surface-hover border border-border text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                      title="Issue Salary Advance"
+                    >
+                      Advance
+                    </Link>
+                    <Link
+                      href={`/frontend_admin/admin_finance/finance_staff_ledger_management?search=${encodeURIComponent(editData.name || '')}`}
+                      className="px-2 py-1 text-xs font-semibold rounded bg-card hover:bg-surface-hover border border-border text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                      title="View Staff Ledger"
+                    >
+                      Ledger
+                    </Link>
+                  </div>
                 </div>
                 <div className="flex items-center gap-3 bg-input p-3 rounded-xl border border-border">
                   <Hash size={18} className="text-secondary"  strokeWidth={2}/>
@@ -220,7 +239,7 @@ export default function AdminHrManagementStaffProfileModal() {
                       const isPrimary = editData.primaryBranchId === bId || (!editData.primaryBranchId && bId === editData.branch);
                       
                       return (
-                        <tr key={bId} className="hover:bg-surface-highlight/50 transition-colors group">
+                        <tr key={bId} className="hover:bg-surface-hover transition-colors group">
                           <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-medium text-primary">
                             <div className="flex items-center gap-1.5">
                               <span>{info.name}</span>

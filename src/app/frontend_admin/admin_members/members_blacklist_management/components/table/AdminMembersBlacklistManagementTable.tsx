@@ -3,6 +3,7 @@
 // DATA FLOW: feature data/state and user input → AdminMembersBlacklistManagementTable → accessible UI/events routed to owning hooks (admin_blacklist/blacklist_management/components/table/AdminMembersBlacklistManagementTable.tsx)
 
 import { useTranslations, useLocale } from 'next-intl';
+import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { ArrowUpDown } from 'lucide-react';
 import { formatAdminBlacklistDate } from '@/app/frontend_admin/admin_members/members_blacklist_management/utils/AdminMembersBlacklistManagementDateFormatter';
@@ -102,10 +103,16 @@ export default function AdminMembersBlacklistManagementTable() {
           </thead>
           <tbody className="divide-y divide-border">
             {sortedMembers.map((m: BlacklistedMember , __testIdIndex41) => (
-              <tr key={m.id} className="hover:bg-surface-highlight/50 transition-colors group">
+              <tr key={m.id} className="hover:bg-surface-hover transition-colors group">
                 <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3">
                   <div className="flex items-center gap-1.5">
-                    <p className="text-sm font-medium text-primary">{m.memberName}</p>
+                    <Link
+                      href={`/frontend_admin/admin_members/members_directory?search=${encodeURIComponent(m.memberName)}`}
+                      className="text-sm font-medium text-primary hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                      title="View in Member Directory"
+                    >
+                      {m.memberName}
+                    </Link>
                     <CopyButton text={m.memberName} label={m.memberName} />
                   </div>
                   <p className="text-xs text-secondary">{t('blacklist.admin_blacklist_table.text_d789a1e992')}{m.memberId}</p>
@@ -145,7 +152,7 @@ export default function AdminMembersBlacklistManagementTable() {
           </tbody>
         </table>
       </div>
-      <div className="border-t border-border p-4 bg-surface-highlight/10">
+      <div className="border-t border-border p-4 bg-surface-highlight">
         <AdminNavigationLayoutPagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} totalItems={totalItems} itemsPerPage={10} />
       </div>
     </div>

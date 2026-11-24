@@ -99,7 +99,7 @@ export default function AdminSalesMembershipGrowthReportAnalyticsMembership() {
       </div>
 
       <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
-        <div className="px-5 py-4 border-b border-border bg-surface-highlight/30">
+        <div className="px-5 py-4 border-b border-border bg-surface-highlight">
           <h2 className="text-base font-semibold text-primary">{t('reports.admin_reports_membership.text_fd05c3efa5')}</h2>
           <p className="text-xs text-secondary mt-0.5">{t('reports.admin_reports_membership.text_e044ab4747')}</p>
         </div>
@@ -123,7 +123,7 @@ export default function AdminSalesMembershipGrowthReportAnalyticsMembership() {
               {reportData.membershipGrowth.length === 0 ? (
                 <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminSalesMembershipGrowthReportEmptyState title={t('reports.admin_reports_membership.emptyTitle')} description={t('reports.admin_reports_membership.emptyDescription')} /></td></tr>
               ) : reportData.membershipGrowth.map((row , __testIdIndex41) => (
-                <tr key={row.gymId} className="hover:bg-surface-highlight/50 transition-colors group">
+                <tr key={row.gymId} className="hover:bg-surface-hover transition-colors group">
                   <td className="px-5 py-4 text-sm font-semibold text-primary sticky start-0 z-10 bg-card border-e border-border">
                     <div className="flex items-center gap-2">
                       <span>{row.gymName}</span>

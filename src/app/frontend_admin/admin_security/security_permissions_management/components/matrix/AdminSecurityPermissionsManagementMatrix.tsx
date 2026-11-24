@@ -31,7 +31,7 @@ export default function AdminSecurityPermissionsManagementMatrix() {
   if (roleDefaults.length === 0 || PERMISSION_FEATURES.length === 0) return <AdminPermissionsEmptyState />;
   return (
     <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
-      <div className="px-5 py-4 border-b border-border bg-surface-highlight/30 flex items-center gap-2">
+      <div className="px-5 py-4 border-b border-border bg-surface-highlight flex items-center gap-2">
         <ShieldCheck size={18} strokeWidth={2} className="text-primary" />
         <div><h2 className="text-base font-semibold text-primary">{t('permissions.admin_permissions_matrix.text_c2bcde8908')}</h2><p className="text-xs text-secondary mt-0.5">{t('permissions.admin_permissions_matrix.text_62d0417cb2')}</p></div>
       </div>
@@ -42,7 +42,7 @@ export default function AdminSecurityPermissionsManagementMatrix() {
             {PERMISSION_GROUPS.flatMap((group) => [
               <tr key={`group-${group}`}><th scope="rowgroup" colSpan={TABLE_COLUMN_COUNT} className="px-5 py-2 bg-input text-xs font-bold uppercase tracking-wider text-secondary">{t(`permissions.AdminPermissionsCatalog.groups.${group.toLowerCase()}`)}</th></tr>,
               ...PERMISSION_FEATURES.filter((feature) => feature.group === group).map((feature, featureIndex) => (
-                <tr key={feature.key} className={`${featureIndex % 2 === 0 ? 'bg-card' : 'bg-surface-zebra'} hover:bg-surface-highlight/50 transition-colors group`}>
+                <tr key={feature.key} className={`${featureIndex % 2 === 0 ? 'bg-card' : 'bg-surface-zebra'} hover:bg-surface-hover transition-colors group`}>
                   <th scope="row" className="px-5 py-3 text-left sticky start-0 z-10 bg-card border-e border-border"><span className="text-sm font-medium text-primary">{t(feature.labelKey)}</span><span className="block text-xs text-secondary mt-0.5">{t(feature.descriptionKey)}</span></th>
                   {(['manager', 'trainer', 'receptionist'] as const).map((role: RoleType) => <td key={role} className="px-4 py-3 text-center whitespace-nowrap"><span className={`inline-flex min-w-16 justify-center rounded-full px-2.5 py-1 text-xs font-semibold ${byRole.get(role)?.[feature.key] ? 'bg-success-bg text-success' : 'bg-surface-zebra text-disabled'}`} data-testid={`admin_permissions-adminpermissionsmatrix-status-${role}-${feature.key.replace('.', '-')}`}>{byRole.get(role)?.[feature.key] ? t('permissions.admin_permissions_matrix.auto_abfb1a2940') : t('permissions.admin_permissions_matrix.auto_620ad07fd6')}</span></td>)}
                 </tr>

@@ -126,7 +126,7 @@ export default function AdminFinanceStaffLedgerManagementLedgerTable() {
                 <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminFinanceStaffLedgerManagementEmptyState title={t('hr.admin_hr_ledger_table.text_d60c045dd2')} description={t('hr.admin_hr_ledger_table.auto_d9cf357274')} /></td></tr>
               ) : (
                 sortedLedger.map((entry , __testIdIndex109) => (
-                  <tr key={entry.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                  <tr key={entry.id} className="hover:bg-surface-hover transition-colors group">
                     <td className="sticky start-0 z-10 bg-card border-e border-border p-4 text-primary whitespace-nowrap">
                       <div className="flex items-center gap-1.5">
                         <span>{formatDate(entry.date, locale)}</span>

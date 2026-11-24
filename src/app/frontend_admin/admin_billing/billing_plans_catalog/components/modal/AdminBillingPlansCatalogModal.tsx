@@ -180,7 +180,7 @@ export default function AdminBillingPlansCatalogModal({ logic }: AdminPlansModal
               {errors.taxRate && <p id="admin-plan-tax-rate-error" role="alert" className="text-danger text-xs mt-1">{getValidationMessage(errors.taxRate.message)}</p>}
             </div>
           </div>
-          <div className="flex items-center gap-3 p-3 rounded-xl border border-border bg-input/50">
+          <div className="flex items-center gap-3 p-3 rounded-xl border border-border bg-input">
             <input
               id="admin-plan-freeze-allowed"
               type="checkbox"

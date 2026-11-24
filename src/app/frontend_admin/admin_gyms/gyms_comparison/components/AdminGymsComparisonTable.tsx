@@ -46,7 +46,7 @@ export function AdminGymsComparisonTable({
           </thead>
           <tbody className="divide-y divide-border text-sm">
             {/* Status */}
-            <tr className="hover:bg-surface-highlight/50 transition-colors group">
+            <tr className="hover:bg-surface-hover transition-colors group">
               <td className="sticky start-0 z-10 bg-card border-e border-border p-4 font-semibold text-secondary">Operational Status</td>
               {branches.map((b) => (
                 <td key={b.id} className="p-4">
@@ -65,7 +65,7 @@ export function AdminGymsComparisonTable({
             {/* Monthly Revenue */}
             {(metricFilter === 'all' || metricFilter === 'financial') && (
               <>
-                <tr className="hover:bg-surface-highlight/50 transition-colors group bg-card">
+                <tr className="hover:bg-surface-hover transition-colors group bg-card">
                   <td className="sticky start-0 z-10 bg-card border-e border-border p-4 font-semibold text-secondary">Monthly Collections</td>
                   {branches.map((b) => (
                     <td key={b.id} className="p-4 font-bold text-success text-base">
@@ -74,7 +74,7 @@ export function AdminGymsComparisonTable({
                   ))}
                 </tr>
 
-                <tr className="hover:bg-surface-highlight/50 transition-colors group">
+                <tr className="hover:bg-surface-hover transition-colors group">
                   <td className="sticky start-0 z-10 bg-card border-e border-border p-4 font-semibold text-secondary">Operating Expenses</td>
                   {branches.map((b) => (
                     <td key={b.id} className="p-4 font-medium text-danger">
@@ -83,7 +83,7 @@ export function AdminGymsComparisonTable({
                   ))}
                 </tr>
 
-                <tr className="hover:bg-surface-highlight/50 transition-colors group bg-surface-highlight/50">
+                <tr className="hover:bg-surface-hover transition-colors group bg-surface-highlight">
                   <td className="sticky start-0 z-10 bg-surface-highlight border-e border-border p-4 font-semibold text-primary">Net Operating Profit</td>
                   {branches.map((b) => {
                     const net = b.revenue - b.expenses;
@@ -95,7 +95,7 @@ export function AdminGymsComparisonTable({
                   })}
                 </tr>
 
-                <tr className="hover:bg-surface-highlight/50 transition-colors group">
+                <tr className="hover:bg-surface-hover transition-colors group">
                   <td className="sticky start-0 z-10 bg-card border-e border-border p-4 font-semibold text-secondary">Profit Margin %</td>
                   {branches.map((b) => {
                     const margin = Math.round(((b.revenue - b.expenses) / b.revenue) * 100);
@@ -116,7 +116,7 @@ export function AdminGymsComparisonTable({
             {/* Operations */}
             {(metricFilter === 'all' || metricFilter === 'operations') && (
               <>
-                <tr className="hover:bg-surface-highlight/50 transition-colors group">
+                <tr className="hover:bg-surface-hover transition-colors group">
                   <td className="sticky start-0 z-10 bg-card border-e border-border p-4 font-semibold text-secondary">Active Members</td>
                   {branches.map((b) => (
                     <td key={b.id} className="p-4 font-bold text-primary">
@@ -125,7 +125,7 @@ export function AdminGymsComparisonTable({
                   ))}
                 </tr>
 
-                <tr className="hover:bg-surface-highlight/50 transition-colors group">
+                <tr className="hover:bg-surface-hover transition-colors group">
                   <td className="sticky start-0 z-10 bg-card border-e border-border p-4 font-semibold text-secondary">Total Staff Members</td>
                   {branches.map((b) => (
                     <td key={b.id} className="p-4 text-primary">
@@ -134,7 +134,7 @@ export function AdminGymsComparisonTable({
                   ))}
                 </tr>
 
-                <tr className="hover:bg-surface-highlight/50 transition-colors group">
+                <tr className="hover:bg-surface-hover transition-colors group">
                   <td className="sticky start-0 z-10 bg-card border-e border-border p-4 font-semibold text-secondary">Equipments Tracked</td>
                   {branches.map((b) => (
                     <td key={b.id} className="p-4 text-primary">
@@ -143,7 +143,7 @@ export function AdminGymsComparisonTable({
                   ))}
                 </tr>
 
-                <tr className="hover:bg-surface-highlight/50 transition-colors group">
+                <tr className="hover:bg-surface-hover transition-colors group">
                   <td className="sticky start-0 z-10 bg-card border-e border-border p-4 font-semibold text-secondary">Occupancy vs Capacity</td>
                   {branches.map((b) => {
                     const current = b.currentOccupancy ?? 0;
@@ -158,7 +158,7 @@ export function AdminGymsComparisonTable({
                   })}
                 </tr>
 
-                <tr className="hover:bg-surface-highlight/50 transition-colors group">
+                <tr className="hover:bg-surface-hover transition-colors group">
                   <td className="sticky start-0 z-10 bg-card border-e border-border p-4 font-semibold text-secondary">Operating Hours</td>
                   {branches.map((b) => (
                     <td key={b.id} className="p-4 text-xs text-secondary">

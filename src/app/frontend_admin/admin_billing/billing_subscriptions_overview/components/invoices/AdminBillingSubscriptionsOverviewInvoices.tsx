@@ -51,7 +51,7 @@ export default function AdminSubscriptionsManagementInvoices() {
 
   return (
     <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-card">
-      <div className="flex items-center justify-between border-b border-border p-4 bg-surface-highlight/30">
+      <div className="flex items-center justify-between border-b border-border p-4 bg-surface-highlight">
         <div className="flex items-center gap-2">
           <FileText size={18} className="text-primary" aria-hidden="true"  strokeWidth={2}/>
           <h3 className="text-sm font-semibold text-primary">{t('subscriptions.admin_finance_subscription_invoices.text_50d038cf02')}</h3>
@@ -91,7 +91,7 @@ export default function AdminSubscriptionsManagementInvoices() {
                   const safeInvoicePdfUrl = isSafeAdminSubscriptionsInvoicePdfUrl(invoice.pdfUrl);
 
                   return (
-                    <tr key={invoice.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                    <tr key={invoice.id} className="hover:bg-surface-hover transition-colors group">
                       <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-bold text-primary">
                         <div className="flex items-center gap-1.5">
                           <span>{invoice.invoiceNo}</span>
@@ -128,7 +128,7 @@ export default function AdminSubscriptionsManagementInvoices() {
               </tbody>
             </table>
           </div>
-          <div className="border-t border-border px-4 py-3 bg-surface-highlight/10">
+          <div className="border-t border-border px-4 py-3 bg-surface-highlight">
             <AdminNavigationLayoutPagination
               currentPage={currentInvoicePage}
               totalPages={invoiceTotalPages}

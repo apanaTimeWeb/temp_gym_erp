@@ -4,6 +4,7 @@
 // DATA FLOW: staff fixtures & attendance state → filtered records table with shifts, check-in/out, manual punch modal, and status.
 
 import { useState, useMemo, useEffect } from 'react';
+import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { 
   Search, 
@@ -91,7 +92,7 @@ export default function AdminAttendanceStaffManagerTable() {
   return (
     <div className="space-y-4">
       {successToast && (
-        <div role="status" className="flex items-center justify-between gap-3 p-3.5 bg-success-bg border border-success/30 rounded-xl text-success-text text-xs sm:text-sm font-semibold shadow-xs animate-in fade-in">
+        <div role="status" className="flex items-center justify-between gap-3 p-3.5 bg-success-bg border border-success rounded-xl text-success-text text-xs sm:text-sm font-semibold shadow-xs animate-in fade-in">
           <div className="flex items-center gap-2">
             <CheckCircle2 size={18} className="shrink-0 text-success-text" />
             <span>{successToast}</span>
@@ -108,11 +109,11 @@ export default function AdminAttendanceStaffManagerTable() {
           <div className="text-xs font-semibold text-secondary">Total Staff Logged</div>
           <div className="text-lg font-bold text-primary mt-0.5">{records.length} Staff</div>
         </div>
-        <div className="rounded-xl border border-success/30 bg-success-bg p-3">
+        <div className="rounded-xl border border-success bg-success-bg p-3">
           <div className="text-xs font-semibold text-success-text">Present Today</div>
           <div className="text-lg font-bold text-success-text mt-0.5">{presentCount} On Duty</div>
         </div>
-        <div className="rounded-xl border border-warning/30 bg-warning-bg p-3">
+        <div className="rounded-xl border border-warning bg-warning-bg p-3">
           <div className="text-xs font-semibold text-warning">Late Arrivals</div>
           <div className="text-lg font-bold text-warning mt-0.5">{lateCount} Flagged</div>
         </div>
@@ -123,7 +124,7 @@ export default function AdminAttendanceStaffManagerTable() {
       </div>
 
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 bg-surface-highlight/50 p-3 rounded-xl border border-border">
+      <div className="flex flex-wrap items-center justify-between gap-3 bg-surface-highlight p-3 rounded-xl border border-border">
         <div className="flex flex-wrap items-center gap-2.5 flex-1">
           <div className="relative min-w-[200px]">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary" />
@@ -217,7 +218,9 @@ export default function AdminAttendanceStaffManagerTable() {
                         </span>
                         <div>
                           <div className="flex items-center gap-1.5">
-                            <span>{record.name}</span>
+                            <Link href={`/frontend_admin/admin_hr/hr_staff_management?search=${encodeURIComponent(record.name)}`} className="hover:underline hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded" title="View staff profile">
+                              {record.name}
+                            </Link>
                             <CopyButton value={record.name} label="Copy staff name" className="opacity-0 group-hover:opacity-100" />
                           </div>
                           {record.adminNotes && (
@@ -235,7 +238,11 @@ export default function AdminAttendanceStaffManagerTable() {
                         {record.role}
                       </span>
                     </td>
-                    <td className="p-3.5 text-secondary">{record.branchName}</td>
+                    <td className="p-3.5 text-secondary">
+                      <Link href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(record.branchName)}`} className="hover:underline hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded" title="View branch">
+                        {record.branchName}
+                      </Link>
+                    </td>
                     <td className="p-3.5 text-secondary text-xs">{record.shift}</td>
                     <td className="p-3.5 font-medium text-primary">{record.checkInTime}</td>
                     <td className="p-3.5 text-secondary">{record.checkOutTime || '—'}</td>

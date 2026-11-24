@@ -1,5 +1,6 @@
 // RESPONSIBILITY: Lists subscription plans with recoverable async states and delegated mutation behavior.
 'use client';
+import Link from 'next/link';
 import { Check, Edit2, Trash2, Loader2, Archive } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 
@@ -47,7 +48,13 @@ export default function SuperadminBillingPlansManagementList() {
         return (
           <article key={plan.id} className="group relative flex flex-col overflow-hidden rounded-xl border border-border bg-card p-6 motion-safe:transition-colors motion-safe:duration-base hover:border-focus">
             {plan.isArchived && <div className="absolute start-0 top-0 rounded-ee-lg bg-surface-hover px-3 py-1 text-xs font-bold text-secondary">{t('ui.archived_75b8b0f4')}</div>}
-            <div className="absolute end-0 top-0 rounded-es-lg bg-primary-subtle px-3 py-1 text-xs font-bold text-primary">{plan.activeTenants ?? 0} {t('ui.gyms_active_4920a3e4')}</div>
+            <Link
+              href={`/frontend_superadmin/superadmin_gyms/gyms_directory?planId=${encodeURIComponent(plan.id)}`}
+              className="absolute end-0 top-0 rounded-es-lg bg-primary-subtle px-3 py-1 text-xs font-bold text-primary hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+              title="View gyms subscribed to this plan"
+            >
+              {plan.activeTenants ?? 0} {t('ui.gyms_active_4920a3e4')}
+            </Link>
             <div className="mb-4">
               <h2 className="text-xl font-bold text-primary">{plan.name}</h2>
               <div className="mt-2 flex items-end gap-1">

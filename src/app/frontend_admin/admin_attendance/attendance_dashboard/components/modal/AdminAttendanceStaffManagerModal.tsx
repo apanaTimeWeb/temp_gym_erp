@@ -91,9 +91,9 @@ export default function AdminAttendanceStaffManagerModal({
   };
 
   return (
-    <div role="dialog" aria-modal="true" aria-labelledby="manual-attendance-modal-title" className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in">
+    <div role="dialog" aria-modal="true" aria-labelledby="manual-attendance-modal-title" className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-overlay backdrop-blur-sm backdrop-blur-xs animate-in fade-in">
       <div className="bg-card w-full max-w-lg rounded-2xl border border-border shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-        <div className="flex items-center justify-between p-5 border-b border-border bg-surface-highlight/30">
+        <div className="flex items-center justify-between p-5 border-b border-border bg-surface-highlight">
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl bg-primary-subtle text-primary flex items-center justify-center">
               <UserCheck size={18} />
@@ -112,7 +112,7 @@ export default function AdminAttendanceStaffManagerModal({
 
         <form onSubmit={handleSubmit} className="p-5 space-y-4 overflow-y-auto">
           {formError && (
-            <div role="alert" className="p-3 bg-destructive/10 border border-destructive/20 rounded-xl text-destructive text-xs font-semibold">
+            <div role="alert" className="p-3 bg-danger-bg border border-danger rounded-xl text-destructive text-xs font-semibold">
               {formError}
             </div>
           )}

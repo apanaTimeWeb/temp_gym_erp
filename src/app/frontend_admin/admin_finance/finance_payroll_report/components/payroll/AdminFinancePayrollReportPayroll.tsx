@@ -51,7 +51,7 @@ export default function AdminFinancePayrollReportPayroll() {
 
       {/* Payroll Table */}
       <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
-        <div className="px-5 py-4 border-b border-border bg-surface-highlight/30">
+        <div className="px-5 py-4 border-b border-border bg-surface-highlight">
           <h2 className="text-base font-semibold text-primary">{t('reports.admin_finance_payroll_report.text_86bb288973')}</h2>
         </div>
         <div className="overflow-x-auto max-h-[640px] overflow-auto">
@@ -74,7 +74,7 @@ export default function AdminFinancePayrollReportPayroll() {
               {reportData.payrollSummary.length === 0 ? (
                 <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminReportsEmptyState title={t('reports.admin_finance_payroll_report.text_9062d7cc94')} description={t('reports.admin_finance_payroll_report.auto_2a76b3d03a')} /></td></tr>
               ) : reportData.payrollSummary.map((row , __testIdIndex62) => (
-                <tr key={row.gymId} className="hover:bg-surface-highlight/50 transition-colors group">
+                <tr key={row.gymId} className="hover:bg-surface-hover transition-colors group">
                   <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-4 text-sm font-semibold text-primary">
                     <div className="flex items-center gap-1.5">
                       <span>{row.gymName}</span>

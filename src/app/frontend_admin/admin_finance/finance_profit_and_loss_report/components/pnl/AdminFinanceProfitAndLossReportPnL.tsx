@@ -32,7 +32,7 @@ export default function AdminFinanceProfitAndLossReportPnL() {
   return (
     <div className="space-y-6">
       <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
-        <div className="px-5 py-4 border-b border-border bg-surface-highlight/30">
+        <div className="px-5 py-4 border-b border-border bg-surface-highlight">
           <h2 className="text-base font-semibold text-primary">{t('reports.admin_finance_profit_and_loss_report.text_abc7e55ec9')}</h2>
           <p className="text-xs text-secondary mt-0.5">{t('reports.admin_finance_profit_and_loss_report.text_c51b793f71')}</p>
         </div>
@@ -56,7 +56,7 @@ export default function AdminFinanceProfitAndLossReportPnL() {
               {reportData.pnlSummary.length === 0 ? (
                 <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminReportsEmptyState title={t('reports.admin_finance_profit_and_loss_report.emptyTitle')} description={t('reports.admin_finance_profit_and_loss_report.emptyDescription')} /></td></tr>
               ) : reportData.pnlSummary.map((row) => (
-                <tr key={row.gymId} className="hover:bg-surface-highlight/50 transition-colors group">
+                <tr key={row.gymId} className="hover:bg-surface-hover transition-colors group">
                   <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-4 text-sm font-semibold text-primary whitespace-nowrap">
                     <div className="flex items-center gap-1.5">
                       <span>{row.gymName}</span>

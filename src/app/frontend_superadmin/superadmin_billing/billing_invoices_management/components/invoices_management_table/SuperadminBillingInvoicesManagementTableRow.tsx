@@ -4,6 +4,7 @@
 
 import { MessageCircle, Mail, Receipt } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 
 import CopyButton from '@/components/ui/CopyButton';
 import { SUPERADMIN_INVOICE_STATUS_CODES } from '@/app/frontend_superadmin/superadmin_billing/billing_invoices_management/constants/superadmin_billing_invoices_management.constants';
@@ -98,7 +99,14 @@ export default function SuperadminBillingInvoicesManagementTableRow({ invoice: i
 
       {/* 3. Gym Name */}
       <td className="p-4 text-sm font-bold text-primary border-b border-border">
-        <span className="truncate block max-w-48" title={inv.tenantName}>{displaySuperadminInvoiceValue(inv.tenantName)}</span>
+        <Link
+          href={`/frontend_superadmin/superadmin_gyms/gyms_detail/${inv.tenantId}`}
+          onClick={(e) => e.stopPropagation()}
+          className="truncate block max-w-48 text-primary hover:text-primary-hover hover:underline transition-colors"
+          title={`View ${inv.tenantName} details`}
+        >
+          {displaySuperadminInvoiceValue(inv.tenantName)}
+        </Link>
       </td>
 
       {/* 4. Tax ID */}

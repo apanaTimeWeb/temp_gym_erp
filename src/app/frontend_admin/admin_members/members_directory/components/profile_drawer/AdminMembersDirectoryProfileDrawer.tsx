@@ -3,6 +3,7 @@
 // DATA FLOW: feature data/state and user input → AdminMembersDirectoryProfileDrawer → accessible UI/events routed to owning hooks (admin_members/members_directory/components/profile_drawer/AdminMembersDirectoryProfileDrawer.tsx)
 
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import { MEMBER_STATUS_LABEL_KEYS, MEMBER_STATUS_STYLES } from '@/app/frontend_admin/admin_members/members_directory/constants/AdminMembersDirectoryConstants';
 import { formatDate } from '@/app/frontend_admin/admin_members/members_directory/utils/AdminMembersDirectoryFormatters';
@@ -92,12 +93,12 @@ export default function AdminMembersDirectoryProfileDrawer({ member, status, err
                   </span>
                 )}
                 {member.bloodGroup && (
-                  <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-danger-bg text-danger border border-danger/30">
+                  <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-danger-bg text-danger border border-danger">
                     🩸 {member.bloodGroup}
                   </span>
                 )}
                 {member.isPT && (
-                  <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-primary-subtle text-primary border border-primary/30">
+                  <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-primary-subtle text-primary border border-border">
                     PT Trainee
                   </span>
                 )}
@@ -106,11 +107,11 @@ export default function AdminMembersDirectoryProfileDrawer({ member, status, err
           </div>
 
           {member.isBlacklisted && (
-            <div className="flex items-start gap-2.5 p-3 rounded-xl bg-danger-bg border border-danger/40 text-danger">
+            <div className="flex items-start gap-2.5 p-3 rounded-xl bg-danger-bg border border-danger text-danger">
               <ShieldAlert size={18} className="shrink-0 mt-0.5" />
               <div>
                 <p className="text-xs font-bold uppercase tracking-wide">Blacklisted Member</p>
-                <p className="text-xs text-danger/90 mt-0.5">{member.blacklistReason || 'This member has been blacklisted from facilities by gym administration.'}</p>
+                <p className="text-xs text-danger mt-0.5">{member.blacklistReason || 'This member has been blacklisted from facilities by gym administration.'}</p>
               </div>
             </div>
           )}
@@ -137,7 +138,7 @@ export default function AdminMembersDirectoryProfileDrawer({ member, status, err
                     href={`https://wa.me/${member.phone.replace(/[^0-9]/g, '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                    className="p-1.5 rounded-lg bg-success-bg hover:bg-success-bg text-emerald-600 dark:text-emerald-400 motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                     title="WhatsApp"
                     aria-label={`WhatsApp ${member.phone}`}
                   >
@@ -206,9 +207,21 @@ export default function AdminMembersDirectoryProfileDrawer({ member, status, err
               </div>
             )}
             {member.pendingAmount > 0 && (
-              <div className="flex items-center gap-3">
-                <IndianRupee size={18} className="text-danger flex-shrink-0"  strokeWidth={2}/>
-                <span className="text-sm font-bold text-danger">{t('members.admin_members_profile_drawer.text_02fc962d8c')}{AdminMembersFormatCurrency(member.pendingAmount, undefined, locale)}</span>
+              <div className="flex items-center justify-between gap-3 bg-danger-bg p-3 rounded-xl border border-danger">
+                <div className="flex items-center gap-2">
+                  <IndianRupee size={18} className="text-danger flex-shrink-0" strokeWidth={2}/>
+                  <div>
+                    <span className="text-xs text-secondary block">Pending Dues</span>
+                    <span className="text-sm font-bold text-danger">{AdminMembersFormatCurrency(member.pendingAmount, undefined, locale)}</span>
+                  </div>
+                </div>
+                <Link
+                  href={`/frontend_admin/admin_sales/sales_pending_payments?search=${encodeURIComponent(member.name)}`}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-danger text-on-danger hover:brightness-110 text-xs font-semibold motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger"
+                  title="View / Collect Pending Dues"
+                >
+                  Collect Dues
+                </Link>
               </div>
             )}
           </div>

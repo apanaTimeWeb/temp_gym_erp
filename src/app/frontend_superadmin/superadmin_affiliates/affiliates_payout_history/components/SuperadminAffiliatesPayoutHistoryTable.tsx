@@ -2,6 +2,7 @@
 'use client';
 // RESPONSIBILITY: Renders server-backed affiliate payout history passed from the feature page query.
 import { useState, useId } from 'react';
+import Link from 'next/link';
 import { Loader2 } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 
@@ -123,7 +124,13 @@ export default function SuperadminAffiliatesPayoutHistoryTable({ payouts, isPend
                   {formatDate(payout.paidAt, locale)}
                 </td>
                 <td className="border-b border-border p-4" data-mobile-label={t('ui.mobile_affiliate')}>
-                  <span className="font-medium text-primary block">{payout.affiliateName}</span>
+                  <Link
+                    href={`/frontend_superadmin/superadmin_affiliates/affiliates_management?search=${encodeURIComponent(payout.affiliateName)}`}
+                    className="font-medium text-primary hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded block"
+                    title="View affiliate details"
+                  >
+                    {payout.affiliateName}
+                  </Link>
                   <div className="flex items-center gap-1.5 mt-0.5" onClick={(e) => e.stopPropagation()}>
                     <span className="text-xs text-disabled">{payout.affiliateId}</span>
                     <CopyButton value={payout.affiliateId} label={`Copy affiliate ID ${payout.affiliateId}`} />

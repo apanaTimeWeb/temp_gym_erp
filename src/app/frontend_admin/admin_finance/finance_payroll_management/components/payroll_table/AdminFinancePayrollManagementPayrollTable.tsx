@@ -3,6 +3,7 @@
 // DATA FLOW: feature data/state and user input → AdminFinancePayrollManagementPayrollTable → accessible UI/events routed to owning hooks (admin_finance/finance_payroll_management/components/payroll_table/AdminFinancePayrollManagementPayrollTable.tsx)
 
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { formatDate } from '@/app/frontend_admin/admin_finance/finance_payroll_management/utils/AdminFinancePayrollManagementFormatters';
 import { AdminFinancePayrollManagementFormatCurrency } from '@/app/frontend_admin/admin_finance/finance_payroll_management/utils/AdminFinancePayrollManagementFormatCurrency';
 import { useAdminFinancePayrollManagementViewModel } from '@/app/frontend_admin/admin_finance/finance_payroll_management/hooks/useAdminFinancePayrollManagementViewModel';
@@ -172,13 +173,34 @@ export default function AdminFinancePayrollManagementPayrollTable() {
               {payrolls.map((payroll, __testIdIndex45) => {
                 const salary = staff.find((member) => member.id === payroll.staffId)?.salary ?? 0;
                 return (
-                  <tr key={payroll.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                  <tr key={payroll.id} className="hover:bg-surface-hover transition-colors group">
                     <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3">
                       <div className="flex items-center gap-1.5">
-                        <p className="text-sm font-medium text-primary">{payroll.staff?.name || t('admin_hr_payroll_table.auto_staffFallback', { id: payroll.staffId })}</p>
+                        {payroll.staff?.name ? (
+                          <Link
+                            href={`/frontend_admin/admin_hr/hr_staff_management?search=${encodeURIComponent(payroll.staff.name)}`}
+                            className="text-sm font-medium text-primary hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                            title="View staff profile"
+                          >
+                            {payroll.staff.name}
+                          </Link>
+                        ) : (
+                          <p className="text-sm font-medium text-primary">{t('admin_hr_payroll_table.auto_staffFallback', { id: payroll.staffId })}</p>
+                        )}
                         {payroll.staff?.name && <CopyButton text={payroll.staff.name} label={payroll.staff.name} />}
                       </div>
-                      <div className="text-xs text-secondary">{payroll.staff?.role}</div>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        <span className="text-xs text-secondary">{payroll.staff?.role}</span>
+                        {payroll.staff?.name && (
+                          <Link
+                            href={`/frontend_admin/admin_finance/finance_staff_ledger_management?search=${encodeURIComponent(payroll.staff.name)}`}
+                            className="text-[10px] text-primary hover:underline font-semibold"
+                            title="View Ledger"
+                          >
+                            Ledger
+                          </Link>
+                        )}
+                      </div>
                     </td>
                     <td className="px-4 py-3 text-sm text-primary">{payroll.month}</td>
                     <td className="px-4 py-3 text-sm font-medium text-right">{AdminFinancePayrollManagementFormatCurrency(salary, undefined, locale)}</td>
@@ -222,7 +244,7 @@ export default function AdminFinancePayrollManagementPayrollTable() {
             </tbody>
           </table>
         </div>
-        <div className="border-t border-border p-4 bg-surface-highlight/10">
+        <div className="border-t border-border p-4 bg-surface-highlight">
           <AdminNavigationLayoutPagination
             currentPage={currentPage}
             totalPages={Math.max(1, Math.ceil(totalPayrolls / ADMIN_FINANCE_PAYROLL_MANAGEMENT_ITEMS_PER_PAGE))}

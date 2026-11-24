@@ -4,6 +4,8 @@
 
 import { buildAdminSalesWhatsAppWebUrl } from '@/app/frontend_admin/admin_sales/sales_pending_payments/constants/AdminSalesPendingPaymentsExternalUrlConstants';
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
+import { Phone, Mail, User } from 'lucide-react';
 import { AdminSalesFormatCurrency } from '@/app/frontend_admin/admin_sales/sales_pending_payments/utils/AdminSalesPendingPaymentsFormatCurrency';
 import { maskAdminSalesListAmount } from '@/app/frontend_admin/admin_sales/sales_pending_payments/utils/AdminSalesPendingPaymentsMaskFinancialAmount';
 import { displayValue } from '@/app/frontend_admin/admin_sales/sales_pending_payments/utils/AdminSalesPendingPaymentsDisplayValue';
@@ -89,36 +91,67 @@ export default function AdminSalesAnalyticsPendingPayments() {
                 <p className="font-bold text-danger"><span>{AdminSalesFormatCurrency(p.pendingAmount ?? 0, 'INR', locale)}</span></p>
                 <p className="text-xs text-secondary opacity-80">{p.daysOverdue || 0} {t('sales.admin_sales_pending_payments.text_acb1814fce')}</p>
               </div>
-              <button type="button"
-                onClick={() => {
-                  const waText = AdminSalesWhatsAppFormatter.formatReceipt({
-                    title: ADMIN_GYM_CONFIGURATION.name,
-                    subtitle: t('sales.admin_sales_pending_payments.whatsappReminderTitle'),
-                    date: formatDate(getAdminSalesPendingPaymentsCurrentUtcTimestamp(), locale),
-                    customerInfo: {
-                      [t('sales.admin_sales_pending_payments.whatsappMemberLabel')]: p.name,
-                      [t('sales.admin_sales_pending_payments.text_ae2f98a099')]: p.plan ?? '—',
-                    },
-                    sections: [
-                      {
-                        title: t('sales.admin_sales_pending_payments.whatsappOutstandingDues'),
-                        items: {
-                          [t('sales.admin_sales_pending_payments.whatsappPendingAmount')]: AdminSalesFormatCurrency(p.pendingAmount ?? 0, 'INR', locale),
-                          [t('sales.admin_sales_pending_payments.whatsappOverdueBy')]: `${p.daysOverdue || 0} ${t('sales.admin_sales_pending_payments.text_acb1814fce')}`,
+              <div className="flex items-center gap-1.5 shrink-0">
+                {p.phone && (
+                  <a
+                    href={`tel:${p.phone.replace(/[^0-9+]/g, '')}`}
+                    className="p-2 rounded-lg border border-border bg-card hover:bg-surface-hover text-secondary hover:text-primary motion-safe:transition-colors min-h-11 min-w-11 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+                    title={`Call ${p.name}`}
+                    aria-label={`Call ${p.name}`}
+                  >
+                    <Phone size={14} />
+                  </a>
+                )}
+                {p.email && (
+                  <a
+                    href={`mailto:${p.email}`}
+                    className="p-2 rounded-lg border border-border bg-card hover:bg-surface-hover text-secondary hover:text-primary motion-safe:transition-colors min-h-11 min-w-11 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+                    title={`Email ${p.name}`}
+                    aria-label={`Email ${p.name}`}
+                  >
+                    <Mail size={14} />
+                  </a>
+                )}
+                <Link
+                  href={`/frontend_admin/admin_members/members_directory?search=${encodeURIComponent(p.name)}`}
+                  className="p-2 rounded-lg border border-border bg-card hover:bg-surface-hover text-secondary hover:text-primary motion-safe:transition-colors min-h-11 min-w-11 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+                  title="View in Member Directory"
+                  aria-label={`View ${p.name} in member directory`}
+                >
+                  <User size={14} />
+                </Link>
+                <button type="button"
+                  onClick={() => {
+                    const waText = AdminSalesWhatsAppFormatter.formatReceipt({
+                      title: ADMIN_GYM_CONFIGURATION.name,
+                      subtitle: t('sales.admin_sales_pending_payments.whatsappReminderTitle'),
+                      date: formatDate(getAdminSalesPendingPaymentsCurrentUtcTimestamp(), locale),
+                      customerInfo: {
+                        [t('sales.admin_sales_pending_payments.whatsappMemberLabel')]: p.name,
+                        [t('sales.admin_sales_pending_payments.text_ae2f98a099')]: p.plan ?? '—',
+                      },
+                      sections: [
+                        {
+                          title: t('sales.admin_sales_pending_payments.whatsappOutstandingDues'),
+                          items: {
+                            [t('sales.admin_sales_pending_payments.whatsappPendingAmount')]: AdminSalesFormatCurrency(p.pendingAmount ?? 0, 'INR', locale),
+                            [t('sales.admin_sales_pending_payments.whatsappOverdueBy')]: `${p.daysOverdue || 0} ${t('sales.admin_sales_pending_payments.text_acb1814fce')}`,
+                          }
                         }
-                      }
-                    ],
-                    footer: t('sales.admin_sales_pending_payments.whatsappFooter')
-                  });
-                  const reminderUrl = buildAdminSalesWhatsAppWebUrl(p.phone ?? '', waText);
-                  if (reminderUrl) window.open(reminderUrl, '_blank', 'noopener,noreferrer');
-                }}
-                disabled={!buildAdminSalesWhatsAppWebUrl(p.phone ?? '', '')}
-                aria-label={buildAdminSalesWhatsAppWebUrl(p.phone ?? '', '') ? t('sales.admin_sales_pending_payments.text_f3789fc9e6') : t('sales.admin_sales_pending_payments.whatsappInvalidRecipient')}
-                title={!buildAdminSalesWhatsAppWebUrl(p.phone ?? '', '') ? t('sales.admin_sales_pending_payments.whatsappInvalidRecipient') : undefined}
-                className="px-3 py-1.5 text-xs text-on-primary bg-primary rounded-lg font-medium motion-safe:transition-all motion-safe:duration-base ease-in-out hover:bg-primary-hover motion-safe:active:scale-95 flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11"
-               data-testid={`admin_sales-admin_sales-pending-payments-click-map61-${__testIdIndex61}-2`}>
-                {t('sales.admin_sales_pending_payments.text_f3789fc9e6')}</button>
+                      ],
+                      footer: t('sales.admin_sales_pending_payments.whatsappFooter')
+                    });
+                    const reminderUrl = buildAdminSalesWhatsAppWebUrl(p.phone ?? '', waText);
+                    if (reminderUrl) window.open(reminderUrl, '_blank', 'noopener,noreferrer');
+                  }}
+                  disabled={!buildAdminSalesWhatsAppWebUrl(p.phone ?? '', '')}
+                  aria-label={buildAdminSalesWhatsAppWebUrl(p.phone ?? '', '') ? t('sales.admin_sales_pending_payments.text_f3789fc9e6') : t('sales.admin_sales_pending_payments.whatsappInvalidRecipient')}
+                  title={!buildAdminSalesWhatsAppWebUrl(p.phone ?? '', '') ? t('sales.admin_sales_pending_payments.whatsappInvalidRecipient') : undefined}
+                  className="px-3 py-1.5 text-xs text-on-primary bg-primary rounded-lg font-medium motion-safe:transition-all motion-safe:duration-base ease-in-out hover:bg-primary-hover motion-safe:active:scale-95 flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11"
+                 data-testid={`admin_sales-admin_sales-pending-payments-click-map61-${__testIdIndex61}-2`}>
+                  {t('sales.admin_sales_pending_payments.text_f3789fc9e6')}
+                </button>
+              </div>
             </div>
           </div>
         ))}

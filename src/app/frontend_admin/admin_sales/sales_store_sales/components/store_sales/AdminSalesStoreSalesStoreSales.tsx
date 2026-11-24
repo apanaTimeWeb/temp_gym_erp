@@ -106,7 +106,7 @@ export default function AdminSalesAnalyticsStoreSales() {
                     ) : null}
                     {order.returnStatus && order.returnStatus !== 'NONE' && (
                       <div className="pt-2">
-                        <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-danger-bg text-danger border border-danger/30">
+                        <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-danger-bg text-danger border border-danger">
                           Return Status: {order.returnStatus}
                         </span>
                       </div>

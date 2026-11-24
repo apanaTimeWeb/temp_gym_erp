@@ -175,7 +175,7 @@ export default function AdminCommunicationNoticesAndAnnouncementsTable() {
                   <td colSpan={TABLE_COLUMN_COUNT}><AdminAnnouncementsEmptyState hasFilters={hasFilters} onResetFilters={resetFilters} /></td>
                 </tr>
               ) : sortedAnnouncements.map((a , __testIdIndex145) => (
-                <tr key={a.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                <tr key={a.id} className="hover:bg-surface-hover transition-colors group">
                   {/* Pin indicator */}
                   <td className="p-4 w-10 sticky start-0 z-10 bg-card border-e border-border">
                     {a.isPinned && <Pin size={18} className="text-warning"  strokeWidth={2}/>}
@@ -186,7 +186,7 @@ export default function AdminCommunicationNoticesAndAnnouncementsTable() {
                       <p className="text-sm font-semibold text-primary truncate">{a.title}</p>
                       <CopyButton text={a.title} label={a.title} />
                       {(a.createdBy === 'SUPERADMIN' || a.isPlatformNotice) && (
-                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-primary-subtle text-primary border border-primary/20 uppercase tracking-wider">
+                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-primary-subtle text-primary border border-border uppercase tracking-wider">
                           <Shield size={10} /> Platform
                         </span>
                       )}

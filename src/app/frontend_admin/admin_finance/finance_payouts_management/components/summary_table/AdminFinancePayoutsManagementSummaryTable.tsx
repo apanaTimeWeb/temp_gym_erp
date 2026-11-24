@@ -126,7 +126,7 @@ export default function AdminFinancePayoutsManagementSummaryTable() {
                   </tr>
                 ) : (
                   logic.payouts.map((p) => (
-                    <tr key={`${p.gymId}-${p.month}`} className="hover:bg-surface-highlight/50 transition-colors group">
+                    <tr key={`${p.gymId}-${p.month}`} className="hover:bg-surface-hover transition-colors group">
                       <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-medium text-primary">
                         <div className="flex items-center gap-1.5">
                           <span>{p.gymName}</span>
@@ -161,7 +161,7 @@ export default function AdminFinancePayoutsManagementSummaryTable() {
               </tbody>
             </table>
           </div>
-          <div className="border-t border-border p-4 bg-surface-highlight/10">
+          <div className="border-t border-border p-4 bg-surface-highlight">
             <AdminNavigationLayoutPagination
               currentPage={logic.currentPage}
               totalPages={logic.totalPages}

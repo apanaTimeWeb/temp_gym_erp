@@ -128,7 +128,7 @@ export default function AdminSalesAnalyticsMembershipReport() {
           </thead>
           <tbody className="divide-y divide-border">
             {sortedRows.map((row) => (
-              <tr key={row.id ?? row.plan ?? row.name} className="hover:bg-surface-highlight/50 transition-colors group">
+              <tr key={row.id ?? row.plan ?? row.name} className="hover:bg-surface-hover transition-colors group">
                 <td className="px-4 py-3 text-sm font-medium text-primary sticky start-0 z-10 bg-card border-e border-border">
                   <div className="flex items-center gap-2">
                     <span>{displayValue(row.plan ?? row.name)}</span>

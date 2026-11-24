@@ -59,7 +59,7 @@ export default function AdminFinancePlanRevenueAnalyticsTable({ data, sortKey, s
             {data.length === 0 ? (
               <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminPlansEmptyState title={t('plans.AdminPlansRevenueTable.text_6a50bf56d9')} description={t('plans.AdminPlansRevenueTable.auto_7a5702dc84')} /></td></tr>
             ) : data.map((row) => (
-              <tr key={row.id} className="hover:bg-surface-highlight/50 transition-colors group">
+              <tr key={row.id} className="hover:bg-surface-hover transition-colors group">
                 <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3.5 text-sm font-semibold text-primary">
                   <div className="flex items-center gap-1.5">
                     <span>{row.planName}</span>
@@ -76,7 +76,7 @@ export default function AdminFinancePlanRevenueAnalyticsTable({ data, sortKey, s
           </tbody>
         </table>
       </div>
-      <div className="border-t border-border p-4 bg-surface-highlight/10">
+      <div className="border-t border-border p-4 bg-surface-highlight">
         <AdminNavigationLayoutPagination currentPage={currentPage} totalPages={totalPages} totalItems={totalItems} itemsPerPage={PLANS_ITEMS_PER_PAGE} onPageChange={onPageChange} />
       </div>
     </div>

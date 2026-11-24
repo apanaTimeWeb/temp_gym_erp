@@ -73,7 +73,7 @@ export default function AdminHrPerformanceAnalyticsTable({
               data.map((staff) => {
                 const statusCfg = PERFORMANCE_STATUS_CONFIG[staff.status];
                 return (
-                  <tr key={staff.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                  <tr key={staff.id} className="hover:bg-surface-hover transition-colors group">
                     <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3.5">
                       <div className="flex items-center gap-2.5">
                         <div className="w-8 h-8 rounded-lg bg-primary-subtle flex items-center justify-center text-primary text-xs font-bold flex-shrink-0">

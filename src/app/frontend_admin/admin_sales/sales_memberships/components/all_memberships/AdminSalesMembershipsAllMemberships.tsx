@@ -3,6 +3,7 @@
 // DATA FLOW: feature data/state and user input → AdminSalesAnalyticsAllMemberships → accessible UI/events routed to owning hooks (admin_sales/sales_memberships/components/all_memberships/AdminSalesAnalyticsAllMemberships.tsx)
 
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { formatDate, getAdminSalesMembershipsDaysLeft } from '@/app/frontend_admin/admin_sales/sales_memberships/utils/AdminSalesMembershipsFormatters';
 import { AdminSalesFormatCurrency } from '@/app/frontend_admin/admin_sales/sales_memberships/utils/AdminSalesMembershipsFormatCurrency';
 
@@ -169,11 +170,26 @@ export default function AdminSalesAnalyticsAllMemberships() {
               {filtered.map((r: Member , __testIdIndex151) => {
                 const daysLeft = getAdminSalesMembershipsDaysLeft(r.expiryDate);
                 return (
-                  <tr key={r.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                  <tr key={r.id} className="hover:bg-surface-hover transition-colors group">
                     <td className="px-4 py-3 text-sm font-medium text-primary sticky start-0 z-10 bg-card border-e border-border">
                       <div className="flex items-center gap-2">
-                        <span>{r.name}</span>
+                        <Link
+                          href={`/frontend_admin/admin_members/members_directory?search=${encodeURIComponent(r.name)}`}
+                          className="hover:underline hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                          title="View member in directory"
+                        >
+                          {r.name}
+                        </Link>
                         <CopyButton text={r.name} label="Copy name" />
+                        {r.pendingAmount > 0 && (
+                          <Link
+                            href={`/frontend_admin/admin_sales/sales_pending_payments?search=${encodeURIComponent(r.name)}`}
+                            className="px-1.5 py-0.5 text-[10px] font-bold rounded bg-danger-bg text-danger-text border border-danger-border hover:opacity-80 transition-opacity"
+                            title={`Pending: ₹${r.pendingAmount} - Click to collect dues`}
+                          >
+                            Dues
+                          </Link>
+                        )}
                       </div>
                     </td>
                     <td className="px-4 py-3 text-sm text-secondary">{r.plan?.name ?? `Plan #${r.planId}`}</td>

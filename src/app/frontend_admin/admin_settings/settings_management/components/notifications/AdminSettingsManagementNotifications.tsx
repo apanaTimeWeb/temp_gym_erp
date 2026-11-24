@@ -77,7 +77,7 @@ export function AdminSettingsManagementNotifications({ initialData }: AdminSetti
             </thead>
             <tbody className="divide-y divide-border">
               {sortedEvents.length === 0 ? <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminSettingsEmptyState /></td></tr> : sortedEvents.map((ev, __testIdIndex66) => (
-                <tr key={ev.key} className="hover:bg-surface-highlight/50 transition-colors group">
+                <tr key={ev.key} className="hover:bg-surface-hover transition-colors group">
                   <td className="px-4 py-3 text-sm text-primary font-medium sticky start-0 z-10 bg-card border-e border-border whitespace-nowrap">{ev.label}</td>
                   {channels.map((c, __testIdIndex69) => {
                     const fieldName = `${c.key}${ev.key}` as keyof NotificationsSettingsType;

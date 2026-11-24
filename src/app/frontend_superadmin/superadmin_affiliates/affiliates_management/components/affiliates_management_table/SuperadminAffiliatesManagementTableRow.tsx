@@ -1,8 +1,9 @@
 // RESPONSIBILITY: Renders/orchestrates SuperadminAffiliatesTableRow within its owning Superadmin feature module; no direct backend implementation.
 'use client';
 // RESPONSIBILITY: Renders a single row in the Affiliates data table. Handles row-level action buttons with stopPropagation. Purely presentational.
-import { Pencil, Trash2, Power, Check, Banknote } from 'lucide-react';
+import { Pencil, Trash2, Power, Check, Banknote, History } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
+import Link from 'next/link';
 
 import CopyButton from '@/components/ui/CopyButton';
 import { useConfirm } from '@/components/ui/Feedback/ConfirmProvider';
@@ -84,6 +85,15 @@ export default function SuperadminAffiliatesManagementTableRow({ affiliate: aff,
             }} className="min-w-11 min-h-11 p-1.5 text-secondary hover:text-success motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" title={t('ui.pay_commission_060eaae')} aria-label={t('ui.a11y_pay_commission', { name: aff.name })} data-testid="superadmin_affiliates-superadmin-affiliates-table-row-affiliates-affiliates-table-control">
               <Banknote size={18}/>
             </button>)}
+          <Link
+            href="/frontend_superadmin/superadmin_affiliates/affiliates_payout_history"
+            onClick={(e) => e.stopPropagation()}
+            className="min-w-11 min-h-11 p-1.5 text-secondary hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95 flex items-center justify-center"
+            title="View Payout History"
+            aria-label={`View payout history for ${aff.name}`}
+          >
+            <History size={18}/>
+          </Link>
           <button  type="button" onClick={(e) => { e.stopPropagation(); onEdit(aff); }} className="min-w-11 min-h-11 p-1.5 text-secondary hover:text-info motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" title={t('ui.edit_affiliate_9d2f00b')} aria-label={t('ui.a11y_edit', { name: aff.name })} data-testid="superadmin_affiliates-superadmin-affiliates-table-row-affiliates-affiliates-table-edit">
             <Pencil size={18}/>
           </button>

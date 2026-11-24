@@ -3,6 +3,7 @@
 // DATA FLOW: feature data/state and user input → AdminGymsBranchesDirectoryCard → accessible UI/events routed to owning hooks (admin_branches/branches_directory/components/card/AdminGymsBranchesDirectoryCard.tsx)
 
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { Building2, TrendingUp, TrendingDown, Users, Activity, ChevronRight } from 'lucide-react';
 import { useAdminBranchesLogic } from '@/app/frontend_admin/admin_gyms/gyms_branches_directory/hooks/useAdminGymsBranchesDirectoryLogic';
 import { AdminBranchesFormatCurrency } from '@/app/frontend_admin/admin_gyms/gyms_branches_directory/utils/AdminGymsBranchesDirectoryFormatCurrency';
@@ -76,6 +77,22 @@ export default function AdminGymsBranchesDirectoryCard() {
             <div className="flex items-center justify-between gap-3">
               <span className={`rounded-full px-2 py-1 text-xs font-bold uppercase tracking-wider ${BRANCH_STATUS_STYLES[branch.status]}`} data-testid="branches-directory-branches-directory-card-status-badge">{t(BRANCH_STATUS_LABEL_KEYS[branch.status])}</span>
               <span className="text-xs font-medium text-secondary">{t('branches.admin_branches_card.text_d789a1e992')}{branch.id.toUpperCase()}</span>
+            </div>
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-border">
+              <Link
+                href={`/frontend_admin/admin_gyms/gyms_health_alerts_monitoring?search=${encodeURIComponent(branch.name)}`}
+                className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded bg-input hover:bg-surface-hover border border-border text-secondary hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                title="View Branch Health Alerts"
+              >
+                Health Alerts
+              </Link>
+              <Link
+                href="/frontend_admin/admin_gyms/gyms_comparison"
+                className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded bg-input hover:bg-surface-hover border border-border text-secondary hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                title="Compare with Other Branches"
+              >
+                Compare
+              </Link>
             </div>
           </div>
         </div>

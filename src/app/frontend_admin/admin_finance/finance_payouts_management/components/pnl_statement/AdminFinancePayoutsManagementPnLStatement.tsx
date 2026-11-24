@@ -46,7 +46,7 @@ export default function AdminFinancePayoutsManagementPnLStatement() {
 
   return (
     <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-card">
-      <div className="border-b border-border px-5 py-3 bg-surface-highlight/30">
+      <div className="border-b border-border px-5 py-3 bg-surface-highlight">
         <p className="text-sm font-semibold text-primary">{t('payouts.admin_payouts_pnl_statement.text_587bef7062')}</p>
         <p className="mt-0.5 text-xs text-secondary">{t('payouts.admin_payouts_pnl_statement.text_b968ad7e9b')}</p>
       </div>
@@ -75,7 +75,7 @@ export default function AdminFinancePayoutsManagementPnLStatement() {
               <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminPayoutsEmptyState title={t('payouts.admin_payouts_pnl_statement.text_f19bc6d402')} description={t('payouts.admin_payouts_pnl_statement.auto_55e2fbeab5')} /></td></tr>
             ) : (
               logic.pnlData.map((row) => (
-                <tr key={`${row.gymId}-${row.month}`} className="hover:bg-surface-highlight/50 transition-colors group">
+                <tr key={`${row.gymId}-${row.month}`} className="hover:bg-surface-hover transition-colors group">
                   <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-medium text-primary">
                     <div className="flex items-center gap-1.5">
                       <span>{row.gymName}</span>

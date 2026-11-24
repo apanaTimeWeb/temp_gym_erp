@@ -85,7 +85,7 @@ export default function AdminFinanceBranchProfitAndLossTable({
                   <Fragment key={branch.branchId}>
                     <tr
                       className={`group transition-colors ${
-                        isExpanded ? 'bg-surface-highlight' : 'hover:bg-surface-highlight/50'
+                        isExpanded ? 'bg-surface-highlight' : 'hover:bg-surface-hover'
                       }`}
                      data-testid={`admin_finance-admin_finance-pnl-table-row-map77-${__testIdIndex77}`}>
 

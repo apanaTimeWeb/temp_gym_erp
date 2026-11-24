@@ -131,7 +131,7 @@ export default function AdminHrManagementStaffTable() {
           </thead>
           <tbody className="divide-y divide-border">
             {staff.map((member , __testIdIndex93) => (
-              <tr key={member.id} className="hover:bg-surface-highlight/50 transition-colors group" data-testid={`admin_hr-admin_hr-staff-table-row-map93-${__testIdIndex93}`}>
+              <tr key={member.id} className="hover:bg-surface-hover transition-colors group" data-testid={`admin_hr-admin_hr-staff-table-row-map93-${__testIdIndex93}`}>
                 <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm bg-primary-subtle text-primary" aria-hidden="true">
@@ -157,7 +157,7 @@ export default function AdminHrManagementStaffTable() {
           </tbody>
         </table>
       </div>
-      <div className="border-t border-border p-4 bg-surface-highlight/10">
+      <div className="border-t border-border p-4 bg-surface-highlight">
         <AdminNavigationLayoutPagination currentPage={currentPage} totalPages={Math.max(1, Math.ceil(totalStaff / HR_ITEMS_PER_PAGE))} totalItems={totalStaff} itemsPerPage={HR_ITEMS_PER_PAGE} onPageChange={setCurrentPage} />
       </div>
     </div>

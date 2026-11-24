@@ -76,7 +76,7 @@ export default function AdminFinanceRevenueReportRevenue() {
     <div className="space-y-6">
       {/* Revenue by Gym */}
       <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
-        <div className="px-5 py-4 border-b border-border bg-surface-highlight/30">
+        <div className="px-5 py-4 border-b border-border bg-surface-highlight">
           <h2 className="text-base font-semibold text-primary">{t('reports.admin_finance_revenue_report.text_177bf7fe0c')}</h2>
         </div>
         <div className="overflow-x-auto max-h-[640px] overflow-auto">
@@ -106,7 +106,7 @@ export default function AdminFinanceRevenueReportRevenue() {
             </thead>
             <tbody className="divide-y divide-border">
               {revenueByGym.map((row) => (
-                <tr key={row.gymId} className="hover:bg-surface-highlight/50 transition-colors group">
+                <tr key={row.gymId} className="hover:bg-surface-hover transition-colors group">
                   <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-4">
                     <div>
                       <div className="flex items-center gap-1.5">
@@ -190,7 +190,7 @@ export default function AdminFinanceRevenueReportRevenue() {
 
       {/* Monthly Trend */}
       <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
-        <div className="px-5 py-4 border-b border-border bg-surface-highlight/30">
+        <div className="px-5 py-4 border-b border-border bg-surface-highlight">
           <h2 className="text-base font-semibold text-primary">{t('reports.admin_finance_revenue_report.text_d965c78fbc')}</h2>
         </div>
         <div className="overflow-x-auto max-h-[640px] overflow-auto">
@@ -221,7 +221,7 @@ export default function AdminFinanceRevenueReportRevenue() {
               {reportData.monthlyRevenue.length === 0 ? (
                 <tr><td colSpan={MONTHLY_REVENUE_COLUMN_COUNT}><AdminReportsEmptyState title={t('reports.admin_finance_revenue_report.text_096b9d52b6')} description={t('reports.admin_finance_revenue_report.auto_a64dbf269d')} /></td></tr>
               ) : monthlyRevenue.map((row) => (
-                <tr key={row.month} className="hover:bg-surface-highlight/50 transition-colors group">
+                <tr key={row.month} className="hover:bg-surface-hover transition-colors group">
                   <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-3 text-sm font-semibold text-primary">
                     <div className="flex items-center gap-1.5">
                       <span>{row.month}</span>

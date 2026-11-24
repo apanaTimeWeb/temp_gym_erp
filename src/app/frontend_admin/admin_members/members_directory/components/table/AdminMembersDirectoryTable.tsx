@@ -87,7 +87,7 @@ export default function AdminMembersDirectoryTable() {
                 aria-label={t('admin_members_table.auto_openProfile', { name: m.name })}
                 onClick={(event) => { if ((event.target as HTMLElement).closest('a,button')) return; router.push(memberProfileHref(m.id)); }}
                 onKeyDown={(event) => { if ((event.key === 'Enter' || event.key === ' ') && event.target === event.currentTarget) { event.preventDefault(); router.push(memberProfileHref(m.id)); } }}
-                className="hover:bg-surface-highlight/50 transition-colors group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                className="hover:bg-surface-hover transition-colors group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 data-testid={`admin_members-admin_members-table-row-map61-${__testIdIndex61}`}>
                 <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3">
                   <div className="flex items-center gap-3">
@@ -136,7 +136,7 @@ export default function AdminMembersDirectoryTable() {
           </tbody>
         </table>
       </div>
-      <div className="border-t border-border p-4 bg-surface-highlight/10">
+      <div className="border-t border-border p-4 bg-surface-highlight">
         <AdminNavigationLayoutPagination
           currentPage={currentPage}
           totalPages={totalPages}

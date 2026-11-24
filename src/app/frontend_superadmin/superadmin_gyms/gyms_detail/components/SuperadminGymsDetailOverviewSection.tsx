@@ -96,8 +96,10 @@ export default function SuperadminGymsDetailOverviewSection({ gym, locale }: Sup
             <MapPin size={18} strokeWidth={2} aria-hidden="true"/> {t('ui.location_amp_legal_1e6f050f')}
           </h2>
           <div className="space-y-3 text-sm">
+            {gym.address ? <SuperadminGymsGymDetailRow label="Address" value={gym.address}/> : null}
             <SuperadminGymsGymDetailRow label={t('ui.city_57d056ed')} value={gym.city}/>
             <SuperadminGymsGymDetailRow label={t('ui.state_46a2a41c')} value={gym.state}/>
+            {gym.postalCode ? <SuperadminGymsGymDetailRow label="PIN Code" value={gym.postalCode}/> : null}
             <SuperadminGymsGymDetailRow label={t('ui.country_59716c97')} value={gym.country}/>
             <SuperadminGymsGymDetailRow label={t('ui.gstin_8d85d689')} value={gym.gstin} emphasis={!gym.gstin}/>
             {gym.status === SUPERADMIN_GYM_STATUS_CODES.TRIAL && gym.trialEndsAt ? (

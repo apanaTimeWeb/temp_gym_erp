@@ -69,7 +69,7 @@ export default function AdminDashboardOverviewBranchLeaderboard() {
 
   return (
     <div className="bg-card backdrop-blur-xl border border-border rounded-2xl shadow-card overflow-hidden">
-      <div className="flex items-center gap-3 p-6 border-b border-border bg-surface-highlight/30">
+      <div className="flex items-center gap-3 p-6 border-b border-border bg-surface-highlight">
         <div className="p-2.5 bg-primary-subtle text-primary rounded-xl">
           <Building2 size={18} strokeWidth={2} />
         </div>
@@ -125,7 +125,7 @@ export default function AdminDashboardOverviewBranchLeaderboard() {
                 <tr
                   key={branch.id}
                   className={`transition-colors group cursor-pointer ${
-                    selected ? 'bg-primary-subtle border-l-2 border-focus' : 'hover:bg-surface-highlight/50'
+                    selected ? 'bg-primary-subtle border-l-2 border-focus' : 'hover:bg-surface-hover'
                   }`}
                   tabIndex={0}
                   onClick={() => handleBranchSelect(branch.id)}

@@ -174,7 +174,7 @@ export default function GymsComparisonPage() {
         </div>
 
         {/* Scrollable Gym Chips container */}
-        <div className="max-h-28 overflow-y-auto custom-scrollbar flex flex-wrap items-center gap-2 pt-1 border-t border-border/60">
+        <div className="max-h-28 overflow-y-auto custom-scrollbar flex flex-wrap items-center gap-2 pt-1 border-t border-border">
           {filteredBranchesList.length === 0 ? (
             <p className="text-xs text-secondary py-2">No gyms matching "{branchSearch}"</p>
           ) : (
@@ -190,7 +190,7 @@ export default function GymsComparisonPage() {
                   className={`inline-flex min-h-10 items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-semibold border motion-safe:transition-all ${
                     isChecked
                       ? 'border-primary bg-primary text-on-primary shadow-sm'
-                      : 'border-border bg-surface-highlight text-secondary hover:text-primary hover:border-primary/50'
+                      : 'border-border bg-surface-highlight text-secondary hover:text-primary hover:border-primary'
                   }`}
                 >
                   <Building2 size={13} />

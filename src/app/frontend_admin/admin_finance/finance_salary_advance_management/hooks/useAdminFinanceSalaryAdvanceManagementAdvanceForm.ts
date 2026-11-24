@@ -2,7 +2,7 @@
 // RESPONSIBILITY: Owns RHF/Zod validation, dirty-state protection, selected-staff derivation, and successful-reset behavior for the Admin Finance salary-advance form.
 // DATA FLOW: Staff query state → RHF form → Zod validation → HR advance mutation → TanStack Query refresh.
 
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, useWatch } from 'react-hook-form';
 import type { Resolver } from 'react-hook-form';
@@ -19,7 +19,7 @@ import { applyAdminFinanceSalaryAdvanceManagementApiValidationErrors } from '@/a
  * @edge-cases Preserves dirty values after validation/server failure and resets only after a confirmed successful mutation.
  */
 export function useAdminFinanceSalaryAdvanceManagementAdvanceForm() {
-  const { staff, giveAdvance, saving } = useAdminFinanceSalaryAdvanceManagementViewModel();
+  const { staff, giveAdvance, saving, search } = useAdminFinanceSalaryAdvanceManagementViewModel();
   const form = useForm<AdminFinanceSalaryAdvanceManagementAdvanceFormValues>({
     resolver: zodResolver(adminFinanceSalaryAdvanceManagementAdvanceFormSchema) as unknown as Resolver<AdminFinanceSalaryAdvanceManagementAdvanceFormValues>,
     defaultValues: {
@@ -29,6 +29,17 @@ export function useAdminFinanceSalaryAdvanceManagementAdvanceForm() {
       paymentMode: ADMIN_FINANCE_SALARY_ADVANCE_MANAGEMENT_DEFAULT_PAYMENT_MODE,
     },
   });
+
+  useEffect(() => {
+    if (!form.getValues('staffId') && staff.length > 0 && search) {
+      const query = search.trim().toLowerCase();
+      const matched = staff.find((m) => m.id === search || m.name.toLowerCase().includes(query));
+      if (matched) {
+        form.setValue('staffId', matched.id);
+      }
+    }
+  }, [staff, search, form]);
+
   const selectedStaffId = useWatch({ control: form.control, name: 'staffId' });
   const selectedStaff = useMemo(
     () => staff.find((member) => String(member.id) === String(selectedStaffId)),

@@ -64,7 +64,7 @@ export default function AdminSecurityAuditLogsExplorerTable() {
               {logs.length === 0 ? <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminAuditLogsEmptyState /></td></tr> : logs.map((log: AuditLog) => (
                 <tr
                   key={log.id}
-                  className="hover:bg-surface-highlight/50 transition-colors group"
+                  className="hover:bg-surface-hover transition-colors group"
                   data-testid={`admin_audit_logs-admin_audit_logs-table-row-${log.id}`}>
                   <td data-label={t('audit_logs.admin_audit_logs_table.auto_timestamp')} className="px-4 py-4 text-xs text-secondary whitespace-nowrap sticky start-0 z-10 bg-card border-e border-border">
                     <div className="flex items-center gap-2">

@@ -3,6 +3,7 @@
 // DATA FLOW: feature data/state and user input → AdminAttendanceDashboardTable → accessible UI/events routed to owning hooks (admin_attendance/attendance_dashboard/components/table/AdminAttendanceDashboardTable.tsx)
 
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { ChevronDown, ChevronUp, ChevronsUpDown } from 'lucide-react';
 import { displayValue } from '@/lib/display_value';
@@ -120,7 +121,7 @@ export default function AdminAttendanceDashboardTable() {
           </thead>
           <tbody className="divide-y divide-border">
             {sortedRecords.map((r) => (
-              <tr key={r.id} className="hover:bg-surface-highlight/70 motion-safe:transition-colors motion-safe:duration-base group">
+              <tr key={r.id} className="hover:bg-surface-hover motion-safe:transition-colors motion-safe:duration-base group">
                 <td className="px-4 py-3 sticky start-0 z-10 bg-card group-hover:bg-surface-highlight border-e border-border">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-primary-subtle flex items-center justify-center text-primary text-xs font-bold flex-shrink-0">
@@ -128,7 +129,13 @@ export default function AdminAttendanceDashboardTable() {
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <p className="text-sm font-semibold text-primary">{r.memberName}</p>
+                        <Link
+                          href={`/frontend_admin/admin_members/members_directory?search=${encodeURIComponent(r.memberName)}`}
+                          className="text-sm font-semibold text-primary hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                          title="View member profile"
+                        >
+                          {r.memberName}
+                        </Link>
                         <CopyButton value={r.memberName} label="Copy member name" className="opacity-0 group-hover:opacity-100" />
                       </div>
                       <p className="text-xs text-secondary">
@@ -138,15 +145,29 @@ export default function AdminAttendanceDashboardTable() {
                   </div>
                 </td>
                 <td className="px-4 py-3">
-                  <span className="text-sm text-primary">{r.branchName}</span>
+                  <Link
+                    href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(r.branchName)}`}
+                    className="text-sm text-primary hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                    title="View branch"
+                  >
+                    {r.branchName}
+                  </Link>
                 </td>
                 <td className="px-4 py-3">
                   <span className="text-sm text-primary">{r.planName}</span>
                 </td>
                 <td className="px-4 py-3">
-                  <span className="text-sm text-primary">
-                    {r.sessionType === 'PT' ? displayValue(r.trainerName) : displayValue(null)}
-                  </span>
+                  {r.sessionType === 'PT' && r.trainerName ? (
+                    <Link
+                      href={`/frontend_admin/admin_hr/hr_staff_management?search=${encodeURIComponent(r.trainerName)}`}
+                      className="text-sm text-primary hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                      title="View trainer"
+                    >
+                      {r.trainerName}
+                    </Link>
+                  ) : (
+                    <span className="text-sm text-primary">{displayValue(null)}</span>
+                  )}
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-1.5 whitespace-nowrap">
@@ -154,7 +175,7 @@ export default function AdminAttendanceDashboardTable() {
                       {formatAttendanceTime(r.checkInTime, locale)}
                     </span>
                     {r.checkInMethod && (
-                      <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-primary-subtle text-primary border border-primary/20">
+                      <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-primary-subtle text-primary border border-border">
                         {r.checkInMethod}
                       </span>
                     )}

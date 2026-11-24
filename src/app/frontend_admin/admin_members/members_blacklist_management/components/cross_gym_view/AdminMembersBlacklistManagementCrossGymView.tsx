@@ -3,6 +3,7 @@
 // DATA FLOW: feature data/state and user input → AdminMembersBlacklistManagementCrossGymView → accessible UI/events routed to owning hooks (admin_blacklist/blacklist_management/components/cross_gym_view/AdminMembersBlacklistManagementCrossGymView.tsx)
 
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { formatAdminBlacklistDate } from '@/app/frontend_admin/admin_members/members_blacklist_management/utils/AdminMembersBlacklistManagementDateFormatter';
 // Shows all branch-scoped bans in one place and allows admin to propagate any entry to all branches.
@@ -105,11 +106,17 @@ export default function AdminMembersBlacklistManagementCrossGymView() {
             </thead>
             <tbody className="divide-y divide-border">
               {sortedEntries.map((m: BlacklistedMember , __testIdIndex64) => (
-                <tr key={m.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                <tr key={m.id} className="hover:bg-surface-hover transition-colors group">
                   <td className="px-4 py-3 sticky start-0 z-10 bg-card border-e border-border">
                     <div className="flex items-center gap-2">
                       <div>
-                        <p className="text-sm font-medium text-primary">{m.memberName}</p>
+                        <Link
+                          href={`/frontend_admin/admin_members/members_directory?search=${encodeURIComponent(m.memberName)}`}
+                          className="text-sm font-medium text-primary hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                          title="View in Member Directory"
+                        >
+                          {m.memberName}
+                        </Link>
                         <p className="text-xs text-secondary">{t('blacklist.admin_blacklist_cross_gym_view.text_d789a1e992')}{m.memberId}</p>
                       </div>
                       <CopyButton text={m.memberId || m.memberName} label="Copy ID" />

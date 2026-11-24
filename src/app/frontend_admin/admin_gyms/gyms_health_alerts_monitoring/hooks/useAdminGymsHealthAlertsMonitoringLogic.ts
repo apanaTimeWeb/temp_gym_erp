@@ -3,7 +3,8 @@
 // DATA FLOW: module API / client state → useAdminGymHealthAlertsLogic → consuming Admin feature component.
 
 import { ADMIN_GYM_HEALTH_ALERTS_QUERY_KEYS } from '@/app/frontend_admin/admin_gyms/gyms_health_alerts_monitoring/constants/AdminGymsHealthAlertsMonitoringQueryKeys';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useAdminGymHealthAlertsDebounce } from '@/app/frontend_admin/admin_gyms/gyms_health_alerts_monitoring/hooks/useAdminGymsHealthAlertsMonitoringDebounce';
 import { useTranslations } from 'next-intl';
 import { useQuery } from '@tanstack/react-query';
@@ -14,8 +15,16 @@ import { useAdminGymHealthAlertsMutations } from '@/app/frontend_admin/admin_gym
 /** @description useAdminGymHealthAlertsLogic: Coordinates Gym Health Alerts query state, 60-second refresh, severity/search filters, and pessimistic dismiss behavior. @dependencies Consumes AdminGymHealthAlertsQueryKeys, useAdminNavigationLayoutConfirm, AdminGymHealthAlertsApi, useAdminGymHealthAlertsStore, useAdminGymHealthAlertsMutations. @edge-case Preserves documented loading, empty, error, permission, and recovery behavior without owning presentation. @returns The hook’s typed data, state, actions, and recovery handlers. */
 export function useAdminGymHealthAlertsLogic() {
   const t = useTranslations();
+  const searchParams = useSearchParams();
   const { confirm } = useAdminNavigationLayoutConfirm();
   const { severityFilter, search, setSeverityFilter, setSearch } = useAdminGymHealthAlertsStore();
+
+  const urlSearch = searchParams.get('search') || searchParams.get('branch') || '';
+  useEffect(() => {
+    if (urlSearch && !search) {
+      setSearch(urlSearch);
+    }
+  }, [urlSearch, search, setSearch]);
 
   const debouncedSearch = useAdminGymHealthAlertsDebounce(search, 300);
   const queryParams = { severity: severityFilter === 'all' ? undefined : severityFilter, search: debouncedSearch.trim() || undefined };

@@ -96,7 +96,7 @@ export default function AdminFinanceOverviewExpensesTable() {
                 <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminFinanceEmptyState title={t('finance.admin_finance_expenses_table.text_15f519954e')} description={t('finance.admin_finance_expenses_table.auto_4508b993fb')} /></td></tr>
               ) : (
                 expenses.map((expense: Expense) => (
-                  <tr key={expense.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                  <tr key={expense.id} className="hover:bg-surface-hover transition-colors group">
                     <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-semibold text-primary whitespace-nowrap">{formatDate(expense.date, locale)}</td>
                     <td className="px-4 py-3"><span className={`text-xs font-bold px-2.5 py-1 rounded-full ${FINANCE_EXPENSE_CATEGORY_STYLES[expense.category as keyof typeof FINANCE_EXPENSE_CATEGORY_STYLES] ?? 'bg-input text-secondary'}`} data-testid="finance-overview-finance-overview-expenses-table-status-badge">{t(FINANCE_EXPENSE_CATEGORY_LABEL_KEYS[expense.category as keyof typeof FINANCE_EXPENSE_CATEGORY_LABEL_KEYS] ?? 'finance.AdminAuditRepair.other')}</span></td>
                     <td className="px-4 py-3 text-sm text-primary">
@@ -112,13 +112,13 @@ export default function AdminFinanceOverviewExpensesTable() {
                           <div className="flex items-center gap-1.5 mt-1">
                             {expense.status && (
                               <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
-                                expense.status.toUpperCase() === 'PAID' ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning'
+                                expense.status.toUpperCase() === 'PAID' ? 'bg-success-bg text-success' : 'bg-warning-bg text-warning'
                               }`}>
                                 {expense.status}
                               </span>
                             )}
                             {expense.paymentMode && (
-                              <span className="text-[10px] px-1.5 py-0.5 bg-input border border-border/60 rounded text-secondary font-normal">
+                              <span className="text-[10px] px-1.5 py-0.5 bg-input border border-border rounded text-secondary font-normal">
                                 {expense.paymentMode}
                               </span>
                             )}
@@ -130,8 +130,8 @@ export default function AdminFinanceOverviewExpensesTable() {
                       <p className="truncate">{displayValue(expense.notes)}</p>
                       {(expense.vendor || expense.billNumber || expense.receiptUrl) && (
                         <div className="flex flex-wrap items-center gap-1.5 mt-0.5 text-xs">
-                          {expense.vendor && <span className="text-secondary/80 font-medium">Vendor: {expense.vendor}</span>}
-                          {expense.billNumber && <span className="text-secondary/70">Ref: {expense.billNumber}</span>}
+                          {expense.vendor && <span className="text-secondary font-medium">Vendor: {expense.vendor}</span>}
+                          {expense.billNumber && <span className="text-secondary">Ref: {expense.billNumber}</span>}
                           {expense.receiptUrl && (
                             <a href={expense.receiptUrl} target="_blank" rel="noopener noreferrer" className="text-primary underline text-[11px] font-medium hover:opacity-80">
                               Receipt
