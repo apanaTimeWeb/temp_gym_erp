@@ -2,8 +2,8 @@
 // RESPONSIBILITY: Renders the top KPI stat cards (total staff, active staff, payroll metrics) for the HR module.
 // DATA FLOW: feature data/state and user input → AdminFinancePayrollManagementKPIs → accessible UI/events routed to owning hooks (admin_finance/finance_payroll_management/components/kpis/AdminFinancePayrollManagementKPIs.tsx)
 
-import { useTranslations } from 'next-intl';
-import { useLocale } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
+import Link from 'next/link';
 import { AdminFinancePayrollManagementFormatCurrency } from '@/app/frontend_admin/admin_finance/finance_payroll_management/utils/AdminFinancePayrollManagementFormatCurrency';
 
 import { useAdminFinancePayrollManagementViewModel } from '@/app/frontend_admin/admin_finance/finance_payroll_management/hooks/useAdminFinancePayrollManagementViewModel';
@@ -33,16 +33,16 @@ export default function AdminFinancePayrollManagementKPIs() {
   }
 
   const kpis = [
-    { label: t('hr.AdminAuditRepair.totalSalaryGenerated'), value: AdminFinancePayrollManagementFormatCurrency(summary.totalSalaryThisMonth, undefined, locale), icon: DollarSign, colorClass: 'text-primary', bgClass: 'bg-primary-subtle' },
-    { label: t('hr.AdminAuditRepair.totalPaid'), value: AdminFinancePayrollManagementFormatCurrency(summary.totalSalaryPaid, undefined, locale), icon: UserCheck, colorClass: 'text-success', bgClass: 'bg-success-bg' },
-    { label: t('hr.AdminAuditRepair.outstandingDue'), value: AdminFinancePayrollManagementFormatCurrency(summary.totalSalaryDue, undefined, locale), icon: FileText, colorClass: 'text-warning', bgClass: 'bg-warning-bg' },
-    { label: t('hr.AdminAuditRepair.advanceGiven'), value: AdminFinancePayrollManagementFormatCurrency(summary.totalAdvanceGiven, undefined, locale), icon: DollarSign, colorClass: 'text-danger', bgClass: 'bg-danger-bg' },
+    { label: t('hr.AdminAuditRepair.totalSalaryGenerated'), value: AdminFinancePayrollManagementFormatCurrency(summary.totalSalaryThisMonth, undefined, locale), icon: DollarSign, colorClass: 'text-primary', bgClass: 'bg-primary-subtle', href: '/frontend_admin/admin_finance/finance_payroll_report' },
+    { label: t('hr.AdminAuditRepair.totalPaid'), value: AdminFinancePayrollManagementFormatCurrency(summary.totalSalaryPaid, undefined, locale), icon: UserCheck, colorClass: 'text-success', bgClass: 'bg-success-bg', href: '/frontend_admin/admin_finance/finance_staff_ledger_management' },
+    { label: t('hr.AdminAuditRepair.outstandingDue'), value: AdminFinancePayrollManagementFormatCurrency(summary.totalSalaryDue, undefined, locale), icon: FileText, colorClass: 'text-warning', bgClass: 'bg-warning-bg', href: '/frontend_admin/admin_finance/finance_staff_dues_management' },
+    { label: t('hr.AdminAuditRepair.advanceGiven'), value: AdminFinancePayrollManagementFormatCurrency(summary.totalAdvanceGiven, undefined, locale), icon: DollarSign, colorClass: 'text-danger', bgClass: 'bg-danger-bg', href: '/frontend_admin/admin_finance/finance_salary_advance_management' },
   ];
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4" data-testid="admin_hr-adminhrkpis-summary">
       {kpis.map((k) => (
-        <div key={k.label} className="rounded-xl p-4 shadow-card border border-border bg-card flex items-center gap-3">
+        <Link key={k.label} href={k.href} className="rounded-xl p-4 shadow-card border border-border bg-card flex items-center gap-3 hover:border-focus transition-colors no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
           <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${k.bgClass}`}>
             <k.icon size={18} className={k.colorClass} />
           </div>
@@ -50,7 +50,7 @@ export default function AdminFinancePayrollManagementKPIs() {
             <p className="text-xs font-medium text-secondary">{k.label}</p>
             <p className="text-xl font-bold text-primary">{k.value}</p>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );

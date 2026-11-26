@@ -2,8 +2,8 @@
 // RESPONSIBILITY: Renders 4 read-only KPI stat cards for Admin Attendance — today's count, present, late, weekly avg.
 // DATA FLOW: feature data/state and user input → AdminAttendanceDashboardKPIs → accessible UI/events routed to owning hooks (admin_attendance/attendance_dashboard/components/kpis/AdminAttendanceDashboardKPIs.tsx)
 
-import { useTranslations } from 'next-intl';
-import { useLocale } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
+import Link from 'next/link';
 import { formatNumber } from '@/app/frontend_admin/admin_attendance/attendance_dashboard/utils/AdminAttendanceDashboardFormatters';
 
 import { CalendarCheck, UserCheck, Clock, TrendingUp } from 'lucide-react';
@@ -21,7 +21,7 @@ import { getAdminAttendanceTrendDirection } from '@/app/frontend_admin/admin_att
 export default function AdminAttendanceDashboardKPIs() {
   const t = useTranslations();
   const locale = useLocale();
-  const { dateRange } = useAdminAttendanceStore();
+  const { dateRange, statusFilter, setStatusFilter } = useAdminAttendanceStore();
   const { summary } = useAdminAttendanceLogic();
   if (!summary) return null;
 
@@ -53,6 +53,7 @@ export default function AdminAttendanceDashboardKPIs() {
 
   const cards = [
     {
+      id: 'all',
       title: periodTitle,
       value: formatNumber(summary.todayTotal, locale),
       sub: t('attendance.AdminAuditRepair.peakHour', { time: summary.peakHour }),
@@ -60,8 +61,11 @@ export default function AdminAttendanceDashboardKPIs() {
       icon: CalendarCheck,
       iconBg: 'bg-primary-subtle',
       iconColor: 'text-primary',
+      active: statusFilter === 'all',
+      onClick: () => setStatusFilter('all'),
     },
     {
+      id: 'present',
       title: presentTitle,
       value: formatNumber(summary.todayPresent, locale),
       sub: t('attendance.AdminAuditRepair.attendanceRate', { percent: summary.todayTotal > 0 ? Math.round((summary.todayPresent / summary.todayTotal) * 100) : 0 }),
@@ -69,8 +73,11 @@ export default function AdminAttendanceDashboardKPIs() {
       icon: UserCheck,
       iconBg: 'bg-success-bg',
       iconColor: 'text-success',
+      active: statusFilter === 'present',
+      onClick: () => setStatusFilter(statusFilter === 'present' ? 'all' : 'present'),
     },
     {
+      id: 'late',
       title: lateTitle,
       value: formatNumber(summary.todayLate, locale),
       sub: t('attendance.AdminAuditRepair.lateRate', { percent: summary.todayTotal > 0 ? Math.round((summary.todayLate / summary.todayTotal) * 100) : 0 }),
@@ -78,8 +85,11 @@ export default function AdminAttendanceDashboardKPIs() {
       icon: Clock,
       iconBg: 'bg-warning-bg',
       iconColor: 'text-warning',
+      active: statusFilter === 'late',
+      onClick: () => setStatusFilter(statusFilter === 'late' ? 'all' : 'late'),
     },
     {
+      id: 'weekly',
       title: t('attendance.AdminAuditRepair.weeklyAverage'),
       value: formatNumber(summary.weeklyAverage, locale),
       sub: trendDirection === 'unchanged'
@@ -89,6 +99,8 @@ export default function AdminAttendanceDashboardKPIs() {
       icon: TrendingUp,
       iconBg: 'bg-info-bg',
       iconColor: 'text-info',
+      active: false,
+      href: '/frontend_admin/admin_attendance/attendance_reports',
     },
   ];
 
@@ -96,11 +108,8 @@ export default function AdminAttendanceDashboardKPIs() {
     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4" data-testid="admin_attendance-adminattendancekpis-summary">
       {cards.map((c) => {
         const Icon = c.icon;
-        return (
-          <div
-            key={c.title}
-            className="bg-card rounded-xl p-5 border border-border hover:border-focus motion-safe:transition-all motion-safe:duration-base"
-          >
+        const inner = (
+          <div className={`bg-card rounded-xl p-5 border motion-safe:transition-all motion-safe:duration-base text-left w-full ${c.active ? 'border-primary ring-1 ring-primary' : 'border-border hover:border-focus'}`}>
             <div className="flex items-start justify-between">
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-medium text-secondary uppercase tracking-wider">{c.title}</p>
@@ -112,6 +121,18 @@ export default function AdminAttendanceDashboardKPIs() {
               </div>
             </div>
           </div>
+        );
+        if (c.href) {
+          return (
+            <Link key={c.id} href={c.href} className="block no-underline rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+              {inner}
+            </Link>
+          );
+        }
+        return (
+          <button key={c.id} type="button" onClick={c.onClick} aria-pressed={c.active} className="block w-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+            {inner}
+          </button>
         );
       })}
     </div>

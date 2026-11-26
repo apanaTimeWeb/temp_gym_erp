@@ -2,8 +2,8 @@
 // RESPONSIBILITY: Renders the Membership Growth report tab — new members, renewals, exits, net growth per gym.
 // DATA FLOW: feature data/state and user input → AdminSalesMembershipGrowthReportAnalyticsMembership → accessible UI/events routed to owning hooks (admin_sales/sales_membership_growth_report/components/membership/AdminSalesMembershipGrowthReportAnalyticsMembership.tsx)
 
-import { useLocale } from 'next-intl';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { formatNumber } from '@/app/frontend_admin/admin_sales/sales_membership_growth_report/utils/AdminSalesMembershipGrowthReportFormatters';
 
 import { useAdminSalesMembershipGrowthReportLogic } from '@/app/frontend_admin/admin_sales/sales_membership_growth_report/hooks/useAdminSalesMembershipGrowthReportLogic';
@@ -62,7 +62,13 @@ export default function AdminSalesMembershipGrowthReportAnalyticsMembership() {
               <div key={row.gymId} className="p-3.5 rounded-lg border border-border bg-surface-highlight flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-bold text-primary truncate">{row.gymName}</span>
+                    <Link
+                      href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(row.gymName)}`}
+                      className="text-xs font-bold text-primary truncate hover:underline"
+                      title={`View ${row.gymName} in Branches Directory`}
+                    >
+                      {row.gymName}
+                    </Link>
                     <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${row.netGrowth >= 0 ? 'bg-success-bg text-success-text' : 'bg-danger-bg text-danger-text'}`}>
                       {row.netGrowth >= 0 ? '+' : ''}{row.netGrowth} net
                     </span>
@@ -126,7 +132,13 @@ export default function AdminSalesMembershipGrowthReportAnalyticsMembership() {
                 <tr key={row.gymId} className="hover:bg-surface-hover transition-colors group">
                   <td className="px-5 py-4 text-sm font-semibold text-primary sticky start-0 z-10 bg-card border-e border-border">
                     <div className="flex items-center gap-2">
-                      <span>{row.gymName}</span>
+                      <Link
+                        href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(row.gymName)}`}
+                        className="hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                        title={`View ${row.gymName} in Branches Directory`}
+                      >
+                        {row.gymName}
+                      </Link>
                       <CopyButton text={row.gymName} label="Copy gym name" />
                     </div>
                   </td>

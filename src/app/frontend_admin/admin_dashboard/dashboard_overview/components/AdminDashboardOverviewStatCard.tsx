@@ -1,15 +1,16 @@
 // RESPONSIBILITY: Renders the zero-business KPI/stat-card primitive used by Admin features.
 // DATA FLOW: Next.js route/lifecycle or owning module entry → feature-local components/hooks/contracts → host integration boundary (admin_navigation/components/AdminNavigationLayoutStatCard.tsx)
 
+import Link from 'next/link';
 import type { AdminStatCardProps } from '@/app/frontend_admin/admin_dashboard/dashboard_overview/types/AdminDashboardOverviewStatCardTypes';
 
 /**
  * AdminNavigationLayoutStatCard renders the admin stat card UI surface and coordinates only the state or handlers required by its owning module.
  * @remarks Business behavior remains inside the feature module and semantic theme tokens are consumed at the JSX boundary.
  */
-export default function AdminNavigationLayoutStatCard({ title, value, change, changeType = 'neutral', icon: Icon, iconBg, iconColor, testId }: AdminStatCardProps) {
-  return (
-    <div data-testid={testId} className="bg-card rounded-lg p-5 shadow-card border border-border motion-safe:transition-all motion-safe:duration-base motion-safe:hover:-translate-y-1 hover:border-focus">
+export default function AdminNavigationLayoutStatCard({ title, value, change, changeType = 'neutral', icon: Icon, iconBg, iconColor, testId, href }: AdminStatCardProps) {
+  const card = (
+    <div data-testid={testId} className={`bg-card rounded-lg p-5 shadow-card border border-border motion-safe:transition-all motion-safe:duration-base motion-safe:hover:-translate-y-1 hover:border-focus ${href ? 'cursor-pointer' : ''}`}>
       <div className="flex items-center justify-between gap-4">
         <div className="min-w-0">
           <p className="text-xs font-medium text-secondary uppercase tracking-wider truncate">{title}</p>
@@ -26,4 +27,14 @@ export default function AdminNavigationLayoutStatCard({ title, value, change, ch
       </div>
     </div>
   );
+
+  if (href) {
+    return (
+      <Link href={href} className="block no-underline rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+        {card}
+      </Link>
+    );
+  }
+
+  return card;
 }

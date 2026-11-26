@@ -3,6 +3,7 @@
 // DATA FLOW: feature data/state and user input → AdminSalesAnalyticsMembershipReport → accessible UI/events routed to owning hooks (admin_sales/sales_membership_report/components/membership_report/AdminSalesAnalyticsMembershipReport.tsx)
 
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { AdminSalesFormatCurrency } from '@/app/frontend_admin/admin_sales/sales_membership_report/utils/AdminSalesMembershipReportFormatCurrency';
 import { maskAdminSalesListAmount } from '@/app/frontend_admin/admin_sales/sales_membership_report/utils/AdminSalesMembershipReportMaskFinancialAmount';
 import { displayValue } from '@/app/frontend_admin/admin_sales/sales_membership_report/utils/AdminSalesMembershipReportDisplayValue';
@@ -131,7 +132,13 @@ export default function AdminSalesAnalyticsMembershipReport() {
               <tr key={row.id ?? row.plan ?? row.name} className="hover:bg-surface-hover transition-colors group">
                 <td className="px-4 py-3 text-sm font-medium text-primary sticky start-0 z-10 bg-card border-e border-border">
                   <div className="flex items-center gap-2">
-                    <span>{displayValue(row.plan ?? row.name)}</span>
+                    <Link
+                      href={`/frontend_admin/admin_billing/billing_plans_catalog?search=${encodeURIComponent(String(row.plan ?? row.name ?? ''))}`}
+                      className="hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                      title="View Plan in Catalog"
+                    >
+                      {displayValue(row.plan ?? row.name)}
+                    </Link>
                     <CopyButton text={String(row.plan ?? row.name ?? '')} label="Copy plan" />
                   </div>
                 </td>

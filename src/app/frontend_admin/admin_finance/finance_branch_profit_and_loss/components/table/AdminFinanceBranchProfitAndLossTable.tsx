@@ -3,6 +3,7 @@
 // DATA FLOW: feature data/state and user input → AdminFinanceBranchProfitAndLossTable → accessible UI/events routed to owning hooks (admin_finance/finance_branch_profit_and_loss/components/table/AdminFinanceBranchProfitAndLossTable.tsx)
 
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { Fragment } from 'react';
 // clickable row expansion. Handles sorting indicators and inline breakdown toggle.
 
@@ -97,7 +98,13 @@ export default function AdminFinanceBranchProfitAndLossTable({
                           </div>
                           <div className="min-w-0">
                             <div className="flex items-center gap-1.5">
-                              <p className="text-sm font-semibold text-primary truncate">{branch.branchName}</p>
+                              <Link
+                                href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(branch.branchName)}`}
+                                className="text-sm font-semibold text-primary truncate hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                                title={`View ${branch.branchName} in Branches Directory`}
+                              >
+                                {branch.branchName}
+                              </Link>
                               <CopyButton text={branch.branchName} label={branch.branchName} />
                             </div>
                             <p className="text-xs text-disabled truncate">{branch.location}</p>

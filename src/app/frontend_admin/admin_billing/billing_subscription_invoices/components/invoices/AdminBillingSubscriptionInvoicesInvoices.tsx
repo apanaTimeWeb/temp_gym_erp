@@ -3,6 +3,7 @@
 // DATA FLOW: feature data/state and user input → AdminSubscriptionsManagementInvoices → accessible UI/events routed to owning hooks (admin_finance/finance_subscription_invoices/components/invoices/AdminSubscriptionsManagementInvoices.tsx)
 
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { formatDate } from '@/app/frontend_admin/admin_billing/billing_subscription_invoices/utils/AdminBillingSubscriptionInvoicesFormatters';
 import { AdminSubscriptionsFormatCurrency } from '@/app/frontend_admin/admin_billing/billing_subscription_invoices/utils/AdminBillingSubscriptionInvoicesFormatCurrency';
 import { maskAdminSubscriptionsListAmount } from '@/app/frontend_admin/admin_billing/billing_subscription_invoices/utils/AdminBillingSubscriptionInvoicesMaskFinancialAmount';
@@ -102,7 +103,15 @@ export default function AdminSubscriptionsManagementInvoices() {
                       <td className="whitespace-nowrap px-4 py-3 text-sm text-secondary">
                         {formatDate(invoice.date, locale)}
                       </td>
-                      <td className="px-4 py-3 text-sm text-primary">{invoice.planName}</td>
+                      <td className="px-4 py-3 text-sm text-primary">
+                        <Link
+                          href="/frontend_admin/admin_billing/billing_subscription_plans"
+                          className="hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                          title="Manage Subscription Plans"
+                        >
+                          {invoice.planName}
+                        </Link>
+                      </td>
                       <td className="px-4 py-3 text-xs capitalize text-secondary">{invoice.billingCycle}</td>
                       <td className="px-4 py-3 text-sm font-semibold text-primary"><span>{AdminSubscriptionsFormatCurrency(invoice.amount, 'INR', locale) !== '—' ? AdminSubscriptionsFormatCurrency(invoice.amount, 'INR', locale) : (Number.isFinite(invoice.amount) ? `₹${(invoice.amount > 1000 ? invoice.amount / 100 : invoice.amount).toLocaleString(locale)}` : '—')}</span></td>
                       <td className="px-4 py-3">

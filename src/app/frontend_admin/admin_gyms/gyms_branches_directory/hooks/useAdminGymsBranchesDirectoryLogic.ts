@@ -3,7 +3,8 @@
 // DATA FLOW: UI state → TanStack Query → Branch list/detail data → filtered cards/drawer.
 
 import { ADMIN_BRANCHES_QUERY_KEYS } from '@/app/frontend_admin/admin_gyms/gyms_branches_directory/constants/AdminGymsBranchesDirectoryQueryKeys';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { AdminBranchesApi } from '@/app/frontend_admin/admin_gyms/gyms_branches_directory/api/admin_gyms_branches_directory_api';
 import { useAdminBranchesStore } from '@/app/frontend_admin/admin_gyms/gyms_branches_directory/state/useAdminGymsBranchesDirectoryStore';
@@ -13,6 +14,21 @@ import type { DetailView } from '@/app/frontend_admin/admin_gyms/gyms_branches_d
 /** @description useAdminBranchesLogic: Coordinates Admin Branches server state, shareable UI filters, detail selection, and user-facing error/loading states. @dependencies Consumes AdminBranchesQueryKeys, AdminBranchesApi, useAdminBranchesStore, useAdminBranchesQueries, AdminBranchesTypes, AdminBranchesUiTypes. @edge-case Preserves documented loading, empty, error, permission, and recovery behavior without owning presentation. @returns The hook’s typed data, state, actions, and recovery handlers. */
 export function useAdminBranchesLogic() {
   const store = useAdminBranchesStore();
+  const searchParams = useSearchParams();
+  const urlSearch = searchParams.get('search') || '';
+  const urlStatus = searchParams.get('status') || '';
+  const lastUrlSyncRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    const syncKey = `${urlSearch}::${urlStatus}`;
+    if (lastUrlSyncRef.current === syncKey) return;
+    lastUrlSyncRef.current = syncKey;
+    if (urlSearch) store.setSearch(urlSearch);
+    if (urlStatus === 'active' || urlStatus === 'inactive' || urlStatus === 'all') {
+      store.setStatusFilter(urlStatus);
+    }
+  }, [urlSearch, urlStatus, store]);
+
   const listQuery = useAdminBranchesQueries({ timeRange: store.timeRange, startDate: store.startDate, endDate: store.endDate });
   const branches = listQuery.data?.data ?? [];
 

@@ -4,6 +4,7 @@
 
 import { FINANCE_PAYMENT_STATUSES } from '@/app/frontend_admin/admin_finance/finance_summary/constants/AdminFinanceSummaryConstants';
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useAdminFinanceLogic } from '@/app/frontend_admin/admin_finance/finance_summary/hooks/useAdminFinanceSummaryLogic';
 import { FileText, TrendingUp, IndianRupee, CreditCard } from 'lucide-react';
@@ -34,11 +35,11 @@ export default function AdminFinanceOverviewKPIs() {
   })();
 
   const kpis = [
-    { label: t('finance.AdminAuditRepair.totalRevenue'), value: AdminFinanceFormatCurrency(summary.totalRevenue, 'INR', locale), icon: TrendingUp, colorClass: 'text-success', bgClass: 'bg-success-bg', activeBorder: 'border-border' },
-    { label: periodRevenueLabel, value: AdminFinanceFormatCurrency(summary.monthlyRevenue, 'INR', locale), icon: IndianRupee, colorClass: 'text-primary', bgClass: 'bg-primary-subtle', activeBorder: 'border-focus' },
+    { label: t('finance.AdminAuditRepair.totalRevenue'), value: AdminFinanceFormatCurrency(summary.totalRevenue, 'INR', locale), icon: TrendingUp, colorClass: 'text-success', bgClass: 'bg-success-bg', activeBorder: 'border-border', href: '/frontend_admin/admin_finance/finance_revenue_report' },
+    { label: periodRevenueLabel, value: AdminFinanceFormatCurrency(summary.monthlyRevenue, 'INR', locale), icon: IndianRupee, colorClass: 'text-primary', bgClass: 'bg-primary-subtle', activeBorder: 'border-focus', href: '/frontend_admin/admin_finance/finance_plan_revenue_analytics' },
     { label: t('finance.AdminAuditRepair.pendingAmount'), value: AdminFinanceFormatCurrency(summary.pendingAmount, 'INR', locale), icon: FileText, colorClass: 'text-warning', bgClass: 'bg-warning-bg', activeBorder: 'border-border', filter: FINANCE_PAYMENT_STATUSES[1] },
-    { label: t('finance.AdminAuditRepair.totalExpenses'), value: AdminFinanceFormatCurrency(summary.totalExpenses, 'INR', locale), icon: CreditCard, colorClass: 'text-danger', bgClass: 'bg-danger-bg', activeBorder: 'border-border' },
-    { label: t('finance.AdminAuditRepair.netProfit'), value: AdminFinanceFormatCurrency(summary.netProfit, 'INR', locale), icon: TrendingUp, colorClass: 'text-success', bgClass: 'bg-success-bg', activeBorder: 'border-border' },
+    { label: t('finance.AdminAuditRepair.totalExpenses'), value: AdminFinanceFormatCurrency(summary.totalExpenses, 'INR', locale), icon: CreditCard, colorClass: 'text-danger', bgClass: 'bg-danger-bg', activeBorder: 'border-border', href: '/frontend_admin/admin_finance/finance_expenses' },
+    { label: t('finance.AdminAuditRepair.netProfit'), value: AdminFinanceFormatCurrency(summary.netProfit, 'INR', locale), icon: TrendingUp, colorClass: 'text-success', bgClass: 'bg-success-bg', activeBorder: 'border-border', href: '/frontend_admin/admin_finance/finance_profit_and_loss_report' },
   ] as const;
 
   return (
@@ -52,10 +53,17 @@ export default function AdminFinanceOverviewKPIs() {
             <div className="min-w-0"><p className="truncate text-xs font-medium text-secondary">{kpi.label}</p><p className={`truncate text-lg font-bold ${isActive ? kpi.colorClass : 'text-primary'}`}>{kpi.value}</p></div>
           </>
         );
-        const className = `flex items-center gap-3 rounded-xl border-2 bg-card p-4 text-left shadow-card motion-safe:transition-all ${isActive ? kpi.activeBorder : 'border-border'} ${isPendingFilter ? 'hover:shadow-card' : ''}`;
-        return isPendingFilter ? (
-          <button key={kpi.label} type="button" className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11 motion-safe:active:scale-95 ${className} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base ease-in-out`} aria-pressed={isActive} onClick={() => setStatusFilter(isActive ? 'All' : kpi.filter)} data-testid={`admin_finance-admin_finance-kpis-click-map34-${__testIdIndex34}-1`}>{content}</button>
-        ) : <div key={kpi.label} className={className}>{content}</div>;
+        const className = `flex items-center gap-3 rounded-xl border-2 bg-card p-4 text-left shadow-card motion-safe:transition-all ${isActive ? kpi.activeBorder : 'border-border'} hover:border-focus hover:shadow-card`;
+        if (isPendingFilter) {
+          return (
+            <button key={kpi.label} type="button" className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11 motion-safe:active:scale-95 ${className} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base ease-in-out`} aria-pressed={isActive} onClick={() => setStatusFilter(isActive ? 'All' : kpi.filter)} data-testid={`admin_finance-admin_finance-kpis-click-map34-${__testIdIndex34}-1`}>{content}</button>
+          );
+        }
+        return (
+          <Link key={kpi.label} href={kpi.href} className={`${className} no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary`}>
+            {content}
+          </Link>
+        );
       })}
     </div>
   );

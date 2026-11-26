@@ -27,11 +27,13 @@ export const adminFinanceMockHandlers = [
     const url = new URL(request.url);
     const branchId = url.searchParams.get('branchId');
     const category = url.searchParams.get('category');
+    const search = (url.searchParams.get('search') ?? '').trim().toLowerCase();
     const page = normalizeMockPagination(url.searchParams.get('page'), 1);
     const limit = normalizeMockPagination(url.searchParams.get('limit'), 8);
     const filtered = MOCK_ADMIN_EXPENSES.filter((expense) =>
       (!branchId || branchId === 'all' || expense.branchId === branchId) &&
-      (!category || category === 'All' || expense.category === category),
+      (!category || category === 'All' || expense.category === category) &&
+      (!search || `${expense.notes ?? ''} ${expense.vendor ?? ''} ${expense.billNumber ?? ''} ${expense.branchName ?? ''} ${expense.category}`.toLowerCase().includes(search)),
     );
     const totalAmount = filtered.reduce((sum, expense) => sum + expense.amount, 0);
     const start = (page - 1) * limit;

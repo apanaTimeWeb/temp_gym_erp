@@ -8,7 +8,8 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { LeaderboardSortDirection, LeaderboardSortKey } from '@/app/frontend_admin/admin_dashboard/dashboard_overview/types/AdminDashboardOverviewBranchLeaderboardTypes';
 import { AdminDashboardFormatCurrency } from '@/app/frontend_admin/admin_dashboard/dashboard_overview/utils/AdminDashboardOverviewFormatCurrency';
 import { useAdminDashboardLogic } from '@/app/frontend_admin/admin_dashboard/dashboard_overview/hooks/useAdminDashboardOverviewLogic';
-import { TrendingUp, TrendingDown, Minus, Building2 } from 'lucide-react';
+import { TrendingUp, TrendingDown, Minus, Building2, ExternalLink } from 'lucide-react';
+import Link from 'next/link';
 import AdminDashboardBranchLeaderboardSortIcon from '@/app/frontend_admin/admin_dashboard/dashboard_overview/components/branch_leaderboard/AdminDashboardOverviewBranchLeaderboardSortIcon';
 import type { BranchPerformance } from '@/app/frontend_admin/admin_dashboard/dashboard_overview/types/AdminDashboardOverviewTypes';
 import { sortAdminBranchPerformanceRows } from '@/app/frontend_admin/admin_dashboard/dashboard_overview/utils/AdminDashboardOverviewSortBranchPerformanceRows';
@@ -140,7 +141,16 @@ export default function AdminDashboardOverviewBranchLeaderboard() {
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-1.5">
                       <span className="text-sm font-semibold text-primary">{branch.name}</span>
-                      <CopyButton text={branch.name} label={branch.name} />
+                      <CopyButton value={branch.name} label={branch.name} />
+                      <Link
+                        href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(branch.name)}`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="text-secondary hover:text-primary p-1 rounded hover:bg-surface-hover transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+                        title={`View ${branch.name} in Branches Directory`}
+                        aria-label={`View ${branch.name} in Branches Directory`}
+                      >
+                        <ExternalLink size={13} aria-hidden="true" />
+                      </Link>
                     </div>
                   </td>
                   <td className="py-3 px-4 text-right">

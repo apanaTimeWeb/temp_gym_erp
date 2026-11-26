@@ -3,6 +3,7 @@
 // DATA FLOW: feature data/state and user input → AdminFinanceProfitAndLossReportPnL → accessible UI/events routed to owning hooks (admin_finance/finance_profit_and_loss_report/components/pnl/AdminFinanceProfitAndLossReportPnL.tsx)
 
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { AdminFinanceProfitAndLossReportFormatCurrency } from '@/app/frontend_admin/admin_finance/finance_profit_and_loss_report/utils/AdminFinanceProfitAndLossReportFormatCurrency';
 import { formatPercent1dp } from '@/app/frontend_admin/admin_finance/finance_profit_and_loss_report/utils/AdminFinanceProfitAndLossReportFormatters';
 
@@ -59,7 +60,13 @@ export default function AdminFinanceProfitAndLossReportPnL() {
                 <tr key={row.gymId} className="hover:bg-surface-hover transition-colors group">
                   <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-4 text-sm font-semibold text-primary whitespace-nowrap">
                     <div className="flex items-center gap-1.5">
-                      <span>{row.gymName}</span>
+                      <Link
+                        href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(row.gymName)}`}
+                        className="hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                        title={`View ${row.gymName} in Branches Directory`}
+                      >
+                        {row.gymName}
+                      </Link>
                       <CopyButton text={row.gymName} label={row.gymName} />
                     </div>
                   </td>

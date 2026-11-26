@@ -162,7 +162,12 @@ export default function AdminReportsCrossDomainOverview() {
             {branchMetrics.map((branch) => {
               const widthPct = Math.round((branch.revenue / maxRevenue) * 100);
               return (
-                <div key={branch.name} className="p-3.5 rounded-xl border border-border bg-surface-highlight space-y-2">
+                <Link
+                  key={branch.name}
+                  href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(branch.name)}`}
+                  className="block p-3.5 rounded-xl border border-border bg-surface-highlight hover:border-primary hover:bg-surface-hover transition-colors space-y-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  title={`View ${branch.name} in Branches Directory`}
+                >
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-primary text-xs">{branch.name}</span>
                     <span className="text-xs font-semibold text-success">{branch.profitMargin} Net</span>
@@ -181,7 +186,7 @@ export default function AdminReportsCrossDomainOverview() {
                     <span className="text-success font-medium">{branch.netGrowth} new</span>
                     <span>{branch.occupancy} cap</span>
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>

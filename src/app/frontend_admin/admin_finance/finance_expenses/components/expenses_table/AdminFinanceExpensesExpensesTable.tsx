@@ -3,6 +3,7 @@
 // DATA FLOW: feature data/state and user input → AdminFinanceOverviewExpensesTable → accessible UI/events routed to owning hooks (admin_finance/finance_expenses/components/expenses_table/AdminFinanceOverviewExpensesTable.tsx)
 
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import type { ChangeEvent } from 'react';
 import type { Expense } from '@/app/frontend_admin/admin_finance/finance_expenses/types/AdminFinanceExpensesTypes';
 import { formatDate } from '@/app/frontend_admin/admin_finance/finance_expenses/utils/AdminFinanceExpensesFormatters';
@@ -101,7 +102,13 @@ export default function AdminFinanceOverviewExpensesTable() {
                     <td className="px-4 py-3"><span className={`text-xs font-bold px-2.5 py-1 rounded-full ${FINANCE_EXPENSE_CATEGORY_STYLES[expense.category as keyof typeof FINANCE_EXPENSE_CATEGORY_STYLES] ?? 'bg-input text-secondary'}`} data-testid="finance-overview-finance-overview-expenses-table-status-badge">{t(FINANCE_EXPENSE_CATEGORY_LABEL_KEYS[expense.category as keyof typeof FINANCE_EXPENSE_CATEGORY_LABEL_KEYS] ?? 'finance.AdminAuditRepair.other')}</span></td>
                     <td className="px-4 py-3 text-sm text-primary">
                       <div className="flex items-center gap-1.5">
-                        <span>{expense.branchName ?? expense.branchId}</span>
+                        <Link
+                          href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(expense.branchName ?? expense.branchId)}`}
+                          className="hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                          title="View branch"
+                        >
+                          {expense.branchName ?? expense.branchId}
+                        </Link>
                         <CopyButton text={expense.branchName ?? expense.branchId} label={expense.branchName ?? expense.branchId} />
                       </div>
                     </td>

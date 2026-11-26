@@ -126,24 +126,8 @@ export default function AdminMembersDirectoryProfileDrawer({ member, status, err
               </div>
               {member.phone && (
                 <div className="flex items-center gap-1.5 shrink-0">
-                  <a
-                    href={`tel:${member.phone.replace(/[^0-9+]/g, '')}`}
-                    className="p-1.5 rounded-lg bg-surface hover:bg-surface-hover text-secondary hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                    title="Call"
-                    aria-label={`Call ${member.phone}`}
-                  >
-                    <PhoneCall size={14} />
-                  </a>
-                  <a
-                    href={`https://wa.me/${member.phone.replace(/[^0-9]/g, '')}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-1.5 rounded-lg bg-success-bg hover:bg-success-bg text-emerald-600 dark:text-emerald-400 motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
-                    title="WhatsApp"
-                    aria-label={`WhatsApp ${member.phone}`}
-                  >
-                    <MessageCircle size={14} />
-                  </a>
+                  <a href={`tel:${member.phone.replace(/[^0-9+]/g, '')}`} className="p-1.5 rounded-lg bg-surface hover:bg-surface-hover text-secondary hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" title="Call" aria-label={`Call ${member.phone}`}><PhoneCall size={14} /></a>
+                  <a href={`https://wa.me/${member.phone.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer" className="p-1.5 rounded-lg bg-success-bg hover:bg-success-bg text-emerald-600 dark:text-emerald-400 motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500" title="WhatsApp" aria-label={`WhatsApp ${member.phone}`}><MessageCircle size={14} /></a>
                 </div>
               )}
             </div>
@@ -186,7 +170,13 @@ export default function AdminMembersDirectoryProfileDrawer({ member, status, err
             <p className="text-xs font-semibold text-secondary uppercase tracking-wider">{t('members.admin_members_profile_drawer.text_53bc9670e7')}</p>
             <div className="flex items-center gap-3">
               <Building2 size={18} className="text-secondary flex-shrink-0"  strokeWidth={2}/>
-              <span className="text-sm text-primary">{member.branchName}</span>
+              <Link
+                href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(member.branchName)}`}
+                className="text-sm text-primary hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                title={`View ${member.branchName} branch`}
+              >
+                {member.branchName}
+              </Link>
             </div>
             <div className="flex items-center gap-3">
               <Calendar size={18} className="text-secondary flex-shrink-0"  strokeWidth={2}/>
@@ -202,7 +192,13 @@ export default function AdminMembersDirectoryProfileDrawer({ member, status, err
                 <Dumbbell size={18} className="text-primary flex-shrink-0" strokeWidth={2}/>
                 <div>
                   <span className="text-xs text-secondary block">Assigned Trainer</span>
-                  <span className="text-sm font-semibold text-primary">{member.assignedTrainerName}</span>
+                  <Link
+                    href={`/frontend_admin/admin_hr/hr_staff_management?search=${encodeURIComponent(member.assignedTrainerName)}`}
+                    className="text-sm font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                    title={`View ${member.assignedTrainerName} in Staff Management`}
+                  >
+                    {member.assignedTrainerName}
+                  </Link>
                 </div>
               </div>
             )}
@@ -262,6 +258,17 @@ export default function AdminMembersDirectoryProfileDrawer({ member, status, err
               )}
             </div>
           )}
+
+          {/* Quick Admin Actions */}
+          <div className="pt-2 flex flex-wrap gap-2">
+            <Link
+              href={member.isBlacklisted ? `/frontend_admin/admin_members/members_blacklist_management?search=${encodeURIComponent(member.name)}` : `/frontend_admin/admin_members/members_blacklist_management?action=add&memberId=${encodeURIComponent(member.id)}&memberName=${encodeURIComponent(member.name)}&memberPhone=${encodeURIComponent(member.phone || '')}&memberEmail=${encodeURIComponent(member.email || '')}`}
+              className={`flex-1 inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger ${member.isBlacklisted ? 'border-danger bg-danger-bg text-danger hover:brightness-95' : 'border-border bg-input text-danger hover:bg-danger-bg hover:border-danger'}`}
+            >
+              <ShieldAlert size={14} aria-hidden="true" />
+              <span>{member.isBlacklisted ? 'Manage Blacklist Entry' : 'Blacklist Member'}</span>
+            </Link>
+          </div>
 
           {/* Role boundary: renewal/payment/freeze actions belong to Manager workflows per the Admin feature contract. */}
           </>

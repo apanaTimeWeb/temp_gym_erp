@@ -4,7 +4,8 @@
 
 import { ADMIN_FINANCE_STAFF_LEDGER_MANAGEMENT_QUERY_KEYS } from '@/app/frontend_admin/admin_finance/finance_staff_ledger_management/constants/AdminFinanceStaffLedgerManagementQueryKeys';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { AdminFinanceStaffLedgerManagementApi } from '@/app/frontend_admin/admin_finance/finance_staff_ledger_management/api/admin_finance_staff_ledger_management_api';
@@ -14,20 +15,35 @@ import type { AdminFinanceStaffLedgerManagementLedgerSortDirection, AdminFinance
 export function useAdminFinanceStaffLedgerManagementLedgerLogic() {
   const { staff, showToast } = useAdminFinanceStaffLedgerManagementViewModel();
   const errorText = useTranslations('hr.HrError')('text_22b2c820bf');
+  const searchParams = useSearchParams();
+  const urlStaffId = searchParams.get('staffId') ?? '';
+  const urlSearch = (searchParams.get('search') ?? '').trim().toLowerCase();
   const [selectedStaffId, setSelectedStaffId] = useState('');
   const [sortKey, setSortKey] = useState<AdminFinanceStaffLedgerManagementLedgerSortKey>('date');
   const [sortDir, setSortDir] = useState<AdminFinanceStaffLedgerManagementLedgerSortDirection>('desc');
+  const lastAppliedUrlRef = useRef<string | null>(null);
 
-// EFFECT: Synchronizes ledger filters with URL-backed state so the table remains shareable and recoverable.
+// EFFECT: Synchronizes ledger selection with URL-backed staffId/search state so cross-domain navigation selects the right staff member.
   useEffect(() => {
     if (staff.length === 0) {
       setSelectedStaffId('');
       return;
     }
+    const urlKey = `${urlStaffId}::${urlSearch}`;
+    if (lastAppliedUrlRef.current !== urlKey && (urlStaffId || urlSearch)) {
+      const matched = urlStaffId
+        ? staff.find((member) => member.id === urlStaffId)
+        : staff.find((member) => member.name.toLowerCase().includes(urlSearch));
+      if (matched) {
+        lastAppliedUrlRef.current = urlKey;
+        setSelectedStaffId(matched.id);
+        return;
+      }
+    }
     if (!selectedStaffId || !staff.some((member) => member.id === selectedStaffId)) {
       setSelectedStaffId(staff[0]?.id ?? '');
     }
-  }, [staff, selectedStaffId]);
+  }, [staff, selectedStaffId, urlStaffId, urlSearch]);
 
   const ledgerQuery = useQuery({
     queryKey: ADMIN_FINANCE_STAFF_LEDGER_MANAGEMENT_QUERY_KEYS.key('ledger', selectedStaffId),

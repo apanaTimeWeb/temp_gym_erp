@@ -14,4 +14,5 @@ export interface AdminStatCardProps {
   iconBg: string;
   iconColor: string;
   testId?: string;
+  href?: string;
 }

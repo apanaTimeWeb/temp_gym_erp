@@ -3,9 +3,12 @@
 // DATA FLOW: feature data/state and user input → AdminMembersDirectoryKPIs → accessible UI/events routed to owning hooks (admin_members/members_directory/components/kpis/AdminMembersDirectoryKPIs.tsx)
 
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 
 import { Users, UserCheck, Clock, IndianRupee } from 'lucide-react';
 import { useAdminMembersLogic } from '@/app/frontend_admin/admin_members/members_directory/hooks/useAdminMembersDirectoryLogic';
+import { useAdminMembersStore } from '@/app/frontend_admin/admin_members/members_directory/state/useAdminMembersDirectoryStore';
+import { MEMBER_STATUS_VALUES } from '@/app/frontend_admin/admin_members/members_directory/constants/AdminMembersDirectoryConstants';
 import { AdminMembersFormatCurrency } from '@/app/frontend_admin/admin_members/members_directory/utils/AdminMembersDirectoryFormatCurrency';
 import { formatNumber } from '@/app/frontend_admin/admin_members/members_directory/utils/AdminMembersDirectoryFormatters';
 
@@ -20,6 +23,7 @@ export default function AdminMembersDirectoryKPIs() {
   const t = useTranslations();
   const locale = useLocale();
   const { summary, summaryStatus, retrySummary } = useAdminMembersLogic();
+  const { statusFilter, expiryFilter, setStatusFilter, setExpiryFilter } = useAdminMembersStore();
   if (summaryStatus === 'pending') {
     return <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4" aria-busy="true" aria-label={t('members.AdminAuditRepair.summaryLoading')}>
       {['total-members', 'active-members', 'expiring-members', 'outstanding-members'].map((key) => <div key={key} className="h-28 rounded-xl border border-border bg-card p-5"><div className="h-3 w-24 animate-pulse rounded bg-skeleton-base"/><div className="mt-4 h-7 w-16 animate-pulse rounded bg-skeleton-base"/><div className="mt-3 h-3 w-32 animate-pulse rounded bg-skeleton-base"/></div>)}
@@ -35,6 +39,7 @@ export default function AdminMembersDirectoryKPIs() {
 
   const cards = [
     {
+      id: 'all',
       title: t('members.AdminAuditRepair.totalMembers'),
       value: formatNumber(summary.totalMembers, locale),
       sub: t('members.AdminAuditRepair.newThisMonth', { count: summary.newThisMonth }),
@@ -42,8 +47,11 @@ export default function AdminMembersDirectoryKPIs() {
       icon: Users,
       iconBg: 'bg-info-bg',
       iconColor: 'text-info',
+      active: statusFilter === 'all' && expiryFilter === 'all',
+      onClick: () => { setStatusFilter('all'); setExpiryFilter('all'); },
     },
     {
+      id: 'active',
       title: t('members.AdminAuditRepair.activeMembers'),
       value: formatNumber(summary.activeMembers, locale),
       sub: t('members.AdminAuditRepair.percentOfTotal', { value: Math.round((summary.activeMembers / Math.max(summary.totalMembers, 1)) * 100) }),
@@ -51,8 +59,11 @@ export default function AdminMembersDirectoryKPIs() {
       icon: UserCheck,
       iconBg: 'bg-success-bg',
       iconColor: 'text-success',
+      active: statusFilter === MEMBER_STATUS_VALUES.ACTIVE,
+      onClick: () => setStatusFilter(statusFilter === MEMBER_STATUS_VALUES.ACTIVE ? 'all' : MEMBER_STATUS_VALUES.ACTIVE),
     },
     {
+      id: 'expiring',
       title: t('members.AdminAuditRepair.expiringThisMonth'),
       value: formatNumber(summary.expiringThisMonth, locale),
       sub: t('members.AdminAuditRepair.expiringThisWeek', { count: summary.expiringThisWeek }),
@@ -60,8 +71,11 @@ export default function AdminMembersDirectoryKPIs() {
       icon: Clock,
       iconBg: 'bg-warning-bg',
       iconColor: 'text-warning',
+      active: expiryFilter === 'this_month',
+      onClick: () => setExpiryFilter(expiryFilter === 'this_month' ? 'all' : 'this_month'),
     },
     {
+      id: 'dues',
       title: t('members.AdminAuditRepair.totalOutstanding'),
       value: AdminMembersFormatCurrency(summary.totalOutstanding, undefined, locale),
       sub: t('members.AdminAuditRepair.membersWithDues', { count: summary.pendingMembers }),
@@ -69,6 +83,8 @@ export default function AdminMembersDirectoryKPIs() {
       icon: IndianRupee,
       iconBg: 'bg-danger-bg',
       iconColor: 'text-danger',
+      active: false,
+      href: '/frontend_admin/admin_sales/sales_pending_payments',
     },
   ];
 
@@ -76,8 +92,8 @@ export default function AdminMembersDirectoryKPIs() {
     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4" data-testid="admin_members-adminmemberskpis-summary">
       {cards.map((c) => {
         const Icon = c.icon;
-        return (
-          <div key={c.title} className="bg-card rounded-xl p-5 border border-border hover:border-focus motion-safe:transition-all motion-safe:duration-base">
+        const inner = (
+          <div className={`bg-card rounded-xl p-5 border motion-safe:transition-all motion-safe:duration-base text-left w-full ${c.active ? 'border-primary ring-1 ring-primary' : 'border-border hover:border-focus'}`}>
             <div className="flex items-start justify-between">
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-medium text-secondary uppercase tracking-wider">{c.title}</p>
@@ -89,6 +105,18 @@ export default function AdminMembersDirectoryKPIs() {
               </div>
             </div>
           </div>
+        );
+        if (c.href) {
+          return (
+            <Link key={c.id} href={c.href} className="block no-underline rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+              {inner}
+            </Link>
+          );
+        }
+        return (
+          <button key={c.id} type="button" onClick={c.onClick} aria-pressed={c.active} className="block w-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+            {inner}
+          </button>
         );
       })}
     </div>

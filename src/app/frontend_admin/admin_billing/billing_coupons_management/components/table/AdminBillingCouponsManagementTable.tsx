@@ -2,8 +2,8 @@
 // RESPONSIBILITY: Renders the coupons data table with edit, delete, and toggle actions.
 // DATA FLOW: feature data/state and user input → AdminBillingCouponsManagementTable → accessible UI/events routed to owning hooks (admin_coupons/coupons_management/components/table/AdminBillingCouponsManagementTable.tsx)
 
-import { useTranslations } from 'next-intl';
-import { useLocale } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
+import Link from 'next/link';
 import { format, isValid, parseISO } from 'date-fns';
 import { enUS, hi } from 'date-fns/locale';
 import AdminNavigationLayoutProgressBar from '@/app/frontend_admin/admin_billing/billing_coupons_management/components/progress_bar/AdminBillingCouponsManagementProgressBar';
@@ -99,7 +99,24 @@ export default function AdminBillingCouponsManagementTable() {
                   {coupon.minOrderAmount > 0 && <p className="text-xs text-secondary font-normal">{t('coupons.admin_coupons_table.text_21be6e4ee3')}{AdminCouponsFormatCurrency(coupon.minOrderAmount, locale)}</p>}
                 </td>
                 <td className="px-5 py-4 text-sm text-primary">
-                  {coupon.assignedGymNames.join(', ')}
+                  <div className="flex flex-wrap gap-1">
+                    {coupon.assignedGymNames.map((gymName, gIdx) => (
+                      <span key={gymName}>
+                        {gymName.toLowerCase().includes('all') ? (
+                          gymName
+                        ) : (
+                          <Link
+                            href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(gymName)}`}
+                            className="hover:underline text-primary"
+                            title={`View ${gymName} in Branches Directory`}
+                          >
+                            {gymName}
+                          </Link>
+                        )}
+                        {gIdx < coupon.assignedGymNames.length - 1 ? ', ' : ''}
+                      </span>
+                    ))}
+                  </div>
                 </td>
                 <td className="px-5 py-4">
                   {coupon.usageLimit ? (

@@ -154,7 +154,17 @@ export default function AdminAttendanceDashboardTable() {
                   </Link>
                 </td>
                 <td className="px-4 py-3">
-                  <span className="text-sm text-primary">{r.planName}</span>
+                  {r.planName ? (
+                    <Link
+                      href={`/frontend_admin/admin_billing/billing_plans_catalog?search=${encodeURIComponent(r.planName)}`}
+                      className="text-sm text-primary hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                      title={`View ${r.planName} plan`}
+                    >
+                      {r.planName}
+                    </Link>
+                  ) : (
+                    <span className="text-sm text-primary">—</span>
+                  )}
                 </td>
                 <td className="px-4 py-3">
                   {r.sessionType === 'PT' && r.trainerName ? (

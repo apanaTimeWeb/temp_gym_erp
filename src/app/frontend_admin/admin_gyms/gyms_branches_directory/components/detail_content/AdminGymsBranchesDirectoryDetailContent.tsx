@@ -3,6 +3,7 @@
 // DATA FLOW: feature data/state and user input → AdminGymsBranchesDirectoryDetailContent → accessible UI/events routed to owning hooks (admin_branches/branches_directory/components/detail_content/AdminGymsBranchesDirectoryDetailContent.tsx)
 
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { BRANCH_PAYMENT_METHOD_STYLES } from '@/app/frontend_admin/admin_gyms/gyms_branches_directory/constants/AdminGymsBranchesDirectoryConstants';
 import { AdminBranchesFormatCurrency } from '@/app/frontend_admin/admin_gyms/gyms_branches_directory/utils/AdminGymsBranchesDirectoryFormatCurrency';
 
@@ -28,7 +29,9 @@ export default function AdminGymsBranchesDirectoryDetailContent({ branch, view }
         {items.map((item) => (
           <div key={item.id} className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-input p-3.5">
             <div>
-              <p className="text-sm font-medium text-primary">{item.label}</p>
+              <Link href={`/frontend_admin/admin_finance/finance_payments?search=${encodeURIComponent(item.label)}`} className="text-sm font-medium text-primary hover:underline">
+                {item.label}
+              </Link>
               <p className="text-xs text-secondary">{item.date}</p>
             </div>
             <div className="flex items-center gap-2">
@@ -48,7 +51,9 @@ export default function AdminGymsBranchesDirectoryDetailContent({ branch, view }
         {items.map((item) => (
           <div key={item.id} className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-input p-3.5">
             <div>
-              <p className="text-sm font-medium text-primary">{item.label}</p>
+              <Link href={`/frontend_admin/admin_finance/finance_expenses?search=${encodeURIComponent(item.label)}`} className="text-sm font-medium text-primary hover:underline">
+                {item.label}
+              </Link>
               <p className="text-xs text-secondary">{item.category} · {item.date}</p>
             </div>
             <span className="font-bold text-danger">{AdminBranchesFormatCurrency(item.amount, 'INR', locale)}</span>
@@ -65,7 +70,9 @@ export default function AdminGymsBranchesDirectoryDetailContent({ branch, view }
         {items.map((member) => (
           <div key={member.id} className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-input p-3.5">
             <div>
-              <p className="text-sm font-medium text-primary">{member.name}</p>
+              <Link href={`/frontend_admin/admin_hr/hr_staff_management?search=${encodeURIComponent(member.name)}`} className="text-sm font-medium text-primary hover:underline">
+                {member.name}
+              </Link>
               <p className="text-xs text-secondary">{member.role} · {member.shift}</p>
             </div>
             <span className={`rounded-full px-2 py-0.5 text-xs ${member.status === ADMIN_BRANCH_STAFF_STATUS.ACTIVE ? 'bg-success-bg text-success' : 'bg-warning-bg text-warning'}`} data-testid={`admin_branches-admin_branches-detail-content-staff-status-${member.id}`}>{member.status === ADMIN_BRANCH_STAFF_STATUS.ACTIVE ? t(ADMIN_BRANCH_STAFF_STATUS_LABEL_KEYS.ACTIVE) : t(ADMIN_BRANCH_STAFF_STATUS_LABEL_KEYS.ON_LEAVE)}</span>
@@ -81,7 +88,9 @@ export default function AdminGymsBranchesDirectoryDetailContent({ branch, view }
       {students.map((student) => (
         <div key={student.id} className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-input p-3.5">
           <div>
-            <p className="text-sm font-medium text-primary">{student.name}</p>
+            <Link href={`/frontend_admin/admin_members/members_directory?search=${encodeURIComponent(student.name)}`} className="text-sm font-medium text-primary hover:underline">
+              {student.name}
+            </Link>
             <p className="text-xs text-secondary">{student.plan} {t('branches.AdminBranchesDetailContent.text_joined')} {student.joinDate}</p>
           </div>
           <span className={`rounded-full px-2 py-0.5 text-xs ${student.status === ADMIN_BRANCH_STUDENT_STATUS.ACTIVE ? 'bg-success-bg text-success' : 'bg-danger-bg text-danger'}`} data-testid={`admin_branches-admin_branches-detail-content-student-status-${student.id}`}>{student.status === ADMIN_BRANCH_STUDENT_STATUS.ACTIVE ? t(ADMIN_BRANCH_STUDENT_STATUS_LABEL_KEYS.ACTIVE) : t(ADMIN_BRANCH_STUDENT_STATUS_LABEL_KEYS.EXPIRED)}</span>

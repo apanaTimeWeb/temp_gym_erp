@@ -9,7 +9,7 @@
 export const ADMIN_DASHBOARD_ROUTES = {
   root: '/frontend_admin/admin_dashboard/dashboard_overview' as const,
   auditLogs: '/frontend_admin/admin_security/security_audit_logs_explorer' as const,
-  members: '/frontend_admin/admin_members' as const,
+  members: '/frontend_admin/admin_members/members_directory' as const,
 } as const;
 
 // ─── Backend API Endpoints ─────────────────────────────────────────────────

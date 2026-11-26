@@ -135,7 +135,15 @@ export default function AdminGymsHealthAlertsMonitoringTable() {
                     <p className="mt-1 text-xs text-secondary">{alert.description}</p>
                     <p className="mt-1 text-xs text-secondary">{alert.metric} {t('gym-health-alerts.admin_gym_health_alerts_table.text_e7d139364f')}{alert.threshold}</p>
                   </td>
-                  <td className="px-4 py-4 text-sm text-primary">{alert.gymName}</td>
+                  <td className="px-4 py-4 text-sm text-primary">
+                    <Link
+                      href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(alert.gymName)}`}
+                      className="font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
+                      title={`View ${alert.gymName} in Branches Directory`}
+                    >
+                      {alert.gymName}
+                    </Link>
+                  </td>
                   <td className="px-4 py-4 text-sm text-secondary">{formatDateTime(alert.detectedAt, locale)}</td>
                   <td className="px-4 py-4">{href ? <Link data-testid={`admin_gym_health_alerts-admin_gym_health_alerts-table-navigate-${alert.id}`} href={href} className="text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">{t('gym-health-alerts.admin_gym_health_alerts_table.text_c0ba32fc60')}</Link> : <span className="text-xs text-disabled">{t('gym-health-alerts.admin_gym_health_alerts_table.text_a42c475248')}</span>}</td>
                   <td className="px-4 py-4 text-right"><button type="button" onClick={() => dismissAlert(alert.id, alert.title)} aria-label={t('gym-health-alerts.AdminGymHealthAlertsTable.auto_dismiss', { title: alert.title })} className="min-h-11 min-w-11 inline-flex items-center justify-center rounded-lg text-secondary hover:bg-danger-bg hover:text-danger transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid={`admin_gym_health_alerts-admin_gym_health_alerts-table-dismiss-${alert.id}`}><X size={18} strokeWidth={2} aria-hidden="true" /></button></td>

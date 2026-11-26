@@ -176,6 +176,12 @@
         "salesDescription": "बिक्री-स्वामित्व वाली सदस्यता रिपोर्टिंग और बिक्री सारांश।",
         "financeTitle": "वित्त रिपोर्ट",
         "financeDescription": "वित्त के स्वामित्व वाले लाभ-हानि, राजस्व और पेरोल रिपोर्ट।",
+        "financeProfitLossTitle": "लाभ और हानि रिपोर्ट",
+        "financeProfitLossDescription": "शाखा और समग्र आय विवरण, परिचालन व्यय और शुद्ध लाभ मार्जिन।",
+        "financeRevenueTitle": "राजस्व रिपोर्ट",
+        "financeRevenueDescription": "सदस्यता, नवीनीकरण और खुदरा बिक्री में विस्तृत राजस्व विश्लेषण।",
+        "financePayrollTitle": "पेरोल रिपोर्ट",
+        "financePayrollDescription": "कर्मचारी वेतन वितरण, कटौती, प्रोत्साहन और शाखा पेरोल ऑडिट।",
         "notFoundTitle": "रिपोर्ट कैटलॉग नहीं मिला",
         "notFoundDescription": "अनुरोधित रिपोर्ट कैटलॉग मार्ग उपलब्ध नहीं है।",
         "backToReports": "रिपोर्ट पर वापस जाएँ"

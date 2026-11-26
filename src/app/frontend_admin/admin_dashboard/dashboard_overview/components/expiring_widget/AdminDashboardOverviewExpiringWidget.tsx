@@ -48,9 +48,14 @@ export default function AdminDashboardOverviewExpiringWidget() {
         )}
         {expiring.length === 0 && <p role="status" className="py-8 text-center text-sm text-secondary" data-testid="dashboard-overview-dashboard-overview-expiring-widget-status-region">{t('dashboard.admin_dashboard_expiring_widget.noData')}</p>}
         {expiring.map((m) => (
-          <div key={m.id} className={`p-3 rounded-xl border flex items-center justify-between gap-3 motion-safe:transition-colors ${
-            m.daysLeft <= 7 ? 'bg-danger-bg border-border' : 'bg-warning-bg border-border'
-          }`}>
+          <Link
+            key={m.id}
+            href={`${ADMIN_DASHBOARD_ROUTES.members}?search=${encodeURIComponent(m.name)}`}
+            className={`p-3 rounded-xl border flex items-center justify-between gap-3 motion-safe:transition-colors hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+              m.daysLeft <= 7 ? 'bg-danger-bg border-border' : 'bg-warning-bg border-border'
+            }`}
+            title={`View ${m.name} in Members Directory`}
+          >
             <div className="flex items-center gap-2.5 min-w-0">
               <div className="w-7 h-7 rounded-full bg-primary-subtle flex items-center justify-center text-primary text-xs font-bold flex-shrink-0">
                 {m.name.charAt(0)}
@@ -62,12 +67,12 @@ export default function AdminDashboardOverviewExpiringWidget() {
             </div>
             <span className={`text-xs font-bold whitespace-nowrap flex-shrink-0 ${m.daysLeft <= 7 ? 'text-danger' : 'text-warning'}`}>
               {m.daysLeft}{t('dashboard.admin_dashboard_expiring_widget.text_90cc4645c0')}</span>
-          </div>
+          </Link>
         ))}
       </div>
 
       <Link data-testid="admin_dashboard-admin_dashboard-expiring-widget-navigate"
-        href={`${ADMIN_DASHBOARD_ROUTES.members}?expiryFilter=this_month`}
+        href={`${ADMIN_DASHBOARD_ROUTES.members}?expiry=this_month`}
         className="w-full mt-4 py-2 border border-border rounded-lg text-xs font-bold text-secondary hover:text-primary hover:bg-surface-highlight motion-safe:transition-colors flex items-center justify-center gap-1 motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page"
       >
         {t('dashboard.admin_dashboard_expiring_widget.text_6c8c925d4a')}<ChevronRight size={18}  strokeWidth={2}/>

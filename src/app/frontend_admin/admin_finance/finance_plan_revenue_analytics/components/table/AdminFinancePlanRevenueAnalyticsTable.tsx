@@ -3,6 +3,7 @@
 // DATA FLOW: feature data/state and user input → AdminFinancePlanRevenueAnalyticsTable → accessible UI/events routed to owning hooks (admin_finance/finance_plan_revenue_analytics/components/table/AdminFinancePlanRevenueAnalyticsTable.tsx)
 
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 
 import { PLANS_ITEMS_PER_PAGE, REVENUE_TABLE_HEADERS } from '@/app/frontend_admin/admin_finance/finance_plan_revenue_analytics/constants/AdminFinancePlanRevenueAnalyticsConstants';
 import type { RevenueSortKey } from '@/app/frontend_admin/admin_finance/finance_plan_revenue_analytics/types/AdminFinancePlanRevenueAnalyticsTypes';
@@ -62,7 +63,13 @@ export default function AdminFinancePlanRevenueAnalyticsTable({ data, sortKey, s
               <tr key={row.id} className="hover:bg-surface-hover transition-colors group">
                 <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3.5 text-sm font-semibold text-primary">
                   <div className="flex items-center gap-1.5">
-                    <span>{row.planName}</span>
+                    <Link
+                      href={`/frontend_admin/admin_billing/billing_plans_catalog?search=${encodeURIComponent(row.planName)}`}
+                      className="hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                      title={`View ${row.planName} in Plans Catalog`}
+                    >
+                      {row.planName}
+                    </Link>
                     <CopyButton text={row.planName} label={row.planName} />
                   </div>
                 </td>

@@ -176,6 +176,12 @@
         "salesDescription": "Sales-owned membership reporting and sales summary.",
         "financeTitle": "Finance Reports",
         "financeDescription": "Profit and loss, revenue, and payroll reporting owned by Finance.",
+        "financeProfitLossTitle": "Profit & Loss Report",
+        "financeProfitLossDescription": "Branch and overall income statements, operating expenses, and net profit margins.",
+        "financeRevenueTitle": "Revenue Report",
+        "financeRevenueDescription": "Detailed revenue breakdown across memberships, renewals, and retail sales.",
+        "financePayrollTitle": "Payroll Report",
+        "financePayrollDescription": "Staff salary disbursements, deductions, incentives, and branch payroll audit.",
         "notFoundTitle": "Report catalog not found",
         "notFoundDescription": "The requested report catalog route is unavailable.",
         "backToReports": "Back to Reports"

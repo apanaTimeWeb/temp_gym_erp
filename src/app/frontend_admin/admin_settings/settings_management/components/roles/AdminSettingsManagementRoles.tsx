@@ -3,7 +3,8 @@
 // DATA FLOW: feature data/state and user input → AdminSettingsManagementRoles → accessible UI/events routed to owning hooks (admin_settings/settings_management/components/roles/AdminSettingsManagementRoles.tsx)
 
 import { useTranslations } from 'next-intl';
-import { ShieldCheck } from 'lucide-react';
+import Link from 'next/link';
+import { ShieldCheck, ArrowUpRight } from 'lucide-react';
 import { useAdminSettingsRolesData } from '@/app/frontend_admin/admin_settings/settings_management/hooks/useAdminSettingsManagementRolesData';
 
 /**
@@ -36,6 +37,13 @@ export function AdminSettingsManagementRoles() {
           <h2 className="font-bold text-primary text-lg">{t('settings.admin_settings_roles.text_406b4e0e00')}</h2>
           <p className="text-xs text-secondary">{t('settings.admin_settings_roles.text_81bc7a81b8')}</p>
         </div>
+        <Link
+          href="/frontend_admin/admin_security/security_permissions_management"
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-border bg-input px-3.5 py-2 text-xs font-semibold text-primary hover:bg-surface-hover transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+        >
+          <span>Manage Permissions</span>
+          <ArrowUpRight size={14} aria-hidden="true" />
+        </Link>
       </div>
       <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-5">
         {roles.map((role , __testIdIndex36) => {

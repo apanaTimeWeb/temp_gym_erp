@@ -3,6 +3,7 @@
 // DATA FLOW: feature data/state and user input → AdminFinanceRevenueReportRevenue → accessible UI/events routed to owning hooks (admin_finance/finance_revenue_report/components/revenue/AdminFinanceRevenueReportRevenue.tsx)
 
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { AdminFinanceRevenueReportFormatCurrency } from '@/app/frontend_admin/admin_finance/finance_revenue_report/utils/AdminFinanceRevenueReportFormatCurrency';
 import { formatPercent1dp } from '@/app/frontend_admin/admin_finance/finance_revenue_report/utils/AdminFinanceRevenueReportFormatters';
 import type { AdminFinanceRevenueReportSortKey } from '@/app/frontend_admin/admin_finance/finance_revenue_report/types/AdminFinanceRevenueReportUiTypes';
@@ -110,7 +111,13 @@ export default function AdminFinanceRevenueReportRevenue() {
                   <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-4">
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <p className="text-sm font-semibold text-primary">{row.gymName}</p>
+                        <Link
+                          href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(row.gymName)}`}
+                          className="text-sm font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                          title={`View ${row.gymName} in Branches Directory`}
+                        >
+                          {row.gymName}
+                        </Link>
                         <CopyButton text={row.gymName} label={row.gymName} />
                       </div>
                       <div className="mt-1 w-32">

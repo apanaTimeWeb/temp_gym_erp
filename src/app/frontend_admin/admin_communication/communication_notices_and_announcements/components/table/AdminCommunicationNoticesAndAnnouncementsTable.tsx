@@ -2,9 +2,9 @@
 // RESPONSIBILITY: Announcements table with search/filter toolbar, status badges, pin/edit/delete row actions.
 // DATA FLOW: feature data/state and user input → AdminCommunicationNoticesAndAnnouncementsTable → accessible UI/events routed to owning hooks (admin_communication/communication_notices_and_announcements/components/table/AdminCommunicationNoticesAndAnnouncementsTable.tsx)
 
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { useMemo, useState } from 'react';
-import { useTranslations } from 'next-intl';
 import { formatDate } from '@/app/frontend_admin/admin_communication/communication_notices_and_announcements/utils/AdminCommunicationNoticesAndAnnouncementsFormatters';
 import { formatNumber } from '@/app/frontend_admin/admin_communication/communication_notices_and_announcements/utils/AdminCommunicationNoticesAndAnnouncementsFormatters';
 
@@ -202,7 +202,7 @@ export default function AdminCommunicationNoticesAndAnnouncementsTable() {
                     </div>
                   </td>
                   {/* Branches */}
-                  <td className="p-4 text-xs text-secondary whitespace-nowrap">{a.gymNames.join(', ')}</td>
+                  <td className="p-4 text-xs text-secondary whitespace-nowrap">{a.gymNames.map((gymName, gIdx) => (<span key={gymName}>{gymName.toLowerCase().includes('all') ? gymName : <Link href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(gymName)}`} className="text-primary hover:underline">{gymName}</Link>}{gIdx < a.gymNames.length - 1 ? ', ' : ''}</span>))}</td>
                   {/* Schedule */}
                   <td className="p-4 text-xs text-secondary whitespace-nowrap">
                     <p>{formatDate(a.publishedAt, locale)}</p>

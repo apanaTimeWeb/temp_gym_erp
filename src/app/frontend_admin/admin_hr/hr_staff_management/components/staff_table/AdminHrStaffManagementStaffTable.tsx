@@ -3,6 +3,7 @@
 // DATA FLOW: feature data/state and user input → AdminHrManagementStaffTable → accessible UI/events routed to owning hooks (admin_hr/hr_staff_management/components/staff_table/AdminHrManagementStaffTable.tsx)
 
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { formatDate } from '@/app/frontend_admin/admin_hr/hr_staff_management/utils/AdminHrStaffManagementFormatters';
 
 import { useAdminHrViewModel } from '@/app/frontend_admin/admin_hr/hr_staff_management/hooks/useAdminHrStaffManagementViewModel';
@@ -146,7 +147,26 @@ export default function AdminHrManagementStaffTable() {
                     </div>
                   </div>
                 </td>
-                <td className="px-4 py-3 text-sm text-secondary">{member.role === 'Manager' && member.assignedBranches && member.assignedBranches.length > 0 ? <div className="flex flex-col"><span className="font-medium text-primary">{displayValue(member.primaryBranchId || member.assignedBranches[0])}</span>{member.assignedBranches.length > 1 && <span className="text-xs bg-primary-subtle text-primary px-1.5 py-0.5 rounded-full mt-1 w-max" data-testid="hr-management-hr-management-staff-table-status-badge">+{member.assignedBranches.length - 1} {t('hr.admin_hr_staff_table.text_4bab2d8fe1')}</span>}</div> : displayValue(member.branch)}</td>
+                <td className="px-4 py-3 text-sm text-secondary">
+                  {member.role === 'Manager' && member.assignedBranches && member.assignedBranches.length > 0 ? (
+                    <div className="flex flex-col">
+                      <Link
+                        href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(member.primaryBranchId || member.assignedBranches[0] || '')}`}
+                        className="font-medium text-primary hover:underline"
+                      >
+                        {displayValue(member.primaryBranchId || member.assignedBranches[0])}
+                      </Link>
+                      {member.assignedBranches.length > 1 && <span className="text-xs bg-primary-subtle text-primary px-1.5 py-0.5 rounded-full mt-1 w-max" data-testid="hr-management-hr-management-staff-table-status-badge">+{member.assignedBranches.length - 1} {t('hr.admin_hr_staff_table.text_4bab2d8fe1')}</span>}
+                    </div>
+                  ) : member.branch ? (
+                    <Link
+                      href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(member.branch)}`}
+                      className="text-secondary hover:text-primary hover:underline"
+                    >
+                      {displayValue(member.branch)}
+                    </Link>
+                  ) : displayValue(member.branch)}
+                </td>
                 <td className="px-4 py-3 text-sm text-primary">{displayValue(member.role)}</td>
                 <td className="px-4 py-3">{member.isActive === false ? <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-danger text-on-danger border border-border" data-testid={`admin_hr-adminhrstafftable-status-1-map93-${__testIdIndex93}-2`}><Ban size={18} strokeWidth={2}/> {t('hr.admin_hr_staff_table.text_794696a720')}</span> : <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-success text-on-success border border-border" data-testid={`admin_hr-adminhrstafftable-status-2-map93-${__testIdIndex93}-3`}><CheckCircle2 size={18} strokeWidth={2}/> {t('hr.admin_hr_staff_table.text_a733b809d2')}</span>}</td>
                 <td className="px-4 py-3 text-sm text-secondary">{maskSensitiveData(member.phone)}</td><td className="px-4 py-3 text-sm font-medium text-success">{AdminHrFormatCurrency(member.salary, undefined, locale)}</td><td className="px-4 py-3 text-sm text-secondary">{member.joinDate ? formatDate(member.joinDate, locale) : displayValue(null)}</td>

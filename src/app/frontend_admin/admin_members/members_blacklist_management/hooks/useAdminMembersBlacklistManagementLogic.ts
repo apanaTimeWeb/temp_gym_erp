@@ -5,7 +5,8 @@ import { normalizeAdminMembersBlacklistManagementUrlPage } from '@/app/frontend_
 
 import { ADMIN_BLACKLIST_QUERY_KEYS } from '@/app/frontend_admin/admin_members/members_blacklist_management/constants/AdminMembersBlacklistManagementQueryKeys';
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { AdminBlacklistApi } from '@/app/frontend_admin/admin_members/members_blacklist_management/api/admin_members_blacklist_management_api';
 import { useTranslations } from 'next-intl';
@@ -21,8 +22,30 @@ import type { AdminConfirmOptions } from '@/app/frontend_admin/admin_members/mem
 /** @description useAdminBlacklistLogic: Business logic hook for the Blacklist module. @dependencies Consumes AdminBlacklistQueryKeys, AdminBlacklistApi, useAdminBlacklistStore, useAdminNavigationLayoutUrlQuerySync, useAdminNavigationLayoutConfirm, AdminBlacklistConstants. @edge-case Preserves documented loading, empty, error, permission, and recovery behavior without owning presentation. @returns The hook’s typed data, state, actions, and recovery handlers. */
 export function useAdminBlacklistLogic() {
   const t = useTranslations();
+  const searchParams = useSearchParams();
   const { confirm } = useAdminNavigationLayoutConfirm();
   const { activeTab, setActiveTab, showModal, setShowModal, form, setForm, search, scopeFilter, gymFilter, currentPage, setCurrentPage, operationPending: sharedPending } = useAdminBlacklistStore();
+  const prefillRef = useRef<string | null>(null);
+  const actionParam = searchParams.get('action');
+  const prefillMemberId = searchParams.get('memberId') || '';
+  const prefillMemberName = searchParams.get('memberName') || '';
+  const prefillMemberPhone = searchParams.get('memberPhone') || '';
+  const prefillMemberEmail = searchParams.get('memberEmail') || '';
+
+  useEffect(() => {
+    if (actionParam !== 'add') return;
+    const key = `${prefillMemberId}::${prefillMemberName}`;
+    if (prefillRef.current === key) return;
+    prefillRef.current = key;
+    setForm({
+      ...EMPTY_BLACKLIST_FORM,
+      memberId: prefillMemberId,
+      memberName: prefillMemberName,
+      memberPhone: prefillMemberPhone.replace(/\D/g, '').slice(-10),
+      memberEmail: prefillMemberEmail,
+    });
+    setShowModal(true);
+  }, [actionParam, prefillMemberId, prefillMemberName, prefillMemberPhone, prefillMemberEmail, setForm, setShowModal]);
   useAdminNavigationLayoutUrlQuerySync([
     { key: 'search', value: search, defaultValue: '', setValue: (val) => useAdminBlacklistStore.getState().setSearch(val as string) },
     { key: 'scope', value: scopeFilter, defaultValue: 'all', setValue: (val) => { if (val === 'all' || val === 'global' || val === 'specific') useAdminBlacklistStore.getState().setScopeFilter(val); } },

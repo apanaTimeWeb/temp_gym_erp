@@ -3,7 +3,7 @@
 // DATA FLOW: module API / client state → useAdminGymHealthAlertsLogic → consuming Admin feature component.
 
 import { ADMIN_GYM_HEALTH_ALERTS_QUERY_KEYS } from '@/app/frontend_admin/admin_gyms/gyms_health_alerts_monitoring/constants/AdminGymsHealthAlertsMonitoringQueryKeys';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useAdminGymHealthAlertsDebounce } from '@/app/frontend_admin/admin_gyms/gyms_health_alerts_monitoring/hooks/useAdminGymsHealthAlertsMonitoringDebounce';
 import { useTranslations } from 'next-intl';
@@ -20,11 +20,14 @@ export function useAdminGymHealthAlertsLogic() {
   const { severityFilter, search, setSeverityFilter, setSearch } = useAdminGymHealthAlertsStore();
 
   const urlSearch = searchParams.get('search') || searchParams.get('branch') || '';
+  const lastUrlSearchRef = useRef<string | null>(null);
   useEffect(() => {
-    if (urlSearch && !search) {
+    if (lastUrlSearchRef.current === urlSearch) return;
+    lastUrlSearchRef.current = urlSearch;
+    if (urlSearch) {
       setSearch(urlSearch);
     }
-  }, [urlSearch, search, setSearch]);
+  }, [urlSearch, setSearch]);
 
   const debouncedSearch = useAdminGymHealthAlertsDebounce(search, 300);
   const queryParams = { severity: severityFilter === 'all' ? undefined : severityFilter, search: debouncedSearch.trim() || undefined };

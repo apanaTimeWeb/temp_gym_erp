@@ -4,6 +4,7 @@
 
 import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { AlertTriangle, RotateCcw } from 'lucide-react';
 import { useAdminPermissionsLogic } from '@/app/frontend_admin/admin_security/security_permissions_management/hooks/useAdminSecurityPermissionsManagementLogic';
 import { PERMISSION_FEATURES, ROLE_OPTIONS } from '@/app/frontend_admin/admin_security/security_permissions_management/constants/AdminSecurityPermissionsManagementConstants';
@@ -36,7 +37,16 @@ export default function AdminSecurityPermissionsManagementStaffOverrides() {
     <div className="divide-y divide-border">
       {overrides.map((item, staffIndex) => <section key={item.staffId} className="p-5">
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-          <div className="min-w-0"><p className="text-sm font-semibold text-primary">{item.staffName}</p><p className="text-xs text-secondary">{roleLabel(item.role)} · {item.staffId}</p></div>
+          <div className="min-w-0">
+            <Link
+              href={`/frontend_admin/admin_hr/hr_staff_management?search=${encodeURIComponent(item.staffName)}`}
+              className="text-sm font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+              title={`View ${item.staffName} in Staff Management`}
+            >
+              {item.staffName}
+            </Link>
+            <p className="text-xs text-secondary">{roleLabel(item.role)} · {item.staffId}</p>
+          </div>
           <button type="button" onClick={() => void resetToDefaults(item.staffId, item.staffName, item.role)} disabled={saving} className="min-h-11 min-w-11 inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-input px-3 text-xs font-semibold text-secondary hover:text-primary hover:bg-surface-hover disabled:cursor-not-allowed disabled:text-disabled focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base" data-testid={`admin_permissions-admin_permissions-staff-overrides-click-map27-${staffIndex}-1`}><RotateCcw size={18} aria-hidden="true" strokeWidth={2}/>{t('permissions.admin_permissions_staff_overrides.text_299ef4aaf3')}</button>
         </div>
         <div className="mt-4 grid gap-2">

@@ -2,11 +2,9 @@
 // RESPONSIBILITY: Renders sortable table displaying detailed staff performance metrics.
 // DATA FLOW: feature data/state and user input → AdminHrPerformanceAnalyticsTable → accessible UI/events routed to owning hooks (admin_hr/hr_performance_analytics/components/table/AdminHrPerformanceAnalyticsTable.tsx)
 
-import { formatNumber } from '@/app/frontend_admin/admin_hr/hr_performance_analytics/utils/AdminHrPerformanceAnalyticsFormatters';
-import { useLocale } from 'next-intl';
-import { useTranslations } from 'next-intl';
-
-import { formatDecimal } from '@/app/frontend_admin/admin_hr/hr_performance_analytics/utils/AdminHrPerformanceAnalyticsFormatters';
+import { formatNumber, formatDecimal } from '@/app/frontend_admin/admin_hr/hr_performance_analytics/utils/AdminHrPerformanceAnalyticsFormatters';
+import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { PERFORMANCE_TABLE_HEADERS, PERFORMANCE_STATUS_CONFIG } from '@/app/frontend_admin/admin_hr/hr_performance_analytics/constants/AdminHrPerformanceAnalyticsConstants';
 import AdminHrEmptyState from '@/app/frontend_admin/admin_hr/hr_performance_analytics/components/empty_state/AdminHrPerformanceAnalyticsEmptyState';
 import AdminHrPerformanceTableSortIcon from '@/app/frontend_admin/admin_hr/hr_performance_analytics/components/table/AdminHrPerformanceAnalyticsTableSortIcon';
@@ -81,10 +79,22 @@ export default function AdminHrPerformanceAnalyticsTable({
                         </div>
                         <div className="min-w-0">
                           <div className="flex items-center gap-1.5">
-                            <p className="text-sm font-semibold text-primary truncate">{staff.name}</p>
+                            <Link
+                              href={`/frontend_admin/admin_hr/hr_staff_management?search=${encodeURIComponent(staff.name)}`}
+                              className="text-sm font-semibold text-primary truncate hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                              title={`View ${staff.name} in Staff Management`}
+                            >
+                              {staff.name}
+                            </Link>
                             <CopyButton text={staff.name} label={staff.name} />
                           </div>
-                          <p className="text-xs text-disabled truncate">{staff.branchName}</p>
+                          <Link
+                            href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(staff.branchName)}`}
+                            className="block text-xs text-secondary hover:text-primary hover:underline truncate"
+                            title={`View ${staff.branchName} branch`}
+                          >
+                            {staff.branchName}
+                          </Link>
                         </div>
                       </div>
                     </td>

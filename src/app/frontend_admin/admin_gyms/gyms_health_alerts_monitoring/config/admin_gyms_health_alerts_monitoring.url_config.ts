@@ -14,10 +14,10 @@ function encodeAdminGymsHealthAlertsMonitoringPathSegment(id: string): string {
 
 export const ADMIN_GYM_HEALTH_ALERTS_ROUTES = {
   root: '/frontend_admin/admin_gyms/gyms_health_alerts_monitoring' as const,
-  members: '/frontend_admin/admin_members' as const,
-  finance: '/frontend_admin/admin_finance' as const,
-  hr: '/frontend_admin/admin_hr' as const,
-  attendance: '/frontend_admin/admin_attendance' as const,
+  members: '/frontend_admin/admin_members/members_directory' as const,
+  finance: '/frontend_admin/admin_finance/finance_summary' as const,
+  hr: '/frontend_admin/admin_hr/hr_staff_management' as const,
+  attendance: '/frontend_admin/admin_attendance/attendance_dashboard' as const,
 } as const;
 
 // ─── Backend API Endpoints ─────────────────────────────────────────────────

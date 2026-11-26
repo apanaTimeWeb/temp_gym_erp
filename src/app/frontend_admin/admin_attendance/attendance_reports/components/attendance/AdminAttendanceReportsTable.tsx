@@ -3,6 +3,7 @@
 // DATA FLOW: feature data/state and user input → AdminAttendanceReportsTable → accessible UI/events routed to owning hooks (admin_attendance/attendance_reports/components/attendance/AdminAttendanceReportsTable.tsx)
 
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { AdminAttendanceReportsEmptyState as AdminAttendanceReportsEmptyState } from '@/app/frontend_admin/admin_attendance/attendance_reports/components/empty_state/AdminAttendanceReportsEmptyState';
 import AdminAttendanceReportsSortIcon from '@/app/frontend_admin/admin_attendance/attendance_reports/components/attendance/AdminAttendanceReportsSortIcon';
 import AdminAttendanceReportsProgressBar from '@/app/frontend_admin/admin_attendance/attendance_reports/components/progress_bar/AdminAttendanceReportsProgressBar';
@@ -76,7 +77,13 @@ export default function AdminAttendanceReportsTable() {
                 <tr key={row.gymId} className="hover:bg-surface-highlight motion-safe:transition-colors motion-safe:duration-base group">
                   <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-highlight border-e border-border px-5 py-4 text-sm font-semibold text-primary">
                     <div className="flex items-center gap-1.5">
-                      <span>{row.gymName}</span>
+                      <Link
+                        href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(row.gymName)}`}
+                        className="hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                        title={`View ${row.gymName} in Branches Directory`}
+                      >
+                        {row.gymName}
+                      </Link>
                       <CopyButton value={row.gymName} label="Copy gym name" className="opacity-0 group-hover:opacity-100" />
                     </div>
                   </td>
@@ -108,7 +115,13 @@ export default function AdminAttendanceReportsTable() {
                   <tr key={gym.gymId} className="group">
                     <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-highlight border-e border-border text-sm font-medium text-primary pr-4 py-2">
                       <div className="flex items-center gap-1.5">
-                        <span>{gym.gymName}</span>
+                        <Link
+                          href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(gym.gymName)}`}
+                          className="hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                          title={`View ${gym.gymName} in Branches Directory`}
+                        >
+                          {gym.gymName}
+                        </Link>
                         <CopyButton value={gym.gymName} label="Copy gym name" className="opacity-0 group-hover:opacity-100" />
                       </div>
                     </td>

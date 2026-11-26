@@ -40,6 +40,7 @@ export default function AdminDashboardOverviewKPIs() {
         icon={Users}
         iconBg="bg-primary-subtle"
         iconColor="text-primary"
+        href="/frontend_admin/admin_attendance/attendance_dashboard"
        testId="admin_dashboard-admindashboardkpis-kpi-1"/>
       <AdminNavigationLayoutStatCard
         title={t('dashboard.admin_dashboard_kpis.auto_renewalsPending', { suffix })}
@@ -49,6 +50,7 @@ export default function AdminDashboardOverviewKPIs() {
         icon={Clock}
         iconBg="bg-warning-bg"
         iconColor="text-warning"
+        href="/frontend_admin/admin_members/members_directory?expiry=this_week"
        testId="admin_dashboard-admindashboardkpis-kpi-2"/>
     </div>
     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
@@ -60,6 +62,7 @@ export default function AdminDashboardOverviewKPIs() {
         icon={DollarSign}
         iconBg="bg-primary-subtle"
         iconColor="text-primary"
+        href="/frontend_admin/admin_finance/finance_revenue_report"
        testId="admin_dashboard-admindashboardkpis-kpi-3"/>
       <AdminNavigationLayoutStatCard
         title={t('dashboard.admin_dashboard_kpis.auto_netProfit', { suffix })}
@@ -69,6 +72,7 @@ export default function AdminDashboardOverviewKPIs() {
         icon={TrendingUp}
         iconBg="bg-success-bg"
         iconColor="text-success"
+        href="/frontend_admin/admin_finance/finance_profit_and_loss_report"
        testId="admin_dashboard-admindashboardkpis-kpi-4"/>
       <AdminNavigationLayoutStatCard
         title={t('dashboard.admin_dashboard_kpis.auto_activeMembers', { suffix })}
@@ -78,6 +82,7 @@ export default function AdminDashboardOverviewKPIs() {
         icon={UserCheck}
         iconBg="bg-info-bg"
         iconColor="text-info"
+        href="/frontend_admin/admin_members/members_directory?status=active"
        testId="admin_dashboard-admindashboardkpis-kpi-5"/>
       <AdminNavigationLayoutStatCard
         title={t('dashboard.admin_dashboard_kpis.auto_totalOutstanding', { suffix })}
@@ -87,6 +92,7 @@ export default function AdminDashboardOverviewKPIs() {
         icon={AlertCircle}
         iconBg="bg-danger-bg"
         iconColor="text-danger"
+        href="/frontend_admin/admin_sales/sales_pending_payments"
        testId="admin_dashboard-admindashboardkpis-kpi-6"/>
     </div>
     </>

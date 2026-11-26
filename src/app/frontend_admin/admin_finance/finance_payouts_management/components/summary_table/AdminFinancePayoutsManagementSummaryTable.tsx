@@ -4,6 +4,7 @@
 
 import { PAYOUT_STATUS_LABEL_KEYS, PAYOUT_STATUS_STYLES, PAYOUT_STATUS_VALUES, PAYOUTS_ITEMS_PER_PAGE } from '@/app/frontend_admin/admin_finance/finance_payouts_management/constants/AdminFinancePayoutsManagementConstants';
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { AdminPayoutsFormatCurrency } from '@/app/frontend_admin/admin_finance/finance_payouts_management/utils/AdminFinancePayoutsManagementFormatCurrency';
 import { CheckCircle, Clock, Loader2 } from 'lucide-react';
 import { useAdminPayoutsLogic } from '@/app/frontend_admin/admin_finance/finance_payouts_management/hooks/useAdminFinancePayoutsManagementLogic';
@@ -129,7 +130,13 @@ export default function AdminFinancePayoutsManagementSummaryTable() {
                     <tr key={`${p.gymId}-${p.month}`} className="hover:bg-surface-hover transition-colors group">
                       <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-medium text-primary">
                         <div className="flex items-center gap-1.5">
-                          <span>{p.gymName}</span>
+                          <Link
+                            href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(p.gymName)}`}
+                            className="hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                            title={`View ${p.gymName} in Branches Directory`}
+                          >
+                            {p.gymName}
+                          </Link>
                           <CopyButton text={p.gymName} label={p.gymName} />
                         </div>
                       </td>

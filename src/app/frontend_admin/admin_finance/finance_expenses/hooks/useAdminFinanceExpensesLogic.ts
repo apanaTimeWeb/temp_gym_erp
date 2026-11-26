@@ -85,6 +85,7 @@ export function useAdminFinanceLogic() {
     branchId: selectedBranchId,
     page: String(expensePage),
     limit: String(FINANCE_EXPENSE_ITEMS_PER_PAGE),
+    ...(debouncedSearch ? { search: debouncedSearch } : {}),
     ...(expenseCategory !== 'All' ? { category: expenseCategory } : {}),
   };
   const expensesQuery = useQuery({
