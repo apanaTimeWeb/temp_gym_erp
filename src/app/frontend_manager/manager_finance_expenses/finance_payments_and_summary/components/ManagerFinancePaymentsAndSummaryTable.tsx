@@ -1,6 +1,7 @@
 // RESPONSIBILITY: Renders ManagerFinancePaymentsAndSummaryTable's feature UI and orchestrates presentation through module-owned state/hooks; it does not own API transport or business rules.
 'use client';
 
+import Link from 'next/link';
 import { Printer, Banknote } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 
@@ -35,6 +36,7 @@ export default function ManagerFinancePaymentsAndSummaryTable() {
 
   const { payments, totalPayments, currentPage, setCurrentPage, printReceipt } = useManagerFinancePaymentsAndSummaryLogic();
   const setShowModal = useManagerFinancePaymentsAndSummaryUiStore((s) => s.setShowModal);
+  const setPaymentPrefill = useManagerFinancePaymentsAndSummaryUiStore((s) => s.setPaymentPrefill);
   const totalPages = Math.ceil(totalPayments / MANAGER_ITEMS_PER_PAGE);
 
   return (
@@ -67,7 +69,7 @@ export default function ManagerFinancePaymentsAndSummaryTable() {
                 payments.map((p, mapIndex) => {
                   const ms = MANAGER_FINANCE_PAYMENTS_AND_SUMMARY_METHOD_STYLES[p.method] ?? { bg: 'bg-input', text: 'text-text-secondary' };
                   return (
-                    <tr key={p.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                    <tr key={p.id} className="hover:bg-surface-hover transition-colors group">
                       <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 whitespace-nowrap">
                         <div className="flex items-center gap-2">
                           <span className="text-sm font-bold text-text-primary">{p.invoiceNumber}</span>
@@ -75,7 +77,13 @@ export default function ManagerFinancePaymentsAndSummaryTable() {
                         </div>
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap">
-                        <p className="text-sm font-semibold text-text-primary">{ManagerFinancePaymentsAndSummaryDisplayValue(p.member?.name)}</p>
+                        {p.member?.name ? (
+                          <Link href={`/frontend_manager/manager_members/members_directory?search=${encodeURIComponent(p.member.name)}`} className="text-sm font-semibold text-text-primary hover:text-primary hover:underline">
+                            {p.member.name}
+                          </Link>
+                        ) : (
+                          <p className="text-sm font-semibold text-text-primary">{ManagerFinancePaymentsAndSummaryDisplayValue(p.member?.name)}</p>
+                        )}
                         <p className="text-xs text-text-secondary">{ManagerFinancePaymentsAndSummaryMaskSensitiveData(p.member?.email, 'email')}</p>
                       </td>
                       <td className="px-4 py-3 text-sm text-text-secondary whitespace-nowrap">{ManagerFinancePaymentsAndSummaryDisplayValue(p.member?.plan?.name)}</td>
@@ -99,10 +107,16 @@ export default function ManagerFinancePaymentsAndSummaryTable() {
                         <div className="flex items-center gap-1.5">
                           {(p.status === 'DUE' || p.status === 'PARTIAL' || p.status === 'PENDING') && (
                             <button
-                              className="min-h-11 min-w-11 md:min-h-8 md:min-w-8 p-1.5 flex items-center justify-center rounded-lg bg-warning-bg text-warning-text hover:bg-warning hover:text-on-warning border border-warning/30 motion-safe:transition-all motion-safe:duration-200 ease-in-out active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none"
+                              className="min-h-11 min-w-11 md:min-h-8 md:min-w-8 p-1.5 flex items-center justify-center rounded-lg bg-warning-bg text-warning-text hover:bg-warning hover:text-on-warning border border-warning motion-safe:transition-all motion-safe:duration-200 ease-in-out active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none"
                               data-testid={`manager_finance-managerfinancetable-button-collect-due-${p.id}`}
                               onClick={(event) => {
                                 event.stopPropagation();
+                                setPaymentPrefill({
+                                  memberId: String(p.memberId || ''),
+                                  amount: Number(p.amount || 0),
+                                  paymentType: 'DUE_SETTLEMENT',
+                                  notes: `Due settlement for invoice ${p.invoiceNumber}`,
+                                });
                                 setShowModal(true);
                               }}
                               title="Collect Due Payment"

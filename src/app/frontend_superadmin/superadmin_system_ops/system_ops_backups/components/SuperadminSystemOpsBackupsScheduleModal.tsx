@@ -58,7 +58,7 @@ export default function SuperadminSystemOpsBackupsScheduleModal({ isOpen, onClos
   };
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-labelledby="superadmin-backups-schedule-title" data-testid="superadmin_system_ops_backups-superadmin-system-ops-backups-schedule-modal-backups-schedule-modal-dialog" ref={dialogRef}>
+    <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay-backdrop backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-labelledby="superadmin-backups-schedule-title" data-testid="superadmin_system_ops_backups-superadmin-system-ops-backups-schedule-modal-backups-schedule-modal-dialog" ref={dialogRef}>
       <div className="bg-overlay w-full max-w-md rounded-xl shadow-dialog overflow-hidden border border-border my-auto max-h-dialog-desktop flex flex-col">
         <div className="flex min-h-0 flex-1 flex-col p-6">
           <div className="shrink-0 mb-4 flex items-center gap-3">

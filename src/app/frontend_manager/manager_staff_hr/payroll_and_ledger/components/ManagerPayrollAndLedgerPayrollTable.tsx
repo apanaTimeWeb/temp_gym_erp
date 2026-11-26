@@ -135,7 +135,7 @@ export default function ManagerPayrollAndLedgerPayrollTable() {
               </thead>
           <tbody className="divide-y divide-border">
             {currentData.map((p, mapIndex) => (
-              <tr key={p.id} className="hover:bg-surface-highlight/50 transition-colors group">
+              <tr key={p.id} className="hover:bg-surface-hover transition-colors group">
                 <td className="sticky start-0 z-10 bg-card border-e border-border px-3 py-3 whitespace-nowrap">
                   <div className="flex items-center gap-2">
                     <div>

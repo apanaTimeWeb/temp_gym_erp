@@ -95,7 +95,7 @@ export default function ManagerExerciseLibraryExerciseTable() {
                     <tr
                       key={exercise.id}
                       data-testid={`manager_exercise-library-row-${exercise.id}`}
-                      className="cursor-pointer hover:bg-surface-highlight/50 transition-colors group"
+                      className="cursor-pointer hover:bg-surface-hover transition-colors group"
                       tabIndex={0}
                       onClick={() => openEditEx(exercise)}
                       onKeyDown={(event) => {
@@ -103,7 +103,7 @@ export default function ManagerExerciseLibraryExerciseTable() {
                         if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openEditEx(exercise); }
                       }}
                     >
-                      <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-medium text-text-primary group-hover:bg-surface-highlight/50 transition-colors">
+                      <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-medium text-text-primary group-hover:bg-surface-hover transition-colors">
                         <div className="flex items-center gap-2">
                           <span>{exercise.name}</span>
                           <CopyButton value={exercise.name} />

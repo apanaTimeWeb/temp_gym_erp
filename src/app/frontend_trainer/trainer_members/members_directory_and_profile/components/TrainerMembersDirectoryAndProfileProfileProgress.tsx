@@ -101,7 +101,7 @@ export default function TrainerMembersProfileProgress() {
 
         {/* Side-by-Side Comparison if Before & After available */}
         {beforePhoto && afterPhoto && (
-          <div className="rounded-xl border border-border bg-input/20 p-4 space-y-3" data-testid="trainer_members-transformation-comparison">
+          <div className="rounded-xl border border-border bg-input p-4 space-y-3" data-testid="trainer_members-transformation-comparison">
             <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-wider">
               <Sparkles size={14} className="text-primary" />
               <span>Transformation Comparison (Before vs After)</span>
@@ -120,7 +120,7 @@ export default function TrainerMembersProfileProgress() {
                   className="aspect-square relative rounded-lg overflow-hidden bg-input cursor-pointer group border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 >
                   <Image src={beforePhoto} alt="Baseline photo" fill unoptimized sizes="(max-width: 768px) 100vw, 50vw" className="object-cover group-hover:scale-105 transition-transform duration-300" />
-                  <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-white text-xs font-semibold gap-1">
+                  <div className="absolute inset-0 bg-overlay-backdrop opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-on-primary text-xs font-semibold gap-1">
                     <Eye size={16} /> View
                   </div>
                 </div>
@@ -145,7 +145,7 @@ export default function TrainerMembersProfileProgress() {
                   className="aspect-square relative rounded-lg overflow-hidden bg-input cursor-pointer group border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 >
                   <Image src={afterPhoto} alt="Current progress photo" fill unoptimized sizes="(max-width: 768px) 100vw, 50vw" className="object-cover group-hover:scale-105 transition-transform duration-300" />
-                  <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-white text-xs font-semibold gap-1">
+                  <div className="absolute inset-0 bg-overlay-backdrop opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-on-primary text-xs font-semibold gap-1">
                     <Eye size={16} /> View
                   </div>
                 </div>
@@ -178,7 +178,7 @@ export default function TrainerMembersProfileProgress() {
                   className="aspect-square relative rounded-lg overflow-hidden bg-input cursor-pointer group border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 >
                   <Image src={src} alt={t("TEXT_PROGRESS_PHOTO_ALT", { index: index + 1 })} fill unoptimized sizes="(max-width: 768px) 50vw, 25vw" className="object-cover group-hover:scale-105 transition-transform duration-300" />
-                  <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-white text-xs font-semibold gap-1">
+                  <div className="absolute inset-0 bg-overlay-backdrop opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-on-primary text-xs font-semibold gap-1">
                     <Eye size={16} /> Enlarge
                   </div>
                 </div>
@@ -189,14 +189,14 @@ export default function TrainerMembersProfileProgress() {
           <div className="text-center py-6 border border-dashed border-border rounded-xl space-y-2">
             <Camera size={28} className="mx-auto text-secondary" strokeWidth={1.5} />
             <p className="text-sm text-secondary">{t("TEXT_NO_PROGRESS_PHOTOS_RECORDED")}</p>
-            <p className="text-xs text-secondary/70">Upload front, side, and back posture photos to build client transformation logs.</p>
+            <p className="text-xs text-secondary">Upload front, side, and back posture photos to build client transformation logs.</p>
           </div>
         )}
       </div>
 
       {/* Photo Upload Modal */}
       {isUploadOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="upload-photo-title">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="upload-photo-title">
           <div className="bg-card border border-border rounded-xl w-full max-w-md p-5 space-y-4 shadow-xl my-auto">
             <div className="flex items-center justify-between pb-3 border-b border-border">
               <h3 id="upload-photo-title" className="text-base font-semibold text-primary">Add Transformation Photo</h3>

@@ -140,7 +140,7 @@ export default function ManagerAttendanceTrackingTable() {
                           setCalendarUser({ id: String(r.memberId || r.staffId || r.id), name: String(r.member?.name || r.staff?.name || ''), type: r.type as ManagerAttendanceTrackingPersonType });
                         }
                       }}
-                      className="cursor-pointer hover:bg-surface-highlight/50 transition-colors group"
+                      className="cursor-pointer hover:bg-surface-hover transition-colors group"
                     >
                       {/* Name */}
                       <td className="px-2.5 py-3 whitespace-nowrap sticky start-0 z-10 bg-card border-e border-border">
@@ -161,7 +161,7 @@ export default function ManagerAttendanceTrackingTable() {
                             {r.type}
                           </span>
                           {r.type === 'MEMBER' && r.sessionType && (
-                            <span className="inline-flex px-1.5 py-0.5 rounded text-[10px] font-bold bg-primary-subtle text-primary border border-primary/20">
+                            <span className="inline-flex px-1.5 py-0.5 rounded text-[10px] font-bold bg-primary-subtle text-primary border border-border">
                               {r.sessionType}
                             </span>
                           )}
@@ -208,7 +208,7 @@ export default function ManagerAttendanceTrackingTable() {
                                 event.stopPropagation();
                                 void handleCheckOut(r.id);
                               }}
-                              className="p-1.5 rounded-md hover:bg-warning/10 text-warning motion-safe:transition-all flex items-center gap-1 border border-warning/30 hover:border-warning motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none"
+                              className="p-1.5 rounded-md bg-warning-bg hover:brightness-95 text-warning-text motion-safe:transition-all flex items-center gap-1 border border-warning motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none"
                               title="Check Out"
                               aria-label={`Check out ${r.member?.name || r.staff?.name || 'user'}`}
                             >
@@ -237,7 +237,7 @@ export default function ManagerAttendanceTrackingTable() {
           </div>
         ); })(); })()}
 
-      <div className="border-t border-border p-4 bg-card/60">
+      <div className="border-t border-border p-4 bg-card">
         <ManagerPagination data-testid="manager_attendance-managerattendancetable-managerpagination-1"
           currentPage={currentPage}
           totalPages={totalPages}

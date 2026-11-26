@@ -60,7 +60,6 @@ export default function ManagerInquiriesPipelineToolbar() {
             options={[
               { label: t("COPY_ALL_STATUS"), value: MANAGER_INQUIRIES_PIPELINE_STATUS_VALUES.ALL_FILTER },
               ...Object.entries(INQUIRIES_STATUS_LABEL_KEYS)
-                .filter(([val]) => val !== MANAGER_INQUIRY_CONVERTED_STATUS)
                 .map(([val, labelKey]) => ({ label: t(labelKey), value: val })),
             ]}
            data-testid="manager_inquiries-managerinquiriestoolbar-searchable-dropdown-1"/>

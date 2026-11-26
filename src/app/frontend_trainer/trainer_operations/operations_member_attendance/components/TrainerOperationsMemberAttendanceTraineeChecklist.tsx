@@ -58,7 +58,7 @@ export function TrainerOperationsMemberAttendanceTraineeChecklist({
                 key={m.id}
                 className={`flex items-center gap-2.5 p-2 rounded-lg cursor-pointer motion-safe:transition-all ${
                   isChecked
-                    ? 'bg-primary-subtle border border-primary/30'
+                    ? 'bg-primary-subtle border border-primary'
                     : 'hover:bg-input border border-transparent'
                 }`}
               >

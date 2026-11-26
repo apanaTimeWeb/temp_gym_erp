@@ -55,7 +55,7 @@ export default function ManagerTrainerScheduleWeeklyGrid() {
           </thead>
           <tbody className="divide-y divide-border">
             {trainers.map((trainer, mapIndex) => (
-              <tr key={trainer.trainerId} className="hover:bg-surface-highlight/50 transition-colors group">
+              <tr key={trainer.trainerId} className="hover:bg-surface-hover transition-colors group">
                 <td className="py-3 px-4 sticky start-0 bg-card border-e border-border z-10 align-middle">
                   <div className="flex flex-col items-start justify-center gap-0.5">
                     <div className="flex items-center gap-1.5">

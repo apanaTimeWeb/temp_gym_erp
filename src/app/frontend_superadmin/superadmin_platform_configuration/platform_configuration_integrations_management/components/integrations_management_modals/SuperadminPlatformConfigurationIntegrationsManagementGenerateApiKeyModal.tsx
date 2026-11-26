@@ -55,7 +55,7 @@ export default function SuperadminPlatformConfigurationIntegrationsManagementGen
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay p-4 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in" role="dialog" aria-modal="true" aria-labelledby="superadmin-generate-api-key-title" data-testid="superadmin_platform_configuration_integrations-superadmin-integrations-generate-api-key-modal-key-modal-dialog-1" ref={dialogRef}>
+    <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay-backdrop p-4 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in" role="dialog" aria-modal="true" aria-labelledby="superadmin-generate-api-key-title" data-testid="superadmin_platform_configuration_integrations-superadmin-integrations-generate-api-key-modal-key-modal-dialog-1" ref={dialogRef}>
       <div className="my-auto flex max-h-dialog-desktop w-full max-w-md flex-col overflow-hidden rounded-xl border border-border bg-overlay shadow-dialog motion-safe:animate-in motion-safe:zoom-in-95">
         <div className="flex shrink-0 items-center justify-between border-b border-border px-6 py-5">
           <div className="flex items-center gap-3">

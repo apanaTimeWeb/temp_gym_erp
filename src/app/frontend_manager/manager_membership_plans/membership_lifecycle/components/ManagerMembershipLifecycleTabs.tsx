@@ -73,7 +73,7 @@ export default function ManagerMembershipLifecycleTabs() {
                         </tr>
                       ) : (
                         (overview?.renewalCandidates ?? []).map((member, mapIndex) => (
-                          <tr key={member.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                          <tr key={member.id} className="hover:bg-surface-hover transition-colors group">
                             <td className="sticky start-0 z-10 bg-card border-e border-border py-3 px-4 text-sm text-text-primary whitespace-nowrap">
                               <div className="flex items-center gap-2">
                                 <span>{member.name}</span>
@@ -139,7 +139,7 @@ export default function ManagerMembershipLifecycleTabs() {
                           </tr>
                         ) : (
                           (overview?.memberOptions ?? []).map(member => (
-                            <tr key={member.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                            <tr key={member.id} className="hover:bg-surface-hover transition-colors group">
                               <td className="sticky start-0 z-10 bg-card border-e border-border py-3 px-4 text-sm text-text-primary whitespace-nowrap">
                                 <div className="flex items-center gap-2">
                                   <span>{member.name}</span>

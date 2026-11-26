@@ -1,6 +1,6 @@
 // RESPONSIBILITY: Renders or orchestrates the owning Manager feature UI; API transport and business rules remain in module-owned hooks/services.
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -31,9 +31,11 @@ export default function ManagerAttendanceTrackingCalendar() {
 
   const history = Array.isArray(historyData) ? historyData : [];
 
-  if (isError) {
-    showToast(ManagerInfrastructureGetErrorMessage(error, t('TEXT_GENERIC_ERROR')), 'error');
-  }
+  useEffect(() => {
+    if (isError) {
+      showToast(ManagerInfrastructureGetErrorMessage(error, t('TEXT_GENERIC_ERROR')), 'error');
+    }
+  }, [isError, error, showToast, t]);
 
 
 
@@ -111,7 +113,7 @@ export default function ManagerAttendanceTrackingCalendar() {
 
         {viewMode === 'year' ? (
           <div className="p-4 min-h-0 flex-1 overflow-y-auto custom-scrollbar space-y-4">
-            <div className="rounded-xl border border-border bg-input/40 p-3">
+            <div className="rounded-xl border border-border bg-input p-3">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-bold text-text-primary">2026 Annual Overview</span>
                 <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-success-bg text-success-text">89.4% Attendance Rate</span>

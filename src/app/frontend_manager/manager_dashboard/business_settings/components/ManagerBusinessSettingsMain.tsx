@@ -47,7 +47,7 @@ export default function ManagerBusinessSettingsMain() {
         <p className="mt-1 text-sm text-text-secondary">{t("COPY_MANAGE_PREFERENCES_APP_BEHAVIOUR")}</p>
       </div>
 
-      <div className="flex items-center gap-3 rounded-xl border border-info/40 bg-info-bg/30 p-4 text-sm text-text-primary shadow-sm">
+      <div className="flex items-center gap-3 rounded-xl border border-info bg-info-bg p-4 text-sm text-text-primary shadow-sm">
         <ShieldCheck className="h-5 w-5 text-info-text shrink-0" />
         <div>
           <span className="font-semibold text-info-text">Organization Configuration — View-Only Mode (Managed by Admin)</span>
@@ -84,11 +84,11 @@ export default function ManagerBusinessSettingsMain() {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <span className="inline-flex items-center gap-1 px-3 py-1 bg-success-bg text-success-text border border-success/30 rounded-lg text-xs font-semibold">
+                <span className="inline-flex items-center gap-1 px-3 py-1 bg-success-bg text-success-text border border-success rounded-lg text-xs font-semibold">
                   <CheckCircle2 size={14} />
                   <span>License Active</span>
                 </span>
-                <span className="px-3 py-1 bg-primary/10 text-primary border border-primary/20 rounded-lg text-xs font-bold">
+                <span className="px-3 py-1 bg-primary-subtle text-primary border border-border rounded-lg text-xs font-bold">
                   Enterprise Tier
                 </span>
               </div>
@@ -105,7 +105,7 @@ export default function ManagerBusinessSettingsMain() {
                   <span className="text-xl font-bold text-text-primary">420</span>
                   <span className="text-xs text-text-secondary">/ 500 Max</span>
                 </div>
-                <div className="w-full bg-card rounded-full h-2 overflow-hidden border border-border/50">
+                <div className="w-full bg-card rounded-full h-2 overflow-hidden border border-border">
                   <div className="bg-primary h-2 rounded-full" style={{ width: '84%' }} />
                 </div>
                 <p className="text-[11px] text-text-secondary">80 member slots remaining</p>
@@ -120,7 +120,7 @@ export default function ManagerBusinessSettingsMain() {
                   <span className="text-xl font-bold text-text-primary">18</span>
                   <span className="text-xs text-text-secondary">/ 25 Seats</span>
                 </div>
-                <div className="w-full bg-card rounded-full h-2 overflow-hidden border border-border/50">
+                <div className="w-full bg-card rounded-full h-2 overflow-hidden border border-border">
                   <div className="bg-success-text h-2 rounded-full" style={{ width: '72%' }} />
                 </div>
                 <p className="text-[11px] text-text-secondary">7 staff seats available</p>
@@ -135,7 +135,7 @@ export default function ManagerBusinessSettingsMain() {
                   <span className="text-xl font-bold text-text-primary">12.4 GB</span>
                   <span className="text-xs text-text-secondary">/ 50 GB</span>
                 </div>
-                <div className="w-full bg-card rounded-full h-2 overflow-hidden border border-border/50">
+                <div className="w-full bg-card rounded-full h-2 overflow-hidden border border-border">
                   <div className="bg-info-text h-2 rounded-full" style={{ width: '25%' }} />
                 </div>
                 <p className="text-[11px] text-text-secondary">37.6 GB high-speed cloud storage free</p>
@@ -144,7 +144,7 @@ export default function ManagerBusinessSettingsMain() {
 
             {/* License Details & Enabled Modules */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-              <div className="p-4 bg-input/40 rounded-xl border border-border space-y-3">
+              <div className="p-4 bg-input rounded-xl border border-border space-y-3">
                 <h3 className="text-xs font-bold text-text-secondary uppercase tracking-wider">Subscription Specifications</h3>
                 <dl className="space-y-2 text-xs">
                   <div className="flex justify-between">
@@ -166,7 +166,7 @@ export default function ManagerBusinessSettingsMain() {
                 </dl>
               </div>
 
-              <div className="p-4 bg-input/40 rounded-xl border border-border space-y-3">
+              <div className="p-4 bg-input rounded-xl border border-border space-y-3">
                 <h3 className="text-xs font-bold text-text-secondary uppercase tracking-wider">Enabled Operational Modules</h3>
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   {[

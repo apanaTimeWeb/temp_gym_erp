@@ -252,7 +252,7 @@ export default function TrainerCoachingSessionsLiveWorkoutModal({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Record cues, fatigue observations, client feedback or next session recommendations..."
-              className="w-full px-3 py-2 rounded-xl bg-floating border border-border text-sm text-primary placeholder:text-secondary/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              className="w-full px-3 py-2 rounded-xl bg-floating border border-border text-sm text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
             />
           </div>
         </div>
@@ -275,7 +275,7 @@ export default function TrainerCoachingSessionsLiveWorkoutModal({
               type="button"
               onClick={handleCompleteWorkout}
               disabled={isSaving}
-              className="min-h-11 flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-6 py-2 bg-success text-on-primary rounded-xl text-sm font-bold hover:bg-success/90 transition-colors shadow-sm disabled:opacity-50"
+              className="min-h-11 flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-6 py-2 bg-success text-on-success rounded-xl text-sm font-bold hover:brightness-110 transition-colors shadow-sm disabled:opacity-50"
               data-testid="complete-live-workout-button"
             >
               {isSaving ? (

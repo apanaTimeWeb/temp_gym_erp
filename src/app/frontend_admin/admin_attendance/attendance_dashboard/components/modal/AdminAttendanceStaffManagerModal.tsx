@@ -91,7 +91,7 @@ export default function AdminAttendanceStaffManagerModal({
   };
 
   return (
-    <div role="dialog" aria-modal="true" aria-labelledby="manual-attendance-modal-title" className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-overlay backdrop-blur-sm backdrop-blur-xs animate-in fade-in">
+    <div role="dialog" aria-modal="true" aria-labelledby="manual-attendance-modal-title" className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-overlay-backdrop backdrop-blur-sm animate-in fade-in">
       <div className="bg-card w-full max-w-lg rounded-2xl border border-border shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         <div className="flex items-center justify-between p-5 border-b border-border bg-surface-highlight">
           <div className="flex items-center gap-2.5">
@@ -105,14 +105,14 @@ export default function AdminAttendanceStaffManagerModal({
               <p className="text-xs text-secondary mt-0.5">Record or adjust daily check-in/out timestamps and presence</p>
             </div>
           </div>
-          <button type="button" onClick={onClose} className="text-secondary hover:text-primary p-1.5 rounded-lg hover:bg-surface-highlight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label="Close dialog">
+          <button type="button" onClick={onClose} className="text-secondary hover:text-primary p-1.5 rounded-lg hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label="Close dialog">
             <X size={18} />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-5 space-y-4 overflow-y-auto">
           {formError && (
-            <div role="alert" className="p-3 bg-danger-bg border border-danger rounded-xl text-destructive text-xs font-semibold">
+            <div role="alert" className="p-3 bg-danger-bg border border-danger rounded-xl text-danger-text text-xs font-semibold">
               {formError}
             </div>
           )}

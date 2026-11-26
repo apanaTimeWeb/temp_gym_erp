@@ -21,7 +21,7 @@ export default function AdminFinancePayrollManagementPaymentModal() {
   if (!paymentModal) return null;
 
   return (
-    <div ref={dialogRef} data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-hr-payment-title" tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center bg-overlay backdrop-blur-sm p-4 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-base overflow-y-auto" data-testid="admin_hr-admin_hr-payment-modal-control">
+    <div ref={dialogRef} data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-hr-payment-title" tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-4 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-base overflow-y-auto" data-testid="admin_hr-admin_hr-payment-modal-control">
       <div className="my-auto bg-overlay backdrop-blur-xl rounded-2xl shadow-dialog w-full max-w-md max-h-dialog-desktop flex flex-col overflow-hidden motion-safe:animate-in motion-safe:zoom-in-95 motion-safe:duration-base border border-border">
         <div className="p-5 flex justify-between items-center border-b border-border shrink-0 bg-overlay">
           <h3 id="admin-hr-payment-title" className="font-bold text-primary">{t('hr.admin_hr_payment_modal.text_669fa93630')}</h3>

@@ -7,7 +7,7 @@ import { ManagerInquiriesPipelineFormatNumber } from '@/app/frontend_manager/man
 
 /** @description Renders the ManagerInquiriesPipelineKPIs component for its owning Manager frontend boundary. @dependencies Local dependencies are owned by this feature module (3 documented module/import dependencies).. @edge-case Preserves the documented interaction and boundary states. */
 export default function ManagerInquiriesPipelineKPIs() {
-  const { stats, isPending, dateFilter } = useManagerInquiriesPipelineLogic();
+  const { stats, isPending, dateFilter, statusFilter, setStatusFilter } = useManagerInquiriesPipelineLogic();
 
   if (isPending && !stats) {
     return (
@@ -37,19 +37,37 @@ export default function ManagerInquiriesPipelineKPIs() {
     return item.label;
   };
 
+  const kpiFilterMap: Record<string, string> = {
+    total: 'All',
+    new: 'NEW',
+    followUp: 'FOLLOW_UP',
+    converted: 'CONVERTED',
+  };
+
   return (
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-      {MANAGER_INQUIRIES_PIPELINE_KPI_CONFIG.map((item) => (
-        <div key={item.key} className="bg-card rounded-xl p-4 shadow-card border border-border flex items-center gap-3 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
-          <div className={`w-10 h-10 rounded-xl ${item.bg} flex items-center justify-center`}>
-            <item.icon size={18} className={item.color} />
-          </div>
-          <div>
-            <p className="text-xs text-text-secondary font-medium">{getKpiLabel(item)}</p>
-            <p className="text-kpi font-bold text-text-primary">{ManagerInquiriesPipelineFormatNumber(stats[item.key])}</p>
-          </div>
-        </div>
-      ))}
+      {MANAGER_INQUIRIES_PIPELINE_KPI_CONFIG.map((item) => {
+        const targetStatus = kpiFilterMap[item.key] || 'All';
+        const isActive = statusFilter === targetStatus;
+        return (
+          <button
+            key={item.key}
+            type="button"
+            onClick={() => setStatusFilter(isActive && targetStatus !== 'All' ? 'All' : targetStatus)}
+            className={`bg-card rounded-xl p-4 shadow-card border text-left flex items-center gap-3 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring ${
+              isActive && targetStatus !== 'All' ? 'border-primary ring-2 ring-focus-ring' : 'border-border'
+            }`}
+          >
+            <div className={`w-10 h-10 rounded-xl ${item.bg} flex items-center justify-center shrink-0`}>
+              <item.icon size={18} className={item.color} />
+            </div>
+            <div>
+              <p className="text-xs text-text-secondary font-medium">{getKpiLabel(item)}</p>
+              <p className="text-kpi font-bold text-text-primary">{ManagerInquiriesPipelineFormatNumber(stats[item.key])}</p>
+            </div>
+          </button>
+        );
+      })}
     </div>
   );
 }

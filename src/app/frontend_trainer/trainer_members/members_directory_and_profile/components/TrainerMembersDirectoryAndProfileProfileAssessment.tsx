@@ -222,12 +222,12 @@ export default function TrainerMembersProfileAssessment() {
             </div>
           </div>
           {hasAnyParqRisk ? (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-danger/15 text-danger border border-danger/30" role="alert" data-testid="trainer_members-parq-risk-badge">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-danger-bg text-danger border border-danger" role="alert" data-testid="trainer_members-parq-risk-badge">
               <ShieldAlert size={14} strokeWidth={2} />
               Medical Clearance Required
             </span>
           ) : (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-success/15 text-success border border-success/30" data-testid="trainer_members-parq-cleared-badge">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-success-bg text-success border border-success" data-testid="trainer_members-parq-cleared-badge">
               <CheckCircle2 size={14} strokeWidth={2} />
               PAR-Q Cleared (Ready for Training)
             </span>
@@ -235,7 +235,7 @@ export default function TrainerMembersProfileAssessment() {
         </div>
 
         {hasAnyParqRisk && (
-          <div className="p-3 bg-danger-bg border border-danger/30 rounded-lg text-xs text-danger flex items-start gap-2" role="alert">
+          <div className="p-3 bg-danger-bg border border-danger rounded-lg text-xs text-danger flex items-start gap-2" role="alert">
             <AlertCircle size={16} className="shrink-0 mt-0.5" strokeWidth={2} />
             <p>
               <strong>Notice:</strong> One or more health risk indicators checked &apos;Yes&apos;. The client must obtain physician medical clearance before participating in vigorous or high-intensity exercise routines.
@@ -243,7 +243,7 @@ export default function TrainerMembersProfileAssessment() {
           </div>
         )}
 
-        <div className="divide-y divide-border/60">
+        <div className="divide-y divide-border">
           {[
             { key: 'parqHeartCondition' as const, label: '1. Has your doctor ever said that you have a heart condition and should only do medically supervised exercise?' },
             { key: 'parqChestPainActivity' as const, label: '2. Do you feel pain or heaviness in your chest when engaging in physical activity?' },
@@ -253,7 +253,7 @@ export default function TrainerMembersProfileAssessment() {
             { key: 'parqMedicationPrescribed' as const, label: '6. Is your physician currently prescribing prescription medications for blood pressure or heart conditions?' },
             { key: 'parqOtherReason' as const, label: '7. Do you know of any other reason or medical concern why you should not follow an exercise program?' },
           ].map((question) => (
-            <label key={question.key} className="flex items-start justify-between gap-4 py-3 cursor-pointer hover:bg-input/40 px-2 rounded-lg transition-colors">
+            <label key={question.key} className="flex items-start justify-between gap-4 py-3 cursor-pointer hover:bg-input px-2 rounded-lg transition-colors">
               <span className="text-xs text-primary font-medium leading-relaxed">{question.label}</span>
               <input
                 type="checkbox"

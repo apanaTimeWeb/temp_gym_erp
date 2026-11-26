@@ -73,7 +73,7 @@ export default function ManagerExpenseRegisterAndReportingTable() {
                   {expenses.map((e, mapIndex) => {
                     const statusStyle = EXPENSE_STATUS_STYLES[e.status] || { bg: 'bg-input', text: 'text-text-secondary' };
                     return (
-                      <tr key={e.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                      <tr key={e.id} className="hover:bg-surface-hover transition-colors group">
                         <td className="px-3 py-3 text-sm font-bold text-text-primary whitespace-nowrap sticky start-0 z-10 bg-card border-e border-border">
                           <div className="flex items-center gap-1.5">
                             <span>{e.id}</span>
@@ -86,7 +86,7 @@ export default function ManagerExpenseRegisterAndReportingTable() {
                             <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
                               {e.vendorName && <span className="text-xs font-medium text-text-secondary">Vendor: {e.vendorName}</span>}
                               {e.referenceNo && <span className="text-xs font-normal text-text-secondary">({t("COPY_REF")}{e.referenceNo})</span>}
-                              {e.paymentMode && <span className="text-xs px-1.5 py-0.2 bg-input border border-border/60 rounded text-text-secondary">{e.paymentMode}</span>}
+                              {e.paymentMode && <span className="text-xs px-1.5 py-0.2 bg-input border border-border rounded text-text-secondary">{e.paymentMode}</span>}
                             </div>
                           )}
                         </td>
@@ -149,7 +149,7 @@ export default function ManagerExpenseRegisterAndReportingTable() {
             </ManagerInfrastructureResponsiveTable>
           </div>
           {totalPages > 1 && (
-            <div className="border-t border-border p-4 bg-card/60">
+            <div className="border-t border-border p-4 bg-card">
               <ManagerPagination data-testid="manager_expenses-managerexpensestable-managerpagination-1" 
                 currentPage={currentPage} 
                 totalPages={totalPages} 

@@ -22,7 +22,7 @@ export default function ManagerLibraryDietPlansTabs() {
         <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", (`min-h-11 whitespace-nowrap border-b-2 px-5 py-3 text-sm font-semibold motion-safe:transition-all motion-safe:duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring ${isDeletionRequests ? 'border-primary text-primary' : 'border-transparent text-text-secondary hover:text-primary'} ease-in-out motion-safe:active:scale-95 hover:brightness-110 flex items-center gap-1.5`)].filter((value) => Boolean(value)).join(' ') } data-testid="manager_library-manager-library-tabs-button-action-3" type="button" role="tab" aria-selected={isDeletionRequests} onClick={() => setView('deletion_requests')} >
           <span>Pending Deletions</span>
           {pendingDeletions.length > 0 && (
-            <span className="px-1.5 py-0.5 text-2xs font-bold rounded-full bg-warning-bg text-warning-text border border-warning/40">
+            <span className="px-1.5 py-0.5 text-2xs font-bold rounded-full bg-warning-bg text-warning-text border border-warning">
               {pendingDeletions.length}
             </span>
           )}

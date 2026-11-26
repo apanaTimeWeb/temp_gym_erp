@@ -243,7 +243,7 @@ export default function SuperadminSupportTicketsManagementTable({
                             e.stopPropagation();
                             onReply(ticket.id);
                           }}
-                          className="min-w-11 min-h-11 p-2 text-primary hover:bg-primary-subtle rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:active:scale-95"
+                          className="min-w-11 min-h-11 p-2 text-primary hover:bg-surface-hover rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:active:scale-95"
                           title={t('ui.reply_to_ticket_d555f35')}
                           aria-label={t('ui.a11y_reply_ticket', { id: ticket.id })}
                           data-testid={`superadmin_support_tickets-table-reply-${index}`}

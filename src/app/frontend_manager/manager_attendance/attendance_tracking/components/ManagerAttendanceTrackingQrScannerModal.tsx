@@ -94,7 +94,7 @@ export default function ManagerAttendanceTrackingQrScannerModal({ open, onClose 
           <h2 className="absolute top-8 text-xl font-bold text-on-primary tracking-widest uppercase opacity-80" id="managerattendanceqrscannermodal-dialog-title">{t("COPY_FRONT_DESK_KIOSK")}</h2>
 
           {/* Scanner Frame — corner markers + animated scan line */}
-          <div className="relative w-64 h-64 sm:w-80 sm:h-80 mb-10 rounded-2xl overflow-hidden bg-black/40">
+          <div className="relative w-64 h-64 sm:w-80 sm:h-80 mb-10 rounded-2xl overflow-hidden bg-overlay-backdrop">
             {hasCamera && (
               <video
                 ref={videoRef}

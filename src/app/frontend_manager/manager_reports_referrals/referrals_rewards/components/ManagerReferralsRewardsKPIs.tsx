@@ -16,7 +16,6 @@ export default function ManagerReferralsRewardsKPIs() {
   const dateSuffix = useDateRangeSuffix();
 
   if (isKpisError) return <div role="alert" className="rounded-lg border border-danger p-4 text-sm text-danger-text">{t('TEXT_GENERIC_ERROR')} <button type="button" className="min-h-11 underline" onClick={() => void reloadKpis()}>{t('COPY_TRY_AGAIN_2')}</button></div>;
-  if (isKpisError) return <div role="alert" className="rounded-lg border border-danger p-4 text-sm text-danger-text">{t('TEXT_GENERIC_ERROR')} <button type="button" className="min-h-11 underline" onClick={() => void reloadKpis()}>{t('COPY_TRY_AGAIN_2')}</button></div>;
   if (isKpisLoading) {
     return (
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 motion-safe:animate-pulse">
@@ -46,6 +45,7 @@ export default function ManagerReferralsRewardsKPIs() {
         change={undefined}
         iconBg="bg-success-bg"
         iconColor="text-success-text"
+        href="/frontend_manager/manager_members/members_directory"
       />
       <ManagerStatCard 
         title={t("TEXT_KPI_PENDING_REWARDS") + dateSuffix} 

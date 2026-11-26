@@ -74,7 +74,7 @@ export default function SuperadminCommunicationBroadcastsCampaignsTable({
               broadcasts.map((bc) => (
                 <tr
                   key={bc.id}
-                  className="hover:bg-primary-subtle motion-safe:transition-colors group"
+                  className="hover:bg-surface-hover motion-safe:transition-colors group"
                   data-testid={`superadmin-broadcast-row-${bc.id}`}
                 >
                   <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-e border-border px-6 py-4 transition-colors">
@@ -143,7 +143,7 @@ export default function SuperadminCommunicationBroadcastsCampaignsTable({
                             e.stopPropagation();
                             onSend(bc.id);
                           }}
-                          className="p-1.5 text-secondary hover:text-primary hover:bg-primary-subtle rounded-lg motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11"
+                          className="p-1.5 text-secondary hover:text-primary hover:bg-surface-hover rounded-lg motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11"
                           title={t('ui.send_now_db3c809c')}
                           aria-label={t('ui.send_broadcast_aria', { title: bc.title })}
                           data-testid="superadmin_communication_broadcasts-superadmin-broadcasts-table-broadcasts-table-send-now"
@@ -157,7 +157,7 @@ export default function SuperadminCommunicationBroadcastsCampaignsTable({
                           e.stopPropagation();
                           onEdit(bc);
                         }}
-                        className="p-1.5 text-secondary hover:text-primary hover:bg-primary-subtle rounded-lg motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11"
+                        className="p-1.5 text-secondary hover:text-primary hover:bg-surface-hover rounded-lg motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11"
                         title={t('ui.edit_broadcast_4a9ebd8b')}
                         aria-label={t('ui.edit_broadcast_aria', { title: bc.title })}
                         data-testid="superadmin_communication_broadcasts-superadmin-broadcasts-table-broadcasts-table-edit-broadcast"

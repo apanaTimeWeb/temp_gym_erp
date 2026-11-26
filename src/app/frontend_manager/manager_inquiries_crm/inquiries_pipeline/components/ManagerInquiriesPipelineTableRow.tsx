@@ -38,7 +38,7 @@ export default function ManagerInquiriesPipelineTableRow({ inq, mapIndex, select
       }}
       data-testid={`manager_inquiries-inquiries-managerinquiriestable-row-${inq.id}`}
       key={inq.id}
-      className={[rowCardClass, selected ? 'bg-surface-highlight/70' : 'hover:bg-surface-highlight/50', 'transition-colors group cursor-pointer'].filter(Boolean).join(' ')}
+      className={[rowCardClass, selected ? 'bg-surface-highlight' : 'hover:bg-surface-hover', 'transition-colors group cursor-pointer'].filter(Boolean).join(' ')}
     >
       <td className={`px-5 py-3.5 w-12 sticky start-0 z-10 bg-card border-e border-border ${cellBaseClass}`} data-label="" data-testid={`manager_inquiries-managerinquiriestable-cell-select-${mapIndex}`} onClick={(e) => e.stopPropagation()}>
         <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "w-4 h-4 rounded border-border text-text-primary focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_inquiries-inquiries-managerinquiriestable-input-toggleselectone-${mapIndex}`}

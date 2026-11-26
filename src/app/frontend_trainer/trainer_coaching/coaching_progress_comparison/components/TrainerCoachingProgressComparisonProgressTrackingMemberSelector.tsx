@@ -62,7 +62,7 @@ export default function TrainerProgressTrackingMemberSelector({
           </div>
           <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full border ${
             isMaxReached
-              ? 'bg-warning-bg text-warning border-warning/30'
+              ? 'bg-warning-bg text-warning border-warning'
               : 'bg-input text-secondary border-border'
           }`}>
             {selectedIds.length} / {TRAINER_PROGRESS_TRACKING_COMPARISON_MAX_MEMBERS}
@@ -118,7 +118,7 @@ export default function TrainerProgressTrackingMemberSelector({
                   type="button"
                   onClick={() => onToggle(m.id)}
                   aria-label={`Remove ${m.name}`}
-                  className="rounded-full p-0.5 hover:bg-black/20 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring motion-safe:transition-colors"
+                  className="rounded-full p-0.5 hover:bg-overlay-backdrop focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring motion-safe:transition-colors"
                 >
                   <X size={13} strokeWidth={2.5} />
                 </button>
@@ -152,7 +152,7 @@ export default function TrainerProgressTrackingMemberSelector({
       </div>
 
       {/* Scrollable Member Checkbox Grid */}
-      <div className="max-h-56 overflow-y-auto custom-scrollbar border border-border/80 rounded-xl p-3 bg-input/10">
+      <div className="max-h-56 overflow-y-auto custom-scrollbar border border-border rounded-xl p-3 bg-input">
         {filteredMembers.length === 0 ? (
           <div className="py-6 text-center space-y-2">
             <p className="text-xs text-secondary">
@@ -179,8 +179,8 @@ export default function TrainerProgressTrackingMemberSelector({
                     isSelected
                       ? 'bg-primary-subtle border-primary text-primary shadow-xs'
                       : isDisabled
-                      ? 'bg-input/40 text-disabled border-border/40 cursor-not-allowed opacity-60'
-                      : 'bg-card text-primary border-border hover:border-primary/60 hover:bg-surface-hover'
+                      ? 'bg-input text-disabled border-border cursor-not-allowed opacity-60'
+                      : 'bg-card text-primary border-border hover:border-primary hover:bg-surface-hover'
                   }`}
                 >
                   <input
@@ -210,7 +210,7 @@ export default function TrainerProgressTrackingMemberSelector({
       </div>
 
       {/* Helper text footer */}
-      <div className="flex items-center justify-between text-xs pt-1 border-t border-border/60">
+      <div className="flex items-center justify-between text-xs pt-1 border-t border-border">
         {selectedIds.length < 2 ? (
           <p className="text-secondary italic">{t("TEXT_SELECT_AT_LEAST_2_MEMBERS_TO_COMPARE")}</p>
         ) : (

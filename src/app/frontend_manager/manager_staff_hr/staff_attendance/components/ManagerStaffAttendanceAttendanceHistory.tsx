@@ -179,8 +179,8 @@ export default function ManagerStaffPayrollAndAttendanceAttendanceHistory() {
                   <tr><td colSpan={ATTENDANCE_COLUMN_COUNT}><ManagerStaffAttendanceEmptyState message={t('COPY_NO_ATTENDANCE_RECORDS_WERE_RETURNED_SELECTED_MONTH')} /></td></tr>
                 ) : (
                   history.map((record) => (
-                    <tr key={`${record.date}-${record.status}`} className="hover:bg-surface-highlight/50 transition-colors group">
-                      <td className="sticky start-0 z-10 bg-card border-e border-border p-4 text-text-primary whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
+                    <tr key={`${record.date}-${record.status}`} className="hover:bg-surface-hover transition-colors group">
+                      <td className="sticky start-0 z-10 bg-card border-e border-border p-4 text-text-primary whitespace-nowrap group-hover:bg-surface-hover transition-colors">
                         <div className="flex items-center gap-2">
                           <span>{ManagerStaffPayrollAndAttendanceFormatDate(record.date, locale)}</span>
                           <CopyButton value={ManagerStaffPayrollAndAttendanceFormatDate(record.date, locale)} />

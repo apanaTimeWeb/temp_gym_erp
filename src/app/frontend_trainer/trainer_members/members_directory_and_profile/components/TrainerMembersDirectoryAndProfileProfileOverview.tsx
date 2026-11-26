@@ -51,7 +51,7 @@ export default function TrainerMembersProfileOverview() {
   const isRestricted = Boolean(selectedMember.isBlacklisted || selectedMember.status === 'BANNED' || selectedMember.status === 'SUSPENDED');
   return <div className="space-y-5">
     {isRestricted && (
-      <div className="bg-danger/10 border border-danger/30 rounded-xl p-3.5 flex items-start gap-3 text-xs text-danger font-medium" role="alert" data-testid="trainer_members-blacklist-alert">
+      <div className="bg-danger-bg border border-danger rounded-xl p-3.5 flex items-start gap-3 text-xs text-danger font-medium" role="alert" data-testid="trainer_members-blacklist-alert">
         <AlertTriangle size={18} className="shrink-0 mt-0.5 text-danger" />
         <div>
           <p className="font-bold text-sm">Account Restricted ({selectedMember.status})</p>
@@ -78,7 +78,7 @@ export default function TrainerMembersProfileOverview() {
               </div>
             </div>
             {selectedMember.ptPackage && typeof selectedMember.ptPackage.remainingSessions === 'number' && selectedMember.ptPackage.remainingSessions <= 2 && (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-warning/15 text-warning border border-warning/30" role="alert" data-testid="trainer_members-pt-low-balance-alert">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-warning-bg text-warning border border-warning" role="alert" data-testid="trainer_members-pt-low-balance-alert">
                 <AlertTriangle size={14} strokeWidth={2} />
                 Low Balance ({selectedMember.ptPackage.remainingSessions} remaining)
               </span>
@@ -97,15 +97,15 @@ export default function TrainerMembersProfileOverview() {
                 />
               </div>
               <div className="grid grid-cols-3 gap-2 pt-1 text-center">
-                <div className="bg-input/60 rounded-lg p-2">
+                <div className="bg-input rounded-lg p-2">
                   <p className="text-xs text-secondary">Total</p>
                   <p className="text-sm font-bold text-primary">{selectedMember.ptPackage.totalSessions}</p>
                 </div>
-                <div className="bg-input/60 rounded-lg p-2">
+                <div className="bg-input rounded-lg p-2">
                   <p className="text-xs text-secondary">Completed</p>
                   <p className="text-sm font-bold text-primary">{selectedMember.ptPackage.completedSessions ?? 0}</p>
                 </div>
-                <div className="bg-input/60 rounded-lg p-2">
+                <div className="bg-input rounded-lg p-2">
                   <p className="text-xs text-secondary">Remaining</p>
                   <p className={`text-sm font-bold ${(selectedMember.ptPackage.remainingSessions ?? 0) <= 2 ? 'text-warning font-extrabold' : 'text-primary'}`}>
                     {selectedMember.ptPackage.remainingSessions ?? (selectedMember.ptPackage.totalSessions - (selectedMember.ptPackage.completedSessions ?? 0))}

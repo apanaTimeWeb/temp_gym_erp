@@ -56,7 +56,7 @@ export default function SuperadminSupportTicketsManagementReplyModal({ isOpen, o
   };
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-labelledby="superadmin-ticket-reply-title" data-testid="superadmin_support_tickets-superadmin-tickets-reply-modal-tickets-reply-modal-dialog" ref={dialogRef}>
+    <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay-backdrop backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-labelledby="superadmin-ticket-reply-title" data-testid="superadmin_support_tickets-superadmin-tickets-reply-modal-tickets-reply-modal-dialog" ref={dialogRef}>
       <div className="my-auto flex max-h-dialog-desktop w-full max-w-lg flex-col rounded-xl border border-border bg-overlay shadow-dialog relative">
         <div className="shrink-0 p-6 border-b border-border">
           <h2 id="superadmin-ticket-reply-title" className="text-lg font-bold text-primary mb-1">{t('ui.reply_to_ticket_03470b7')}{ticketId}</h2>

@@ -122,7 +122,7 @@ export default function AdminAttendanceDashboardTable() {
           <tbody className="divide-y divide-border">
             {sortedRecords.map((r) => (
               <tr key={r.id} className="hover:bg-surface-hover motion-safe:transition-colors motion-safe:duration-base group">
-                <td className="px-4 py-3 sticky start-0 z-10 bg-card group-hover:bg-surface-highlight border-e border-border">
+                <td className="px-4 py-3 sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-e border-border">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-primary-subtle flex items-center justify-center text-primary text-xs font-bold flex-shrink-0">
                       {r.memberName.charAt(0).toUpperCase()}

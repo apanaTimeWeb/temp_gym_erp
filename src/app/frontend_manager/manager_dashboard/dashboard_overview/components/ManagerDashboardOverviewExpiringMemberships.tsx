@@ -53,7 +53,13 @@ export default function ManagerDashboardOverviewExpiringMemberships() {
                 {m.name.charAt(0)}
               </div>
               <div>
-                <p className="text-sm font-medium text-text-primary break-words">{m.name}</p>
+                <Link
+                  href={`/frontend_manager/manager_members/members_directory?search=${encodeURIComponent(m.name)}`}
+                  className="text-sm font-medium text-text-primary break-words hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring rounded"
+                  title={`View ${m.name} in Members Directory`}
+                >
+                  {m.name}
+                </Link>
                 <p className="text-xs text-text-secondary">{t("COPY_EXPIRES_2")}{ManagerDashboardOverviewFormatDate(m.expiryDate, locale)}
                 </p>
               </div>

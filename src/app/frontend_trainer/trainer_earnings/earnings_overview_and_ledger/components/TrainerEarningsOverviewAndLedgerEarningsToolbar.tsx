@@ -38,7 +38,7 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
   };
 
   return (
-    <div className="p-4 border-b border-border bg-surface-highlight/30 flex flex-col xl:flex-row gap-3 items-start xl:items-center justify-between">
+    <div className="p-4 border-b border-border bg-surface-highlight flex flex-col xl:flex-row gap-3 items-start xl:items-center justify-between">
       <h2 className="text-section-title font-semibold text-primary">{t("TEXT_EARNINGS_LEDGER")}</h2>
       <div className="flex flex-col sm:flex-row gap-2.5 w-full xl:w-auto xl:items-center flex-wrap">
         <div className="relative w-full sm:w-64 min-w-[200px]">
@@ -127,7 +127,7 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
           <a
             href="/__mocks__/trainer/earnings_export.csv"
             download="trainer_earnings_statement.csv"
-            className="min-h-10 inline-flex items-center gap-1.5 px-3 py-1.5 bg-input hover:bg-input/80 text-primary border border-border rounded-xl text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all"
+            className="min-h-10 inline-flex items-center gap-1.5 px-3 py-1.5 bg-input hover:bg-surface-hover text-primary border border-border rounded-xl text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all"
             data-testid="trainer_earnings-export-csv-button"
           >
             <Download size={14} />
@@ -136,7 +136,7 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
           <a
             href="/__mocks__/trainer/earnings_statement.pdf"
             download="trainer_earnings_statement.pdf"
-            className="min-h-10 inline-flex items-center gap-1.5 px-3 py-1.5 bg-input hover:bg-input/80 text-primary border border-border rounded-xl text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all"
+            className="min-h-10 inline-flex items-center gap-1.5 px-3 py-1.5 bg-input hover:bg-surface-hover text-primary border border-border rounded-xl text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all"
             data-testid="trainer_earnings-export-pdf-button"
           >
             <FileText size={14} />

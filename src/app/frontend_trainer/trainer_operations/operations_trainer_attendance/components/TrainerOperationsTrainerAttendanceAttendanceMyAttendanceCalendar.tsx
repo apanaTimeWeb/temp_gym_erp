@@ -88,7 +88,7 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
     <div className="p-6 space-y-6">
       {/* 3-Month Quarter Selector if range=last_3_months */}
       {isThreeMonthsRange && (
-        <div className="bg-primary/5 border border-primary/20 rounded-2xl p-5 space-y-4 shadow-sm">
+        <div className="bg-primary-subtle border border-border rounded-2xl p-5 space-y-4 shadow-sm">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
             <div>
               <div className="flex items-center gap-2">
@@ -141,8 +141,8 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
                   }}
                   className={`p-3 rounded-xl text-left border motion-safe:transition-all ${
                     isSelected
-                      ? 'bg-card border-primary ring-2 ring-primary/30 shadow-sm'
-                      : 'bg-card/70 border-border hover:border-primary/50'
+                      ? 'bg-card border-primary ring-2 ring-focus-ring shadow-sm'
+                      : 'bg-card border-border hover:border-primary'
                   }`}
                 >
                   <p className="text-xs font-bold text-primary">{format(mDate, 'MMMM yyyy')}</p>

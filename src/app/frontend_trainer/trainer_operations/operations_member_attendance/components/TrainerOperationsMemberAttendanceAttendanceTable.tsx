@@ -136,9 +136,9 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
                     aria-expanded={expanded}
                     onClick={() => setExpandedId((current) => current === record.id ? null : record.id)}
                     onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setExpandedId((current) => current === record.id ? null : record.id); } }}
-                    className="cursor-pointer hover:bg-surface-highlight/50 transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus-ring"
+                    className="cursor-pointer hover:bg-surface-hover transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus-ring"
                   >
-                    <td className="sticky start-0 z-10 bg-card border-e border-border cursor-pointer px-4 py-3 whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
+                    <td className="sticky start-0 z-10 bg-card border-e border-border cursor-pointer px-4 py-3 whitespace-nowrap group-hover:bg-surface-hover transition-colors">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-primary-subtle flex items-center justify-center text-primary font-bold text-sm shrink-0" aria-hidden="true">{initial}</div>
                         <div className="min-w-0">
@@ -175,7 +175,7 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
                             e.stopPropagation();
                             void onCheckOut(record.id);
                           }}
-                          className="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100 motion-safe:transition-opacity inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-lg bg-warning-bg text-warning-text hover:brightness-105 border border-warning/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:active:scale-95"
+                          className="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100 motion-safe:transition-opacity inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-lg bg-warning-bg text-warning-text hover:brightness-105 border border-warning focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:active:scale-95"
                           title={t('TEXT_CHECK_OUT')}
                         >
                           <LogOut size={13} strokeWidth={2} aria-hidden="true" />
@@ -217,7 +217,7 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
                     <button
                       type="button"
                       onClick={() => void onCheckOut(record.id)}
-                      className="mt-1 inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg bg-warning-bg text-warning-text hover:brightness-105 border border-warning/30"
+                      className="mt-1 inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg bg-warning-bg text-warning-text hover:brightness-105 border border-warning"
                     >
                       <LogOut size={13} strokeWidth={2} aria-hidden="true" />
                       <span>{t('TEXT_CHECK_OUT')}</span>

@@ -140,7 +140,7 @@ export default function TrainerOperationsMemberAttendanceQuickMark({
       {query.trim().length > 0 && (
         <div
           data-testid="trainer-attendance-quick-mark-results"
-          className="mt-3 divide-y divide-border rounded-lg border border-border bg-page/50 overflow-hidden"
+          className="mt-3 divide-y divide-border rounded-lg border border-border bg-page overflow-hidden"
         >
           {matchingMembers.length === 0 ? (
             <div className="p-4 text-center">
@@ -167,7 +167,7 @@ export default function TrainerOperationsMemberAttendanceQuickMark({
                 <div
                   key={member.id}
                   data-testid={`quick-mark-member-${member.id}`}
-                  className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3 hover:bg-surface-hover/70 motion-safe:transition-colors"
+                  className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3 hover:bg-surface-hover motion-safe:transition-colors"
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <div className="w-9 h-9 rounded-full bg-primary-subtle text-primary font-bold flex items-center justify-center text-sm shrink-0">
@@ -200,7 +200,7 @@ export default function TrainerOperationsMemberAttendanceQuickMark({
                           type="button"
                           onClick={() => void handleCheckOutNow(todayRecord!.id)}
                           disabled={isCurrentlyMarking || isPending}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-warning-bg text-warning-text hover:brightness-105 border border-warning/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring disabled:opacity-60"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-warning-bg text-warning-text hover:brightness-105 border border-warning focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring disabled:opacity-60"
                         >
                           {isCurrentlyMarking ? (
                             <Loader2 size={14} className="motion-safe:animate-spin" />

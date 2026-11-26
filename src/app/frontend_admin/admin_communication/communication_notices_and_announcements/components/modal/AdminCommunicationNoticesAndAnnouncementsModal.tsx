@@ -26,7 +26,7 @@ export default function AdminCommunicationNoticesAndAnnouncementsModal() {
 
   return (
     <>
-      <div aria-hidden="true" className="fixed inset-0 bg-overlay backdrop-blur-sm z-40" onClick={() => void handleClose()} data-testid="admin_announcements-admin_announcements-modal-click"/>
+      <div aria-hidden="true" className="fixed inset-0 bg-overlay-backdrop backdrop-blur-sm z-40" onClick={() => void handleClose()} data-testid="admin_announcements-admin_announcements-modal-click"/>
       <div data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-announcements-dialog-title" tabIndex={-1} onMouseDown={(event) => { if (event.target === event.currentTarget) void handleClose(); }} className="fixed inset-0 z-40 flex items-center justify-center p-4 overflow-y-auto">
         <div className="my-auto bg-overlay border border-border rounded-2xl shadow-dialog w-full max-w-md max-h-dialog-desktop flex flex-col overflow-hidden">
 

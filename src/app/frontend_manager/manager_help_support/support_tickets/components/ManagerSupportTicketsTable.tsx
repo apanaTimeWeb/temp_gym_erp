@@ -58,7 +58,7 @@ export default function ManagerSupportTicketsTable({ tickets, onSelectTicket }: 
                         }
                       }}
                       data-testid={`manager_support-ticket-row-${t.id}`}
-                      className="hover:bg-surface-highlight/50 transition-colors group cursor-pointer"
+                      className="hover:bg-surface-hover transition-colors group cursor-pointer"
                     >
                       <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-3.5 whitespace-nowrap">
                         <div className="flex items-center gap-2">

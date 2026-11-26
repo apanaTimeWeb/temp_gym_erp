@@ -1,6 +1,7 @@
 // RESPONSIBILITY: Renders the Trainer Performance table for the Reports module; state remains in module-owned logic hook.
 'use client';
 
+import Link from 'next/link';
 import { Star, Award, TrendingUp } from 'lucide-react';
 import { useLocale } from 'next-intl';
 
@@ -57,11 +58,17 @@ export function ManagerReportsOverviewTrainersTable() {
                 </tr>
               ) : (
                 data.map((t) => (
-                  <tr key={t.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                  <tr key={t.id} className="hover:bg-surface-hover transition-colors group">
                     <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-3.5 whitespace-nowrap">
                       <div className="flex items-center gap-2">
                         <div>
-                          <p className="text-sm font-semibold text-text-primary">{t.trainerName}</p>
+                          <Link
+                            href={`/frontend_manager/manager_staff_hr/staff_directory?search=${encodeURIComponent(t.trainerName)}`}
+                            className="text-sm font-semibold text-text-primary hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring rounded"
+                            title={`View ${t.trainerName} in Staff Directory`}
+                          >
+                            {t.trainerName}
+                          </Link>
                           <p className="text-xs text-text-secondary">{t.specialization}</p>
                         </div>
                         <CopyButton value={t.trainerName} />
@@ -80,7 +87,7 @@ export function ManagerReportsOverviewTrainersTable() {
                       </span>
                     </td>
                     <td className="px-5 py-3.5 whitespace-nowrap">
-                      <span className="inline-flex items-center gap-1 text-sm font-bold text-amber-500">
+                      <span className="inline-flex items-center gap-1 text-sm font-bold text-warning-text">
                         <Star size={14} fill="currentColor" strokeWidth={0} aria-hidden="true" />
                         {t.avgRating.toFixed(1)}
                       </span>

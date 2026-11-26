@@ -177,7 +177,7 @@ export default function AdminCommunicationNoticesAndAnnouncementsTable() {
               ) : sortedAnnouncements.map((a , __testIdIndex145) => (
                 <tr key={a.id} className="hover:bg-surface-hover transition-colors group">
                   {/* Pin indicator */}
-                  <td className="p-4 w-10 sticky start-0 z-10 bg-card border-e border-border">
+                  <td className="p-4 w-10 sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-e border-border transition-colors">
                     {a.isPinned && <Pin size={18} className="text-warning"  strokeWidth={2}/>}
                   </td>
                   {/* Title + preview */}

@@ -57,7 +57,13 @@ export default function ManagerDashboardOverviewPendingPayments() {
                 {p.name.charAt(0)}
               </div>
               <div>
-                <p className="break-words text-sm font-medium text-text-primary">{p.name}</p>
+                <Link
+                  href={`/frontend_manager/manager_members/members_directory?search=${encodeURIComponent(p.name)}`}
+                  className="break-words text-sm font-medium text-text-primary hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring rounded"
+                  title={`View ${p.name} in Members Directory`}
+                >
+                  {p.name}
+                </Link>
                 <p className="text-xs text-text-secondary">{t("COPY_EXPIRES_1")}{ManagerDashboardOverviewFormatDate(p.expiryDate, locale)}
                 </p>
               </div>

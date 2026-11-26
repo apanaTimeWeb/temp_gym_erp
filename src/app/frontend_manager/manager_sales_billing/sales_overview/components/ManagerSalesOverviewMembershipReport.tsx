@@ -67,8 +67,8 @@ export default function ManagerSalesOverviewMembershipReport() {
             <tbody className="divide-y divide-border">
               {paginated.length > 0 ? (
                 paginated.map((r, index) => (
-                  <tr key={`${r.plan}-${index}`} className="hover:bg-surface-highlight/50 transition-colors group">
-                    <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-medium text-text-primary whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
+                  <tr key={`${r.plan}-${index}`} className="hover:bg-surface-hover transition-colors group">
+                    <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-medium text-text-primary whitespace-nowrap group-hover:bg-surface-hover transition-colors">
                       <div className="flex items-center gap-2">
                         <span>{r.plan || ''}</span>
                         {r.plan ? <CopyButton value={r.plan} /> : null}

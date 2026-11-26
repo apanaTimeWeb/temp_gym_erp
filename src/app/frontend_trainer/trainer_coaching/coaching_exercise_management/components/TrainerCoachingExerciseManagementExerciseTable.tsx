@@ -149,10 +149,10 @@ export default function TrainerWorkoutExerciseTable() {
                 {exercises.map((exercise) => (
                   <tr
                     key={exercise.id}
-                    className="hover:bg-surface-highlight/50 transition-colors group focus-within:bg-surface-highlight/50"
+                    className="hover:bg-surface-hover transition-colors group focus-within:bg-surface-hover"
                     data-testid={`trainer_workout-exercise-table_row${exercise.id}`}
                   >
-                    <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-medium text-primary whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
+                    <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-medium text-primary whitespace-nowrap group-hover:bg-surface-hover transition-colors">
                       <div className="flex items-center gap-2">
                         <TrainerInfrastructureTooltip content={String(displayValue(exercise.name))}>
                           <span className="truncate max-w-xs inline-block font-bold text-primary text-sm">{displayValue(exercise.name)}</span>

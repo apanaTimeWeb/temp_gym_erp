@@ -59,7 +59,7 @@ export default function ManagerDashboardOverviewRecentMembers() {
 
   return (
     <div className="xl:col-span-2 rounded-2xl shadow-card border overflow-hidden bg-card border-border">
-      <div className="min-w-0 px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-3 border-b border-border bg-surface-highlight/30">
+      <div className="min-w-0 px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-3 border-b border-border bg-surface-highlight">
         <h2 className="font-semibold text-text-primary">{t("COPY_RECENT_MEMBERS")}</h2>
         <div className="min-w-0 flex flex-wrap items-center gap-3">
           <div className="relative min-w-0 w-full sm:w-auto">
@@ -82,7 +82,11 @@ export default function ManagerDashboardOverviewRecentMembers() {
           return (
             <article key={m.id} role="listitem" className="min-w-0 rounded-lg border border-border bg-card p-3">
               <div className="flex min-w-0 flex-wrap items-start justify-between gap-2">
-                <h3 className="min-w-0 break-words font-medium text-text-primary">{m.name}</h3>
+                <h3 className="min-w-0 break-words font-medium text-text-primary">
+                  <Link href={`/frontend_manager/manager_members/members_directory?search=${encodeURIComponent(m.name)}`} className="hover:underline">
+                    {m.name}
+                  </Link>
+                </h3>
                 <span data-testid={`manager_dashboard-dashboard-recent-members-status-${m.id}`} className={`inline-flex max-w-full whitespace-normal break-words rounded-full px-2.5 py-1 text-xs font-semibold ${statusStyle.bg} ${statusStyle.text}`}>
                   {statusKey ? t(statusKey) : m.status}
                 </span>
@@ -133,13 +137,18 @@ export default function ManagerDashboardOverviewRecentMembers() {
             {paginated.map(m => {
               const statusStyle = DASHBOARD_STATUS_STYLES[m.status] || { bg: 'bg-input', text: 'text-text-secondary' };
               return (
-                <tr key={m.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                <tr key={m.id} className="hover:bg-surface-hover transition-colors group">
                   <td className="px-6 py-4 sticky start-0 z-10 bg-card border-e border-border whitespace-nowrap">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm bg-primary-subtle text-primary">
                         {m.name.charAt(0) || '?'}
                       </div>
-                      <span className="text-sm font-medium text-text-primary">{m.name}</span>
+                      <Link
+                        href={`/frontend_manager/manager_members/members_directory?search=${encodeURIComponent(m.name)}`}
+                        className="text-sm font-medium text-text-primary hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring rounded"
+                      >
+                        {m.name}
+                      </Link>
                       <CopyButton value={m.name} label="Copy member name" />
                     </div>
                   </td>
@@ -169,7 +178,7 @@ export default function ManagerDashboardOverviewRecentMembers() {
         </table>
       </div>
       
-      <div className="border-t border-border p-4 bg-card/60">
+      <div className="border-t border-border p-4 bg-card">
         <ManagerPagination data-testid="manager_dashboard-managerdashboardrecentmembers-managerpagination-1" 
           currentPage={currentPage}
           totalPages={totalPages}

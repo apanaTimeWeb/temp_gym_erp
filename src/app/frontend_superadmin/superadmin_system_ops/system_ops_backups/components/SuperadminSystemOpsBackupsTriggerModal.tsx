@@ -31,7 +31,7 @@ export default function SuperadminSystemOpsBackupsTriggerModal({ isOpen, onClose
       toast.error(t('ui.action_failed_retry'), { id: 'superadmin-backups-trigger-error' });
     }
   };
-  return (<div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="superadmin-backups-trigger-title" data-testid="superadmin_system_ops_backups-superadmin-system-ops-backups-trigger-modal-backups-trigger-modal-dialog" ref={dialogRef}>
+  return (<div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay-backdrop p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="superadmin-backups-trigger-title" data-testid="superadmin_system_ops_backups-superadmin-system-ops-backups-trigger-modal-backups-trigger-modal-dialog" ref={dialogRef}>
     <div className="my-auto flex max-h-dialog-desktop w-full max-w-md flex-col overflow-hidden rounded-xl border border-border bg-overlay shadow-dialog motion-safe:animate-in motion-safe:fade-in">
       <div className="flex min-h-0 flex-1 flex-col p-6">
         <div className="min-h-0 flex-1 overflow-y-auto custom-scrollbar pe-1">

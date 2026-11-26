@@ -42,7 +42,7 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-4 overflow-y-auto"
       role="dialog"
       aria-modal="true"
       aria-labelledby="broadcast-modal-title"
@@ -52,7 +52,7 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-header shrink-0">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-primary-subtle text-primary flex items-center justify-center">
               <Megaphone size={16} />
             </div>
             <div>
@@ -75,7 +75,7 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
         {/* Body */}
         <form onSubmit={handleSend} className="p-6 space-y-4">
           {/* Trainer Scope Notice */}
-          <div className="flex items-start gap-2.5 p-3 rounded-xl bg-info/10 border border-info/20 text-xs text-info">
+          <div className="flex items-start gap-2.5 p-3 rounded-xl bg-info-bg border border-info text-xs text-info">
             <ShieldCheck size={16} className="shrink-0 mt-0.5 text-info" />
             <p>
               <strong>Trainer Scope:</strong> You can only message trainees assigned directly to you (10 total). Gym-wide announcements to all staff or all gym members are managed by Managers.
@@ -92,7 +92,7 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
                 onClick={() => setAudience('ALL')}
                 className={`p-2.5 rounded-xl border text-xs font-semibold text-center motion-safe:transition-all ${
                   audience === 'ALL'
-                    ? 'border-primary bg-primary/10 text-primary ring-1 ring-primary'
+                    ? 'border-primary bg-primary-subtle text-primary ring-1 ring-primary'
                     : 'border-border bg-input text-secondary hover:text-primary'
                 }`}
               >
@@ -103,7 +103,7 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
                 onClick={() => setAudience('PT_ONLY')}
                 className={`p-2.5 rounded-xl border text-xs font-semibold text-center motion-safe:transition-all ${
                   audience === 'PT_ONLY'
-                    ? 'border-primary bg-primary/10 text-primary ring-1 ring-primary'
+                    ? 'border-primary bg-primary-subtle text-primary ring-1 ring-primary'
                     : 'border-border bg-input text-secondary hover:text-primary'
                 }`}
               >
@@ -114,7 +114,7 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
                 onClick={() => setAudience('ATTENTION_ONLY')}
                 className={`p-2.5 rounded-xl border text-xs font-semibold text-center motion-safe:transition-all ${
                   audience === 'ATTENTION_ONLY'
-                    ? 'border-primary bg-primary/10 text-primary ring-1 ring-primary'
+                    ? 'border-primary bg-primary-subtle text-primary ring-1 ring-primary'
                     : 'border-border bg-input text-secondary hover:text-primary'
                 }`}
               >
@@ -133,7 +133,7 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
                 onClick={() => setChannel('WHATSAPP')}
                 className={`flex-1 flex items-center justify-center gap-1.5 p-2 rounded-xl border text-xs font-semibold motion-safe:transition-all ${
                   channel === 'WHATSAPP'
-                    ? 'border-success bg-success/15 text-success ring-1 ring-success'
+                    ? 'border-success bg-success-bg text-success ring-1 ring-success'
                     : 'border-border bg-input text-secondary hover:text-primary'
                 }`}
               >
@@ -145,7 +145,7 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
                 onClick={() => setChannel('EMAIL')}
                 className={`flex-1 flex items-center justify-center gap-1.5 p-2 rounded-xl border text-xs font-semibold motion-safe:transition-all ${
                   channel === 'EMAIL'
-                    ? 'border-info bg-info/15 text-info ring-1 ring-info'
+                    ? 'border-info bg-info-bg text-info ring-1 ring-info'
                     : 'border-border bg-input text-secondary hover:text-primary'
                 }`}
               >
@@ -157,7 +157,7 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
                 onClick={() => setChannel('PUSH')}
                 className={`flex-1 flex items-center justify-center gap-1.5 p-2 rounded-xl border text-xs font-semibold motion-safe:transition-all ${
                   channel === 'PUSH'
-                    ? 'border-warning bg-warning/15 text-warning ring-1 ring-warning'
+                    ? 'border-warning bg-warning-bg text-warning ring-1 ring-warning'
                     : 'border-border bg-input text-secondary hover:text-primary'
                 }`}
               >

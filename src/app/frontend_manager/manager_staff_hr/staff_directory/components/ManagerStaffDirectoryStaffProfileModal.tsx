@@ -75,7 +75,7 @@ export default function ManagerStaffDirectoryStaffProfileModal() {
                     href={`https://wa.me/${s.phone.replace(/[^0-9]/g, '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                    className="p-1.5 rounded-lg bg-success-bg hover:brightness-95 text-success-text transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                     title="WhatsApp Staff"
                     aria-label={`WhatsApp ${s.phone}`}
                   >
@@ -203,7 +203,7 @@ export default function ManagerStaffDirectoryStaffProfileModal() {
                 <p className="text-xs font-bold uppercase tracking-wider text-text-secondary mb-1.5">Certifications</p>
                 <div className="flex flex-wrap gap-1.5">
                   {s.certifications.map((cert) => (
-                    <span key={cert} className="px-2 py-0.5 rounded-md text-xs font-medium bg-primary-subtle text-primary border border-primary/20">
+                    <span key={cert} className="px-2 py-0.5 rounded-md text-xs font-medium bg-primary-subtle text-primary border border-border">
                       {cert}
                     </span>
                   ))}

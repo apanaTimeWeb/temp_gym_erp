@@ -76,7 +76,7 @@ export default function TrainerLibraryDietGrid({
               </div>
               <div className="flex items-center gap-1.5">
                 {plan.deletionRequested && (
-                  <span className="px-2 py-0.5 text-2xs font-semibold rounded-full bg-warning-bg text-warning border border-warning/40">
+                  <span className="px-2 py-0.5 text-2xs font-semibold rounded-full bg-warning-bg text-warning border border-warning">
                     Pending Deletion
                   </span>
                 )}

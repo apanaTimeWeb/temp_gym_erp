@@ -81,7 +81,7 @@ export default function TrainerLibraryDeleteRequestModal({
             You are requesting deletion of <span className="font-semibold text-primary">{plan.name}</span>.
           </p>
 
-          <div className="rounded-xl bg-warning-bg border border-warning/30 p-3.5">
+          <div className="rounded-xl bg-warning-bg border border-warning p-3.5">
             <p className="text-xs text-warning-text leading-relaxed">
               <strong>Manager Approval Required:</strong> To prevent accidental disruption to assigned members, this request will be forwarded to your gym manager for review.
             </p>
@@ -113,7 +113,7 @@ export default function TrainerLibraryDeleteRequestModal({
             <button
               type="submit"
               disabled={isSaving}
-              className="min-h-10 px-4 py-2 bg-warning-bg border border-warning/40 text-warning-text hover:bg-warning/20 rounded-xl text-sm font-semibold flex items-center gap-2"
+              className="min-h-10 px-4 py-2 bg-warning-bg border border-warning text-warning-text hover:brightness-95 rounded-xl text-sm font-semibold flex items-center gap-2"
             >
               {isSaving && <Loader2 size={16} className="animate-spin" />}
               Send Request to Manager

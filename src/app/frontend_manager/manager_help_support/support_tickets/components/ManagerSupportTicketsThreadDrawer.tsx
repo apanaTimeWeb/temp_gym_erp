@@ -78,7 +78,7 @@ export default function ManagerSupportTicketsThreadDrawer({ ticket, onClose, onS
         </div>
 
         {/* Conversation Stream */}
-        <div className="min-h-0 flex-1 overflow-y-auto custom-scrollbar p-5 space-y-4 bg-surface/30">
+        <div className="min-h-0 flex-1 overflow-y-auto custom-scrollbar p-5 space-y-4 bg-surface">
           {ticket.messages.map((m) => {
             const isManager = m.senderRole === 'MANAGER';
 

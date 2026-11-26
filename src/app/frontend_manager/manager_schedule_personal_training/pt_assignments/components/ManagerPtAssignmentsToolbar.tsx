@@ -22,7 +22,7 @@ export default function ManagerPtAssignmentsToolbar({ title, subtitle, actionLab
             data-testid="manager_pt-button-schedule-session"
             type="button"
             onClick={onScheduleSession}
-            className="flex min-h-11 items-center gap-2 rounded-xl border border-primary/30 bg-primary-subtle px-4 py-2.5 text-sm font-bold text-primary shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-200 motion-safe:active:scale-95 hover:bg-primary hover:text-on-primary"
+            className="flex min-h-11 items-center gap-2 rounded-xl border border-primary bg-primary-subtle px-4 py-2.5 text-sm font-bold text-primary shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-200 motion-safe:active:scale-95 hover:bg-primary hover:text-on-primary"
           >
             <CalendarPlus size={18} strokeWidth={2} aria-hidden="true" />
             Schedule Session

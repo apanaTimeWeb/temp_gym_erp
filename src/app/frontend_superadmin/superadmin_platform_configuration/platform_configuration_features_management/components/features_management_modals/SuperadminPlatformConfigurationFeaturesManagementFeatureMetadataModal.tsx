@@ -51,7 +51,7 @@ export default function SuperadminPlatformConfigurationFeaturesManagementFeature
   });
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay p-4 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in">
+    <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay-backdrop p-4 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in">
       <section ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="superadmin-feature-metadata-title" className="my-auto flex max-h-dialog-desktop w-full max-w-lg flex-col rounded-xl border border-border bg-overlay shadow-dialog">
         <header className="flex shrink-0 items-center justify-between border-b border-border p-5">
           <h2 id="superadmin-feature-metadata-title" className="text-lg font-bold text-primary">{t('ui.edit_feature_metadata')}</h2>

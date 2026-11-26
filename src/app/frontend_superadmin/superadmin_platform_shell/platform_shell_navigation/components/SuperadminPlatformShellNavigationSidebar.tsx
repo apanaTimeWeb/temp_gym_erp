@@ -144,7 +144,7 @@ export default function SuperadminPlatformShellNavigationSidebar({ isCollapsed, 
       {/* Mobile Backdrop */}
       {isMobileOpen && (
         <div
-          className="fixed inset-0 bg-overlay backdrop-blur-sm z-10 lg:hidden motion-safe:transition-opacity motion-safe:duration-base"
+          className="fixed inset-0 bg-overlay-backdrop backdrop-blur-sm z-10 lg:hidden motion-safe:transition-opacity motion-safe:duration-base"
           onClick={() => setIsMobileOpen(false)}
          data-testid="superadmin_platform_shell_layout-superadminsidebar-interaction-layer-1"/>
       )}
@@ -236,7 +236,7 @@ export default function SuperadminPlatformShellNavigationSidebar({ isCollapsed, 
                         } ${
                           active
                             ? 'bg-primary-subtle text-primary border-s-2 border-focus'
-                            : 'text-secondary hover:text-primary hover:bg-primary-subtle border-s-2 border-transparent'
+                            : 'text-secondary hover:text-primary hover:bg-surface-hover border-s-2 border-transparent'
                         } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11`}
                         
                        aria-current={active ? 'page' : undefined}

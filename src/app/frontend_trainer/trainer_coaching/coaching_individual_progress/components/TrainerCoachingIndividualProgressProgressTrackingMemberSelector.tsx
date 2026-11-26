@@ -48,7 +48,7 @@ export default function TrainerProgressTrackingMemberSelector({ allMembers, sele
           </div>
           <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full border ${
             isMaxReached
-              ? 'bg-warning-bg text-warning border-warning/30'
+              ? 'bg-warning-bg text-warning border-warning'
               : 'bg-input text-secondary border-border'
           }`}>
             {selectedIds.length} / {TRAINER_PROGRESS_TRACKING_COMPARISON_MAX_MEMBERS}
@@ -92,7 +92,7 @@ export default function TrainerProgressTrackingMemberSelector({ allMembers, sele
                   type="button"
                   onClick={() => onToggle(m.id)}
                   aria-label={`Remove ${m.name}`}
-                  className="rounded-full p-0.5 hover:bg-black/20 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring motion-safe:transition-colors"
+                  className="rounded-full p-0.5 hover:bg-overlay-backdrop focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring motion-safe:transition-colors"
                 >
                   <X size={13} strokeWidth={2.5} />
                 </button>
@@ -126,7 +126,7 @@ export default function TrainerProgressTrackingMemberSelector({ allMembers, sele
       </div>
 
       {/* Scrollable Member Roster */}
-      <div className="max-h-48 overflow-y-auto custom-scrollbar border border-border/60 rounded-lg p-2 bg-input/20">
+      <div className="max-h-48 overflow-y-auto custom-scrollbar border border-border rounded-lg p-2 bg-input">
         {filteredMembers.length === 0 ? (
           <div className="py-6 text-center space-y-2">
             <p className="text-xs text-secondary">
@@ -156,7 +156,7 @@ export default function TrainerProgressTrackingMemberSelector({ allMembers, sele
                     isSelected
                       ? 'bg-primary text-on-primary border-focus shadow-card'
                       : isDisabled
-                      ? 'bg-input text-disabled border-border/50 cursor-not-allowed opacity-60'
+                      ? 'bg-input text-disabled border-border cursor-not-allowed opacity-60'
                       : 'bg-input text-secondary border-border hover:border-focus hover:text-primary'
                   } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`}
                   data-testid={`trainer_progress_tracking-progress-member-selector-${m.id}`}

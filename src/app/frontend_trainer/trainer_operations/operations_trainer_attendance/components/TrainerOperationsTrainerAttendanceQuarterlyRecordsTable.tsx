@@ -51,8 +51,8 @@ export function TrainerOperationsTrainerAttendanceQuarterlyRecordsTable({
               </tr>
             ) : (
               rangeRecords.map((r, idx) => (
-                <tr key={`${r.id || idx}`} className="hover:bg-surface-highlight/50 transition-colors group">
-                  <td className="p-3.5 font-bold text-primary sticky start-0 z-10 bg-card border-e border-border whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
+                <tr key={`${r.id || idx}`} className="hover:bg-surface-hover transition-colors group">
+                  <td className="p-3.5 font-bold text-primary sticky start-0 z-10 bg-card border-e border-border whitespace-nowrap group-hover:bg-surface-hover transition-colors">
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-primary text-sm">{r.date}</span>
                       <CopyButton value={r.date} />
@@ -62,7 +62,7 @@ export function TrainerOperationsTrainerAttendanceQuarterlyRecordsTable({
                     </div>
                   </td>
                   <td className="p-3.5 whitespace-nowrap">
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-success-bg text-success border border-success/30">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-success-bg text-success border border-success">
                       <CheckCircle2 size={12} /> Present
                     </span>
                   </td>
@@ -78,7 +78,7 @@ export function TrainerOperationsTrainerAttendanceQuarterlyRecordsTable({
           </tbody>
         </table>
       </div>
-      <div className="border-t border-border px-4 py-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between bg-card/60 text-xs text-secondary">
+      <div className="border-t border-border px-4 py-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between bg-card text-xs text-secondary">
         <p>
           Showing <span className="font-semibold text-primary">{rangeRecords.length}</span> biometric log entries
         </p>

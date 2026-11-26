@@ -47,9 +47,9 @@ export default function AdminSalesMembershipGrowthReportAnalyticsMembership() {
             <p className="text-xs text-secondary mt-0.5">Comparative breakdown of new additions, renewals, and exits across operational branches</p>
           </div>
           <div className="flex items-center gap-4 text-xs">
-            <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> New Members</span>
-            <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-blue-500"></span> Renewals</span>
-            <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-rose-500"></span> Exits</span>
+            <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-chart-success"></span> New Members</span>
+            <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-chart-info"></span> Renewals</span>
+            <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-chart-danger"></span> Exits</span>
           </div>
         </div>
 
@@ -78,24 +78,24 @@ export default function AdminSalesMembershipGrowthReportAnalyticsMembership() {
                   </div>
                   
                   {/* Visual Segmented bar */}
-                  <div className="h-2.5 w-full bg-muted rounded-full overflow-hidden flex mb-2">
-                    <div style={{ width: `${newPct}%` }} className="bg-emerald-500 h-full transition-all" title={`New: ${row.newMembers}`} />
-                    <div style={{ width: `${renewalPct}%` }} className="bg-blue-500 h-full transition-all" title={`Renewals: ${row.renewals}`} />
+                  <div className="h-2.5 w-full bg-input rounded-full overflow-hidden flex mb-2">
+                    <div style={{ width: `${newPct}%` }} className="bg-chart-success h-full transition-all" title={`New: ${row.newMembers}`} />
+                    <div style={{ width: `${renewalPct}%` }} className="bg-chart-info h-full transition-all" title={`Renewals: ${row.renewals}`} />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-3 gap-1 pt-2 border-t border-border text-center text-[11px]">
                   <div>
                     <span className="text-secondary block">New</span>
-                    <strong className="text-emerald-600 font-bold">+{row.newMembers}</strong>
+                    <strong className="text-success-text font-bold">+{row.newMembers}</strong>
                   </div>
                   <div>
                     <span className="text-secondary block">Renew</span>
-                    <strong className="text-blue-600 font-bold">{row.renewals}</strong>
+                    <strong className="text-info-text font-bold">{row.renewals}</strong>
                   </div>
                   <div>
                     <span className="text-secondary block">Exit</span>
-                    <strong className="text-rose-600 font-bold">-{row.exits}</strong>
+                    <strong className="text-danger-text font-bold">-{row.exits}</strong>
                   </div>
                 </div>
               </div>

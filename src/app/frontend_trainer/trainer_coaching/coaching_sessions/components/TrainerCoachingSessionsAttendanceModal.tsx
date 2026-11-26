@@ -136,9 +136,9 @@ export default function TrainerSessionsAttendanceModal({ session, onClose, onSub
                         <span className="text-sm font-medium text-primary truncate">{member.name}</span>
                         {member.remainingSessions !== undefined && (
                           <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                            member.remainingSessions === 0 ? 'bg-danger-bg text-danger border border-danger/30' :
-                            member.remainingSessions === 1 ? 'bg-warning-bg text-warning border border-warning/30' :
-                            'bg-success-bg text-success border border-success/30'
+                            member.remainingSessions === 0 ? 'bg-danger-bg text-danger border border-danger' :
+                            member.remainingSessions === 1 ? 'bg-warning-bg text-warning border border-warning' :
+                            'bg-success-bg text-success border border-success'
                           }`}>
                             {member.remainingSessions === 0 ? '0 Left' : `${member.remainingSessions} Left`}
                           </span>
@@ -153,7 +153,7 @@ export default function TrainerSessionsAttendanceModal({ session, onClose, onSub
               </div>
 
               {hasExhaustedSelected && (
-                <div className="p-3 rounded-xl bg-danger-bg border border-danger/30 text-xs text-danger flex items-center gap-2" role="alert">
+                <div className="p-3 rounded-xl bg-danger-bg border border-danger text-xs text-danger flex items-center gap-2" role="alert">
                   <span className="font-bold">⚠️ Warning:</span>
                   <span>1 or more selected members have exhausted their PT package (0 sessions left).</span>
                 </div>

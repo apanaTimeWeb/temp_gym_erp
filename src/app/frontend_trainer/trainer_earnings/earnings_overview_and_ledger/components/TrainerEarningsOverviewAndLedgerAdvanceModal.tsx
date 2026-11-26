@@ -61,7 +61,7 @@ export default function TrainerEarningsOverviewAndLedgerAdvanceModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-4 overflow-y-auto"
       role="dialog"
       aria-modal="true"
       aria-labelledby="advance-modal-title"
@@ -71,7 +71,7 @@ export default function TrainerEarningsOverviewAndLedgerAdvanceModal({
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-header shrink-0">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-primary-subtle text-primary flex items-center justify-center">
               <IndianRupee size={16} />
             </div>
             <h3 id="advance-modal-title" className="text-sm font-bold text-primary">
@@ -90,7 +90,7 @@ export default function TrainerEarningsOverviewAndLedgerAdvanceModal({
 
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          <div className="p-3 rounded-xl bg-input/40 border border-border text-xs text-secondary leading-relaxed">
+          <div className="p-3 rounded-xl bg-input border border-border text-xs text-secondary leading-relaxed">
             Trainers can request an advance against their upcoming monthly retainer and personal training commissions. Advances are automatically adjusted against the next settlement cycle.
           </div>
 
@@ -151,7 +151,7 @@ export default function TrainerEarningsOverviewAndLedgerAdvanceModal({
           {statusMessage && (
             <div
               className={`p-3 rounded-lg flex items-center gap-2 text-xs font-medium ${
-                statusMessage.type === 'success' ? 'bg-success/15 text-success border border-success/30' : 'bg-danger/15 text-danger border border-danger/30'
+                statusMessage.type === 'success' ? 'bg-success-bg text-success border border-success' : 'bg-danger-bg text-danger border border-danger'
               }`}
             >
               {statusMessage.type === 'success' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}

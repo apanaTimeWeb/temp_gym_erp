@@ -29,7 +29,7 @@ export default function AdminMembersDomainLayout({ children }: { children: React
             >
               <span>{t(item.labelKey)}</span>
               {'badge' in item && item.badge && (
-                <span className="px-1.5 py-0.5 text-xs font-bold rounded-full bg-danger-bg text-danger-text border border-danger-border">
+                <span className="px-1.5 py-0.5 text-xs font-bold rounded-full bg-danger-bg text-danger-text border border-danger/30">
                   {item.badge}
                 </span>
               )}

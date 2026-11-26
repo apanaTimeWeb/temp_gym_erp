@@ -34,7 +34,7 @@ export default function AdminBillingUsageAnalyticsPlanCard({ planTiers, onReques
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        {planTiers.map((plan: AdminUsagePlanTier , __testIdIndex34) => {
+        {planTiers.map((plan: AdminUsagePlanTier, __testIdIndex34) => {
           const isPending = pendingUpgradePlan === plan.name;
           return (
             <div key={plan.name} className={`rounded-xl border p-4 space-y-3 motion-safe:transition-all motion-safe:duration-base ${plan.isCurrent ? 'border-focus bg-primary-subtle' : 'border-border bg-input hover:border-focus'}`}>
@@ -46,7 +46,7 @@ export default function AdminBillingUsageAnalyticsPlanCard({ planTiers, onReques
               <ul className="space-y-1.5">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-center gap-2 text-xs text-secondary">
-                    <Check size={18} className="text-success flex-shrink-0"  strokeWidth={2}/>
+                    <Check size={18} className="text-success flex-shrink-0" strokeWidth={2} />
                     {t(feature)}
                   </li>
                 ))}
@@ -56,9 +56,9 @@ export default function AdminBillingUsageAnalyticsPlanCard({ planTiers, onReques
                   type="button"
                   onClick={() => void onRequestUpgrade(plan.name)}
                   disabled={pendingUpgradePlan !== null}
-                  className="w-full min-h-11 py-2 rounded-lg text-xs font-bold border border-focus text-primary hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-base motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-60 disabled:cursor-not-allowed focus-visible:ring-offset-2 focus-visible:ring-offset-page ease-in-out min-w-11"
-                 data-testid={`admin_usage-admin_usage-plan-card-click-map34-${__testIdIndex34}-1`}>
-                  {isPending ? <span className="inline-flex items-center justify-center gap-2"><Loader2 size={18} className="motion-safe:animate-spin"  strokeWidth={2}/> {t('usage.admin_usage_plan_card.text_cf765512cc')}</span> : plan.price === 0 ? t('usage.admin_usage_plan_card.auto_0757510097') : t('usage.admin_usage_plan_card.auto_94fe6d906b')}
+                  className="w-full min-h-11 py-2 rounded-lg text-xs font-bold border border-focus text-primary hover:bg-surface-hover motion-safe:transition-all motion-safe:duration-base motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-60 disabled:cursor-not-allowed focus-visible:ring-offset-2 focus-visible:ring-offset-page ease-in-out min-w-11"
+                  data-testid={`admin_usage-admin_usage-plan-card-click-map34-${__testIdIndex34}-1`}>
+                  {isPending ? <span className="inline-flex items-center justify-center gap-2"><Loader2 size={18} className="motion-safe:animate-spin" strokeWidth={2} /> {t('usage.admin_usage_plan_card.text_cf765512cc')}</span> : plan.price === 0 ? t('usage.admin_usage_plan_card.auto_0757510097') : t('usage.admin_usage_plan_card.auto_94fe6d906b')}
                 </button>
               )}
             </div>

@@ -79,7 +79,7 @@ export function TrainerMembersDirectoryAndProfileGoalMilestoneTracker({
     <div className="bg-card border border-border rounded-xl p-5 space-y-4" data-testid="trainer_members-goal-milestone-tracker">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-border">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+          <div className="w-9 h-9 rounded-xl bg-primary-subtle text-primary flex items-center justify-center">
             <Target size={20} />
           </div>
           <div>

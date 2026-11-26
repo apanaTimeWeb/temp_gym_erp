@@ -51,7 +51,7 @@ export default function AdminHrManagementStaffProfileModal() {
   if (!showProfileModal || !editData) return null;
 
   return (
-    <div data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-hr-staff-profile-title" tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay backdrop-blur-sm overflow-y-auto" data-testid="admin_hr-admin_hr-staff-profile-modal-control">
+    <div data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-hr-staff-profile-title" tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay-backdrop backdrop-blur-sm overflow-y-auto" data-testid="admin_hr-admin_hr-staff-profile-modal-control">
       <div className="my-auto bg-overlay w-full max-w-md rounded-2xl shadow-dialog border border-border overflow-hidden flex flex-col max-h-dialog-desktop">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-input shrink-0">
@@ -240,7 +240,7 @@ export default function AdminHrManagementStaffProfileModal() {
                       
                       return (
                         <tr key={bId} className="hover:bg-surface-hover transition-colors group">
-                          <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-medium text-primary">
+                          <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-e border-border px-4 py-3 text-sm font-medium text-primary">
                             <div className="flex items-center gap-1.5">
                               <span>{info.name}</span>
                               <CopyButton text={info.name} label={info.name} />

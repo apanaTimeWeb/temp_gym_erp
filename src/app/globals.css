@@ -168,6 +168,7 @@
   --color-input: var(--bg-input);
   --color-floating: var(--bg-floating);
   --color-overlay: var(--bg-overlay);
+  --color-overlay-backdrop: var(--overlay-backdrop);
   --color-popover: var(--bg-popover);
   --color-surface-hover: var(--surface-hover);
   --color-surface-highlight: var(--surface-highlight);

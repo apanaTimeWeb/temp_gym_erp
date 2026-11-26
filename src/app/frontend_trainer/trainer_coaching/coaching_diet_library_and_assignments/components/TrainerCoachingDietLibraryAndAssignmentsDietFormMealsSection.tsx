@@ -53,14 +53,14 @@ export function TrainerCoachingDietLibraryAndAssignmentsDietFormMealsSection({
           return (
             <div
               key={field.id}
-              className="p-3.5 bg-input/20 border border-border rounded-xl space-y-2.5"
+              className="p-3.5 bg-input border border-border rounded-xl space-y-2.5"
             >
               <div className="flex items-center justify-between gap-2">
                 <span className="w-5 h-5 rounded-full bg-primary-subtle text-primary text-xs font-bold flex items-center justify-center shrink-0">
                   {index + 1}
                 </span>
                 {isCoreMeal ? (
-                  <div className="flex-1 px-3 py-1.5 bg-card border border-border/80 rounded-lg text-sm font-bold text-primary flex items-center justify-between">
+                  <div className="flex-1 px-3 py-1.5 bg-card border border-border rounded-lg text-sm font-bold text-primary flex items-center justify-between">
                     <span>{currentName}</span>
                     <span className="text-2xs text-secondary px-2 py-0.5 rounded-full bg-input border border-border flex items-center gap-1 font-medium">
                       <Lock size={10} className="text-secondary" /> Core Meal
@@ -100,7 +100,7 @@ export function TrainerCoachingDietLibraryAndAssignmentsDietFormMealsSection({
               <input
                 {...register(`meals.${index}.description` as const)}
                 placeholder="Prep notes or guidance (optional)"
-                className="w-full px-2.5 py-1 bg-input/50 border border-border rounded-lg text-2xs text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                className="w-full px-2.5 py-1 bg-input border border-border rounded-lg text-2xs text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
               />
             </div>
           );

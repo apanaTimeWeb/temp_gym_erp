@@ -82,7 +82,7 @@ export default function SuperadminPlatformConfigurationWhiteLabelingSettingsDraw
 
   return (
     <>
-      <div className="fixed inset-0 z-40 bg-overlay backdrop-blur-sm motion-safe:transition-opacity" onClick={() => setSelectedDomainId(null)} aria-hidden="true"  data-testid="superadmin_platform_configuration_white_labeling-superadminwhitelabelingdrawer-interaction-layer-1"/>
+      <div className="fixed inset-0 z-40 bg-overlay-backdrop backdrop-blur-sm motion-safe:transition-opacity" onClick={() => setSelectedDomainId(null)} aria-hidden="true"  data-testid="superadmin_platform_configuration_white_labeling-superadminwhitelabelingdrawer-interaction-layer-1"/>
       <aside id="superadmin-white-labeling-drawer" className="fixed inset-y-0 end-0 z-40 flex w-full max-w-md flex-col border-s border-border bg-overlay shadow-dialog motion-safe:transition-transform motion-safe:duration-slow" aria-labelledby="superadmin-white-labeling-drawer-title" aria-modal="true" role="dialog" data-testid="superadmin_platform_configuration_white_labeling-drawer-dialog">
         <div className="flex shrink-0 items-center justify-between border-b border-border p-6">
           <div className="min-w-0"><h2 id="superadmin-white-labeling-drawer-title" className="text-xl font-bold text-primary">{t('ui.manage_domain_c24cb688')}</h2><p className="mt-1 truncate text-sm text-secondary" title={domain.gymName}>{domain.gymName}</p></div>

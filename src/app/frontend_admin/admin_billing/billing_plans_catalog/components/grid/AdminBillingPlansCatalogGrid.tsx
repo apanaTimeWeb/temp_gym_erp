@@ -75,7 +75,7 @@ export default function AdminBillingPlansCatalogGrid({ logic }: AdminPlansGridPr
                 <div className="flex gap-1">
                   <button type="button"
                     onClick={() => openEdit(p)}
-                    className="min-h-11 min-w-11 p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page ease-in-out motion-safe:active:scale-95"
+                    className="min-h-11 min-w-11 p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-hover motion-safe:transition-all motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page ease-in-out motion-safe:active:scale-95"
                     title={t('plans.admin_plans_grid.text_13a7a7c3a7')}
                     aria-label={t('admin_plans_grid.auto_edit', { name: p.name })}
                    data-testid={`admin_plans-admin_plans-grid-click-map61-${i}-2`}>

@@ -1,6 +1,6 @@
 // RESPONSIBILITY: Renders the Schedule PT Session dialog with React Hook Form + Zod validation; mutation remains in module-owned hooks.
 'use client';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { X, Calendar, Clock, MapPin, FileText, Loader2, Dumbbell } from 'lucide-react';
@@ -27,6 +27,8 @@ export default function ManagerPtAssignmentsScheduleSessionModal({ open, assignm
     register,
     handleSubmit,
     reset,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<ManagerPtScheduleSessionFormValues>({
     resolver: zodResolver(managerPtScheduleSessionSchema),
@@ -39,6 +41,13 @@ export default function ManagerPtAssignmentsScheduleSessionModal({ open, assignm
       trainerNotes: '',
     },
   });
+
+  const currentAssignmentId = watch('assignmentId');
+  useEffect(() => {
+    if (open && !currentAssignmentId && activeAssignments[0]?.id) {
+      setValue('assignmentId', activeAssignments[0].id);
+    }
+  }, [open, currentAssignmentId, activeAssignments, setValue]);
 
   if (!open) return null;
 
@@ -90,11 +99,17 @@ export default function ManagerPtAssignmentsScheduleSessionModal({ open, assignm
               data-testid="manager_pt-schedule-select-assignment"
               className="w-full rounded-lg border border-border bg-input px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
             >
-              {activeAssignments.map((a) => (
-                <option key={a.id} value={a.id}>
-                  {a.memberName} — Trainer: {a.trainerName} ({a.completedSessions}/{a.totalSessions} done)
+              {activeAssignments.length === 0 ? (
+                <option value="" disabled>
+                  No active PT assignments available
                 </option>
-              ))}
+              ) : (
+                activeAssignments.map((a) => (
+                  <option key={a.id} value={a.id}>
+                    {a.memberName} — Trainer: {a.trainerName} ({a.completedSessions}/{a.totalSessions} done)
+                  </option>
+                ))
+              )}
             </select>
             {errors.assignmentId && <p className="mt-1 text-xs text-danger-text">{errors.assignmentId.message}</p>}
           </div>

@@ -61,7 +61,7 @@ export function TrainerCoachingSessionsLiveWorkoutExerciseCard({
             {exercise.sets.map((set) => (
               <tr
                 key={set.id}
-                className={`transition-colors ${set.completed ? 'bg-success-bg/30 text-primary font-medium' : 'text-primary'}`}
+                className={`transition-colors ${set.completed ? 'bg-success-bg text-primary font-medium' : 'text-primary'}`}
               >
                 <td className="py-2 px-2 text-center font-bold text-secondary">
                   {set.setNumber}

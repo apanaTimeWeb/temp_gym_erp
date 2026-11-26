@@ -35,7 +35,7 @@ export function TrainerOperationsLeaveRequestsLeaveFilterBar({
   const t = useTranslations('TRAINER_SCHEDULE');
 
   return (
-    <div className="p-4 border-b border-border/80 bg-surface-highlight/30 flex flex-wrap items-center justify-between gap-3">
+    <div className="p-4 border-b border-border bg-surface-highlight flex flex-wrap items-center justify-between gap-3">
       {/* Status Filter Tabs */}
       <div className="flex items-center gap-1.5 flex-wrap">
         <button

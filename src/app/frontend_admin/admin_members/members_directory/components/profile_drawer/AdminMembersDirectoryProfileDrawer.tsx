@@ -48,7 +48,7 @@ export default function AdminMembersDirectoryProfileDrawer({ member, status, err
 
   return (
     <>
-      <div aria-hidden="true" className="fixed inset-0 bg-overlay backdrop-blur-sm z-40" onClick={onClose}  data-testid="admin_members-admin_members-profile-drawer-control"/>
+      <div aria-hidden="true" className="fixed inset-0 bg-overlay-backdrop backdrop-blur-sm z-40" onClick={onClose}  data-testid="admin_members-admin_members-profile-drawer-control"/>
       <div ref={dialogRef} data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-members-profile-drawer-title" tabIndex={-1} className="fixed right-0 top-0 h-full w-full max-w-md bg-overlay border-l border-border z-40 flex flex-col shadow-dialog" data-testid="admin_members-admin_members-profile-drawer-control-2">
         <div className="shrink-0 flex items-center justify-between p-5 border-b border-border">
           <h2 id="admin-members-profile-drawer-title" className="font-bold text-primary text-lg">{t('members.admin_members_profile_drawer.text_75caff26c6')}</h2>
@@ -93,7 +93,7 @@ export default function AdminMembersDirectoryProfileDrawer({ member, status, err
                   </span>
                 )}
                 {member.bloodGroup && (
-                  <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-danger-bg text-danger border border-danger">
+                  <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-danger-bg text-danger border border-danger/30">
                     🩸 {member.bloodGroup}
                   </span>
                 )}

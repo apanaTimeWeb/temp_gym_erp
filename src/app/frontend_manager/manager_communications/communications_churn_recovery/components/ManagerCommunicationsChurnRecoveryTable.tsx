@@ -42,7 +42,7 @@ export default function ManagerCommunicationsCampaignsChurnRecoveryTable({
   return (
     <div className="bg-card border border-border rounded-2xl shadow-card overflow-hidden">
       {/* Controls */}
-      <div className="p-4 border-b border-border bg-surface-highlight/30 flex flex-wrap items-center justify-between gap-3">
+      <div className="p-4 border-b border-border bg-surface-highlight flex flex-wrap items-center justify-between gap-3">
         {/* Search */}
         <div className="relative min-w-[240px] sm:w-72">
           <Search size={18} strokeWidth={2} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary pointer-events-none"/>

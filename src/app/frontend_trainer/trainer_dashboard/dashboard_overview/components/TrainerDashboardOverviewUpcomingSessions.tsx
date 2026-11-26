@@ -36,7 +36,7 @@ export default function TrainerDashboardUpcomingSessions() {
     <div className="bg-card border border-border rounded-2xl p-5 shadow-card xl:col-span-2">
       <div className="flex items-center justify-between mb-5">
         <h3 className="font-bold text-primary text-lg flex items-center gap-2">
-          <Calendar className="text-primary" size={18}  strokeWidth={2}/>
+          <Calendar className="text-primary" size={18} strokeWidth={2} />
           {t("TEXT_UPCOMING_SESSIONS")}</h3>
         <Link href={TRAINER_DASHBOARD_URLS.ROUTES.SCHEDULE} className="motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page text-sm text-primary font-medium hover:underline" data-testid="trainer_dashboard-dashboard-upcoming_sessions_view">{t("TEXT_VIEW_SCHEDULE")}</Link>
       </div>
@@ -52,12 +52,14 @@ export default function TrainerDashboardUpcomingSessions() {
                   {session.name.charAt(0)}
                 </div>
                 <div>
-                  <p className="font-medium text-primary text-sm">{session.name}</p>
+                  <Link href={`${TRAINER_DASHBOARD_URLS.ROUTES.MEMBERS}?search=${encodeURIComponent(session.name)}`} className="font-medium text-primary text-sm hover:underline">
+                    {session.name}
+                  </Link>
                   <p className="text-xs text-secondary">{session.type}</p>
                 </div>
               </div>
               <div className="flex items-center gap-1.5 text-sm font-medium text-primary bg-input px-3 py-1.5 rounded-lg">
-                <Clock size={18} className="text-secondary"  strokeWidth={2}/>
+                <Clock size={18} className="text-secondary" strokeWidth={2} />
                 {session.time}
               </div>
             </div>

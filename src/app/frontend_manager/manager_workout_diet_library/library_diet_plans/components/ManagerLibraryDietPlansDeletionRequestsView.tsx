@@ -44,8 +44,8 @@ export default function ManagerLibraryDietPlansDeletionRequestsView() {
         <div>
           <h2 className="text-base font-bold text-text-primary flex items-center gap-2">
             <span>Trainer Deletion Requests</span>
-            <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-warning-bg text-warning-text border border-warning/40">
-              {pendingDeletions.length} {pendingDeletions.length === 1 ? 'Pending' : 'Pending'}
+            <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-warning-bg text-warning-text border border-warning">
+              {pendingDeletions.length} Pending
             </span>
           </h2>
           <p className="text-xs text-text-secondary mt-0.5">
@@ -59,7 +59,7 @@ export default function ManagerLibraryDietPlansDeletionRequestsView() {
           <article
             key={diet.id}
             data-testid={`manager-diet-deletion-request-${diet.id}`}
-            className="rounded-xl border border-warning/40 bg-card p-5 shadow-sm space-y-4 flex flex-col justify-between"
+            className="rounded-xl border border-warning bg-card p-5 shadow-sm space-y-4 flex flex-col justify-between"
           >
             <div>
               <div className="flex items-start justify-between gap-3 mb-2">
@@ -67,13 +67,13 @@ export default function ManagerLibraryDietPlansDeletionRequestsView() {
                   <h3 className="font-bold text-sm text-text-primary">{diet.name}</h3>
                   <p className="text-xs text-text-secondary">{diet.goal} · {diet.createdBy || 'Trainer Request'}</p>
                 </div>
-                <span className="px-2 py-0.5 text-2xs font-semibold rounded-md bg-warning-bg text-warning-text border border-warning/30">
+                <span className="px-2 py-0.5 text-2xs font-semibold rounded-md bg-warning-bg text-warning-text border border-warning">
                   Approval Needed
                 </span>
               </div>
 
               {/* Deletion Reason Banner */}
-              <div className="p-3 bg-warning-bg/60 border border-warning/30 rounded-lg flex items-start gap-2 text-xs text-warning-text mb-3">
+              <div className="p-3 bg-warning-bg border border-warning rounded-lg flex items-start gap-2 text-xs text-warning-text mb-3">
                 <AlertCircle size={15} className="shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold">Trainer Reason:</span>{' '}
@@ -116,7 +116,7 @@ export default function ManagerLibraryDietPlansDeletionRequestsView() {
                 type="button"
                 disabled={saving}
                 onClick={() => void approveDeletion(diet.id)}
-                className="min-h-10 px-3.5 py-1.5 bg-danger-bg text-danger-text border border-danger/40 hover:bg-danger/20 rounded-lg text-xs font-semibold flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger"
+                className="min-h-10 px-3.5 py-1.5 bg-danger-bg text-danger-text border border-danger hover:bg-danger hover:text-on-danger rounded-lg text-xs font-semibold flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger"
                 data-testid={`manager-approve-deletion-${diet.id}`}
               >
                 <Trash2 size={14} /> Approve Deletion

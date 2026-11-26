@@ -24,7 +24,7 @@ export function TrainerCoachingSessionsLiveWorkoutHeader({
   return (
     <div className="p-5 border-b border-border bg-floating flex flex-col sm:flex-row sm:items-center justify-between gap-4">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+        <div className="w-10 h-10 rounded-xl bg-primary-subtle text-primary flex items-center justify-center shrink-0">
           <Dumbbell size={22} strokeWidth={2} />
         </div>
         <div>

@@ -27,7 +27,7 @@ export default function ManagerSupportTicketsToolbar({
   return (
     <div className="space-y-4" data-testid="manager_support-toolbar">
       {/* Top Banner with Direct Admin Hotline */}
-      <div className="p-4 rounded-xl bg-primary-subtle border border-primary/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="p-4 rounded-xl bg-primary-subtle border border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <div className="p-2 rounded-lg bg-primary text-on-primary">
             <LifeBuoy size={20} strokeWidth={2} aria-hidden="true" />
@@ -40,7 +40,7 @@ export default function ManagerSupportTicketsToolbar({
         <div className="flex items-center gap-2">
           <a
             href="tel:+919876500000"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-primary/30 bg-card text-xs font-semibold text-primary hover:bg-primary hover:text-on-primary transition-all"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-primary bg-card text-xs font-semibold text-primary hover:bg-primary hover:text-on-primary transition-all"
           >
             <PhoneCall size={14} aria-hidden="true" />
             Admin Hotline

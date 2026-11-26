@@ -1,5 +1,6 @@
 // RESPONSIBILITY: Renders the Defaulters List / Overdue Dues Register for Manager Finance.
 'use client';
+import Link from 'next/link';
 import { AlertTriangle, MessageCircle, Banknote, Calendar } from 'lucide-react';
 import { useLocale } from 'next-intl';
 
@@ -72,6 +73,7 @@ export default function ManagerFinancePaymentsAndSummaryDefaultersList() {
   const locale = useLocale();
   const formatCurrency = (val: number) => ManagerFinancePaymentsAndSummaryFormatCurrency(val, ManagerEnvConfig.currencyCode, locale);
   const setShowModal = useManagerFinancePaymentsAndSummaryUiStore((s) => s.setShowModal);
+  const setPaymentPrefill = useManagerFinancePaymentsAndSummaryUiStore((s) => s.setPaymentPrefill);
 
   const totalOverdue = DEFAULT_DEFAULTERS.reduce((sum, d) => sum + d.dueAmount, 0);
   const TABLE_HEADERS = ['Member Name & Phone', 'Membership Plan', 'Overdue Amount', 'Due Date', 'Days Overdue', 'Actions'];
@@ -80,7 +82,8 @@ export default function ManagerFinancePaymentsAndSummaryDefaultersList() {
     const text = encodeURIComponent(
       `Hello ${def.memberName}, this is a gentle reminder from Smart Gym regarding your pending balance of ${formatCurrency(def.dueAmount)} for ${def.planName}. Kindly clear your dues at the earliest.`
     );
-    window.open(`https://wa.me/91${def.memberPhone}?text=${text}`, '_blank');
+    const popup = window.open(`https://wa.me/91${def.memberPhone}?text=${text}`, '_blank', 'noopener,noreferrer');
+    if (popup) popup.opener = null;
   };
 
   return (
@@ -125,11 +128,13 @@ export default function ManagerFinancePaymentsAndSummaryDefaultersList() {
                 </tr>
               ) : (
                 DEFAULT_DEFAULTERS.map((d) => (
-                  <tr key={d.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                  <tr key={d.id} className="hover:bg-surface-hover transition-colors group">
                     <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-3.5 whitespace-nowrap">
                       <div className="flex items-center gap-2">
                         <div>
-                          <p className="text-sm font-semibold text-text-primary">{d.memberName}</p>
+                          <Link href={`/frontend_manager/manager_members/members_directory?search=${encodeURIComponent(d.memberName)}`} className="text-sm font-semibold text-text-primary hover:text-primary hover:underline">
+                            {d.memberName}
+                          </Link>
                           <p className="text-xs font-mono text-text-secondary">+91 {d.memberPhone}</p>
                         </div>
                         <CopyButton value={d.memberPhone} />
@@ -157,7 +162,15 @@ export default function ManagerFinancePaymentsAndSummaryDefaultersList() {
                         </button>
                         <button
                           type="button"
-                          onClick={() => setShowModal(true)}
+                          onClick={() => {
+                            setPaymentPrefill({
+                              memberId: d.memberId,
+                              amount: d.dueAmount,
+                              paymentType: 'DUE_SETTLEMENT',
+                              notes: `Overdue dues settlement for ${d.memberName} (${d.planName})`,
+                            });
+                            setShowModal(true);
+                          }}
                           title="Collect Due Payment"
                           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-on-primary text-xs font-semibold hover:brightness-110 active:scale-95 transition-all"
                         >

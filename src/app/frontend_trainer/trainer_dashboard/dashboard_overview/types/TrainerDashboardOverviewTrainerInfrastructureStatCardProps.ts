@@ -12,4 +12,5 @@ export interface TrainerInfrastructureStatCardProps {
   icon: LucideIcon;
   iconBg: string;
   iconColor: string;
+  href?: string;
 }

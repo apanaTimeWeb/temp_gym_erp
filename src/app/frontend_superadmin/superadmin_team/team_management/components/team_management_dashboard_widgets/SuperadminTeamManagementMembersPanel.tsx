@@ -67,7 +67,7 @@ export default function SuperadminTeamManagementMembersPanel({ data }: Superadmi
               </tr>
             ) : (
               data.users.map((user) => (
-                <tr key={user.id} className="hover:bg-primary-subtle motion-safe:transition-colors group">
+                <tr key={user.id} className="hover:bg-surface-hover motion-safe:transition-colors group">
                   <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-e border-border px-4 py-3 transition-colors">
                     <Tooltip content={user.name}>
                       <div className="max-w-56 truncate font-medium text-primary">

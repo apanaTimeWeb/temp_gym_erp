@@ -88,7 +88,7 @@ export default function AdminNavigationLayoutSidebar({ isCollapsed, setIsCollaps
     <>
       {isMobileOpen && (
         <div
-          className="fixed inset-0 bg-overlay backdrop-blur-sm z-30 md:hidden motion-safe:transition-opacity motion-safe:duration-base"
+          className="fixed inset-0 bg-overlay-backdrop backdrop-blur-sm z-30 md:hidden motion-safe:transition-opacity motion-safe:duration-base"
           onClick={() => setIsMobileOpen(false)}
           data-testid="admin_navigation-admin-sidebar-click"
         />

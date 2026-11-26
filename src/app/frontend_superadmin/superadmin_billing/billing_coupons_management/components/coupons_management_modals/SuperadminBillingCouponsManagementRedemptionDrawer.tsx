@@ -42,7 +42,7 @@ export default function SuperadminBillingCouponsManagementRedemptionDrawer({ cou
   const totalDiscount = redemptions.reduce((sum, redemption) => sum + redemption.discountApplied, 0);
   return (
     <>
-      <div className="fixed inset-0 z-30 bg-overlay backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in" onClick={onClose} aria-hidden="true"  data-testid="superadmin_coupons-superadmincouponsredemptiondrawer-interaction-layer-1" />
+      <div className="fixed inset-0 z-30 bg-overlay-backdrop backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in" onClick={onClose} aria-hidden="true"  data-testid="superadmin_coupons-superadmincouponsredemptiondrawer-interaction-layer-1" />
       <div ref={drawerRef} tabIndex={-1} role="dialog" aria-modal="true" aria-label={t('ui.redemption_history_aria', { code: coupon.code })} className="fixed end-0 top-0 z-40 flex h-full w-full max-w-md flex-col border-s border-border bg-card shadow-popover" data-testid="superadmin_coupons-redemption-drawer-dialog">
         <div className="flex shrink-0 items-center justify-between border-b border-border p-6">
           <div>

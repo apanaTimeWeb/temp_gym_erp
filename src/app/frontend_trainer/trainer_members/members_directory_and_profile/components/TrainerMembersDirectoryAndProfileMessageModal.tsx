@@ -180,7 +180,7 @@ export default function TrainerMembersMessageModal({
   };
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay backdrop-blur-sm overflow-y-auto " role="presentation">
+    <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay-backdrop backdrop-blur-sm overflow-y-auto " role="presentation">
       <div
         ref={dialogRef}
         tabIndex={-1}

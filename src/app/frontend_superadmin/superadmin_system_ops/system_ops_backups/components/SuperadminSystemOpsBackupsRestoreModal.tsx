@@ -36,7 +36,7 @@ export default function SuperadminSystemOpsBackupsRestoreModal({ isOpen, onClose
     }
   };
 
-  return (<div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="superadmin-backups-restore-title" data-testid="superadmin_system_ops_backups-superadmin-system-ops-backups-restore-modal-backups-restore-modal-dialog" ref={dialogRef}>
+  return (<div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay-backdrop p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="superadmin-backups-restore-title" data-testid="superadmin_system_ops_backups-superadmin-system-ops-backups-restore-modal-backups-restore-modal-dialog" ref={dialogRef}>
     <div className="my-auto flex max-h-dialog-desktop w-full max-w-md flex-col overflow-hidden rounded-xl border border-border bg-overlay shadow-dialog motion-safe:animate-in motion-safe:fade-in">
       <div className="flex min-h-0 flex-1 flex-col p-6">
         <div className="shrink-0 mb-4 flex size-12 items-center justify-center rounded-full bg-danger-bg text-danger" aria-hidden="true"><RotateCcw size={18} strokeWidth={2}/></div>

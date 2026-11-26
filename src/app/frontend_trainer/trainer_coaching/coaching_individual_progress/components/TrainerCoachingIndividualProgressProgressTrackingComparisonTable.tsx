@@ -81,10 +81,10 @@ export default function TrainerProgressTrackingComparisonTable({ snapshots }: Tr
                 return (
                   <tr
                     key={snapshot.memberId}
-                    className="hover:bg-surface-highlight/50 transition-colors group"
+                    className="hover:bg-surface-hover transition-colors group"
                     data-testid="trainer_progress_tracking-TrainerProgressTrackingComparisonTable-row-2"
                   >
-                    <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 font-medium text-primary whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
+                    <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 font-medium text-primary whitespace-nowrap group-hover:bg-surface-hover transition-colors">
                       <div className="flex items-center gap-2">
                         <div className="w-7 h-7 rounded-full bg-primary-subtle flex items-center justify-center text-primary text-xs font-bold shrink-0" aria-hidden="true">
                           {snapshot.memberName.charAt(0)}
@@ -119,7 +119,7 @@ export default function TrainerProgressTrackingComparisonTable({ snapshots }: Tr
           <div className="mt-4 grid grid-cols-2 gap-3 text-sm"><p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_WEIGHT_KG')}</span><span className="text-primary">{snapshot.latestWeightKg == null ? '—' : TrainerProgressTrackingFormatNumber(snapshot.latestWeightKg, locale)}</span></p><p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_BMI')}</span><span className="text-primary">{snapshot.latestBmi == null ? '—' : TrainerProgressTrackingFormatNumber(snapshot.latestBmi, locale)}</span></p><p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_BODY_FAT_PERCENT')}</span><span className="text-primary">{snapshot.latestBodyFatPercent == null ? '—' : `${TrainerProgressTrackingFormatNumber(snapshot.latestBodyFatPercent, locale)}%`}</span></p><p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_MUSCLE_MASS_KG')}</span><span className="text-primary">{snapshot.latestMuscleMassKg == null ? '—' : TrainerProgressTrackingFormatNumber(snapshot.latestMuscleMassKg, locale)}</span></p><div><span className="block text-xs font-semibold text-secondary uppercase mb-1">{t('TEXT_DELTA_WEIGHT')}</span><TrainerProgressTrackingComparisonDelta value={snapshot.weightChangeKg} lowerIsBetter={true} /></div><div><span className="block text-xs font-semibold text-secondary uppercase mb-1">{t('TEXT_DELTA_MUSCLE')}</span><TrainerProgressTrackingComparisonDelta value={snapshot.muscleMassChange} lowerIsBetter={false} /></div><p className="col-span-2"><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_ENTRIES')}</span><span className="text-primary">{TrainerProgressTrackingFormatNumber(snapshot.totalEntries, locale)}</span></p></div>
         </article>; })}
       </div>
-      <div className="border-t border-border px-4 py-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between bg-card/60 text-xs text-secondary">
+      <div className="border-t border-border px-4 py-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between bg-card text-xs text-secondary">
         <p>
           Showing <span className="font-semibold text-primary">{snapshots.length}</span> member comparison records
         </p>

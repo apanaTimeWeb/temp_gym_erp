@@ -206,7 +206,7 @@ export default function TrainerLibraryDietFormModal({
               <Zap size={15} className="text-warning" />
               Daily Nutritional Targets
             </p>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-input/40 p-3.5 rounded-xl border border-border">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-input p-3.5 rounded-xl border border-border">
               <div>
                 <label htmlFor="macro-calories" className="block text-xs text-secondary mb-1">
                   Calories (kcal) *

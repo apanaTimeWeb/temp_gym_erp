@@ -84,7 +84,7 @@ export default function ManagerPayrollAndLedgerLedgerTable() {
                   <th className="p-4 font-medium text-text-secondary">{t("COPY_NOTES_1")}</th>
                   <th className="p-4 font-medium text-text-secondary text-right">{t("COPY_CREDIT")}</th>
                   <th className="p-4 font-medium text-text-secondary text-right">{t("COPY_DEBIT")}</th>
-                  <th className="p-4 font-medium text-text-secondary text-right bg-primary-subtle/50">{t("COPY_BALANCE")}</th>
+                  <th className="p-4 font-medium text-text-secondary text-right bg-primary-subtle">{t("COPY_BALANCE")}</th>
                 </tr>
               </thead>
               <tbody className="text-sm divide-y divide-border">
@@ -112,8 +112,8 @@ export default function ManagerPayrollAndLedgerLedgerTable() {
                   }
                   return (
                     ledger.map(l => (
-                      <tr key={l.id} className="hover:bg-surface-highlight/50 transition-colors group">
-                        <td className="sticky start-0 z-10 bg-card border-e border-border p-4 text-text-primary whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
+                      <tr key={l.id} className="hover:bg-surface-hover transition-colors group">
+                        <td className="sticky start-0 z-10 bg-card border-e border-border p-4 text-text-primary whitespace-nowrap group-hover:bg-surface-hover transition-colors">
                           <div className="flex items-center gap-2">
                             <span>{ManagerStaffPayrollAndAttendanceFormatDate(l.date)}</span>
                             <CopyButton value={ManagerStaffPayrollAndAttendanceFormatDate(l.date)} />
@@ -128,7 +128,7 @@ export default function ManagerPayrollAndLedgerLedgerTable() {
                         <td className="p-4 text-text-secondary max-w-50 truncate" title={ManagerStaffPayrollAndAttendanceDisplayValue(l.notes)}>{ManagerStaffPayrollAndAttendanceDisplayValue(l.notes)}</td>
                         <td className="p-4 text-right text-success-text font-medium">{l.credit > 0 ? `+${ManagerStaffPayrollAndAttendanceFormatCurrency(l.credit, ManagerEnvConfig.currencyCode, locale)}` : '—'}</td>
                         <td className="p-4 text-right text-danger-text font-medium">{l.debit > 0 ? `-${ManagerStaffPayrollAndAttendanceFormatCurrency(l.debit, ManagerEnvConfig.currencyCode, locale)}` : '—'}</td>
-                        <td className="p-4 text-right font-bold text-primary bg-primary-subtle/30">{ManagerStaffPayrollAndAttendanceFormatCurrency(l.balance, ManagerEnvConfig.currencyCode, locale)}</td>
+                        <td className="p-4 text-right font-bold text-primary bg-primary-subtle">{ManagerStaffPayrollAndAttendanceFormatCurrency(l.balance, ManagerEnvConfig.currencyCode, locale)}</td>
                       </tr>
                     ))
                   );

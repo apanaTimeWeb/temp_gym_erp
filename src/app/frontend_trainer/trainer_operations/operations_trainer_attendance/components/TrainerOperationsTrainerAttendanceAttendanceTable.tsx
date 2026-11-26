@@ -160,9 +160,9 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
                     aria-expanded={expanded}
                     onClick={() => setExpandedId((current) => current === record.id ? null : record.id)}
                     onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setExpandedId((current) => current === record.id ? null : record.id); } }}
-                    className="cursor-pointer hover:bg-surface-highlight/50 transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus-ring"
+                    className="cursor-pointer hover:bg-surface-hover transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus-ring"
                   >
-                    <td className="sticky start-0 z-10 bg-card border-e border-border cursor-pointer px-4 py-3 whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
+                    <td className="sticky start-0 z-10 bg-card border-e border-border cursor-pointer px-4 py-3 whitespace-nowrap group-hover:bg-surface-hover transition-colors">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-primary-subtle flex items-center justify-center text-primary font-bold text-sm shrink-0" aria-hidden="true">{initial}</div>
                         <div className="min-w-0">

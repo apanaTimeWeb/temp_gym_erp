@@ -84,7 +84,7 @@ export default function AdminNavigationLayoutSidebarNavigation({
                       } ${
                         active
                           ? 'bg-primary-subtle text-primary border-l-2 border-focus'
-                          : 'text-secondary hover:text-primary hover:bg-primary-subtle border-l-2 border-transparent'
+                          : 'text-secondary hover:text-primary hover:bg-surface-hover border-l-2 border-transparent'
                       } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page`}
                     >
                       <Icon

@@ -25,7 +25,7 @@ export function TrainerCoachingSessionsBookingRequests({
   if (bookingRequests.length === 0) return null;
 
   return (
-    <div className="bg-primary/5 border border-primary/20 rounded-2xl p-5 space-y-4">
+    <div className="bg-primary-subtle border border-border rounded-2xl p-5 space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <CalendarCheck className="text-primary" size={20} />
@@ -64,13 +64,13 @@ export function TrainerCoachingSessionsBookingRequests({
                 </span>
               </div>
               {req.notes && (
-                <p className="text-xs text-secondary mt-2.5 bg-input/50 p-2 rounded-lg italic">
+                <p className="text-xs text-secondary mt-2.5 bg-input p-2 rounded-lg italic">
                   &ldquo;{req.notes}&rdquo;
                 </p>
               )}
             </div>
 
-            <div className="flex items-center gap-2 pt-2 border-t border-border/60">
+            <div className="flex items-center gap-2 pt-2 border-t border-border">
               <button
                 type="button"
                 onClick={() => onAccept(req.id)}

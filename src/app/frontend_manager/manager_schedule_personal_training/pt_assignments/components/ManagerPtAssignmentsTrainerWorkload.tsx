@@ -50,7 +50,7 @@ export default function ManagerPtAssignmentsTrainerWorkload({ workload }: Manage
                 </tr>
               ) : (
                 workload.map((trainer) => (
-                  <tr key={trainer.trainerId} className="hover:bg-surface-highlight/50 transition-colors group">
+                  <tr key={trainer.trainerId} className="hover:bg-surface-hover transition-colors group">
                     <td className="sticky start-0 z-10 bg-card border-e border-border py-3 px-4 whitespace-nowrap">
                       <div className="flex items-center gap-2">
                         <div className="w-8 h-8 rounded-full bg-input flex items-center justify-center shrink-0">

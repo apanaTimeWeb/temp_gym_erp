@@ -21,7 +21,7 @@ export default function SuperadminSystemOpsJobsJobInspectModal({ job, onClose }:
   const dialogRef = useSuperadminSystemOpsJobsDialogA11y(true, onClose);
         const statusKey = job.status as keyof typeof SUPERADMIN_JOBS_STATUS_TEXT_COLORS;
 
-  return (<div role="dialog" aria-modal="true" aria-label={t('ui.a11y_inspect_job', { id: job.id })} data-testid="superadmin_system_ops_jobs-superadmin-system-ops-jobs-job-inspect-modal-job-inspect-modal-dialog" ref={dialogRef} className="fixed inset-0 bg-overlay z-40 flex items-center justify-center p-4 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in">
+  return (<div role="dialog" aria-modal="true" aria-label={t('ui.a11y_inspect_job', { id: job.id })} data-testid="superadmin_system_ops_jobs-superadmin-system-ops-jobs-job-inspect-modal-job-inspect-modal-dialog" ref={dialogRef} className="fixed inset-0 bg-overlay-backdrop z-40 flex items-center justify-center p-4 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in">
       <div className="bg-overlay border border-border rounded-xl w-full max-w-2xl shadow-dialog overflow-hidden flex flex-col max-h-screen">
         {/* Modal Header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-border bg-overlay shrink-0">

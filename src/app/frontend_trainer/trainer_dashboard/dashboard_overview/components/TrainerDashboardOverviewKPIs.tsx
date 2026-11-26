@@ -10,6 +10,7 @@ import { useTrainerDashboardQuery } from '@/app/frontend_trainer/trainer_dashboa
 import { TrainerDashboardFormatNumber } from '@/app/frontend_trainer/trainer_dashboard/dashboard_overview/utils/TrainerDashboardOverviewFormatNumber';
 
 import TrainerInfrastructureStatCard from '@/app/frontend_trainer/trainer_dashboard/dashboard_overview/components/TrainerDashboardOverviewTrainerInfrastructureStatCard';
+import { TRAINER_DASHBOARD_URLS } from '@/app/frontend_trainer/trainer_dashboard/dashboard_overview/config/trainer_dashboard_overview.url_config';
 
 
 
@@ -61,6 +62,7 @@ export default function TrainerDashboardKPIs() {
           icon={Clock}
           iconBg="bg-primary-subtle"
           iconColor="text-primary"
+          href="/frontend_trainer/trainer_coaching/coaching_sessions"
         />
         <TrainerInfrastructureStatCard
           title={t("TEXT_MY_MEMBERS")}
@@ -70,6 +72,7 @@ export default function TrainerDashboardKPIs() {
           icon={Users}
           iconBg="bg-info-bg"
           iconColor="text-info"
+          href={TRAINER_DASHBOARD_URLS.ROUTES.MEMBERS}
         />
         <TrainerInfrastructureStatCard
           title={attendanceTitle}
@@ -79,6 +82,7 @@ export default function TrainerDashboardKPIs() {
           icon={CalendarCheck}
           iconBg="bg-success-bg"
           iconColor="text-success"
+          href={TRAINER_DASHBOARD_URLS.ROUTES.ATTENDANCE}
         />
         <TrainerInfrastructureStatCard
           title={t("TEXT_PENDING_PLANS")}
@@ -88,6 +92,7 @@ export default function TrainerDashboardKPIs() {
           icon={Dumbbell}
           iconBg="bg-warning-bg"
           iconColor="text-warning"
+          href={TRAINER_DASHBOARD_URLS.ROUTES.WORKOUT}
         />
       </div>
     </>

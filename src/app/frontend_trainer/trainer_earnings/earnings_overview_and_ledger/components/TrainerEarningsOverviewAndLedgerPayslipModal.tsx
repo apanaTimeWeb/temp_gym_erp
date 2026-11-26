@@ -33,7 +33,7 @@ export default function TrainerEarningsOverviewAndLedgerPayslipModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-4 overflow-y-auto"
       role="dialog"
       aria-modal="true"
       aria-labelledby="payslip-modal-title"
@@ -83,7 +83,7 @@ export default function TrainerEarningsOverviewAndLedgerPayslipModal({
               <p className="text-xs text-secondary">Authorized Remuneration Voucher</p>
             </div>
             <div className="text-right sm:text-end space-y-1">
-              <span className="inline-block px-2.5 py-1 rounded-full text-[11px] font-bold bg-success/15 text-success border border-success/30 uppercase tracking-wider">
+              <span className="inline-block px-2.5 py-1 rounded-full text-[11px] font-bold bg-success-bg text-success border border-success uppercase tracking-wider">
                 {row.status}
               </span>
               <p className="text-xs text-secondary mt-1">Invoice: <strong className="text-primary">{invoiceNo}</strong></p>
@@ -92,7 +92,7 @@ export default function TrainerEarningsOverviewAndLedgerPayslipModal({
           </div>
 
           {/* Trainer & Session Details */}
-          <div className="grid grid-cols-2 gap-4 p-4 rounded-xl bg-input/40 border border-border/80 text-xs">
+          <div className="grid grid-cols-2 gap-4 p-4 rounded-xl bg-input border border-border text-xs">
             <div>
               <p className="text-secondary font-medium">Trainer</p>
               <p className="font-bold text-sm text-primary mt-0.5">Certified Personal Trainer</p>
@@ -117,7 +117,7 @@ export default function TrainerEarningsOverviewAndLedgerPayslipModal({
                 <span>{row.description}</span>
                 <span className="font-semibold text-primary">{TrainerEarningsFormatCurrency(row.amount, row.currency, locale)}</span>
               </div>
-              <div className="flex items-center justify-between p-3 text-xs bg-input/20">
+              <div className="flex items-center justify-between p-3 text-xs bg-input">
                 <span className="text-secondary">Gross Amount</span>
                 <span className="font-semibold text-primary">{TrainerEarningsFormatCurrency(row.amount, row.currency, locale)}</span>
               </div>

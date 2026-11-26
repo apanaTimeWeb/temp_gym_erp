@@ -54,12 +54,12 @@ export default function ManagerReferralsRewardsTable() {
         </div>
         
         <div className="w-full sm:w-48">
-          <ManagerSearchableDropdown dataTestId="manager_referrals-managerreferralstable-managersearchabledropdown-1"
+          <ManagerSearchableDropdown dataTestId="manager_referrals-managerreferralstable-searchable-dropdown-1"
             value={statusFilter}
             onChange={(val) => setStatusFilter(String(val))}
             options={[...MANAGER_REFERRAL_STATUS_OPTIONS]}
             placeholder={t("COPY_FILTER_STATUS")}
-           data-testid="manager_referrals-managerreferralstable-searchable-dropdown-1"/>
+           />
         </div>
       </div>
 
@@ -95,11 +95,17 @@ export default function ManagerReferralsRewardsTable() {
                   const canClaim = ref.status === MANAGER_REFERRAL_STATUS_JOINED && ref.rewardStatus === MANAGER_REFERRAL_REWARD_STATUS_PENDING;
                   
                   return (
-                    <tr key={ref.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                    <tr key={ref.id} className="hover:bg-surface-hover transition-colors group">
                       <td className="sticky start-0 z-10 bg-card border-e border-border px-6 py-4">
                         <div className="flex items-center gap-2">
                           <div>
-                            <p className="font-bold text-text-primary">{ref.referrerName}</p>
+                            <Link
+                              href={`/frontend_manager/manager_members/members_directory?search=${encodeURIComponent(ref.referrerName)}`}
+                              className="font-bold text-text-primary hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring rounded"
+                              title={`View ${ref.referrerName} in Members Directory`}
+                            >
+                              {ref.referrerName}
+                            </Link>
                             <p className="text-xs text-text-secondary">{ref.referrerId}</p>
                           </div>
                           <CopyButton value={ref.referrerName} />
@@ -116,7 +122,7 @@ export default function ManagerReferralsRewardsTable() {
                               href={`https://wa.me/${ref.refereePhone.replace(/\D/g, '')}?text=${encodeURIComponent(`Hi ${ref.refereeName}, greetings from our fitness center! ${ref.referrerName} referred you.`)}`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="p-1 rounded text-text-secondary hover:text-success-text hover:bg-success-bg/20 transition-colors"
+                              className="p-1 rounded text-text-secondary hover:text-success-text hover:bg-success-bg transition-colors"
                               title={`WhatsApp ${ref.refereeName}`}
                               aria-label={`WhatsApp ${ref.refereeName}`}
                             >

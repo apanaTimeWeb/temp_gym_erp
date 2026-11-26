@@ -51,7 +51,7 @@ export default function ManagerCommunicationsCampaignsAutomations() {
       <div className="bg-card border border-border rounded-xl p-5 md:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <h2 className="text-lg font-bold text-text-primary flex items-center gap-2">
-            <Zap size={18} strokeWidth={2} className="text-warning-text fill-warning/20"/>{t("COPY_AUTOMATED_TRIGGERS")}</h2>
+            <Zap size={18} strokeWidth={2} className="text-warning-text fill-warning-bg"/>{t("COPY_AUTOMATED_TRIGGERS")}</h2>
           <p className="text-sm text-text-secondary mt-1">{t("COPY_SET_UP_AUTOMATED_WHATSAPP_MESSAGES_RECURRING_MEMBER_EVENTS_LIKE")}</p>
         </div>
       </div>

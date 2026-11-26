@@ -62,9 +62,9 @@ export default function ManagerStaffDirectoryStaffTableContent({ staff, totalSta
                     <tr
                       data-testid={`manager_hr-hr-managerhrstafftable-row-${s.id}`}
                       key={s.id}
-                      className="hover:bg-surface-highlight/50 transition-colors group"
+                      className="hover:bg-surface-hover transition-colors group"
                     >
-                      <td className="sticky start-0 z-10 bg-card border-e border-border px-3 py-3 whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
+                      <td className="sticky start-0 z-10 bg-card border-e border-border px-3 py-3 whitespace-nowrap group-hover:bg-surface-hover transition-colors">
                         <div className="flex items-center gap-2">
                           <button
                             type="button"

@@ -172,7 +172,7 @@ export default function SuperadminSystemOpsBackupsTable({
                         type="button"
                         aria-label={t('ui.a11y_download_backup', { id: backup.id })}
                         onClick={() => void handleDownload(backup.id)}
-                        className="min-w-11 min-h-11 p-2 text-secondary hover:text-primary hover:bg-primary-subtle rounded-lg motion-safe:transition-colors disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95"
+                        className="min-w-11 min-h-11 p-2 text-secondary hover:text-primary hover:bg-surface-hover rounded-lg motion-safe:transition-colors disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95"
                         title={t('ui.download_pg_dump_bc330ff')}
                         disabled={backup.status !== SUPERADMIN_BACKUPS_STATUS_CODES.SUCCESS}
                         data-testid={`superadmin_system_ops_backups-backups-table-download-${index}`}

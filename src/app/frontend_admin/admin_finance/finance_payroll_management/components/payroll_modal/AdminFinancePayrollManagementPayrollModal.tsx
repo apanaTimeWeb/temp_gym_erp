@@ -31,13 +31,13 @@ export default function AdminFinancePayrollManagementPayrollModal() {
 
 
   return (
-    <div ref={dialogRef} data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-hr-payroll-title" tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay overflow-y-auto" data-testid="admin_hr-admin_hr-payroll-modal-control">
+    <div ref={dialogRef} data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-hr-payroll-title" tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay-backdrop backdrop-blur-sm overflow-y-auto" data-testid="admin_hr-admin_hr-payroll-modal-control">
       <div className="my-auto w-full max-w-md rounded-2xl shadow-dialog flex flex-col max-h-dialog-desktop overflow-hidden bg-overlay border-2 border-border">
         
         <div className="flex items-center justify-between px-8 py-5 border-b border-border shrink-0 bg-overlay">
           <h2 id="admin-hr-payroll-title" className="text-xl font-bold text-primary">
             {t('hr.admin_hr_payroll_modal.text_998b7ddeda')}</h2>
-          <button type="button" onClick={() => void handleClose()} className="p-2 rounded-full hover:bg-primary-subtle motion-safe:transition-colors text-secondary hover:text-primary motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95" data-testid="admin_hr-admin_hr-payroll-modal-click">
+          <button type="button" onClick={() => void handleClose()} className="p-2 rounded-full hover:bg-surface-hover motion-safe:transition-colors text-secondary hover:text-primary motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95" data-testid="admin_hr-admin_hr-payroll-modal-click">
             <X size={18}  strokeWidth={2}/>
           </button>
         </div>

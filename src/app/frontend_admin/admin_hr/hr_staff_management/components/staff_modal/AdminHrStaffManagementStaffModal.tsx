@@ -30,14 +30,14 @@ export default function AdminHrManagementStaffModal() {
 
 
   return (
- <div data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-hr-staff-modal-title" tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay overflow-y-auto" data-testid="admin_hr-admin_hr-staff-modal-control">
+ <div data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-hr-staff-modal-title" tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay-backdrop backdrop-blur-sm overflow-y-auto" data-testid="admin_hr-admin_hr-staff-modal-control">
   <div className="my-auto rounded-2xl shadow-dialog w-full max-w-md max-h-dialog-desktop overflow-y-auto custom-scrollbar bg-overlay motion-safe:transition-all motion-safe:duration-base ease-in-out border-2 border-border">
   <div className="sticky top-0 px-8 py-5 border-b border-border bg-card flex items-center justify-between z-10">
   <h3 id="admin-hr-staff-modal-title" className="text-xl font-bold text-primary">{editId ? t('hr.admin_hr_staff_modal.auto_6185ab8940') : t('hr.admin_hr_staff_modal.auto_b76695b470')}</h3>
   <button 
   type="button" 
   onClick={() => void handleClose()} 
-  className="p-2 rounded-full hover:bg-primary-subtle motion-safe:transition-colors text-secondary hover:text-primary motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95"
+  className="p-2 rounded-full hover:bg-surface-hover motion-safe:transition-colors text-secondary hover:text-primary motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95"
    data-testid="admin_hr-admin_hr-staff-modal-click">
   <X size={18}  strokeWidth={2}/>
   </button>

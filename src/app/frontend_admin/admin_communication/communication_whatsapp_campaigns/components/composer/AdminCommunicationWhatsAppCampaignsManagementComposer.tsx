@@ -23,7 +23,7 @@ export default function AdminCommunicationWhatsAppCampaignsManagementComposer({ 
         <button
           type="button"
           onClick={() => onChange(`${body}${body && !body.endsWith(' ') ? ' ' : ''}{name}`)}
-          className="flex items-center gap-1.5 rounded-lg bg-input px-3 py-1.5 text-xs font-medium text-primary motion-safe:transition-colors motion-safe:duration-base hover:bg-primary-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95"
+          className="flex items-center gap-1.5 rounded-lg bg-input px-3 py-1.5 text-xs font-medium text-primary motion-safe:transition-colors motion-safe:duration-base hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95"
          data-testid="admin_campaigns-admin_campaigns-composer-click">
           <Variable size={18} aria-hidden="true"  strokeWidth={2}/>
           {t('campaigns.admin_campaigns_composer.text_95802daab3')}{'{name}'}

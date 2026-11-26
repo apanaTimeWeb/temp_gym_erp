@@ -184,7 +184,7 @@ export default function AdminSalesAnalyticsAllMemberships() {
                         {r.pendingAmount > 0 && (
                           <Link
                             href={`/frontend_admin/admin_sales/sales_pending_payments?search=${encodeURIComponent(r.name)}`}
-                            className="px-1.5 py-0.5 text-[10px] font-bold rounded bg-danger-bg text-danger-text border border-danger-border hover:opacity-80 transition-opacity"
+                            className="px-1.5 py-0.5 text-[10px] font-bold rounded bg-danger-bg text-danger-text border border-danger/30 hover:opacity-80 transition-opacity"
                             title={`Pending: ₹${r.pendingAmount} - Click to collect dues`}
                           >
                             Dues

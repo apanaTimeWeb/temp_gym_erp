@@ -1,7 +1,7 @@
 // DATA FLOW: Finance payment form → RHF/Zod → useManagerFinancePaymentsAndSummaryMutations → ManagerFinancePaymentsAndSummaryApi → authoritative response → query invalidation/UI close.
 'use client';
 
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -27,9 +27,28 @@ export function useManagerFinancePaymentsAndSummaryPaymentForm() {
   const idempotencyKeyRef = useRef<string | null>(null);
   const form = useForm<ManagerFinancePaymentsAndSummaryPaymentFormInput, unknown, ManagerFinancePaymentsAndSummaryPaymentFormOutput>({
     resolver: zodResolver(managerFinancePaymentFormSchema),
-    defaultValues: { memberId: '', amount: 0, method: 'UPI', notes: '', paidAt: new Date().toISOString().slice(0, 10) },
+    defaultValues: {
+      memberId: ui.paymentPrefill?.memberId ?? '',
+      amount: ui.paymentPrefill?.amount ?? 0,
+      method: 'UPI',
+      notes: ui.paymentPrefill?.notes ?? '',
+      paidAt: new Date().toISOString().slice(0, 10),
+      paymentType: ui.paymentPrefill?.paymentType ?? 'FULL',
+    },
     mode: 'onSubmit'
   });
+
+  useEffect(() => {
+    if (!ui.paymentPrefill) return;
+    form.reset({
+      memberId: ui.paymentPrefill.memberId ?? '',
+      amount: ui.paymentPrefill.amount ?? 0,
+      method: 'UPI',
+      notes: ui.paymentPrefill.notes ?? '',
+      paidAt: new Date().toISOString().slice(0, 10),
+      paymentType: ui.paymentPrefill.paymentType ?? 'FULL',
+    });
+  }, [ui.paymentPrefill, form]);
 
   const { confirmAndClose } = useManagerInfrastructureUnsavedChangesGuard(
     form.formState.isDirty && !createPayment.isPending,

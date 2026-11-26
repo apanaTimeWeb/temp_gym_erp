@@ -56,6 +56,7 @@ export default function ManagerDashboardOverviewKPIs() {
           icon={Users}
           iconBg="bg-info-bg"
           iconColor="text-info-text"
+          href="/frontend_manager/manager_members/members_directory"
         />
         <ManagerStatCard
           title={
@@ -93,6 +94,7 @@ export default function ManagerDashboardOverviewKPIs() {
           icon={DollarSign}
           iconBg="bg-success-bg"
           iconColor="text-success-text"
+          href="/frontend_manager/manager_finance_expenses/finance_payments_and_summary"
         />
         <ManagerStatCard
           title={t("COPY_TRAINER_ATTENDANCE")}
@@ -102,6 +104,7 @@ export default function ManagerDashboardOverviewKPIs() {
           icon={UserCheck}
           iconBg="bg-warning-bg"
           iconColor="text-warning-text"
+          href="/frontend_manager/manager_attendance/attendance_tracking?tab=Trainer+Attendance"
         />
         <ManagerStatCard
           title={t("COPY_PENDING_DUES_1")}
@@ -111,6 +114,7 @@ export default function ManagerDashboardOverviewKPIs() {
           icon={AlertCircle}
           iconBg="bg-danger-bg"
           iconColor="text-danger-text"
+          href="/frontend_manager/manager_finance_expenses/finance_payments_and_summary"
         />
       </div>
 
@@ -123,6 +127,7 @@ export default function ManagerDashboardOverviewKPIs() {
           icon={TrendingUp}
           iconBg="bg-primary-subtle"
           iconColor="text-primary"
+          href="/frontend_manager/manager_members/members_directory"
         />
         <ManagerStatCard
           title={
@@ -150,6 +155,7 @@ export default function ManagerDashboardOverviewKPIs() {
           icon={Clock}
           iconBg="bg-warning-bg"
           iconColor="text-warning-text"
+          href="/frontend_manager/manager_attendance/attendance_tracking?tab=Member+Attendance"
         />
         <ManagerStatCard
           title={t("COPY_STORE_PRODUCTS")}
@@ -159,6 +165,7 @@ export default function ManagerDashboardOverviewKPIs() {
           icon={ShoppingCart}
           iconBg="bg-info-bg"
           iconColor="text-info-text"
+          href="/frontend_manager/manager_sales_billing/store_products_catalog"
         />
         <ManagerStatCard
           title={inqLabel}
@@ -168,6 +175,7 @@ export default function ManagerDashboardOverviewKPIs() {
           icon={CheckCircle}
           iconBg="bg-success-bg"
           iconColor="text-success-text"
+          href="/frontend_manager/manager_inquiries_crm/inquiries_pipeline"
         />
       </div>
 
@@ -181,6 +189,7 @@ export default function ManagerDashboardOverviewKPIs() {
           icon={DollarSign}
           iconBg="bg-success-bg"
           iconColor="text-success-text"
+          href="/frontend_manager/manager_sales_billing/sales_overview"
         />
         <ManagerStatCard
           title={t("COPY_REVENUE_GROWTH")}
@@ -190,6 +199,7 @@ export default function ManagerDashboardOverviewKPIs() {
           icon={(s.revenueGrowthPercent || 0) >= 0 ? TrendingUp : TrendingDown}
           iconBg={(s.revenueGrowthPercent || 0) >= 0 ? "bg-success-bg" : "bg-danger-bg"}
           iconColor={(s.revenueGrowthPercent || 0) >= 0 ? "text-success-text" : "text-danger-text"}
+          href="/frontend_manager/manager_reports_referrals/reports_overview"
         />
         <ManagerStatCard
           title={t("COPY_PT_REVENUE")}
@@ -199,6 +209,7 @@ export default function ManagerDashboardOverviewKPIs() {
           icon={Target}
           iconBg="bg-info-bg"
           iconColor="text-info-text"
+          href="/frontend_manager/manager_schedule_personal_training/pt_assignments"
         />
         <ManagerStatCard
           title={t("COPY_FROZEN_MEMBERSHIPS")}
@@ -208,6 +219,7 @@ export default function ManagerDashboardOverviewKPIs() {
           icon={Snowflake}
           iconBg="bg-primary-subtle"
           iconColor="text-primary"
+          href="/frontend_manager/manager_membership_plans/membership_lifecycle?view=MEMBERSHIP_FREEZE"
         />
         <ManagerStatCard
           title={t("COPY_MEMBERS_LOST")}
@@ -217,6 +229,7 @@ export default function ManagerDashboardOverviewKPIs() {
           icon={AlertCircle}
           iconBg={(s.churnRate || 0) > 5 ? "bg-danger-bg" : "bg-warning-bg"}
           iconColor={(s.churnRate || 0) > 5 ? "text-danger-text" : "text-warning-text"}
+          href="/frontend_manager/manager_communications/communications_churn_recovery"
         />
       </div>
     </>

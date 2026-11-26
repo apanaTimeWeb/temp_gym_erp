@@ -46,7 +46,7 @@ export default function ManagerFinancePaymentsAndSummaryDailyCollectionReport() 
       </div>
 
       {/* KPI Breakdown Cards */}
-      <div className="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 border-b border-border bg-surface/50">
+      <div className="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 border-b border-border bg-surface">
         <div className="p-4 rounded-xl bg-card border border-border">
           <div className="flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-wider mb-1">
             <DollarSign size={16} aria-hidden="true" />
@@ -57,7 +57,7 @@ export default function ManagerFinancePaymentsAndSummaryDailyCollectionReport() 
         </div>
 
         <div className="p-4 rounded-xl bg-card border border-border">
-          <div className="flex items-center gap-2 text-emerald-600 text-xs font-bold uppercase tracking-wider mb-1">
+          <div className="flex items-center gap-2 text-success-text text-xs font-bold uppercase tracking-wider mb-1">
             <Banknote size={16} aria-hidden="true" />
             Cash In Drawer
           </div>
@@ -66,7 +66,7 @@ export default function ManagerFinancePaymentsAndSummaryDailyCollectionReport() 
         </div>
 
         <div className="p-4 rounded-xl bg-card border border-border">
-          <div className="flex items-center gap-2 text-blue-600 text-xs font-bold uppercase tracking-wider mb-1">
+          <div className="flex items-center gap-2 text-info-text text-xs font-bold uppercase tracking-wider mb-1">
             <Smartphone size={16} aria-hidden="true" />
             UPI / QR Dynamic
           </div>
@@ -75,11 +75,11 @@ export default function ManagerFinancePaymentsAndSummaryDailyCollectionReport() 
         </div>
 
         <div className="p-4 rounded-xl bg-card border border-border">
-          <div className="flex items-center gap-2 text-amber-600 text-xs font-bold uppercase tracking-wider mb-1">
+          <div className="flex items-center gap-2 text-warning-text text-xs font-bold uppercase tracking-wider mb-1">
             <CreditCard size={16} aria-hidden="true" />
             Card / POS Terminal
           </div>
-          <p className="text-xl font-bold text-amber-600">{formatCurrency(cardTotal)}</p>
+          <p className="text-xl font-bold text-warning-text">{formatCurrency(cardTotal)}</p>
           <p className="text-[11px] text-text-muted mt-0.5">EDC machine swipe</p>
         </div>
 
@@ -113,7 +113,7 @@ export default function ManagerFinancePaymentsAndSummaryDailyCollectionReport() 
             </thead>
             <tbody className="divide-y divide-border">
               {payments.slice(0, 5).map((p) => (
-                <tr key={p.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                <tr key={p.id} className="hover:bg-surface-hover transition-colors group">
                   <td className="px-5 py-3.5 text-sm font-mono font-bold text-text-primary whitespace-nowrap sticky start-0 z-10 bg-card border-e border-border">
                     <div className="flex items-center gap-1.5">
                       <span>{p.invoiceNumber}</span>

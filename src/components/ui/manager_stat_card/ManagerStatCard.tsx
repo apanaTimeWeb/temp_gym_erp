@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 export interface ManagerStatCardProps {
   title: string;
@@ -12,6 +13,7 @@ export interface ManagerStatCardProps {
   className?: string;
   testId?: string;
   'data-testid'?: string;
+  href?: string;
 }
 
 export default function ManagerStatCard({
@@ -26,10 +28,11 @@ export default function ManagerStatCard({
   className = '',
   testId,
   'data-testid': dataTestIdProp,
+  href,
 }: ManagerStatCardProps) {
-  return (
+  const card = (
     <div
-      className={`rounded-2xl border border-border bg-card p-5 shadow-card transition-all hover:shadow-md ${className}`}
+      className={`rounded-2xl border border-border bg-card p-5 shadow-card transition-all hover:shadow-md ${href ? 'hover:border-primary cursor-pointer' : ''} ${className}`}
       data-testid={testId || dataTestIdProp}
     >
       <div className="flex items-center justify-between gap-4">
@@ -63,5 +66,15 @@ export default function ManagerStatCard({
       )}
     </div>
   );
+
+  if (href) {
+    return (
+      <Link href={href} className="block no-underline rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring">
+        {card}
+      </Link>
+    );
+  }
+
+  return card;
 }
 

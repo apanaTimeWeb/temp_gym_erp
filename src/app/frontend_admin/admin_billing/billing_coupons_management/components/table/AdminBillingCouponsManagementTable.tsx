@@ -79,9 +79,9 @@ export default function AdminBillingCouponsManagementTable() {
             {coupons.map((coupon: Coupon , __testIdIndex54) => (
               <tr
                 key={coupon.id}
-                className="hover:bg-surface-highlight motion-safe:transition-colors group motion-safe:duration-base"
+                className="hover:bg-surface-hover motion-safe:transition-colors group motion-safe:duration-base"
                 data-testid={`admin_coupons-admin_coupons-table-row-${__testIdIndex54}`}>
-                <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-highlight border-e border-border px-5 py-4">
+                <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-e border-border px-5 py-4">
                   <div className="flex items-center gap-2">
                     <button type="button" onClick={() => openEdit(coupon)} disabled={coupon.status === COUPON_STATUS.EXPIRED || coupon.validUntil < todayLocalKey} aria-label={t('admin_coupons_table.auto_editCoupon', { code: coupon.code })} className="font-mono text-sm font-bold text-primary bg-primary-subtle px-2 py-1 rounded min-h-11 underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid={`admin_coupons-admin_coupons-table-edit-code-${__testIdIndex54}`}>{coupon.code}</button>
                     <button type="button"

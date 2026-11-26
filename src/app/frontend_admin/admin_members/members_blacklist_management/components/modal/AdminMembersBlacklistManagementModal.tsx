@@ -27,7 +27,7 @@ export default function AdminMembersBlacklistManagementModal() {
 
   return (
     <div data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-blacklist-dialog-title" tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center p-4 overflow-y-auto" data-testid="admin_blacklist-admin_blacklist-modal-control">
-      <div aria-hidden="true" className="absolute inset-0 bg-overlay backdrop-blur-sm" data-testid="admin_blacklist-admin_blacklist-modal-backdrop"/>
+      <div aria-hidden="true" className="absolute inset-0 bg-overlay-backdrop backdrop-blur-sm" data-testid="admin_blacklist-admin_blacklist-modal-backdrop"/>
       <div className="relative my-auto bg-overlay border border-border rounded-2xl shadow-dialog w-full max-w-md max-h-dialog-desktop flex flex-col overflow-hidden">
         <div className="flex items-center justify-between px-6 py-4 border-b border-border shrink-0 bg-overlay z-10">
           <h2 id="admin-blacklist-dialog-title" className="text-lg font-bold text-primary">{t('blacklist.admin_blacklist_modal.text_e0b464e57f')}</h2>

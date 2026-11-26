@@ -50,19 +50,19 @@ export default function ManagerMembersDirectoryRenewModal() {
                   </span>
                 </div>
                 {selectedPlan && (Boolean(selectedPlan.taxRate) || Boolean(selectedPlan.ptSessionsIncluded) || selectedPlan.freezeAllowed !== undefined) && (
-                  <div className="flex flex-wrap gap-2 pt-2 border-t border-border-focus/30 text-xs">
+                  <div className="flex flex-wrap gap-2 pt-2 border-t border-border-focus text-xs">
                     {Boolean(selectedPlan.taxRate && selectedPlan.taxRate > 0) && (
-                      <span className="bg-primary/20 px-2 py-0.5 rounded font-medium text-text-primary">
+                      <span className="bg-surface px-2 py-0.5 rounded font-medium text-text-primary border border-border">
                         🏛️ + Tax: {selectedPlan.taxRate}% GST
                       </span>
                     )}
                     {Boolean(selectedPlan.ptSessionsIncluded) && (
-                      <span className="bg-primary/20 px-2 py-0.5 rounded font-medium text-text-primary">
+                      <span className="bg-surface px-2 py-0.5 rounded font-medium text-text-primary border border-border">
                         🎯 {selectedPlan.ptSessionsIncluded} PT Sessions Included
                       </span>
                     )}
                     {selectedPlan.freezeAllowed !== undefined && (
-                      <span className="bg-primary/20 px-2 py-0.5 rounded font-medium text-text-primary">
+                      <span className="bg-surface px-2 py-0.5 rounded font-medium text-text-primary border border-border">
                         {selectedPlan.freezeAllowed ? '❄️ Freeze Permitted' : '🚫 No Freeze'}
                       </span>
                     )}

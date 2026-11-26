@@ -208,7 +208,7 @@ export default function AdminReportsCrossDomainOverview() {
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="rounded-xl border border-border bg-surface-highlight p-2 text-primary group-hover:bg-primary-subtle group-hover:text-primary motion-safe:transition-colors">
+                  <span className="rounded-xl border border-border bg-surface-highlight p-2 text-primary group-hover:bg-surface-hover group-hover:text-primary motion-safe:transition-colors">
                     <FileBarChart size={20} aria-hidden="true" />
                   </span>
                   <span className="inline-flex items-center gap-1 text-xs font-semibold text-secondary group-hover:text-primary motion-safe:transition-colors">

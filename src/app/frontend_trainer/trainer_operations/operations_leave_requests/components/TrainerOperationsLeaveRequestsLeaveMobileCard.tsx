@@ -46,7 +46,7 @@ export function TrainerOperationsLeaveRequestsLeaveMobileCard({
           {statusLabel}
         </span>
       </div>
-      <div className="space-y-2 text-sm pt-1 border-t border-border/60">
+      <div className="space-y-2 text-sm pt-1 border-t border-border">
         <div>
           <span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_DATE_RANGE')}</span>
           <span className="text-primary font-medium">

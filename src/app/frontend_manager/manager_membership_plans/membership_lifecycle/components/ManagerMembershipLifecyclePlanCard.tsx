@@ -32,7 +32,7 @@ export default function ManagerMembershipLifecyclePlanCard({ plan }: ManagerMemb
             ) : (
               <span className="rounded-full bg-input px-2.5 py-0.5 text-xs font-semibold text-text-secondary">{plan.tier}</span>
             )}
-            <span className="rounded-full bg-info-bg border border-info/30 px-2 py-0.5 text-xs font-semibold text-info-text">Master Plan (Admin)</span>
+            <span className="rounded-full bg-info-bg border border-info px-2 py-0.5 text-xs font-semibold text-info-text">Master Plan (Admin)</span>
             {plan.isActive ? (
               <span data-testid={`manager_plans-manager-plans-main-status-active-${plan.id}`} className="flex items-center gap-1 rounded-full bg-success-bg px-2 py-0.5 text-xs font-semibold text-success-text"><CheckCircle size={18} strokeWidth={2} aria-hidden="true" />{t('COPY_ACTIVE_1')}</span>
             ) : (
@@ -56,7 +56,7 @@ export default function ManagerMembershipLifecyclePlanCard({ plan }: ManagerMemb
       {(plan.joiningFee !== undefined || plan.priceCustom !== undefined || plan.taxRate !== undefined || plan.ptSessionsIncluded !== undefined || plan.freezeAllowed !== undefined) && (
         <div className="flex flex-wrap gap-2 text-xs">
           {plan.joiningFee !== undefined && (
-            <span className="rounded-md bg-secondary-subtle/50 px-2.5 py-1 font-medium text-text-secondary">
+            <span className="rounded-md bg-secondary-subtle px-2.5 py-1 font-medium text-text-secondary">
               + Admission: {ManagerMembershipLifecycleFormatCurrency(plan.joiningFee, ManagerEnvConfig.currencyCode, locale)}
             </span>
           )}
@@ -66,7 +66,7 @@ export default function ManagerMembershipLifecyclePlanCard({ plan }: ManagerMemb
             </span>
           )}
           {plan.priceCustom !== undefined && (
-            <span className="rounded-md bg-secondary-subtle/50 px-2.5 py-1 font-medium text-text-secondary">
+            <span className="rounded-md bg-secondary-subtle px-2.5 py-1 font-medium text-text-secondary">
               Custom: {ManagerMembershipLifecycleFormatCurrency(plan.priceCustom, ManagerEnvConfig.currencyCode, locale)}
             </span>
           )}

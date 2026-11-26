@@ -73,7 +73,7 @@ export function TrainerMembersDirectoryAndProfileDailyAdherenceTracker({
                 onClick={() => onToggleMeal(index)}
                 className={`p-3 rounded-xl border text-start flex items-center justify-between gap-2 transition-all ${
                   isChecked
-                    ? 'bg-success-bg/40 border-success/40 text-primary'
+                    ? 'bg-success-bg border-success text-primary'
                     : 'bg-card border-border text-secondary hover:border-primary'
                 }`}
               >
@@ -82,7 +82,7 @@ export function TrainerMembersDirectoryAndProfileDailyAdherenceTracker({
                   <span className="text-xs font-semibold text-primary">{mealTitle}</span>
                 </div>
                 <span className={`text-xs font-bold px-2 py-0.5 rounded-md ${
-                  isChecked ? 'bg-success text-on-primary' : 'bg-input text-secondary'
+                  isChecked ? 'bg-success text-on-success' : 'bg-input text-secondary'
                 }`}>
                   {isChecked ? 'Consumed' : 'Pending'}
                 </span>

@@ -31,7 +31,7 @@ export default function TrainerCoachingExerciseManagementToolbar() {
   };
 
   return (
-    <div className="p-4 border-b border-border bg-surface-highlight/30 flex flex-wrap items-center justify-between gap-3">
+    <div className="p-4 border-b border-border bg-surface-highlight flex flex-wrap items-center justify-between gap-3">
       <div className="flex items-center gap-2.5 flex-wrap flex-1 min-w-[280px]">
         {/* Search Box Geometry */}
         <div className="relative min-w-[240px] sm:w-72">

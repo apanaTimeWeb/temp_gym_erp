@@ -1,5 +1,6 @@
 // AUTONOMOUS COPY: Module-local, WET-isolated copy of original trainer-infrastructure primitive.
 // RESPONSIBILITY: Renders a single KPI stat card (icon, label, big number, trend). Used in dashboard and module KPI rows.
+import Link from 'next/link';
 import type { TrainerInfrastructureStatCardProps } from '@/app/frontend_trainer/trainer_dashboard/dashboard_overview/types/TrainerDashboardOverviewTrainerInfrastructureStatCardProps';
 
 
@@ -14,9 +15,9 @@ import type { TrainerInfrastructureStatCardProps } from '@/app/frontend_trainer/
  * @dependencies Uses only documented infrastructure module dependencies and approved global infrastructure/UI primitives.
  * @edge-case Preserves documented loading, empty, error, accessibility, responsive, and recovery behavior without inventing business fallbacks.
  */
-export default function TrainerInfrastructureStatCard({ title, value, change, changeType = 'neutral', icon: Icon, iconBg, iconColor }: TrainerInfrastructureStatCardProps) {
- return (
- <div className="bg-card rounded-xl p-5 shadow-card border border-border hover:border-focus motion-safe:transition-colors motion-safe:duration-base">
+export default function TrainerInfrastructureStatCard({ title, value, change, changeType = 'neutral', icon: Icon, iconBg, iconColor, href }: TrainerInfrastructureStatCardProps) {
+ const card = (
+ <div className={`bg-card rounded-xl p-5 shadow-card border border-border hover:border-focus motion-safe:transition-colors motion-safe:duration-base ${href ? 'hover:border-primary cursor-pointer' : ''}`}>
  <div className="flex items-center justify-between">
  <div>
  <p className="text-xs font-medium text-secondary uppercase tracking-wider">{title}</p>
@@ -36,5 +37,15 @@ export default function TrainerInfrastructureStatCard({ title, value, change, ch
  </div>
  </div>
  );
+
+ if (href) {
+  return (
+   <Link href={href} className="block no-underline rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring">
+    {card}
+   </Link>
+  );
+ }
+
+ return card;
 }
 

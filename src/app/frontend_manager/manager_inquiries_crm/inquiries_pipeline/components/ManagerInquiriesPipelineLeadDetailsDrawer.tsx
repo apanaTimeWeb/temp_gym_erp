@@ -64,7 +64,7 @@ export default function ManagerInquiriesPipelineLeadDetailsDrawer() {
         {/* Header */}
         <div className="shrink-0 p-6 border-b border-border bg-overlay flex items-center justify-between gap-4">
           <div className="flex items-center gap-4 min-w-0">
-            <div className="w-14 h-14 rounded-full flex items-center justify-center font-bold text-xl bg-primary-subtle text-primary shrink-0 ring-2 ring-primary/20">
+            <div className="w-14 h-14 rounded-full flex items-center justify-center font-bold text-xl bg-primary-subtle text-primary shrink-0 ring-2 ring-primary">
               {selectedLead.name.charAt(0).toUpperCase()}
             </div>
             <div className="min-w-0">
@@ -72,7 +72,7 @@ export default function ManagerInquiriesPipelineLeadDetailsDrawer() {
                 {ManagerInquiriesPipelineDisplayValue(selectedLead.name)}
               </h2>
               <div className="flex items-center gap-2 mt-1">
-                <span className="inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary-subtle text-primary border border-primary/20">
+                <span className="inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary-subtle text-primary border border-border">
                   {statusLabel}
                 </span>
                 {selectedLead.source && (
@@ -153,7 +153,7 @@ export default function ManagerInquiriesPipelineLeadDetailsDrawer() {
           <div>
             <h3 className="text-xs font-bold uppercase tracking-wider text-text-secondary mb-3">Interaction History</h3>
             {selectedLead.followUpLogs && selectedLead.followUpLogs.length > 0 ? (
-              <div className="relative pl-6 border-l-2 border-primary/30 space-y-4">
+              <div className="relative pl-6 border-l-2 border-primary space-y-4">
                 {selectedLead.followUpLogs.map((log, idx) => (
                   <div key={idx} className="relative">
                     <div className="absolute -left-[31px] top-1 w-3 h-3 rounded-full bg-primary ring-4 ring-card" />
@@ -163,7 +163,7 @@ export default function ManagerInquiriesPipelineLeadDetailsDrawer() {
                 ))}
               </div>
             ) : (
-              <p className="text-xs text-text-muted italic bg-input/50 p-3 rounded-lg border border-border/50">
+              <p className="text-xs text-text-muted italic bg-input p-3 rounded-lg border border-border">
                 No past interactions recorded. Use WhatsApp or Email below to log communications.
               </p>
             )}

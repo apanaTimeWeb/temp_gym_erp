@@ -175,7 +175,7 @@ export default function ManagerStorePointOfSalePosModal() {
        </button>
      </div>
    ) : (
-     <div className="flex items-center justify-between p-2 bg-success-bg/20 border border-success/30 rounded-lg text-xs">
+     <div className="flex items-center justify-between p-2 bg-success-bg border border-success rounded-lg text-xs">
        <div className="flex items-center gap-1.5 text-success-text font-semibold">
          <Check size={14} />
          <span>{appliedCoupon}</span>

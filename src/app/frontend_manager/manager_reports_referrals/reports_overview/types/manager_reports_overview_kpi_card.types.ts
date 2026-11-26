@@ -9,4 +9,5 @@ export interface ManagerReportsOverviewKpiCardProps {
   iconColor: string;
   sub?: string;
   subColor?: string;
+  href?: string;
 }

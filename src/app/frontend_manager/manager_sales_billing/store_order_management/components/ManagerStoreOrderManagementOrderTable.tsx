@@ -140,7 +140,7 @@ export default function ManagerStoreOrderManagementOrderTable() {
                     <tr
                       data-testid={`manager_store-store-managerstoreordertable-row-${o.id}`}
                       key={o.id} 
-                      className="hover:bg-surface-highlight/50 transition-colors group"
+                      className="hover:bg-surface-hover transition-colors group"
                     >
                       <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-mono text-text-primary whitespace-nowrap">
                         <div className="flex items-center gap-2">

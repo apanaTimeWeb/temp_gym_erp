@@ -29,7 +29,7 @@ export function TrainerOperationsLeaveRequestsLeaveExpandedDetails({
   return (
     <div
       id={`trainer-schedule-leave-details-${leave.id}`}
-      className="p-5 border-l-4 border-l-primary bg-card/70 space-y-4 shadow-inner"
+      className="p-5 border-l-4 border-l-primary bg-card space-y-4 shadow-inner"
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -53,7 +53,7 @@ export function TrainerOperationsLeaveRequestsLeaveExpandedDetails({
         </button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1 text-xs">
-        <div className="p-3 rounded-xl bg-input/40 border border-border">
+        <div className="p-3 rounded-xl bg-input border border-border">
           <span className="font-semibold text-secondary uppercase block mb-1">
             {t('TEXT_DATE_RANGE')}
           </span>
@@ -65,13 +65,13 @@ export function TrainerOperationsLeaveRequestsLeaveExpandedDetails({
             </span>
           </p>
         </div>
-        <div className="p-3 rounded-xl bg-input/40 border border-border">
+        <div className="p-3 rounded-xl bg-input border border-border">
           <span className="font-semibold text-secondary uppercase block mb-1">
             {t('TEXT_REASON')}
           </span>
           <p className="text-sm text-primary font-medium">{leave.reason}</p>
         </div>
-        <div className="p-3 rounded-xl bg-input/40 border border-border">
+        <div className="p-3 rounded-xl bg-input border border-border">
           <span className="font-semibold text-secondary uppercase block mb-1">
             {t('TEXT_MANAGER_NOTES')}
           </span>
@@ -80,7 +80,7 @@ export function TrainerOperationsLeaveRequestsLeaveExpandedDetails({
           </p>
         </div>
         {leave.rejectedReason && (
-          <div className="p-3 rounded-xl bg-danger-bg border border-danger/30 text-danger">
+          <div className="p-3 rounded-xl bg-danger-bg border border-danger text-danger">
             <span className="font-semibold uppercase block mb-1 text-xs">
               Rejection Reason
             </span>
@@ -88,7 +88,7 @@ export function TrainerOperationsLeaveRequestsLeaveExpandedDetails({
           </div>
         )}
         {leave.approvedBy && (
-          <div className="p-3 rounded-xl bg-success-bg border border-success/30 text-success">
+          <div className="p-3 rounded-xl bg-success-bg border border-success text-success">
             <span className="font-semibold uppercase block mb-1 text-xs">
               Approved By
             </span>
@@ -96,7 +96,7 @@ export function TrainerOperationsLeaveRequestsLeaveExpandedDetails({
           </div>
         )}
         {leave.attachmentUrl && (
-          <div className="p-3 rounded-xl bg-input/40 border border-border md:col-span-3">
+          <div className="p-3 rounded-xl bg-input border border-border md:col-span-3">
             <span className="font-semibold text-secondary uppercase block mb-1">
               Supporting Document
             </span>

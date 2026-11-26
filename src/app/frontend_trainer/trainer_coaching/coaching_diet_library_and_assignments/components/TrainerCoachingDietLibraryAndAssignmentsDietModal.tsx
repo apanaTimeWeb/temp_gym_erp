@@ -60,15 +60,15 @@ export default function TrainerLibraryDietModal({ isOpen, plan, onClose, onAssig
             {plan.description ? <div><p className="text-xs font-semibold text-secondary uppercase tracking-wider mb-1">{t("TEXT_DESCRIPTION")}</p><p className="text-sm text-primary">{plan.description}</p></div> : null}
             {plan.meals?.length ? <div><p className="text-xs font-semibold text-secondary uppercase tracking-wider mb-2"><Utensils size={18} className="inline me-1"  strokeWidth={2}/>{t("TEXT_MEAL_PLAN")}</p><ul className="space-y-1.5">{plan.meals.map((meal, index) => <li key={`${typeof meal === 'string' ? meal : meal.name}-${typeof meal === 'string' ? t("TEXT_TEXT") : meal.description ?? t('TEXT_MEAL')}`} className="flex items-start gap-2 text-sm text-primary"><span className="shrink-0 mt-0.5 w-5 h-5 rounded-full bg-primary-subtle text-primary flex items-center justify-center text-xs font-bold">{index + 1}</span><div><span className="font-medium">{typeof meal === 'string' ? meal : meal.name}</span>{typeof meal !== 'string' && meal.description ? <span className="block text-xs text-secondary">{meal.description}</span> : null}</div></li>)}</ul></div> : null}
             {plan.deletionRequested ? (
-              <div className="rounded-xl bg-warning-bg border border-warning/40 px-4 py-3 flex items-start gap-2.5" data-testid="trainer_library-trainer_library-diet-modal-warning-state-39-1">
+              <div className="rounded-xl bg-warning-bg border border-warning px-4 py-3 flex items-start gap-2.5" data-testid="trainer_library-trainer_library-diet-modal-warning-state-39-1">
                 <AlertCircle size={18} className="text-warning shrink-0 mt-0.5" />
                 <div>
                   <p className="text-xs text-warning-text font-bold">Pending Deletion Approval</p>
-                  <p className="text-xs text-warning-text/90 mt-0.5">Reason: {plan.deletionReason || 'Retirement requested by trainer'}</p>
+                  <p className="text-xs text-warning-text mt-0.5">Reason: {plan.deletionReason || 'Retirement requested by trainer'}</p>
                 </div>
               </div>
             ) : (
-              <div className="rounded-xl bg-primary-subtle/50 border border-border px-4 py-2.5" data-testid="trainer_library-trainer_library-diet-modal-warning-state-39-1">
+              <div className="rounded-xl bg-primary-subtle border border-border px-4 py-2.5" data-testid="trainer_library-trainer_library-diet-modal-warning-state-39-1">
                 <p className="text-xs text-secondary font-medium">Customizable nutrition plan. Trainers can edit details or request deletion with gym manager approval.</p>
               </div>
             )}
@@ -90,7 +90,7 @@ export default function TrainerLibraryDietModal({ isOpen, plan, onClose, onAssig
                 <button
                   type="button"
                   onClick={onRequestDelete}
-                  className="min-h-11 px-4 py-2 border border-danger/30 text-danger hover:bg-danger-bg rounded-xl text-sm font-semibold flex items-center gap-1.5"
+                  className="min-h-11 px-4 py-2 border border-danger text-danger hover:bg-danger-bg rounded-xl text-sm font-semibold flex items-center gap-1.5"
                   data-testid="trainer_library-trainerlibrarydietmodal-button-request-delete"
                 >
                   <Trash2 size={16} /> Request Deletion

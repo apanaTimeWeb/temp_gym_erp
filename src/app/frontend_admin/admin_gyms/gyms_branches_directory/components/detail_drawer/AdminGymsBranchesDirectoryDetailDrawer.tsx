@@ -40,7 +40,7 @@ export default function AdminGymsBranchesDirectoryDetailDrawer() {
 
   return (
     <>
-      <button type="button" aria-label={t('branches.admin_branches_detail_drawer.text_cf7fcd62b8')} className="min-h-11 min-w-11 motion-safe:transition-all motion-safe:duration-base ease-in-out fixed inset-0 z-40 cursor-default bg-overlay backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" onClick={closeDetail}  data-testid="admin_branches-admin_branches-detail-drawer-control"/>
+      <button type="button" aria-label={t('branches.admin_branches_detail_drawer.text_cf7fcd62b8')} className="min-h-11 min-w-11 motion-safe:transition-all motion-safe:duration-base ease-in-out fixed inset-0 z-40 cursor-default bg-overlay-backdrop backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" onClick={closeDetail}  data-testid="admin_branches-admin_branches-detail-drawer-control"/>
       <aside role="dialog" aria-modal="true" aria-labelledby="admin_branches-detail-title" className="fixed right-0 top-0 z-40 flex h-full w-full max-w-lg flex-col border-l border-border bg-overlay shadow-dialog" data-testid="admin_branches-admin_branches-detail-drawer-control-2">
         <div className="shrink-0 flex items-center justify-between border-b border-border p-5">
           <div className="min-w-0">

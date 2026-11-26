@@ -74,8 +74,8 @@ export default function AdminAttendanceReportsTable() {
             </thead>
             <tbody className="divide-y divide-border">
               {rows.length === 0 ? <tr><td colSpan={SUMMARY_TABLE_COLUMN_COUNT}><AdminAttendanceReportsEmptyState title={t('reports.admin_reports_attendance.text_0e47830c90')} description={t('reports.admin_reports_attendance.auto_1d0c4b148c')} /></td></tr> : rows.map((row) => (
-                <tr key={row.gymId} className="hover:bg-surface-highlight motion-safe:transition-colors motion-safe:duration-base group">
-                  <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-highlight border-e border-border px-5 py-4 text-sm font-semibold text-primary">
+                <tr key={row.gymId} className="hover:bg-surface-hover motion-safe:transition-colors motion-safe:duration-base group">
+                  <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-e border-border px-5 py-4 text-sm font-semibold text-primary">
                     <div className="flex items-center gap-1.5">
                       <Link
                         href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(row.gymName)}`}
@@ -112,8 +112,8 @@ export default function AdminAttendanceReportsTable() {
                 const heatmap = (reportData as AdminAttendanceReportsReportData).attendanceHeatmap ?? [];
                 const byDay = heatmap.filter((cell) => cell.gymId === gym.gymId);
                 return (
-                  <tr key={gym.gymId} className="group">
-                    <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-highlight border-e border-border text-sm font-medium text-primary pr-4 py-2">
+                  <tr key={gym.gymId} className="hover:bg-surface-hover motion-safe:transition-colors group">
+                    <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-e border-border text-sm font-medium text-primary pr-4 py-2 transition-colors">
                       <div className="flex items-center gap-1.5">
                         <Link
                           href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(gym.gymName)}`}

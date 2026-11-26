@@ -57,7 +57,7 @@ export default function ManagerMembersDirectoryMemberProfilePictureUpload() {
               type="button"
               onClick={handleRemove}
               aria-label="Remove photo"
-              className="absolute inset-0 bg-overlay-backdrop/60 text-on-danger flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute inset-0 bg-overlay-backdrop text-on-danger flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
             >
               <X size={18} strokeWidth={2} />
             </button>

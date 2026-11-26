@@ -100,7 +100,7 @@ export default function ManagerCommunicationsCampaignsHistory() {
                     const statusStyle = COMM_STATUS_STYLES[c.status] ?? COMM_STATUS_STYLES.sent;
                     const isWA = c.channel === 'whatsapp';
                     return (
-                      <tr key={c.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                      <tr key={c.id} className="hover:bg-surface-hover transition-colors group">
                         <td className="px-4 py-3 sticky start-0 z-10 bg-card border-e border-border whitespace-nowrap">
                           <div className="flex items-center gap-2">
                             <p className="text-sm font-medium text-text-primary">{c.title}</p>
@@ -138,7 +138,7 @@ export default function ManagerCommunicationsCampaignsHistory() {
               </table>
             </ManagerInfrastructureResponsiveTable>
           </div>
-          <div className="border-t border-border p-4 bg-card/60">
+          <div className="border-t border-border p-4 bg-card">
             <ManagerPagination data-testid="manager_communications-managercommunicationshistory-managerpagination-1"
               currentPage={currentPage}
               totalPages={totalPages}

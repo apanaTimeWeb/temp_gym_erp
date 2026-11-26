@@ -175,7 +175,7 @@ export default function ManagerPtAssignmentsSessionsTracker({ assignments, onMar
                   const isMarking = markingId === s.assignmentId;
 
                   return (
-                    <tr key={s.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                    <tr key={s.id} className="hover:bg-surface-hover transition-colors group">
                       <td className="sticky start-0 z-10 bg-card border-e border-border py-3.5 px-4 whitespace-nowrap">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-full bg-primary-subtle text-primary font-bold text-xs flex items-center justify-center shrink-0">

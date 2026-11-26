@@ -33,7 +33,7 @@ export default function AdminBillingPlansCatalogModal({ logic }: AdminPlansModal
 
 
   return (
-    <div ref={dialogRef} data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-plans-modal-title" tabIndex={-1} className="fixed inset-0 bg-overlay z-40 flex items-center justify-center p-4 overflow-y-auto" data-testid="admin_plans-admin_plans-modal-control">
+    <div ref={dialogRef} data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-plans-modal-title" tabIndex={-1} className="fixed inset-0 bg-overlay-backdrop backdrop-blur-sm z-40 flex items-center justify-center p-4 overflow-y-auto" data-testid="admin_plans-admin_plans-modal-control">
       <div className="my-auto bg-overlay rounded-2xl shadow-dialog shadow-dialog w-full max-w-md max-h-dialog-desktop overflow-y-auto border border-border">
         <div className="sticky top-0 bg-card px-6 py-4 border-b border-border flex items-center justify-between">
           <h3 id="admin-plans-modal-title" className="text-lg font-bold text-primary">
@@ -42,7 +42,7 @@ export default function AdminBillingPlansCatalogModal({ logic }: AdminPlansModal
           <button
             type="button"
             onClick={() => void handleClose()}
-            className="min-h-11 min-w-11 p-2 rounded-lg hover:bg-primary-subtle text-secondary motion-safe:transition-all motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page ease-in-out motion-safe:active:scale-95"
+            className="min-h-11 min-w-11 p-2 rounded-lg hover:bg-surface-hover text-secondary motion-safe:transition-all motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page ease-in-out motion-safe:active:scale-95"
             aria-label={t('plans.admin_plans_modal.text_70d3a544a3')}
            data-testid="admin_plans-admin_plans-modal-click">
             <X size={18}  strokeWidth={2}/>
@@ -212,7 +212,7 @@ export default function AdminBillingPlansCatalogModal({ logic }: AdminPlansModal
             <button
               type="button"
               onClick={() => void handleClose()}
-              className="flex-1 py-2.5 border border-border rounded-xl text-sm font-medium text-primary hover:bg-primary-subtle motion-safe:transition-all motion-safe:duration-base motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page ease-in-out min-h-11 min-w-11"
+              className="flex-1 py-2.5 border border-border rounded-xl text-sm font-medium text-primary hover:bg-surface-hover motion-safe:transition-all motion-safe:duration-base motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page ease-in-out min-h-11 min-w-11"
              data-testid="admin_plans-admin_plans-modal-click-2">
               {t('plans.admin_plans_modal.text_77dfd2135f')}</button>
             <button

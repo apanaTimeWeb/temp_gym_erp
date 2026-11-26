@@ -66,7 +66,7 @@ export default function AdminSalesAnalyticsToolbar() {
                 setExportFailed(true);
               }
             }}
-            className="flex items-center gap-1.5 px-3 py-2 text-sm border border-border rounded-lg hover:bg-primary-subtle text-secondary disabled:cursor-not-allowed disabled:opacity-50 motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95"
+            className="flex items-center gap-1.5 px-3 py-2 text-sm border border-border rounded-lg hover:bg-surface-hover text-secondary disabled:cursor-not-allowed disabled:opacity-50 motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95"
            data-testid="admin_sales-admin_sales-toolbar-click">
             <Download size={18}  strokeWidth={2}/> {t('sales.admin_sales_toolbar.text_f3e4fadb9e')}</button>
           {exportFailed && <p role="alert" className="text-sm text-danger">{t('sales.admin_sales_toolbar.exportFailed')}</p>}

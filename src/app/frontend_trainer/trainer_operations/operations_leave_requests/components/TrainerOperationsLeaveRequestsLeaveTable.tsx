@@ -48,9 +48,9 @@ export function TrainerOperationsLeaveRequestsLeaveTable({ leaveRequests, openLe
 
   const getStatusBadgeClass = (status: string) => {
     const upper = status.toUpperCase();
-    if (upper === 'APPROVED') return 'bg-success-bg text-success border border-success/30';
-    if (upper === 'PENDING') return 'bg-warning-bg text-warning border border-warning/30';
-    return 'bg-danger-bg text-danger border border-danger/30';
+    if (upper === 'APPROVED') return 'bg-success-bg text-success border border-success';
+    if (upper === 'PENDING') return 'bg-warning-bg text-warning border border-warning';
+    return 'bg-danger-bg text-danger border border-danger';
   };
 
   const getLeaveTypeLabel = (type: string) => {
@@ -176,11 +176,11 @@ export function TrainerOperationsLeaveRequestsLeaveTable({ leaveRequests, openLe
                           setExpandedId((curr) => (curr === leave.id ? null : leave.id));
                         }
                       }}
-                      className={`cursor-pointer hover:bg-surface-highlight/50 transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-colors ${
+                      className={`cursor-pointer hover:bg-surface-hover transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-colors ${
                         expanded ? 'bg-primary-subtle border-l-4 border-l-primary' : ''
                       }`}
                     >
-                      <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-4 text-xs font-bold text-primary whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
+                      <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-4 text-xs font-bold text-primary whitespace-nowrap group-hover:bg-surface-hover transition-colors">
                         <div className="flex items-center gap-2">
                           <span className="font-bold text-primary text-sm font-mono">{leave.id}</span>
                           <CopyButton value={leave.id} />
@@ -225,7 +225,7 @@ export function TrainerOperationsLeaveRequestsLeaveTable({ leaveRequests, openLe
 
                     {/* Inline Expandable Details Row */}
                     {expanded && (
-                      <tr className="bg-primary/5 border-b border-primary/20">
+                      <tr className="bg-primary-subtle border-b border-border">
                         <td colSpan={TABLE_COLUMN_COUNT} className="p-0">
                           <TrainerOperationsLeaveRequestsLeaveExpandedDetails
                             leave={leave}
@@ -272,7 +272,7 @@ export function TrainerOperationsLeaveRequestsLeaveTable({ leaveRequests, openLe
       </div>
 
       {/* In-Card Bottom-Pinned Footer Summary */}
-      <div className="border-t border-border px-4 py-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between bg-card/60 text-xs text-secondary">
+      <div className="border-t border-border px-4 py-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between bg-card text-xs text-secondary">
         <p>
           Showing <span className="font-semibold text-primary">{filteredLeaves.length}</span> of <span className="font-semibold text-primary">{totalRequests}</span> leave requests
         </p>

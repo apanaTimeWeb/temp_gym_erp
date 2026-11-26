@@ -117,7 +117,7 @@ export default function ManagerSalesOverviewAllMemberships() {
                   const daysLeft = Math.floor((expiryTimestamp - now) / 86400000);
                   const daysLeftLabel = !Number.isFinite(expiryTimestamp) ? '—' : expiryTimestamp < now ? t('COPY_EXPIRED') : new Intl.RelativeTimeFormat(locale, { numeric: 'auto' }).format(daysLeft, 'day');
                   return (
-                    <tr key={r.id} className="hover:bg-surface-highlight/50 transition-colors group">
+                    <tr key={r.id} className="hover:bg-surface-hover transition-colors group">
                       <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-medium text-text-primary whitespace-nowrap">
                         <div className="flex items-center gap-2">
                           <span>{r.name || '—'}</span>

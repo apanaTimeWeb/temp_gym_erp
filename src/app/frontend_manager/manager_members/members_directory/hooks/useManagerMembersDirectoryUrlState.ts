@@ -61,15 +61,19 @@ export function useManagerMembersDirectoryUrlState() {
   const currentPage = Number.isSafeInteger(rawPage) && rawPage > 0 ? Math.min(rawPage, 100000) : 1;
   const debouncedSearch = useManagerInfrastructureDebounce(search, 300);
 
-  // Remove legacy PII-bearing search parameters from previously shared/bookmarked URLs.
+  // Consume incoming ?search= deep links into search store, then clean PII-bearing search parameters from URL.
   useEffect(() => {
     if (searchParams.get('action') === 'add_member') return;
+    const incomingSearch = searchParams.get('search');
+    if (incomingSearch) {
+      setSearchDraft(incomingSearch);
+    }
     const piiParams = ['search', 'name', 'phone', 'email'];
     if (!piiParams.some((key) => searchParams.has(key))) return;
     const next = new URLSearchParams(searchParams.toString());
     for (const key of piiParams) next.delete(key);
     router.replace(next.toString() ? `${pathname}?${next.toString()}` : pathname, { scroll: false });
-  }, [pathname, router, searchParams]);
+  }, [pathname, router, searchParams, setSearchDraft]);
 
   const setUrlParam = useCallback((key: string, value: string | null) => {
     const current = new URLSearchParams(searchParams.toString());

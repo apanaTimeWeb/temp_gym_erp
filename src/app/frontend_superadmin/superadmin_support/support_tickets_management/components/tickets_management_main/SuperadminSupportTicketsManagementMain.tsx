@@ -47,7 +47,7 @@ export default function SuperadminSupportTicketsManagementMain() {
     </div>
     <SuperadminSupportTicketsDetailModal ticketId={vm.detailModalTicketId} onClose={() => vm.setDetailModalTicketId(null)} onReply={(ticketId) => { vm.setDetailModalTicketId(null); vm.setReplyModalTicketId(ticketId); }} />
     <SuperadminSupportTicketsReplyModal isOpen={Boolean(vm.replyModalTicketId)} onClose={() => vm.setReplyModalTicketId(null)} ticketId={vm.replyModalTicketId} />
-    {vm.assignModalTicketId ? (<div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="superadmin-ticket-assign-title" data-testid="superadmin_support_tickets-superadmin-tickets-main-superadmin_support_tickets-main-assign-dialog" ref={vm.assignDialogRef}>
+    {vm.assignModalTicketId ? (<div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="superadmin-ticket-assign-title" data-testid="superadmin_support_tickets-superadmin-tickets-main-superadmin_support_tickets-main-assign-dialog" ref={vm.assignDialogRef}>
       <div className="w-full max-w-sm space-y-4 rounded-xl border border-border bg-overlay p-6 shadow-dialog">
         <h2 id="superadmin-ticket-assign-title" className="text-base font-bold text-primary">{vm.t('ui.assign_ticket_2ce81f4')}</h2>
         <p className="text-sm text-secondary">{vm.t('ui.enter_the_name_or_email_of_the_superadmin_team_member_to_as_57eb516')}</p>
