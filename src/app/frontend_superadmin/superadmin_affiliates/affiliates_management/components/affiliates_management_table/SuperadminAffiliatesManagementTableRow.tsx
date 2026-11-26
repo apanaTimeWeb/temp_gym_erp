@@ -86,7 +86,7 @@ export default function SuperadminAffiliatesManagementTableRow({ affiliate: aff,
               <Banknote size={18}/>
             </button>)}
           <Link
-            href="/frontend_superadmin/superadmin_affiliates/affiliates_payout_history"
+            href={`/frontend_superadmin/superadmin_affiliates/affiliates_payout_history?search=${encodeURIComponent(aff.name)}`}
             onClick={(e) => e.stopPropagation()}
             className="min-w-11 min-h-11 p-1.5 text-secondary hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95 flex items-center justify-center"
             title="View Payout History"

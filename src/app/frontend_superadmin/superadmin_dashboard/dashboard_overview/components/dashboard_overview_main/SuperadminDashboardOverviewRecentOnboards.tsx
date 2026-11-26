@@ -4,6 +4,7 @@
 
 
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import Tooltip from '@/components/ui/Tooltip';
@@ -25,7 +26,16 @@ export function SuperadminDashboardOverviewRecentOnboards({ recentOnboards }: Su
     const locale = useLocale();
     const router = useRouter();
     return (<div className="bg-card border border-border rounded-xl p-6 shadow-card">
-      <h2 className="text-base font-semibold text-primary mb-6">{t('ui.recent_onboards_bc6e20c')}</h2>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-base font-semibold text-primary">{t('ui.recent_onboards_bc6e20c')}</h2>
+        <Link
+          href="/frontend_superadmin/superadmin_gyms/gyms_directory"
+          className="text-xs text-primary font-medium hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+          title="View all gyms in directory"
+        >
+          {t('ui.view_all_gyms') ?? 'View All'}
+        </Link>
+      </div>
       {recentOnboards.length === 0 ? <p className="rounded-lg border border-border bg-page p-6 text-center text-sm text-secondary" data-testid="superadmin-dashboard-recent-onboards-empty">{t('ui.no_recent_onboards')}</p> : <div className="space-y-4">
         {recentOnboards.map((tenant) => {
             const planUpper = tenant.plan?.trim().toUpperCase() ?? 'UNKNOWN';

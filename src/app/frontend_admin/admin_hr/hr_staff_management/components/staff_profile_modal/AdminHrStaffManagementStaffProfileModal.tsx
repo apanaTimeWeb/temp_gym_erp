@@ -167,14 +167,14 @@ export default function AdminHrManagementStaffProfileModal() {
                   </div>
                   <div className="flex items-center gap-1.5 shrink-0">
                     <Link
-                      href={`/frontend_admin/admin_finance/finance_salary_advance_management?search=${encodeURIComponent(editData.name)}`}
+                      href={`/frontend_admin/admin_finance/finance_salary_advance_management?search=${encodeURIComponent(editData.name || '')}`}
                       className="px-2 py-1 text-xs font-semibold rounded bg-card hover:bg-surface-hover border border-border text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                       title="Issue Salary Advance"
                     >
                       Advance
                     </Link>
                     <Link
-                      href={`/frontend_admin/admin_finance/finance_staff_ledger_management?search=${encodeURIComponent(editData.name)}`}
+                      href={`/frontend_admin/admin_finance/finance_staff_ledger_management?search=${encodeURIComponent(editData.name || '')}`}
                       className="px-2 py-1 text-xs font-semibold rounded bg-card hover:bg-surface-hover border border-border text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                       title="View Staff Ledger"
                     >

@@ -14,9 +14,9 @@ export default function SuperadminAuditComplianceDashboardSummaryCards({ data }:
   const t = useTranslations('superadmin_audit_compliance');
   const locale = useLocale();
   return <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-    <MetricCard label={t('ui.registered_tenants_90a68246')} value={formatComplianceNumber(data.summary.registeredTenants, locale)} helper={t('ui.registered_tenants_90a68246')} tone="success" data-testid="superadmin-compliance-registered-tenants"/>
-    <MetricCard label={t('ui.missing_tax_details_9a1779f3')} value={formatComplianceNumber(data.summary.missingTaxDetails, locale)} helper={t('ui.need_review_16dc4e12')} tone="warning" data-testid="superadmin-compliance-missing-tax-details"/>
+    <MetricCard label={t('ui.registered_tenants_90a68246')} value={formatComplianceNumber(data.summary.registeredTenants, locale)} helper={t('ui.registered_tenants_90a68246')} tone="success" href="/frontend_superadmin/superadmin_gyms/gyms_directory" data-testid="superadmin-compliance-registered-tenants"/>
+    <MetricCard label={t('ui.missing_tax_details_9a1779f3')} value={formatComplianceNumber(data.summary.missingTaxDetails, locale)} helper={t('ui.need_review_16dc4e12')} tone="warning" href="/frontend_superadmin/superadmin_gyms/gyms_directory" data-testid="superadmin-compliance-missing-tax-details"/>
     <MetricCard label={t('ui.documents_expiring_17fbd246')} value={formatComplianceNumber(data.summary.documentsExpiring, locale)} helper={t('ui.near_term_renewals_7804ac74')} tone="warning" data-testid="superadmin-compliance-documents-expiring"/>
-    <MetricCard label={t('ui.open_tasks_69190445')} value={formatComplianceNumber(data.summary.openComplianceTasks, locale)} helper={t('ui.compliance_work_dc69d074')} tone="danger" data-testid="superadmin-compliance-open-tasks"/>
+    <MetricCard label={t('ui.open_tasks_69190445')} value={formatComplianceNumber(data.summary.openComplianceTasks, locale)} helper={t('ui.compliance_work_dc69d074')} tone="danger" href="/frontend_superadmin/superadmin_audit_compliance/audit_compliance_global_audit_overview" data-testid="superadmin-compliance-open-tasks"/>
   </div>;
 }

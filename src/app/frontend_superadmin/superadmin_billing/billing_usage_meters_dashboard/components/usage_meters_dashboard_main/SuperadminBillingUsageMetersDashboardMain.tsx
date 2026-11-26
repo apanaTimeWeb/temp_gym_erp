@@ -7,6 +7,7 @@
  */
 // RESPONSIBILITY: Renders the SuperadminBillingUsageMetersMain component.
 import { HardDrive, MessageSquare, Users, Mail, Send, Code2 } from 'lucide-react';
+import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 
 import { SearchableDropdown } from '@/components/ui/SearchableDropdown';
@@ -76,7 +77,15 @@ export default function SuperadminBillingUsageMetersDashboardMain() {
             const mediaGb = meter.mediaGb;
             const totalStorage = dbGb + mediaGb;
             return (<div key={meter.id} className="bg-card border border-border rounded-xl p-6 shadow-card hover:shadow-card motion-safe:transition-all motion-safe:duration-base">
-            <h3 className="text-lg font-bold text-primary mb-4 truncate" title={displayValue(meter.tenantName)}>{displayValue(meter.tenantName)}</h3>
+            <h3 className="text-lg font-bold text-primary mb-4 truncate" title={displayValue(meter.tenantName)}>
+              <Link
+                href={`/frontend_superadmin/superadmin_gyms/gyms_detail/${meter.tenantId}`}
+                className="hover:underline hover:text-primary-hover transition-colors"
+                title={`View ${displayValue(meter.tenantName)} gym detail`}
+              >
+                {displayValue(meter.tenantName)}
+              </Link>
+            </h3>
             
             <div className="space-y-5" data-testid="superadmin_billing_usage_meters-superadmin-usage-meters-main-page-ready">
               {/* SMS Meter */}

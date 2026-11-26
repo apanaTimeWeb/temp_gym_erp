@@ -1,5 +1,6 @@
 // RESPONSIBILITY: Renders Superadmin Support Tickets Management Detail Modal using its declared props and feature-local hooks.
 'use client';
+import Link from 'next/link';
 import { Loader2, MessageSquare, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -76,7 +77,19 @@ export default function SuperadminSupportTicketsManagementDetailModal({ ticketId
               <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                   <dt className="text-xs font-semibold uppercase text-secondary">{t('ui.tenant')}</dt>
-                  <dd className="mt-1 text-sm text-primary">{ticket.tenantName}</dd>
+                  <dd className="mt-1 text-sm font-medium text-primary">
+                    {ticket.tenantId ? (
+                      <Link
+                        href={`/frontend_superadmin/superadmin_gyms/gyms_detail/${encodeURIComponent(ticket.tenantId)}`}
+                        className="hover:underline hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                        title="View Gym Details"
+                      >
+                        {ticket.tenantName}
+                      </Link>
+                    ) : (
+                      ticket.tenantName
+                    )}
+                  </dd>
                 </div>
                 <div>
                   <dt className="text-xs font-semibold uppercase text-secondary">{t('ui.status')}</dt>

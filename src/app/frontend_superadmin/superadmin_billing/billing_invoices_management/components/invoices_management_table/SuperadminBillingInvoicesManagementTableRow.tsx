@@ -118,7 +118,20 @@ export default function SuperadminBillingInvoicesManagementTableRow({ invoice: i
       </td>
 
       {/* 5. Plan */}
-      <td className="p-4 text-sm text-secondary border-b border-border">{displaySuperadminInvoiceValue(inv.planName)}</td>
+      <td className="p-4 text-sm text-secondary border-b border-border">
+        {inv.planName ? (
+          <Link
+            href={`/frontend_superadmin/superadmin_billing/billing_plans_management?search=${encodeURIComponent(inv.planName)}`}
+            onClick={(e) => e.stopPropagation()}
+            className="text-secondary hover:text-primary hover:underline transition-colors"
+            title={`View plan ${inv.planName}`}
+          >
+            {displaySuperadminInvoiceValue(inv.planName)}
+          </Link>
+        ) : (
+          '—'
+        )}
+      </td>
 
       {/* 6. Invoice Type */}
       <td className="p-4 text-sm text-secondary capitalize border-b border-border">{inv.invoiceType ? t(`ui.invoice_type_${String(inv.invoiceType).toLowerCase()}`) : '—'}</td>

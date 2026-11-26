@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Power, Pencil, MoreVertical, History, LogIn, Trash2 } from 'lucide-react';
+import Link from 'next/link';
+import { Power, Pencil, MoreVertical, History, LogIn, Trash2, ExternalLink, Receipt } from 'lucide-react';
 import type { Tenant } from '../types/SuperadminGymsDirectoryTenantTypes';
 
 export interface SuperadminGymsDirectoryTableRowActionsProps {
@@ -109,6 +110,24 @@ export function SuperadminGymsDirectoryTableRowActions({
               } w-48 bg-card border border-border rounded-xl shadow-2xl p-1 z-50 animate-in fade-in zoom-in-95`}
               style={{ backgroundColor: 'var(--bg-card)' }}
             >
+              <Link
+                href={`/frontend_superadmin/superadmin_gyms/gyms_detail/${encodeURIComponent(gym.id)}`}
+                onClick={() => setActiveKebabId(null)}
+                className="w-full flex items-center gap-2 px-3 py-2 text-xs font-medium text-secondary hover:text-primary hover:bg-surface-hover rounded-lg cursor-pointer"
+              >
+                <ExternalLink size={14} className="text-secondary" />
+                <span>View Gym Details</span>
+              </Link>
+
+              <Link
+                href={`/frontend_superadmin/superadmin_billing/billing_invoices_management?search=${encodeURIComponent(gymDisplayName)}`}
+                onClick={() => setActiveKebabId(null)}
+                className="w-full flex items-center gap-2 px-3 py-2 text-xs font-medium text-secondary hover:text-primary hover:bg-surface-hover rounded-lg cursor-pointer"
+              >
+                <Receipt size={14} className="text-secondary" />
+                <span>View Invoices</span>
+              </Link>
+
               <button
                 type="button"
                 onClick={(e) => {

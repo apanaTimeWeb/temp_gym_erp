@@ -3,6 +3,7 @@
 // RESPONSIBILITY: Renders and composes SuperadminAnalyticsReportsCancellationsPanel for the owning feature module; business logic and API transport remain in module-owned hooks/services.
 
 import { useTranslations, useLocale } from 'next-intl';
+import Link from 'next/link';
 import dynamic from 'next/dynamic';
 
 import { CHART_COLORS } from '@/components/ui/ChartConstants';
@@ -137,10 +138,28 @@ export function SuperadminAnalyticsReportsCancellationsPanel({
                 filteredCancellationsData.map((row) => (
                   <tr key={row.id} className="hover:bg-input motion-safe:transition-colors group">
                     <td className="sticky start-0 z-10 bg-card group-hover:bg-input border-e border-border px-4 py-3 transition-colors">
-                      <p className="font-medium text-primary">{row.gymName}</p>
+                      <Link
+                        href={`/frontend_superadmin/superadmin_gyms/gyms_directory?search=${encodeURIComponent(row.gymName)}`}
+                        className="font-medium text-primary hover:underline hover:text-primary-hover transition-colors block"
+                        title={`View ${row.gymName} in gyms directory`}
+                      >
+                        {row.gymName}
+                      </Link>
                       <p className="text-xs text-secondary">{row.ownerName}</p>
                     </td>
-                    <td className="px-4 py-3 text-secondary">{row.plan}</td>
+                    <td className="px-4 py-3 text-secondary">
+                      {row.plan ? (
+                        <Link
+                          href={`/frontend_superadmin/superadmin_billing/billing_plans_management?search=${encodeURIComponent(row.plan)}`}
+                          className="hover:underline hover:text-primary transition-colors"
+                          title={`View plan ${row.plan}`}
+                        >
+                          {row.plan}
+                        </Link>
+                      ) : (
+                        '—'
+                      )}
+                    </td>
                     <td className="px-4 py-3 text-secondary">{formatDate(row.cancelledAt)}</td>
                     <td className="px-4 py-3 text-secondary">{row.reason}</td>
                     <td className="px-4 py-3 text-danger font-medium">{SuperadminAnalyticsReportsFormatCurrency(row.mrr, currency, locale)}</td>

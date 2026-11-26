@@ -5,6 +5,7 @@
 
 import { AlertCircle, CreditCard, Building2, Activity, Users, DollarSign, Clock, CheckCircle2 } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
+import { useRouter } from 'next/navigation';
 
 import { useSuperadminDashboardOverviewDateRangeSuffix } from '@/app/frontend_superadmin/superadmin_dashboard/dashboard_overview/hooks/useSuperadminDashboardOverviewDateRangeSuffix';
 import { SuperadminDashboardFormatCurrency } from '@/app/frontend_superadmin/superadmin_dashboard/dashboard_overview/utils/SuperadminDashboardOverviewFormatCurrency';
@@ -20,8 +21,9 @@ import type { SuperadminDashboardKpiGridProps } from '@/app/frontend_superadmin/
 export function SuperadminDashboardOverviewKpiGrid({ metrics, revenueChartData, timeMultiplier, mrrLabel }: SuperadminDashboardKpiGridProps) {
     const locale = useLocale();
     const t = useTranslations('superadmin_dashboard');
+    const router = useRouter();
 
-      const dateSuffix = useSuperadminDashboardOverviewDateRangeSuffix();
+    const dateSuffix = useSuperadminDashboardOverviewDateRangeSuffix();
     const lastTwoMonths = revenueChartData.length >= 2 ? revenueChartData.slice(-2) : [];
     const mrrTrendNum = lastTwoMonths.length === 2 && lastTwoMonths[0]!.mrr > 0
         ? Math.round(((lastTwoMonths[1]!.mrr - lastTwoMonths[0]!.mrr) / lastTwoMonths[0]!.mrr) * 100)
@@ -41,7 +43,7 @@ export function SuperadminDashboardOverviewKpiGrid({ metrics, revenueChartData, 
             icon: CreditCard,
             colorClass: 'text-success',
             iconBgClass: 'bg-success-bg',
-            onClick: undefined as (() => void) | undefined,
+            onClick: () => router.push('/frontend_superadmin/superadmin_billing/billing_invoices_management'),
         },
         {
             id: 'total-gyms',
@@ -52,6 +54,7 @@ export function SuperadminDashboardOverviewKpiGrid({ metrics, revenueChartData, 
             icon: Building2,
             colorClass: 'text-primary',
             iconBgClass: 'bg-primary-subtle',
+            onClick: () => router.push('/frontend_superadmin/superadmin_gyms/gyms_directory'),
         },
         {
             id: 'active-gyms',
@@ -62,6 +65,7 @@ export function SuperadminDashboardOverviewKpiGrid({ metrics, revenueChartData, 
             icon: Activity,
             colorClass: 'text-primary',
             iconBgClass: 'bg-primary-subtle',
+            onClick: () => router.push('/frontend_superadmin/superadmin_gyms/gyms_directory?status=ACTIVE'),
         },
         {
             id: 'total-end-users',
@@ -72,6 +76,7 @@ export function SuperadminDashboardOverviewKpiGrid({ metrics, revenueChartData, 
             icon: Users,
             colorClass: 'text-purple',
             iconBgClass: 'bg-purple-bg',
+            onClick: () => router.push('/frontend_superadmin/superadmin_analytics/analytics_dashboard'),
         },
         {
             id: 'average-income-per-gym',
@@ -82,6 +87,7 @@ export function SuperadminDashboardOverviewKpiGrid({ metrics, revenueChartData, 
             icon: DollarSign,
             colorClass: 'text-success',
             iconBgClass: 'bg-success-bg',
+            onClick: () => router.push('/frontend_superadmin/superadmin_analytics/analytics_dashboard'),
         },
         {
             id: 'trial-gyms',
@@ -92,6 +98,7 @@ export function SuperadminDashboardOverviewKpiGrid({ metrics, revenueChartData, 
             icon: Clock,
             colorClass: 'text-warning',
             iconBgClass: 'bg-warning-bg',
+            onClick: () => router.push('/frontend_superadmin/superadmin_gyms/gyms_directory?planId=trial'),
         },
         {
             id: 'overdue-invoices',
@@ -102,6 +109,7 @@ export function SuperadminDashboardOverviewKpiGrid({ metrics, revenueChartData, 
             icon: AlertCircle,
             colorClass: 'text-danger',
             iconBgClass: 'bg-danger-bg',
+            onClick: () => router.push('/frontend_superadmin/superadmin_billing/billing_invoices_management?status=OVERDUE'),
         },
         {
             id: 'pending-revenue',
@@ -112,6 +120,7 @@ export function SuperadminDashboardOverviewKpiGrid({ metrics, revenueChartData, 
             icon: CreditCard,
             colorClass: 'text-warning',
             iconBgClass: 'bg-warning-bg',
+            onClick: () => router.push('/frontend_superadmin/superadmin_billing/billing_invoices_management?status=PENDING'),
         },
         {
             id: 'platform-health',
@@ -122,6 +131,7 @@ export function SuperadminDashboardOverviewKpiGrid({ metrics, revenueChartData, 
             icon: CheckCircle2,
             colorClass: healthScore !== undefined && healthScore < 80 ? 'text-warning' : 'text-success',
             iconBgClass: healthScore !== undefined && healthScore < 80 ? 'bg-warning-bg' : 'bg-success-bg',
+            onClick: () => router.push('/frontend_superadmin/superadmin_analytics/analytics_reports_health'),
         },
         {
             id: 'trials-expiring-seven-days',
@@ -132,12 +142,27 @@ export function SuperadminDashboardOverviewKpiGrid({ metrics, revenueChartData, 
             icon: AlertCircle,
             colorClass: 'text-warning',
             iconBgClass: 'bg-warning-bg',
+            onClick: () => router.push('/frontend_superadmin/superadmin_gyms/gyms_directory?planId=trial'),
         },
     ];
     return (<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
       {kpiCards.map((card) => {
             const Icon = card.icon;
-            return (<div key={card.label} onClick={card.onClick} onKeyDown={(event) => { if (card.onClick && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); card.onClick(); } }} role={card.onClick ? 'button' : undefined} tabIndex={card.onClick ? 0 : undefined} data-testid={`superadmin-dashboard-kpi-${card.id}`} className={`relative overflow-hidden bg-card border border-border rounded-xl p-6 shadow-card motion-safe:hover:-translate-y-1 motion-safe:hover:shadow-card motion-safe:transition-all motion-safe:duration-base ${card.onClick ? 'cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page' : ''}`}>
+            return (
+              <div
+                key={card.label}
+                onClick={card.onClick}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    card.onClick();
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+                data-testid={`superadmin-dashboard-kpi-${card.id}`}
+                className="relative overflow-hidden bg-card border border-border rounded-xl p-6 shadow-card motion-safe:hover:-translate-y-1 motion-safe:hover:shadow-card motion-safe:transition-all motion-safe:duration-base cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+              >
             <div className="flex items-center justify-between mb-4">
               <span className="text-secondary font-medium text-xs uppercase tracking-wider">{card.label}</span>
                 <Icon className={`w-5 h-5 ${card.colorClass}`}/>

@@ -14,6 +14,8 @@ export interface MetricCardProps {
   className?: string;
   'data-testid'?: string;
   testId?: string;
+  onClick?: () => void;
+  href?: string;
 }
 
 export function MetricCard({
@@ -27,16 +29,18 @@ export function MetricCard({
   className = '',
   'data-testid': dataTestId,
   testId,
+  onClick,
+  href,
 }: MetricCardProps) {
   const displayTitle = label || title || '';
   const displaySubtitle = helper || subtitle;
 
   const toneBorder = {
-    primary: 'hover:border-primary/50',
-    success: 'hover:border-success/50',
-    warning: 'hover:border-warning/50',
-    danger: 'hover:border-danger/50',
-    info: 'hover:border-info/50',
+    primary: 'hover:border-primary',
+    success: 'hover:border-success',
+    warning: 'hover:border-warning',
+    danger: 'hover:border-danger',
+    info: 'hover:border-info',
     default: 'hover:border-border-hover',
   }[tone];
 
@@ -49,9 +53,22 @@ export function MetricCard({
     default: 'bg-surface-hover text-secondary',
   }[tone];
 
-  return (
+  const cardContent = (
     <article
-      className={`rounded-2xl border border-border bg-card p-5 shadow-card transition-all motion-safe:duration-base ${toneBorder} ${className}`}
+      tabIndex={onClick ? 0 : undefined}
+      role={onClick ? 'button' : undefined}
+      onClick={onClick}
+      onKeyDown={
+        onClick
+          ? (e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onClick();
+              }
+            }
+          : undefined
+      }
+      className={`rounded-2xl border border-border bg-card p-5 shadow-card transition-all motion-safe:duration-base ${toneBorder} ${onClick || href ? 'cursor-pointer hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary' : ''} ${className}`}
       data-testid={dataTestId || testId}
     >
       <div className="flex items-center justify-between gap-4">
@@ -70,6 +87,16 @@ export function MetricCard({
       )}
     </article>
   );
+
+  if (href) {
+    return (
+      <a href={href} className="block no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-2xl">
+        {cardContent}
+      </a>
+    );
+  }
+
+  return cardContent;
 }
 
 export default MetricCard;

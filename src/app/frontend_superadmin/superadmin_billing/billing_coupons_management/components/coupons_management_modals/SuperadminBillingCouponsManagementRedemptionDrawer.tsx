@@ -6,6 +6,7 @@
 import { useEffect, useRef } from 'react';
 
 import { History, Loader2, X } from 'lucide-react';
+import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
 
 import SuperadminBillingCouponsStatusBadge from '@/app/frontend_superadmin/superadmin_billing/billing_coupons_management/components/coupons_management_status_badge/SuperadminBillingCouponsManagementStatusBadge';
@@ -58,7 +59,27 @@ export default function SuperadminBillingCouponsManagementRedemptionDrawer({ cou
           {(() => { if (query.isPending) { return (<div className="flex min-h-48 items-center justify-center gap-2 text-secondary" aria-busy="true" data-testid="superadmin_coupons-redemption-drawer-loading-state"><Loader2 size={18} className="motion-safe:animate-spin"/> {t('ui.loading_redemptions_b65cc1b0')}</div>); } if (query.isError) { return (<div role="alert" className="rounded-lg border border-border bg-danger-bg p-4 text-sm text-danger" data-testid="superadmin_coupons-redemption-drawer-error-state">{t('ui.unable_to_load_redemption_history_4bca1761')}<button type="button" onClick={() => void query.refetch()} className="ms-1 underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11" data-testid="superadmin_coupons-superadmin-coupons-redemption-drawer-coupons-redemption-drawer-retry">{t('ui.retry_6327b4e5')}</button></div>); } if (redemptions.length === 0) { return (<div className="rounded-lg border border-border bg-input p-8 text-center"><History size={18} className="mx-auto mb-3 text-secondary"/><p className="font-medium text-primary">{t('ui.no_redemptions_yet_465fe9ce')}</p><p className="mt-1 text-sm text-secondary">{t('ui.this_coupon_has_not_been_used_by_a_gym_c8e776d1')}</p></div>); } return (<div className="space-y-3">
               {redemptions.map((redemption) => (
                 <div key={redemption.id} className="rounded-lg border border-border bg-card p-4 shadow-card">
-                  <div className="flex items-start justify-between gap-3"><div><p className="font-medium text-primary">{redemption.tenantName}</p><p className="mt-1 text-xs text-secondary">{redemption.planName}</p></div><p className="font-semibold text-success">{SuperadminBillingCouponsFormatCurrency(redemption.discountApplied, 'INR', locale)}</p></div>
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <Link
+                        href={`/frontend_superadmin/superadmin_gyms/gyms_directory?search=${encodeURIComponent(redemption.tenantName)}`}
+                        className="font-medium text-primary hover:underline hover:text-primary-hover transition-colors"
+                        title={`View ${redemption.tenantName} in gyms directory`}
+                      >
+                        {redemption.tenantName}
+                      </Link>
+                      <p className="mt-1 text-xs text-secondary">
+                        <Link
+                          href={`/frontend_superadmin/superadmin_billing/billing_plans_management?search=${encodeURIComponent(redemption.planName)}`}
+                          className="hover:underline hover:text-primary transition-colors"
+                          title={`View ${redemption.planName} plan`}
+                        >
+                          {redemption.planName}
+                        </Link>
+                      </p>
+                    </div>
+                    <p className="font-semibold text-success">{SuperadminBillingCouponsFormatCurrency(redemption.discountApplied, 'INR', locale)}</p>
+                  </div>
                   <time className="mt-3 block text-xs text-secondary">{t('ui.redeemed_d182bd3c')}{formatSuperadminBillingCouponsDisplayDate(redemption.redeemedAt, locale)}</time>
                 </div>
               ))}
