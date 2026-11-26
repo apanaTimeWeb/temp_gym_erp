@@ -92,11 +92,11 @@ export function ManagerReportsOverviewBenchmarkingTable() {
                 return (
                   <tr
                     key={branch.gymBranch}
-                    className={`hover:bg-surface-highlight/50 transition-colors group ${
-                      isCurrent ? 'bg-primary/5 font-medium' : ''
+                    className={`hover:bg-surface-hover transition-colors group ${
+                      isCurrent ? 'bg-surface-highlight font-medium' : ''
                     }`}
                   >
-                    <td className="sticky start-0 z-10 bg-card border-e border-border py-3 px-4 text-text-primary whitespace-nowrap">
+                    <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-e border-border py-3 px-4 text-text-primary whitespace-nowrap transition-colors">
                       <div className="flex items-center gap-2">
                         {isCurrent && <CheckCircle2 size={14} className="text-primary shrink-0" />}
                         <span>{branch.gymBranch}</span>

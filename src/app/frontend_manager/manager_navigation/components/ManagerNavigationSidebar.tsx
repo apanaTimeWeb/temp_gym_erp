@@ -135,7 +135,7 @@ export default function ManagerNavigationSidebar({ isCollapsed, setIsCollapsed }
       {/* Mobile Backdrop */}
       {isMobileOpen && (
         <div aria-hidden="true" data-testid="manager_navigation-layout-backdrop-mobile-sidebar"
-          className="fixed inset-0 bg-overlay backdrop-blur-sm z-30 md:hidden motion-safe:transition-opacity motion-safe:duration-200"
+          className="fixed inset-0 bg-overlay-backdrop backdrop-blur-sm z-30 md:hidden motion-safe:transition-opacity motion-safe:duration-200"
           onClick={() => setIsMobileOpen(false)}
         />
       )}

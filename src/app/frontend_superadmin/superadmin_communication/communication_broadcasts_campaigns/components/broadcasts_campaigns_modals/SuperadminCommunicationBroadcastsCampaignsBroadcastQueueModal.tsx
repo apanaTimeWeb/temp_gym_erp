@@ -36,7 +36,7 @@ export default function SuperadminCommunicationBroadcastsCampaignsBroadcastQueue
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto p-4 bg-overlay backdrop-blur-sm" role="dialog" aria-modal="true" ref={dialogRef} aria-labelledby="superadmin-broadcast-queue-title" data-testid="superadmin_communication_broadcasts-broadcast-queue-modal-dialog">
+    <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto p-4 bg-overlay-backdrop backdrop-blur-sm" role="dialog" aria-modal="true" ref={dialogRef} aria-labelledby="superadmin-broadcast-queue-title" data-testid="superadmin_communication_broadcasts-broadcast-queue-modal-dialog">
       <div className="bg-overlay rounded-xl shadow-dialog w-full max-w-lg my-auto max-h-dialog-desktop border border-border flex flex-col overflow-hidden">
         <div className="shrink-0 px-6 py-4 bg-primary-subtle flex items-center justify-between">
           <div className="min-w-0">

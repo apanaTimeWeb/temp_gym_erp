@@ -60,7 +60,7 @@ export function ManagerReportsOverviewTrainersChart() {
         </div>
 
         <div className="p-4 rounded-xl bg-card border border-border flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-lg bg-warning-bg text-warning-text flex items-center justify-center shrink-0">
             <DollarSign size={20} strokeWidth={2} aria-hidden="true" />
           </div>
           <div>

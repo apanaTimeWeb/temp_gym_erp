@@ -34,7 +34,7 @@ export const SuperadminAffiliatesAffiliateModal: React.FC<SuperadminAffiliatesAf
     const dialogRef = useSuperadminAffiliatesManagementDialogA11y(isOpen, requestClose);
     if (!isOpen)
         return null;
-    return (<div className="fixed inset-0 bg-overlay z-40 flex items-center justify-center overflow-y-auto p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="superadmin-affiliate-modal-title" data-testid="superadmin_affiliates-superadmin-affiliates-affiliate-modal-affiliates-affiliate-modal-dialog" ref={dialogRef}>
+    return (<div className="fixed inset-0 bg-overlay-backdrop z-40 flex items-center justify-center overflow-y-auto p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="superadmin-affiliate-modal-title" data-testid="superadmin_affiliates-superadmin-affiliates-affiliate-modal-affiliates-affiliate-modal-dialog" ref={dialogRef}>
       <div className="bg-overlay border border-border rounded-xl w-full max-w-md shadow-dialog my-auto max-h-dialog-desktop flex flex-col">
         <div className="flex shrink-0 items-center justify-between px-7 py-5 border-b border-border">
           <h2 id="superadmin-affiliate-modal-title" className="text-lg font-bold text-primary">

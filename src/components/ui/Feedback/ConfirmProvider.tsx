@@ -56,7 +56,7 @@ export function ConfirmProvider({ children }: { children: React.ReactNode }) {
     <ConfirmContext.Provider value={{ confirm }}>
       {children}
       {isOpen && options && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in" role="dialog" aria-modal="true">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-overlay-backdrop p-4 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in" role="dialog" aria-modal="true">
           <div className="w-full max-w-md rounded-2xl border border-border bg-card p-6 shadow-xl motion-safe:animate-in motion-safe:zoom-in-95">
             <h3 className="text-lg font-bold text-primary">{options.title}</h3>
             <p className="mt-2 text-sm text-secondary">{options.message}</p>

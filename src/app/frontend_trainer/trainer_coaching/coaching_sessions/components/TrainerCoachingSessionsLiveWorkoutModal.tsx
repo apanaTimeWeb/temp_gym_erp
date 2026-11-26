@@ -158,7 +158,7 @@ export default function TrainerCoachingSessionsLiveWorkoutModal({
       role="dialog"
       aria-modal="true"
       aria-labelledby="live-workout-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-4 overflow-y-auto"
       data-testid={testId}
     >
       <div className="bg-card border border-border rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden my-auto">

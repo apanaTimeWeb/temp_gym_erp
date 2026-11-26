@@ -31,7 +31,7 @@ export default function SuperadminGymsDirectoryGymDeleteModal() {
         return null;
     const isDeleteEnabled = confirmText === t('ui.delete_32f68a60') && actionLoadingId !== gymToDelete.id;
     const isDeleting = actionLoadingId === gymToDelete.id;
-    return (<div ref={dialogRef} tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay p-4" role="dialog" aria-modal="true" aria-labelledby="superadmin-gyms-delete-dialog-title" data-testid="superadmin_gyms-gym-delete-modal-dialog">
+    return (<div ref={dialogRef} tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay-backdrop backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-labelledby="superadmin-gyms-delete-dialog-title" data-testid="superadmin_gyms-gym-delete-modal-dialog">
       <div className="my-auto flex max-h-dialog-desktop w-full max-w-md flex-col rounded-xl border border-border bg-overlay p-7 shadow-dialog relative">
         <button type="button" onClick={closeDeleteModal} aria-label={t('ui.close_modal_a2071564')} className="absolute top-5 end-5 min-h-11 min-w-11 text-secondary hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" disabled={isDeleting} data-testid="superadmin_gyms-superadmin-gyms-gym-delete-modal-gym-delete-modal-button">
           <X size={18}/>

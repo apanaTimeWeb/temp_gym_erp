@@ -89,7 +89,7 @@ export const SuperadminCommunicationBroadcastsBroadcastModal: React.FC<Superadmi
     const previewRecipientCount = recipientCount ?? 0;
     if (!isOpen)
         return null;
-    return (<div ref={dialogRef} className="fixed inset-0 bg-overlay z-40 flex items-center justify-center overflow-y-auto p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="superadmin-broadcast-modal-title" data-testid="superadmin_communication_broadcasts-broadcast-modal-dialog">
+    return (<div ref={dialogRef} className="fixed inset-0 bg-overlay-backdrop z-40 flex items-center justify-center overflow-y-auto p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="superadmin-broadcast-modal-title" data-testid="superadmin_communication_broadcasts-broadcast-modal-dialog">
       <div className="bg-overlay border border-border rounded-xl w-full max-w-md shadow-dialog flex flex-col my-auto max-h-dialog-desktop">
         <div className="flex shrink-0 items-center justify-between px-7 py-5 border-b border-border">
           <h2 id="superadmin-broadcast-modal-title" className="text-lg font-bold text-primary">{isEditMode ? t('ui.edit_broadcast_4c7d1a2e') : t('ui.new_broadcast_6b2e9d1c')}</h2>

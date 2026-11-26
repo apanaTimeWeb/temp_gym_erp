@@ -125,7 +125,7 @@ export default function SuperadminBillingPlansManagementPlanEditModal() {
         applySuperadminBillingPlansManagementFormApiErrors(error, setError, ['name', 'priceMonthly', 'priceAnnual', 'setupFee', 'currency', 'maxMembers', 'maxStaff', 'maxBranches', 'dbLimitGb', 'binaryLimitGb', 'features.*.value']);
       }
     };
-    return (<div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-labelledby="superadmin-plans-edit-title" tabIndex={-1} ref={dialogRef} data-testid="superadmin_billing_plans-plan-edit-modal-dialog">
+    return (<div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay-backdrop backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-labelledby="superadmin-plans-edit-title" tabIndex={-1} ref={dialogRef} data-testid="superadmin_billing_plans-plan-edit-modal-dialog">
       <div className="bg-overlay border border-border rounded-xl w-full max-w-2xl my-auto max-h-dialog-desktop overflow-hidden flex flex-col shadow-dialog">
         <div className="flex shrink-0 items-center justify-between p-6 border-b border-border">
           <h2 id="superadmin-plans-edit-title" className="text-xl font-bold text-primary">{t('ui.edit_subscription_plan_396f9001')}</h2>

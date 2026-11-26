@@ -38,7 +38,7 @@ export default function SuperadminGymsDirectoryGymWhatsappModal() {
     const dialogRef = useSuperadminGymsDirectoryDialogA11y(isWhatsappModalOpen && Boolean(selectedGym), closeWhatsappModal);
     if (!isWhatsappModalOpen || !selectedGym)
         return null;
-    return (<div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay p-4" role="dialog" aria-modal="true" aria-labelledby="superadmin-gym-whatsapp-title" data-testid="superadmin_gyms-gym-whatsapp-modal-dialog" ref={dialogRef}>
+    return (<div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay-backdrop backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-labelledby="superadmin-gym-whatsapp-title" data-testid="superadmin_gyms-gym-whatsapp-modal-dialog" ref={dialogRef}>
       <div className="my-auto flex max-h-dialog-desktop w-full max-w-md flex-col rounded-xl border border-border bg-overlay p-7 shadow-dialog relative">
         <button type="button" onClick={closeWhatsappModal} aria-label={t('ui.cancel_ea478870')} className="min-h-11 min-w-11 absolute top-5 end-5 text-secondary hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="superadmin_gyms-superadmin-gyms-gym-whatsapp-modal-gym-whatsapp-modal-button">
           <X size={18} aria-hidden="true"/>

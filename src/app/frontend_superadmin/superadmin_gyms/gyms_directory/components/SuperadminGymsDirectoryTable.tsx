@@ -176,7 +176,7 @@ export default function SuperadminGymsDirectoryTable() {
 
   const renderSortIndicator = (col: string) => {
     if (effectiveSortBy !== col) return <ArrowUpDown size={12} className="text-secondary" aria-hidden="true" />;
-    return effectiveSortOrder === 'asc' ? <ArrowUp size={12} className="text-yellow-400 font-bold" aria-hidden="true" /> : <ArrowDown size={12} className="text-yellow-400 font-bold" aria-hidden="true" />;
+    return effectiveSortOrder === 'asc' ? <ArrowUp size={12} className="text-primary font-bold" aria-hidden="true" /> : <ArrowDown size={12} className="text-primary font-bold" aria-hidden="true" />;
   };
 
   return (

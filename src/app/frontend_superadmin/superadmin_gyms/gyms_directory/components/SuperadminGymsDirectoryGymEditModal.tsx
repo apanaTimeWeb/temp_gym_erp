@@ -48,7 +48,7 @@ export default function SuperadminGymsDirectoryGymEditModal() {
     const [showPassword, setShowPassword] = React.useState(false);
     if (!isEditModalOpen || !selectedGym)
         return null;
-    return (<div ref={dialogRef} tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay p-4" role="dialog" aria-modal="true" aria-labelledby="superadmin-gyms-edit-dialog-title" data-testid="superadmin_gyms-gym-edit-modal-dialog">
+    return (<div ref={dialogRef} tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay-backdrop backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-labelledby="superadmin-gyms-edit-dialog-title" data-testid="superadmin_gyms-gym-edit-modal-dialog">
       <div className="my-auto flex max-h-dialog-desktop w-full max-w-md flex-col rounded-xl border border-border bg-overlay p-7 shadow-dialog relative">
         <button type="button" onClick={closeEditModal} aria-label={t('ui.close_dialog')} className="absolute top-5 end-5 min-h-11 min-w-11 text-secondary hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="superadmin_gyms-superadmin-gyms-gym-edit-modal-gym-edit-modal-button">
           <X size={18}/>

@@ -57,8 +57,8 @@ export function ManagerReportsOverviewRevenueTable() {
                 </tr>
               ) : (
                 data.map(d => (
-                  <tr key={d.month} className="hover:bg-surface-highlight/50 transition-colors group">
-                    <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-3.5 text-sm font-medium text-text-primary whitespace-nowrap group-hover:bg-surface-highlight/50 transition-colors">
+                  <tr key={d.month} className="hover:bg-surface-hover transition-colors group">
+                    <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-3.5 text-sm font-medium text-text-primary whitespace-nowrap group-hover:bg-surface-hover transition-colors">
                       <div className="flex items-center gap-2">
                         <span>{d.month}</span>
                         <CopyButton value={d.month} />

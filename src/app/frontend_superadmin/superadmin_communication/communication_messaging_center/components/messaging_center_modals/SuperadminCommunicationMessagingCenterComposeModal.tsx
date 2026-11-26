@@ -53,7 +53,7 @@ export function SuperadminCommunicationMessagingCenterComposeModal({ tenants, is
   };
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="superadmin-compose-title" data-testid="superadmin_communication_messaging-superadmin-messaging-compose-modal-messaging-compose-modal-dialog" ref={dialogRef}>
+    <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay-backdrop p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="superadmin-compose-title" data-testid="superadmin_communication_messaging-superadmin-messaging-compose-modal-messaging-compose-modal-dialog" ref={dialogRef}>
       <div className="my-auto flex max-h-dialog-desktop w-full max-w-lg flex-col rounded-xl border border-border bg-overlay shadow-dialog">
         <div className="flex shrink-0 items-center justify-between p-6 border-b border-border">
           <h2 id="superadmin-compose-title" className="text-lg font-bold text-primary">{t('ui.compose_message_2025ce6')}</h2>

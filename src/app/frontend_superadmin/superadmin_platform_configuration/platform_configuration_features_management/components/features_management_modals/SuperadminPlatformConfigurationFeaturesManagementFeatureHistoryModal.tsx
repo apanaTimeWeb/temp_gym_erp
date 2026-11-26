@@ -24,7 +24,7 @@ export default function SuperadminPlatformConfigurationFeaturesManagementFeature
   const dialogRef = useSuperadminPlatformConfigurationFeaturesManagementDialogA11y(isOpen && Boolean(flag), onClose);
   if (!isOpen || !flag) return null;
   return (
-    <div className="fixed inset-0 z-40 flex justify-end overflow-y-auto bg-overlay backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in motion-safe:duration-base">
+    <div className="fixed inset-0 z-40 flex justify-end overflow-y-auto bg-overlay-backdrop backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in motion-safe:duration-base">
       <div className="flex h-full w-full max-w-md flex-col border-s border-border bg-overlay shadow-dialog motion-safe:animate-in motion-safe:slide-in-from-right-full motion-safe:duration-slow" role="dialog" aria-modal="true" aria-labelledby="superadmin-feature-history-title" data-testid="superadmin_platform_configuration_features-superadmin-features-feature-history-modal-feature-history-modal-dialog" ref={dialogRef}>
         <div className="shrink-0 flex items-center justify-between border-b border-border p-6">
           <div>

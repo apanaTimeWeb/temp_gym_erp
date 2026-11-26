@@ -84,7 +84,7 @@ export default function ManagerBusinessSettingsMain() {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <span className="inline-flex items-center gap-1 px-3 py-1 bg-success-bg text-success-text border border-success rounded-lg text-xs font-semibold">
+                <span className="inline-flex items-center gap-1 px-3 py-1 bg-success-bg text-success-text border border-success/30 rounded-lg text-xs font-semibold">
                   <CheckCircle2 size={14} />
                   <span>License Active</span>
                 </span>
@@ -121,7 +121,7 @@ export default function ManagerBusinessSettingsMain() {
                   <span className="text-xs text-text-secondary">/ 25 Seats</span>
                 </div>
                 <div className="w-full bg-card rounded-full h-2 overflow-hidden border border-border">
-                  <div className="bg-success-text h-2 rounded-full" style={{ width: '72%' }} />
+                  <div className="bg-success h-2 rounded-full" style={{ width: '72%' }} />
                 </div>
                 <p className="text-[11px] text-text-secondary">7 staff seats available</p>
               </div>
@@ -136,7 +136,7 @@ export default function ManagerBusinessSettingsMain() {
                   <span className="text-xs text-text-secondary">/ 50 GB</span>
                 </div>
                 <div className="w-full bg-card rounded-full h-2 overflow-hidden border border-border">
-                  <div className="bg-info-text h-2 rounded-full" style={{ width: '25%' }} />
+                  <div className="bg-info h-2 rounded-full" style={{ width: '25%' }} />
                 </div>
                 <p className="text-[11px] text-text-secondary">37.6 GB high-speed cloud storage free</p>
               </div>

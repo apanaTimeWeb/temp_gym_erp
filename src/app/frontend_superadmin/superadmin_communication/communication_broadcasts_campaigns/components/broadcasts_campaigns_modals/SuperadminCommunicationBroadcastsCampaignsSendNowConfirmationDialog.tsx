@@ -57,7 +57,7 @@ export default function SuperadminCommunicationBroadcastsCampaignsSendNowConfirm
     : t('ui.send_now_confirmation_audience_all');
   const canSend = phrase === 'SEND' && !isPending;
 
-  return <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay p-4" data-testid="superadmin_communication_broadcasts-send-now-dialog-backdrop">
+  return <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay-backdrop backdrop-blur-sm p-4" data-testid="superadmin_communication_broadcasts-send-now-dialog-backdrop">
     <section ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="superadmin-broadcast-send-now-title" aria-describedby="superadmin-broadcast-send-now-description" className="my-auto flex max-h-dialog-desktop w-full max-w-lg flex-col rounded-xl border border-border bg-overlay shadow-dialog">
       <div className="min-h-0 flex-1 overflow-y-auto custom-scrollbar p-6">
         <div className="mb-4 flex items-start gap-3">

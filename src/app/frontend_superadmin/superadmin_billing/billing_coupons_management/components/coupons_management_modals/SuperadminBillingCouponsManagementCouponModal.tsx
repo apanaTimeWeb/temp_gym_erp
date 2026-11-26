@@ -31,7 +31,7 @@ export const SuperadminBillingCouponsCouponModal: React.FC<SuperadminBillingCoup
     useSuperadminBillingCouponsManagementDialogFocus(isOpen, dialogRef, onClose);
     if (!isOpen)
         return null;
-    return (<div ref={dialogRef} tabIndex={-1} aria-labelledby="superadmin-coupons-create-title" className="fixed inset-0 bg-overlay z-40 flex items-center justify-center overflow-y-auto p-4 backdrop-blur-sm" role="dialog" aria-modal="true" data-testid="superadmin_coupons-coupon-modal-dialog">
+    return (<div ref={dialogRef} tabIndex={-1} aria-labelledby="superadmin-coupons-create-title" className="fixed inset-0 bg-overlay-backdrop z-40 flex items-center justify-center overflow-y-auto p-4 backdrop-blur-sm" role="dialog" aria-modal="true" data-testid="superadmin_coupons-coupon-modal-dialog">
       <div className="bg-overlay border border-border rounded-xl w-full max-w-md shadow-dialog my-auto max-h-dialog-desktop flex flex-col">
         <div className="flex shrink-0 items-center justify-between px-7 py-5 border-b border-border">
           <h2 id="superadmin-coupons-create-title" className="text-lg font-bold text-primary">{t('ui.create_global_coupon_53ce473c')}</h2>
