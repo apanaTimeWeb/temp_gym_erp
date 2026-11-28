@@ -47,35 +47,37 @@ export default function SuperadminSystemOpsMigrationsMain() {
     </div>);
   }
 
-  return (<div className="space-y-6 w-full">
-    <div className="flex flex-col gap-4 mb-8 md:flex-row md:items-center md:justify-between">
-      <div>
+  return (<div className="space-y-5 w-full">
+    <section className="relative overflow-hidden rounded-2xl border border-blue-500/35 bg-card dark:bg-gradient-to-br dark:from-[#0E2438] dark:via-[#12192B] dark:to-[#0C1322] p-5 sm:p-6 shadow-card flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+      <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#3B82F6] via-[#38BDF8] to-[#10B981]" />
+      <div className="min-w-0">
         <h1 className="superadmin-page-title text-primary">{vm.t('ui.schema_rollouts_af7888a')}</h1>
-        <p className="text-secondary mt-1">{vm.t('ui.manage_and_track_database_schema_migrations_across_a_e149a61')}</p>
+        <p className="text-secondary text-sm mt-1">{vm.t('ui.manage_and_track_database_schema_migrations_across_a_e149a61')}</p>
       </div>
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-start">
+      <div className="flex flex-col gap-2.5 sm:flex-row sm:items-start shrink-0">
         <div>
           <label htmlFor="superadmin-migration-version" className="sr-only">{vm.t('ui.target_schema_version_8f3ab78')}</label>
-          <input id="superadmin-migration-version" type="text" value={vm.versionInput} onChange={(event) => vm.setVersionInput(event.target.value)} placeholder={vm.t('ui.e_g_v1_6_0_b356f2d')} aria-invalid={Boolean(vm.validationMessage)} aria-describedby={vm.validationMessage ? 'superadmin-migration-version-error' : undefined} className="min-h-11 w-40 px-3 py-2 bg-input border border-border rounded-lg text-sm text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base ease-in-out" data-testid="superadmin_system_ops_migrations-superadmin-system-ops-migrations-main-superadmin_system_ops_migrations-migrations-main-version" />
+          <input id="superadmin-migration-version" type="text" value={vm.versionInput} onChange={(event) => vm.setVersionInput(event.target.value)} placeholder={vm.t('ui.e_g_v1_6_0_b356f2d')} aria-invalid={Boolean(vm.validationMessage)} aria-describedby={vm.validationMessage ? 'superadmin-migration-version-error' : undefined} className="min-h-10 w-full sm:w-44 px-3 py-2 bg-input border border-border rounded-xl text-sm text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all" data-testid="superadmin_system_ops_migrations-superadmin-system-ops-migrations-main-superadmin_system_ops_migrations-migrations-main-version" />
           {vm.validationMessage ? <p id="superadmin-migration-version-error" className="mt-1 text-xs text-danger" role="alert" data-testid="superadmin_system_ops_migrations-superadmin-system-ops-migrations-main-superadmin_system_ops_migrations-migrations-main-validation">{vm.validationMessage}</p> : null}
         </div>
-        <button type="button" onClick={() => void vm.handleRollout()} disabled={vm.isDeploying} className="min-h-11 min-w-40 flex items-center justify-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg font-medium hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:active:scale-95" data-testid="superadmin_system_ops_migrations-superadmin-system-ops-migrations-main-migrations-main-action-1">
-          {vm.isDeploying ? <Loader2 size={18} strokeWidth={2} className="motion-safe:animate-spin" aria-hidden="true" /> : <Database size={18} strokeWidth={2} aria-hidden="true" />}
+        <button type="button" onClick={() => void vm.handleRollout()} disabled={vm.isDeploying} className="min-h-10 flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF5A1F] to-[#F97316] hover:brightness-110 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-[0_4px_14px_rgba(255,90,31,0.3)] disabled:opacity-50 disabled:cursor-not-allowed motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:active:scale-95 cursor-pointer" data-testid="superadmin_system_ops_migrations-superadmin-system-ops-migrations-main-migrations-main-action-1">
+          {vm.isDeploying ? <Loader2 size={16} strokeWidth={2.2} className="motion-safe:animate-spin" aria-hidden="true" /> : <Database size={16} strokeWidth={2.2} aria-hidden="true" />}
           {vm.isDeploying ? vm.t('ui.deploying') : vm.t('ui.deploy_new_schema_2caa745')}
         </button>
       </div>
-    </div>
+    </section>
 
-    <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden flex flex-col">
+    <div className="relative bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-blue-500/30 rounded-2xl shadow-card overflow-hidden flex flex-col">
+      <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#3B82F6] via-[#38BDF8] to-[#FF5A1F] z-30" />
       <div className="overflow-x-auto flex-1">
         <table className={`w-full text-start border-collapse ${MOBILE_CARD_TABLE_CLASSES}`}>
-          <thead>
-            <tr className="bg-primary-subtle border-b border-border" data-testid="superadmin_system_ops_migrations-superadmin-system-ops-migrations-main-migrations-main-action-2">
-              <th scope="col" className="sticky start-0 z-20 bg-primary-subtle border-b border-e border-border px-6 py-3 text-xs font-bold uppercase tracking-wider text-secondary text-start">{vm.t('ui.version')}</th>
-              <th scope="col" className="border-b border-border px-6 py-3 text-xs font-bold uppercase tracking-wider text-secondary text-start">{vm.t('ui.description')}</th>
-              <th scope="col" className="border-b border-border px-6 py-3 text-xs font-bold uppercase tracking-wider text-secondary text-start">{vm.t('ui.target')}</th>
-              <th scope="col" className="border-b border-border px-6 py-3 text-xs font-bold uppercase tracking-wider text-secondary text-start">{vm.t('ui.status')}</th>
-              <th scope="col" className="border-b border-border px-6 py-3 text-xs font-bold uppercase tracking-wider text-secondary text-start">{vm.t('ui.applied_date_3a20841')}</th>
+          <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10">
+            <tr className="border-b border-border dark:border-white/10" data-testid="superadmin_system_ops_migrations-superadmin-system-ops-migrations-main-migrations-main-action-2">
+              <th scope="col" className="sticky start-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-e border-border dark:border-white/10 px-6 py-3.5 text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300 text-start">{vm.t('ui.version')}</th>
+              <th scope="col" className="border-b border-border dark:border-white/10 px-6 py-3.5 text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300 text-start">{vm.t('ui.description')}</th>
+              <th scope="col" className="border-b border-border dark:border-white/10 px-6 py-3.5 text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300 text-start">{vm.t('ui.target')}</th>
+              <th scope="col" className="border-b border-border dark:border-white/10 px-6 py-3.5 text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300 text-start">{vm.t('ui.status')}</th>
+              <th scope="col" className="border-b border-border dark:border-white/10 px-6 py-3.5 text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300 text-start">{vm.t('ui.applied_date_3a20841')}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border">

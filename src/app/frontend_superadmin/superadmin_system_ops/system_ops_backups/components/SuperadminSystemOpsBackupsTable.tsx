@@ -103,9 +103,9 @@ export default function SuperadminSystemOpsBackupsTable({
       )}
       <div className="overflow-x-auto flex-1">
         <table className={`w-full text-start border-collapse min-w-full ${MOBILE_CARD_TABLE_CLASSES}`}>
-          <thead className="sticky top-0 z-20 bg-primary-subtle border-b border-border shadow-xs">
-            <tr className="bg-primary-subtle border-b border-border text-sm" data-testid="superadmin_system_ops_backups-superadmin-system-ops-backups-table-backups-table-action-1">
-              <th className="sticky start-0 z-20 bg-primary-subtle border-b border-border w-12 px-4 py-3 text-center">
+          <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10 shadow-[0_2px_10px_rgba(0,0,0,0.12)]">
+            <tr className="border-b border-border dark:border-white/10 text-sm" data-testid="superadmin_system_ops_backups-superadmin-system-ops-backups-table-backups-table-action-1">
+              <th className="sticky start-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10 w-12 px-4 py-3.5 text-center">
                 <input
                   type="checkbox"
                   aria-label={t('ui.select_all_backups') ?? 'Select all backups'}
@@ -116,15 +116,15 @@ export default function SuperadminSystemOpsBackupsTable({
                   data-testid="superadmin_system_ops_backups-table-select-all"
                 />
               </th>
-              <th className="sticky start-12 z-20 bg-primary-subtle border-b border-e border-border px-4 py-3 font-bold text-secondary text-xs uppercase tracking-wider text-start">
+              <th className="sticky start-12 z-20 bg-slate-100 dark:bg-[#152038] border-b border-e border-border dark:border-white/10 px-4 py-3.5 font-bold text-secondary dark:text-slate-300 text-[11px] uppercase tracking-wider text-start">
                 {t('ui.backup_id_f321e1e')}
               </th>
-              <th className="border-b border-border px-4 py-3 font-bold text-secondary text-xs uppercase tracking-wider text-start">{t('ui.gym_7af44a9')}</th>
-              <th className="border-b border-border px-4 py-3 font-bold text-secondary text-xs uppercase tracking-wider text-start">{t('ui.database_name_9627a1b')}</th>
-              <th className="border-b border-border px-4 py-3 font-bold text-secondary text-xs uppercase tracking-wider text-start">{t('ui.size_mb_1e94325')}</th>
-              <th className="border-b border-border px-4 py-3 font-bold text-secondary text-xs uppercase tracking-wider text-start">{t('ui.status_b2c5243')}</th>
-              <th className="border-b border-border px-4 py-3 font-bold text-secondary text-xs uppercase tracking-wider text-start">{t('ui.timestamp_4442a67')}</th>
-              <th className="border-b border-border px-4 py-3 font-bold text-secondary text-xs uppercase tracking-wider text-end">{t('ui.actions_1e45db1')}</th>
+              <th className="border-b border-border dark:border-white/10 px-4 py-3.5 font-bold text-secondary dark:text-slate-300 text-[11px] uppercase tracking-wider text-start">{t('ui.gym_7af44a9')}</th>
+              <th className="border-b border-border dark:border-white/10 px-4 py-3.5 font-bold text-secondary dark:text-slate-300 text-[11px] uppercase tracking-wider text-start">{t('ui.database_name_9627a1b')}</th>
+              <th className="border-b border-border dark:border-white/10 px-4 py-3.5 font-bold text-secondary dark:text-slate-300 text-[11px] uppercase tracking-wider text-start">{t('ui.size_mb_1e94325')}</th>
+              <th className="border-b border-border dark:border-white/10 px-4 py-3.5 font-bold text-secondary dark:text-slate-300 text-[11px] uppercase tracking-wider text-start">{t('ui.status_b2c5243')}</th>
+              <th className="border-b border-border dark:border-white/10 px-4 py-3.5 font-bold text-secondary dark:text-slate-300 text-[11px] uppercase tracking-wider text-start">{t('ui.timestamp_4442a67')}</th>
+              <th className="border-b border-border dark:border-white/10 px-4 py-3.5 font-bold text-secondary dark:text-slate-300 text-[11px] uppercase tracking-wider text-end">{t('ui.actions_1e45db1')}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border">

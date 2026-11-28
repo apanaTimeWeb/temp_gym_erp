@@ -143,3 +143,5 @@ export function MetricCard({
 
   return cardContent;
 }
+
+export default MetricCard;

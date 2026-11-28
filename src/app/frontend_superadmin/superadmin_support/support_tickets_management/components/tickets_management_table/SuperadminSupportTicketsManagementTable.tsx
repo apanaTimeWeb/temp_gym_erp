@@ -123,9 +123,9 @@ export default function SuperadminSupportTicketsManagementTable({
       )}
       <div className="overflow-x-auto flex-1">
         <table className={`w-full text-start border-collapse min-w-max ${MOBILE_CARD_TABLE_CLASSES}`}>
-          <thead className="sticky top-0 z-20 bg-primary-subtle border-b border-border shadow-xs">
-            <tr className="bg-primary-subtle border-b border-border text-sm" data-testid="superadmin_support_tickets-superadmin-tickets-table-tickets-table-action-1">
-              <th className="sticky start-0 z-20 bg-primary-subtle border-b border-border w-12 px-4 py-3 text-center">
+          <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10 shadow-[0_2px_10px_rgba(0,0,0,0.12)]">
+            <tr className="border-b border-border dark:border-white/10 text-sm" data-testid="superadmin_support_tickets-superadmin-tickets-table-tickets-table-action-1">
+              <th className="sticky start-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10 w-12 px-4 py-3.5 text-center">
                 <input
                   type="checkbox"
                   aria-label={t('ui.select_all_tickets') ?? 'Select all tickets'}
@@ -136,16 +136,16 @@ export default function SuperadminSupportTicketsManagementTable({
                   data-testid="superadmin_support_tickets-table-select-all"
                 />
               </th>
-              <th className="sticky start-12 z-20 bg-primary-subtle border-b border-e border-border px-4 py-3 text-start font-bold text-xs uppercase tracking-wider text-secondary">
+              <th className="sticky start-12 z-20 bg-slate-100 dark:bg-[#152038] border-b border-e border-border dark:border-white/10 px-4 py-3.5 text-start font-bold text-[11px] uppercase tracking-wider text-secondary dark:text-slate-300">
                 {t('ui.ticket_id_bfe2ba9')}
               </th>
-              <th className="px-4 py-3 font-bold text-secondary text-start text-xs uppercase tracking-wider">{t('ui.gym_4f5e8a8')}</th>
-              <th className="px-4 py-3 font-bold text-secondary text-start text-xs uppercase tracking-wider">{t('ui.subject_5f39e42')}</th>
-              <th className="px-4 py-3 font-bold text-secondary text-start text-xs uppercase tracking-wider">{t('ui.priority_292b027')}</th>
-              <th className="px-4 py-3 font-bold text-secondary text-start text-xs uppercase tracking-wider">{t('ui.status_b9a439d')}</th>
-              <th className="px-4 py-3 font-bold text-secondary text-start text-xs uppercase tracking-wider">{t('ui.response_time_22cd6ee')}</th>
-              <th className="px-4 py-3 font-bold text-secondary text-start text-xs uppercase tracking-wider">{t('ui.last_updated_a6d2b1f')}</th>
-              <th className="px-4 py-3 font-bold text-secondary text-end text-xs uppercase tracking-wider">{t('ui.actions_67b65eb')}</th>
+              <th className="px-4 py-3.5 font-bold text-secondary dark:text-slate-300 text-start text-[11px] uppercase tracking-wider">{t('ui.gym_4f5e8a8')}</th>
+              <th className="px-4 py-3.5 font-bold text-secondary dark:text-slate-300 text-start text-[11px] uppercase tracking-wider">{t('ui.subject_5f39e42')}</th>
+              <th className="px-4 py-3.5 font-bold text-secondary dark:text-slate-300 text-start text-[11px] uppercase tracking-wider">{t('ui.priority_292b027')}</th>
+              <th className="px-4 py-3.5 font-bold text-secondary dark:text-slate-300 text-start text-[11px] uppercase tracking-wider">{t('ui.status_b9a439d')}</th>
+              <th className="px-4 py-3.5 font-bold text-secondary dark:text-slate-300 text-start text-[11px] uppercase tracking-wider">{t('ui.response_time_22cd6ee')}</th>
+              <th className="px-4 py-3.5 font-bold text-secondary dark:text-slate-300 text-start text-[11px] uppercase tracking-wider">{t('ui.last_updated_a6d2b1f')}</th>
+              <th className="px-4 py-3.5 font-bold text-secondary dark:text-slate-300 text-end text-[11px] uppercase tracking-wider">{t('ui.actions_67b65eb')}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border">

@@ -36,7 +36,8 @@ export default function SuperadminSupportTicketsManagementMain() {
   return (<div className="space-y-6" data-testid="superadmin_support_tickets-superadmin-tickets-main-page-ready">
     {vm.closeError ? <p role="alert" className="rounded-lg border border-danger bg-danger-bg px-4 py-3 text-sm text-danger" data-testid="superadmin_support_tickets-superadmin-tickets-main-close-error">{vm.t('ui.action_failed_retry')}</p> : null}
     <SuperadminSupportTicketsHeader search={vm.search} setSearch={vm.setSearch} showFilter={vm.showFilter} setShowFilter={vm.setShowFilter} statusFilter={vm.statusFilter} setStatusFilter={vm.setStatusFilter} priorityFilter={vm.priorityFilter} setPriorityFilter={vm.setPriorityFilter} onFilterChange={() => vm.setCurrentPage(1)} />
-    <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden flex flex-col min-h-96">
+    <div className="relative bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-rose-500/30 rounded-2xl shadow-card overflow-hidden flex flex-col min-h-96">
+      <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#FB7185] via-[#FF5A1F] to-[#38BDF8] z-30" />
       <SuperadminSupportTicketsManagementErrorBoundary variant="inline"><SuperadminSupportTicketsTable tickets={vm.paginatedTickets} onInspect={vm.setDetailModalTicketId} onReply={vm.setReplyModalTicketId} onClose={vm.handleCloseTicket} onAssign={vm.handleOpenAssign} /></SuperadminSupportTicketsManagementErrorBoundary>
       <div className="border-t border-border px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-card">
         <p className="text-xs text-secondary" aria-live="polite">

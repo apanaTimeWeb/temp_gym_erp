@@ -54,24 +54,28 @@ export default function SuperadminPlatformConfigurationWhiteLabelingSettingsMain
   if (isError) return <SuperadminPlatformConfigurationWhiteLabelingErrorState onRetry={() => void refetch()} />;
 
   return (
-    <div className="space-y-6" data-testid="superadmin_platform_configuration_white_labeling-superadmin-white-labeling-main-page-ready">
-      <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-        <div>
-          <h1 className="flex items-center gap-2 text-2xl font-bold text-primary"><Globe size={18} className="text-primary" aria-hidden="true"/>{t('ui.white_labeling_amp_domains_742e46bf')}</h1>
+    <div className="space-y-5" data-testid="superadmin_platform_configuration_white_labeling-superadmin-white-labeling-main-page-ready">
+      <section className="relative overflow-hidden rounded-2xl border border-orange-500/35 bg-card dark:bg-gradient-to-br dark:from-[#291514] dark:via-[#12192B] dark:to-[#0C1322] p-5 sm:p-6 shadow-card flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+        <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#FB923C] via-[#FF5A1F] to-[#38BDF8]" />
+        <div className="min-w-0">
+          <h1 className="flex items-center gap-2.5 superadmin-page-title text-primary">
+            <span className="p-2 rounded-xl border border-orange-500/35 bg-orange-500/15 text-primary shrink-0" aria-hidden="true"><Globe size={18} strokeWidth={2.2} /></span>
+            <span className="truncate">{t('ui.white_labeling_amp_domains_742e46bf')}</span>
+          </h1>
           <p className="mt-1 text-sm text-secondary">{t('ui.manage_custom_domains_and_branding_for_tenan_26c96fd4')}</p>
         </div>
-      </div>
+      </section>
 
-      <div className="flex flex-col items-center gap-4 rounded-xl border border-border bg-card p-4 sm:flex-row">
+      <div className="flex flex-col items-center gap-3 rounded-2xl border border-border dark:border-white/10 bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] p-4 shadow-card sm:flex-row">
         <div className="relative w-full flex-1">
-          <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary" aria-hidden="true"/>
+          <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary" aria-hidden="true"/>
           <label htmlFor="superadmin-white-labeling-search" className="sr-only">{t('ui.search_by_gym_name_or_domain_d96770fb')}</label>
-          <input id="superadmin-white-labeling-search" type="search" placeholder={t('ui.search_by_gym_name_or_domain_91307363')} value={search} onChange={(event) => setState({ search: normalizeWhiteLabelSearch(event.target.value) })} className="w-full rounded-lg border border-border bg-input py-2 ps-9 pe-4 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base min-h-11"  data-testid="superadmin_platform_configuration_white_labeling-superadmin-white-labeling-main-superadmin-white-labeling-search"/>
+          <input id="superadmin-white-labeling-search" type="search" placeholder={t('ui.search_by_gym_name_or_domain_91307363')} value={search} onChange={(event) => setState({ search: normalizeWhiteLabelSearch(event.target.value) })} className="w-full rounded-xl border border-border bg-input py-2 ps-9 pe-4 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base min-h-10"  data-testid="superadmin_platform_configuration_white_labeling-superadmin-white-labeling-main-superadmin-white-labeling-search"/>
         </div>
         <div className="flex w-full items-center gap-2 sm:w-auto">
-          <Filter size={18} className="shrink-0 text-secondary" aria-hidden="true"/>
+          <Filter size={16} className="shrink-0 text-secondary" aria-hidden="true"/>
           <label htmlFor="superadmin-white-labeling-status" className="sr-only">{t('ui.filter_by_status_5dd5cd66')}</label>
-          <select id="superadmin-white-labeling-status" value={status} onChange={(event) => setState({ status: event.target.value as SuperadminPlatformConfigurationWhiteLabelingStatus })} className="min-h-11 w-full rounded-lg border border-border bg-input px-3 py-2 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page sm:w-40" data-testid="superadmin_platform_configuration_white_labeling-superadmin-white-labeling-main-superadmin-white-labeling-status">
+          <select id="superadmin-white-labeling-status" value={status} onChange={(event) => setState({ status: event.target.value as SuperadminPlatformConfigurationWhiteLabelingStatus })} className="min-h-10 w-full rounded-xl border border-border bg-input px-3 py-2 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:w-40" data-testid="superadmin_platform_configuration_white_labeling-superadmin-white-labeling-main-superadmin-white-labeling-status">
             {SUPERADMIN_PLATFORM_CONFIGURATION_WHITE_LABELING_STATUS_OPTIONS.map((option) => <option key={option.value} value={option.value} data-testid="superadminwhitelabelingmain-option-6927">{t(option.labelKey)}</option>)}
           </select>
         </div>

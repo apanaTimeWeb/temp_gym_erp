@@ -56,17 +56,17 @@ export default function SuperadminSystemOpsJobsTable({ jobs, allJobsFiltered, se
       )}
       <div className="overflow-x-auto flex-1">
       <table className={`w-full text-start border-collapse min-w-full ${MOBILE_CARD_TABLE_CLASSES}`}>
-        <thead className="sticky top-0 z-20 bg-primary-subtle border-b border-border shadow-xs">
-          <tr className="bg-primary-subtle border-b border-border text-sm" data-testid="superadmin_system_ops_jobs-superadmin-system-ops-jobs-table-jobs-table-action-1">
-            <th className="sticky start-0 z-20 bg-primary-subtle border-b border-border p-4 w-12 text-center">
-              <input  type="checkbox" aria-label={t('ui.select_all_visible_jobs_33ef689')} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page rounded border-border text-primary cursor-pointer w-4 h-4 min-h-11 min-w-11 motion-safe:transition-all motion-safe:duration-base ease-in-out" checked={jobs.length > 0 && jobs.every((job) => selectedJobIds.has(job.id))} onChange={() => toggleAll(jobs.map((job) => job.id))} data-testid="superadmin_system_ops_jobs-superadmin-system-ops-jobs-table-jobs-table-select-all"/>
+        <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10 shadow-[0_2px_10px_rgba(0,0,0,0.12)]">
+          <tr className="border-b border-border dark:border-white/10 text-sm" data-testid="superadmin_system_ops_jobs-superadmin-system-ops-jobs-table-jobs-table-action-1">
+            <th className="sticky start-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10 p-4 w-12 text-center">
+              <input  type="checkbox" aria-label={t('ui.select_all_visible_jobs_33ef689')} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded border-border text-primary cursor-pointer w-4 h-4 min-h-11 min-w-11 motion-safe:transition-all motion-safe:duration-base ease-in-out" checked={jobs.length > 0 && jobs.every((job) => selectedJobIds.has(job.id))} onChange={() => toggleAll(jobs.map((job) => job.id))} data-testid="superadmin_system_ops_jobs-superadmin-system-ops-jobs-table-jobs-table-select-all"/>
             </th>
-            <th className="sticky start-12 z-20 bg-primary-subtle border-b border-e border-border p-4 font-bold text-secondary text-xs uppercase tracking-wider text-start">{t('ui.job_id_0e9172b')}</th>
-            <th className="border-b border-border p-4 font-bold text-secondary text-xs uppercase tracking-wider text-start">{t('ui.queue_9cd7e3f')}</th>
-            <th className="border-b border-border p-4 font-bold text-secondary text-xs uppercase tracking-wider text-start">{t('ui.task_error_1fb40b6')}</th>
-            <th className="border-b border-border p-4 font-bold text-secondary text-xs uppercase tracking-wider text-start">{t('ui.status_b5bd428')}</th>
-            <th className="border-b border-border p-4 font-bold text-secondary text-xs uppercase tracking-wider text-start">{t('ui.timing_bcdb348')}</th>
-            <th className="border-b border-border p-4 font-bold text-secondary text-xs uppercase tracking-wider text-end">{t('ui.actions_0290a3d')}</th>
+            <th className="sticky start-12 z-20 bg-slate-100 dark:bg-[#152038] border-b border-e border-border dark:border-white/10 p-4 font-bold text-secondary dark:text-slate-300 text-[11px] uppercase tracking-wider text-start">{t('ui.job_id_0e9172b')}</th>
+            <th className="border-b border-border dark:border-white/10 p-4 font-bold text-secondary dark:text-slate-300 text-[11px] uppercase tracking-wider text-start">{t('ui.queue_9cd7e3f')}</th>
+            <th className="border-b border-border dark:border-white/10 p-4 font-bold text-secondary dark:text-slate-300 text-[11px] uppercase tracking-wider text-start">{t('ui.task_error_1fb40b6')}</th>
+            <th className="border-b border-border dark:border-white/10 p-4 font-bold text-secondary dark:text-slate-300 text-[11px] uppercase tracking-wider text-start">{t('ui.status_b5bd428')}</th>
+            <th className="border-b border-border dark:border-white/10 p-4 font-bold text-secondary dark:text-slate-300 text-[11px] uppercase tracking-wider text-start">{t('ui.timing_bcdb348')}</th>
+            <th className="border-b border-border dark:border-white/10 p-4 font-bold text-secondary dark:text-slate-300 text-[11px] uppercase tracking-wider text-end">{t('ui.actions_0290a3d')}</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-border">

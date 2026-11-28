@@ -51,17 +51,19 @@ export default function SuperadminSystemOpsBackupsMain() {
   const endRow = Math.min(vm.currentPage * SUPERADMIN_BACKUPS_PAGE_SIZE, totalRecords);
   const formatCount = (value: number) => new Intl.NumberFormat(locale).format(value);
 
-  return (<div className="space-y-6" data-testid="superadmin_system_ops_backups-superadmin-system-ops-backups-main-page">
-    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-      <div><h1 className="superadmin-page-title text-primary">{t('ui.tenant_database_backups_7312f67')}</h1><p className="text-secondary mt-1 text-sm">{t('ui.manage_automated_pg_dump_snapshots_for_all_isolated__5fd1a3d')}</p></div>
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-        <button type="button" onClick={vm.openScheduleModal} className="min-h-11 bg-transparent text-primary px-4 py-2 rounded-lg font-medium hover:bg-surface-hover motion-safe:transition-colors border border-border flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" data-testid="superadmin_system_ops_backups-superadmin-system-ops-backups-main-superadmin_system_ops_backups-main-configure-schedule"><Clock size={18} strokeWidth={2} /> {t('ui.configure_schedule_14b2842')}</button>
-        <button type="button" onClick={vm.openTriggerModal} disabled={vm.isTriggering} className="min-h-11 min-w-40 bg-primary text-on-primary px-4 py-2 rounded-lg font-medium hover:bg-primary-hover motion-safe:transition-colors flex items-center justify-center gap-2 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" data-testid="superadmin_system_ops_backups-superadmin-system-ops-backups-main-superadmin_system_ops_backups-main-global-snapshot"><DatabaseBackup size={18} strokeWidth={2} /> {vm.isTriggering ? t('ui.creating_snapshot_ec1115a') : t('ui.global_snapshot_e932710')}</button>
+  return (<div className="space-y-5" data-testid="superadmin_system_ops_backups-superadmin-system-ops-backups-main-page">
+    <section className="relative overflow-hidden rounded-2xl border border-blue-500/35 bg-card dark:bg-gradient-to-br dark:from-[#0E2438] dark:via-[#12192B] dark:to-[#0C1322] p-5 sm:p-6 shadow-card flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+      <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#3B82F6] via-[#38BDF8] to-[#10B981]" />
+      <div className="min-w-0"><h1 className="superadmin-page-title text-primary">{t('ui.tenant_database_backups_7312f67')}</h1><p className="text-secondary mt-1 text-sm">{t('ui.manage_automated_pg_dump_snapshots_for_all_isolated__5fd1a3d')}</p></div>
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 shrink-0">
+        <button type="button" onClick={vm.openScheduleModal} className="min-h-10 bg-input text-primary px-4 py-2 rounded-xl text-sm font-semibold hover:bg-surface-hover motion-safe:transition-colors border border-border dark:border-white/15 flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:active:scale-95 cursor-pointer" data-testid="superadmin_system_ops_backups-superadmin-system-ops-backups-main-superadmin_system_ops_backups-main-configure-schedule"><Clock size={16} strokeWidth={2.2} /> {t('ui.configure_schedule_14b2842')}</button>
+        <button type="button" onClick={vm.openTriggerModal} disabled={vm.isTriggering} className="min-h-10 bg-gradient-to-r from-[#FF5A1F] to-[#F97316] hover:brightness-110 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-[0_4px_14px_rgba(255,90,31,0.3)] motion-safe:transition-all flex items-center justify-center gap-2 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:active:scale-95 cursor-pointer" data-testid="superadmin_system_ops_backups-superadmin-system-ops-backups-main-superadmin_system_ops_backups-main-global-snapshot"><DatabaseBackup size={16} strokeWidth={2.2} /> {vm.isTriggering ? t('ui.creating_snapshot_ec1115a') : t('ui.global_snapshot_e932710')}</button>
       </div>
-    </div>
+    </section>
     <SuperadminSystemOpsBackupsErrorBoundary variant="inline">
-      <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden flex flex-col min-h-96">
-        <div className="p-4 border-b border-border flex flex-col sm:flex-row gap-4 justify-between items-center bg-card">
+      <div className="relative bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-blue-500/30 rounded-2xl shadow-card overflow-hidden flex flex-col min-h-96">
+        <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#3B82F6] via-[#38BDF8] to-[#FF5A1F] z-30" />
+        <div className="p-4 border-b border-border dark:border-white/10 flex flex-col sm:flex-row gap-3 justify-between items-stretch sm:items-center bg-card/50">
           <div className="relative w-full max-w-md">
             <label htmlFor="superadmin-backups-search" className="sr-only">{t('ui.search_by_gym_name_or_database_d36489b')}</label>
             <Search size={18} strokeWidth={2} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" />

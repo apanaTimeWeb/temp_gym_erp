@@ -38,27 +38,28 @@ export default function SuperadminCommunicationBroadcastsCampaignsTable({
   const { confirm } = useConfirm();
 
   return (
-    <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-sm flex flex-col min-h-96">
+    <div className="relative bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-cyan-500/30 rounded-2xl overflow-hidden shadow-card flex flex-col min-h-96">
+      <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#06B6D4] via-[#38BDF8] to-[#FF5A1F] z-30" />
       <div className="overflow-x-auto flex-1">
         <table className="w-full text-start border-collapse">
-          <thead className="sticky top-0 z-20 bg-primary-subtle border-b border-border shadow-xs">
-            <tr className="bg-primary-subtle border-b border-border">
-              <th className="sticky start-0 z-20 bg-primary-subtle border-b border-e border-border px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-start">
+          <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10 shadow-[0_2px_10px_rgba(0,0,0,0.12)]">
+            <tr className="border-b border-border dark:border-white/10">
+              <th className="sticky start-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-e border-border dark:border-white/10 px-6 py-3.5 text-[11px] font-bold text-secondary dark:text-slate-300 uppercase tracking-wider text-start">
                 {t('ui.title_b78a3223')}
               </th>
-              <th className="border-b border-border px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-start">
+              <th className="border-b border-border dark:border-white/10 px-6 py-3.5 text-[11px] font-bold text-secondary dark:text-slate-300 uppercase tracking-wider text-start">
                 {t('ui.audience_ef1e6887')}
               </th>
-              <th className="border-b border-border px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-start">
+              <th className="border-b border-border dark:border-white/10 px-6 py-3.5 text-[11px] font-bold text-secondary dark:text-slate-300 uppercase tracking-wider text-start">
                 {t('ui.status_ec53a8c4')}
               </th>
-              <th className="border-b border-border px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-start">
+              <th className="border-b border-border dark:border-white/10 px-6 py-3.5 text-[11px] font-bold text-secondary dark:text-slate-300 uppercase tracking-wider text-start">
                 {t('ui.delivery_rate_11895316')}
               </th>
-              <th className="border-b border-border px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-start">
+              <th className="border-b border-border dark:border-white/10 px-6 py-3.5 text-[11px] font-bold text-secondary dark:text-slate-300 uppercase tracking-wider text-start">
                 {t('ui.scheduled_sent_date_d715318e')}
               </th>
-              <th className="border-b border-border px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-end">
+              <th className="border-b border-border dark:border-white/10 px-6 py-3.5 text-[11px] font-bold text-secondary dark:text-slate-300 uppercase tracking-wider text-end">
                 {t('ui.actions_06df3300')}
               </th>
             </tr>

@@ -22,18 +22,18 @@ export default function SuperadminAuditComplianceGlobalAuditOverviewTable({ logs
   return (
     <div className="overflow-x-auto flex-1">
       <table className="w-full text-start border-collapse">
-        <thead className="sticky top-0 z-20 bg-primary-subtle border-b border-border shadow-xs">
-          <tr className="border-b border-border bg-primary-subtle">
-            <th scope="col" className="sticky start-0 z-20 bg-primary-subtle border-b border-e border-border whitespace-nowrap px-6 py-3 text-start text-xs font-bold uppercase tracking-wider text-secondary">
+        <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10 shadow-[0_2px_10px_rgba(0,0,0,0.12)]">
+          <tr className="border-b border-border dark:border-white/10">
+            <th scope="col" className="sticky start-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-e border-border dark:border-white/10 whitespace-nowrap px-6 py-3.5 text-start text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300">
               {t('ui.timestamp_a3d5de3e')}
             </th>
-            <th scope="col" className="border-b border-border px-6 py-3 text-start text-xs font-bold uppercase tracking-wider text-secondary">
+            <th scope="col" className="border-b border-border dark:border-white/10 px-6 py-3.5 text-start text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300">
               {t('ui.severity_007cc954')}
             </th>
-            <th scope="col" className="border-b border-border px-6 py-3 text-start text-xs font-bold uppercase tracking-wider text-secondary">
+            <th scope="col" className="border-b border-border dark:border-white/10 px-6 py-3.5 text-start text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300">
               {t('ui.action_amp_resource_7092f2db')}
             </th>
-            <th scope="col" className="border-b border-border px-6 py-3 text-start text-xs font-bold uppercase tracking-wider text-secondary">
+            <th scope="col" className="border-b border-border dark:border-white/10 px-6 py-3.5 text-start text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300">
               {t('ui.actor_origin_ip_ba2d92b2')}
             </th>
           </tr>

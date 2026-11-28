@@ -51,32 +51,34 @@ export default function SuperadminBillingUsageMetersDashboardMain() {
     const displayMeters = hasInvalidCustomRange ? [] : (queryData?.data ?? []);
     const formatBillingDate = (value: string) => formatSuperadminUsageMeterBillingDate(value, locale, t('ui.date_unavailable'));
     return (<div className="space-y-6 w-full">
-      {isError ? <div className="rounded-lg border border-danger bg-danger-bg p-3 text-sm text-danger" role="alert">{t('ui.failed_to_load_usage_meters')} <button type="button" onClick={() => void refetch()} className="ms-2 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary min-h-11 min-w-11">{t('ui.try_again_d876a9fe')}</button></div> : null}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-        <div>
-          <h1 className="text-2xl font-bold text-primary">{t('ui.usage_meters_83ceafa1')}</h1>
-          <p className="text-secondary mt-1">{t('ui.monitor_gym_resource_consumption_and_billing_c0c9399b')}</p>
+      {isError ? <div className="rounded-xl border border-danger bg-danger-bg p-3 text-sm text-danger" role="alert">{t('ui.failed_to_load_usage_meters')} <button type="button" onClick={() => void refetch()} className="ms-2 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary min-h-11 min-w-11">{t('ui.try_again_d876a9fe')}</button></div> : null}
+      <section className="relative overflow-hidden rounded-2xl border border-amber-500/35 bg-card dark:bg-gradient-to-br dark:from-[#281E10] dark:via-[#12192B] dark:to-[#0C1322] p-5 sm:p-6 shadow-card flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#F59E0B] via-[#FACC15] to-[#FF5A1F]" />
+        <div className="min-w-0">
+          <h1 className="superadmin-page-title text-primary">{t('ui.usage_meters_83ceafa1')}</h1>
+          <p className="text-secondary text-sm mt-1">{t('ui.monitor_gym_resource_consumption_and_billing_c0c9399b')}</p>
         </div>
         
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="relative w-48">
+        <div className="flex flex-wrap items-center gap-3 shrink-0">
+          <div className="relative w-full sm:w-48">
             <SearchableDropdown data-testid="superadmin_billing_usage_meters-superadmin-usage-meters-main-date-range" value={dateRange} onChange={(val) => setParam('range', String(val))} options={SUPERADMIN_BILLING_USAGE_METERS_DATE_RANGE_OPTIONS.map((option) => ({ label: t(option.labelKey), value: option.value }))}/>
           </div>
 
-          {dateRange === 'custom' && (<div className="flex flex-col gap-1"><div className="flex items-center gap-2">
-              <label className="sr-only" htmlFor="superadmin-usage-meters-date-from">{t('ui.from_date')}</label><input id="superadmin-usage-meters-date-from" type="date" aria-invalid={hasInvalidCustomRange || undefined} aria-describedby={hasInvalidCustomRange ? "superadmin-usage-meters-date-range-error" : undefined} value={customFrom} onChange={(e) => setParam('from', e.target.value)} className="bg-card border border-border rounded-lg px-3 py-2 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11" data-testid="superadmin_billing_usage_meters-superadmin-usage-meters-main-usage-meters-main-date"/>
+          {dateRange === 'custom' && (<div className="flex flex-col gap-1"><div className="flex flex-wrap items-center gap-2">
+              <label className="sr-only" htmlFor="superadmin-usage-meters-date-from">{t('ui.from_date')}</label><input id="superadmin-usage-meters-date-from" type="date" aria-invalid={hasInvalidCustomRange || undefined} aria-describedby={hasInvalidCustomRange ? "superadmin-usage-meters-date-range-error" : undefined} value={customFrom} onChange={(e) => setParam('from', e.target.value)} className="bg-input border border-border rounded-xl px-3 py-2 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary min-h-10" data-testid="superadmin_billing_usage_meters-superadmin-usage-meters-main-usage-meters-main-date"/>
               <label className="sr-only" htmlFor="superadmin-usage-meters-date-to">{t('ui.to_date')}</label><span className="text-secondary" aria-hidden="true">{t('ui.to_01b6e203')}</span>
-              <input id="superadmin-usage-meters-date-to" type="date" aria-invalid={hasInvalidCustomRange || undefined} aria-describedby={hasInvalidCustomRange ? "superadmin-usage-meters-date-range-error" : undefined} value={customTo} onChange={(e) => setParam('to', e.target.value)} className="bg-card border border-border rounded-lg px-3 py-2 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11" data-testid="superadmin_billing_usage_meters-superadmin-usage-meters-main-meters-main-date-2"/>
+              <input id="superadmin-usage-meters-date-to" type="date" aria-invalid={hasInvalidCustomRange || undefined} aria-describedby={hasInvalidCustomRange ? "superadmin-usage-meters-date-range-error" : undefined} value={customTo} onChange={(e) => setParam('to', e.target.value)} className="bg-input border border-border rounded-xl px-3 py-2 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary min-h-10" data-testid="superadmin_billing_usage_meters-superadmin-usage-meters-main-meters-main-date-2"/>
             </div>{hasInvalidCustomRange ? <p className="text-xs text-danger" role="alert" id="superadmin-usage-meters-date-range-error" data-testid="superadmin_billing_usage_meters-invalid-date-range">{t('ui.invalid_date_range')}</p> : null}</div>)}
         </div>
-      </div>
+      </section>
 
-      {(() => { if (hasInvalidCustomRange || (isError && !queryData)) { return (null); } if (isPending) { return (<div className="p-6 space-y-4" aria-busy="true" data-testid="superadmin_billing_usage_meters-superadmin-usage-meters-main-loading">{[1, 2, 3].map(i => <div key={`skeleton-${i}`} className="h-32 rounded-xl bg-card motion-safe:animate-pulse" />)}</div>); } if (displayMeters.length === 0) { return (<div className="rounded-xl border border-border bg-card p-8 text-center text-sm text-secondary" role="status">{t('ui.no_usage_meters_found')}</div>); } return (<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      {(() => { if (hasInvalidCustomRange || (isError && !queryData)) { return (null); } if (isPending) { return (<div className="p-6 space-y-4" aria-busy="true" data-testid="superadmin_billing_usage_meters-superadmin-usage-meters-main-loading">{[1, 2, 3].map(i => <div key={`skeleton-${i}`} className="h-32 rounded-2xl bg-card motion-safe:animate-pulse" />)}</div>); } if (displayMeters.length === 0) { return (<div className="rounded-2xl border border-border bg-card p-8 text-center text-sm text-secondary" role="status">{t('ui.no_usage_meters_found')}</div>); } return (<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
         {displayMeters.map((meter: UsageMeter) => {
             const dbGb = meter.databaseGb || 0;
             const mediaGb = meter.mediaGb;
             const totalStorage = dbGb + mediaGb;
-            return (<div key={meter.id} className="bg-card border border-border rounded-xl p-6 shadow-card hover:shadow-card motion-safe:transition-all motion-safe:duration-base">
+            return (<div key={meter.id} className="relative overflow-hidden bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-white/10 rounded-2xl p-6 shadow-card hover:border-amber-500/40 motion-safe:transition-all motion-safe:duration-base">
+            <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#F59E0B] via-[#38BDF8] to-[#10B981]" />
             <h3 className="text-lg font-bold text-primary mb-4 truncate" title={displayValue(meter.tenantName)}>
               <Link
                 href={`/frontend_superadmin/superadmin_gyms/gyms_detail/${meter.tenantId}`}

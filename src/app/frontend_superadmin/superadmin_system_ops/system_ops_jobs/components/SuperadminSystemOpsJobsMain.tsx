@@ -52,7 +52,8 @@ export default function SuperadminSystemOpsJobsMain() {
     <p className="text-xs text-secondary" role="note">{t('ui.metrics_scope_note')}</p>
     <SuperadminSystemOpsJobsStatsBar metrics={metrics} selectedStatus={statusFilter as SuperadminSystemOpsJobsStatusFilter} onFilterSelect={(status) => { setStatusFilter(status as SuperadminSystemOpsJobsStatusFilter); setCurrentPage(1); }}/>
 
-    <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden flex flex-col min-h-96">
+    <div className="relative bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-blue-500/30 rounded-2xl shadow-card overflow-hidden flex flex-col min-h-96">
+      <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#3B82F6] via-[#38BDF8] to-[#FF5A1F] z-30" />
       <SuperadminSystemOpsJobsTable jobs={paginatedJobs} allJobsFiltered={statusFilter !== SUPERADMIN_JOBS_FILTER_STATUS_CODES.ALL || queueFilter !== SUPERADMIN_JOBS_FILTER_QUEUE_CODES.ALL} selectedJobIds={selectedJobIds} toggleSelection={toggleSelection} toggleAll={toggleAll} onInspect={setInspectJob} onRetry={handleRetryJob} onCancel={handleCancelJob} onDelete={handleDeleteJob}/>
       <div className="border-t border-border px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-card">
         <p className="text-xs text-secondary" aria-live="polite">

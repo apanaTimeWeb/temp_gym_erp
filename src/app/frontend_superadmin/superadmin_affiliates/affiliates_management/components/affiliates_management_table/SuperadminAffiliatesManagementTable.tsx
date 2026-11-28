@@ -90,7 +90,8 @@ export default function SuperadminAffiliatesManagementTable({
   const formatCount = (value: number) => new Intl.NumberFormat(locale).format(value);
 
   return (
-    <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-sm flex flex-col min-h-96">
+    <div className="relative bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-teal-500/30 rounded-2xl overflow-hidden shadow-card flex flex-col min-h-96">
+      <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#2DD4BF] via-[#38BDF8] to-[#FF5A1F] z-30" />
       {selectedIds.size > 0 && (
         <div className="p-3 bg-primary-subtle border-b border-border flex flex-wrap items-center justify-between gap-3 motion-safe:animate-fadeIn">
           <div className="flex items-center gap-2">
@@ -109,9 +110,9 @@ export default function SuperadminAffiliatesManagementTable({
       )}
       <div className="overflow-x-auto flex-1">
         <table className={`w-full text-start border-collapse ${MOBILE_CARD_TABLE_CLASSES}`}>
-          <thead className="sticky top-0 z-20 bg-primary-subtle border-b border-border shadow-xs">
-            <tr className="bg-primary-subtle border-b border-border" data-testid="superadmin_affiliates-superadmin-affiliates-table-affiliates-table-action-1">
-              <th className="sticky start-0 z-20 bg-primary-subtle border-b border-border w-12 px-4 py-3 text-center">
+          <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10 shadow-[0_2px_10px_rgba(0,0,0,0.12)]">
+            <tr className="border-b border-border dark:border-white/10" data-testid="superadmin_affiliates-superadmin-affiliates-table-affiliates-table-action-1">
+              <th className="sticky start-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10 w-12 px-4 py-3.5 text-center">
                 <input
                   type="checkbox"
                   aria-label={t('ui.select_all_affiliates') ?? 'Select all affiliates'}
@@ -122,7 +123,7 @@ export default function SuperadminAffiliatesManagementTable({
                   data-testid="superadmin_affiliates-table-select-all"
                 />
               </th>
-              <th className="sticky start-12 z-20 bg-primary-subtle border-b border-e border-border px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-start">
+              <th className="sticky start-12 z-20 bg-slate-100 dark:bg-[#152038] border-b border-e border-border dark:border-white/10 px-6 py-3.5 text-[11px] font-bold text-secondary dark:text-slate-300 uppercase tracking-wider text-start">
                 {t('ui.partner_name_d78e689')}
               </th>
               <th className="px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-start">{t('ui.referral_code_aaebd49')}</th>

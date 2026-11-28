@@ -123,10 +123,10 @@ export default function SuperadminBillingInvoicesManagementTable({
       {/* Scrollable Viewport with Sticky Start Columns */}
       <div className="overflow-x-auto flex-1">
         <table className="w-full text-start border-collapse min-w-full">
-          <thead className="sticky top-0 z-20 bg-primary-subtle border-b border-border shadow-xs">
-            <tr className="bg-primary-subtle border-b border-border text-sm">
+          <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10 shadow-[0_2px_10px_rgba(0,0,0,0.12)]">
+            <tr className="border-b border-border dark:border-white/10 text-sm">
               {/* 1. Multi-Select Checkbox (Sticky Start-0) */}
-              <th className="w-12 px-4 py-3 text-center sticky start-0 z-20 bg-primary-subtle border-b border-border">
+              <th className="w-12 px-4 py-3.5 text-center sticky start-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10">
                 <input
                   id={selectAllId}
                   type="checkbox"
@@ -141,7 +141,7 @@ export default function SuperadminBillingInvoicesManagementTable({
               </th>
 
               {/* 2. Frozen Sticky Invoice ID (Sticky Start-12) */}
-              <th className="sticky start-12 z-20 px-4 py-3 text-start font-semibold text-secondary text-xs uppercase tracking-wider bg-primary-subtle border-b border-e border-border">
+              <th className="sticky start-12 z-20 px-4 py-3.5 text-start font-bold text-secondary dark:text-slate-300 text-[11px] uppercase tracking-wider bg-slate-100 dark:bg-[#152038] border-b border-e border-border dark:border-white/10">
                 {t('ui.invoice_id_9c5c7edf')}
               </th>
 
