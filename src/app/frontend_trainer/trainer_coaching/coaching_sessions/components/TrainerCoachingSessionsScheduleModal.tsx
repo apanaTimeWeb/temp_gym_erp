@@ -72,7 +72,7 @@ export default function TrainerSessionsScheduleModal({
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-4 overflow-y-auto " role="presentation" data-testid={testId ?? "trainer_sessions-schedule-modal"}>
       <div ref={dialogRef} className="my-auto bg-overlay w-full max-w-md max-h-dialog-desktop flex flex-col rounded-2xl shadow-dialog border border-border overflow-hidden motion-safe:transition-opacity motion-safe:duration-base" role="dialog" aria-modal="true" aria-labelledby="trainer-session-schedule-title">
         <div className="flex items-center justify-between p-5 border-b border-border shrink-0 bg-overlay ">
-          <h3 id="trainer-session-schedule-title" className="text-lg font-bold text-primary ">{t("TEXT_SCHEDULE_PT_SESSION")}</h3>
+          <h3 id="trainer-session-schedule-title" className="text-lg font-bold text-text-primary ">{t("TEXT_SCHEDULE_PT_SESSION")}</h3>
           <button type="button"
             onClick={() => void guardNavigation(onClose)}
             className="min-w-11 min-h-11 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page text-secondary hover:text-primary hover:bg-input p-1 rounded-lg motion-safe:transition-colors motion-safe:duration-base motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95"
@@ -105,7 +105,7 @@ export default function TrainerSessionsScheduleModal({
              ariaDescribedBy={errors.memberId ? "trainer-session-member-error" : undefined}
              testId="trainer-sessions-schedule-modal-choose-member"/>
             {memberOptionsIsPending && <p role="status" className="text-xs text-secondary mt-1">{t('TEXT_MEMBERS_LOADING')}</p>}
-            {memberOptionsIsError && <div className="mt-2 flex items-center gap-2"><p role="alert" className="text-xs text-danger">{t('TEXT_UNABLE_TO_LOAD_SESSIONS_RIGHT_NOW_PLEASE_RETRY')}</p><button type="button" onClick={onRetryMemberOptions} disabled={memberOptionsIsFetching} className="min-h-11 px-3 rounded border border-border text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring">{memberOptionsIsFetching ? t('TEXT_RETRYING') : t('TEXT_RETRY')}</button></div>}
+            {memberOptionsIsError && <div className="mt-2 flex items-center gap-2"><p role="alert" className="text-xs text-danger">{t('TEXT_UNABLE_TO_LOAD_SESSIONS_RIGHT_NOW_PLEASE_RETRY')}</p><button type="button" onClick={onRetryMemberOptions} disabled={memberOptionsIsFetching} className="min-h-11 px-3 rounded border border-border text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring">{memberOptionsIsFetching ? t('TEXT_RETRYING') : t('TEXT_RETRY')}</button></div>}
             {!memberOptionsIsPending && !memberOptionsIsError && memberOptions.length === 0 && <p className="text-xs text-secondary mt-1">{t('TEXT_NO_MEMBERS_FOUND')}</p>}
             {errors.memberId && <p id="trainer-session-member-error" role="alert" className="text-xs text-danger mt-1 " data-testid={"trainer_sessions-schedule_modal-error_state_71_2"}>{t(errors.memberId?.message || '')}</p>}
           </div>
@@ -118,7 +118,7 @@ export default function TrainerSessionsScheduleModal({
                 {...register('date')}
                 aria-invalid={Boolean(errors.date)}
                 aria-describedby={errors.date ? "trainer-session-date-error" : undefined}
-                className="w-full px-3 py-2 border border-border rounded-lg bg-input text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_sessions-trainersessionsschedulemodal-input_5"/>
+                className="w-full px-3 py-2 border border-border rounded-lg bg-input text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_sessions-trainersessionsschedulemodal-input_5"/>
               {errors.date && <p id="trainer-session-date-error" role="alert" className="text-xs text-danger mt-1 " data-testid={"trainer_sessions-schedule_modal-error_state_81_3"}>{t(errors.date?.message || '')}</p>}
             </div>
             <div>
@@ -129,7 +129,7 @@ export default function TrainerSessionsScheduleModal({
                 {...register('time')}
                 aria-invalid={Boolean(errors.time)}
                 aria-describedby={errors.time ? "trainer-session-time-error" : undefined}
-                className="w-full px-3 py-2 border border-border rounded-lg bg-input text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_sessions-trainersessionsschedulemodal-input_6"/>
+                className="w-full px-3 py-2 border border-border rounded-lg bg-input text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_sessions-trainersessionsschedulemodal-input_6"/>
               {errors.time && <p id="trainer-session-time-error" role="alert" className="text-xs text-danger mt-1 " data-testid={"trainer_sessions-schedule_modal-error_state_90_4"}>{t(errors.time?.message || '')}</p>}
             </div>
           </div>

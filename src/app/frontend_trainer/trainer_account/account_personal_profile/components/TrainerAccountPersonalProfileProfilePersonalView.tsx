@@ -15,11 +15,11 @@ export default function TrainerProfilePersonalView({ profileForm, user, saveProf
 
   return (
     <form onSubmit={profileForm.handleSubmit((values) => saveProfile(values))} className="bg-card border border-border rounded-xl p-6 space-y-5" data-testid="trainer_profile-trainerprofilemain-form_3">
-      <h2 className="text-section-title font-semibold text-primary">{t('TEXT_PERSONAL_INFORMATION')}</h2>
+      <h2 className="text-section-title font-semibold text-text-primary">{t('TEXT_PERSONAL_INFORMATION')}</h2>
       <div className="grid grid-cols-1 gap-5">
         <div>
           <label htmlFor="trainer-profile-name" className="block text-sm font-medium text-secondary mb-1.5">{t('TEXT_FULL_NAME')}</label>
-          <input id="trainer-profile-name" {...profileForm.register('name')} aria-invalid={Boolean(profileForm.formState.errors.name)} aria-describedby={profileForm.formState.errors.name ? 'trainer-profile-name-error' : undefined} className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="trainer_profile-trainerprofilemain-input_4" />
+          <input id="trainer-profile-name" {...profileForm.register('name')} aria-invalid={Boolean(profileForm.formState.errors.name)} aria-describedby={profileForm.formState.errors.name ? 'trainer-profile-name-error' : undefined} className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="trainer_profile-trainerprofilemain-input_4" />
           {profileForm.formState.errors.name && <p className="text-xs text-danger mt-1" id="trainer-profile-name-error" data-testid="trainer_profile-main-name_error">{t(profileForm.formState.errors.name.message ?? 'TEXT_VALIDATION_ERROR')}</p>}
         </div>
         <div>
@@ -28,7 +28,7 @@ export default function TrainerProfilePersonalView({ profileForm, user, saveProf
         </div>
         <div>
           <label htmlFor="trainer-profile-phone" className="block text-sm font-medium text-secondary mb-1.5">{t('TEXT_PHONE_NUMBER')}</label>
-          <input id="trainer-profile-phone" {...profileForm.register('phone')} aria-invalid={Boolean(profileForm.formState.errors.phone)} aria-describedby={profileForm.formState.errors.phone ? 'trainer-profile-phone-error' : undefined} className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="trainer_profile-trainerprofilemain-input_6" />
+          <input id="trainer-profile-phone" {...profileForm.register('phone')} aria-invalid={Boolean(profileForm.formState.errors.phone)} aria-describedby={profileForm.formState.errors.phone ? 'trainer-profile-phone-error' : undefined} className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="trainer_profile-trainerprofilemain-input_6" />
           {profileForm.formState.errors.phone && <p className="text-xs text-danger mt-1" id="trainer-profile-phone-error" data-testid="trainer_profile-main-phone_error">{t(profileForm.formState.errors.phone.message ?? 'TEXT_VALIDATION_ERROR')}</p>}
         </div>
         <Controller
@@ -60,7 +60,7 @@ export default function TrainerProfilePersonalView({ profileForm, user, saveProf
               max="50"
               {...profileForm.register('experienceYears', { valueAsNumber: true })}
               placeholder="e.g. 5"
-              className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
               data-testid="trainer_profile-trainerprofilemain-input-experience"
             />
           </div>
@@ -71,7 +71,7 @@ export default function TrainerProfilePersonalView({ profileForm, user, saveProf
               rows={3}
               {...profileForm.register('bio')}
               placeholder="Brief summary of fitness philosophy, coaching experience, and accomplishments..."
-              className="w-full px-4 py-2 bg-input border border-border rounded-lg text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring resize-none"
+              className="w-full px-4 py-2 bg-input border border-border rounded-lg text-text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring resize-none"
               data-testid="trainer_profile-trainerprofilemain-input-bio"
             />
           </div>
@@ -80,8 +80,8 @@ export default function TrainerProfilePersonalView({ profileForm, user, saveProf
 
       <div className="pt-4 border-t border-border space-y-4">
         <div className="flex items-center gap-2">
-          <Landmark size={18} className="text-primary" />
-          <h3 className="text-base font-semibold text-primary">Banking & Payout Details</h3>
+          <Landmark size={18} className="text-text-primary" />
+          <h3 className="text-base font-semibold text-text-primary">Banking & Payout Details</h3>
         </div>
         <p className="text-xs text-secondary">
           Configure your bank account and UPI details for receiving monthly payroll and personal training commissions.
@@ -94,7 +94,7 @@ export default function TrainerProfilePersonalView({ profileForm, user, saveProf
               id="trainer-payout-holder"
               {...profileForm.register('accountHolderName')}
               placeholder="e.g. John Doe"
-              className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
               data-testid="trainer_profile-payout-holder"
             />
           </div>
@@ -105,7 +105,7 @@ export default function TrainerProfilePersonalView({ profileForm, user, saveProf
               id="trainer-payout-bank"
               {...profileForm.register('bankName')}
               placeholder="e.g. HDFC Bank, SBI, ICICI"
-              className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
               data-testid="trainer_profile-payout-bank"
             />
           </div>
@@ -116,7 +116,7 @@ export default function TrainerProfilePersonalView({ profileForm, user, saveProf
               id="trainer-payout-account"
               {...profileForm.register('accountNumber')}
               placeholder="e.g. 50100234567890"
-              className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring font-mono"
+              className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring font-mono"
               data-testid="trainer_profile-payout-account"
             />
           </div>
@@ -127,7 +127,7 @@ export default function TrainerProfilePersonalView({ profileForm, user, saveProf
               id="trainer-payout-ifsc"
               {...profileForm.register('ifscCode')}
               placeholder="e.g. HDFC0001234"
-              className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring uppercase font-mono"
+              className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring uppercase font-mono"
               data-testid="trainer_profile-payout-ifsc"
             />
           </div>
@@ -138,7 +138,7 @@ export default function TrainerProfilePersonalView({ profileForm, user, saveProf
               id="trainer-payout-upi"
               {...profileForm.register('upiId')}
               placeholder="e.g. trainer@oksbi / trainer@okhdfcbank"
-              className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring font-mono"
+              className="w-full px-4 py-2.5 bg-input border border-border rounded-lg text-text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring font-mono"
               data-testid="trainer_profile-payout-upi"
             />
           </div>

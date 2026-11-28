@@ -92,7 +92,7 @@ export default function TrainerAttendanceToolbar({
             value={localSearch}
             onChange={e => { const value = e.target.value; setLocalSearch(value); setSearch(value); }}
             placeholder={t('TEXT_SEARCH_PLACEHOLDER')}
-            className="ps-9 pe-8 py-2 border border-border bg-input text-primary rounded-lg text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring w-full motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out" data-testid="trainer_attendance-trainerattendancetoolbar-input_4"/>
+            className="ps-9 pe-8 py-2 border border-border bg-input text-text-primary rounded-lg text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring w-full motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out" data-testid="trainer_attendance-trainerattendancetoolbar-input_4"/>
           {localSearch && (
             <button
               type="button"

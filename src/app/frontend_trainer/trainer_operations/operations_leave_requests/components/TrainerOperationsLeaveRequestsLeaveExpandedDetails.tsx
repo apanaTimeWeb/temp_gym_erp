@@ -33,8 +33,8 @@ export function TrainerOperationsLeaveRequestsLeaveExpandedDetails({
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <span className="text-sm font-bold text-primary">{leave.id}</span>
-          <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-input text-primary border border-border">
+          <span className="text-sm font-bold text-text-primary">{leave.id}</span>
+          <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-input text-text-primary border border-border">
             {leaveTypeLabel}
           </span>
           <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${statusBadgeClass}`}>
@@ -57,7 +57,7 @@ export function TrainerOperationsLeaveRequestsLeaveExpandedDetails({
           <span className="font-semibold text-secondary uppercase block mb-1">
             {t('TEXT_DATE_RANGE')}
           </span>
-          <p className="text-sm font-bold text-primary">
+          <p className="text-sm font-bold text-text-primary">
             {TrainerScheduleFormatDate(leave.startDate, locale)} {t('TEXT_TO')}{' '}
             {TrainerScheduleFormatDate(leave.endDate, locale)}
             <span className="text-secondary ml-1.5 font-normal text-xs">
@@ -69,7 +69,7 @@ export function TrainerOperationsLeaveRequestsLeaveExpandedDetails({
           <span className="font-semibold text-secondary uppercase block mb-1">
             {t('TEXT_REASON')}
           </span>
-          <p className="text-sm text-primary font-medium">{leave.reason}</p>
+          <p className="text-sm text-text-primary font-medium">{leave.reason}</p>
         </div>
         <div className="p-3 rounded-xl bg-input border border-border">
           <span className="font-semibold text-secondary uppercase block mb-1">

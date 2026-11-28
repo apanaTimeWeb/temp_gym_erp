@@ -144,7 +144,7 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
                         <div className="min-w-0">
                           <div className="flex items-center gap-2">
                             <TrainerInfrastructureTooltip content={String(displayValue(personName))}>
-                              <div className="text-sm font-bold text-primary truncate max-w-52">{displayValue(personName)}</div>
+                              <div className="text-sm font-bold text-text-primary truncate max-w-52">{displayValue(personName)}</div>
                             </TrainerInfrastructureTooltip>
                             <CopyButton value={String(personName ?? '')} />
                           </div>
@@ -155,7 +155,7 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
                             {record.sessionType && (
                               <>
                                 <span>·</span>
-                                <span className="font-semibold text-primary">{record.sessionType}</span>
+                                <span className="font-semibold text-text-primary">{record.sessionType}</span>
                               </>
                             )}
                           </div>
@@ -188,7 +188,7 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
                     <td className="px-4 py-3 text-sm text-secondary whitespace-nowrap">{record.durationMinutes == null ? '—' : `${TrainerAttendanceFormatNumber(record.durationMinutes, locale)} ${t('TEXT_MINUTES_SHORT')}`}</td>
                     <td className="px-4 py-3"><span className="inline-flex px-2 py-0.5 rounded-md text-xs font-medium bg-input text-secondary border border-border">{displayValue(record.checkInMethod)}</span></td>
                   </tr>
-                  {expanded && <tr className="bg-surface-highlight" data-testid="trainer_attendance-TrainerAttendanceTable-row-3"><td colSpan={TABLE_COLUMNS} className="px-4 py-3 text-sm text-secondary"><div className="grid grid-cols-1 sm:grid-cols-3 gap-3"><span><strong className="text-primary">{t('TEXT_RECORD_ID')}</strong> {record.id}</span><span><strong className="text-primary">{t('TEXT_NOTES_9C3BEF')}</strong> {displayValue(record.notes)}</span><span><strong className="text-primary">{t('TEXT_CHECK_IN_METHOD')}</strong> {displayValue(record.checkInMethod)}</span></div></td></tr>}
+                  {expanded && <tr className="bg-surface-highlight" data-testid="trainer_attendance-TrainerAttendanceTable-row-3"><td colSpan={TABLE_COLUMNS} className="px-4 py-3 text-sm text-secondary"><div className="grid grid-cols-1 sm:grid-cols-3 gap-3"><span><strong className="text-text-primary">{t('TEXT_RECORD_ID')}</strong> {record.id}</span><span><strong className="text-text-primary">{t('TEXT_NOTES_9C3BEF')}</strong> {displayValue(record.notes)}</span><span><strong className="text-text-primary">{t('TEXT_CHECK_IN_METHOD')}</strong> {displayValue(record.checkInMethod)}</span></div></td></tr>}
                 </Fragment>
               );
             })}
@@ -207,12 +207,12 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
                 <span className={`shrink-0 inline-flex px-2.5 py-1 rounded-full text-xs font-semibold ${record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? 'bg-info-bg text-info' : 'bg-success-bg text-success'}`} data-testid={`trainer_attendance-table-type-mobile-${record.id}`}>{record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? t('TEXT_MEMBER') : t('TEXT_STAFF')}</span>
               </div>
               <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-                <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_DATE')}</span><span className="text-primary">{TrainerAttendanceFormatDate(record.date, locale)}</span></p>
-                <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_CHECK_IN_TIME')}</span><span className="text-primary">{TrainerAttendanceFormatTime(record.checkIn, locale)}</span></p>
+                <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_DATE')}</span><span className="text-text-primary">{TrainerAttendanceFormatDate(record.date, locale)}</span></p>
+                <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_CHECK_IN_TIME')}</span><span className="text-text-primary">{TrainerAttendanceFormatTime(record.checkIn, locale)}</span></p>
                 <div>
                   <span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_CHECK_OUT_TIME')}</span>
                   {record.checkOut ? (
-                    <span className="text-primary">{TrainerAttendanceFormatTime(record.checkOut, locale)}</span>
+                    <span className="text-text-primary">{TrainerAttendanceFormatTime(record.checkOut, locale)}</span>
                   ) : onCheckOut && record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? (
                     <button
                       type="button"
@@ -223,13 +223,13 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
                       <span>{t('TEXT_CHECK_OUT')}</span>
                     </button>
                   ) : (
-                    <span className="text-primary">—</span>
+                    <span className="text-text-primary">—</span>
                   )}
                 </div>
-                <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_DAYS')}</span><span className="text-primary">{record.durationMinutes == null ? '—' : `${TrainerAttendanceFormatNumber(record.durationMinutes, locale)} ${t('TEXT_MINUTES_SHORT')}`}</span></p>
-                <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_CHECK_IN_METHOD')}</span><span className="text-primary">{displayValue(record.checkInMethod)}</span></p>
-                <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_RECORD_ID')}</span><span className="text-primary">{record.id}</span></p>
-                <p className="sm:col-span-2"><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_NOTES_9C3BEF')}</span><span className="text-primary">{displayValue(record.notes)}</span></p>
+                <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_DAYS')}</span><span className="text-text-primary">{record.durationMinutes == null ? '—' : `${TrainerAttendanceFormatNumber(record.durationMinutes, locale)} ${t('TEXT_MINUTES_SHORT')}`}</span></p>
+                <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_CHECK_IN_METHOD')}</span><span className="text-text-primary">{displayValue(record.checkInMethod)}</span></p>
+                <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_RECORD_ID')}</span><span className="text-text-primary">{record.id}</span></p>
+                <p className="sm:col-span-2"><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_NOTES_9C3BEF')}</span><span className="text-text-primary">{displayValue(record.notes)}</span></p>
               </div>
             </article>
           );

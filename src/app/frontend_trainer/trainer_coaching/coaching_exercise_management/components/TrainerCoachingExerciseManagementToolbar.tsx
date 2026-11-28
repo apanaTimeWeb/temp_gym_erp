@@ -43,7 +43,7 @@ export default function TrainerCoachingExerciseManagementToolbar() {
             value={draft}
             onChange={(event) => setDraft(event.target.value)}
             placeholder={t('TEXT_SEARCH')}
-            className="w-full min-h-10 pl-9 pr-8 py-2 bg-input border border-border rounded-xl text-xs sm:text-sm text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="w-full min-h-10 pl-9 pr-8 py-2 bg-input border border-border rounded-xl text-xs sm:text-sm text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           />
           {draft && (
             <button

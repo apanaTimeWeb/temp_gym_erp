@@ -31,7 +31,7 @@ export function TrainerCoachingSessionsLiveWorkoutExerciseCard({
           <span className="w-6 h-6 rounded-lg bg-primary-subtle text-primary text-xs font-bold flex items-center justify-center shrink-0">
             {exIndex + 1}
           </span>
-          <h3 className="font-bold text-primary text-base truncate">{exercise.name}</h3>
+          <h3 className="font-bold text-text-primary text-base truncate">{exercise.name}</h3>
         </div>
         <button
           type="button"
@@ -85,7 +85,7 @@ export function TrainerCoachingSessionsLiveWorkoutExerciseCard({
                   step="0.5"
                   value={set.actualWeightKg}
                   onChange={(e) => onUpdateSetValue(exercise.id, set.id, 'actualWeightKg', Number(e.target.value))}
-                  className="w-full min-h-9 px-2 py-1 rounded bg-input border border-border text-center text-primary font-semibold focus-visible:ring-1 focus-visible:ring-focus-ring"
+                  className="w-full min-h-9 px-2 py-1 rounded bg-input border border-border text-center text-text-primary font-semibold focus-visible:ring-1 focus-visible:ring-focus-ring"
                 />
               </label>
               <label className="space-y-1">
@@ -95,7 +95,7 @@ export function TrainerCoachingSessionsLiveWorkoutExerciseCard({
                   min="1"
                   value={set.actualReps}
                   onChange={(e) => onUpdateSetValue(exercise.id, set.id, 'actualReps', Number(e.target.value))}
-                  className="w-full min-h-9 px-2 py-1 rounded bg-input border border-border text-center text-primary font-semibold focus-visible:ring-1 focus-visible:ring-focus-ring"
+                  className="w-full min-h-9 px-2 py-1 rounded bg-input border border-border text-center text-text-primary font-semibold focus-visible:ring-1 focus-visible:ring-focus-ring"
                 />
               </label>
               <label className="space-y-1">
@@ -106,7 +106,7 @@ export function TrainerCoachingSessionsLiveWorkoutExerciseCard({
                   max="10"
                   value={set.rpe}
                   onChange={(e) => onUpdateSetValue(exercise.id, set.id, 'rpe', Number(e.target.value))}
-                  className="w-full min-h-9 px-2 py-1 rounded bg-input border border-border text-center text-primary font-semibold focus-visible:ring-1 focus-visible:ring-focus-ring"
+                  className="w-full min-h-9 px-2 py-1 rounded bg-input border border-border text-center text-text-primary font-semibold focus-visible:ring-1 focus-visible:ring-focus-ring"
                 />
               </label>
             </div>
@@ -148,7 +148,7 @@ export function TrainerCoachingSessionsLiveWorkoutExerciseCard({
                     step="0.5"
                     value={set.actualWeightKg}
                     onChange={(e) => onUpdateSetValue(exercise.id, set.id, 'actualWeightKg', Number(e.target.value))}
-                    className="w-16 px-2 py-1 rounded bg-card border border-border text-center text-primary font-semibold focus-visible:ring-1 focus-visible:ring-focus-ring"
+                    className="w-16 px-2 py-1 rounded bg-card border border-border text-center text-text-primary font-semibold focus-visible:ring-1 focus-visible:ring-focus-ring"
                   />
                 </td>
                 <td className="py-2 px-3 text-secondary">
@@ -160,7 +160,7 @@ export function TrainerCoachingSessionsLiveWorkoutExerciseCard({
                     min="1"
                     value={set.actualReps}
                     onChange={(e) => onUpdateSetValue(exercise.id, set.id, 'actualReps', Number(e.target.value))}
-                    className="w-14 px-2 py-1 rounded bg-card border border-border text-center text-primary font-semibold focus-visible:ring-1 focus-visible:ring-focus-ring"
+                    className="w-14 px-2 py-1 rounded bg-card border border-border text-center text-text-primary font-semibold focus-visible:ring-1 focus-visible:ring-focus-ring"
                   />
                 </td>
                 <td className="py-2 px-3">
@@ -170,7 +170,7 @@ export function TrainerCoachingSessionsLiveWorkoutExerciseCard({
                     max="10"
                     value={set.rpe}
                     onChange={(e) => onUpdateSetValue(exercise.id, set.id, 'rpe', Number(e.target.value))}
-                    className="w-12 px-2 py-1 rounded bg-card border border-border text-center text-primary font-semibold focus-visible:ring-1 focus-visible:ring-focus-ring"
+                    className="w-12 px-2 py-1 rounded bg-card border border-border text-center text-text-primary font-semibold focus-visible:ring-1 focus-visible:ring-focus-ring"
                   />
                 </td>
                 <td className="py-2 px-3 text-center">

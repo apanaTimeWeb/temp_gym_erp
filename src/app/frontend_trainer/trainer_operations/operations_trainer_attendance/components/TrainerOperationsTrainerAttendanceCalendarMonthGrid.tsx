@@ -66,7 +66,7 @@ export function TrainerOperationsTrainerAttendanceCalendarMonthGrid({
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className="text-sm font-bold text-primary">
+                <span className="text-sm font-bold text-text-primary">
                   {day}
                 </span>
                 {isPastOrToday && (

@@ -18,14 +18,14 @@ export default function TrainerAccountSecuritySecurityView({ passwordForm, chang
 
   return (
     <form onSubmit={passwordForm.handleSubmit((values) => changePassword(values))} className="bg-card border border-border rounded-xl p-6 space-y-5" data-testid="trainer_profile-trainerprofilemain-form_9">
-      <h2 className="text-section-title font-semibold text-primary">{t('TEXT_CHANGE_PASSWORD')}</h2>
+      <h2 className="text-section-title font-semibold text-text-primary">{t('TEXT_CHANGE_PASSWORD')}</h2>
       {TRAINER_ACCOUNT_SECURITY_PASSWORD_FIELDS.map((field) => {
         const visible = passwordVisibility[field.key];
         return (
           <div key={field.name} className="max-w-md">
             <label htmlFor={`trainer-${field.name}`} className="block text-sm font-medium text-secondary mb-1.5">{t(field.labelKey)}</label>
             <div className="relative">
-              <input id={`trainer-${field.name}`} type={visible ? 'text' : 'password'} {...passwordForm.register(field.name)} aria-invalid={Boolean(passwordForm.formState.errors[field.name])} aria-describedby={passwordForm.formState.errors[field.name] ? `trainer-profile-${field.key}-error` : undefined} className="w-full px-4 py-2.5 pe-10 bg-input border border-border rounded-lg text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid={`trainer_profile-profile-password-${field.key}`} />
+              <input id={`trainer-${field.name}`} type={visible ? 'text' : 'password'} {...passwordForm.register(field.name)} aria-invalid={Boolean(passwordForm.formState.errors[field.name])} aria-describedby={passwordForm.formState.errors[field.name] ? `trainer-profile-${field.key}-error` : undefined} className="w-full px-4 py-2.5 pe-10 bg-input border border-border rounded-lg text-text-primary text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid={`trainer_profile-profile-password-${field.key}`} />
               <button type="button" aria-label={visible ? t('TEXT_HIDE_PASSWORD') : t('TEXT_SHOW_PASSWORD')} onClick={() => setPasswordVisibility((current) => ({ ...current, [field.key]: !current[field.key] }))} className="min-w-11 min-h-11 absolute end-3 top-1/2 -translate-y-1/2 text-secondary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid={`trainer_profile-profile-password-visibility-${field.key}`}>
                 {visible ? <EyeOff size={18} strokeWidth={2} /> : <Eye size={18} strokeWidth={2} />}
               </button>

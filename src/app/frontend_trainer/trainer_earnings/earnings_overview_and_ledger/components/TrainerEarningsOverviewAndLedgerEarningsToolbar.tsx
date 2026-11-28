@@ -39,7 +39,7 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
 
   return (
     <div className="p-4 border-b border-border bg-surface-highlight flex flex-col xl:flex-row gap-3 items-start xl:items-center justify-between">
-      <h2 className="text-section-title font-semibold text-primary">{t("TEXT_EARNINGS_LEDGER")}</h2>
+      <h2 className="text-section-title font-semibold text-text-primary">{t("TEXT_EARNINGS_LEDGER")}</h2>
       <div className="flex flex-col sm:flex-row gap-2.5 w-full xl:w-auto xl:items-center flex-wrap">
         <div className="relative w-full sm:w-64 sm:min-w-[200px]">
           <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-sky-500 pointer-events-none w-4 h-4" aria-hidden="true" strokeWidth={2} />
@@ -50,7 +50,7 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
             placeholder={t("TEXT_SEARCH_DESCRIPTIONS")}
             value={draftSearch}
             onChange={(event) => setDraftSearch(event.target.value)}
-            className="w-full min-h-10 pl-9 pr-8 py-2 bg-input border border-border rounded-xl text-xs sm:text-sm text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all"
+            className="w-full min-h-10 pl-9 pr-8 py-2 bg-input border border-border rounded-xl text-xs sm:text-sm text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all"
             data-testid="trainer_earnings-earnings-history_search"
           />
           {draftSearch && (
@@ -69,7 +69,7 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
             id="trainer-earnings-status-filter"
             value={statusFilter}
             onChange={(e) => updateUrlParam('status', e.target.value === 'ALL' ? null : e.target.value)}
-            className="min-h-10 px-3 bg-input border border-border rounded-xl text-xs font-medium text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
+            className="min-h-10 px-3 bg-input border border-border rounded-xl text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
             aria-label="Filter by Status"
             data-testid="trainer_earnings-filter-status"
           >
@@ -83,7 +83,7 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
             id="trainer-earnings-type-filter"
             value={typeFilter}
             onChange={(e) => updateUrlParam('type', e.target.value === 'ALL' ? null : e.target.value)}
-            className="min-h-10 px-3 bg-input border border-border rounded-xl text-xs font-medium text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
+            className="min-h-10 px-3 bg-input border border-border rounded-xl text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
             aria-label="Filter by Type"
             data-testid="trainer_earnings-filter-type"
           >
@@ -100,7 +100,7 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
             type="date"
             value={startDate}
             onChange={(event) => handleDateChange('startDate', event.target.value)}
-            className="min-h-10 px-2.5 bg-input border border-border rounded-xl text-xs sm:text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="min-h-10 px-2.5 bg-input border border-border rounded-xl text-xs sm:text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             data-testid="trainer_earnings-earnings-history_start_date"
           />
           <span className="text-secondary text-xs sm:text-sm" aria-hidden="true">{t("TEXT_TO")}</span>
@@ -110,7 +110,7 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
             type="date"
             value={endDate}
             onChange={(event) => handleDateChange('endDate', event.target.value)}
-            className="min-h-10 px-2.5 bg-input border border-border rounded-xl text-xs sm:text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="min-h-10 px-2.5 bg-input border border-border rounded-xl text-xs sm:text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             data-testid="trainer_earnings-earnings-history_end_date"
           />
 

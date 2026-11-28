@@ -33,7 +33,7 @@ export default function TrainerCoachingWorkoutPlansToolbar() {
         <label htmlFor="trainer-coaching_workout_plans-search" className="sr-only">{t('TEXT_SEARCH')}</label>
         <input id="trainer-coaching_workout_plans-search" type="search" value={draft}
           onChange={(event) => setDraft(event.target.value)} placeholder={t('TEXT_SEARCH')}
-          className="min-h-11 w-full rounded-lg border border-border bg-input py-2 ps-9 pe-3 text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" />
+          className="min-h-11 w-full rounded-lg border border-border bg-input py-2 ps-9 pe-3 text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" />
       </div>
       <div className="w-full sm:w-56 shrink-0">
         <TrainerSearchableDropdown

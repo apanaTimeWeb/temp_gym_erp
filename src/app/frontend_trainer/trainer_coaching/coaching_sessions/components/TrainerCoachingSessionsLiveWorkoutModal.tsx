@@ -176,7 +176,7 @@ export default function TrainerCoachingSessionsLiveWorkoutModal({
         {/* Progress Bar Banner */}
         <div className="px-6 py-2.5 bg-input/50 border-b border-border flex items-center justify-between text-xs text-secondary">
           <div className="flex items-center gap-2">
-            <span className="font-semibold text-primary">Sets Progress:</span>
+            <span className="font-semibold text-text-primary">Sets Progress:</span>
             <span>
               {totalSetsCompleted} of {totalSets} sets logged ({totalSets > 0 ? Math.round((totalSetsCompleted / totalSets) * 100) : 0}%)
             </span>
@@ -211,7 +211,7 @@ export default function TrainerCoachingSessionsLiveWorkoutModal({
                 placeholder="Enter exercise name (e.g. Lat Pulldown, Cable Fly)"
                 value={newExerciseName}
                 onChange={(e) => setNewExerciseName(e.target.value)}
-                className="flex-1 px-3 py-2 bg-card border border-border rounded-lg text-sm text-primary focus-visible:ring-2 focus-visible:ring-focus-ring"
+                className="flex-1 px-3 py-2 bg-card border border-border rounded-lg text-sm text-text-primary focus-visible:ring-2 focus-visible:ring-focus-ring"
                 autoFocus
               />
               <div className="flex items-center gap-2 w-full sm:w-auto">
@@ -252,7 +252,7 @@ export default function TrainerCoachingSessionsLiveWorkoutModal({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Record cues, fatigue observations, client feedback or next session recommendations..."
-              className="w-full px-3 py-2 rounded-xl bg-floating border border-border text-sm text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              className="w-full px-3 py-2 rounded-xl bg-floating border border-border text-sm text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
             />
           </div>
         </div>

@@ -129,7 +129,7 @@ export default function TrainerMembersProfileAssessment() {
             <Activity size={18} className="text-primary "  strokeWidth={2}/>
           </div>
           <div>
-            <h3 className="text-base font-semibold text-primary ">{t("TEXT_DAY_1_FITNESS_MEDICAL_ASSESSMENT")}</h3>
+            <h3 className="text-base font-semibold text-text-primary ">{t("TEXT_DAY_1_FITNESS_MEDICAL_ASSESSMENT")}</h3>
             <p className="text-sm text-secondary ">{t("TEXT_INITIAL_FITNESS_TEST_SCORES_AND_BASELINE_METRICS")}</p>
           </div>
         </div>
@@ -145,7 +145,7 @@ export default function TrainerMembersProfileAssessment() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
         <div className="space-y-4 ">
           <div>
-            <label htmlFor="trainer-member-medical-history" className="block text-sm font-bold text-primary mb-1 ">{t("TEXT_MEDICAL_HISTORY")}</label>
+            <label htmlFor="trainer-member-medical-history" className="block text-sm font-bold text-text-primary mb-1 ">{t("TEXT_MEDICAL_HISTORY")}</label>
             <textarea id="trainer-member-medical-history" aria-invalid={Boolean(errors.medicalHistory)} aria-describedby={errors.medicalHistory ? "trainer-member-medical-history-error" : undefined}
               {...register('medicalHistory')} 
               placeholder={t("TEXT_ANY_KNOWN_MEDICAL_CONDITIONS")}
@@ -154,7 +154,7 @@ export default function TrainerMembersProfileAssessment() {
             {errors.medicalHistory && <p id="trainer-member-medical-history-error" role="alert" className="text-xs text-danger mt-1 " data-testid="trainer_members-medical-history-error">{t("TEXT_TRAINER_MEMBER_MEDICAL_HISTORY_ERROR")}</p>}
           </div>
           <div>
-            <label htmlFor="trainer-member-past-injuries" className="block text-sm font-bold text-primary mb-1 ">{t("TEXT_PAST_INJURIES")}</label>
+            <label htmlFor="trainer-member-past-injuries" className="block text-sm font-bold text-text-primary mb-1 ">{t("TEXT_PAST_INJURIES")}</label>
             <textarea id="trainer-member-past-injuries" aria-invalid={Boolean(errors.pastInjuries)} aria-describedby={errors.pastInjuries ? "trainer-member-past-injuries-error" : undefined}
               {...register('pastInjuries')} 
               placeholder={t("TEXT_ANY_PAST_INJURIES")}
@@ -163,7 +163,7 @@ export default function TrainerMembersProfileAssessment() {
             {errors.pastInjuries && <p id="trainer-member-past-injuries-error" role="alert" className="text-xs text-danger mt-1 " data-testid="trainer_members-past-injuries-error">{t("TEXT_TRAINER_MEMBER_PAST_INJURIES_ERROR")}</p>}
           </div>
           <div>
-            <label htmlFor="trainer-member-fitness-goals" className="block text-sm font-bold text-primary mb-1 ">{t("TEXT_FITNESS_GOALS")}</label>
+            <label htmlFor="trainer-member-fitness-goals" className="block text-sm font-bold text-text-primary mb-1 ">{t("TEXT_FITNESS_GOALS")}</label>
             <textarea id="trainer-member-fitness-goals" aria-invalid={Boolean(errors.fitnessGoals)} aria-describedby={errors.fitnessGoals ? "trainer-member-fitness-goals-error" : undefined}
               {...register('fitnessGoals')} 
               placeholder={t("TEXT_WHAT_DOES_THE_CLIENT_WANT_TO_ACHIEVE")}
@@ -181,7 +181,7 @@ export default function TrainerMembersProfileAssessment() {
               step="0.1"
               {...register('vo2Max', { valueAsNumber: true })} 
               placeholder={t("TEXT_E_G_45")}
-              className="w-full bg-transparent text-xl font-bold text-primary focus-visible:outline-none  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+              className="w-full bg-transparent text-xl font-bold text-text-primary focus-visible:outline-none  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
              data-testid="trainer_members-trainermembersprofileassessment-input_6"/>
             {errors.vo2Max && <p id="trainer-member-vo2-error" role="alert" className="text-xs text-danger mt-1 " data-testid="trainer_members-trainermembersprofileassessment-vo2-error">{t("TEXT_TRAINER_MEMBER_VO2_ERROR")}</p>}
           </div>
@@ -192,7 +192,7 @@ export default function TrainerMembersProfileAssessment() {
               step="0.1"
               {...register('flexibility', { valueAsNumber: true })} 
               placeholder={t("TEXT_E_G_15")}
-              className="w-full bg-transparent text-xl font-bold text-primary focus-visible:outline-none  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+              className="w-full bg-transparent text-xl font-bold text-text-primary focus-visible:outline-none  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
              data-testid="trainer_members-trainermembersprofileassessment-input_7"/>
             {errors.flexibility && <p id="trainer-member-flexibility-error" role="alert" className="text-xs text-danger mt-1 " data-testid="trainer_members-trainermembersprofileassessment-flexibility-error">{t("TEXT_TRAINER_MEMBER_FLEXIBILITY_ERROR")}</p>}
           </div>
@@ -203,7 +203,7 @@ export default function TrainerMembersProfileAssessment() {
               aria-invalid={Boolean(errors.coreStrength)}
               {...register('coreStrength')} 
               placeholder={t("TEXT_E_G_2_30_PLANK")}
-              className="w-full bg-transparent text-xl font-bold text-primary focus-visible:outline-none  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+              className="w-full bg-transparent text-xl font-bold text-text-primary focus-visible:outline-none  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
              data-testid="trainer_members-trainermembersprofileassessment-input_8"/>
           </div>
         </div>
@@ -217,7 +217,7 @@ export default function TrainerMembersProfileAssessment() {
               <HeartPulse size={18} strokeWidth={2} />
             </div>
             <div>
-              <h4 className="text-base font-semibold text-primary">Physical Activity Readiness Questionnaire (PAR-Q)</h4>
+              <h4 className="text-base font-semibold text-text-primary">Physical Activity Readiness Questionnaire (PAR-Q)</h4>
               <p className="text-xs text-secondary">Pre-exercise screening questionnaire to determine training safety.</p>
             </div>
           </div>
@@ -254,11 +254,11 @@ export default function TrainerMembersProfileAssessment() {
             { key: 'parqOtherReason' as const, label: '7. Do you know of any other reason or medical concern why you should not follow an exercise program?' },
           ].map((question) => (
             <label key={question.key} className="flex items-start justify-between gap-4 py-3 cursor-pointer hover:bg-input px-2 rounded-lg transition-colors">
-              <span className="text-xs text-primary font-medium leading-relaxed">{question.label}</span>
+              <span className="text-xs text-text-primary font-medium leading-relaxed">{question.label}</span>
               <input
                 type="checkbox"
                 {...register(question.key)}
-                className="mt-0.5 h-4 w-4 rounded border-border text-primary focus:ring-focus"
+                className="mt-0.5 h-4 w-4 rounded border-border text-text-primary focus:ring-focus"
                 data-testid={`trainer_members-parq-${question.key}`}
               />
             </label>

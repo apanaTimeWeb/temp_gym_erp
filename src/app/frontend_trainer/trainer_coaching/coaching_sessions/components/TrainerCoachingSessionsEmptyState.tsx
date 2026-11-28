@@ -28,7 +28,7 @@ export default function TrainerSessionsEmptyState({ onSchedule }: TrainerSession
         <Calendar size={18} className="text-primary"  strokeWidth={2}/>
       </div>
       <div>
-        <h3 className="text-lg font-bold text-primary">{t("TEXT_NO_SESSIONS_SCHEDULED")}</h3>
+        <h3 className="text-lg font-bold text-text-primary">{t("TEXT_NO_SESSIONS_SCHEDULED")}</h3>
         <p className="text-sm text-secondary mt-1 max-w-xs mx-auto">
           {t("TEXT_YOU_HAVE_NO_SESSIONS_FOR_THIS_DAY_OR_FIL_3B7805DE")}</p>
       </div>

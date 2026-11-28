@@ -93,7 +93,7 @@ export function TrainerOperationsLeaveRequestsLeaveTable({ leaveRequests, openLe
       {/* Table Top Header Bar */}
       <div className="p-5 border-b border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-header">
         <div>
-          <h2 className="text-lg font-bold text-primary flex items-center gap-2">
+          <h2 className="text-lg font-bold text-text-primary flex items-center gap-2">
             <Calendar size={18} className="text-primary" />
             {t('TEXT_TIME_OFF_REQUESTS')}
           </h2>
@@ -180,18 +180,18 @@ export function TrainerOperationsLeaveRequestsLeaveTable({ leaveRequests, openLe
                         expanded ? 'bg-primary-subtle border-l-4 border-l-primary' : ''
                       }`}
                     >
-                      <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-4 text-xs font-bold text-primary whitespace-nowrap group-hover:bg-surface-hover transition-colors">
+                      <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-4 text-xs font-bold text-text-primary whitespace-nowrap group-hover:bg-surface-hover transition-colors">
                         <div className="flex items-center gap-2">
-                          <span className="font-bold text-primary text-sm font-mono">{leave.id}</span>
+                          <span className="font-bold text-text-primary text-sm font-mono">{leave.id}</span>
                           <CopyButton value={leave.id} />
                         </div>
                       </td>
                       <td className="px-4 py-4 whitespace-nowrap">
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold bg-input text-primary border border-border">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold bg-input text-text-primary border border-border">
                           {getLeaveTypeLabel(leave.leaveType)}
                         </span>
                       </td>
-                      <td className="px-4 py-4 text-sm font-semibold text-primary whitespace-nowrap">
+                      <td className="px-4 py-4 text-sm font-semibold text-text-primary whitespace-nowrap">
                         {TrainerScheduleFormatDate(leave.startDate, locale)} <span className="text-secondary font-normal mx-1">{t('TEXT_TO')}</span> {TrainerScheduleFormatDate(leave.endDate, locale)}
                         <span className="ml-2 text-xs font-normal text-secondary">
                           ({daysCount} {daysCount === 1 ? t('TEXT_DAY') : t('TEXT_DAYS')})
@@ -274,7 +274,7 @@ export function TrainerOperationsLeaveRequestsLeaveTable({ leaveRequests, openLe
       {/* In-Card Bottom-Pinned Footer Summary */}
       <div className="border-t border-border px-4 py-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between bg-card text-xs text-secondary">
         <p>
-          Showing <span className="font-semibold text-primary">{filteredLeaves.length}</span> of <span className="font-semibold text-primary">{totalRequests}</span> leave requests
+          Showing <span className="font-semibold text-text-primary">{filteredLeaves.length}</span> of <span className="font-semibold text-text-primary">{totalRequests}</span> leave requests
         </p>
       </div>
     </div>

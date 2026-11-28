@@ -41,7 +41,7 @@ export default function TrainerProgressTrackingMemberSelector({ allMembers, sele
             <Users size={18} strokeWidth={2} />
           </div>
           <div>
-            <span className="text-sm font-bold text-primary">{t("TEXT_SELECT_MEMBERS_TO_COMPARE")}</span>
+            <span className="text-sm font-bold text-text-primary">{t("TEXT_SELECT_MEMBERS_TO_COMPARE")}</span>
             <p className="text-xs text-secondary">
               {t("TEXT_SHOWING_MEMBERS_COUNT", { count: filteredMembers.length, total: allMembers.length })}
             </p>

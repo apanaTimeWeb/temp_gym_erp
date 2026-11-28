@@ -103,7 +103,7 @@ export default function TrainerMembersProfileDiet() {
     <div className="space-y-6 motion-safe:transition-opacity motion-safe:duration-slow">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h3 className="text-lg font-bold text-primary">{t("TEXT_DIET_NUTRITION_PLAN")}</h3>
+          <h3 className="text-lg font-bold text-text-primary">{t("TEXT_DIET_NUTRITION_PLAN")}</h3>
           <p className="text-sm text-secondary">{t('TEXT_MANAGE_AND_CUSTOMIZE_DAILY_MEAL_REQUIREMENTS_FOR', { name: selectedMember.name })}</p>
         </div>
         <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
@@ -136,7 +136,7 @@ export default function TrainerMembersProfileDiet() {
       {isAssigning && (
         <div className="bg-card border border-focus p-5 rounded-2xl space-y-4 shadow-card">
           <div className="flex items-center justify-between">
-            <h4 className="font-semibold text-primary flex items-center gap-2">
+            <h4 className="font-semibold text-text-primary flex items-center gap-2">
               <Apple size={18}  strokeWidth={2}/> {t("TEXT_SELECT_DIET_PLAN_FROM_LIBRARY")}</h4>
             <button type="button" 
               onClick={() => setIsAssigning(false)}
@@ -188,7 +188,7 @@ export default function TrainerMembersProfileDiet() {
                   {displayValue(diet.goal)}
                 </span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-primary break-words">{diet.name}</h3>
+              <h3 className="text-xl sm:text-2xl font-bold text-text-primary break-words">{diet.name}</h3>
               <p className="text-sm text-secondary mt-1">{displayValue(diet.description)}</p>
             </div>
             <div className="flex flex-wrap gap-3 w-full sm:w-auto">
@@ -198,12 +198,12 @@ export default function TrainerMembersProfileDiet() {
                   <div className="h-2 w-16 bg-input rounded-full overflow-hidden" aria-hidden="true">
                     <svg viewBox="0 0 100 1" preserveAspectRatio="none" className="h-full w-full" aria-hidden="true"><rect width={Math.max(0, Math.min(100, diet.complianceScore ?? 0))} height="1" fill="currentColor" className="text-success" /></svg>
                   </div>
-                  <p className="text-xl font-black text-primary tabular-nums">{diet.complianceScore == null ? '—' : TrainerMembersFormatNumber(diet.complianceScore, locale)}%</p>
+                  <p className="text-xl font-black text-text-primary tabular-nums">{diet.complianceScore == null ? '—' : TrainerMembersFormatNumber(diet.complianceScore, locale)}%</p>
                 </div>
               </div>
               <div className="flex-1 sm:flex-none bg-floating border border-border rounded-xl px-4 py-3 text-end">
                 <p className="text-xs text-secondary">{t("TEXT_TARGET_DAILY_CALORIES")}</p>
-                <p className="text-2xl font-black text-primary flex items-center gap-1 justify-end tabular-nums">
+                <p className="text-2xl font-black text-text-primary flex items-center gap-1 justify-end tabular-nums">
                   <Flame size={18} className="text-danger"  strokeWidth={2}/> {diet.calories == null ? '—' : TrainerMembersFormatNumber(diet.calories, locale)} <span className="text-xs text-secondary font-normal">{t("TEXT_KCAL")}</span>
                 </p>
               </div>
@@ -239,7 +239,7 @@ export default function TrainerMembersProfileDiet() {
                         {idx + 1}
                       </span>
                       <div>
-                        <p className="text-sm font-bold text-primary">
+                        <p className="text-sm font-bold text-text-primary">
                           {typeof meal === 'string' ? `Meal ${idx + 1}` : meal.name || `Meal ${idx + 1}`}
                         </p>
                         <p className="text-xs text-secondary mt-0.5">
@@ -280,7 +280,7 @@ export default function TrainerMembersProfileDiet() {
           <div className="w-14 h-14 rounded-full bg-success-bg text-success flex items-center justify-center mx-auto" data-testid={"trainer_members-trainer_members-profile-success-state-224-3"}>
             <Apple size={18}  strokeWidth={2}/>
           </div>
-          <h4 className="text-lg font-bold text-primary">{t("TEXT_NO_DIET_PLAN_ASSIGNED")}</h4>
+          <h4 className="text-lg font-bold text-text-primary">{t("TEXT_NO_DIET_PLAN_ASSIGNED")}</h4>
           <p className="text-sm text-secondary max-w-md mx-auto">
             {selectedMember.name} {t("TEXT_DOES_NOT_HAVE_AN_ACTIVE_NUTRITION_PLAN_A_6056E8DF")}</p>
           <button type="button"

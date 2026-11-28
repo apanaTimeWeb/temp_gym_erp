@@ -119,10 +119,10 @@ export default function TrainerMembersTrainerNotesMain() {
       reset({ text: '' }); submission.current = null;
     } catch { /* Inline query/mutation error states communicate failure; draft is retained. */ }
   });
-  return <section className="space-y-5 p-4 sm:p-6 text-primary" aria-labelledby="trainer-notes-title">
+  return <section className="space-y-5 p-4 sm:p-6 text-text-primary" aria-labelledby="trainer-notes-title">
     <div className="flex flex-wrap items-center justify-between gap-3">
       <h1 id="trainer-notes-title" className="text-page-title font-bold">{t('TEXT_TRAINER_NOTES')}</h1>
-      <Link className="inline-flex min-h-11 items-center rounded-lg border border-border px-4 text-primary focus-visible:ring-2 focus-visible:ring-focus-ring" href={TRAINER_NOTES_ROUTES.DIRECTORY} onClick={(event) => { if (isDirty && !addNote.isPending) { event.preventDefault(); setPendingDestination(TRAINER_NOTES_ROUTES.DIRECTORY); setConfirmNavigation(true); } }}>{t('TEXT_BACK_TO_MEMBERS')}</Link>
+      <Link className="inline-flex min-h-11 items-center rounded-lg border border-border px-4 text-text-primary focus-visible:ring-2 focus-visible:ring-focus-ring" href={TRAINER_NOTES_ROUTES.DIRECTORY} onClick={(event) => { if (isDirty && !addNote.isPending) { event.preventDefault(); setPendingDestination(TRAINER_NOTES_ROUTES.DIRECTORY); setConfirmNavigation(true); } }}>{t('TEXT_BACK_TO_MEMBERS')}</Link>
     </div>
     {confirmNavigation && <div role="presentation" className="fixed inset-0 z-50 flex items-center justify-center bg-overlay-backdrop p-4 overflow-y-auto">
       <div ref={dialogRef} role="alertdialog" aria-modal="true" aria-labelledby="trainer-notes-unsaved-title" aria-describedby="trainer-notes-unsaved-description" className="my-auto w-full max-w-md rounded-xl border border-border bg-overlay p-6 shadow-dialog">
@@ -155,7 +155,7 @@ export default function TrainerMembersTrainerNotesMain() {
       </div>
       <form className="space-y-3 rounded-xl border border-border bg-card p-5" onSubmit={(event) => void save(event)}>
         <label htmlFor="trainer-notes-text" className="block text-sm font-semibold">{t('TEXT_ADD_NOTE')}</label>
-        <textarea id="trainer-notes-text" rows={4} disabled={addNote.isPending} aria-invalid={Boolean(errors.text)} aria-describedby={errors.text ? 'trainer-notes-validation' : undefined} {...register('text')} className="min-h-24 w-full rounded-lg border border-border bg-input p-3 text-primary focus-visible:ring-2 focus-visible:ring-focus-ring"/>
+        <textarea id="trainer-notes-text" rows={4} disabled={addNote.isPending} aria-invalid={Boolean(errors.text)} aria-describedby={errors.text ? 'trainer-notes-validation' : undefined} {...register('text')} className="min-h-24 w-full rounded-lg border border-border bg-input p-3 text-text-primary focus-visible:ring-2 focus-visible:ring-focus-ring"/>
         {errors.text && <p id="trainer-notes-validation" role="alert" className="text-sm text-danger">{t('TEXT_NOTE')} {t('TEXT_REQUIRED')}</p>}
         {addNote.isError && <p role="alert" className="text-sm text-danger">{t('TEXT_GENERIC_REQUEST_ERROR')}</p>}
         <button disabled={addNote.isPending || !isDirty} type="submit" className="min-h-11 rounded-lg bg-primary px-4 font-semibold text-on-primary disabled:cursor-not-allowed disabled:opacity-50">{t('TEXT_SAVE_NOTE')}</button>

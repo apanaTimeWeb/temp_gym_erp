@@ -74,7 +74,7 @@ export default function TrainerEarningsOverviewAndLedgerAdvanceModal({
             <div className="w-8 h-8 rounded-lg bg-primary-subtle text-primary flex items-center justify-center">
               <IndianRupee size={16} />
             </div>
-            <h3 id="advance-modal-title" className="text-sm font-bold text-primary">
+            <h3 id="advance-modal-title" className="text-sm font-bold text-text-primary">
               Request Payout Advance
             </h3>
           </div>
@@ -109,7 +109,7 @@ export default function TrainerEarningsOverviewAndLedgerAdvanceModal({
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 required
-                className="w-full min-h-11 ps-8 pe-4 bg-input border border-border rounded-lg text-sm text-primary font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                className="w-full min-h-11 ps-8 pe-4 bg-input border border-border rounded-lg text-sm text-text-primary font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 placeholder="15000"
                 data-testid="trainer_earnings-advance-amount-input"
               />
@@ -127,7 +127,7 @@ export default function TrainerEarningsOverviewAndLedgerAdvanceModal({
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               required
-              className="w-full p-3 bg-input border border-border rounded-lg text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              className="w-full p-3 bg-input border border-border rounded-lg text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
               placeholder="e.g. Medical expense, course certification fee, urgent personal need"
               data-testid="trainer_earnings-advance-reason-input"
             />
@@ -143,7 +143,7 @@ export default function TrainerEarningsOverviewAndLedgerAdvanceModal({
               value={needByDate}
               onChange={(e) => setNeedByDate(e.target.value)}
               required
-              className="w-full min-h-11 px-3 bg-input border border-border rounded-lg text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              className="w-full min-h-11 px-3 bg-input border border-border rounded-lg text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
               data-testid="trainer_earnings-advance-date-input"
             />
           </div>
@@ -164,7 +164,7 @@ export default function TrainerEarningsOverviewAndLedgerAdvanceModal({
               type="button"
               onClick={onClose}
               disabled={isSubmitting}
-              className="min-h-10 px-4 rounded-lg border border-border text-xs font-semibold text-primary hover:bg-input"
+              className="min-h-10 px-4 rounded-lg border border-border text-xs font-semibold text-text-primary hover:bg-input"
             >
               Cancel
             </button>

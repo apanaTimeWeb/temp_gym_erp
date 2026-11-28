@@ -47,9 +47,9 @@ export default function TrainerInfrastructurePagination({ currentPage, totalPage
     <div className="px-3 sm:px-5 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-border bg-surface-highlight/40">
       {startItem !== null && endItem !== null && totalItems !== undefined ? (
         <div className="text-sm text-center sm:text-start text-secondary">
-          {t("TEXT_SHOWING")}<span className="font-semibold text-primary tabular-nums">{startItem}</span> {t("TEXT_TO")}<span className="font-semibold text-primary tabular-nums">{endItem}</span> {t("TEXT_OF")}<span className="font-semibold text-primary tabular-nums">{totalItems}</span> {t("TEXT_RESULTS")}</div>
+          {t("TEXT_SHOWING")}<span className="font-semibold text-text-primary tabular-nums">{startItem}</span> {t("TEXT_TO")}<span className="font-semibold text-text-primary tabular-nums">{endItem}</span> {t("TEXT_OF")}<span className="font-semibold text-text-primary tabular-nums">{totalItems}</span> {t("TEXT_RESULTS")}</div>
       ) : (
-        <div className="text-sm text-secondary">{t("TEXT_PAGE")} <span className="font-semibold text-primary tabular-nums">{totalPages <= 0 ? 0 : page}</span> {t("TEXT_OF")} <span className="font-semibold text-primary tabular-nums">{Math.max(0, totalPages)}</span></div>
+        <div className="text-sm text-secondary">{t("TEXT_PAGE")} <span className="font-semibold text-text-primary tabular-nums">{totalPages <= 0 ? 0 : page}</span> {t("TEXT_OF")} <span className="font-semibold text-text-primary tabular-nums">{Math.max(0, totalPages)}</span></div>
       )}
 
       <div className="flex flex-wrap items-center justify-center gap-1.5 max-w-full">

@@ -91,8 +91,8 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
-            <h3 className="text-xl font-bold text-primary flex items-center gap-2">
-              <CalendarIcon size={18} strokeWidth={2} className="text-primary" /> {monthName} {year} {t("TEXT_HISTORY")}</h3>
+            <h3 className="text-xl font-bold text-text-primary flex items-center gap-2">
+              <CalendarIcon size={18} strokeWidth={2} className="text-text-primary" /> {monthName} {year} {t("TEXT_HISTORY")}</h3>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-success-bg text-success border border-border flex items-center gap-1" data-testid="trainer_attendance-attendance-my_attendance_calendar_status_my_record">
               <UserCheck size={18}  strokeWidth={2}/> {user?.name || t('TEXT_MY_RECORD')}
             </span>
@@ -117,7 +117,7 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
              data-testid="trainer_attendance-trainerattendancemyattendancecalendar-button_2">
               <ChevronLeft size={18}  strokeWidth={2}/>
             </button>
-            <span className="px-3 text-xs font-bold text-primary select-none">
+            <span className="px-3 text-xs font-bold text-text-primary select-none">
               {monthName} {year}
             </span>
             <button type="button"
@@ -207,7 +207,7 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className={`text-sm font-bold ${isToday ? 'text-primary' : 'text-primary'}`}>
+                  <span className={`text-sm font-bold ${isToday ? 'text-text-primary' : 'text-text-primary'}`}>
                     {day}
                   </span>
                   {isToday && (
@@ -247,7 +247,7 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
       {/* Legend Footer */}
       <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-floating border border-border rounded-xl text-xs text-secondary">
         <div className="flex items-center gap-4 flex-wrap">
-          <span className="font-semibold text-primary">{t("TEXT_CALENDAR_STATUS")}</span>
+          <span className="font-semibold text-text-primary">{t("TEXT_CALENDAR_STATUS")}</span>
           <span className="flex items-center gap-1.5">
             <span className="w-3 h-3 rounded-full bg-success text-on-success" data-testid={"trainer_attendance-my-attendance-calendar-status-state-271"}></span> {t("TEXT_PRESENT_P")}</span>
           <span className="flex items-center gap-1.5">

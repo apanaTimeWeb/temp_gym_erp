@@ -82,7 +82,7 @@ export default function TrainerInfrastructureTooltip({ content, children, testId
     const naturallyFocusable = typeof elementType === 'string' && ['a', 'button', 'input', 'select', 'textarea', 'summary'].includes(elementType);
 
     const tooltip = open ? (
-      <span id={tooltipId} role="tooltip" className="absolute start-0 top-full z-30 mt-2 max-w-60 rounded-md border border-border bg-popover px-3 py-2 text-xs text-primary shadow-popover motion-safe:transition-opacity motion-safe:duration-base ease-in-out">
+      <span id={tooltipId} role="tooltip" className="absolute start-0 top-full z-30 mt-2 max-w-60 rounded-md border border-border bg-popover px-3 py-2 text-xs text-text-primary shadow-popover motion-safe:transition-opacity motion-safe:duration-base ease-in-out">
         {content}
       </span>
     ) : null;
@@ -103,7 +103,7 @@ export default function TrainerInfrastructureTooltip({ content, children, testId
   return (
     <span className="relative inline-flex min-w-0 max-w-full motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page" tabIndex={0} aria-describedby={open ? tooltipId : undefined} onMouseEnter={() => scheduleOpen('hover')} onMouseLeave={() => scheduleClose('hover')} onFocus={() => scheduleOpen('focus')} onBlur={() => scheduleClose('focus')} onKeyDown={dismissWithEscape} data-testid={generatedTestId}>
       {children}
-      {open && <span id={tooltipId} role="tooltip" className="absolute start-0 top-full z-30 mt-2 max-w-60 rounded-md border border-border bg-popover px-3 py-2 text-xs text-primary shadow-popover motion-safe:transition-opacity motion-safe:duration-base ease-in-out">{content}</span>}
+      {open && <span id={tooltipId} role="tooltip" className="absolute start-0 top-full z-30 mt-2 max-w-60 rounded-md border border-border bg-popover px-3 py-2 text-xs text-text-primary shadow-popover motion-safe:transition-opacity motion-safe:duration-base ease-in-out">{content}</span>}
     </span>
   );
 }

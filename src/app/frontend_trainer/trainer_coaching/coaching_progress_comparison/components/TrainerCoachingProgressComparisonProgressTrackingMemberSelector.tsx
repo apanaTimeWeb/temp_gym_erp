@@ -52,7 +52,7 @@ export default function TrainerProgressTrackingMemberSelector({
             <Users size={18} strokeWidth={2} />
           </div>
           <div>
-            <h2 className="text-sm font-bold text-primary flex items-center gap-2">
+            <h2 className="text-sm font-bold text-text-primary flex items-center gap-2">
               <span>{t("TEXT_SELECT_MEMBERS_TO_COMPARE")}</span>
               <span className="text-xs font-normal text-secondary">(Multi-Checkbox Selection)</span>
             </h2>
@@ -74,9 +74,9 @@ export default function TrainerProgressTrackingMemberSelector({
             <button
               type="button"
               onClick={handleSelectTopN}
-              className="min-h-9 inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg bg-surface-highlight border border-border hover:bg-surface-hover text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              className="min-h-9 inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg bg-surface-highlight border border-border hover:bg-surface-hover text-text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
             >
-              <CheckSquare size={14} className="text-primary" />
+              <CheckSquare size={14} className="text-text-primary" />
               <span>Select First {TRAINER_PROGRESS_TRACKING_COMPARISON_MAX_MEMBERS}</span>
             </button>
           )}
@@ -137,7 +137,7 @@ export default function TrainerProgressTrackingMemberSelector({
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={t("TEXT_SEARCH_MEMBERS")}
           data-testid="trainer_progress_tracking-member-search-input"
-          className="w-full pl-8 pr-8 py-2 bg-input border border-border rounded-xl text-xs text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+          className="w-full pl-8 pr-8 py-2 bg-input border border-border rounded-xl text-xs text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
         />
         {searchQuery && (
           <button
@@ -190,7 +190,7 @@ export default function TrainerProgressTrackingMemberSelector({
                     disabled={isDisabled}
                     onChange={() => !isDisabled && onToggle(m.id)}
                     aria-label={`Select ${m.name} for comparison`}
-                    className="w-4 h-4 rounded border-border text-primary focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
+                    className="w-4 h-4 rounded border-border text-text-primary focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
                     data-testid={`trainer_progress_tracking-progress-member-selector-${m.id}`}
                   />
                   <div className="flex-1 min-w-0">

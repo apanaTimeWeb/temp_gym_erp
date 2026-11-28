@@ -37,7 +37,7 @@ export function TrainerCoachingIndividualProgressProgressTrackingFilterBar({
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search notes or date..."
             aria-label="Search progress notes"
-            className="w-full pl-8 pr-7 py-1.5 bg-input border border-border rounded-xl text-xs text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            className="w-full pl-8 pr-7 py-1.5 bg-input border border-border rounded-xl text-xs text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
           />
           {searchQuery && (
             <button
@@ -59,7 +59,7 @@ export function TrainerCoachingIndividualProgressProgressTrackingFilterBar({
             value={dateRangeFilter}
             onChange={(e) => setDateRangeFilter(e.target.value as typeof dateRangeFilter)}
             aria-label="Filter by date range"
-            className="min-h-9 rounded-xl border border-border bg-input px-3 py-1 text-xs font-medium text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            className="min-h-9 rounded-xl border border-border bg-input px-3 py-1 text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
           >
             <option value="all">All Dates</option>
             <option value="30d">Last 30 Days</option>
@@ -77,7 +77,7 @@ export function TrainerCoachingIndividualProgressProgressTrackingFilterBar({
             value={bmiCategoryFilter}
             onChange={(e) => setBmiCategoryFilter(e.target.value as typeof bmiCategoryFilter)}
             aria-label="Filter by BMI or metric"
-            className="min-h-9 rounded-xl border border-border bg-input px-3 py-1 text-xs font-medium text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            className="min-h-9 rounded-xl border border-border bg-input px-3 py-1 text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
           >
             <option value="all">All BMI & Metrics</option>
             <option value="normal">Normal BMI (18.5 - 24.9)</option>
@@ -104,7 +104,7 @@ export function TrainerCoachingIndividualProgressProgressTrackingFilterBar({
       </div>
 
       <div className="text-xs text-secondary font-medium">
-        Showing <span className="font-bold text-primary">{filteredCount}</span> of {totalEntries} entries
+        Showing <span className="font-bold text-text-primary">{filteredCount}</span> of {totalEntries} entries
       </div>
     </div>
   );

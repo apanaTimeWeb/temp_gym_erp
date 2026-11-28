@@ -125,7 +125,7 @@ export default function TrainerMembersProfileWorkout() {
     <div className="space-y-6 motion-safe:transition-opacity motion-safe:duration-slow">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h3 className="text-lg font-bold text-primary">{t("TEXT_WORKOUT_PLAN")}</h3>
+          <h3 className="text-lg font-bold text-text-primary">{t("TEXT_WORKOUT_PLAN")}</h3>
           <p className="text-sm text-secondary">{t('TEXT_ASSIGN_OR_UPDATE_DAILY_WORKOUT_ROUTINES_FOR', { name: selectedMember.name })}</p>
         </div>
         <div className="flex items-center gap-2">
@@ -158,7 +158,7 @@ export default function TrainerMembersProfileWorkout() {
       {isAssigning && (
         <div className="bg-card border border-focus p-5 rounded-2xl space-y-4 shadow-card">
           <div className="flex items-center justify-between">
-            <h4 className="font-semibold text-primary flex items-center gap-2">
+            <h4 className="font-semibold text-text-primary flex items-center gap-2">
               <Dumbbell size={18}  strokeWidth={2}/> {t("TEXT_SELECT_WORKOUT_PLAN_FROM_LIBRARY")}</h4>
             <button type="button" 
               onClick={() => setIsAssigning(false)}
@@ -210,19 +210,19 @@ export default function TrainerMembersProfileWorkout() {
                   {displayValue(workout.level)}
                 </span>
               </div>
-              <h3 className="text-2xl font-bold text-primary">{workout.name}</h3>
+              <h3 className="text-2xl font-bold text-text-primary">{workout.name}</h3>
               <p className="text-sm text-secondary mt-1">{displayValue(workout.focus)}</p>
             </div>
             <div className="flex items-center gap-6">
               <div className="text-end">
                 <p className="text-xs text-secondary">{t("TEXT_SESSION_DURATION")}</p>
-                <p className="text-base font-bold text-primary flex items-center gap-1">
+                <p className="text-base font-bold text-text-primary flex items-center gap-1">
                   <Calendar size={18} className="text-primary"  strokeWidth={2}/> {displayValue(workout.duration)}
                 </p>
               </div>
               <div className="text-end">
                 <p className="text-xs text-secondary">{t("TEXT_FREQUENCY")}</p>
-                <p className="text-base font-bold text-primary flex items-center gap-1">
+                <p className="text-base font-bold text-text-primary flex items-center gap-1">
                   <Flame size={18} className="text-warning"  strokeWidth={2}/> {typeof workout.days === 'number' ? TrainerMembersFormatNumber(workout.days, locale) : displayValue(workout.days)} {t("TEXT_DAYS_WEEK")}</p>
               </div>
             </div>
@@ -240,12 +240,12 @@ export default function TrainerMembersProfileWorkout() {
                         {idx + 1}
                       </span>
                       <div>
-                        <p className="text-sm font-bold text-primary">{ex.name}</p>
+                        <p className="text-sm font-bold text-text-primary">{ex.name}</p>
                         <p className="text-xs text-secondary">{t("TEXT_REST_33D2CB")}{displayValue(ex.restTime)}</p>
                       </div>
                     </div>
                     <div className="text-end">
-                      <span className="text-sm font-bold text-primary">{ex.sets} {t("TEXT_SETS_99FB45")}{ex.reps}</span>
+                      <span className="text-sm font-bold text-text-primary">{ex.sets} {t("TEXT_SETS_99FB45")}{ex.reps}</span>
                       {ex.weight && <p className="text-xs text-secondary">{ex.weight}</p>}
                     </div>
                   </div>
@@ -262,7 +262,7 @@ export default function TrainerMembersProfileWorkout() {
           <div className="w-14 h-14 rounded-full bg-primary-subtle text-primary flex items-center justify-center mx-auto">
             <Dumbbell size={18}  strokeWidth={2}/>
           </div>
-          <h4 className="text-lg font-bold text-primary">{t("TEXT_NO_WORKOUT_PLAN_ASSIGNED")}</h4>
+          <h4 className="text-lg font-bold text-text-primary">{t("TEXT_NO_WORKOUT_PLAN_ASSIGNED")}</h4>
           <p className="text-sm text-secondary max-w-md mx-auto">
             {selectedMember.name} {t("TEXT_HAS_NOT_BEEN_ASSIGNED_A_WORKOUT_PLAN_YET_E4ADEB71")}</p>
           <button type="button"
@@ -274,12 +274,12 @@ export default function TrainerMembersProfileWorkout() {
 
       {/* Workout History Section */}
       <div className="bg-card border border-border rounded-2xl p-6 mt-6">
-        <h4 className="text-lg font-bold text-primary mb-4">{t("TEXT_WORKOUT_HISTORY")}</h4>
+        <h4 className="text-lg font-bold text-text-primary mb-4">{t("TEXT_WORKOUT_HISTORY")}</h4>
         <div className="space-y-3">
           {(selectedMember.workoutHistory ?? []).map((historyItem) => (
             <div key={historyItem.id} className="bg-input rounded-xl p-4 flex items-center justify-between">
               <div>
-                <h5 className="font-bold text-sm text-primary">{historyItem.name}</h5>
+                <h5 className="font-bold text-sm text-text-primary">{historyItem.name}</h5>
                 <p className="text-xs text-secondary">{historyItem.date} · {historyItem.level}</p>
               </div>
               <span className="px-3 py-1 rounded-full text-xs font-semibold bg-success-bg text-success flex items-center gap-1" data-testid={`trainer_members-profile-workout_history_state${historyItem.id}`}>

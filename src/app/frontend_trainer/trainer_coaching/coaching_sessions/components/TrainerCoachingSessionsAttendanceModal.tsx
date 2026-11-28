@@ -85,7 +85,7 @@ export default function TrainerSessionsAttendanceModal({ session, onClose, onSub
       >
         <div className="flex items-center justify-between gap-4 p-5 border-b border-border bg-header shrink-0">
           <div className="min-w-0">
-            <h3 id="trainer-session-attendance-title" className="text-lg font-bold text-primary truncate">{t("TEXT_MARK_ATTENDANCE")}</h3>
+            <h3 id="trainer-session-attendance-title" className="text-lg font-bold text-text-primary truncate">{t("TEXT_MARK_ATTENDANCE")}</h3>
             <p className="text-sm text-secondary mt-0.5 truncate">{session.title} — {session.time}</p>
           </div>
           <button
@@ -103,13 +103,13 @@ export default function TrainerSessionsAttendanceModal({ session, onClose, onSub
           {members.length === 0 ? (
             <div className="text-center py-10">
               <Users size={18} className="mx-auto text-disabled mb-3" aria-hidden="true"  strokeWidth={2}/>
-              <p className="text-sm font-semibold text-primary">{t("TEXT_NO_MEMBERS_ENROLLED")}</p>
+              <p className="text-sm font-semibold text-text-primary">{t("TEXT_NO_MEMBERS_ENROLLED")}</p>
               <p className="text-xs text-secondary mt-1">{t("TEXT_CANNOT_MARK_ATTENDANCE_FOR_AN_EMPTY_SESSION")}</p>
             </div>
           ) : (
             <div className="space-y-4">
               <div className="flex items-center justify-between gap-3">
-                <span className="text-sm font-semibold text-primary">{t("TEXT_ENROLLED_MEMBERS")}{members.length})</span>
+                <span className="text-sm font-semibold text-text-primary">{t("TEXT_ENROLLED_MEMBERS")}{members.length})</span>
                 <button
                   type="button"
                   onClick={handleSelectAll}
@@ -133,7 +133,7 @@ export default function TrainerSessionsAttendanceModal({ session, onClose, onSub
                       className={`w-full flex items-center justify-between gap-3 min-h-11 p-3 rounded-xl border text-start motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page disabled:opacity-60 ${isPresent ? 'border-focus bg-surface-highlight' : 'border-border bg-input hover:border-focus'} motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95`}
                      data-testid={`trainer_sessions-session-attendance-member-${member.id}`}>
                       <div className="flex items-center gap-2 truncate">
-                        <span className="text-sm font-medium text-primary truncate">{member.name}</span>
+                        <span className="text-sm font-medium text-text-primary truncate">{member.name}</span>
                         {member.remainingSessions !== undefined && (
                           <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                             member.remainingSessions === 0 ? 'bg-danger-bg text-danger border border-danger' :

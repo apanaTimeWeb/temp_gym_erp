@@ -11,10 +11,10 @@ export default function TrainerCoachingIndividualProgressMain() {
   // This canonical leaf never starts comparison-member network queries.
   const model = useTrainerProgressTrackingMain({ enableComparison: false });
   return (
-    <main data-testid="trainer-canonical-coaching_individual_progress" className="min-h-full space-y-5 bg-page p-4 text-primary sm:p-6">
+    <main data-testid="trainer-canonical-coaching_individual_progress" className="min-h-full space-y-5 bg-page p-4 text-text-primary sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-section-title font-bold text-primary">{t('TEXT_INDIVIDUAL')}</h1>
+          <h1 className="text-section-title font-bold text-text-primary">{t('TEXT_INDIVIDUAL')}</h1>
           <p className="mt-1 text-sm text-secondary">{t('TEXT_BODY_MEASUREMENTS_AND_FITNESS_METRICS_OVER_TIME')}</p>
         </div>
         <button type="button" onClick={model.openAddModal} disabled={!model.selectedMemberId || model.membersQuery.isPending || model.membersQuery.isError}

@@ -104,7 +104,7 @@ export default function TrainerOperationsTrainerAttendanceDateFilterDropdown() {
           id="trainer-attendance-range"
           value={currentRange}
           onChange={handleRangeChange}
-          className="w-full ps-9 pe-8 py-2 text-sm bg-input border border-border rounded-lg text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring appearance-none cursor-pointer motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+          className="w-full ps-9 pe-8 py-2 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring appearance-none cursor-pointer motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
           data-testid="trainer_attendance-date_range_select"
         >
           {TRAINER_ATTENDANCE_DATE_RANGE_OPTIONS.map((option) => (
@@ -125,7 +125,7 @@ export default function TrainerOperationsTrainerAttendanceDateFilterDropdown() {
             type="date"
             value={customStartDate}
             onChange={(e) => handleDateChange('startDate', e.target.value)}
-            className="px-3 py-2 text-sm bg-input border border-border rounded-lg text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            className="px-3 py-2 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
           />
           <span className="text-secondary text-sm font-medium" aria-hidden="true">
             {t('TEXT_TO')}
@@ -138,7 +138,7 @@ export default function TrainerOperationsTrainerAttendanceDateFilterDropdown() {
             type="date"
             value={customEndDate}
             onChange={(e) => handleDateChange('endDate', e.target.value)}
-            className="px-3 py-2 text-sm bg-input border border-border rounded-lg text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            className="px-3 py-2 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
           />
         </div>
       )}

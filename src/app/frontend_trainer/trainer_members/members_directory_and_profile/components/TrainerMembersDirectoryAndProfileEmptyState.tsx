@@ -30,7 +30,7 @@ export default function TrainerMembersEmptyState({ isFiltered }: TrainerMembersE
       <div className="w-16 h-16 bg-primary-subtle rounded-full flex items-center justify-center mb-4 text-primary">
         <Users size={18}  strokeWidth={2}/>
       </div>
-      <h3 className="text-xl font-bold text-primary mb-2">
+      <h3 className="text-xl font-bold text-text-primary mb-2">
         {isFiltered ? t("TEXT_NO_MEMBERS_FOUND") : t("TEXT_NO_MEMBERS_YET")}
       </h3>
       <p className="text-secondary text-center max-w-md">

@@ -28,7 +28,7 @@ export default function TrainerWorkoutEmptyState({ onAdd }: TrainerWorkoutEmptyS
         <Dumbbell size={18} className="text-primary"  strokeWidth={2}/>
       </div>
       <div>
-        <h3 className="text-lg font-bold text-primary">{t("TEXT_NO_WORKOUT_PLANS")}</h3>
+        <h3 className="text-lg font-bold text-text-primary">{t("TEXT_NO_WORKOUT_PLANS")}</h3>
         <p className="text-sm text-secondary mt-1 max-w-xs mx-auto">
           {t("TEXT_YOU_HAVEN_T_CREATED_ANY_WORKOUT_PLANS_YE_FF0DC302")}</p>
       </div>

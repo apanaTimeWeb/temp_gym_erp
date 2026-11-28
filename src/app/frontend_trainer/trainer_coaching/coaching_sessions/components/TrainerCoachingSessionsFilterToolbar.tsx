@@ -62,7 +62,7 @@ export function TrainerCoachingSessionsFilterToolbar({
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search sessions or clients..."
               aria-label="Search sessions or clients"
-              className="w-full pl-8 pr-7 py-2 bg-input border border-border rounded-xl text-xs text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              className="w-full pl-8 pr-7 py-2 bg-input border border-border rounded-xl text-xs text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
             />
             {searchQuery && (
               <button
@@ -84,7 +84,7 @@ export function TrainerCoachingSessionsFilterToolbar({
               value={statusDropdown}
               onChange={(e) => setStatusDropdown(e.target.value)}
               aria-label="Filter by session status"
-              className="min-h-10 rounded-xl border border-border bg-input px-3 py-1.5 text-xs font-medium text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              className="min-h-10 rounded-xl border border-border bg-input px-3 py-1.5 text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
             >
               <option value="ALL">All Statuses</option>
               <option value={TRAINER_SESSIONS_SESSION_STATUS.UPCOMING}>Upcoming</option>
@@ -107,7 +107,7 @@ export function TrainerCoachingSessionsFilterToolbar({
                 else setFilter('All');
               }}
               aria-label="Filter by session type"
-              className="min-h-10 rounded-xl border border-border bg-input px-3 py-1.5 text-xs font-medium text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              className="min-h-10 rounded-xl border border-border bg-input px-3 py-1.5 text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
             >
               <option value="ALL">All Session Types</option>
               <option value={TRAINER_SESSIONS_SESSION_TYPE.PT}>1-on-1 PT Sessions</option>
@@ -123,7 +123,7 @@ export function TrainerCoachingSessionsFilterToolbar({
               value={memberFilter}
               onChange={(e) => setMemberFilter(e.target.value)}
               aria-label="Filter by client name"
-              className="min-h-10 rounded-xl border border-border bg-input px-3 py-1.5 text-xs font-medium text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring w-full sm:max-w-[160px] truncate"
+              className="min-h-10 rounded-xl border border-border bg-input px-3 py-1.5 text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring w-full sm:max-w-[160px] truncate"
             >
               <option value="ALL">All Clients</option>
               {memberOptions.map((opt) => (
@@ -143,7 +143,7 @@ export function TrainerCoachingSessionsFilterToolbar({
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="bg-transparent text-primary text-xs focus-visible:outline-none"
+              className="bg-transparent text-text-primary text-xs focus-visible:outline-none"
               aria-label="Filter sessions by date"
             />
           </div>

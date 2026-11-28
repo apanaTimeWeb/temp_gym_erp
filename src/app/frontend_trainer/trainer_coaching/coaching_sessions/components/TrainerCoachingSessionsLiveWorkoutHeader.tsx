@@ -34,7 +34,7 @@ export function TrainerCoachingSessionsLiveWorkoutHeader({
             </span>
             <span className="text-xs text-secondary">{session.member || 'Client PT Session'}</span>
           </div>
-          <h2 id="live-workout-modal-title" className="text-lg font-bold text-primary">
+          <h2 id="live-workout-modal-title" className="text-lg font-bold text-text-primary">
             {session.title}
           </h2>
         </div>
@@ -42,7 +42,7 @@ export function TrainerCoachingSessionsLiveWorkoutHeader({
 
       <div className="flex items-center gap-3">
         {/* Stopwatch Badge */}
-        <div className="flex items-center gap-2 bg-card border border-border px-3.5 py-1.5 rounded-xl font-mono text-base font-bold text-primary shadow-sm">
+        <div className="flex items-center gap-2 bg-card border border-border px-3.5 py-1.5 rounded-xl font-mono text-base font-bold text-text-primary shadow-sm">
           <span className="text-secondary text-xs font-sans uppercase">Elapsed</span>
           <span>{formatTimer(secondsElapsed)}</span>
           <button

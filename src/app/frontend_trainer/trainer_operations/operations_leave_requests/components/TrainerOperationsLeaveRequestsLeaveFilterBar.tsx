@@ -89,7 +89,7 @@ export function TrainerOperationsLeaveRequestsLeaveFilterBar({
         <select
           value={typeFilter}
           onChange={(e) => setTypeFilter(e.target.value)}
-          className="min-h-9 w-full sm:w-auto rounded-xl border border-border bg-input px-3 text-xs text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+          className="min-h-9 w-full sm:w-auto rounded-xl border border-border bg-input px-3 text-xs text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
           aria-label="Filter by leave type"
         >
           <option value="ALL">All Leave Types</option>
@@ -107,7 +107,7 @@ export function TrainerOperationsLeaveRequestsLeaveFilterBar({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={t('TEXT_SEARCH_LEAVES')}
-            className="w-full pl-8 pr-7 py-1.5 bg-input border border-border rounded-xl text-xs text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            className="w-full pl-8 pr-7 py-1.5 bg-input border border-border rounded-xl text-xs text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
           />
           {searchQuery && (
             <button

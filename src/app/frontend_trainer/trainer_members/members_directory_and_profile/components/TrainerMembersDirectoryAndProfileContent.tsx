@@ -33,10 +33,10 @@ export default function TrainerMembersContent() {
         ) : isError ? (
           <div className="p-6" role="alert" data-testid="trainer_members-profile-error">
             <div className="rounded-xl border border-border bg-card p-6 space-y-3">
-              <p className="text-primary font-semibold">{t('TEXT_MEMBER_PROFILE_LOAD_FAILED')}</p>
+              <p className="text-text-primary font-semibold">{t('TEXT_MEMBER_PROFILE_LOAD_FAILED')}</p>
               <div className="flex flex-wrap gap-3">
                 <button type="button" onClick={() => void refetch()} className="min-h-11 px-4 rounded-lg bg-primary text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring">{t('TEXT_RETRY')}</button>
-                <button type="button" onClick={viewState.backToList} className="min-h-11 px-4 rounded-lg border border-border text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring">{t('TEXT_BACK_TO_MEMBERS')}</button>
+                <button type="button" onClick={viewState.backToList} className="min-h-11 px-4 rounded-lg border border-border text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring">{t('TEXT_BACK_TO_MEMBERS')}</button>
               </div>
             </div>
           </div>

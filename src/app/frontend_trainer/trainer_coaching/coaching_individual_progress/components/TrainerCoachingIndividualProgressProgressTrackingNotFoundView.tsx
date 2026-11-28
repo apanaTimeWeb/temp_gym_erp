@@ -30,7 +30,7 @@ export function TrainerProgressTrackingNotFoundView() {
       <div className="bg-primary-subtle p-4 rounded-full mb-4">
         <SearchX size={18} className="text-primary"  strokeWidth={2}/>
       </div>
-      <h2 className="text-section-title font-bold text-primary mb-2">{t("TEXT_PAGE_NOT_FOUND")}</h2>
+      <h2 className="text-section-title font-bold text-text-primary mb-2">{t("TEXT_PAGE_NOT_FOUND")}</h2>
       <p className="text-secondary max-w-md mb-6">{t("TEXT_PAGE_NOT_FOUND_DESCRIPTION")}</p>
       <Link 
         href={TRAINER_PROGRESS_TRACKING_PAGE_DASHBOARD}

@@ -15,8 +15,8 @@ export default function TrainerOperationsMemberAttendanceMembersMain() {
   const { tab, setTab } = model.filters;
   useEffect(() => { if (tab !== 'MEMBERS') setTab('MEMBERS'); }, [tab, setTab]);
   return (
-    <main data-testid="trainer-canonical-operations_member_attendance" className="min-h-full space-y-5 bg-page p-4 text-primary sm:p-6">
-      <h1 className="text-section-title font-bold text-primary">{t('TEXT_MEMBERS_TAB')}</h1>
+    <main data-testid="trainer-canonical-operations_member_attendance" className="min-h-full space-y-5 bg-page p-4 text-text-primary sm:p-6">
+      <h1 className="text-section-title font-bold text-text-primary">{t('TEXT_MEMBERS_TAB')}</h1>
       <TrainerAttendanceKPIs stats={model.stats} isPending={model.statsQuery.isPending}
         isError={model.statsQuery.isError} onRetry={() => void model.statsQuery.refetch()} />
       <TrainerOperationsMemberAttendanceQuickMark

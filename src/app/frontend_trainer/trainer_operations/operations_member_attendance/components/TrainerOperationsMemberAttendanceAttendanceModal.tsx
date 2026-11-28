@@ -104,7 +104,7 @@ export default function TrainerAttendanceModal({ isOpen, onClose, members, membe
       <div className="my-auto bg-overlay rounded-2xl shadow-dialog w-full max-w-md max-h-dialog-desktop flex flex-col overflow-hidden border border-border motion-safe:transition-opacity motion-safe:duration-base">
         <div className="flex justify-between items-center p-5 border-b border-border shrink-0 bg-overlay ">
           <div>
-            <h3 id={titleId} className="font-bold text-lg text-primary ">{t("TEXT_RECORD_ATTENDANCE")}</h3>
+            <h3 id={titleId} className="font-bold text-lg text-text-primary ">{t("TEXT_RECORD_ATTENDANCE")}</h3>
             <p className="text-xs text-secondary mt-0.5">Quickly mark check-in for individual or multiple trainees</p>
           </div>
           <button
@@ -202,7 +202,7 @@ export default function TrainerAttendanceModal({ isOpen, onClose, members, membe
                 aria-describedby={errors.date ? "trainer-attendance-date-error" : undefined}
                 className={`w-full px-3 py-2 border rounded-lg focus-visible:outline-none focus-visible:ring-2 ${
                   errors.date ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-focus-ring'
-                } bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_attendance-trainerattendancemodal-input_5"/>
+                } bg-input text-text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_attendance-trainerattendancemodal-input_5"/>
               {errors.date && <p id="trainer-attendance-date-error" className="text-danger text-xs mt-1 " data-testid={"trainer_attendance-modal-error-state-134"}>{t(errors.date?.message || '')}</p>}
             </div>
             <div>
@@ -215,7 +215,7 @@ export default function TrainerAttendanceModal({ isOpen, onClose, members, membe
                 aria-describedby={errors.checkIn ? "attendance-check-in-error" : undefined}
                 className={`w-full px-3 py-2 border rounded-lg focus-visible:outline-none focus-visible:ring-2 ${
                   errors.checkIn ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-focus-ring'
-                } bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_attendance-trainerattendancemodal-input_6"/>
+                } bg-input text-text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_attendance-trainerattendancemodal-input_6"/>
               {errors.checkIn && <p id="attendance-check-in-error" className="text-danger text-xs mt-1 " data-testid={"trainer_attendance-modal-error-state-147"}>{t(errors.checkIn?.message || '')}</p>}
             </div>
             <div>
@@ -225,14 +225,14 @@ export default function TrainerAttendanceModal({ isOpen, onClose, members, membe
                 type="time"
                 {...register('checkOut')}
                 aria-invalid={Boolean(errors.checkOut)}
-                className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_attendance-trainerattendancemodal-input_7"/>
+                className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_attendance-trainerattendancemodal-input_7"/>
             </div>
             <div>
               <label htmlFor="attendance-session-type" className="block text-sm font-medium text-secondary mb-1">Session Type</label>
               <select
                 id="attendance-session-type"
                 {...register('sessionType')}
-                className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-primary motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+                className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-text-primary motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
                 data-testid="trainer_attendance-session-type-select"
               >
                 <option value="PT">Personal Training (PT)</option>
@@ -248,7 +248,7 @@ export default function TrainerAttendanceModal({ isOpen, onClose, members, membe
                 {...register('notes')}
                 aria-invalid={Boolean(errors.notes)}
                 placeholder={t("TEXT_OPTIONAL_NOTES")}
-                className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_attendance-trainerattendancemodal-input_8"/>
+                className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_attendance-trainerattendancemodal-input_8"/>
             </div>
           </div>
 

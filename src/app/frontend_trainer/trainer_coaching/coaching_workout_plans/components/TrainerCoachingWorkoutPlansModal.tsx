@@ -131,7 +131,7 @@ export default function TrainerWorkoutModal() {
     <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay-backdrop p-4 " role="presentation">
       <div className="my-auto flex max-h-dialog-desktop w-full max-w-md flex-col overflow-hidden rounded-2xl bg-overlay shadow-dialog " ref={dialogRef} role="dialog" aria-modal={true} aria-labelledby="trainer-workout-modal-title">
         <div className="flex justify-between items-center p-5 border-b border-border shrink-0 bg-overlay ">
-          <h3 id="trainer-workout-modal-title" className="font-bold text-lg text-primary ">
+          <h3 id="trainer-workout-modal-title" className="font-bold text-lg text-text-primary ">
             {editWorkout ? t("TEXT_EDIT_WORKOUT_PLAN") : t("TEXT_ADD_WORKOUT_PLAN")}
           </h3>
           <button 
@@ -150,7 +150,7 @@ export default function TrainerWorkoutModal() {
               aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? "trainer-workout-name-error" : undefined}
               className={`w-full px-3 py-2 border rounded-lg focus-visible:outline-none focus-visible:ring-2 ${
                 errors.name ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-focus-ring'
-              } bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_workout-trainerworkoutmodal-input_3"/>
+              } bg-input text-text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_workout-trainerworkoutmodal-input_3"/>
             {errors.name && <p id="trainer-workout-name-error" role="alert" className="text-danger text-xs mt-1 " data-testid={"trainer_workout-modal-error_state_121_1"}>{t(errors.name?.message || '')}</p>}
           </div>
           
@@ -182,7 +182,7 @@ export default function TrainerWorkoutModal() {
                 aria-invalid={Boolean(errors.days)} aria-describedby={errors.days ? "trainer-workout-days-error" : undefined}
                 className={`w-full px-3 py-2 border rounded-lg focus-visible:outline-none focus-visible:ring-2 ${
                   errors.days ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-focus-ring'
-                } bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_workout-trainerworkoutmodal-input_5"/>
+                } bg-input text-text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_workout-trainerworkoutmodal-input_5"/>
               {errors.days && <p id="trainer-workout-days-error" role="alert" className="text-danger text-xs mt-1 " data-testid={"trainer_workout-modal-error_state_151_2"}>{t(errors.days?.message || '')}</p>}
             </div>
           </div>
@@ -197,7 +197,7 @@ export default function TrainerWorkoutModal() {
                 aria-invalid={Boolean(errors.focus)} aria-describedby={errors.focus ? "trainer-workout-focus-error" : undefined}
                 className={`w-full px-3 py-2 border rounded-lg focus-visible:outline-none focus-visible:ring-2 ${
                   errors.focus ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-focus-ring'
-                } bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_workout-trainerworkoutmodal-input_6"/>
+                } bg-input text-text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_workout-trainerworkoutmodal-input_6"/>
               {errors.focus && <p id="trainer-workout-focus-error" role="alert" className="text-danger text-xs mt-1 " data-testid={"trainer_workout-modal-error_state_165_3"}>{t(errors.focus?.message || '')}</p>}
             </div>
             <div>
@@ -209,7 +209,7 @@ export default function TrainerWorkoutModal() {
                 aria-invalid={Boolean(errors.duration)} aria-describedby={errors.duration ? "trainer-workout-duration-error" : undefined}
                 className={`w-full px-3 py-2 border rounded-lg focus-visible:outline-none focus-visible:ring-2 ${
                   errors.duration ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-focus-ring'
-                } bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_workout-trainerworkoutmodal-input_7"/>
+                } bg-input text-text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_workout-trainerworkoutmodal-input_7"/>
               {errors.duration && <p id="trainer-workout-duration-error" role="alert" className="text-danger text-xs mt-1 " data-testid={"trainer_workout-modal-error_state_176_4"}>{t(errors.duration?.message || '')}</p>}
             </div>
           </div>
@@ -222,7 +222,7 @@ export default function TrainerWorkoutModal() {
                 placeholder={t("TEXT_E_G_WEIGHT_LOSS")} 
                 {...register('goal')}
                 aria-invalid={Boolean(errors.goal)}
-                className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_workout-trainerworkoutmodal-input_8"/>
+                className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_workout-trainerworkoutmodal-input_8"/>
             </div>
             <div>
               <label htmlFor="trainer-workout-assignedMemberId" className="block text-sm font-medium text-secondary mb-1 ">{t("TEXT_ASSIGNED_TO_MEMBER_ID")}</label>
@@ -231,7 +231,7 @@ export default function TrainerWorkoutModal() {
                 placeholder={t("TEXT_LEAVE_BLANK_FOR_GLOBAL_PLAN")} 
                 {...register('assignedMemberId')}
                 aria-invalid={Boolean(errors.assignedMemberId)}
-                className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_workout-trainerworkoutmodal-input_9"/>
+                className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_workout-trainerworkoutmodal-input_9"/>
             </div>
           </div>
 
@@ -242,7 +242,7 @@ export default function TrainerWorkoutModal() {
                 type="date" 
                 {...register('startDate')}
                 aria-invalid={Boolean(errors.startDate)}
-                className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_workout-trainerworkoutmodal-input_10"/>
+                className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_workout-trainerworkoutmodal-input_10"/>
             </div>
             <div>
               <label htmlFor="trainer-workout-endDate" className="block text-sm font-medium text-secondary mb-1 ">{t("TEXT_END_DATE")}</label>
@@ -250,7 +250,7 @@ export default function TrainerWorkoutModal() {
                 type="date" 
                 {...register('endDate')}
                 aria-invalid={Boolean(errors.endDate)}
-                className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_workout-trainerworkoutmodal-input_11"/>
+                className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_workout-trainerworkoutmodal-input_11"/>
             </div>
           </div>
 
@@ -262,7 +262,7 @@ export default function TrainerWorkoutModal() {
               placeholder={t("TEXT_E_G_WARM_UP_PROPERLY_BEFORE_STARTING")} 
               {...register('instructions')}
               aria-invalid={Boolean(errors.instructions)}
-              className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-primary custom-scrollbar  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_workout-trainerworkoutmodal-textarea_12"/>
+              className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-text-primary custom-scrollbar  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_workout-trainerworkoutmodal-textarea_12"/>
           </div>
 
           <TrainerWorkoutExerciseFields control={control} register={register} />

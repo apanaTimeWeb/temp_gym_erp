@@ -135,7 +135,7 @@ export default function TrainerProgressTrackingTable({
               {filteredEntries.length === 0 ? (
                 <tr>
                   <td colSpan={TABLE_COLUMN_COUNT} className="py-12 text-center text-secondary">
-                    <p className="text-sm font-semibold text-primary">{t('TEXT_NO_PROGRESS_ENTRIES_YET')}</p>
+                    <p className="text-sm font-semibold text-text-primary">{t('TEXT_NO_PROGRESS_ENTRIES_YET')}</p>
                     {hasActiveFilters && (
                       <p className="text-xs text-secondary mt-1">No entries matched the selected filters.</p>
                     )}
@@ -147,7 +147,7 @@ export default function TrainerProgressTrackingTable({
                   return (
                     <Fragment key={entry.id}>
                       <tr data-testid={`trainer_progress_tracking-progress-table-row-${entry.id}`} className="hover:bg-surface-hover transition-colors group">
-                        <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-primary whitespace-nowrap group-hover:bg-surface-hover transition-colors">
+                        <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-text-primary whitespace-nowrap group-hover:bg-surface-hover transition-colors">
                           <div className="flex items-center gap-2">
                             <button
                               type="button"
@@ -163,12 +163,12 @@ export default function TrainerProgressTrackingTable({
                           </div>
                           <p className="text-xs text-secondary font-mono flex items-center gap-1.5 mt-0.5">#{entry.id.slice(-6)}</p>
                         </td>
-                        <td className="px-4 py-3 text-primary">{TrainerProgressTrackingFormatNumber(entry.weightKg, locale)}</td>
-                        <td className="px-4 py-3 text-primary">{TrainerProgressTrackingFormatNumber(entry.heightCm, locale)}</td>
-                        <td className="px-4 py-3 text-primary">{TrainerProgressTrackingFormatNumber(entry.bmi, locale)}</td>
-                        <td className="px-4 py-3 text-primary">{entry.bodyFatPercent == null ? displayValue(entry.bodyFatPercent) : `${TrainerProgressTrackingFormatNumber(entry.bodyFatPercent, locale)}%`}</td>
-                        <td className="px-4 py-3 text-primary">{entry.muscleMassKg == null ? displayValue(entry.muscleMassKg) : TrainerProgressTrackingFormatNumber(entry.muscleMassKg, locale)}</td>
-                        <td className="px-4 py-3 text-primary">{entry.waistCm == null ? displayValue(entry.waistCm) : TrainerProgressTrackingFormatNumber(entry.waistCm, locale)}</td>
+                        <td className="px-4 py-3 text-text-primary">{TrainerProgressTrackingFormatNumber(entry.weightKg, locale)}</td>
+                        <td className="px-4 py-3 text-text-primary">{TrainerProgressTrackingFormatNumber(entry.heightCm, locale)}</td>
+                        <td className="px-4 py-3 text-text-primary">{TrainerProgressTrackingFormatNumber(entry.bmi, locale)}</td>
+                        <td className="px-4 py-3 text-text-primary">{entry.bodyFatPercent == null ? displayValue(entry.bodyFatPercent) : `${TrainerProgressTrackingFormatNumber(entry.bodyFatPercent, locale)}%`}</td>
+                        <td className="px-4 py-3 text-text-primary">{entry.muscleMassKg == null ? displayValue(entry.muscleMassKg) : TrainerProgressTrackingFormatNumber(entry.muscleMassKg, locale)}</td>
+                        <td className="px-4 py-3 text-text-primary">{entry.waistCm == null ? displayValue(entry.waistCm) : TrainerProgressTrackingFormatNumber(entry.waistCm, locale)}</td>
                         <td className="px-4 py-3 text-secondary max-w-40">
                           <TrainerInfrastructureTooltip content={String(displayValue(entry.notes))}>
                             <span className="block max-w-40 truncate">{displayValue(entry.notes)}</span>
@@ -221,7 +221,7 @@ export default function TrainerProgressTrackingTable({
           <article key={entry.id} className="bg-card rounded-xl border border-border p-4 shadow-card" data-testid={`trainer-progress-tracking-progress-table-card-${entry.id}`}>
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
-                <h3 className="font-semibold text-primary truncate">{TrainerProgressTrackingFormatDate(entry.date, locale)}</h3>
+                <h3 className="font-semibold text-text-primary truncate">{TrainerProgressTrackingFormatDate(entry.date, locale)}</h3>
                 <p className="text-xs text-secondary">{t('TEXT_DATE')}</p>
               </div>
               <span className="shrink-0 inline-flex px-2 py-1 rounded-md text-xs font-semibold bg-info-bg text-info" data-testid={`trainer-progress-tracking-table-entry-state-${entry.id}`}>
@@ -229,13 +229,13 @@ export default function TrainerProgressTrackingTable({
               </span>
             </div>
             <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-              <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_WEIGHT_KG')}</span><span className="text-primary">{TrainerProgressTrackingFormatNumber(entry.weightKg, locale)}</span></p>
-              <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_HEIGHT_CM')}</span><span className="text-primary">{TrainerProgressTrackingFormatNumber(entry.heightCm, locale)}</span></p>
-              <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_BMI')}</span><span className="text-primary">{TrainerProgressTrackingFormatNumber(entry.bmi, locale)}</span></p>
-              <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_BODY_FAT_PERCENT')}</span><span className="text-primary">{entry.bodyFatPercent == null ? displayValue(entry.bodyFatPercent) : `${TrainerProgressTrackingFormatNumber(entry.bodyFatPercent, locale)}%`}</span></p>
-              <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_MUSCLE_MASS_KG')}</span><span className="text-primary">{entry.muscleMassKg == null ? displayValue(entry.muscleMassKg) : TrainerProgressTrackingFormatNumber(entry.muscleMassKg, locale)}</span></p>
-              <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_WAIST_CM')}</span><span className="text-primary">{entry.waistCm == null ? displayValue(entry.waistCm) : TrainerProgressTrackingFormatNumber(entry.waistCm, locale)}</span></p>
-              <p className="col-span-2"><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_NOTES')}</span><span className="text-primary">{displayValue(entry.notes)}</span></p>
+              <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_WEIGHT_KG')}</span><span className="text-text-primary">{TrainerProgressTrackingFormatNumber(entry.weightKg, locale)}</span></p>
+              <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_HEIGHT_CM')}</span><span className="text-text-primary">{TrainerProgressTrackingFormatNumber(entry.heightCm, locale)}</span></p>
+              <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_BMI')}</span><span className="text-text-primary">{TrainerProgressTrackingFormatNumber(entry.bmi, locale)}</span></p>
+              <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_BODY_FAT_PERCENT')}</span><span className="text-text-primary">{entry.bodyFatPercent == null ? displayValue(entry.bodyFatPercent) : `${TrainerProgressTrackingFormatNumber(entry.bodyFatPercent, locale)}%`}</span></p>
+              <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_MUSCLE_MASS_KG')}</span><span className="text-text-primary">{entry.muscleMassKg == null ? displayValue(entry.muscleMassKg) : TrainerProgressTrackingFormatNumber(entry.muscleMassKg, locale)}</span></p>
+              <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_WAIST_CM')}</span><span className="text-text-primary">{entry.waistCm == null ? displayValue(entry.waistCm) : TrainerProgressTrackingFormatNumber(entry.waistCm, locale)}</span></p>
+              <p className="col-span-2"><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_NOTES')}</span><span className="text-text-primary">{displayValue(entry.notes)}</span></p>
             </div>
             <div className="mt-4 pt-3 border-t border-border flex gap-2">
               <button type="button" onClick={() => onEdit(entry)} className="min-h-11 flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-300 font-semibold hover:bg-amber-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all" aria-label={t('TEXT_EDIT_ENTRY_65440F')} data-testid="trainer_progress_tracking-trainerprogresstrackingtable-button_5">

@@ -108,7 +108,7 @@ export default function TrainerInfrastructureSearchableDropdown({
         className={`w-full min-h-11 bg-input border border-border rounded-lg px-4 py-2.5 flex items-center justify-between cursor-pointer ${disabled ? 'opacity-50 cursor-not-allowed' : ''} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-colors motion-safe:duration-base motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95`}
         onClick={() => { if (!disabled) { setIsOpen((current) => !current); setActiveOptionIndex(-1); } }}
        data-testid={resolvedTestId}>
-        <span className={`text-sm ${!selectedOption ? 'text-secondary' : 'text-primary'} truncate `}>
+        <span className={`text-sm ${!selectedOption ? 'text-secondary' : 'text-text-primary'} truncate `}>
           {selectedOption ? selectedOption.label : resolvedPlaceholder}
         </span>
         <ChevronDown size={18} className="text-secondary "  strokeWidth={2}/>

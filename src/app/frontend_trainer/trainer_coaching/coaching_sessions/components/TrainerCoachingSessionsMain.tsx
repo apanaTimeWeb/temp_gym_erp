@@ -178,7 +178,7 @@ export default function TrainerSessionsMain() {
                   <div className={`p-3 rounded-xl mt-1 ${TRAINER_SESSIONS_SESSION_TYPE_STYLES[session.type]}`}>{session.type === TRAINER_SESSIONS_SESSION_TYPE.PT ? <User size={18} strokeWidth={2} /> : <Users size={18} strokeWidth={2} />}</div>
                   <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-bold text-primary text-lg">{session.title}</h3>
+                      <h3 className="font-bold text-text-primary text-lg">{session.title}</h3>
                       <span className={`text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${TRAINER_SESSIONS_SESSION_TYPE_STYLES[session.type]}`}>{t(session.type === TRAINER_SESSIONS_SESSION_TYPE.PT ? 'TEXT_PT' : 'TEXT_GROUP')}</span>
                     </div>
                     <div className="flex flex-wrap items-center gap-3 text-sm text-secondary">

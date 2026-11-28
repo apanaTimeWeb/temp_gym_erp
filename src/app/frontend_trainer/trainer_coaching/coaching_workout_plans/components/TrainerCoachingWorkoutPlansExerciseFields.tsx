@@ -81,8 +81,8 @@ export default function TrainerWorkoutExerciseFields({ control, register }: Trai
       {/* Header and Day Splits Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
         <div>
-          <label className="block text-sm font-bold text-primary flex items-center gap-1.5">
-            <Layers size={18} className="text-primary" />
+          <label className="block text-sm font-bold text-text-primary flex items-center gap-1.5">
+            <Layers size={18} className="text-text-primary" />
             {t("TEXT_WORKOUT_EXERCISES")} (Day-Wise Split)
           </label>
           <p className="text-xs text-secondary mt-0.5">
@@ -162,7 +162,7 @@ export default function TrainerWorkoutExerciseFields({ control, register }: Trai
                 list="trainer-workout-exercise-library-list"
                 placeholder="e.g. Barbell Bench Press"
                 {...register(`workoutExercises.${index}.name`)}
-                className="w-full px-2 py-1.5 text-sm bg-input border border-border rounded-lg text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                className="w-full px-2 py-1.5 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 data-testid={`trainer_workout-exercise-fields-name-${field.id}`}
               />
             </div>
@@ -180,7 +180,7 @@ export default function TrainerWorkoutExerciseFields({ control, register }: Trai
                 max="20"
                 step="1"
                 {...register(`workoutExercises.${index}.sets`, { valueAsNumber: true })}
-                className="w-full px-2 py-1.5 text-sm bg-input border border-border rounded-lg text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                className="w-full px-2 py-1.5 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 data-testid={`trainer_workout-exercise-fields-sets-${field.id}`}
               />
             </div>
@@ -198,7 +198,7 @@ export default function TrainerWorkoutExerciseFields({ control, register }: Trai
                 max="100"
                 step="1"
                 {...register(`workoutExercises.${index}.reps`)}
-                className="w-full px-2 py-1.5 text-sm bg-input border border-border rounded-lg text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                className="w-full px-2 py-1.5 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 data-testid={`trainer_workout-exercise-fields-reps-${field.id}`}
               />
             </div>
@@ -214,7 +214,7 @@ export default function TrainerWorkoutExerciseFields({ control, register }: Trai
                 type="text"
                 placeholder="e.g. 50kg"
                 {...register(`workoutExercises.${index}.weight`)}
-                className="w-full px-2 py-1.5 text-sm bg-input border border-border rounded-lg text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                className="w-full px-2 py-1.5 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 data-testid={`trainer_workout-exercise-fields-weight-${field.id}`}
               />
             </div>
@@ -230,7 +230,7 @@ export default function TrainerWorkoutExerciseFields({ control, register }: Trai
                 type="text"
                 placeholder="e.g. 60s"
                 {...register(`workoutExercises.${index}.restTime`)}
-                className="w-full px-2 py-1.5 text-sm bg-input border border-border rounded-lg text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                className="w-full px-2 py-1.5 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 data-testid={`trainer_workout-exercise-fields-rest-${field.id}`}
               />
             </div>

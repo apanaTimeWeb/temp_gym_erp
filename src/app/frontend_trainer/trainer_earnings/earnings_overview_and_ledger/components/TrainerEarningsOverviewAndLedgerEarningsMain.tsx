@@ -40,9 +40,15 @@ export default function TrainerEarningsMain() {
   const earningsQuery = useTrainerEarningsQuery();
   const { isPending, isError, isFetching, refetch, isInvalidRange } = earningsQuery;
   const pageHeader = (
-    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6">
-      <h1 className="text-page-title font-bold">{t("TEXT_EARNINGS")}</h1>
-      <TrainerEarningsDateFilterDropdown />
+    <div className="relative overflow-hidden rounded-2xl border border-amber-500/35 bg-card dark:bg-gradient-to-br dark:from-[#281E10] dark:via-[#141B2D] dark:to-[#0C1220] p-5 sm:p-6 shadow-card flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
+      <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#FACC15] via-[#10B981] to-transparent" />
+      <span aria-hidden="true" className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-amber-500/20 blur-3xl" />
+      <div className="relative min-w-0">
+        <h1 className="text-page-title font-extrabold text-text-primary">{t("TEXT_EARNINGS")}</h1>
+      </div>
+      <div className="relative shrink-0">
+        <TrainerEarningsDateFilterDropdown />
+      </div>
     </div>
   );
 

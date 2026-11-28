@@ -20,7 +20,7 @@ export function TrainerOperationsTrainerAttendanceQuarterlyRecordsTable({
   return (
     <div className="bg-card border border-border rounded-2xl shadow-card overflow-hidden">
       <div className="p-4 border-b border-border bg-surface-highlight flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-        <h3 className="font-bold text-sm text-primary flex items-center gap-2">
+        <h3 className="font-bold text-sm text-text-primary flex items-center gap-2">
           <span className="p-1.5 rounded-lg border border-sky-500/30 bg-sky-500/15 text-sky-500 shrink-0">
             <Clock size={15} />
           </span>
@@ -54,9 +54,9 @@ export function TrainerOperationsTrainerAttendanceQuarterlyRecordsTable({
             ) : (
               rangeRecords.map((r, idx) => (
                 <tr key={`${r.id || idx}`} className="hover:bg-surface-hover transition-colors group">
-                  <td className="p-3.5 font-bold text-primary sticky start-0 z-10 bg-card border-e border-border whitespace-nowrap group-hover:bg-surface-hover transition-colors">
+                  <td className="p-3.5 font-bold text-text-primary sticky start-0 z-10 bg-card border-e border-border whitespace-nowrap group-hover:bg-surface-hover transition-colors">
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-primary text-sm">{r.date}</span>
+                      <span className="font-bold text-text-primary text-sm">{r.date}</span>
                       <CopyButton value={r.date} />
                     </div>
                     <div className="text-xs text-secondary font-mono flex items-center gap-1.5 mt-0.5">
@@ -68,9 +68,9 @@ export function TrainerOperationsTrainerAttendanceQuarterlyRecordsTable({
                       <CheckCircle2 size={12} /> Present
                     </span>
                   </td>
-                  <td className="p-3.5 font-semibold text-primary whitespace-nowrap">{r.checkIn || '06:00 AM'}</td>
+                  <td className="p-3.5 font-semibold text-text-primary whitespace-nowrap">{r.checkIn || '06:00 AM'}</td>
                   <td className="p-3.5 text-secondary whitespace-nowrap">{r.checkOut || '03:00 PM'}</td>
-                  <td className="p-3.5 text-primary font-medium whitespace-nowrap">
+                  <td className="p-3.5 text-text-primary font-medium whitespace-nowrap">
                     {r.durationMinutes ? `${Math.floor(r.durationMinutes / 60)}h ${r.durationMinutes % 60}m` : '8h 30m'}
                   </td>
                   <td className="p-3.5 text-xs text-secondary whitespace-nowrap">{r.checkInMethod || 'Biometric Fingerprint'}</td>
@@ -90,7 +90,7 @@ export function TrainerOperationsTrainerAttendanceQuarterlyRecordsTable({
             <article key={`mobile-${r.id || idx}`} className="rounded-xl border border-border bg-card p-4 shadow-card space-y-2.5 text-xs">
               <div className="flex items-center justify-between gap-2 border-b border-border pb-2">
                 <div className="flex items-center gap-2 min-w-0">
-                  <span className="font-bold text-primary text-sm">{r.date}</span>
+                  <span className="font-bold text-text-primary text-sm">{r.date}</span>
                   <CopyButton value={r.date} />
                 </div>
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 border border-emerald-500/30 shrink-0">
@@ -98,9 +98,9 @@ export function TrainerOperationsTrainerAttendanceQuarterlyRecordsTable({
                 </span>
               </div>
               <dl className="grid grid-cols-2 gap-2">
-                <div><dt className="text-secondary uppercase text-[10px]">Check-In</dt><dd className="font-semibold text-primary">{r.checkIn || '06:00 AM'}</dd></div>
+                <div><dt className="text-secondary uppercase text-[10px]">Check-In</dt><dd className="font-semibold text-text-primary">{r.checkIn || '06:00 AM'}</dd></div>
                 <div><dt className="text-secondary uppercase text-[10px]">Check-Out</dt><dd className="text-secondary">{r.checkOut || '03:00 PM'}</dd></div>
-                <div><dt className="text-secondary uppercase text-[10px]">Duration</dt><dd className="font-medium text-primary">{r.durationMinutes ? `${Math.floor(r.durationMinutes / 60)}h ${r.durationMinutes % 60}m` : '8h 30m'}</dd></div>
+                <div><dt className="text-secondary uppercase text-[10px]">Duration</dt><dd className="font-medium text-text-primary">{r.durationMinutes ? `${Math.floor(r.durationMinutes / 60)}h ${r.durationMinutes % 60}m` : '8h 30m'}</dd></div>
                 <div><dt className="text-secondary uppercase text-[10px]">Method</dt><dd className="text-secondary truncate">{r.checkInMethod || 'Biometric Fingerprint'}</dd></div>
               </dl>
             </article>
@@ -109,7 +109,7 @@ export function TrainerOperationsTrainerAttendanceQuarterlyRecordsTable({
       </div>
       <div className="border-t border-border px-4 py-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between bg-card text-xs text-secondary">
         <p>
-          Showing <span className="font-semibold text-primary">{rangeRecords.length}</span> biometric log entries
+          Showing <span className="font-semibold text-text-primary">{rangeRecords.length}</span> biometric log entries
         </p>
       </div>
     </div>

@@ -147,7 +147,7 @@ export default function TrainerScheduleWeeklyAvailability() {
   return (
     <form onSubmit={handleSubmit(handleSave)} className="p-6 space-y-6 " noValidate data-testid="trainer_schedule-trainerscheduleweeklyavailability-form_2">
       <div>
-        <h2 className="text-section-title font-bold text-primary ">{t("TEXT_STANDARD_AVAILABILITY")}</h2>
+        <h2 className="text-section-title font-bold text-text-primary ">{t("TEXT_STANDARD_AVAILABILITY")}</h2>
         <p className="text-sm text-secondary mt-1 ">{t("TEXT_SET_YOUR_RECURRING_WEEKLY_WORKING_HOURS__F6AD4F6E")}</p>
       </div>
 
@@ -169,7 +169,7 @@ export default function TrainerScheduleWeeklyAvailability() {
                 <span className="absolute start-0.5 top-0.5 h-5 w-5 rounded-full border border-border bg-card motion-safe:transition-transform motion-safe:peer-checked:translate-x-5" aria-hidden="true" />
                 <span className="sr-only ">{t("TEXT_TOGGLE")}{weekdayLabel(day.day)} {t("TEXT_AVAILABILITY")}</span>
               </label>
-              <span className={`font-semibold w-24 ${day.isAvailable ? 'text-primary' : 'text-secondary line-through'} `}>{weekdayLabel(day.day)}</span>
+              <span className={`font-semibold w-24 ${day.isAvailable ? 'text-text-primary' : 'text-secondary line-through'} `}>{weekdayLabel(day.day)}</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 items-center gap-3 w-full sm:w-auto ">
@@ -182,7 +182,7 @@ export default function TrainerScheduleWeeklyAvailability() {
                   type="time"
                   disabled={!day.isAvailable}
                   {...register(`days.${index}.startTime`)}
-                  className="w-full sm:w-32 min-h-11 bg-card border border-border rounded-lg px-3 py-2 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring disabled:opacity-50  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+                  className="w-full sm:w-32 min-h-11 bg-card border border-border rounded-lg px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring disabled:opacity-50  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
                  data-testid={`trainer_schedule-weekly-availability-start-${day.day.toLowerCase()}`}/>
               </div>
               <span className="text-secondary font-medium text-sm text-center ">{t("TEXT_TO")}</span>
@@ -195,7 +195,7 @@ export default function TrainerScheduleWeeklyAvailability() {
                   type="time"
                   disabled={!day.isAvailable}
                   {...register(`days.${index}.endTime`)}
-                  className="w-full sm:w-32 min-h-11 bg-card border border-border rounded-lg px-3 py-2 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring disabled:opacity-50  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+                  className="w-full sm:w-32 min-h-11 bg-card border border-border rounded-lg px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring disabled:opacity-50  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
                  data-testid={`trainer_schedule-weekly-availability-end-${day.day.toLowerCase()}`}/>
               </div>
             </div>

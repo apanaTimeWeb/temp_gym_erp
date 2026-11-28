@@ -13,5 +13,5 @@ import { Toaster } from 'sonner';
  * @edge-case Preserves documented loading, empty, error, accessibility, responsive, and recovery behavior without inventing business fallbacks.
  */
 export default function TrainerNavigationToastHost() {
-  return <Toaster position="bottom-right" duration={4000} toastOptions={{ className: 'w-80 p-4 rounded-lg bg-card text-primary border border-border shadow-toast' }} />;
+  return <Toaster position="bottom-right" duration={4000} toastOptions={{ className: 'w-80 p-4 rounded-xl bg-card dark:bg-[#101726]/95 text-text-primary border border-border dark:border-orange-500/30 shadow-toast backdrop-blur-xl' }} />;
 }

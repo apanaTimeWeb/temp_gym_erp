@@ -40,7 +40,7 @@ export default function TrainerEarningsPending() {
   return (
     <div className="bg-card border border-border rounded-xl overflow-hidden flex flex-col h-full">
       <div className="px-5 py-4 border-b border-border flex items-center justify-between bg-header">
-        <h2 className="text-section-title font-semibold text-primary">{t("TEXT_UPCOMING_PAYOUTS")}</h2>
+        <h2 className="text-section-title font-semibold text-text-primary">{t("TEXT_UPCOMING_PAYOUTS")}</h2>
         <button
           type="button"
           onClick={() => setShowAdvanceModal(true)}
@@ -55,7 +55,7 @@ export default function TrainerEarningsPending() {
         {pendingPayouts.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center">
             <CalendarClock size={18} className="text-disabled mb-3"  strokeWidth={2}/>
-            <p className="text-sm font-semibold text-primary">{t("TEXT_NO_PENDING_PAYOUTS")}</p>
+            <p className="text-sm font-semibold text-text-primary">{t("TEXT_NO_PENDING_PAYOUTS")}</p>
             <p className="text-xs text-secondary mt-1">{t("TEXT_YOU_ARE_ALL_CAUGHT_UP")}</p>
           </div>
         ) : (
@@ -65,7 +65,7 @@ export default function TrainerEarningsPending() {
               <div key={p.id} className="p-4 rounded-xl border border-border bg-page flex flex-col gap-3">
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="text-sm font-semibold text-primary">{TrainerEarningsFormatCurrency(p.amount, p.currency, locale)}</p>
+                    <p className="text-sm font-semibold text-text-primary">{TrainerEarningsFormatCurrency(p.amount, p.currency, locale)}</p>
                     <p className="text-xs text-secondary mt-0.5">{p.period}</p>
                   </div>
                   <span className={`px-2 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider ${style?.bg || 'bg-input'} ${style?.text || 'text-secondary'}`} data-testid={`trainer_earnings-earnings-pending-status-${p.id}`}>

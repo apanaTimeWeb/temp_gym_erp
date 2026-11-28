@@ -92,7 +92,7 @@ export default function TrainerMembersProfileView({ activeView, onBackToList, on
                 {selectedMember.name.charAt(0)}
               </div>
               <div>
-                <h2 className="text-section-title font-bold text-primary">{selectedMember.name}</h2>
+                <h2 className="text-section-title font-bold text-text-primary">{selectedMember.name}</h2>
                 <p className="text-secondary text-sm">{selectedMember.email} · {TrainerMembersMaskSensitiveData(selectedMember.phone)}</p>
                 <div className="flex gap-2 mt-2 flex-wrap">
                   <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${statusStyle.bg} ${statusStyle.text}`} data-testid={"trainer-trainermembersprofile-status-state-63"}>
@@ -137,7 +137,7 @@ export default function TrainerMembersProfileView({ activeView, onBackToList, on
             ].map((f) => (
               <div key={f.label} className="bg-input rounded-lg p-3">
                 <p className="text-xs text-secondary mb-0.5">{f.label}</p>
-                <p className="text-sm font-semibold text-primary">{f.value}</p>
+                <p className="text-sm font-semibold text-text-primary">{f.value}</p>
               </div>
             ))}
           </div>

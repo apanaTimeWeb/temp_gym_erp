@@ -90,7 +90,7 @@ export default function TrainerOperationsMemberAttendanceQuickMark({
             <UserCheck size={20} strokeWidth={2} aria-hidden="true" />
           </div>
           <div>
-            <h2 className="text-base font-bold text-primary leading-tight">
+            <h2 className="text-base font-bold text-text-primary leading-tight">
               Quick Mark Attendance
             </h2>
             <p className="text-xs text-secondary mt-0.5">
@@ -122,7 +122,7 @@ export default function TrainerOperationsMemberAttendanceQuickMark({
           placeholder="Search member name or phone to mark attendance (e.g. Rahul, Priya, 9876...)"
           aria-label="Search member to mark attendance"
           data-testid="trainer-attendance-quick-mark-input"
-          className="min-h-11 w-full rounded-lg border border-border bg-input ps-10 pe-10 text-sm text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+          className="min-h-11 w-full rounded-lg border border-border bg-input ps-10 pe-10 text-sm text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
         />
         {query && (
           <button
@@ -145,12 +145,12 @@ export default function TrainerOperationsMemberAttendanceQuickMark({
           {matchingMembers.length === 0 ? (
             <div className="p-4 text-center">
               <p className="text-sm text-secondary">
-                No members found matching &ldquo;<span className="font-semibold text-primary">{query}</span>&rdquo;.
+                No members found matching &ldquo;<span className="font-semibold text-text-primary">{query}</span>&rdquo;.
               </p>
               <button
                 type="button"
                 onClick={onOpenModal}
-                className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-primary underline"
+                className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-text-primary underline"
               >
                 Open manual attendance modal
               </button>
@@ -174,7 +174,7 @@ export default function TrainerOperationsMemberAttendanceQuickMark({
                       {initial}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-semibold text-primary truncate">
+                      <p className="text-sm font-semibold text-text-primary truncate">
                         {member.name}
                       </p>
                       <p className="text-xs text-secondary truncate">

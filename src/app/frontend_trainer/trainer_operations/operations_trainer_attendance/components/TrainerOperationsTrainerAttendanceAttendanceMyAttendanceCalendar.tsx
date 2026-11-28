@@ -95,7 +95,7 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
                 <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary text-on-primary">
                   Quarterly View (Last 3 Months)
                 </span>
-                <span className="text-xs font-semibold text-primary">
+                <span className="text-xs font-semibold text-text-primary">
                   {format(threeMonthsList[0], 'MMM yyyy')} – {format(threeMonthsList[2], 'MMM yyyy')}
                 </span>
               </div>
@@ -145,7 +145,7 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
                       : 'bg-card border-border hover:border-primary'
                   }`}
                 >
-                  <p className="text-xs font-bold text-primary">{format(mDate, 'MMMM yyyy')}</p>
+                  <p className="text-xs font-bold text-text-primary">{format(mDate, 'MMMM yyyy')}</p>
                   <p className="text-[11px] text-secondary mt-0.5">Click to view monthly calendar</p>
                 </button>
               );
@@ -167,8 +167,8 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-xl font-bold text-primary flex items-center gap-2">
-                  <CalendarIcon size={18} strokeWidth={2} className="text-primary" /> {monthName} {year} {t("TEXT_HISTORY")}
+                <h3 className="text-xl font-bold text-text-primary flex items-center gap-2">
+                  <CalendarIcon size={18} strokeWidth={2} className="text-text-primary" /> {monthName} {year} {t("TEXT_HISTORY")}
                 </h3>
                 <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-success-bg text-success border border-border flex items-center gap-1" data-testid="trainer_attendance-attendance-my_attendance_calendar_status_my_record">
                   <UserCheck size={14} strokeWidth={2}/> {user?.name || t('TEXT_MY_RECORD')}
@@ -201,7 +201,7 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
                 >
                   <ChevronLeft size={16} strokeWidth={2}/>
                 </button>
-                <span className="px-3 text-xs font-bold text-primary select-none">
+                <span className="px-3 text-xs font-bold text-text-primary select-none">
                   {monthName} {year}
                 </span>
                 <button
@@ -257,7 +257,7 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
       {/* Legend Footer */}
       <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-floating border border-border rounded-xl text-xs text-secondary">
         <div className="flex items-center gap-4 flex-wrap">
-          <span className="font-semibold text-primary">{t("TEXT_CALENDAR_STATUS")}</span>
+          <span className="font-semibold text-text-primary">{t("TEXT_CALENDAR_STATUS")}</span>
           <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-success text-on-success"></span> {t("TEXT_PRESENT_P")}</span>
           <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-danger text-on-danger"></span> {t("TEXT_ABSENT_A")}</span>
           <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-warning text-on-warning"></span> {t("TEXT_WEEKLY_OFF_SUNDAY")}</span>

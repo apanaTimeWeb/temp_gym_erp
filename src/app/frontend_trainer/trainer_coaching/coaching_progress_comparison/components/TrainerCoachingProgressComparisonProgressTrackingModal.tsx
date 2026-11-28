@@ -49,7 +49,7 @@ const EMPTY: TrainerProgressTrackingCreateProgressEntryFormValues = {
  * @dependencies Uses only documented progress tracking module dependencies and approved global infrastructure/UI primitives.
  * @edge-case Preserves documented loading, empty, error, accessibility, responsive, and recovery behavior without inventing business fallbacks.
  */
-const INPUT_CLASS = 'w-full px-3 py-2 border border-border rounded-lg bg-input text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95';
+const INPUT_CLASS = 'w-full px-3 py-2 border border-border rounded-lg bg-input text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95';
 
 /**
  * @description Provides the create/edit form for member progress entries with schema validation and mutation state handling.
@@ -109,7 +109,7 @@ export default function TrainerProgressTrackingModal({ editingEntry, onSave, onC
     <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay-backdrop p-4 " role="presentation" data-testid={testId}>
       <div className="my-auto bg-overlay w-full max-w-lg max-h-dialog-desktop flex flex-col rounded-2xl shadow-dialog border border-border overflow-hidden motion-safe:transition-opacity motion-safe:duration-base" ref={dialogRef} role="dialog" aria-modal={true} aria-labelledby="trainer-progress-modal-title">
         <div className="flex items-center justify-between p-5 border-b border-border shrink-0 bg-overlay ">
-          <h3 id="trainer-progress-modal-title" className="text-lg font-bold text-primary ">{editingEntry ? t("TEXT_EDIT_ENTRY") : t("TEXT_ADD_PROGRESS_ENTRY")}</h3>
+          <h3 id="trainer-progress-modal-title" className="text-lg font-bold text-text-primary ">{editingEntry ? t("TEXT_EDIT_ENTRY") : t("TEXT_ADD_PROGRESS_ENTRY")}</h3>
           <button type="button" onClick={handleClose} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page text-secondary hover:text-primary hover:bg-input p-2 rounded-lg motion-safe:transition-colors motion-safe:duration-base min-w-11 min-h-11 motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95" aria-label={t("TEXT_CLOSE_MODAL")} data-testid="trainer_progress_tracking-trainerprogresstrackingmodal-button_1"><X size={18}  strokeWidth={2}/></button>
         </div>
 

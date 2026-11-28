@@ -32,7 +32,7 @@ export default function TrainerLibraryTabs({ search, setSearch, filterGoal, setF
   const t = useTranslations('TRAINER_LIBRARY');
   return (
     <div className="border-b border-border flex flex-wrap gap-4 justify-between items-center bg-card p-2 sm:p-0 ">
-      <h2 className="px-5 py-3.5 text-section-title font-bold text-primary whitespace-nowrap ">{t("TEXT_DIET_PLANS")}</h2>
+      <h2 className="px-5 py-3.5 text-section-title font-bold text-text-primary whitespace-nowrap ">{t("TEXT_DIET_PLANS")}</h2>
       <div className="px-4 flex flex-wrap gap-3 items-center ">
         <div className="relative ">
           <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-sky-500 "  strokeWidth={2}/>
@@ -41,14 +41,14 @@ export default function TrainerLibraryTabs({ search, setSearch, filterGoal, setF
             onChange={(event) => setSearch(event.target.value)}
             placeholder={t("TEXT_SEARCH_DIET_PLANS")}
             aria-label={t("TEXT_SEARCH_DIET_PLANS_793027")}
-            className="ps-9 pe-3 py-2 border border-border rounded-lg text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring w-40 sm:w-64 bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+            className="ps-9 pe-3 py-2 border border-border rounded-lg text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring w-40 sm:w-64 bg-input text-text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
            data-testid="trainer_library-library-tabs_search"/>
         </div>
         <select
           value={filterGoal}
           onChange={(event) => setFilterGoal(event.target.value as TrainerLibraryFilterGoal)}
           aria-label={t("TEXT_FILTER_DIET_PLANS_BY_GOAL")}
-          className="px-3 py-2 border border-border rounded-lg text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+          className="px-3 py-2 border border-border rounded-lg text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
          data-testid="trainer_library-library-tabs_filter">
           <option value="All" data-testid="trainer_library-library-tabs_goal_option_all">{t("TEXT_ALL_GOALS")}</option>
           {TRAINER_LIBRARY_GOALS.map((goal) => <option key={goal.value} value={goal.value} data-testid={`trainer_library-library-tabs_goal_option${goal.value}`}>{t(goal.labelKey)}</option>)}

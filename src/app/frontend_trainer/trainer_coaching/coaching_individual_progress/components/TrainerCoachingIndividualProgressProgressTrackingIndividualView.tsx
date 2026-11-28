@@ -15,11 +15,11 @@ export default function TrainerProgressTrackingIndividualView({ model }: { model
   return (
     <>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-card p-4 rounded-xl border border-border">
-        <span className="text-sm font-semibold text-primary shrink-0">{t('TEXT_SELECT_MEMBER')}</span>
+        <span className="text-sm font-semibold text-text-primary shrink-0">{t('TEXT_SELECT_MEMBER')}</span>
         {model.membersQuery.isPending ? (
           <p role="status" className="text-sm text-secondary">{t('TEXT_MEMBERS_LOADING')}</p>
         ) : model.membersQuery.isError ? (
-          <div className="flex flex-wrap items-center gap-2"><p role="alert" className="text-sm text-danger">{t('TEXT_MEMBERS_LOAD_ERROR')}</p><button type="button" onClick={model.retryMembers} disabled={model.membersQuery.isFetching} className="min-h-11 px-3 rounded-lg border border-border text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring">{model.membersQuery.isFetching ? t('TEXT_RETRYING') : t('TEXT_RETRY')}</button></div>
+          <div className="flex flex-wrap items-center gap-2"><p role="alert" className="text-sm text-danger">{t('TEXT_MEMBERS_LOAD_ERROR')}</p><button type="button" onClick={model.retryMembers} disabled={model.membersQuery.isFetching} className="min-h-11 px-3 rounded-lg border border-border text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring">{model.membersQuery.isFetching ? t('TEXT_RETRYING') : t('TEXT_RETRY')}</button></div>
         ) : model.tData.members.length === 0 ? (
           <p className="text-sm text-secondary">{t('TEXT_NO_MEMBERS_AVAILABLE')}</p>
         ) : (
@@ -28,15 +28,15 @@ export default function TrainerProgressTrackingIndividualView({ model }: { model
       </div>
       {model.selectedMemberId && !model.membersQuery.isPending && !model.membersQuery.isError && model.tData.members.length > 0 ? (
         <section aria-labelledby="trainer-progress-summary-heading" className="rounded-xl border border-border bg-card p-4 space-y-3" data-testid="trainer-progress-summary">
-          <h2 id="trainer-progress-summary-heading" className="font-semibold text-primary">{model.summaryQuery.data?.memberName ?? t('TEXT_PROGRESS_TRACKING')}</h2>
+          <h2 id="trainer-progress-summary-heading" className="font-semibold text-text-primary">{model.summaryQuery.data?.memberName ?? t('TEXT_PROGRESS_TRACKING')}</h2>
           {model.summaryQuery.isPending ? <p role="status" className="text-sm text-secondary">{t('TEXT_MEMBERS_LOADING')}</p> : model.summaryQuery.isError ? (
-            <div className="flex flex-wrap items-center gap-2"><p role="alert" className="text-sm text-danger">{TrainerInfrastructureUserSafeError(model.summaryQuery.error, t('TEXT_GENERIC_REQUEST_ERROR'))}</p><button type="button" onClick={() => void model.summaryQuery.refetch()} disabled={model.summaryQuery.isFetching} className="min-h-11 rounded-lg border border-border px-3 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring">{model.summaryQuery.isFetching ? t('TEXT_RETRYING') : t('TEXT_RETRY')}</button></div>
+            <div className="flex flex-wrap items-center gap-2"><p role="alert" className="text-sm text-danger">{TrainerInfrastructureUserSafeError(model.summaryQuery.error, t('TEXT_GENERIC_REQUEST_ERROR'))}</p><button type="button" onClick={() => void model.summaryQuery.refetch()} disabled={model.summaryQuery.isFetching} className="min-h-11 rounded-lg border border-border px-3 text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring">{model.summaryQuery.isFetching ? t('TEXT_RETRYING') : t('TEXT_RETRY')}</button></div>
           ) : model.summaryQuery.data ? (
             <dl className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              <div><dt className="text-xs text-secondary">{t('TEXT_ENTRIES')}</dt><dd className="text-lg font-semibold text-primary">{model.summaryQuery.data.totalEntries}</dd></div>
-              <div><dt className="text-xs text-secondary">{t('TEXT_WEIGHT_CHANGE')}</dt><dd className="text-lg font-semibold text-primary">{model.summaryQuery.data.weightChangeKg} kg</dd></div>
-              <div><dt className="text-xs text-secondary">{t('TEXT_CURRENT_WEIGHT')}</dt><dd className="text-lg font-semibold text-primary">{model.summaryQuery.data.latestEntry ? `${model.summaryQuery.data.latestEntry.weightKg} kg` : '—'}</dd></div>
-              <div><dt className="text-xs text-secondary">{t('TEXT_CURRENT_BMI')}</dt><dd className="text-lg font-semibold text-primary">{model.summaryQuery.data.latestEntry?.bmi ?? '—'}</dd></div>
+              <div><dt className="text-xs text-secondary">{t('TEXT_ENTRIES')}</dt><dd className="text-lg font-semibold text-text-primary">{model.summaryQuery.data.totalEntries}</dd></div>
+              <div><dt className="text-xs text-secondary">{t('TEXT_WEIGHT_CHANGE')}</dt><dd className="text-lg font-semibold text-text-primary">{model.summaryQuery.data.weightChangeKg} kg</dd></div>
+              <div><dt className="text-xs text-secondary">{t('TEXT_CURRENT_WEIGHT')}</dt><dd className="text-lg font-semibold text-text-primary">{model.summaryQuery.data.latestEntry ? `${model.summaryQuery.data.latestEntry.weightKg} kg` : '—'}</dd></div>
+              <div><dt className="text-xs text-secondary">{t('TEXT_CURRENT_BMI')}</dt><dd className="text-lg font-semibold text-text-primary">{model.summaryQuery.data.latestEntry?.bmi ?? '—'}</dd></div>
             </dl>
           ) : null}
         </section>

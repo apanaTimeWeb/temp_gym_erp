@@ -125,7 +125,7 @@ export default function TrainerInfrastructureConfirmModal({
             <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${iconClass} `} aria-hidden="true">
               <AlertTriangle size={18} strokeWidth={2} />
             </div>
-            <TrainerInfrastructureTooltip content={title}><h2 id={titleId} className="text-section-title font-bold text-primary truncate ">{title}</h2></TrainerInfrastructureTooltip>
+            <TrainerInfrastructureTooltip content={title}><h2 id={titleId} className="text-section-title font-bold text-text-primary truncate ">{title}</h2></TrainerInfrastructureTooltip>
           </div>
           <button
             type="button"
@@ -141,14 +141,14 @@ export default function TrainerInfrastructureConfirmModal({
           <p id={descriptionId} className="text-sm text-secondary leading-relaxed ">{message}</p>
           {requireTypedConfirmation && (
             <div className="mt-5 space-y-2 ">
-              <label htmlFor={`${descriptionId}-confirmation`} className="block text-xs font-semibold text-secondary ">{t("TEXT_TYPE")} <span className="text-primary ">{resolvedConfirmationPhrase}</span> {t("TEXT_TO_CONFIRM")}</label>
+              <label htmlFor={`${descriptionId}-confirmation`} className="block text-xs font-semibold text-secondary ">{t("TEXT_TYPE")} <span className="text-text-primary ">{resolvedConfirmationPhrase}</span> {t("TEXT_TO_CONFIRM")}</label>
               <input
                 ref={confirmationInputRef}
                 id={`${descriptionId}-confirmation`}
                 value={typedConfirmation}
                 onChange={(event) => setTypedConfirmation(event.target.value)}
                 autoComplete="off"
-                className="w-full min-h-11 rounded-md border border-border bg-input px-3 py-2 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+                className="w-full min-h-11 rounded-md border border-border bg-input px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
                data-testid="trainer_infrastructure-trainerinfrastructureconfirmmodal-input_3"/>
             </div>
           )}
@@ -157,7 +157,7 @@ export default function TrainerInfrastructureConfirmModal({
               ref={cancelButtonRef}
               type="button"
               onClick={onCancel}
-              className="min-h-11 px-4 border border-border rounded-md text-sm font-semibold text-primary hover:bg-input motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95"
+              className="min-h-11 px-4 border border-border rounded-md text-sm font-semibold text-text-primary hover:bg-input motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95"
              data-testid="trainer_infrastructure-trainerinfrastructureconfirmmodal-button_4">
               {resolvedCancelText}
             </button>

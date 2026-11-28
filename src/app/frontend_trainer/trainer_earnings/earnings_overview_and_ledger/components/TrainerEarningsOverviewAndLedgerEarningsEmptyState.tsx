@@ -32,7 +32,7 @@ export default function TrainerEarningsEmptyState({ message, description }: Trai
         <FileText size={18} className="text-secondary" strokeWidth={2} />
       </div>
       <div>
-        <p className="text-sm font-semibold text-primary">{resolvedMessage}</p>
+        <p className="text-sm font-semibold text-text-primary">{resolvedMessage}</p>
         <p className="text-xs text-secondary mt-1">{resolvedDescription}</p>
       </div>
     </div>

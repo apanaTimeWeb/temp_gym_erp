@@ -24,7 +24,7 @@ export default function TrainerScheduleEmptyState() {
       <div className="w-16 h-16 rounded-full bg-input flex items-center justify-center mb-4">
         <CalendarX className="text-secondary" size={18}  strokeWidth={2}/>
       </div>
-      <h3 className="text-lg font-bold text-primary mb-1">{t("TEXT_NO_ITEMS_FOUND")}</h3>
+      <h3 className="text-lg font-bold text-text-primary mb-1">{t("TEXT_NO_ITEMS_FOUND")}</h3>
       <p className="text-sm text-secondary text-center max-w-sm mb-6">
         {t("TEXT_THERE_ARE_NO_ITEMS_IN_THIS_VIEW_CHECK_BA_8CBF3D04")}</p>
     </div>

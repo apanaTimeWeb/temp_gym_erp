@@ -83,7 +83,7 @@ export default function TrainerLibraryDietGrid({
                 <span className="p-1.5 rounded-lg border border-sky-500/25 bg-sky-500/10 text-sky-500" title={t("TEXT_VIEW_DIET_PLAN")} aria-hidden="true"><Eye size={16}  strokeWidth={2}/></span>
               </div>
             </div>
-            <TrainerInfrastructureTooltip content={plan.name}><h4 className="font-bold text-primary truncate mb-1">{plan.name}</h4></TrainerInfrastructureTooltip>
+            <TrainerInfrastructureTooltip content={plan.name}><h4 className="font-bold text-text-primary truncate mb-1">{plan.name}</h4></TrainerInfrastructureTooltip>
             <TrainerInfrastructureTooltip content={plan.goal}><p className="text-xs text-secondary mb-3 truncate">{plan.goal}</p></TrainerInfrastructureTooltip>
             <div className="mt-auto pt-3 border-t border-border space-y-1.5">
               {plan.calories != null ? <div className="inline-flex items-center gap-1.5 rounded-lg border border-orange-500/25 bg-orange-500/10 px-2.5 py-1 text-xs font-medium text-orange-600 dark:text-orange-300"><Flame size={15} className="text-orange-500" strokeWidth={2}/><span>{TrainerLibraryFormatNumber(plan.calories, locale)} {t("TEXT_KCAL_DAY")}</span></div> : null}

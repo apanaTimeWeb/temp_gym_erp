@@ -64,12 +64,12 @@ export default function TrainerMembersProfileProgress() {
   };
 
   return <div className="space-y-6">
-    <div className="flex items-center justify-between"><h3 className="font-bold text-primary">{t("TEXT_PROGRESS_MEASUREMENTS")}</h3><span className="text-xs text-secondary">{t("TEXT_SOURCE_TRAINER_PROGRESS_API")}</span></div>
+    <div className="flex items-center justify-between"><h3 className="font-bold text-text-primary">{t("TEXT_PROGRESS_MEASUREMENTS")}</h3><span className="text-xs text-secondary">{t("TEXT_SOURCE_TRAINER_PROGRESS_API")}</span></div>
     {latest ? <>
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">{metrics.map(([label,current,change]) => <div key={label} className="bg-card border border-border rounded-xl p-4"><p className="text-xs text-secondary mb-1">{label}</p><p className="text-lg font-bold text-primary">{current}</p><p className="text-xs text-secondary mt-1">{displayValue(change)}</p></div>)}</div>
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">{metrics.map(([label,current,change]) => <div key={label} className="bg-card border border-border rounded-xl p-4"><p className="text-xs text-secondary mb-1">{label}</p><p className="text-lg font-bold text-text-primary">{current}</p><p className="text-xs text-secondary mt-1">{displayValue(change)}</p></div>)}</div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="md:col-span-2 bg-card border border-border rounded-xl p-5"><h4 className="font-semibold text-primary mb-4">{t("TEXT_MEASUREMENT_HISTORY")}</h4><div className="space-y-3">{ordered.map((entry) => <div key={entry.id} className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-3"><span className="text-sm text-secondary">{TrainerMembersFormatDate(entry.date, locale)}</span><span className="text-sm font-semibold">{entry.weightKg == null ? '—' : `${TrainerMembersFormatNumber(entry.weightKg, locale)} ${t('TEXT_KG')}`}</span><span className="text-sm text-secondary">{t("TEXT_BMI")}{entry.bmi == null ? '—' : TrainerMembersFormatNumber(entry.bmi, locale)}</span><span className="text-sm text-secondary">{t("TEXT_BODY_FAT_13AEEC")}{entry.bodyFatPercent == null ? '—' : `${TrainerMembersFormatNumber(entry.bodyFatPercent, locale)}%`}</span></div>)}</div></div>
-        <div className="bg-card border border-border rounded-xl p-5 flex flex-col items-center justify-center text-center"><div className="w-12 h-12 rounded-full bg-info-bg text-info flex items-center justify-center mb-3" data-testid={"trainer_members-trainer_members-profile-info-state-42-2"}><Calculator size={18} strokeWidth={2}/></div><h4 className="text-sm font-semibold text-secondary">{t("TEXT_CURRENT_BMI_EDA3C8")}</h4><p className="text-kpi font-bold text-primary">{bmi == null ? '—' : TrainerMembersFormatNumber(bmi, locale)}</p></div>
+        <div className="md:col-span-2 bg-card border border-border rounded-xl p-5"><h4 className="font-semibold text-text-primary mb-4">{t("TEXT_MEASUREMENT_HISTORY")}</h4><div className="space-y-3">{ordered.map((entry) => <div key={entry.id} className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-3"><span className="text-sm text-secondary">{TrainerMembersFormatDate(entry.date, locale)}</span><span className="text-sm font-semibold">{entry.weightKg == null ? '—' : `${TrainerMembersFormatNumber(entry.weightKg, locale)} ${t('TEXT_KG')}`}</span><span className="text-sm text-secondary">{t("TEXT_BMI")}{entry.bmi == null ? '—' : TrainerMembersFormatNumber(entry.bmi, locale)}</span><span className="text-sm text-secondary">{t("TEXT_BODY_FAT_13AEEC")}{entry.bodyFatPercent == null ? '—' : `${TrainerMembersFormatNumber(entry.bodyFatPercent, locale)}%`}</span></div>)}</div></div>
+        <div className="bg-card border border-border rounded-xl p-5 flex flex-col items-center justify-center text-center"><div className="w-12 h-12 rounded-full bg-info-bg text-info flex items-center justify-center mb-3" data-testid={"trainer_members-trainer_members-profile-info-state-42-2"}><Calculator size={18} strokeWidth={2}/></div><h4 className="text-sm font-semibold text-secondary">{t("TEXT_CURRENT_BMI_EDA3C8")}</h4><p className="text-kpi font-bold text-text-primary">{bmi == null ? '—' : TrainerMembersFormatNumber(bmi, locale)}</p></div>
       </div>
 
       {/* Goal Setting & Milestone Tracker */}
@@ -85,8 +85,8 @@ export default function TrainerMembersProfileProgress() {
       <div className="bg-card border border-border rounded-xl p-5 space-y-4" data-testid="trainer_members-progress-photos-section">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <Camera size={18} className="text-primary" strokeWidth={2}/>
-            <h4 className="font-semibold text-primary">{t("TEXT_PROGRESS_PHOTOS")}</h4>
+            <Camera size={18} className="text-text-primary" strokeWidth={2}/>
+            <h4 className="font-semibold text-text-primary">{t("TEXT_PROGRESS_PHOTOS")}</h4>
           </div>
           <button
             type="button"
@@ -102,14 +102,14 @@ export default function TrainerMembersProfileProgress() {
         {/* Side-by-Side Comparison if Before & After available */}
         {beforePhoto && afterPhoto && (
           <div className="rounded-xl border border-border bg-input p-4 space-y-3" data-testid="trainer_members-transformation-comparison">
-            <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-wider">
+            <div className="flex items-center gap-2 text-xs font-bold text-text-primary uppercase tracking-wider">
               <Sparkles size={14} className="text-primary" />
               <span>Transformation Comparison (Before vs After)</span>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs text-secondary">
-                  <span className="font-semibold text-primary">Before (Initial Baseline)</span>
+                  <span className="font-semibold text-text-primary">Before (Initial Baseline)</span>
                   <span>{first ? TrainerMembersFormatDate(first.date, locale) : 'Day 1'}</span>
                 </div>
                 <div
@@ -126,7 +126,7 @@ export default function TrainerMembersProfileProgress() {
                 </div>
                 {first && (
                   <p className="text-xs text-secondary text-center">
-                    Weight: <strong className="text-primary">{TrainerMembersFormatNumber(first.weightKg, locale)} kg</strong>
+                    Weight: <strong className="text-text-primary">{TrainerMembersFormatNumber(first.weightKg, locale)} kg</strong>
                     {first.bodyFatPercent != null ? ` · Fat: ${first.bodyFatPercent}%` : ''}
                   </p>
                 )}
@@ -134,7 +134,7 @@ export default function TrainerMembersProfileProgress() {
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs text-secondary">
-                  <span className="font-semibold text-primary">After (Current Progress)</span>
+                  <span className="font-semibold text-text-primary">After (Current Progress)</span>
                   <span>{TrainerMembersFormatDate(latest.date, locale)}</span>
                 </div>
                 <div
@@ -150,7 +150,7 @@ export default function TrainerMembersProfileProgress() {
                   </div>
                 </div>
                 <p className="text-xs text-secondary text-center">
-                  Weight: <strong className="text-primary">{TrainerMembersFormatNumber(latest.weightKg, locale)} kg</strong>
+                  Weight: <strong className="text-text-primary">{TrainerMembersFormatNumber(latest.weightKg, locale)} kg</strong>
                   {latest.bodyFatPercent != null ? ` · Fat: ${latest.bodyFatPercent}%` : ''}
                   {delta !== null && (
                     <span className="ml-1.5 font-bold text-success">
@@ -199,7 +199,7 @@ export default function TrainerMembersProfileProgress() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="upload-photo-title">
           <div className="bg-card border border-border rounded-xl w-full max-w-md p-5 space-y-4 shadow-xl my-auto">
             <div className="flex items-center justify-between pb-3 border-b border-border">
-              <h3 id="upload-photo-title" className="text-base font-semibold text-primary">Add Transformation Photo</h3>
+              <h3 id="upload-photo-title" className="text-base font-semibold text-text-primary">Add Transformation Photo</h3>
               <button type="button" onClick={() => setIsUploadOpen(false)} className="text-secondary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring rounded-lg p-1">
                 <X size={18} />
               </button>
@@ -214,20 +214,20 @@ export default function TrainerMembersProfileProgress() {
                   placeholder="https://images.unsplash.com/photo-..."
                   value={newPhotoUrl}
                   onChange={(e) => setNewPhotoUrl(e.target.value)}
-                  className="w-full px-3 py-2 bg-input border border-border rounded-lg text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                  className="w-full px-3 py-2 bg-input border border-border rounded-lg text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 />
                 <div className="flex gap-2 mt-2">
                   <button
                     type="button"
                     onClick={() => setNewPhotoUrl('https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&auto=format&fit=crop&q=80')}
-                    className="text-[11px] text-primary underline hover:text-primary-hover"
+                    className="text-[11px] text-text-primary underline hover:text-primary-hover"
                   >
                     Use Sample Photo 1
                   </button>
                   <button
                     type="button"
                     onClick={() => setNewPhotoUrl('https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&auto=format&fit=crop&q=80')}
-                    className="text-[11px] text-primary underline hover:text-primary-hover"
+                    className="text-[11px] text-text-primary underline hover:text-primary-hover"
                   >
                     Use Sample Photo 2
                   </button>
@@ -240,7 +240,7 @@ export default function TrainerMembersProfileProgress() {
                   id="photo-tag-select"
                   value={newPhotoTag}
                   onChange={(e) => setNewPhotoTag(e.target.value)}
-                  className="w-full px-3 py-2 bg-input border border-border rounded-lg text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                  className="w-full px-3 py-2 bg-input border border-border rounded-lg text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 >
                   <option value="Front View">Front View</option>
                   <option value="Side View">Side View</option>

@@ -60,7 +60,7 @@ export function TrainerCoachingDietLibraryAndAssignmentsDietFormMealsSection({
                   {index + 1}
                 </span>
                 {isCoreMeal ? (
-                  <div className="flex-1 px-3 py-1.5 bg-card border border-border rounded-lg text-sm font-bold text-primary flex items-center justify-between">
+                  <div className="flex-1 px-3 py-1.5 bg-card border border-border rounded-lg text-sm font-bold text-text-primary flex items-center justify-between">
                     <span>{currentName}</span>
                     <span className="text-2xs text-secondary px-2 py-0.5 rounded-full bg-input border border-border flex items-center gap-1 font-medium">
                       <Lock size={10} className="text-secondary" /> Core Meal
@@ -71,13 +71,13 @@ export function TrainerCoachingDietLibraryAndAssignmentsDietFormMealsSection({
                   <input
                     {...register(`meals.${index}.name` as const)}
                     placeholder="e.g., Afternoon Snack / Pre-Workout"
-                    className="flex-1 px-2.5 py-1.5 bg-input border border-border rounded-lg text-sm font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                    className="flex-1 px-2.5 py-1.5 bg-input border border-border rounded-lg text-sm font-semibold text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                   />
                 )}
                 <input
                   {...register(`meals.${index}.time` as const)}
                   placeholder="e.g., 08:30 AM"
-                  className="w-28 px-2.5 py-1.5 bg-input border border-border rounded-lg text-xs text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                  className="w-28 px-2.5 py-1.5 bg-input border border-border rounded-lg text-xs text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 />
                 {!isCoreMeal && fields.length > 1 && (
                   <button
@@ -94,7 +94,7 @@ export function TrainerCoachingDietLibraryAndAssignmentsDietFormMealsSection({
               <input
                 {...register(`meals.${index}.items` as const)}
                 placeholder="Foods & ingredients (e.g. 100g oatmeal, 1 banana, 30g almonds)"
-                className="w-full px-2.5 py-1.5 bg-input border border-border rounded-lg text-xs text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                className="w-full px-2.5 py-1.5 bg-input border border-border rounded-lg text-xs text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
               />
 
               <input

@@ -124,7 +124,7 @@ export default function TrainerLibraryDietFormModal({
         {/* Modal Header */}
         <div className="shrink-0 bg-card px-6 py-4 border-b border-border flex items-center justify-between rounded-t-2xl">
           <div>
-            <h3 id="diet-form-title" className="text-lg font-bold text-primary">
+            <h3 id="diet-form-title" className="text-lg font-bold text-text-primary">
               {isEdit ? t('TEXT_EDIT_DIET_PLAN') ?? 'Edit Diet Plan' : t('TEXT_CREATE_CUSTOM_DIET_PLAN') ?? 'Create Custom Diet Plan'}
             </h3>
             <p className="text-xs text-secondary mt-0.5">
@@ -162,7 +162,7 @@ export default function TrainerLibraryDietFormModal({
                 id="diet-name"
                 {...register('name')}
                 placeholder="e.g., Lean Muscle Hypertrophy Diet"
-                className="w-full px-3 py-2 bg-input border border-border rounded-xl text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                className="w-full px-3 py-2 bg-input border border-border rounded-xl text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
               />
               {errors.name && <p className="text-xs text-danger mt-1">{errors.name.message}</p>}
             </div>
@@ -174,7 +174,7 @@ export default function TrainerLibraryDietFormModal({
               <select
                 id="diet-goal"
                 {...register('goal')}
-                className="w-full px-3 py-2 bg-input border border-border rounded-xl text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                className="w-full px-3 py-2 bg-input border border-border rounded-xl text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
               >
                 {TRAINER_LIBRARY_GOALS.map((g) => (
                   <option key={g.value} value={g.value}>
@@ -196,7 +196,7 @@ export default function TrainerLibraryDietFormModal({
               rows={2}
               {...register('description')}
               placeholder="e.g., Calorie deficit with optimal protein distribution across 4 meals"
-              className="w-full px-3 py-2 bg-input border border-border rounded-xl text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring resize-none"
+              className="w-full px-3 py-2 bg-input border border-border rounded-xl text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring resize-none"
             />
           </div>
 
@@ -215,7 +215,7 @@ export default function TrainerLibraryDietFormModal({
                   id="macro-calories"
                   type="number"
                   {...register('calories', { valueAsNumber: true })}
-                  className="w-full px-2.5 py-1.5 bg-input border border-border rounded-lg text-sm text-primary font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                  className="w-full px-2.5 py-1.5 bg-input border border-border rounded-lg text-sm text-text-primary font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 />
                 {errors.calories && <p className="text-2xs text-danger mt-0.5">{errors.calories.message}</p>}
               </div>
@@ -228,7 +228,7 @@ export default function TrainerLibraryDietFormModal({
                   id="macro-protein"
                   type="number"
                   {...register('protein', { valueAsNumber: true })}
-                  className="w-full px-2.5 py-1.5 bg-input border border-border rounded-lg text-sm text-primary font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                  className="w-full px-2.5 py-1.5 bg-input border border-border rounded-lg text-sm text-text-primary font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 />
                 {errors.protein && <p className="text-2xs text-danger mt-0.5">{errors.protein.message}</p>}
               </div>
@@ -241,7 +241,7 @@ export default function TrainerLibraryDietFormModal({
                   id="macro-carbs"
                   type="number"
                   {...register('carbs', { valueAsNumber: true })}
-                  className="w-full px-2.5 py-1.5 bg-input border border-border rounded-lg text-sm text-primary font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                  className="w-full px-2.5 py-1.5 bg-input border border-border rounded-lg text-sm text-text-primary font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 />
                 {errors.carbs && <p className="text-2xs text-danger mt-0.5">{errors.carbs.message}</p>}
               </div>
@@ -254,7 +254,7 @@ export default function TrainerLibraryDietFormModal({
                   id="macro-fats"
                   type="number"
                   {...register('fats', { valueAsNumber: true })}
-                  className="w-full px-2.5 py-1.5 bg-input border border-border rounded-lg text-sm text-primary font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                  className="w-full px-2.5 py-1.5 bg-input border border-border rounded-lg text-sm text-text-primary font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 />
                 {errors.fats && <p className="text-2xs text-danger mt-0.5">{errors.fats.message}</p>}
               </div>

@@ -88,8 +88,8 @@ export default function TrainerMembersProfileAttendance() {
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h3 className="text-lg font-bold text-primary flex items-center gap-2">
-              <CalendarIcon size={18} strokeWidth={2} className="text-primary" /> {monthName} {currentYear} {t("TEXT_ATTENDANCE")}</h3>
+            <h3 className="text-lg font-bold text-text-primary flex items-center gap-2">
+              <CalendarIcon size={18} strokeWidth={2} className="text-text-primary" /> {monthName} {currentYear} {t("TEXT_ATTENDANCE")}</h3>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary-subtle text-primary border border-focus flex items-center gap-1">
               <ShieldCheck size={18}  strokeWidth={2}/> {t("TEXT_VIEW_ONLY")}</span>
           </div>
@@ -178,7 +178,7 @@ export default function TrainerMembersProfileAttendance() {
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className={`text-sm font-bold ${isToday ? 'text-primary' : 'text-primary'}`}>
+                  <span className={`text-sm font-bold ${isToday ? 'text-text-primary' : 'text-text-primary'}`}>
                     {day}
                   </span>
                   {isToday && (
@@ -212,7 +212,7 @@ export default function TrainerMembersProfileAttendance() {
       {/* Legend Footer */}
       <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-floating border border-border rounded-xl text-xs text-secondary">
         <div className="flex items-center gap-4 flex-wrap">
-          <span className="font-semibold text-primary">{t("TEXT_LEGEND")}</span>
+          <span className="font-semibold text-text-primary">{t("TEXT_LEGEND")}</span>
           <span className="flex items-center gap-1.5">
             <span className="w-3 h-3 rounded-full bg-success text-on-success" data-testid={"trainer_members-profile-attendance-state-187"}></span> {t("TEXT_PRESENT_P")}</span>
           <span className="flex items-center gap-1.5">

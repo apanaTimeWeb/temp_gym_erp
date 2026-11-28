@@ -44,8 +44,8 @@ export default function TrainerEarningsOverviewAndLedgerPayslipModal({
         {/* Modal Header Actions (hidden in print) */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-header print:hidden shrink-0">
           <div className="flex items-center gap-2">
-            <Receipt size={18} className="text-primary" />
-            <h3 id="payslip-modal-title" className="text-sm font-bold text-primary">
+            <Receipt size={18} className="text-text-primary" />
+            <h3 id="payslip-modal-title" className="text-sm font-bold text-text-primary">
               Trainer Remuneration Advice / Payslip
             </h3>
           </div>
@@ -71,12 +71,12 @@ export default function TrainerEarningsOverviewAndLedgerPayslipModal({
         </div>
 
         {/* Payslip Document Body */}
-        <div className="p-6 space-y-6 text-primary bg-card overflow-y-auto custom-scrollbar flex-1 min-h-0" id="printable-payslip">
+        <div className="p-6 space-y-6 text-text-primary bg-card overflow-y-auto custom-scrollbar flex-1 min-h-0" id="printable-payslip">
           {/* Gym & Document Title */}
           <div className="flex flex-wrap items-start justify-between gap-4 border-b border-border pb-5">
             <div className="space-y-1">
-              <div className="flex items-center gap-2 text-primary">
-                <Building2 size={20} className="text-primary" />
+              <div className="flex items-center gap-2 text-text-primary">
+                <Building2 size={20} className="text-text-primary" />
                 <span className="text-lg font-extrabold tracking-tight">GYM ERP ENTERPRISE</span>
               </div>
               <p className="text-xs text-secondary">Fitness Management & Personal Training Services</p>
@@ -86,7 +86,7 @@ export default function TrainerEarningsOverviewAndLedgerPayslipModal({
               <span className="inline-block px-2.5 py-1 rounded-full text-[11px] font-bold bg-success-bg text-success border border-success uppercase tracking-wider">
                 {row.status}
               </span>
-              <p className="text-xs text-secondary mt-1">Invoice: <strong className="text-primary">{invoiceNo}</strong></p>
+              <p className="text-xs text-secondary mt-1">Invoice: <strong className="text-text-primary">{invoiceNo}</strong></p>
               <p className="text-xs text-secondary">Date: {TrainerEarningsFormatDate(row.date, locale)}</p>
             </div>
           </div>
@@ -95,12 +95,12 @@ export default function TrainerEarningsOverviewAndLedgerPayslipModal({
           <div className="grid grid-cols-2 gap-4 p-4 rounded-xl bg-input border border-border text-xs">
             <div>
               <p className="text-secondary font-medium">Trainer</p>
-              <p className="font-bold text-sm text-primary mt-0.5">Certified Personal Trainer</p>
+              <p className="font-bold text-sm text-text-primary mt-0.5">Certified Personal Trainer</p>
               <p className="text-secondary mt-1">ID: TRN-001</p>
             </div>
             <div>
               <p className="text-secondary font-medium">Session / Reference</p>
-              <p className="font-bold text-sm text-primary mt-0.5">{row.sessionId || 'Batch Remuneration'}</p>
+              <p className="font-bold text-sm text-text-primary mt-0.5">{row.sessionId || 'Batch Remuneration'}</p>
               <p className="text-secondary mt-1">Type: <span className="uppercase">{row.type}</span></p>
             </div>
           </div>
@@ -115,11 +115,11 @@ export default function TrainerEarningsOverviewAndLedgerPayslipModal({
               </div>
               <div className="flex items-center justify-between p-3 text-xs">
                 <span>{row.description}</span>
-                <span className="font-semibold text-primary">{TrainerEarningsFormatCurrency(row.amount, row.currency, locale)}</span>
+                <span className="font-semibold text-text-primary">{TrainerEarningsFormatCurrency(row.amount, row.currency, locale)}</span>
               </div>
               <div className="flex items-center justify-between p-3 text-xs bg-input">
                 <span className="text-secondary">Gross Amount</span>
-                <span className="font-semibold text-primary">{TrainerEarningsFormatCurrency(row.amount, row.currency, locale)}</span>
+                <span className="font-semibold text-text-primary">{TrainerEarningsFormatCurrency(row.amount, row.currency, locale)}</span>
               </div>
               <div className="flex items-center justify-between p-3 text-xs text-danger">
                 <span>Tax Deducted at Source (TDS 10%)</span>
@@ -127,7 +127,7 @@ export default function TrainerEarningsOverviewAndLedgerPayslipModal({
               </div>
               <div className="flex items-center justify-between p-4 bg-primary-subtle text-primary font-bold text-sm">
                 <span>Net Disbursed Payout</span>
-                <span className="text-base text-primary font-extrabold">{TrainerEarningsFormatCurrency(net, row.currency, locale)}</span>
+                <span className="text-base text-text-primary font-extrabold">{TrainerEarningsFormatCurrency(net, row.currency, locale)}</span>
               </div>
             </div>
           </div>

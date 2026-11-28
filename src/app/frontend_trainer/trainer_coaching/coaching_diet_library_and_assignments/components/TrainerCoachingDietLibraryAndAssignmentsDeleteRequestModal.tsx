@@ -55,7 +55,7 @@ export default function TrainerLibraryDeleteRequestModal({
         <div className="px-6 py-4 border-b border-border flex items-center justify-between shrink-0 bg-card">
           <div className="flex items-center gap-2 text-warning">
             <AlertTriangle size={20} />
-            <h3 id="delete-request-title" className="text-base font-bold text-primary">
+            <h3 id="delete-request-title" className="text-base font-bold text-text-primary">
               Request Plan Deletion
             </h3>
           </div>
@@ -78,7 +78,7 @@ export default function TrainerLibraryDeleteRequestModal({
           )}
 
           <p className="text-sm text-secondary">
-            You are requesting deletion of <span className="font-semibold text-primary">{plan.name}</span>.
+            You are requesting deletion of <span className="font-semibold text-text-primary">{plan.name}</span>.
           </p>
 
           <div className="rounded-xl bg-warning-bg border border-warning p-3.5">
@@ -97,7 +97,7 @@ export default function TrainerLibraryDeleteRequestModal({
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               placeholder="e.g., Obsolete macros, replaced by new seasonal plan, client graduated..."
-              className="w-full px-3 py-2 bg-input border border-border rounded-xl text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring resize-none"
+              className="w-full px-3 py-2 bg-input border border-border rounded-xl text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring resize-none"
             />
           </div>
 

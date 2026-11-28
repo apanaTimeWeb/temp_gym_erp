@@ -28,7 +28,7 @@ export default function TrainerOperationsMemberAttendanceMembersToolbar({ model 
         <Search size={18} strokeWidth={2} aria-hidden="true" className="absolute start-3 top-1/2 -translate-y-1/2 text-sky-500 pointer-events-none" />
         <input id="trainer-member-attendance-search" type="search" value={search}
           onChange={(event) => setSearch(event.target.value)} placeholder={t('TEXT_SEARCH_PLACEHOLDER')}
-          className="min-h-11 w-full rounded-lg border border-border bg-input ps-10 pe-8 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" />
+          className="min-h-11 w-full rounded-lg border border-border bg-input ps-10 pe-8 text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" />
         {search && (
           <button
             type="button"

@@ -27,7 +27,7 @@ export default function TrainerAttendanceEmptyState({ isFiltered }: TrainerAtten
           <div className="w-12 h-12 rounded-full bg-surface-highlight flex items-center justify-center mb-4">
             <CalendarX className="text-secondary"  strokeWidth={2} size={18}/>
           </div>
-          <h3 className="text-sm font-semibold text-primary mb-1">
+          <h3 className="text-sm font-semibold text-text-primary mb-1">
             {isFiltered ? t("TEXT_NO_MATCHES_FOUND") : t("TEXT_NO_ATTENDANCE_RECORDS")}
           </h3>
           <p className="text-sm text-secondary max-w-sm">

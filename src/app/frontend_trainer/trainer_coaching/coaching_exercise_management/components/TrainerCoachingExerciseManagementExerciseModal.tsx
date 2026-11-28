@@ -115,7 +115,7 @@ export default function TrainerWorkoutExerciseModal() {
     <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay-backdrop p-4 " role="presentation">
       <div className="my-auto flex max-h-dialog-desktop w-full max-w-md flex-col overflow-hidden rounded-2xl bg-overlay shadow-dialog " ref={dialogRef} role="dialog" aria-modal={true} aria-labelledby="trainer-workout-exercise-modal-title">
         <div className="flex justify-between items-center p-5 border-b border-border shrink-0 bg-overlay ">
-          <h3 id="trainer-workout-exercise-modal-title" className="font-bold text-lg text-primary ">
+          <h3 id="trainer-workout-exercise-modal-title" className="font-bold text-lg text-text-primary ">
             {editExercise ? t("TEXT_EDIT_EXERCISE") : t("TEXT_ADD_EXERCISE")}
           </h3>
           <button 
@@ -134,7 +134,7 @@ export default function TrainerWorkoutExerciseModal() {
               aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? "trainer-workout-exercise-name-error" : undefined}
               className={`w-full px-3 py-2 border rounded-lg focus-visible:outline-none focus-visible:ring-2 ${
                 errors.name ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-focus-ring'
-              } bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_workout-trainerworkoutexercisemodal-input_3"/>
+              } bg-input text-text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_workout-trainerworkoutexercisemodal-input_3"/>
             {errors.name && <p id="trainer-workout-exercise-name-error" role="alert" className="text-danger text-xs mt-1 " data-testid={"trainer_workout-exercise_modal-error_state_109_1"}>{t(errors.name?.message || '')}</p>}
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -147,7 +147,7 @@ export default function TrainerWorkoutExerciseModal() {
                 aria-invalid={Boolean(errors.muscle)} aria-describedby={errors.muscle ? "trainer-workout-exercise-muscle-error" : undefined}
                 className={`w-full px-3 py-2 border rounded-lg focus-visible:outline-none focus-visible:ring-2 ${
                   errors.muscle ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-focus-ring'
-                } bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_workout-trainerworkoutexercisemodal-input_4"/>
+                } bg-input text-text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_workout-trainerworkoutexercisemodal-input_4"/>
               {errors.muscle && <p id="trainer-workout-exercise-muscle-error" role="alert" className="text-danger text-xs mt-1 " data-testid={"trainer_workout-exercise_modal-error_state_121_2"}>{t(errors.muscle?.message || '')}</p>}
             </div>
             <div>
@@ -202,7 +202,7 @@ export default function TrainerWorkoutExerciseModal() {
               placeholder={t("TEXT_E_G_HTTPS_YOUTUBE_COM")} 
               {...register('videoUrl')}
               aria-invalid={Boolean(errors.videoUrl)} aria-describedby={errors.videoUrl ? "trainer-workout-exercise-video-error" : undefined}
-              className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_workout-trainerworkoutexercisemodal-input_7"/>
+              className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_workout-trainerworkoutexercisemodal-input_7"/>
             {errors.videoUrl && <p id="trainer-workout-exercise-video-error" role="alert" className="mt-1 text-xs text-danger">{t("ERR_INVALID_MEDIA_URL")}</p>}
           </div>
           <div>
@@ -212,7 +212,7 @@ export default function TrainerWorkoutExerciseModal() {
               placeholder={t("TEXT_E_G_3_SETS_OF_10_12_REPS_KEEP_BACK_STRAIGHT")} 
               {...register('instructions')}
               aria-invalid={Boolean(errors.instructions)}
-              className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-primary custom-scrollbar  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_workout-trainerworkoutexercisemodal-textarea_8"/>
+              className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-text-primary custom-scrollbar  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_workout-trainerworkoutexercisemodal-textarea_8"/>
           </div>
           
           <div className="sticky bottom-0 bg-overlay border-t border-border pt-3 flex justify-end gap-3 z-10 shrink-0 ">

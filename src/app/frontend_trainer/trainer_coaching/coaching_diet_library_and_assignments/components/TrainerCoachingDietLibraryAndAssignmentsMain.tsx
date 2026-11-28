@@ -75,7 +75,7 @@ export default function TrainerLibraryMain() {
   } = logic;
 
   return (
-    <div className="min-h-full pb-10 bg-page text-primary">
+    <div className="min-h-full pb-10 bg-page text-text-primary">
       <div className="p-4 sm:p-6 space-y-5">
         <TrainerLibraryTabs
           search={search}

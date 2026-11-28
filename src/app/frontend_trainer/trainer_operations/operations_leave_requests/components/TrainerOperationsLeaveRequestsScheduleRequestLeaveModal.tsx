@@ -115,7 +115,7 @@ export default function TrainerScheduleRequestLeaveModal() {
         
         <div className="flex items-center justify-between p-4 sm:p-6 border-b border-border bg-header shrink-0">
           <div>
-            <h2 id="trainer-request-leave-title" className="text-section-title font-black text-primary">{t("TEXT_REQUEST_LEAVE")}</h2>
+            <h2 id="trainer-request-leave-title" className="text-section-title font-black text-text-primary">{t("TEXT_REQUEST_LEAVE")}</h2>
             <p className="text-xs text-secondary mt-1">{t("TEXT_SUBMIT_TIME_OFF_FOR_MANAGER_APPROVAL")}</p>
           </div>
           <button type="button" onClick={() => void handleClose()} className="min-w-11 min-h-11 inline-flex items-center justify-center p-2 bg-input hover:bg-input text-secondary rounded-full motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" aria-label={t("TEXT_CANCEL")} data-testid="trainer_schedule-trainerschedulerequestleavemodal-button_2">
@@ -125,7 +125,7 @@ export default function TrainerScheduleRequestLeaveModal() {
 
         <form id="leave-form" onSubmit={submitForm(handleSubmit)} className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 custom-scrollbar" data-testid="trainer_schedule-trainerschedulerequestleavemodal-form_3">
           <div>
-            <label htmlFor="trainer-leave-type" className="block text-sm font-bold text-primary mb-1.5">{t("TEXT_LEAVE_TYPE")}</label>
+            <label htmlFor="trainer-leave-type" className="block text-sm font-bold text-text-primary mb-1.5">{t("TEXT_LEAVE_TYPE")}</label>
             <select
               id="trainer-leave-type"
               aria-invalid={Boolean(errors.leaveType)}
@@ -141,7 +141,7 @@ export default function TrainerScheduleRequestLeaveModal() {
           </div>
 
           <div>
-            <label htmlFor="trainer-leave-start-date" className="block text-sm font-bold text-primary mb-1.5">{t("TEXT_START_DATE")}</label>
+            <label htmlFor="trainer-leave-start-date" className="block text-sm font-bold text-text-primary mb-1.5">{t("TEXT_START_DATE")}</label>
             <input 
               id="trainer-leave-start-date"
               type="date"
@@ -154,7 +154,7 @@ export default function TrainerScheduleRequestLeaveModal() {
           </div>
           
           <div>
-            <label htmlFor="trainer-leave-end-date" className="block text-sm font-bold text-primary mb-1.5">{t("TEXT_END_DATE")}</label>
+            <label htmlFor="trainer-leave-end-date" className="block text-sm font-bold text-text-primary mb-1.5">{t("TEXT_END_DATE")}</label>
             <input 
               id="trainer-leave-end-date"
               type="date"
@@ -167,7 +167,7 @@ export default function TrainerScheduleRequestLeaveModal() {
           </div>
 
           <div>
-            <label htmlFor="trainer-leave-reason" className="block text-sm font-bold text-primary mb-1.5">{t("TEXT_REASON_FOR_LEAVE")}</label>
+            <label htmlFor="trainer-leave-reason" className="block text-sm font-bold text-text-primary mb-1.5">{t("TEXT_REASON_FOR_LEAVE")}</label>
             <textarea
               id="trainer-leave-reason"
               aria-invalid={Boolean(errors.reason)}
@@ -181,7 +181,7 @@ export default function TrainerScheduleRequestLeaveModal() {
           </div>
 
           <div>
-            <label htmlFor="trainer-leave-attachment-url" className="block text-sm font-bold text-primary mb-1.5">Supporting Document URL (Optional)</label>
+            <label htmlFor="trainer-leave-attachment-url" className="block text-sm font-bold text-text-primary mb-1.5">Supporting Document URL (Optional)</label>
             <input
               id="trainer-leave-attachment-url"
               type="url"

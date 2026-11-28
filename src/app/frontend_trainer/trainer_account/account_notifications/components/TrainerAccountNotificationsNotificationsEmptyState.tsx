@@ -24,7 +24,7 @@ export default function TrainerNotificationsEmptyState() {
       <div className="w-12 h-12 rounded-full bg-surface-highlight flex items-center justify-center mb-4">
         <BellOff className="text-secondary"  strokeWidth={2} size={18}/>
       </div>
-      <h3 className="text-sm font-semibold text-primary mb-1">{t("TEXT_NO_NOTIFICATIONS")}</h3>
+      <h3 className="text-sm font-semibold text-text-primary mb-1">{t("TEXT_NO_NOTIFICATIONS")}</h3>
       <p className="text-sm text-secondary max-w-sm">
         {t("TEXT_YOU_ARE_ALL_CAUGHT_UP_NEW_ALERTS_AND_MES_4DB50A48")}</p>
     </div>

@@ -34,7 +34,7 @@ export function TrainerOperationsMemberAttendanceTraineeChecklist({
           value={memberFilterText}
           onChange={(e) => onFilterChange(e.target.value)}
           placeholder="Search trainees to check off..."
-          className="flex-1 px-3 py-1.5 bg-input border border-border rounded-lg text-xs text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+          className="flex-1 px-3 py-1.5 bg-input border border-border rounded-lg text-xs text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
         />
         {filteredMembers.length > 0 && (
           <button
@@ -66,10 +66,10 @@ export function TrainerOperationsMemberAttendanceTraineeChecklist({
                   type="checkbox"
                   checked={isChecked}
                   onChange={() => onToggleMember(m.id)}
-                  className="w-4 h-4 rounded text-primary border-border focus:ring-focus-ring"
+                  className="w-4 h-4 rounded text-text-primary border-border focus:ring-focus-ring"
                 />
                 <div className="flex-1 min-w-0">
-                  <span className="text-sm font-semibold text-primary block truncate">{m.name}</span>
+                  <span className="text-sm font-semibold text-text-primary block truncate">{m.name}</span>
                   {m.phone && <span className="text-2xs text-secondary">{TrainerAttendanceMaskSensitiveData(m.phone)}</span>}
                 </div>
               </label>
@@ -79,7 +79,7 @@ export function TrainerOperationsMemberAttendanceTraineeChecklist({
       </div>
 
       <div className="flex items-center justify-between text-xs">
-        <span className="font-semibold text-primary">
+        <span className="font-semibold text-text-primary">
           {selectedMemberIds.length} trainee(s) checked for batch check-in
         </span>
         {selectedMemberIds.length > 0 && (

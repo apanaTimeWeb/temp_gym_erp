@@ -163,7 +163,7 @@ export default function TrainerEarningsHistory() {
       <div className="flex-1 overflow-x-auto custom-scrollbar">
         {filteredHistory.length === 0 ? <TrainerEarningsEmptyState /> : (
           <>
-          <div className="md:hidden divide-y divide-border">{filteredHistory.map((row) => { const style = TRAINER_EARNINGS_PAYOUT_STATUS_STYLES[row.status]; return <article key={row.id} className="p-4 bg-card" data-testid={`trainer_earnings-history-card${row.id}`}><div className="flex items-start justify-between gap-3"><div className="min-w-0"><TrainerInfrastructureTooltip content={row.description}><p className="font-medium text-primary truncate">{row.description}</p></TrainerInfrastructureTooltip><p className="text-xs text-secondary mt-1">{TrainerEarningsFormatDate(row.date, locale)} · {t(`TEXT_TYPE_${row.type.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`)}</p></div><span className={`shrink-0 inline-flex px-2 py-0.5 rounded-full text-xs font-semibold ${style?.bg ?? 'bg-input'} ${style?.text ?? 'text-secondary'}`} data-testid={`trainer_earnings-earnings-history-mobile-status-${row.id}`}>{style ? t(`TEXT_STATUS_${row.status.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`) : t('TEXT_STATUS_UNKNOWN')}</span></div><div className="mt-3 flex items-center justify-between gap-3"><span className="text-xs text-secondary">{t('TEXT_NET_PAYOUT')}</span><span className="text-sm font-semibold text-primary">{row.netPayout == null ? displayValue(row.netPayout) : TrainerEarningsFormatCurrency(row.netPayout, row.currency, locale)}</span></div><div className="mt-2.5 pt-2 border-t border-border flex justify-end"><button type="button" onClick={() => setSelectedPayslipRow(row)} className="min-h-8 inline-flex items-center gap-1.5 px-3 py-1 bg-sky-500/15 hover:bg-sky-500/25 text-sky-600 dark:text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" data-testid={`trainer_earnings-mobile-view-payslip-${row.id}`}><Receipt size={13} />View Payslip</button></div></article>})}</div>
+          <div className="md:hidden divide-y divide-border">{filteredHistory.map((row) => { const style = TRAINER_EARNINGS_PAYOUT_STATUS_STYLES[row.status]; return <article key={row.id} className="p-4 bg-card" data-testid={`trainer_earnings-history-card${row.id}`}><div className="flex items-start justify-between gap-3"><div className="min-w-0"><TrainerInfrastructureTooltip content={row.description}><p className="font-medium text-text-primary truncate">{row.description}</p></TrainerInfrastructureTooltip><p className="text-xs text-secondary mt-1">{TrainerEarningsFormatDate(row.date, locale)} · {t(`TEXT_TYPE_${row.type.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`)}</p></div><span className={`shrink-0 inline-flex px-2 py-0.5 rounded-full text-xs font-semibold ${style?.bg ?? 'bg-input'} ${style?.text ?? 'text-secondary'}`} data-testid={`trainer_earnings-earnings-history-mobile-status-${row.id}`}>{style ? t(`TEXT_STATUS_${row.status.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`) : t('TEXT_STATUS_UNKNOWN')}</span></div><div className="mt-3 flex items-center justify-between gap-3"><span className="text-xs text-secondary">{t('TEXT_NET_PAYOUT')}</span><span className="text-sm font-semibold text-text-primary">{row.netPayout == null ? displayValue(row.netPayout) : TrainerEarningsFormatCurrency(row.netPayout, row.currency, locale)}</span></div><div className="mt-2.5 pt-2 border-t border-border flex justify-end"><button type="button" onClick={() => setSelectedPayslipRow(row)} className="min-h-8 inline-flex items-center gap-1.5 px-3 py-1 bg-sky-500/15 hover:bg-sky-500/25 text-sky-600 dark:text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" data-testid={`trainer_earnings-mobile-view-payslip-${row.id}`}><Receipt size={13} />View Payslip</button></div></article>})}</div>
           <div className="hidden md:block max-h-[640px] overflow-auto custom-scrollbar">
             <table className="w-full min-w-full text-start border-collapse">
               <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
@@ -211,18 +211,18 @@ export default function TrainerEarningsHistory() {
                       >
                         <td className="sticky start-0 z-10 bg-card border-e border-border py-3 px-4 text-sm text-secondary whitespace-nowrap group-hover:bg-surface-hover transition-colors">
                           <div className="flex items-center gap-2">
-                            <span className="font-bold text-primary text-sm">{TrainerEarningsFormatDate(row.date, locale)}</span>
+                            <span className="font-bold text-text-primary text-sm">{TrainerEarningsFormatDate(row.date, locale)}</span>
                             <CopyButton value={TrainerEarningsFormatDate(row.date, locale)} />
                           </div>
                           <p className="text-xs text-secondary font-mono flex items-center gap-1.5 mt-0.5">#{row.id.slice(-6)}</p>
                         </td>
                         <td className="py-3 px-4">
                           <TrainerInfrastructureTooltip content={row.description}>
-                            <p className="text-sm font-medium text-primary truncate max-w-80">{row.description}</p>
+                            <p className="text-sm font-medium text-text-primary truncate max-w-80">{row.description}</p>
                           </TrainerInfrastructureTooltip>
                           <p className="text-xs text-secondary mt-0.5 motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95">{t(`TEXT_TYPE_${row.type.toUpperCase().replace(/[^A-Z0-9]+/g, "_")}`)}</p>
                         </td>
-                        <td className="py-3 px-4 text-sm font-semibold text-primary text-end whitespace-nowrap">{TrainerEarningsFormatCurrency(row.amount, row.currency, locale)}</td>
+                        <td className="py-3 px-4 text-sm font-semibold text-text-primary text-end whitespace-nowrap">{TrainerEarningsFormatCurrency(row.amount, row.currency, locale)}</td>
                         <td className="py-3 px-4 text-end"><span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider ${style?.bg ?? 'bg-input'} ${style?.text ?? 'text-secondary'}`} data-testid={`trainer_earnings-earnings-history-status-${row.id}`}>{style ? t(`TEXT_STATUS_${row.status.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`) : t('TEXT_STATUS_UNKNOWN')}</span></td>
                       </tr>
                       {expanded && (
@@ -230,9 +230,9 @@ export default function TrainerEarningsHistory() {
                           <td colSpan={TABLE_COLUMN_COUNT} className="px-4 py-3 bg-input">
                             <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-secondary">
                               <div className="flex flex-wrap gap-4">
-                                <span><strong className="text-primary">{t("TEXT_SESSION_ID")}</strong> {displayValue(row.sessionId)}</span>
-                                <span><strong className="text-primary">{t("TEXT_INVOICE")}</strong> {displayValue(row.invoiceNumber)}</span>
-                                <span><strong className="text-primary">{t("TEXT_NET_PAYOUT")}</strong> {row.netPayout == null ? displayValue(row.netPayout) : TrainerEarningsFormatCurrency(row.netPayout, row.currency, locale)}</span>
+                                <span><strong className="text-text-primary">{t("TEXT_SESSION_ID")}</strong> {displayValue(row.sessionId)}</span>
+                                <span><strong className="text-text-primary">{t("TEXT_INVOICE")}</strong> {displayValue(row.invoiceNumber)}</span>
+                                <span><strong className="text-text-primary">{t("TEXT_NET_PAYOUT")}</strong> {row.netPayout == null ? displayValue(row.netPayout) : TrainerEarningsFormatCurrency(row.netPayout, row.currency, locale)}</span>
                               </div>
                               <button
                                 type="button"
@@ -271,7 +271,7 @@ export default function TrainerEarningsHistory() {
             type="button"
             onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
             disabled={currentPage === 1}
-            className="min-h-10 min-w-24 px-3.5 rounded-xl border border-border bg-input text-primary disabled:opacity-40 hover:border-orange-500/40 hover:bg-surface-hover motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95 text-xs font-semibold"
+            className="min-h-10 min-w-24 px-3.5 rounded-xl border border-border bg-input text-text-primary disabled:opacity-40 hover:border-orange-500/40 hover:bg-surface-hover motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95 text-xs font-semibold"
             data-testid="trainer_earnings-trainerearningshistory-button_7"
           >
             {t("TEXT_PREVIOUS")}

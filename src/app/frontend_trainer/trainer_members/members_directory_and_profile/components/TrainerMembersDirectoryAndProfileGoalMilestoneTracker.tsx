@@ -83,7 +83,7 @@ export function TrainerMembersDirectoryAndProfileGoalMilestoneTracker({
             <Target size={20} />
           </div>
           <div>
-            <h4 className="font-bold text-primary text-base flex items-center gap-2">
+            <h4 className="font-bold text-text-primary text-base flex items-center gap-2">
               Client Goal &amp; Milestone Tracker
             </h4>
             <p className="text-xs text-secondary">
@@ -104,13 +104,13 @@ export function TrainerMembersDirectoryAndProfileGoalMilestoneTracker({
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <div className="bg-floating border border-border rounded-xl p-3">
           <span className="text-[11px] font-semibold text-secondary uppercase">Weight Goal</span>
-          <p className="text-sm font-bold text-primary mt-0.5">
+          <p className="text-sm font-bold text-text-primary mt-0.5">
             Current: {latestWeightKg != null ? `${TrainerMembersFormatNumber(latestWeightKg, locale)} kg` : '78.5 kg'} → <span className="text-success">Goal: 72.0 kg</span>
           </p>
         </div>
         <div className="bg-floating border border-border rounded-xl p-3">
           <span className="text-[11px] font-semibold text-secondary uppercase">Body Fat Goal</span>
-          <p className="text-sm font-bold text-primary mt-0.5">
+          <p className="text-sm font-bold text-text-primary mt-0.5">
             Current: {latestBodyFatPercent != null ? `${latestBodyFatPercent}%` : '21.5%'} → <span className="text-success">Goal: 15.0%</span>
           </p>
         </div>
@@ -120,7 +120,7 @@ export function TrainerMembersDirectoryAndProfileGoalMilestoneTracker({
             <div className="flex-1 h-2 bg-input rounded-full overflow-hidden">
               <div className="h-full bg-primary rounded-full" style={{ width: '60%' }} />
             </div>
-            <span className="text-xs font-bold text-primary">60%</span>
+            <span className="text-xs font-bold text-text-primary">60%</span>
           </div>
         </div>
       </div>
@@ -143,9 +143,9 @@ export function TrainerMembersDirectoryAndProfileGoalMilestoneTracker({
                 )}
               </div>
               <div>
-                <p className="text-sm font-semibold text-primary">{milestone.title}</p>
+                <p className="text-sm font-semibold text-text-primary">{milestone.title}</p>
                 <p className="text-xs text-secondary mt-0.5">
-                  Target: <strong className="text-primary">{milestone.targetMetric}</strong> · Target Date: {milestone.targetDate}
+                  Target: <strong className="text-text-primary">{milestone.targetMetric}</strong> · Target Date: {milestone.targetDate}
                 </p>
               </div>
             </div>
@@ -170,27 +170,27 @@ export function TrainerMembersDirectoryAndProfileGoalMilestoneTracker({
       {/* Add Milestone Inline Modal */}
       {isAddMilestoneOpen && (
         <div className="bg-floating border border-dashed border-border rounded-xl p-4 space-y-3">
-          <h5 className="text-xs font-bold uppercase tracking-wider text-primary">Configure New Milestone</h5>
+          <h5 className="text-xs font-bold uppercase tracking-wider text-text-primary">Configure New Milestone</h5>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             <input
               type="text"
               placeholder="Milestone title (e.g. Phase 4: Strength Peak)"
               value={newMilestoneTitle}
               onChange={(e) => setNewMilestoneTitle(e.target.value)}
-              className="px-3 py-1.5 bg-card border border-border rounded-lg text-xs text-primary focus-visible:ring-1 focus-visible:ring-focus-ring"
+              className="px-3 py-1.5 bg-card border border-border rounded-lg text-xs text-text-primary focus-visible:ring-1 focus-visible:ring-focus-ring"
             />
             <input
               type="text"
               placeholder="Target Metric (e.g. Bench 90kg / 70kg)"
               value={newMilestoneMetric}
               onChange={(e) => setNewMilestoneMetric(e.target.value)}
-              className="px-3 py-1.5 bg-card border border-border rounded-lg text-xs text-primary focus-visible:ring-1 focus-visible:ring-focus-ring"
+              className="px-3 py-1.5 bg-card border border-border rounded-lg text-xs text-text-primary focus-visible:ring-1 focus-visible:ring-focus-ring"
             />
             <input
               type="date"
               value={newMilestoneDate}
               onChange={(e) => setNewMilestoneDate(e.target.value)}
-              className="px-3 py-1.5 bg-card border border-border rounded-lg text-xs text-primary focus-visible:ring-1 focus-visible:ring-focus-ring"
+              className="px-3 py-1.5 bg-card border border-border rounded-lg text-xs text-text-primary focus-visible:ring-1 focus-visible:ring-focus-ring"
             />
           </div>
           <div className="flex justify-end gap-2">

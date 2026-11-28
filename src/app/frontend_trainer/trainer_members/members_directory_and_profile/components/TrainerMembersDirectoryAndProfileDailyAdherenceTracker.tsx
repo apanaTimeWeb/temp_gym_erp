@@ -40,7 +40,7 @@ export function TrainerMembersDirectoryAndProfileDailyAdherenceTracker({
         <div className="flex items-center gap-2">
           <CheckCircle2 size={18} className="text-success" />
           <div>
-            <h4 className="text-sm font-bold text-primary">Today&apos;s Meal Adherence &amp; Hydration Log</h4>
+            <h4 className="text-sm font-bold text-text-primary">Today&apos;s Meal Adherence &amp; Hydration Log</h4>
             <p className="text-xs text-secondary">Track client meal consumption and daily water goal adherence</p>
           </div>
         </div>
@@ -73,13 +73,13 @@ export function TrainerMembersDirectoryAndProfileDailyAdherenceTracker({
                 onClick={() => onToggleMeal(index)}
                 className={`p-3 rounded-xl border text-start flex items-center justify-between gap-2 transition-all ${
                   isChecked
-                    ? 'bg-success-bg border-success text-primary'
+                    ? 'bg-success-bg border-success text-text-primary'
                     : 'bg-card border-border text-secondary hover:border-primary'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
                   <span className="text-xs font-bold text-secondary">#{index + 1}</span>
-                  <span className="text-xs font-semibold text-primary">{mealTitle}</span>
+                  <span className="text-xs font-semibold text-text-primary">{mealTitle}</span>
                 </div>
                 <span className={`text-xs font-bold px-2 py-0.5 rounded-md ${
                   isChecked ? 'bg-success text-on-success' : 'bg-input text-secondary'
@@ -100,7 +100,7 @@ export function TrainerMembersDirectoryAndProfileDailyAdherenceTracker({
           </div>
           <div>
             <p className="text-xs font-semibold text-secondary uppercase">Hydration Tracker</p>
-            <p className="text-base font-bold text-primary">
+            <p className="text-base font-bold text-text-primary">
               {(waterMl / 1000).toFixed(1)}L <span className="text-xs text-secondary font-normal">/ 3.5L Daily Target</span>
             </p>
           </div>
@@ -110,14 +110,14 @@ export function TrainerMembersDirectoryAndProfileDailyAdherenceTracker({
           <button
             type="button"
             onClick={() => onAddWater(250)}
-            className="px-2.5 py-1.5 rounded-lg border border-border text-xs font-semibold text-primary hover:bg-input transition-colors"
+            className="px-2.5 py-1.5 rounded-lg border border-border text-xs font-semibold text-text-primary hover:bg-input transition-colors"
           >
             +250 ml
           </button>
           <button
             type="button"
             onClick={() => onAddWater(500)}
-            className="px-2.5 py-1.5 rounded-lg border border-border text-xs font-semibold text-primary hover:bg-input transition-colors"
+            className="px-2.5 py-1.5 rounded-lg border border-border text-xs font-semibold text-text-primary hover:bg-input transition-colors"
           >
             +500 ml
           </button>
@@ -142,7 +142,7 @@ export function TrainerMembersDirectoryAndProfileDailyAdherenceTracker({
           value={complianceNote}
           onChange={(e) => onChangeComplianceNote(e.target.value)}
           placeholder="Log hunger cues, cravings, digestion feedback, or adherence adjustments..."
-          className="w-full px-3 py-2 rounded-xl bg-card border border-border text-xs text-primary placeholder:text-secondary/60 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring"
+          className="w-full px-3 py-2 rounded-xl bg-card border border-border text-xs text-text-primary placeholder:text-secondary/60 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring"
         />
       </div>
     </div>

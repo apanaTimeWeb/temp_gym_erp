@@ -31,7 +31,7 @@ export function TrainerCoachingSessionsBookingRequests({
           <span className="p-1.5 rounded-lg border border-orange-500/30 bg-orange-500/15 text-orange-500">
             <CalendarCheck size={18} />
           </span>
-          <h2 className="font-bold text-primary text-base">Client Booking Requests</h2>
+          <h2 className="font-bold text-text-primary text-base">Client Booking Requests</h2>
           <span className="bg-primary text-on-primary text-xs font-bold px-2.5 py-0.5 rounded-full">
             {bookingRequests.length} Pending
           </span>
@@ -55,7 +55,7 @@ export function TrainerCoachingSessionsBookingRequests({
                     <User size={16} />
                   </div>
                   <div>
-                    <h3 className="font-bold text-primary text-sm">{req.clientName}</h3>
+                    <h3 className="font-bold text-text-primary text-sm">{req.clientName}</h3>
                     <p className="text-xs text-secondary flex items-center gap-1.5 mt-0.5">
                       <Clock size={12} className="text-amber-500" /> {req.preferredDate} • {req.preferredTime}
                     </p>

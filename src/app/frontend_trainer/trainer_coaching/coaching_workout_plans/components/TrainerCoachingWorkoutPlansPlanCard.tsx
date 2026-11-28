@@ -60,7 +60,7 @@ export default function TrainerWorkoutPlanCard({
       </div>
 
       <div className="flex items-start justify-between gap-2 mb-3">
-        <TrainerInfrastructureTooltip content={String(displayValue(plan.name))}><h3 className="font-semibold text-primary truncate min-w-0">{displayValue(plan.name)}</h3></TrainerInfrastructureTooltip>
+        <TrainerInfrastructureTooltip content={String(displayValue(plan.name))}><h3 className="font-semibold text-text-primary truncate min-w-0">{displayValue(plan.name)}</h3></TrainerInfrastructureTooltip>
         <div className="flex gap-1.5 shrink-0">
           {onAssign && (
             <button
@@ -109,7 +109,7 @@ export default function TrainerWorkoutPlanCard({
           [t('TEXT_DURATION'), plan.duration],
         ].map(([label, value]) => (
           <div key={String(label)} className="bg-input rounded-lg p-2 text-center border border-border">
-            <p className="text-sm font-bold text-primary">
+            <p className="text-sm font-bold text-text-primary">
               {typeof value === 'number' ? TrainerWorkoutFormatNumber(value, locale) : displayValue(value as string | null)}
             </p>
             <p className="text-xs text-secondary">{label}</p>
@@ -126,7 +126,7 @@ export default function TrainerWorkoutPlanCard({
       </div>
 
       <p className="text-xs text-secondary">
-        {t('TEXT_FOCUS')} <span className="font-medium text-primary">{displayValue(plan.focus)}</span>
+        {t('TEXT_FOCUS')} <span className="font-medium text-text-primary">{displayValue(plan.focus)}</span>
       </p>
     </article>
   );

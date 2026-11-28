@@ -46,9 +46,10 @@ export default function TrainerNotificationsContent() {
   return (
     <div className="min-h-full pb-10">
       <div className="p-4 sm:p-6 max-w-4xl mx-auto w-full">
-        <div className="flex items-center justify-between mb-4 mt-2 gap-4">
-          <div>
-            <h2 className="text-section-title font-bold text-primary" data-testid="trainer_notifications-notifications-content_recent_activity">{t("TEXT_RECENT_ACTIVITY")}</h2>
+        <div className="relative overflow-hidden rounded-2xl border border-amber-500/35 bg-card dark:bg-gradient-to-br dark:from-[#281E10] dark:via-[#141B2D] dark:to-[#0C1220] p-5 shadow-card flex flex-wrap items-center justify-between mb-5 mt-2 gap-4">
+          <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#F59E0B] via-[#FF5A1F] to-transparent" />
+          <div className="relative">
+            <h2 className="text-section-title font-extrabold text-text-primary" data-testid="trainer_notifications-notifications-content_recent_activity">{t("TEXT_RECENT_ACTIVITY")}</h2>
             <p className="text-sm text-secondary mt-0.5">
               {isPending
                 ? t("TEXT_LOADING_NOTIFICATIONS")
@@ -62,9 +63,9 @@ export default function TrainerNotificationsContent() {
               type="button"
               onClick={markAllAsRead}
               disabled={markAllAsReadPending}
-              className="min-h-11 min-w-36 inline-flex items-center justify-center gap-2 px-3 text-sm font-medium text-primary hover:underline motion-safe:transition-all motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring rounded-md motion-safe:ease-in-out motion-safe:active:scale-95"
+              className="relative min-h-11 min-w-36 inline-flex items-center justify-center gap-2 px-4 rounded-xl border border-amber-500/35 bg-amber-500/15 hover:bg-amber-500/25 text-sm font-semibold text-amber-600 dark:text-amber-300 motion-safe:transition-all motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:ease-in-out motion-safe:active:scale-95"
              data-testid="trainer_notifications-notifications-content_mark_all_as_read">
-              {markAllAsReadPending ? <><Loader2 size={18} className="motion-safe:animate-spin" aria-hidden="true" strokeWidth={2} /> {t("TEXT_MARKING_ALL_AS_READ")}</> : t("TEXT_MARK_ALL_AS_READ")}
+              {markAllAsReadPending ? <><Loader2 size={18} className="motion-safe:animate-spin" aria-hidden="true" strokeWidth={2} /> {t("TEXT_MARKING_ALL_AS_READ")}</> : t("TEXT_MARKING_ALL_AS_READ") && t("TEXT_MARK_ALL_AS_READ")}
             </button>
           )}
         </div>
@@ -101,7 +102,7 @@ export default function TrainerNotificationsContent() {
               type="button"
               onClick={loadMore}
               disabled={loadingMore}
-              className="min-h-11 flex items-center gap-2 px-6 py-2.5 text-sm font-semibold text-primary bg-card border border-border rounded-xl hover:bg-input motion-safe:transition-colors disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+              className="min-h-11 flex items-center gap-2 px-6 py-2.5 text-sm font-semibold text-text-primary bg-card border border-border rounded-xl hover:bg-input motion-safe:transition-colors disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
              data-testid="trainer_notifications-trainernotificationscontent-button_4">
               {loadingMore ? (
                 <><Loader2 size={18} className="motion-safe:animate-spin" aria-hidden="true"  strokeWidth={2}/> {t("TEXT_LOADING")}</>

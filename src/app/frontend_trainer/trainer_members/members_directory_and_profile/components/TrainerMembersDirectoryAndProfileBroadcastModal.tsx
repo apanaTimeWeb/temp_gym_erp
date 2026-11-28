@@ -56,7 +56,7 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
               <Megaphone size={16} />
             </div>
             <div>
-              <h3 id="broadcast-modal-title" className="text-sm font-bold text-primary">
+              <h3 id="broadcast-modal-title" className="text-sm font-bold text-text-primary">
                 Message Assigned Trainees
               </h3>
               <p className="text-xs text-secondary">Send workout cues, schedule alerts, or coaching updates to your clients</p>
@@ -177,7 +177,7 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
               placeholder="e.g. Schedule Update: Tomorrow's Morning Turf Training"
-              className="w-full min-h-11 px-4 bg-input border border-border rounded-lg text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              className="w-full min-h-11 px-4 bg-input border border-border rounded-lg text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
             />
           </div>
 
@@ -192,7 +192,7 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
               onChange={(e) => setMessage(e.target.value)}
               required
               placeholder="Type your coaching announcement or motivational check-in..."
-              className="w-full p-3 bg-input border border-border rounded-lg text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              className="w-full p-3 bg-input border border-border rounded-lg text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
             />
           </div>
 
@@ -208,7 +208,7 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
               type="button"
               onClick={onClose}
               disabled={isSending}
-              className="min-h-10 px-4 rounded-lg border border-border text-xs font-semibold text-primary hover:bg-input"
+              className="min-h-10 px-4 rounded-lg border border-border text-xs font-semibold text-text-primary hover:bg-input"
             >
               Cancel
             </button>

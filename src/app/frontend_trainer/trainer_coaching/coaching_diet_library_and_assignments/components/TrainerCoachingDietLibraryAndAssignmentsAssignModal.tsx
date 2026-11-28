@@ -123,11 +123,11 @@ export default function TrainerLibraryAssignModal({
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-border shrink-0">
           <div>
-            <h3 id={titleId} className="text-lg font-bold text-primary flex items-center gap-2">
-              <Users size={20} className="text-primary" />
+            <h3 id={titleId} className="text-lg font-bold text-text-primary flex items-center gap-2">
+              <Users size={20} className="text-text-primary" />
               {t("TEXT_ASSIGN_DIET_PLAN")}
             </h3>
-            <p className="text-xs text-secondary mt-1">Plan: <span className="font-semibold text-primary">{plan.name}</span></p>
+            <p className="text-xs text-secondary mt-1">Plan: <span className="font-semibold text-text-primary">{plan.name}</span></p>
           </div>
           <button
             type="button"
@@ -174,7 +174,7 @@ export default function TrainerLibraryAssignModal({
                 value={memberSearch}
                 onChange={(e) => setMemberSearch(e.target.value)}
                 placeholder="Search member by name..."
-                className="w-full ps-9 pe-3 py-2 text-sm bg-input border border-border rounded-lg text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                className="w-full ps-9 pe-3 py-2 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
               />
             </div>
           </div>
@@ -218,10 +218,10 @@ export default function TrainerLibraryAssignModal({
                         type="checkbox"
                         checked={isSelected}
                         onChange={() => toggleMember(member.id)}
-                        className="rounded border-border text-primary focus:ring-focus-ring w-4 h-4 cursor-pointer"
+                        className="rounded border-border text-text-primary focus:ring-focus-ring w-4 h-4 cursor-pointer"
                       />
                       <div className="truncate">
-                        <span className="text-sm font-medium block truncate text-primary">{member.name}</span>
+                        <span className="text-sm font-medium block truncate text-text-primary">{member.name}</span>
                         {member.assignedDietPlanId && (
                           <span className="text-xs text-secondary opacity-75">
                             {t("TEXT_CURRENT_PLAN_ASSIGNED")}
@@ -230,7 +230,7 @@ export default function TrainerLibraryAssignModal({
                       </div>
                     </div>
                     {isSelected && (
-                      <span className="text-xs font-semibold text-primary px-2 py-0.5 rounded-full bg-input">
+                      <span className="text-xs font-semibold text-text-primary px-2 py-0.5 rounded-full bg-input">
                         Selected
                       </span>
                     )}

@@ -30,8 +30,8 @@ export function TrainerOperationsLeaveRequestsLeaveMobileCard({
       <div className="flex items-start justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">
-            <h3 className="font-semibold text-primary truncate">{leave.id}</h3>
-            <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-input text-primary border border-border">
+            <h3 className="font-semibold text-text-primary truncate">{leave.id}</h3>
+            <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-input text-text-primary border border-border">
               {leaveTypeLabel}
             </span>
           </div>
@@ -49,7 +49,7 @@ export function TrainerOperationsLeaveRequestsLeaveMobileCard({
       <div className="space-y-2 text-sm pt-1 border-t border-border">
         <div>
           <span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_DATE_RANGE')}</span>
-          <span className="text-primary font-medium">
+          <span className="text-text-primary font-medium">
             {TrainerScheduleFormatDate(leave.startDate, locale)}{' '}
             <span className="text-secondary">{t('TEXT_TO')}</span>{' '}
             {TrainerScheduleFormatDate(leave.endDate, locale)}
@@ -60,7 +60,7 @@ export function TrainerOperationsLeaveRequestsLeaveMobileCard({
         </div>
         <div>
           <span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_REASON')}</span>
-          <span className="text-primary">{leave.reason}</span>
+          <span className="text-text-primary">{leave.reason}</span>
         </div>
         {leave.managerNotes && (
           <div>
