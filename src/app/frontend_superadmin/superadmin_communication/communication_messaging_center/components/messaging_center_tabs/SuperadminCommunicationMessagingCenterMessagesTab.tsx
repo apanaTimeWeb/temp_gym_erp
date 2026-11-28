@@ -81,20 +81,21 @@ export function SuperadminCommunicationMessagingCenterMessagesTab({ search, setS
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-xl border border-border bg-card shadow-card flex flex-col">
+      <div className="relative overflow-hidden rounded-2xl border border-border dark:border-violet-500/30 bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] shadow-card flex flex-col">
+        <div className="h-[2px] w-full bg-gradient-to-r from-violet-500/80 via-primary/60 to-transparent" />
         <div className="overflow-x-auto flex-1">
           <table className={`w-full text-sm ${MOBILE_CARD_TABLE_CLASSES}`}>
             <caption className="sr-only">{t('ui.superadmin_tenant_messages_eb44d48')}</caption>
             <thead>
-              <tr className="border-b border-border bg-surface-highlight" data-testid="superadmin_communication_messaging-superadmin-messaging-messages-tab-messages-tab-action-1">
-                <th scope="col" className="sticky start-0 z-20 bg-surface-highlight border-e border-border px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider text-secondary">{t('ui.tenant_67c84ad')}</th>
-                <th scope="col" className="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider text-secondary">{t('ui.channel_eaf60de')}</th>
-                <th scope="col" className="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider text-secondary">{t('ui.subject_0a48a61')}</th>
-                <th scope="col" className="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider text-secondary">{t('ui.status_523019d')}</th>
-                <th scope="col" className="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider text-secondary">{t('ui.sent_at_a04f131')}</th>
+              <tr className="border-b border-border dark:border-white/10 bg-slate-100 dark:bg-[#152038]" data-testid="superadmin_communication_messaging-superadmin-messaging-messages-tab-messages-tab-action-1">
+                <th scope="col" className="sticky start-0 z-20 bg-slate-100 dark:bg-[#152038] border-e border-border dark:border-white/10 px-4 py-3 text-start text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300">{t('ui.tenant_67c84ad')}</th>
+                <th scope="col" className="px-4 py-3 text-start text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300">{t('ui.channel_eaf60de')}</th>
+                <th scope="col" className="px-4 py-3 text-start text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300">{t('ui.subject_0a48a61')}</th>
+                <th scope="col" className="px-4 py-3 text-start text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300">{t('ui.status_523019d')}</th>
+                <th scope="col" className="px-4 py-3 text-start text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300">{t('ui.sent_at_a04f131')}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border dark:divide-white/5">
               {messages.length === 0 ? (
                 <tr>
                   <td colSpan={TABLE_COLUMN_COUNT} className="px-6 py-16 text-center text-secondary">
@@ -104,7 +105,7 @@ export function SuperadminCommunicationMessagingCenterMessagesTab({ search, setS
               ) : (
                 messages.map((message) => (
                   <tr key={message.id} className="motion-safe:transition-colors hover:bg-surface-hover group" data-testid={`superadmin_communication_messaging-messaging-messages-tab-item-message-id-2-${String(message.id)}`}>
-                    <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-e border-border px-4 py-3 font-medium text-primary transition-colors" data-mobile-label={t('ui.mobile_tenant')}>{message.tenantName}</td>
+                    <td className="sticky start-0 z-10 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover border-e border-border dark:border-white/10 px-4 py-3 font-medium text-primary transition-colors" data-mobile-label={t('ui.mobile_tenant')}>{message.tenantName}</td>
                     <td className="px-4 py-3" data-mobile-label={t('ui.mobile_channel')}>
                       <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold ${CHANNEL_STYLES[message.channel]}`}>
                         {message.channel === SUPERADMIN_COMMUNICATION_MESSAGING_CHANNEL_CODES.EMAIL && <Mail size={18} aria-hidden="true"/>}
@@ -124,7 +125,7 @@ export function SuperadminCommunicationMessagingCenterMessagesTab({ search, setS
         </div>
 
         {isFetching && <div className="border-t border-border px-5 py-2 text-xs text-secondary">{t('ui.refreshing_message_results_b3e8951')}</div>}
-        <div className="p-4 border-t border-border flex flex-wrap items-center justify-between gap-3 bg-card">
+        <div className="p-4 border-t border-border dark:border-white/10 flex flex-wrap items-center justify-between gap-3 bg-card dark:bg-white/[0.02]">
           <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} totalItems={totalItems} itemsPerPage={10} data-testid="superadmin_communication_messaging-superadmin-messaging-messages-tab-messaging-messages-tab-pagination"/>
         </div>
       </div>

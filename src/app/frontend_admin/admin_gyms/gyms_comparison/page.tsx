@@ -117,16 +117,16 @@ export default function GymsComparisonPage() {
             </span>
           </div>
 
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
             {/* Quick search for branches */}
-            <div className="relative min-w-[180px]">
+            <div className="relative w-full sm:w-auto sm:min-w-[180px]">
               <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" />
               <input
                 type="text"
                 value={branchSearch}
                 onChange={(e) => setBranchSearch(e.target.value)}
                 placeholder="Search gyms..."
-                className="w-full pl-8 pr-7 py-1 bg-input border border-border rounded-lg text-xs text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+                className="w-full min-h-10 pl-8 pr-7 py-1.5 bg-input border border-border rounded-lg text-xs text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
               />
               {branchSearch && (
                 <button
@@ -141,7 +141,7 @@ export default function GymsComparisonPage() {
             </div>
 
             {/* Metric Filter Tabs */}
-            <div className="flex items-center gap-1 border border-border rounded-xl p-1 bg-surface-highlight">
+            <div className="flex items-center gap-1 border border-border rounded-xl p-1 bg-surface-highlight overflow-x-auto max-w-full trainer-shell-scrollbar">
               <button
                 type="button"
                 onClick={() => setMetricFilter('all')}

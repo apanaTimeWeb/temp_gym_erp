@@ -68,16 +68,17 @@ export function SuperadminAnalyticsReportsCenterHealthTab({ sortedHealthData }: 
   ];
 
   return (
-    <div className="bg-card border border-border rounded-xl shadow-card overflow-hidden">
+    <div className="relative bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-cyan-500/25 rounded-2xl shadow-card overflow-hidden">
+      <div className="h-[2px] w-full bg-gradient-to-r from-cyan-500/80 via-primary/60 to-transparent" />
       <div className="overflow-x-auto">
         <table className="w-full text-sm border-collapse text-start">
           <thead>
-            <tr className="border-b border-border bg-input">
+            <tr className="border-b border-border dark:border-white/10 bg-slate-100 dark:bg-[#152038]">
               {headers.map((h, index) => (
                 <th
                   key={h}
-                  className={`px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider text-start ${
-                    index === 0 ? 'sticky start-0 z-20 bg-input border-e border-border' : ''
+                  className={`px-4 py-3 text-[11px] font-bold text-secondary dark:text-slate-300 uppercase tracking-wider text-start ${
+                    index === 0 ? 'sticky start-0 z-20 bg-slate-100 dark:bg-[#152038] border-e border-border dark:border-white/10' : ''
                   }`}
                 >
                   {h}
@@ -85,7 +86,7 @@ export function SuperadminAnalyticsReportsCenterHealthTab({ sortedHealthData }: 
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody className="divide-y divide-border dark:divide-white/5">
             {sortedHealthData.length === 0 ? (
               <tr>
                 <td colSpan={TABLE_COLUMN_COUNT} className="px-4 py-8 text-center text-secondary">
@@ -94,8 +95,8 @@ export function SuperadminAnalyticsReportsCenterHealthTab({ sortedHealthData }: 
               </tr>
             ) : (
               sortedHealthData.map((row) => (
-                <tr key={row.id} className="hover:bg-input motion-safe:transition-colors group">
-                  <td className="sticky start-0 z-10 bg-card group-hover:bg-input border-e border-border px-4 py-3 font-medium text-primary transition-colors">{row.gymName}</td>
+                <tr key={row.id} className="hover:bg-surface-hover motion-safe:transition-colors group">
+                  <td className="sticky start-0 z-10 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover border-e border-border dark:border-white/10 px-4 py-3 font-medium text-primary transition-colors">{row.gymName}</td>
                   <td className="px-4 py-3 text-secondary text-xs">{row.plan}</td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">

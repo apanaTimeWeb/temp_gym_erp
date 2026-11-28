@@ -52,10 +52,10 @@ export default function AdminSecurityPermissionsManagementStaffOverrides() {
         <div className="mt-4 grid gap-2">
           {Object.entries(item.overrides).map(([key, enabled], permissionIndex) => {
             const label = featureMap.get(key);
-            if (!label) return <div key={key} className="flex items-center justify-between gap-3 rounded-lg border border-border bg-input p-3" data-testid={`admin_permissions-unknown-permission-${staffIndex}-${permissionIndex}`}>
+            if (!label) return <div key={key} className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border bg-input p-3" data-testid={`admin_permissions-unknown-permission-${staffIndex}-${permissionIndex}`}>
               <span className="min-w-0 text-sm font-medium text-secondary">{key}</span><span className="text-xs text-secondary">{t('permissions.admin_permissions_staff_overrides.unsupportedPermission')}</span>
             </div>;
-            return <div key={key} className="flex items-center justify-between gap-3 rounded-lg border border-border bg-input p-3">
+            return <div key={key} className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border bg-input p-3">
               <div className="min-w-0"><p className="text-sm font-medium text-text-primary">{label}</p><p className="text-xs text-secondary">{t('permissions.admin_permissions_staff_overrides.text_c6c69f06e9')}</p></div>
               <button type="button" onClick={() => void toggleStaffPermission(item.staffId, item.staffName, key, !enabled)} disabled={saving} aria-pressed={enabled} aria-label={t('permissions.admin_permissions_staff_overrides.auto_permissionToggle', { action: enabled ? t('permissions.admin_permissions_staff_overrides.auto_32447c7d34') : t('permissions.admin_permissions_staff_overrides.auto_5b6239be97'), feature: label, name: item.staffName })} className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95 min-h-11 min-w-11 rounded-full px-3 text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base ${enabled ? 'bg-success text-on-success' : 'bg-surface-zebra text-secondary'}`} data-testid={`admin_permissions-admin_permissions-staff-overrides-toggle-${staffIndex}-${permissionIndex}`}>{enabled ? t('permissions.admin_permissions_staff_overrides.auto_5037b668d6') : t('permissions.admin_permissions_staff_overrides.auto_759b88491c')}</button>
             </div>;

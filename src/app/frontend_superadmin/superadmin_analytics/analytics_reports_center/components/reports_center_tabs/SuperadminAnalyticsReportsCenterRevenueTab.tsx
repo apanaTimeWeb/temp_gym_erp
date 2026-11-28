@@ -69,23 +69,25 @@ export function SuperadminAnalyticsReportsCenterRevenueTab({ revenueData, curren
 
   return (
     <div className="space-y-6">
-      <div className="bg-card border border-border rounded-xl p-6 shadow-card">
+      <div className="relative overflow-hidden bg-card dark:bg-gradient-to-br dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-emerald-500/25 rounded-2xl p-5 sm:p-6 shadow-card">
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-emerald-500/80 via-primary/60 to-transparent" />
         <h2 className="text-base font-semibold text-primary mb-6">{t('ui.monthly_income_vs_lost_income_66e9d339')}</h2>
         <div className="h-72">
           <Chart options={revenueChartOptions} series={revenueChartSeries} type="area" height="100%"/>
         </div>
       </div>
 
-      <div className="bg-card border border-border rounded-xl shadow-card overflow-hidden">
+      <div className="relative bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-emerald-500/25 rounded-2xl shadow-card overflow-hidden">
+        <div className="h-[2px] w-full bg-gradient-to-r from-emerald-500/80 via-primary/60 to-transparent" />
         <div className="overflow-x-auto">
           <table className="w-full text-sm border-collapse text-start">
             <thead>
-              <tr className="border-b border-border bg-input">
+              <tr className="border-b border-border dark:border-white/10 bg-slate-100 dark:bg-[#152038]">
                 {headers.map((h, index) => (
                   <th
                     key={h}
-                    className={`px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider text-start ${
-                      index === 0 ? 'sticky start-0 z-20 bg-input border-e border-border' : ''
+                    className={`px-4 py-3 text-[11px] font-bold text-secondary dark:text-slate-300 uppercase tracking-wider text-start ${
+                      index === 0 ? 'sticky start-0 z-20 bg-slate-100 dark:bg-[#152038] border-e border-border dark:border-white/10' : ''
                     }`}
                   >
                     {h}
@@ -93,7 +95,7 @@ export function SuperadminAnalyticsReportsCenterRevenueTab({ revenueData, curren
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border dark:divide-white/5">
               {revenueData.length === 0 ? (
                 <tr>
                   <td colSpan={TABLE_COLUMN_COUNT} className="px-4 py-8 text-center text-secondary">
@@ -102,8 +104,8 @@ export function SuperadminAnalyticsReportsCenterRevenueTab({ revenueData, curren
                 </tr>
               ) : (
                 revenueData.map((row) => (
-                  <tr key={row.month} className="hover:bg-input motion-safe:transition-colors group">
-                    <td className="sticky start-0 z-10 bg-card group-hover:bg-input border-e border-border px-4 py-3 font-medium text-primary transition-colors">{row.month}</td>
+                  <tr key={row.month} className="hover:bg-surface-hover motion-safe:transition-colors group">
+                    <td className="sticky start-0 z-10 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover border-e border-border dark:border-white/10 px-4 py-3 font-medium text-primary transition-colors">{row.month}</td>
                     <td className="px-4 py-3 text-primary">{SuperadminAnalyticsReportsFormatCurrency(row.mrr, currency, locale)}</td>
                     <td className="px-4 py-3 text-success">{t('ui.text_26b17225')}{SuperadminAnalyticsReportsFormatCurrency(row.newRevenue, currency, locale)}</td>
                     <td className="px-4 py-3 text-danger">{t('ui.text_336d5ebc')}{SuperadminAnalyticsReportsFormatCurrency(row.cancelledRevenue, currency, locale)}</td>
