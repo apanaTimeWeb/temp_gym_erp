@@ -17,32 +17,32 @@ import type { TrainerInfrastructureStatCardProps } from '@/app/frontend_trainer/
  */
 const CARD_ACCENTS = {
   orange: {
-    border: 'border-orange-500/30 hover:border-orange-500/60',
-    surface: 'bg-card dark:bg-gradient-to-br dark:from-[#261914] dark:via-[#202020] dark:to-[#181818]',
+    border: 'border-orange-500/35 hover:border-orange-400/60',
+    surface: 'bg-card dark:bg-gradient-to-br dark:from-[#281615] dark:via-[#161c2c] dark:to-[#101624]',
     glow: 'bg-orange-500',
     stroke: '#FF5A1F',
-    badge: 'bg-orange-500/15 border-orange-500/30 text-orange-400',
+    badge: 'bg-orange-500/20 border-orange-500/35 text-orange-500 dark:text-orange-400',
   },
   sky: {
-    border: 'border-sky-500/30 hover:border-sky-500/60',
-    surface: 'bg-card dark:bg-gradient-to-br dark:from-[#13222d] dark:via-[#202020] dark:to-[#181818]',
-    glow: 'bg-sky-500',
+    border: 'border-sky-500/35 hover:border-sky-400/60',
+    surface: 'bg-card dark:bg-gradient-to-br dark:from-[#102235] dark:via-[#151e2e] dark:to-[#101624]',
+    glow: 'bg-sky-400',
     stroke: '#38BDF8',
-    badge: 'bg-sky-500/15 border-sky-500/30 text-sky-400',
+    badge: 'bg-sky-500/20 border-sky-500/35 text-sky-500 dark:text-sky-400',
   },
   emerald: {
-    border: 'border-emerald-500/30 hover:border-emerald-500/60',
-    surface: 'bg-card dark:bg-gradient-to-br dark:from-[#122620] dark:via-[#202020] dark:to-[#181818]',
-    glow: 'bg-emerald-500',
+    border: 'border-emerald-500/35 hover:border-emerald-400/60',
+    surface: 'bg-card dark:bg-gradient-to-br dark:from-[#0f2622] dark:via-[#141f2c] dark:to-[#101624]',
+    glow: 'bg-emerald-400',
     stroke: '#34D399',
-    badge: 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400',
+    badge: 'bg-emerald-500/20 border-emerald-500/35 text-emerald-500 dark:text-emerald-400',
   },
   amber: {
-    border: 'border-amber-500/30 hover:border-amber-500/60',
-    surface: 'bg-card dark:bg-gradient-to-br dark:from-[#262012] dark:via-[#202020] dark:to-[#181818]',
-    glow: 'bg-amber-500',
+    border: 'border-amber-500/35 hover:border-amber-400/60',
+    surface: 'bg-card dark:bg-gradient-to-br dark:from-[#261d11] dark:via-[#161c2c] dark:to-[#101624]',
+    glow: 'bg-amber-400',
     stroke: '#FBBF24',
-    badge: 'bg-amber-500/15 border-amber-500/30 text-amber-400',
+    badge: 'bg-amber-500/20 border-amber-500/35 text-amber-500 dark:text-amber-400',
   },
 } as const;
 

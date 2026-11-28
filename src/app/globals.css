@@ -11,18 +11,18 @@
 /* ── 1. LIGHT MODE ────────────────────────────────────────── */
 :root {
   /* Core Surface */
-  --primary: #EA580C;
-  --primary-hover: #C2410C;
-  --primary-subtle: #FFEDD5;
-  --bg-page: #F4F4F5;
+  --primary: #FF5A1F;
+  --primary-hover: #EA580C;
+  --primary-subtle: rgba(255, 90, 31, 0.14);
+  --bg-page: #F4F6FA;
   --bg-card: #FFFFFF;
-  --bg-sidebar: #FAFAFA;
+  --bg-sidebar: #F8FAFC;
   --bg-header: #FFFFFF;
-  --bg-header-translucent: rgba(255, 255, 255, 0.85);
+  --bg-header-translucent: rgba(255, 255, 255, 0.88);
   --bg-input: #FFFFFF;
   --bg-floating: #FFFFFF;
-  --bg-overlay: #FAFAFA;
-  --bg-popover: #F4F4F5;
+  --bg-overlay: #F8FAFC;
+  --bg-popover: #FFFFFF;
   --surface-hover: rgba(255, 90, 31, 0.08);
   --surface-highlight: rgba(255, 90, 31, 0.05);
   --surface-zebra: #FAFAFA;
@@ -99,59 +99,61 @@
   --drawer-width: 480px;
 }
 
-/* ── 2. DARK MODE (Theme 1 – Black + Electric Orange Default) ── */
+/* ── 2. DARK MODE (Ultra-Premium Obsidian + Electric Orange Default) ── */
 .dark {
   --primary: #FF5A1F;
-  --primary-hover: #E04A14;
-  --primary-subtle: rgba(255, 90, 31, 0.16);
-  --bg-page: #111111;
-  --bg-card: #202020;
-  --bg-sidebar: #141414;
-  --bg-header: #161616;
-  --bg-header-translucent: rgba(17, 17, 17, 0.88);
-  --bg-input: #1A1A1A;
-  --bg-floating: #242424;
-  --bg-overlay: #202020;
-  --bg-popover: #262626;
-  --surface-hover: rgba(255, 90, 31, 0.10);
-  --surface-highlight: rgba(255, 90, 31, 0.06);
-  --surface-zebra: #1A1A1A;
+  --primary-hover: #FF6E38;
+  --primary-subtle: rgba(255, 90, 31, 0.18);
+  --bg-page: #0B0F17;
+  --bg-card: #131B2B;
+  --bg-sidebar: #090D14;
+  --bg-header: #0E1420;
+  --bg-header-translucent: rgba(11, 15, 23, 0.86);
+  --bg-input: #0F1623;
+  --bg-floating: #1A2438;
+  --bg-overlay: #131B2B;
+  --bg-popover: #162033;
+  --surface-hover: rgba(255, 90, 31, 0.12);
+  --surface-highlight: rgba(255, 90, 31, 0.08);
+  --surface-zebra: #101725;
   --focus-ring: #FF5A1F;
-  --border: #2E2E2E;
+  --border: rgba(148, 163, 184, 0.16);
   --border-focus: #FF5A1F;
-  --text-primary: #FFFFFF;
-  --text-secondary: #A3A3A3;
-  --text-disabled: #666666;
-  --text-on-primary: #111111;
-  --skeleton-base: #1A1A1A;
-  --skeleton-highlight: #262626;
-  --success: #15803D;
-  --success-text: #4ADE80;
-  --success-bg: #064E3B;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-disabled: #64748B;
+  --text-on-primary: #FFFFFF;
+  --skeleton-base: #131B2B;
+  --skeleton-highlight: #1E293B;
+  --success: #10B981;
+  --success-text: #34D399;
+  --success-bg: rgba(16, 185, 129, 0.16);
+  --warning: #F59E0B;
   --warning-text: #FBBF24;
-  --warning-bg: #451A03;
-  --danger: #B91C1C;
-  --danger-text: #F87171;
-  --danger-bg: #450A0A;
-  --info-text: #60A5FA;
-  --info-bg: #172554;
-  --purple-text: #D8B4FE;
-  --purple-bg: #3B0764;
+  --warning-bg: rgba(245, 158, 11, 0.16);
+  --danger: #F43F5E;
+  --danger-text: #FB7185;
+  --danger-bg: rgba(244, 63, 94, 0.16);
+  --info: #38BDF8;
+  --info-text: #38BDF8;
+  --info-bg: rgba(56, 189, 248, 0.16);
+  --purple-text: #C084FC;
+  --purple-bg: rgba(168, 85, 247, 0.16);
   --pay-cash-text: #5EEAD4;
-  --pay-cash-bg: #134E4A;
+  --pay-cash-bg: rgba(20, 184, 166, 0.16);
   --pay-upi-text: #67E8F9;
-  --pay-upi-bg: #164E63;
+  --pay-upi-bg: rgba(6, 182, 212, 0.16);
   --pay-card-text: #CBD5E1;
-  --pay-card-bg: #1E293B;
+  --pay-card-bg: rgba(148, 163, 184, 0.16);
   --pay-bank-text: #7DD3FC;
-  --pay-bank-bg: #0C4A6E;
+  --pay-bank-bg: rgba(56, 189, 248, 0.16);
   --chart-primary: #FF5A1F;
-  --chart-grid: rgba(255, 255, 255, 0.06);
-  --chart-tooltip-bg: #202020;
-  --shadow-card: 0 1px 3px rgba(0,0,0,0.4);
-  --shadow-popover: 0 4px 16px rgba(0,0,0,0.5);
-  --shadow-dialog: 0 20px 60px rgba(0,0,0,0.6);
-  --shadow-toast: 0 8px 24px rgba(0,0,0,0.5);
+  --chart-grid: rgba(148, 163, 184, 0.14);
+  --chart-tooltip-bg: #131B2B;
+  --shadow-card: 0 8px 28px rgba(0, 0, 0, 0.38);
+  --shadow-popover: 0 12px 32px rgba(0, 0, 0, 0.55);
+  --shadow-dialog: 0 24px 64px rgba(0, 0, 0, 0.65);
+  --shadow-toast: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 /* ── 3. TAILWIND TOKEN MAPPING (@theme inline) ─────────────── */

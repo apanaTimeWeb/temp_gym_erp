@@ -39,8 +39,8 @@ export default function TrainerDashboardMembershipDistribution() {
     'border-amber-500/30 bg-amber-500/15 text-amber-600 dark:text-amber-300',
   ];
   return (
-    <div className="relative overflow-hidden h-full rounded-2xl border border-purple-500/25 bg-card dark:bg-gradient-to-br dark:from-[#1f162b] dark:via-[#202020] dark:to-[#181818] p-5 min-h-72 shadow-card flex flex-col">
-      <span aria-hidden="true" className="pointer-events-none absolute -right-8 -bottom-8 h-24 w-24 rounded-full bg-purple-500/15 blur-2xl" />
+    <div className="relative overflow-hidden h-full rounded-2xl border border-purple-500/30 bg-card dark:bg-gradient-to-br dark:from-[#211535] dark:via-[#151c2c] dark:to-[#0f1624] p-5 min-h-72 shadow-card flex flex-col">
+      <span aria-hidden="true" className="pointer-events-none absolute -right-8 -bottom-8 h-28 w-28 rounded-full bg-purple-500/20 blur-3xl" />
       <div className="relative flex items-center justify-between gap-2 pb-3 mb-4 border-b border-purple-500/15">
         <div className="flex items-center gap-2.5 min-w-0">
           <span className="p-2 rounded-xl border border-purple-500/30 bg-purple-500/15 text-purple-500 shrink-0">

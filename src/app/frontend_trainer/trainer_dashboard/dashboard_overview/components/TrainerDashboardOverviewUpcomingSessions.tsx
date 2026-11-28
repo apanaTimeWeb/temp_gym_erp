@@ -40,8 +40,8 @@ export default function TrainerDashboardUpcomingSessions() {
   ];
 
   return (
-    <div className="relative overflow-hidden h-full rounded-2xl border border-sky-500/25 bg-card dark:bg-gradient-to-br dark:from-[#13202c] dark:via-[#202020] dark:to-[#181818] p-5 shadow-card flex flex-col">
-      <span aria-hidden="true" className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-sky-500/15 blur-2xl" />
+    <div className="relative overflow-hidden h-full rounded-2xl border border-sky-500/30 bg-card dark:bg-gradient-to-br dark:from-[#102235] dark:via-[#151c2c] dark:to-[#0f1624] p-5 shadow-card flex flex-col">
+      <span aria-hidden="true" className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-sky-500/20 blur-3xl" />
       <div className="relative flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-sky-500/15">
         <h3 className="font-bold text-primary text-lg flex items-center gap-2.5 min-w-0">
           <span className="p-2 rounded-xl border border-sky-500/30 bg-sky-500/15 text-sky-500 shrink-0">

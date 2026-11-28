@@ -46,8 +46,8 @@ export default function TrainerDashboardQuickActions() {
   } as const;
 
   return (
-    <div className="relative overflow-hidden h-full rounded-2xl border border-amber-500/25 bg-card dark:bg-gradient-to-br dark:from-[#241e12] dark:via-[#202020] dark:to-[#181818] p-5 shadow-card flex flex-col">
-      <span aria-hidden="true" className="pointer-events-none absolute -right-8 -bottom-8 h-24 w-24 rounded-full bg-amber-500/15 blur-2xl" />
+    <div className="relative overflow-hidden h-full rounded-2xl border border-amber-500/30 bg-card dark:bg-gradient-to-br dark:from-[#261d11] dark:via-[#151c2c] dark:to-[#0f1624] p-5 shadow-card flex flex-col">
+      <span aria-hidden="true" className="pointer-events-none absolute -right-8 -bottom-8 h-28 w-28 rounded-full bg-amber-500/20 blur-3xl" />
       <div className="relative flex items-center justify-between pb-3 mb-4 border-b border-amber-500/15">
         <h3 className="font-bold text-primary text-lg">{t('TEXT_QUICK_ACTIONS')}</h3>
       </div>

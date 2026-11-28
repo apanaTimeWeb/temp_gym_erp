@@ -67,8 +67,9 @@ export default function TrainerDashboardMain() {
     <main className="min-h-full pb-10 bg-page text-primary">
       <div className="p-4 sm:p-6 space-y-5">
         {/* Executive Colorful Header Card (matching Library Admin Dashboard) */}
-        <section className="relative overflow-hidden rounded-2xl border border-orange-500/25 bg-card dark:bg-gradient-to-br dark:from-[#261914] dark:via-[#202020] dark:to-[#181818] p-5 sm:p-6 shadow-card space-y-4">
-          <span aria-hidden="true" className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-orange-500/15 blur-2xl" />
+        <section className="relative overflow-hidden rounded-2xl border border-orange-500/30 bg-card dark:bg-gradient-to-br dark:from-[#261614] dark:via-[#151c2c] dark:to-[#0f1624] p-5 sm:p-6 shadow-card space-y-4">
+          <span aria-hidden="true" className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-orange-500/20 blur-3xl" />
+          <span aria-hidden="true" className="pointer-events-none absolute left-1/3 -bottom-12 h-28 w-40 rounded-full bg-sky-500/10 blur-3xl" />
           <div className="relative flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div className="space-y-1.5 min-w-0">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/35 bg-orange-500/15 px-3 py-1 text-xs font-semibold text-orange-600 dark:text-orange-300">
