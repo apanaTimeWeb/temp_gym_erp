@@ -41,7 +41,7 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
     <div className="p-4 border-b border-border bg-surface-highlight flex flex-col xl:flex-row gap-3 items-start xl:items-center justify-between">
       <h2 className="text-section-title font-semibold text-primary">{t("TEXT_EARNINGS_LEDGER")}</h2>
       <div className="flex flex-col sm:flex-row gap-2.5 w-full xl:w-auto xl:items-center flex-wrap">
-        <div className="relative w-full sm:w-64 min-w-[200px]">
+        <div className="relative w-full sm:w-64 sm:min-w-[200px]">
           <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none w-4 h-4" aria-hidden="true" strokeWidth={2} />
           <label htmlFor="trainer-earnings-search" className="sr-only">{t("TEXT_SEARCH_EARNINGS_DESCRIPTIONS")}</label>
           <input

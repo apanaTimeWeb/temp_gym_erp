@@ -79,12 +79,12 @@ export default function TrainerEarningsKPIs() {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
       {TRAINER_EARNINGS_KPI_CARD_CONFIG.map(({ key, labelKey, icon: Icon, color, bg }) => (
-        <article key={key} className="bg-card border border-border rounded-xl p-5 flex flex-col justify-between shadow-card motion-safe:transition-all motion-safe:duration-base motion-safe:hover:-translate-y-1" data-testid={`trainer_earnings-kpis-card${key}`}>
+        <article key={key} className="min-w-0 bg-card border border-border rounded-2xl p-5 flex flex-col justify-between shadow-card motion-safe:transition-all motion-safe:duration-base motion-safe:hover:scale-[1.01]" data-testid={`trainer_earnings-kpis-card${key}`}>
           <div className="flex items-start justify-between gap-3">
-            <p className="text-xs font-medium text-secondary uppercase tracking-wider truncate">{getKpiTitle(key, labelKey)}</p>
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${bg}`}><Icon size={18} strokeWidth={2} className={color} /></div>
+            <p className="text-xs font-semibold text-secondary uppercase tracking-wider truncate">{getKpiTitle(key, labelKey)}</p>
+            <div className={`p-2 rounded-xl border border-border flex items-center justify-center shrink-0 ${bg}`}><Icon size={18} strokeWidth={2.2} className={color} /></div>
           </div>
-          <TrainerInfrastructureTooltip content={valuesByKey[key]}><p className={`text-kpi font-bold ${color} mt-4 break-words`}>{valuesByKey[key]}</p></TrainerInfrastructureTooltip>
+          <TrainerInfrastructureTooltip content={valuesByKey[key]}><p className={`text-kpi font-bold tabular-nums ${color} mt-4 break-words`}>{valuesByKey[key]}</p></TrainerInfrastructureTooltip>
         </article>
       ))}
     </div>

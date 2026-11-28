@@ -102,7 +102,7 @@ export default function TrainerWorkoutPlanCard({
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-2 mb-3">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3">
         {[
           [t('TEXT_DAYS'), plan.days],
           [t('TEXT_EXERCISES'), plan.exercises],

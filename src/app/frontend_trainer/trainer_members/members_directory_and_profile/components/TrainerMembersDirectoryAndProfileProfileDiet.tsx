@@ -106,7 +106,7 @@ export default function TrainerMembersProfileDiet() {
           <h3 className="text-lg font-bold text-primary">{t("TEXT_DIET_NUTRITION_PLAN")}</h3>
           <p className="text-sm text-secondary">{t('TEXT_MANAGE_AND_CUSTOMIZE_DAILY_MEAL_REQUIREMENTS_FOR', { name: selectedMember.name })}</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
           {hasDietPlan ? (
             <>
               <button type="button" 
@@ -178,32 +178,32 @@ export default function TrainerMembersProfileDiet() {
 
       {/* Active Diet Display */}
       {hasDietPlan ? (
-        <div className="bg-card border border-border rounded-2xl p-6 space-y-6">
+        <div className="bg-card border border-border rounded-2xl p-4 sm:p-6 space-y-6">
           <div className="flex flex-wrap items-start justify-between gap-4 border-b border-border pb-5">
-            <div>
-              <div className="flex items-center gap-2 mb-1">
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-2 mb-1">
                 <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-success-bg text-success" data-testid={"trainer_members-trainer_members-profile-success-state-143-1"}>
                   {t("TEXT_ACTIVE_DIET")}</span>
                 <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-info-bg text-info" data-testid={"trainer_members-trainer_members-profile-info-state-145-2"}>
                   {displayValue(diet.goal)}
                 </span>
               </div>
-              <h3 className="text-2xl font-bold text-primary">{diet.name}</h3>
+              <h3 className="text-xl sm:text-2xl font-bold text-primary break-words">{diet.name}</h3>
               <p className="text-sm text-secondary mt-1">{displayValue(diet.description)}</p>
             </div>
-            <div className="flex gap-4">
-              <div className="bg-floating border border-border rounded-xl px-4 py-3 text-end">
+            <div className="flex flex-wrap gap-3 w-full sm:w-auto">
+              <div className="flex-1 sm:flex-none bg-floating border border-border rounded-xl px-4 py-3 text-end">
                 <p className="text-xs text-secondary">{t("TEXT_DIET_COMPLIANCE")}</p>
                 <div className="flex items-center justify-end gap-2 mt-1">
                   <div className="h-2 w-16 bg-input rounded-full overflow-hidden" aria-hidden="true">
                     <svg viewBox="0 0 100 1" preserveAspectRatio="none" className="h-full w-full" aria-hidden="true"><rect width={Math.max(0, Math.min(100, diet.complianceScore ?? 0))} height="1" fill="currentColor" className="text-success" /></svg>
                   </div>
-                  <p className="text-xl font-black text-primary">{diet.complianceScore == null ? '—' : TrainerMembersFormatNumber(diet.complianceScore, locale)}%</p>
+                  <p className="text-xl font-black text-primary tabular-nums">{diet.complianceScore == null ? '—' : TrainerMembersFormatNumber(diet.complianceScore, locale)}%</p>
                 </div>
               </div>
-              <div className="bg-floating border border-border rounded-xl px-4 py-3 text-end">
+              <div className="flex-1 sm:flex-none bg-floating border border-border rounded-xl px-4 py-3 text-end">
                 <p className="text-xs text-secondary">{t("TEXT_TARGET_DAILY_CALORIES")}</p>
-                <p className="text-2xl font-black text-primary flex items-center gap-1 justify-end">
+                <p className="text-2xl font-black text-primary flex items-center gap-1 justify-end tabular-nums">
                   <Flame size={18} className="text-danger"  strokeWidth={2}/> {diet.calories == null ? '—' : TrainerMembersFormatNumber(diet.calories, locale)} <span className="text-xs text-secondary font-normal">{t("TEXT_KCAL")}</span>
                 </p>
               </div>
@@ -211,7 +211,7 @@ export default function TrainerMembersProfileDiet() {
           </div>
 
           {/* Macro Breakdown */}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="bg-floating border border-border rounded-xl p-4 text-center">
               <p className="text-xs text-secondary font-medium">{t("TEXT_PROTEIN_26ED35")}</p>
               <p className="text-xl font-bold text-info mt-0.5">{diet.protein == null ? '—' : TrainerMembersFormatNumber(diet.protein, locale)}{t("TEXT_G")}</p>

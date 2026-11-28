@@ -86,11 +86,11 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
 
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 sm:p-6 space-y-6">
       {/* Calendar Header with Navigation */}
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
             <h3 className="text-xl font-bold text-primary flex items-center gap-2">
               <CalendarIcon size={18} strokeWidth={2} className="text-primary" /> {monthName} {year} {t("TEXT_HISTORY")}</h3>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-success-bg text-success border border-border flex items-center gap-1" data-testid="trainer_attendance-attendance-my_attendance_calendar_status_my_record">
@@ -132,7 +132,7 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
       </div>
 
       {/* Monthly Summary Statistics */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-card border border-border rounded-xl p-4 shadow-card">
           <p className="text-xs font-medium text-secondary">{t("TEXT_PRESENT_ON_DUTY")}</p>
           <p className="text-kpi font-bold text-success mt-1 flex items-center gap-2">
@@ -160,7 +160,9 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
       </div>
 
       {/* Monthly Calendar View */}
-      <div className="bg-card border border-border rounded-2xl p-5 shadow-card space-y-4">
+      <div className="bg-card border border-border rounded-2xl p-4 sm:p-5 shadow-card">
+        <div className="overflow-x-auto">
+          <div className="min-w-[560px] space-y-4">
         <div className="grid grid-cols-7 gap-2 text-center pb-2 border-b border-border">
           {weekDays.map(wd => (
             <div key={wd} className="text-xs font-bold text-secondary uppercase tracking-wider py-1">
@@ -237,6 +239,8 @@ export default function TrainerAttendanceMyAttendanceCalendar({ records }: Train
               </div>
             );
           })}
+        </div>
+          </div>
         </div>
       </div>
 

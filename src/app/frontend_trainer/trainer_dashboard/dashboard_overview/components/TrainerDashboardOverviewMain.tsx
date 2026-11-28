@@ -46,7 +46,7 @@ export default function TrainerDashboardMain() {
 
   if (dashboardQuery.isInvalidRange) {
     return (
-      <main className="min-h-full bg-page p-6" aria-label={t('TEXT_DASHBOARD')}>
+      <main className="min-h-full bg-page p-4 sm:p-6" aria-label={t('TEXT_DASHBOARD')}>
         <div className="mb-4"><TrainerDashboardDateFilterDropdown /></div>
         <p role="status" className="max-w-xl rounded-lg border border-danger-bg bg-danger-bg p-4 text-danger">
           {t('TEXT_INVALID_DATE_RANGE')}
@@ -56,16 +56,16 @@ export default function TrainerDashboardMain() {
   }
 
   if (dashboardQuery.isPending) {
-    return <main className="min-h-full bg-page p-6" aria-busy="true" aria-label={t('TEXT_LOADING_DASHBOARD')}><div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">{Array.from({ length: 4 }, (_, index) => <TrainerInfrastructureSkeletonBlock key={`dashboard-kpi-skeleton-${index}`} className="h-28 rounded-xl border border-border" />)}</div><TrainerInfrastructureSkeletonBlock className="mt-5 h-72 rounded-xl border border-border" /></main>;
+    return <main className="min-h-full bg-page p-4 sm:p-6" aria-busy="true" aria-label={t('TEXT_LOADING_DASHBOARD')}><div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">{Array.from({ length: 4 }, (_, index) => <TrainerInfrastructureSkeletonBlock key={`dashboard-kpi-skeleton-${index}`} className="h-28 rounded-xl border border-border" />)}</div><TrainerInfrastructureSkeletonBlock className="mt-5 h-72 rounded-xl border border-border" /></main>;
   }
 
   if (dashboardQuery.isError) {
-    return <main className="min-h-full bg-page p-6"><div role="alert" className="max-w-xl rounded-xl border border-danger-bg bg-danger-bg p-5 text-danger"><p className="font-semibold">{t('TEXT_UNABLE_TO_LOAD_DASHBOARD')}</p><button type="button" onClick={() => void dashboardQuery.refetch()} className="mt-3 min-h-11 rounded-lg px-4 font-semibold underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring">{t('TEXT_RETRY')}</button></div></main>;
+    return <main className="min-h-full bg-page p-4 sm:p-6"><div role="alert" className="max-w-xl rounded-xl border border-danger-bg bg-danger-bg p-5 text-danger"><p className="font-semibold">{t('TEXT_UNABLE_TO_LOAD_DASHBOARD')}</p><button type="button" onClick={() => void dashboardQuery.refetch()} className="mt-3 min-h-11 rounded-lg px-4 font-semibold underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring">{t('TEXT_RETRY')}</button></div></main>;
   }
 
   return (
     <main className="min-h-full pb-10 bg-page text-primary">
-      <div className="p-6 space-y-5">
+      <div className="p-4 sm:p-6 space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
             <h1 className="text-page-title font-bold text-primary">{t("TEXT_DASHBOARD")}</h1>

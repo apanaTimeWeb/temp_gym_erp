@@ -32,9 +32,9 @@ export default function TrainerCoachingExerciseManagementToolbar() {
 
   return (
     <div className="p-4 border-b border-border bg-surface-highlight flex flex-wrap items-center justify-between gap-3">
-      <div className="flex items-center gap-2.5 flex-wrap flex-1 min-w-[280px]">
+      <div className="flex items-center gap-2.5 flex-wrap flex-1 min-w-0 w-full sm:w-auto">
         {/* Search Box Geometry */}
-        <div className="relative min-w-[240px] sm:w-72">
+        <div className="relative w-full sm:min-w-[240px] sm:w-72">
           <Search size={16} aria-hidden="true" strokeWidth={2} className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-secondary w-4 h-4" />
           <label htmlFor="trainer-coaching_exercise_management-search" className="sr-only">{t('TEXT_SEARCH')}</label>
           <input

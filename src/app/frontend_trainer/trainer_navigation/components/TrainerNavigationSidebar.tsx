@@ -2,11 +2,10 @@
 // RESPONSIBILITY: Renders the Trainer role navigation shell, including desktop collapse, mobile drawer, navigation search, focus management, and route-aware active state. No feature business data or API ownership.
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-import { ChevronDown, Search } from 'lucide-react';
+import { ChevronDown, Menu, Search, X } from 'lucide-react';
+import TrainerNavigationBrandIcon from '@/app/frontend_trainer/trainer_navigation/components/TrainerNavigationBrandIcon';
 
 import { useTranslations } from 'next-intl';
-
-import Image from 'next/image';
 
 import Link from 'next/link';
 
@@ -15,6 +14,11 @@ import { usePathname } from 'next/navigation';
 import { getUser } from '@/lib/api';
 
 import { TRAINER_NAVIGATION_GROUPS } from '@/app/frontend_trainer/trainer_navigation/config/TrainerNavigationConstants';
+import {
+  DEFAULT_TRAINER_NAV_COLOR,
+  TRAINER_NAV_GROUP_COLORS,
+  TRAINER_NAV_ITEM_COLORS,
+} from '@/app/frontend_trainer/trainer_navigation/config/TrainerNavigationSidebarColors';
 
 import '@/app/frontend_trainer/trainer_navigation/components/TrainerNavigationSidebar.css';
 
@@ -48,10 +52,18 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
   const [mounted, setMounted] = useState(false);
   const sidebarRef = useRef<HTMLElement>(null);
+  const prevPathnameRef = useRef(pathname);
   const user = getUser();
 
 // Effect contract: initialize browser-only navigation state after hydration and keep shell listeners synchronized with viewport/navigation changes.
   useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    if (prevPathnameRef.current !== pathname) {
+      prevPathnameRef.current = pathname;
+      if (isMobileOpen) setIsMobileOpen(false);
+    }
+  }, [pathname, isMobileOpen, setIsMobileOpen]);
 
   useEffect(() => {
     if (!isMobileOpen) return;
@@ -120,85 +132,145 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
         aria-modal={isMobileOpen || undefined}
         className={`trainer-sidebar trainer-sidebar-safe-area motion-safe:transition-all motion-safe:duration-base ${isCollapsed ? 'trainer-sidebar-collapsed' : ''} ${isMobileOpen ? 'trainer-sidebar-open' : ''}`}
       >
-        <div className="flex items-center justify-center px-4 py-5 border-b border-border shrink-0">
-          <div className="flex items-center gap-3 overflow-hidden">
-            <Image src="/logo.png" alt={t('TEXT_GYMSMART_TRAINER')} width={44} height={44} className="object-contain min-w-11 rounded-lg" />
-            {(!isCollapsed || isMobileOpen) && (
-              <div className="whitespace-nowrap flex flex-col">
-                <span className="text-primary font-bold text-lg leading-tight tracking-tight">{t('TEXT_GYMSMART')}</span>
-                <span className="text-xs text-warning font-bold uppercase tracking-wider -mt-0.5">{t('TEXT_TRAINER_APP')}</span>
+        <div className="h-16 flex items-center gap-2.5 px-3 border-b border-border bg-surface-highlight shrink-0">
+          <button
+            type="button"
+            onClick={isMobileOpen ? () => setIsMobileOpen(false) : () => setIsCollapsed(!isCollapsed)}
+            aria-label={isMobileOpen ? t('TEXT_CLOSE_NAVIGATION_SIDEBAR') : t('TEXT_TOGGLE_NAVIGATION_SIDEBAR')}
+            className="min-w-9 min-h-9 w-9 h-9 inline-flex items-center justify-center rounded-lg text-secondary hover:text-primary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shrink-0 motion-safe:transition-colors"
+            data-testid="trainer_navigation-sidebar-toggle"
+          >
+            {isMobileOpen ? <X size={18} strokeWidth={2} aria-hidden="true" /> : <Menu size={18} strokeWidth={2} aria-hidden="true" />}
+          </button>
+          {(!isCollapsed || isMobileOpen) && (
+            <Link
+              href="/frontend_trainer/trainer_dashboard/dashboard_overview"
+              onClick={() => { if (typeof window !== 'undefined' && window.innerWidth < 768) setIsMobileOpen(false); }}
+              className="flex items-center gap-2.5 min-w-0 flex-1 group no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring rounded-lg"
+            >
+              <span
+                className="w-8 h-8 rounded-xl bg-primary text-on-primary flex items-center justify-center shrink-0 shadow-card motion-safe:transition-transform motion-safe:duration-base group-hover:scale-105"
+                aria-hidden="true"
+              >
+                <TrainerNavigationBrandIcon className="w-[18px] h-[18px]" />
+              </span>
+              <div className="whitespace-nowrap flex flex-col min-w-0 justify-center">
+                <span className="text-primary font-extrabold text-[15px] leading-none tracking-tight truncate">
+                  {t('TEXT_GYMSMART')}
+                </span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-secondary leading-none mt-1 truncate">
+                  {t('TEXT_TRAINER_APP')}
+                </span>
               </div>
-            )}
-          </div>
+            </Link>
+          )}
         </div>
         {(!isCollapsed || isMobileOpen) && (
-          <div className="px-4 py-3 border-b border-border shrink-0">
+          <div className="px-3 py-3 border-b border-border shrink-0">
             <label htmlFor="trainer-sidebar-search" className="sr-only">{t('TEXT_SEARCH_MENU')}</label>
             <div className="relative">
-              <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary" aria-hidden="true"  strokeWidth={2}/>
+              <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-primary pointer-events-none" aria-hidden="true" strokeWidth={2}/>
               <input
                 id="trainer-sidebar-search"
                 type="search"
                 placeholder={t('TEXT_SEARCH_MENU')}
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
-                className="block w-full min-h-11 ps-9 pe-3 py-2 border border-border rounded-lg bg-input text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-colors motion-safe:duration-base"
+                className="block w-full min-h-10 ps-9 pe-8 py-2 border border-border rounded-xl bg-input text-sm text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:border-focus motion-safe:transition-colors motion-safe:duration-base"
                 data-testid="trainer_navigation-sidebar-search"
               />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  aria-label="Clear menu search"
+                  className="absolute end-2 top-1/2 -translate-y-1/2 p-1 rounded-md text-secondary hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring"
+                >
+                  <X size={14} aria-hidden="true" />
+                </button>
+              )}
             </div>
           </div>
         )}
         {isCollapsed && !isMobileOpen && (
-          <div className="flex items-center justify-center px-4 py-3 border-b border-border shrink-0">
-            <button type="button" onClick={() => setIsCollapsed(false)} aria-label={t('TEXT_SEARCH_MENU')} className="min-w-11 min-h-11 p-2 rounded-lg text-secondary hover:text-primary hover:bg-input motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_navigation-sidebar-expand_search">
-              <Search size={18} aria-hidden="true"  strokeWidth={2}/>
+          <div className="flex items-center justify-center px-2 py-3 border-b border-border shrink-0">
+            <button type="button" onClick={() => setIsCollapsed(false)} aria-label={t('TEXT_SEARCH_MENU')} title={t('TEXT_SEARCH_MENU')} className="min-w-11 min-h-11 p-2 rounded-xl text-secondary hover:text-primary hover:bg-surface-hover motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-base motion-safe:active:scale-95" data-testid="trainer_navigation-sidebar-expand_search">
+              <Search size={18} aria-hidden="true" strokeWidth={2}/>
             </button>
           </div>
         )}
-        <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-4 trainer-shell-scrollbar" aria-label={t('TEXT_TRAINER_NAVIGATION')}>
+        <nav className={`flex-1 overflow-y-auto py-3 ${!isCollapsed || isMobileOpen ? 'px-2.5 space-y-3' : 'px-1.5 space-y-2'} trainer-shell-scrollbar`} aria-label={t('TEXT_TRAINER_NAVIGATION')}>
           {filteredNavGroups.length === 0 ? (
             <p className="text-center py-4 text-sm text-secondary">{t('TEXT_NO_MATCHES_FOUND')}</p>
-          ) : filteredNavGroups.map((group) => {
+          ) : filteredNavGroups.map((group, groupIndex) => {
             const activeGroup = group.items.some((item) => pathname === item.href || pathname.startsWith(`${item.href}/`));
             const searching = searchQuery.trim().length > 0;
-            const showChildren = (!isCollapsed || isMobileOpen) && (searching || (expandedGroups[group.groupKey] ?? true));
             const showLabel = !isCollapsed || isMobileOpen;
+            const showChildren = !showLabel ? true : (searching || (expandedGroups[group.groupKey] ?? true));
             const sectionId = `trainer-domain-${group.groupKey.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
-            const DomainIcon = group.items[0].icon;
+            const groupColor = TRAINER_NAV_GROUP_COLORS[group.groupKey] ?? DEFAULT_TRAINER_NAV_COLOR;
             return (
-              <div key={group.groupKey}>
-                <button
-                  type="button"
-                  aria-expanded={showChildren}
-                  aria-controls={sectionId}
-                  aria-label={!showLabel ? t(group.groupKey) : undefined}
-                  onClick={() => {
-                    if (isCollapsed && !isMobileOpen) setIsCollapsed(false);
-                    setExpandedGroups((previous) => ({ ...previous, [group.groupKey]: !showChildren }));
-                  }}
-                  className={`flex w-full min-h-11 items-center gap-3 rounded-lg px-3 text-start text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring ${activeGroup ? 'bg-primary-subtle text-primary' : 'text-secondary hover:bg-surface-hover hover:text-primary'}`}
-                  title={!showLabel ? t(group.groupKey) : undefined}
-                >
-                  {!showLabel && <DomainIcon size={18} strokeWidth={2} aria-hidden="true" />}
-                  {showLabel && <span className="flex-1 truncate">{t(group.groupKey)}</span>}
-                  {showLabel && <ChevronDown size={18} strokeWidth={2} aria-hidden="true" className={`shrink-0 motion-safe:transition-transform ${showChildren ? 'rotate-180' : ''}`} />}
-                </button>
-                <div id={sectionId} hidden={!showChildren} className={`mt-1 space-y-1 ${showLabel ? 'ms-2 border-s border-border ps-2' : ''}`}>
+              <div key={group.groupKey} className={!showLabel && groupIndex > 0 ? 'pt-2 border-t border-border' : ''}>
+                {showLabel && (
+                  <button
+                    type="button"
+                    aria-expanded={showChildren}
+                    aria-controls={sectionId}
+                    onClick={() => {
+                      setExpandedGroups((previous) => ({ ...previous, [group.groupKey]: !showChildren }));
+                    }}
+                    className={`flex w-full min-h-9 items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 text-start text-[11px] font-bold uppercase tracking-wider focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-colors ${activeGroup ? 'text-primary bg-surface-highlight' : 'text-secondary hover:bg-surface-hover hover:text-primary'}`}
+                  >
+                    <span className="flex items-center gap-2 min-w-0">
+                      <span
+                        className="w-2 h-2 rounded-full shrink-0"
+                        style={{ backgroundColor: groupColor.iconColor }}
+                        aria-hidden="true"
+                      />
+                      <span className="truncate">{t(group.groupKey)}</span>
+                    </span>
+                    <ChevronDown size={14} strokeWidth={2.2} aria-hidden="true" className={`shrink-0 motion-safe:transition-transform ${showChildren ? 'rotate-180' : ''}`} />
+                  </button>
+                )}
+                <div id={sectionId} hidden={!showChildren} className={`${showLabel ? 'mt-1 space-y-1' : 'space-y-1.5 flex flex-col items-center'}`}>
                   {group.items.map((item) => {
                     const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
                     const Icon = item.icon;
+                    const itemColor = TRAINER_NAV_ITEM_COLORS[item.labelKey] ?? groupColor;
                     return (
                       <Link
                         key={item.href}
                         href={item.href}
-                        title={!showLabel ? t(item.labelKey) : undefined}
+                        title={t(item.labelKey)}
                         aria-label={!showLabel ? t(item.labelKey) : undefined}
                         aria-current={active ? 'page' : undefined}
                         onClick={() => { if (window.innerWidth < 768) setIsMobileOpen(false); }}
-                        className={`flex min-h-11 items-center gap-3 rounded-xl border-s-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-colors ${showLabel ? 'px-3' : 'justify-center px-0'} ${active ? 'border-focus bg-primary-subtle text-primary' : 'border-transparent text-secondary hover:bg-surface-hover hover:text-primary'}`}
+                        className={`group flex min-h-10 items-center rounded-xl text-[13px] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all ${
+                          showLabel
+                            ? 'w-full gap-2.5 px-2.5 py-1.5 border-s-2'
+                            : 'w-11 h-11 justify-center px-0'
+                        } ${
+                          active
+                            ? showLabel
+                              ? 'border-focus bg-primary-subtle text-primary font-semibold shadow-card'
+                              : 'bg-primary-subtle text-primary ring-1 ring-primary'
+                            : showLabel
+                              ? 'border-transparent text-secondary hover:bg-surface-hover hover:text-primary'
+                              : 'text-secondary hover:bg-surface-hover hover:text-primary'
+                        }`}
                         data-testid={`trainer_navigation-sidebar-nav${item.href.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '')}`}
                       >
-                        <Icon size={18} strokeWidth={2} aria-hidden="true" />
+                        <span
+                          className="w-7 h-7 rounded-lg inline-flex items-center justify-center shrink-0 motion-safe:transition-transform motion-safe:duration-fast group-hover:scale-110"
+                          style={{
+                            color: itemColor.iconColor,
+                            backgroundColor: active ? itemColor.activeBg : itemColor.bg,
+                            boxShadow: active ? itemColor.activeShadow : undefined,
+                          }}
+                          aria-hidden="true"
+                        >
+                          <Icon size={15} strokeWidth={2.2} />
+                        </span>
                         {showLabel && <span className="truncate">{t(item.labelKey)}</span>}
                       </Link>
                     );
@@ -208,9 +280,9 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
             );
           })}
         </nav>
-        <div className="mt-auto border-t border-border px-3 py-3">
-          <div className="flex items-center gap-3 rounded-lg p-2">
-            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold shrink-0" aria-hidden="true">{displayName.charAt(0).toUpperCase()}</div>
+        <div className="mt-auto border-t border-border bg-surface-highlight px-2.5 py-3">
+          <div className={`flex items-center rounded-xl p-1.5 ${!isCollapsed || isMobileOpen ? 'gap-3' : 'justify-center'}`}>
+            <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-on-primary text-sm font-bold shrink-0 shadow-card" aria-hidden="true">{displayName.charAt(0).toUpperCase()}</div>
             {(!isCollapsed || isMobileOpen) && <div className="min-w-0"><p className="text-sm font-semibold text-primary truncate">{displayName}</p><p className="text-xs text-secondary truncate">{displayRole}</p></div>}
           </div>
         </div>

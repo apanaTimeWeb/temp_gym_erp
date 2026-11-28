@@ -19,7 +19,9 @@ export function TrainerOperationsTrainerAttendanceCalendarMonthGrid({
   const t = useTranslations('TRAINER_ATTENDANCE');
 
   return (
-    <div className="bg-card border border-border rounded-2xl p-5 shadow-card space-y-4">
+    <div className="bg-card border border-border rounded-2xl p-4 sm:p-5 shadow-card">
+      <div className="overflow-x-auto">
+        <div className="min-w-[560px] space-y-4">
       <div className="grid grid-cols-7 gap-2 text-center pb-2 border-b border-border">
         {weekDays.map((wd) => (
           <div key={wd} className="text-xs font-bold text-secondary uppercase tracking-wider py-1">
@@ -102,6 +104,8 @@ export function TrainerOperationsTrainerAttendanceCalendarMonthGrid({
             </div>
           );
         })}
+      </div>
+        </div>
       </div>
     </div>
   );

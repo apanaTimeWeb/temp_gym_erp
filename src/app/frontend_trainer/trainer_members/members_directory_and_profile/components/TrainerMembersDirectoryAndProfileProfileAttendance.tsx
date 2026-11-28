@@ -99,7 +99,7 @@ export default function TrainerMembersProfileAttendance() {
       </div>
 
       {/* Summary Stat Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-card border border-border rounded-xl p-4">
           <p className="text-xs font-medium text-secondary">{t("TEXT_PRESENT_DAYS")}</p>
           <p className="text-kpi font-bold text-success mt-1 flex items-center gap-2">
@@ -127,7 +127,9 @@ export default function TrainerMembersProfileAttendance() {
       </div>
 
       {/* Monthly Calendar View */}
-      <div className="bg-card border border-border rounded-2xl p-5 shadow-card space-y-4">
+      <div className="bg-card border border-border rounded-2xl p-4 sm:p-5 shadow-card">
+        <div className="overflow-x-auto">
+          <div className="min-w-[540px] space-y-4">
         <div className="grid grid-cols-7 gap-2 text-center pb-2 border-b border-border">
           {weekDays.map(wd => (
             <div key={wd} className="text-xs font-bold text-secondary uppercase tracking-wider py-1">
@@ -202,6 +204,8 @@ export default function TrainerMembersProfileAttendance() {
               </div>
             );
           })}
+        </div>
+          </div>
         </div>
       </div>
 

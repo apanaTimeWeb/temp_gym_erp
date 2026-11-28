@@ -47,16 +47,16 @@ export default function TrainerMembersKPIs() {
 
   if (isPending || !stats) {
     return (
-      <div className="grid grid-cols-2 gap-4 mb-6 lg:grid-cols-4" aria-busy="true" aria-label={t('TEXT_LOADING_MEMBER_STATISTICS')} data-testid="trainer_members-kpis-loading">
+      <div className="grid grid-cols-1 gap-4 mb-6 sm:grid-cols-2 lg:grid-cols-4" aria-busy="true" aria-label={t('TEXT_LOADING_MEMBER_STATISTICS')} data-testid="trainer_members-kpis-loading">
         {cards.map(({ key }) => (
-          <TrainerInfrastructureSkeletonBlock key={key} className="h-28 rounded-xl border border-border" testId={`trainer-members-kpis-loading-card-${key}`} />
+          <TrainerInfrastructureSkeletonBlock key={key} className="h-28 rounded-2xl border border-border" testId={`trainer-members-kpis-loading-card-${key}`} />
         ))}
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-2 gap-4 mb-6 lg:grid-cols-4" role="group" aria-label={t('TEXT_MEMBER_STATUS_FILTERS')}>
+    <div className="grid grid-cols-1 gap-4 mb-6 sm:grid-cols-2 lg:grid-cols-4" role="group" aria-label={t('TEXT_MEMBER_STATUS_FILTERS')}>
       {cards.map(({ key, filterValue, labelKey, value, icon: Icon, color, bg }) => {
         const isActive = statusFilter === filterValue;
         return (
@@ -67,13 +67,15 @@ export default function TrainerMembersKPIs() {
             aria-label={t('TEXT_FILTER_MEMBERS_BY_STATUS', { status: t(labelKey as never) })}
             onClick={() => setStatusFilter(filterValue)}
             data-testid={`trainer_members-kpi-${key}-filter`}
-            className={`text-start bg-card rounded-xl p-4 border shadow-card motion-safe:transition-all motion-safe:duration-base motion-safe:hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring ${isActive ? 'border-primary ring-2 ring-primary' : 'border-border'}`}
+            className={`min-w-0 text-start bg-card rounded-2xl p-5 border shadow-card motion-safe:transition-all motion-safe:duration-base motion-safe:hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring ${isActive ? 'border-primary ring-2 ring-primary' : 'border-border'}`}
           >
-            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${bg} ${color} mb-3`}>
-              <Icon size={18} strokeWidth={2} aria-hidden="true" />
+            <div className="flex items-start justify-between gap-2">
+              <p className="text-xs font-semibold text-secondary uppercase tracking-wider line-clamp-2">{t(labelKey as never)}</p>
+              <div className={`p-2.5 rounded-xl border border-border shrink-0 flex items-center justify-center ${bg} ${color}`}>
+                <Icon size={18} strokeWidth={2.2} aria-hidden="true" />
+              </div>
             </div>
-            <p className="text-xs font-medium text-secondary uppercase line-clamp-2">{t(labelKey as never)}</p>
-            <p className="text-kpi font-bold text-primary mt-1">{value}</p>
+            <p className="text-kpi font-bold text-primary tabular-nums mt-2">{value}</p>
           </button>
         );
       })}

@@ -52,9 +52,9 @@ export function TrainerCoachingSessionsFilterToolbar({
     <div className="bg-card rounded-2xl shadow-card border border-border p-4 space-y-3.5">
       {/* Top row: Dropdown filters & Search */}
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-2.5 flex-1 min-w-[280px]">
+        <div className="flex flex-wrap items-center gap-2.5 flex-1 min-w-0 w-full lg:w-auto">
           {/* Search box */}
-          <div className="relative min-w-[180px] max-w-xs flex-1">
+          <div className="relative w-full sm:min-w-[180px] sm:max-w-xs flex-1">
             <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" />
             <input
               type="text"
@@ -123,7 +123,7 @@ export function TrainerCoachingSessionsFilterToolbar({
               value={memberFilter}
               onChange={(e) => setMemberFilter(e.target.value)}
               aria-label="Filter by client name"
-              className="min-h-10 rounded-xl border border-border bg-input px-3 py-1.5 text-xs font-medium text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring max-w-[160px] truncate"
+              className="min-h-10 rounded-xl border border-border bg-input px-3 py-1.5 text-xs font-medium text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring w-full sm:max-w-[160px] truncate"
             >
               <option value="ALL">All Clients</option>
               {memberOptions.map((opt) => (
@@ -184,11 +184,11 @@ export function TrainerCoachingSessionsFilterToolbar({
       </div>
 
       {/* Quick Status Filter Tabs row */}
-      <div className="flex items-center gap-1 border-t border-border/60 pt-2.5">
-        <span className="text-[11px] font-bold uppercase tracking-wider text-secondary mr-2 flex items-center gap-1">
+      <div className="flex flex-wrap items-center gap-2 border-t border-border/60 pt-2.5">
+        <span className="text-[11px] font-bold uppercase tracking-wider text-secondary mr-1 flex items-center gap-1">
           <Filter size={12} /> Filter:
         </span>
-        <div className="flex bg-input rounded-xl p-1 gap-1">
+        <div className="flex flex-wrap bg-input rounded-xl p-1 gap-1">
           {TRAINER_SESSIONS_SESSION_FILTER_OPTIONS.map((option) => (
             <button
               key={option.value}

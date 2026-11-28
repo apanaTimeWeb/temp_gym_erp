@@ -85,11 +85,11 @@ export function TrainerOperationsLeaveRequestsLeaveFilterBar({
       </div>
 
       {/* Leave Type Dropdown & Search */}
-      <div className="flex items-center gap-2 flex-wrap">
+      <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
         <select
           value={typeFilter}
           onChange={(e) => setTypeFilter(e.target.value)}
-          className="min-h-9 rounded-xl border border-border bg-input px-3 text-xs text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+          className="min-h-9 w-full sm:w-auto rounded-xl border border-border bg-input px-3 text-xs text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
           aria-label="Filter by leave type"
         >
           <option value="ALL">All Leave Types</option>
@@ -100,7 +100,7 @@ export function TrainerOperationsLeaveRequestsLeaveFilterBar({
           <option value="Other">Other</option>
         </select>
 
-        <div className="relative min-w-[180px]">
+        <div className="relative w-full sm:w-auto sm:min-w-[180px]">
           <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" />
           <input
             type="text"

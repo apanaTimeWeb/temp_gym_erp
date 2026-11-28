@@ -38,8 +38,8 @@ export default function TrainerMembersToolbar() {
   const hasActiveFilters = Boolean(localSearch.trim()) || statusFilter !== 'All' || progressStatusFilter !== 'All';
 
   return (
-    <div className="bg-card rounded-xl shadow-card border border-border p-4 flex flex-wrap gap-3 items-center justify-between ">
-      <div className="relative min-w-[240px] sm:w-72">
+    <div className="bg-card rounded-xl shadow-card border border-border p-4 flex flex-wrap gap-3 items-stretch sm:items-center justify-between ">
+      <div className="relative w-full sm:min-w-[240px] sm:w-72">
         <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" strokeWidth={2}/>
         <label htmlFor="trainer-members-search" className="sr-only ">{t("TEXT_SEARCH_BY_NAME_OR_PHONE")}</label>
         <input id="trainer-members-search" 
@@ -58,18 +58,18 @@ export default function TrainerMembersToolbar() {
           </button>
         )}
       </div>
-      <div className="flex flex-col sm:flex-row gap-2.5 w-full sm:w-auto items-center flex-wrap">
+      <div className="flex flex-col sm:flex-row gap-2.5 w-full sm:w-auto items-stretch sm:items-center flex-wrap">
         <TrainerInfrastructureSearchableDropdown
           value={statusFilter}
           onChange={(val: string | number) => setStatusFilter(String(val))}
-          className="w-48 "
+          className="w-full sm:w-48 "
           options={TRAINER_MEMBERS_MEMBER_STATUS_OPTIONS.map((option) => ({ ...option, label: t(option.labelKey) }))}
           ariaLabel={t("TEXT_STATUS")}
          testId="trainer-members-members-toolbar-status-filter"/>
         <TrainerInfrastructureSearchableDropdown
           value={progressStatusFilter}
           onChange={(val: string | number) => setProgressStatusFilter(String(val))}
-          className="w-48 "
+          className="w-full sm:w-48 "
           options={TRAINER_MEMBERS_MEMBER_PROGRESS_OPTIONS.map((option) => ({ ...option, label: t(option.labelKey) }))}
           ariaLabel={t("TEXT_PROGRESS_STATUS")}
          testId="trainer-members-members-toolbar-progress-status-filter"/>

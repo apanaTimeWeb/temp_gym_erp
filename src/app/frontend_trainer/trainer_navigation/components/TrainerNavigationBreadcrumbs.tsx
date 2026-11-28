@@ -22,7 +22,7 @@ export default function TrainerNavigationBreadcrumbs() {
     <nav
       aria-label={t('TEXT_BREADCRUMBS')}
       data-testid="trainer_navigation-breadcrumbs"
-      className="px-6 pt-3 pb-1 text-sm"
+      className="px-4 sm:px-6 pt-3 pb-1 text-sm"
     >
       <ol className="flex min-w-0 flex-wrap items-center gap-1 text-secondary">
         {!isDashboard && (

@@ -26,24 +26,96 @@ export function TrainerCoachingSessionsLiveWorkoutExerciseCard({
 }: ExerciseCardProps) {
   return (
     <div className="bg-floating border border-border rounded-xl p-4 space-y-3">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="w-6 h-6 rounded-lg bg-primary-subtle text-primary text-xs font-bold flex items-center justify-center">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="w-6 h-6 rounded-lg bg-primary-subtle text-primary text-xs font-bold flex items-center justify-center shrink-0">
             {exIndex + 1}
           </span>
-          <h3 className="font-bold text-primary text-base">{exercise.name}</h3>
+          <h3 className="font-bold text-primary text-base truncate">{exercise.name}</h3>
         </div>
         <button
           type="button"
           onClick={() => onAddSet(exercise.id)}
-          className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring"
+          className="min-h-9 inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring"
         >
           <Plus size={14} /> Add Set
         </button>
       </div>
 
-      {/* Sets Table */}
-      <div className="overflow-x-auto">
+      {/* Sets Mobile Card Stack */}
+      <div className="md:hidden space-y-2.5">
+        {exercise.sets.map((set) => (
+          <div
+            key={set.id}
+            className={`rounded-xl border border-border p-3 space-y-2.5 text-xs ${set.completed ? 'bg-success-bg text-primary font-medium' : 'bg-card text-primary'}`}
+          >
+            <div className="flex items-center justify-between gap-2">
+              <span className="font-bold text-secondary">Set #{set.setNumber}</span>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => onToggleSetCompleted(exercise.id, set.id)}
+                  className={`min-h-9 min-w-9 rounded-lg inline-flex items-center justify-center transition-colors ${
+                    set.completed
+                      ? 'bg-success text-on-primary'
+                      : 'bg-input border border-border text-secondary hover:border-primary'
+                  }`}
+                  aria-label={`Toggle set ${set.setNumber} completion`}
+                >
+                  <Check size={16} strokeWidth={set.completed ? 3 : 2} />
+                </button>
+                {exercise.sets.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => onRemoveSet(exercise.id, set.id)}
+                    className="min-h-9 min-w-9 inline-flex items-center justify-center text-secondary hover:text-danger p-1 rounded-lg border border-border"
+                    aria-label={`Remove set ${set.setNumber}`}
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                )}
+              </div>
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+              <label className="space-y-1">
+                <span className="block text-[10px] text-secondary uppercase">Wt ({set.targetWeightKg}kg)</span>
+                <input
+                  type="number"
+                  min="0"
+                  step="0.5"
+                  value={set.actualWeightKg}
+                  onChange={(e) => onUpdateSetValue(exercise.id, set.id, 'actualWeightKg', Number(e.target.value))}
+                  className="w-full min-h-9 px-2 py-1 rounded bg-input border border-border text-center text-primary font-semibold focus-visible:ring-1 focus-visible:ring-focus-ring"
+                />
+              </label>
+              <label className="space-y-1">
+                <span className="block text-[10px] text-secondary uppercase">Reps ({set.targetReps})</span>
+                <input
+                  type="number"
+                  min="1"
+                  value={set.actualReps}
+                  onChange={(e) => onUpdateSetValue(exercise.id, set.id, 'actualReps', Number(e.target.value))}
+                  className="w-full min-h-9 px-2 py-1 rounded bg-input border border-border text-center text-primary font-semibold focus-visible:ring-1 focus-visible:ring-focus-ring"
+                />
+              </label>
+              <label className="space-y-1">
+                <span className="block text-[10px] text-secondary uppercase">RPE (1-10)</span>
+                <input
+                  type="number"
+                  min="1"
+                  max="10"
+                  value={set.rpe}
+                  onChange={(e) => onUpdateSetValue(exercise.id, set.id, 'rpe', Number(e.target.value))}
+                  className="w-full min-h-9 px-2 py-1 rounded bg-input border border-border text-center text-primary font-semibold focus-visible:ring-1 focus-visible:ring-focus-ring"
+                />
+              </label>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Sets Desktop Table */}
+      <div className="hidden md:block overflow-x-auto">
         <table className="w-full text-xs text-left">
           <thead className="text-secondary uppercase border-b border-border text-[11px]">
             <tr>

@@ -64,7 +64,7 @@ export default function TrainerAttendanceToolbar({
       </div>
 
       {/* Controls */}
-      <div className="px-4 py-2.5 flex flex-wrap gap-2.5 items-center ">
+      <div className="w-full sm:w-auto px-4 py-2.5 flex flex-wrap gap-2.5 items-center ">
         {/* My Attendance view toggle */}
         {tab === 'MY_ATTENDANCE' && setViewMode && (
           <div className="flex bg-input border border-border rounded-lg p-0.5 ">
@@ -84,7 +84,7 @@ export default function TrainerAttendanceToolbar({
         )}
 
         {/* Search */}
-        <div className="relative min-w-[200px] sm:w-64">
+        <div className="relative w-full sm:min-w-[200px] sm:w-64">
           <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none"  strokeWidth={2}/>
           <label htmlFor="trainer-attendance-search" className="sr-only ">{t('TEXT_SEARCH_PLACEHOLDER')}</label>
           <input
@@ -112,7 +112,7 @@ export default function TrainerAttendanceToolbar({
           onChange={(val: string | number) => setFilterDate(String(val))}
           placeholder={t("TEXT_FILTER_BY_DATE")}
           ariaLabel={t("TEXT_FILTER_BY_DATE")}
-          className="w-36 "
+          className="w-full sm:w-36 "
          testId="trainer-attendance-attendance-toolbar-filter"/>
 
         {hasFilter && (

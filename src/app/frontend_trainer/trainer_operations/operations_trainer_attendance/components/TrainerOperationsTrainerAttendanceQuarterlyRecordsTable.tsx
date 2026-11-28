@@ -19,18 +19,18 @@ export function TrainerOperationsTrainerAttendanceQuarterlyRecordsTable({
 
   return (
     <div className="bg-card border border-border rounded-2xl shadow-card overflow-hidden">
-      <div className="p-4 border-b border-border bg-surface-highlight flex items-center justify-between">
+      <div className="p-4 border-b border-border bg-surface-highlight flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <h3 className="font-bold text-sm text-primary flex items-center gap-2">
-          <Clock size={16} className="text-primary" />
+          <Clock size={16} className="text-primary shrink-0" />
           <span>
             Complete Attendance Log: Last 3 Months ({startDate} to {endDate})
           </span>
         </h3>
-        <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-primary-subtle text-primary border border-border">
+        <span className="self-start sm:self-auto text-xs font-semibold px-2 py-0.5 rounded-full bg-primary-subtle text-primary border border-border shrink-0">
           {rangeRecords.length} Logged Entries
         </span>
       </div>
-      <div className="max-h-[640px] overflow-auto custom-scrollbar">
+      <div className="hidden md:block max-h-[640px] overflow-auto custom-scrollbar">
         <table className="w-full text-xs sm:text-sm text-start border-collapse">
           <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
             <tr className="border-b border-border bg-surface-highlight text-secondary uppercase text-[11px] font-bold tracking-wider">
@@ -77,6 +77,33 @@ export function TrainerOperationsTrainerAttendanceQuarterlyRecordsTable({
             )}
           </tbody>
         </table>
+      </div>
+      <div className="md:hidden p-3 space-y-3">
+        {rangeRecords.length === 0 ? (
+          <p className="p-6 text-center text-sm text-secondary">
+            No biometric records found within the selected 3-month range.
+          </p>
+        ) : (
+          rangeRecords.map((r, idx) => (
+            <article key={`mobile-${r.id || idx}`} className="rounded-xl border border-border bg-card p-4 shadow-card space-y-2.5 text-xs">
+              <div className="flex items-center justify-between gap-2 border-b border-border pb-2">
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="font-bold text-primary text-sm">{r.date}</span>
+                  <CopyButton value={r.date} />
+                </div>
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-success-bg text-success border border-success shrink-0">
+                  <CheckCircle2 size={12} /> Present
+                </span>
+              </div>
+              <dl className="grid grid-cols-2 gap-2">
+                <div><dt className="text-secondary uppercase text-[10px]">Check-In</dt><dd className="font-semibold text-primary">{r.checkIn || '06:00 AM'}</dd></div>
+                <div><dt className="text-secondary uppercase text-[10px]">Check-Out</dt><dd className="text-secondary">{r.checkOut || '03:00 PM'}</dd></div>
+                <div><dt className="text-secondary uppercase text-[10px]">Duration</dt><dd className="font-medium text-primary">{r.durationMinutes ? `${Math.floor(r.durationMinutes / 60)}h ${r.durationMinutes % 60}m` : '8h 30m'}</dd></div>
+                <div><dt className="text-secondary uppercase text-[10px]">Method</dt><dd className="text-secondary truncate">{r.checkInMethod || 'Biometric Fingerprint'}</dd></div>
+              </dl>
+            </article>
+          ))
+        )}
       </div>
       <div className="border-t border-border px-4 py-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between bg-card text-xs text-secondary">
         <p>

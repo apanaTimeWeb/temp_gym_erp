@@ -50,7 +50,7 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
     >
       <div className="my-auto bg-card border border-border rounded-2xl w-full max-w-lg flex flex-col shadow-2xl overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-header shrink-0">
+        <div className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-border bg-header shrink-0">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-primary-subtle text-primary flex items-center justify-center">
               <Megaphone size={16} />
@@ -73,7 +73,7 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
         </div>
 
         {/* Body */}
-        <form onSubmit={handleSend} className="p-6 space-y-4">
+        <form onSubmit={handleSend} className="p-4 sm:p-6 space-y-4">
           {/* Trainer Scope Notice */}
           <div className="flex items-start gap-2.5 p-3 rounded-xl bg-info-bg border border-info text-xs text-info">
             <ShieldCheck size={16} className="shrink-0 mt-0.5 text-info" />
@@ -86,7 +86,7 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
             <label className="block text-xs font-semibold text-secondary uppercase tracking-wider mb-1.5">
               Target Trainees
             </label>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               <button
                 type="button"
                 onClick={() => setAudience('ALL')}
@@ -127,7 +127,7 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
             <label className="block text-xs font-semibold text-secondary uppercase tracking-wider mb-1.5">
               Channel
             </label>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               <button
                 type="button"
                 onClick={() => setChannel('WHATSAPP')}

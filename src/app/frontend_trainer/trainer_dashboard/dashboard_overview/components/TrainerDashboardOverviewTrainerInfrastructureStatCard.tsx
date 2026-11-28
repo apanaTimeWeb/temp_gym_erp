@@ -17,13 +17,13 @@ import type { TrainerInfrastructureStatCardProps } from '@/app/frontend_trainer/
  */
 export default function TrainerInfrastructureStatCard({ title, value, change, changeType = 'neutral', icon: Icon, iconBg, iconColor, href }: TrainerInfrastructureStatCardProps) {
  const card = (
- <div className={`bg-card rounded-xl p-5 shadow-card border border-border hover:border-focus motion-safe:transition-colors motion-safe:duration-base ${href ? 'hover:border-primary cursor-pointer' : ''}`}>
- <div className="flex items-center justify-between">
- <div>
- <p className="text-xs font-medium text-secondary uppercase tracking-wider">{title}</p>
- <p className="text-kpi font-bold text-primary mt-1">{value}</p>
+ <div className={`min-w-0 bg-card rounded-2xl p-5 shadow-card border border-border hover:border-focus motion-safe:transition-all motion-safe:duration-base motion-safe:hover:scale-[1.01] ${href ? 'hover:border-primary cursor-pointer' : ''}`}>
+ <div className="flex items-start justify-between gap-3">
+ <div className="min-w-0 flex-1">
+ <p className="text-xs font-semibold text-secondary uppercase tracking-wider truncate">{title}</p>
+ <p className="text-kpi font-bold text-primary tabular-nums mt-1.5">{value}</p>
  {change && (
- <p className={`text-xs mt-1 font-medium ${
+ <p className={`text-xs mt-1.5 font-medium ${
  changeType === 'up' ? 'text-success' :
  changeType === 'down' ? 'text-danger' : 'text-secondary'
  }`}>
@@ -31,8 +31,8 @@ export default function TrainerInfrastructureStatCard({ title, value, change, ch
  </p>
  )}
  </div>
- <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${iconBg}`}>
- <Icon size={18} strokeWidth={2} className={iconColor} />
+ <div className={`p-2.5 rounded-xl border border-border flex items-center justify-center shrink-0 ${iconBg}`}>
+ <Icon size={18} strokeWidth={2.2} className={iconColor} />
  </div>
  </div>
  </div>

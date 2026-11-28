@@ -27,11 +27,6 @@ import { useTrainerLibraryLogic } from '@/app/frontend_trainer/trainer_coaching/
 
 
 
-
-
-
-
-
 /**
  * @description Orchestrates the Trainer Diet Library query state and feature-local presentation components.
  * @dependencies URL filter state → useTrainerLibraryLogic → TanStack Query/API → TrainerLibraryDietGrid/TrainerLibraryTabs.
@@ -81,7 +76,7 @@ export default function TrainerLibraryMain() {
 
   return (
     <div className="min-h-full pb-10 bg-page text-primary">
-      <div className="p-6 space-y-5">
+      <div className="p-4 sm:p-6 space-y-5">
         <TrainerLibraryTabs
           search={search}
           setSearch={setSearch}
@@ -90,7 +85,7 @@ export default function TrainerLibraryMain() {
           onRefresh={loadAll}
           onCreate={openCreateDiet}
         />
-        <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden p-5">
+        <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden p-4 sm:p-5">
           <TrainerLibraryDietGrid
             dietPlans={dietPlans}
             totalDietPlans={totalDietPlans}
@@ -169,7 +164,7 @@ export default function TrainerLibraryMain() {
           } catch {
             // Mutation state owns the visible error; keep the modal and selected member for retry.
           }
-        }} testId="trainer-library-library-main-edit"/>
+        }} testId="trainer-library-library-main-edit" />
     </div>
   );
 }

@@ -27,9 +27,9 @@ export function TrainerCoachingIndividualProgressProgressTrackingFilterBar({
 
   return (
     <div className="p-4 border-b border-border bg-surface-highlight flex flex-wrap items-center justify-between gap-3">
-      <div className="flex flex-wrap items-center gap-2.5 flex-1 min-w-[260px]">
+      <div className="flex flex-wrap items-center gap-2.5 flex-1 min-w-0 w-full sm:w-auto">
         {/* Quick Search */}
-        <div className="relative min-w-[160px] max-w-xs flex-1">
+        <div className="relative w-full sm:min-w-[160px] sm:max-w-xs flex-1">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" />
           <input
             type="text"

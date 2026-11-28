@@ -8,33 +8,33 @@
 
 @source "../**/*.{ts,tsx,js,jsx}";
 
-/* ── 1. LIGHT MODE (default) ──────────────────────────────── */
+/* ── 1. LIGHT MODE ────────────────────────────────────────── */
 :root {
   /* Core Surface */
-  --primary: #EAB308;
-  --primary-hover: #CA8A04;
-  --primary-subtle: #FEF9C3;
+  --primary: #EA580C;
+  --primary-hover: #C2410C;
+  --primary-subtle: #FFEDD5;
   --bg-page: #F4F4F5;
   --bg-card: #FFFFFF;
   --bg-sidebar: #FAFAFA;
   --bg-header: #FFFFFF;
-  --bg-header-translucent: rgba(255, 255, 255, 0.8);
+  --bg-header-translucent: rgba(255, 255, 255, 0.85);
   --bg-input: #FFFFFF;
   --bg-floating: #FFFFFF;
   --bg-overlay: #FAFAFA;
   --bg-popover: #F4F4F5;
-  --surface-hover: rgba(234, 179, 8, 0.08);
-  --surface-highlight: rgba(234, 179, 8, 0.05);
+  --surface-hover: rgba(255, 90, 31, 0.08);
+  --surface-highlight: rgba(255, 90, 31, 0.05);
   --surface-zebra: #FAFAFA;
   --overlay-backdrop: rgba(0, 0, 0, 0.6);
-  --focus-ring: #A16207;
+  --focus-ring: #FF5A1F;
   --border: #E4E4E7;
-  --border-focus: #A16207;
+  --border-focus: #FF5A1F;
   /* Text */
-  --text-primary: #000000;
+  --text-primary: #111111;
   --text-secondary: #52525B;
   --text-disabled: #A1A1AA;
-  --text-on-primary: #111111;
+  --text-on-primary: #FFFFFF;
   --text-on-danger: #FFFFFF;
   --text-on-warning: #111111;
   --text-on-success: #FFFFFF;
@@ -67,7 +67,7 @@
   --pay-bank-text: #0369A1;
   --pay-bank-bg: #E0F2FE;
   /* Chart */
-  --chart-primary: #EAB308;
+  --chart-primary: #FF5A1F;
   --chart-success: #16A34A;
   --chart-danger: #DC2626;
   --chart-warning: #F59E0B;
@@ -99,32 +99,32 @@
   --drawer-width: 480px;
 }
 
-/* ── 2. DARK MODE (Smart Gym 360 Default) ─────────────────── */
+/* ── 2. DARK MODE (Theme 1 – Black + Electric Orange Default) ── */
 .dark {
-  --primary: #FACC15;
-  --primary-hover: #EAB308;
-  --primary-subtle: rgba(250, 204, 21, 0.15);
-  --bg-page: #050505;
-  --bg-card: #111111;
-  --bg-sidebar: #050505;
-  --bg-header: #111111;
-  --bg-header-translucent: rgba(17, 17, 17, 0.8);
+  --primary: #FF5A1F;
+  --primary-hover: #E04A14;
+  --primary-subtle: rgba(255, 90, 31, 0.16);
+  --bg-page: #111111;
+  --bg-card: #202020;
+  --bg-sidebar: #141414;
+  --bg-header: #161616;
+  --bg-header-translucent: rgba(17, 17, 17, 0.88);
   --bg-input: #1A1A1A;
-  --bg-floating: #1A1A1A;
-  --bg-overlay: #242424;
-  --bg-popover: #2E2E2E;
-  --surface-hover: rgba(250, 204, 21, 0.08);
-  --surface-highlight: rgba(250, 204, 21, 0.05);
-  --surface-zebra: #141414;
-  --focus-ring: #FACC15;
-  --border: #27272A;
-  --border-focus: #FACC15;
+  --bg-floating: #242424;
+  --bg-overlay: #202020;
+  --bg-popover: #262626;
+  --surface-hover: rgba(255, 90, 31, 0.10);
+  --surface-highlight: rgba(255, 90, 31, 0.06);
+  --surface-zebra: #1A1A1A;
+  --focus-ring: #FF5A1F;
+  --border: #2E2E2E;
+  --border-focus: #FF5A1F;
   --text-primary: #FFFFFF;
-  --text-secondary: #A1A1AA;
-  --text-disabled: #52525B;
+  --text-secondary: #A3A3A3;
+  --text-disabled: #666666;
   --text-on-primary: #111111;
-  --skeleton-base: #111111;
-  --skeleton-highlight: #1A1A1A;
+  --skeleton-base: #1A1A1A;
+  --skeleton-highlight: #262626;
   --success: #15803D;
   --success-text: #4ADE80;
   --success-bg: #064E3B;
@@ -145,9 +145,9 @@
   --pay-card-bg: #1E293B;
   --pay-bank-text: #7DD3FC;
   --pay-bank-bg: #0C4A6E;
-  --chart-primary: #FACC15;
-  --chart-grid: rgba(255, 255, 255, 0.05);
-  --chart-tooltip-bg: #111111;
+  --chart-primary: #FF5A1F;
+  --chart-grid: rgba(255, 255, 255, 0.06);
+  --chart-tooltip-bg: #202020;
   --shadow-card: 0 1px 3px rgba(0,0,0,0.4);
   --shadow-popover: 0 4px 16px rgba(0,0,0,0.5);
   --shadow-dialog: 0 20px 60px rgba(0,0,0,0.6);
@@ -268,7 +268,7 @@ select:not([multiple]) {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23EAB308' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23EA580C' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
   background-size: 14px 14px;
@@ -276,7 +276,7 @@ select:not([multiple]) {
 }
 
 .dark select:not([multiple]) {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23FACC15' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23FF5A1F' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
 }
 
 /* ── 6. RESPONSIVE TABLE UTILITIES (Card Stack & Horizontal Scroll) ────────── */

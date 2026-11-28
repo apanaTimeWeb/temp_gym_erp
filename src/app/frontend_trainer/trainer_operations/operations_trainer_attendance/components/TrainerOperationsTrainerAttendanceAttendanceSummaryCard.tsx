@@ -149,11 +149,11 @@ export default function TrainerAttendanceSummaryCard({ records }: TrainerAttenda
   ] as const;
 
   return (
-    <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {stats.map(({ key, label, value, unit, icon: Icon, color, bg }) => (
-        <article key={key} className="bg-card rounded-xl p-4 shadow-card border border-border flex items-center gap-3 motion-safe:transition-all motion-safe:duration-base motion-safe:hover:-translate-y-1" data-testid={`trainer_attendance-summary-card${key}`}>
-          <div className={`w-10 h-10 rounded-xl ${bg} flex items-center justify-center shrink-0`}><Icon size={18} strokeWidth={2} className={color} /></div>
-          <div className="min-w-0"><p className="text-xs text-secondary font-medium leading-tight line-clamp-2">{label}</p><p className={`text-xl font-bold ${color}`}>{value}{unit && <span className="text-xs text-secondary font-normal ms-1">{unit}</span>}</p></div>
+        <article key={key} className="min-w-0 bg-card rounded-2xl p-4 shadow-card border border-border flex items-center gap-3 motion-safe:transition-all motion-safe:duration-base motion-safe:hover:scale-[1.01]" data-testid={`trainer_attendance-summary-card${key}`}>
+          <div className={`w-10 h-10 rounded-xl border border-border ${bg} flex items-center justify-center shrink-0`}><Icon size={18} strokeWidth={2} className={color} /></div>
+          <div className="min-w-0"><p className="text-xs text-secondary font-medium leading-tight line-clamp-2">{label}</p><p className={`text-xl font-bold tabular-nums ${color}`}>{value}{unit && <span className="text-xs text-secondary font-normal ms-1">{unit}</span>}</p></div>
         </article>
       ))}
     </div>

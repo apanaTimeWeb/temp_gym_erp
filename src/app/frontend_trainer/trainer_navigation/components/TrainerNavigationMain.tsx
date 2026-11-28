@@ -48,20 +48,28 @@ export default function TrainerNavigationMain({ children }: TrainerNavigationMai
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const pathname = usePathname();
 
-  // Effect contract: keep drawer semantics aligned with the sidebar CSS breakpoint and close mobile navigation when returning to desktop.
+  // Effect contract: keep drawer semantics aligned with the sidebar CSS breakpoint, auto-collapse on tablet, and close mobile navigation when returning to desktop.
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const mediaQuery = typeof window.matchMedia === 'function' ? window.matchMedia('(max-width: 767px)') : null;
+    const tabletQuery = typeof window.matchMedia === 'function' ? window.matchMedia('(min-width: 768px) and (max-width: 1023px)') : null;
+    const mobileQuery = typeof window.matchMedia === 'function' ? window.matchMedia('(max-width: 767px)') : null;
     const syncViewport = () => {
-      const matches = mediaQuery ? mediaQuery.matches : window.innerWidth < 768;
-      setIsMobileViewport(matches);
-      if (!matches) setIsMobileOpen(false);
+      const isMobile = mobileQuery ? mobileQuery.matches : window.innerWidth < 768;
+      const isTablet = tabletQuery ? tabletQuery.matches : (window.innerWidth >= 768 && window.innerWidth < 1024);
+      setIsMobileViewport(isMobile);
+      if (!isMobile) setIsMobileOpen(false);
+      if (isTablet) setIsCollapsed(true);
     };
     syncViewport();
-    if (mediaQuery) {
-      mediaQuery.addEventListener('change', syncViewport);
-      return () => mediaQuery.removeEventListener('change', syncViewport);
-    }
+    const handleTabletChange = (event: MediaQueryListEvent) => {
+      setIsCollapsed(event.matches);
+    };
+    if (mobileQuery) mobileQuery.addEventListener('change', syncViewport);
+    if (tabletQuery) tabletQuery.addEventListener('change', handleTabletChange);
+    return () => {
+      if (mobileQuery) mobileQuery.removeEventListener('change', syncViewport);
+      if (tabletQuery) tabletQuery.removeEventListener('change', handleTabletChange);
+    };
   }, []);
 
   const handleToggleSidebar = () => {
@@ -100,7 +108,7 @@ export default function TrainerNavigationMain({ children }: TrainerNavigationMai
           isMobileOpen={isMobileOpen}
           setIsMobileOpen={setIsMobileOpen}
         />
-        <div id="trainer-main-content" tabIndex={-1} className={`min-h-screen pt-16 trainer-shell-scrollbar overflow-y-auto motion-safe:transition-all motion-safe:duration-base motion-reduce:transition-none ${isCollapsed ? "trainer-shell-content-offset-collapsed" : "trainer-shell-content-offset"}`}>
+        <div id="trainer-main-content" tabIndex={-1} className={`min-h-screen min-w-0 overflow-x-hidden pt-16 trainer-shell-scrollbar overflow-y-auto motion-safe:transition-all motion-safe:duration-base motion-reduce:transition-none ${isCollapsed ? "trainer-shell-content-offset-collapsed" : "trainer-shell-content-offset"}`}>
           <TrainerNavigationBreadcrumbs />
           {children}
         </div>

@@ -96,7 +96,7 @@ export default function TrainerMembersProfileOverview() {
                   style={{ width: `${Math.min(100, Math.round(((selectedMember.ptPackage.completedSessions ?? 0) / selectedMember.ptPackage.totalSessions) * 100))}%` }}
                 />
               </div>
-              <div className="grid grid-cols-3 gap-2 pt-1 text-center">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-center">
                 <div className="bg-input rounded-lg p-2">
                   <p className="text-xs text-secondary">Total</p>
                   <p className="text-sm font-bold text-primary">{selectedMember.ptPackage.totalSessions}</p>

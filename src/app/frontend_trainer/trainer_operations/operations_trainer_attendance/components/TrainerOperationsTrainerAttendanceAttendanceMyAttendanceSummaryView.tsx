@@ -10,7 +10,7 @@ export default function TrainerAttendanceMyAttendanceSummaryView({ model }: { mo
   const t = useTranslations('TRAINER_ATTENDANCE');
   if (model.myAttendanceHistoryQuery.isPending) {
     return (
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4" aria-busy="true" aria-label={t('TEXT_LOADING_ATTENDANCE_RECORDS')} data-testid="trainer_attendance-history-summary-loading">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-busy="true" aria-label={t('TEXT_LOADING_ATTENDANCE_RECORDS')} data-testid="trainer_attendance-history-summary-loading">
         <TrainerInfrastructureSkeletonBlock className="h-24 rounded-xl border border-border" />
         <TrainerInfrastructureSkeletonBlock className="h-24 rounded-xl border border-border" />
         <TrainerInfrastructureSkeletonBlock className="h-24 rounded-xl border border-border" />

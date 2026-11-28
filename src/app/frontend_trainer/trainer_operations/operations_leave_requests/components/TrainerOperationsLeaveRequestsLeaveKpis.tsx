@@ -23,8 +23,8 @@ export function TrainerOperationsLeaveRequestsLeaveKpis({
   return (
     <div className="space-y-4">
       {/* 4 Leave KPI Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-card rounded-2xl border border-border p-5 shadow-card hover:shadow-md motion-safe:transition-all flex items-center gap-4 border-l-4 border-l-primary">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="min-w-0 bg-card rounded-2xl border border-border p-5 shadow-card hover:shadow-md motion-safe:transition-all flex items-center gap-4 border-l-4 border-l-primary">
           <div className="p-3.5 rounded-xl bg-primary-subtle text-primary shrink-0">
             <FileText size={22} strokeWidth={2} />
           </div>

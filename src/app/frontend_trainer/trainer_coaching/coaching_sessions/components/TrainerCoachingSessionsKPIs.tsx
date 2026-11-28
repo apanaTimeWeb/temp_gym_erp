@@ -38,15 +38,15 @@ export default function TrainerSessionsKPIs(_props: TrainerSessionsKPIsProps = {
       {TRAINER_SESSIONS_KPI_CARD_CONFIG.map(({ key, labelKey, icon: Icon, iconClass, bgClass }) => (
         <article
           key={key}
-          className="bg-card rounded-xl p-5 border border-border flex items-start gap-4 shadow-card motion-safe:transition-all motion-safe:duration-base motion-safe:hover:-translate-y-1"
+          className="min-w-0 bg-card rounded-2xl p-5 border border-border flex items-start justify-between gap-3 shadow-card motion-safe:transition-all motion-safe:duration-base motion-safe:hover:scale-[1.01]"
           data-testid={`trainer_sessions-kpis-card${key}`}
         >
-          <div className={`p-3 rounded-xl ${bgClass} ${iconClass}`}>
-            <Icon size={18} strokeWidth={2} />
+          <div className="min-w-0 flex-1">
+            <p className="text-xs font-semibold text-secondary uppercase tracking-wider mb-1 truncate">{t(labelKey)}</p>
+            <p className="text-kpi font-bold text-primary tabular-nums" aria-label={isPending ? t('TEXT_LOADING') : isError ? t('TEXT_UNABLE_TO_LOAD_SESSIONS_RIGHT_NOW_PLEASE_RETRY') : String(valuesByKey[key])} data-state={isPending ? 'loading' : isError ? 'error' : 'ready'}>{isPending || isError ? '—' : valuesByKey[key]}</p>
           </div>
-          <div className="min-w-0">
-            <p className="text-sm font-medium text-secondary mb-1 truncate">{t(labelKey)}</p>
-            <p className="text-kpi font-bold text-primary" aria-label={isPending ? t('TEXT_LOADING') : isError ? t('TEXT_UNABLE_TO_LOAD_SESSIONS_RIGHT_NOW_PLEASE_RETRY') : String(valuesByKey[key])} data-state={isPending ? 'loading' : isError ? 'error' : 'ready'}>{isPending || isError ? '—' : valuesByKey[key]}</p>
+          <div className={`p-2.5 rounded-xl border border-border shrink-0 ${bgClass} ${iconClass}`}>
+            <Icon size={18} strokeWidth={2.2} />
           </div>
         </article>
       ))}

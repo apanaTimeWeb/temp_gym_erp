@@ -16,7 +16,7 @@ export default function TrainerAttendanceMain() {
 
   return (
     <div className="min-h-full pb-10 attendance-module bg-page text-primary">
-      <div className="p-6 space-y-5">
+      <div className="p-4 sm:p-6 space-y-5">
         <TrainerAttendanceKPIs stats={model.stats} isPending={model.statsQuery.isPending} isError={model.statsQuery.isError} onRetry={() => void model.statsQuery.refetch()} />
         {model.tab === 'MY_ATTENDANCE' && <TrainerAttendanceMyAttendanceSummaryView model={model} />}
         <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden">

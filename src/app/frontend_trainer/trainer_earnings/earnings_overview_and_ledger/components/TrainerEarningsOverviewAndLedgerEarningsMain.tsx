@@ -47,13 +47,13 @@ export default function TrainerEarningsMain() {
   );
 
   if (isInvalidRange) {
-    return <main className="min-h-full pb-10"><div className="p-6 space-y-6">{pageHeader}</div></main>;
+    return <main className="min-h-full pb-10"><div className="p-4 sm:p-6 space-y-6">{pageHeader}</div></main>;
   }
 
   if (isPending) {
     return (
       <main className="min-h-full pb-10" data-testid="trainer_earnings-main-loading-state">
-        <div className="p-6 space-y-6">{pageHeader}
+        <div className="p-4 sm:p-6 space-y-6">{pageHeader}
           <div className="flex items-center justify-center pt-8" aria-busy="true">
             <div className="w-full max-w-4xl space-y-4"><TrainerInfrastructureSkeletonBlock className="h-28 rounded-xl border border-border" /><TrainerInfrastructureSkeletonBlock className="h-72 rounded-xl border border-border" /></div>
           </div>
@@ -65,7 +65,7 @@ export default function TrainerEarningsMain() {
   if (isError) {
     return (
       <main className="min-h-full pb-10">
-        <div className="p-6 space-y-6">{pageHeader}
+        <div className="p-4 sm:p-6 space-y-6">{pageHeader}
           <div className="bg-danger-bg border border-border rounded-xl p-4 flex items-center gap-3 text-danger max-w-md" role="alert" data-testid="trainer_earnings-trainer_earnings-main-danger-state-32-1">
             <AlertCircle size={18} strokeWidth={2}/>
             <div>
@@ -81,7 +81,7 @@ export default function TrainerEarningsMain() {
 
   return (
     <main className="min-h-full pb-10">
-      <div className="p-6 space-y-6">
+      <div className="p-4 sm:p-6 space-y-6">
         {pageHeader}
         <TrainerEarningsKPIs />
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
