@@ -46,11 +46,12 @@ export default function TrainerDashboardQuickActions() {
   } as const;
 
   return (
-    <div className="h-full bg-card border border-border rounded-2xl p-5 shadow-card flex flex-col">
-      <div className="flex items-center justify-between mb-4">
+    <div className="relative overflow-hidden h-full rounded-2xl border border-amber-500/25 bg-card dark:bg-gradient-to-br dark:from-[#241e12] dark:via-[#202020] dark:to-[#181818] p-5 shadow-card flex flex-col">
+      <span aria-hidden="true" className="pointer-events-none absolute -right-8 -bottom-8 h-24 w-24 rounded-full bg-amber-500/15 blur-2xl" />
+      <div className="relative flex items-center justify-between pb-3 mb-4 border-b border-amber-500/15">
         <h3 className="font-bold text-primary text-lg">{t('TEXT_QUICK_ACTIONS')}</h3>
       </div>
-      <div className="grid grid-cols-2 gap-3 flex-1">
+      <div className="relative grid grid-cols-2 gap-3 flex-1">
         {TRAINER_DASHBOARD_QUICK_ACTIONS.map(({ href, labelKey, iconKey, tone }) => {
           const Icon = iconMap[iconKey];
           const theme = tileThemeMap[tone] ?? tileThemeMap.primary;
@@ -58,7 +59,7 @@ export default function TrainerDashboardQuickActions() {
             <Link
               key={href}
               href={href}
-              className={`min-h-24 flex flex-col items-center justify-center p-3.5 rounded-xl border ${theme.tile} motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring`}
+              className={`min-h-24 flex flex-col items-center justify-center p-3.5 rounded-xl border ${theme.tile} motion-safe:transition-all motion-safe:hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring`}
               data-testid={`trainer_dashboard-dashboard-quick-action-${href.split('/').pop() ?? 'root'}`}
             >
               <span className={`mb-2 p-2.5 rounded-xl border ${theme.badge}`}>

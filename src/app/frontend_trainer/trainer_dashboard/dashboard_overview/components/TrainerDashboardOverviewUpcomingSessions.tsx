@@ -32,35 +32,43 @@ export default function TrainerDashboardUpcomingSessions() {
   const { data: stats } = useTrainerDashboardQuery();
   if (!stats?.upcomingSessions) return null;
 
+  const avatarThemes = [
+    'border-orange-500/35 bg-orange-500/15 text-orange-500',
+    'border-sky-500/35 bg-sky-500/15 text-sky-500',
+    'border-emerald-500/35 bg-emerald-500/15 text-emerald-500',
+    'border-purple-500/35 bg-purple-500/15 text-purple-500',
+  ];
+
   return (
-    <div className="h-full bg-card border border-border rounded-2xl p-5 shadow-card flex flex-col">
-      <div className="flex flex-wrap items-center justify-between gap-2 mb-5">
-        <h3 className="font-bold text-primary text-lg flex items-center gap-2 min-w-0">
-          <span className="p-1.5 rounded-lg border border-orange-500/30 bg-orange-500/15 text-orange-500 shrink-0">
-            <Calendar size={16} strokeWidth={2} />
+    <div className="relative overflow-hidden h-full rounded-2xl border border-sky-500/25 bg-card dark:bg-gradient-to-br dark:from-[#13202c] dark:via-[#202020] dark:to-[#181818] p-5 shadow-card flex flex-col">
+      <span aria-hidden="true" className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-sky-500/15 blur-2xl" />
+      <div className="relative flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-sky-500/15">
+        <h3 className="font-bold text-primary text-lg flex items-center gap-2.5 min-w-0">
+          <span className="p-2 rounded-xl border border-sky-500/30 bg-sky-500/15 text-sky-500 shrink-0">
+            <Calendar size={16} strokeWidth={2.2} />
           </span>
           <span className="truncate">{t("TEXT_UPCOMING_SESSIONS")}</span></h3>
-        <Link href={TRAINER_DASHBOARD_URLS.ROUTES.SCHEDULE} className="motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page text-xs px-2.5 py-1 rounded-lg border border-orange-500/25 bg-orange-500/10 text-orange-600 dark:text-orange-300 font-semibold hover:bg-orange-500/20 shrink-0" data-testid="trainer_dashboard-dashboard-upcoming_sessions_view">{t("TEXT_VIEW_SCHEDULE")}</Link>
+        <Link href={TRAINER_DASHBOARD_URLS.ROUTES.SCHEDULE} className="motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page text-xs px-3 py-1.5 rounded-xl border border-orange-500/30 bg-orange-500/15 text-orange-600 dark:text-orange-300 font-bold hover:bg-orange-500/25 shrink-0" data-testid="trainer_dashboard-dashboard-upcoming_sessions_view">{t("TEXT_VIEW_SCHEDULE")}</Link>
       </div>
 
-      <div className="space-y-3 flex-1">
+      <div className="relative space-y-3 flex-1">
         {stats.upcomingSessions.length === 0 ? (
           <p className="text-secondary text-sm">{t("TEXT_NO_UPCOMING_SESSIONS_TODAY")}</p>
         ) : (
-          stats.upcomingSessions.map(session => (
-            <div key={session.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 p-3 rounded-xl border border-border bg-page hover:border-orange-500/30 motion-safe:transition-colors motion-safe:duration-base">
+          stats.upcomingSessions.map((session, idx) => (
+            <div key={session.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 p-3 rounded-xl border border-border/80 bg-page/80 hover:border-sky-500/35 motion-safe:transition-colors motion-safe:duration-base">
               <div className="flex items-center gap-3 min-w-0">
-                <div className="w-10 h-10 rounded-full border border-orange-500/30 bg-orange-500/15 text-orange-500 flex items-center justify-center font-bold shrink-0">
+                <div className={`w-10 h-10 rounded-xl border flex items-center justify-center font-bold shrink-0 ${avatarThemes[idx % avatarThemes.length]}`}>
                   {session.name.charAt(0)}
                 </div>
                 <div className="min-w-0">
-                  <Link href={`${TRAINER_DASHBOARD_URLS.ROUTES.MEMBERS}?search=${encodeURIComponent(session.name)}`} className="font-medium text-primary text-sm hover:underline truncate block">
+                  <Link href={`${TRAINER_DASHBOARD_URLS.ROUTES.MEMBERS}?search=${encodeURIComponent(session.name)}`} className="font-semibold text-primary text-sm hover:underline truncate block">
                     {session.name}
                   </Link>
                   <p className="text-xs text-secondary truncate">{session.type}</p>
                 </div>
               </div>
-              <div className="self-start sm:self-auto inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium text-sky-600 dark:text-sky-300 border border-sky-500/25 bg-sky-500/10 px-3 py-1.5 rounded-lg shrink-0 tabular-nums">
+              <div className="self-start sm:self-auto inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-sky-600 dark:text-sky-300 border border-sky-500/30 bg-sky-500/15 px-3 py-1.5 rounded-xl shrink-0 tabular-nums">
                 <Clock size={15} className="text-sky-500" strokeWidth={2} />
                 {session.time}
               </div>
