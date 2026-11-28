@@ -22,10 +22,9 @@ describe('TrainerNavigationBreadcrumbs', () => {
     expect(screen.getByText('My Profile').closest('li')).toHaveAttribute('aria-current', 'page');
   });
 
-  it('does not repeat Dashboard as a parent when Dashboard is the current page', () => {
+  it('does not render redundant single Dashboard breadcrumb on dashboard overview', () => {
     routeState.pathname = '/frontend_trainer/trainer_dashboard/dashboard_overview';
     render(<TrainerNavigationBreadcrumbs />);
-    expect(screen.queryByRole('link', { name: 'Dashboard' })).not.toBeInTheDocument();
-    expect(screen.getByText('Dashboard').closest('li')).toHaveAttribute('aria-current', 'page');
+    expect(screen.queryByRole('navigation', { name: 'Breadcrumb' })).not.toBeInTheDocument();
   });
 });
