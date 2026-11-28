@@ -75,12 +75,12 @@ export default function AdminMembersDirectoryToolbar() {
           placeholder={t('members.admin_members_toolbar.text_9fd6edc02a')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-9 pr-4 py-2.5 bg-input border border-border rounded-xl text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary placeholder:text-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
+          className="w-full pl-9 pr-4 py-2.5 bg-input border border-border rounded-xl text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary placeholder:text-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
           aria-label={t('members.admin_members_toolbar.text_a1d97aee95')}
          data-testid="admin_members-admin_members-toolbar-control"/>
       </div>
       <div className="w-full sm:w-auto flex items-center gap-2">
-        <button type="button" onClick={() => void exportMembers()} disabled={isExporting} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 py-2 text-sm font-semibold text-primary hover:bg-surface-hover disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="admin_members-admin_members-toolbar-export">
+        <button type="button" onClick={() => void exportMembers()} disabled={isExporting} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 py-2 text-sm font-semibold text-text-primary hover:bg-surface-hover disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="admin_members-admin_members-toolbar-export">
           <Download size={18} aria-hidden="true" strokeWidth={2} />{isExporting ? t('members.AdminAuditRepair.exportingCsv') : t('members.AdminAuditRepair.exportCsv')}
         </button>
         <Link

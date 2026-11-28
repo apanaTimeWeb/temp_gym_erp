@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import { apiFetch } from '@/lib/api';
 
 import { TrainerInfrastructureApiResponseSchema } from '@/app/frontend_trainer/trainer_operations/operations_leave_requests/schemas/TrainerOperationsLeaveRequestsTrainerInfrastructureApiResponseSchema';
@@ -49,5 +50,15 @@ export const TrainerScheduleApi = {
     const response = TrainerInfrastructureApiResponseSchema(TrainerScheduleLeaveRequestSchema).parse(raw);
     if (!response.data) throw new Error(response.message);
     return { success: response.success, message: response.message, data: response.data };
+  },
+
+  withdrawLeave: async (id: string, idempotencyKey: string): Promise<{ success: boolean; message: string }> => {
+    const raw = await apiFetch<ApiResponse<unknown>>(`${TRAINER_SCHEDULE_URLS.API.LEAVES}/${id}`, {
+      method: 'DELETE',
+      headers: { 'Idempotency-Key': idempotencyKey },
+    });
+    const response = TrainerInfrastructureApiResponseSchema(z.unknown().optional()).parse(raw);
+    if (!response.success) throw new Error(response.message);
+    return { success: response.success, message: response.message };
   }
 };

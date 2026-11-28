@@ -18,12 +18,12 @@ export default function Error({
   const t = useTranslations();
 
   return (
-    <div className="p-6 w-full mt-10">
+    <div className="p-4 sm:p-6 w-full mt-10">
       <div className="bg-danger-bg border border-border rounded-2xl p-8 text-center flex flex-col items-center">
         <div className="w-16 h-16 bg-danger-bg rounded-full flex items-center justify-center mb-4" data-testid="admin_hr-error-status-1">
           <AlertTriangle size={18} strokeWidth={2} className="text-danger" />
         </div>
-        <h2 className="text-xl font-bold text-primary mb-2">{t('hr.Error.text_3f5701190c')}</h2>
+        <h2 className="text-xl font-bold text-text-primary mb-2">{t('hr.Error.text_3f5701190c')}</h2>
         <p className="text-secondary text-sm mb-6 max-w-md">
           {t('hr.Error.text_f10af425f9')}</p>
         <button type="button"

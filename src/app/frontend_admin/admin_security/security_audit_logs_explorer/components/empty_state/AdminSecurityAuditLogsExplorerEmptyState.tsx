@@ -17,7 +17,7 @@ export default function AdminSecurityAuditLogsExplorerEmptyState() {
   const t = useTranslations();
   return <div className="flex flex-col items-center justify-center gap-2 py-12 text-center" data-testid="admin_audit_logs-admin_audit_logs-empty-state-state">
     <ShieldAlert size={18} aria-hidden="true" className="text-secondary"  strokeWidth={2}/>
-    <h3 className="text-base font-semibold text-primary">{t('audit_logs.admin_audit_logs_empty_state.text_no_audit_logs')}</h3>
+    <h3 className="text-base font-semibold text-text-primary">{t('audit_logs.admin_audit_logs_empty_state.text_no_audit_logs')}</h3>
     <p className="text-sm text-secondary">{t('audit_logs.admin_audit_logs_empty_state.text_no_match')}</p>
   </div>;
 }

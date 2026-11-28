@@ -1,4 +1,5 @@
 // RESPONSIBILITY: Renders the frontend_manager route boundary (MANAGERLayout) and delegates feature behavior to module-owned components/hooks; it does not own transport logic.
+import { Inter } from 'next/font/google';
 import { Toaster } from 'sonner';
 
 import { ManagerConfirmProvider } from '@/components/ui/manager_confirm_provider/ManagerConfirmProvider';
@@ -11,6 +12,9 @@ import { ManagerMocksMswBrowserBootstrap } from '@/app/frontend_manager/manager_
 import ManagerNavigationLayout from '@/app/frontend_manager/manager_navigation/components/ManagerNavigationLayout';
 import ManagerNavigationRouteProgress from '@/app/frontend_manager/manager_navigation/components/ManagerNavigationRouteProgress';
 import type { ManagerRoleLayoutProps } from '@/app/frontend_manager/manager_navigation/types/ManagerNavigationLayoutPropsTypes';
+
+const managerInter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-inter' });
+
 export const metadata = {
   title: 'GymSmart MANAGER | Gym Management System',
   description: 'Complete gym management platform — members, attendance, finance, HR, and more.',
@@ -19,7 +23,7 @@ export const metadata = {
 /** @description Composes the Manager shell, approved providers, and the zero-business route progress indicator. */
 export default function MANAGERLayout({ children }: ManagerRoleLayoutProps) {
   return (
-    <>
+    <div className={managerInter.className}>
       <ManagerNavigationRouteProgress />
       <ManagerInfrastructureQueryProvider>
         <ManagerConfirmProvider>
@@ -29,6 +33,6 @@ export default function MANAGERLayout({ children }: ManagerRoleLayoutProps) {
         </ManagerConfirmProvider>
       </ManagerInfrastructureQueryProvider>
       <Toaster />
-    </>
+    </div>
   );
 }

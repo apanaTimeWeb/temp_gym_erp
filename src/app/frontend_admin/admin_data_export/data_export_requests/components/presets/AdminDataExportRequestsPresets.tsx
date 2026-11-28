@@ -43,7 +43,7 @@ export function AdminDataExportRequestsPresets() {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <Database size={18} className="text-primary" strokeWidth={2} />
-                <h3 className="font-semibold text-primary">{ds.label}</h3>
+                <h3 className="font-semibold text-text-primary">{ds.label}</h3>
               </div>
               <p className="text-xs text-secondary leading-relaxed mb-4">{ds.desc}</p>
             </div>

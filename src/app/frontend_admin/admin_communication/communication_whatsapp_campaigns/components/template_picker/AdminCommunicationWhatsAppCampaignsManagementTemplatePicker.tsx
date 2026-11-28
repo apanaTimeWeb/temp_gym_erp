@@ -27,7 +27,7 @@ export default function AdminCommunicationWhatsAppCampaignsManagementTemplatePic
 
   return (
     <section className="rounded-xl border border-border bg-card p-5" aria-labelledby="campaign-template-heading">
-      <h2 id="campaign-template-heading" className="mb-4 text-sm font-semibold text-primary">{t('campaigns.admin_campaigns_template_picker.text_550db245f6')}</h2>
+      <h2 id="campaign-template-heading" className="mb-4 text-sm font-semibold text-text-primary">{t('campaigns.admin_campaigns_template_picker.text_550db245f6')}</h2>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {templates.map((template , __testIdIndex30) => {
           const isSelected = selectedTemplateId === template.id;
@@ -37,7 +37,7 @@ export default function AdminCommunicationWhatsAppCampaignsManagementTemplatePic
               type="button"
               onClick={() => onSelect(template.id)}
               aria-pressed={isSelected}
-              className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95 flex items-center gap-3 rounded-xl border p-4 text-left motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${isSelected ? 'border-focus bg-primary text-on-primary' : 'border-border bg-input text-primary hover:border-focus'}`}
+              className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95 flex items-center gap-3 rounded-xl border p-4 text-left motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${isSelected ? 'border-focus bg-primary text-on-primary' : 'border-border bg-input text-text-primary hover:border-focus'}`}
              data-testid={`admin_campaigns-admin_campaigns-template-picker-click-map30-${__testIdIndex30}-1`}>
               <span className="shrink-0">{renderAdminCampaignsTemplateIcon(template.type)}</span>
               <span className="text-sm font-medium">{template.title}</span>

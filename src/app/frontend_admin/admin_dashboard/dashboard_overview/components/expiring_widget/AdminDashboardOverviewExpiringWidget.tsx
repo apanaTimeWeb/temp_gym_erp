@@ -31,7 +31,7 @@ export default function AdminDashboardOverviewExpiringWidget() {
             <Clock size={18} strokeWidth={2} className="text-warning" />
           </div>
           <div>
-            <h2 className="text-base font-bold text-primary">{t('dashboard.admin_dashboard_expiring_widget.text_8eb6a72b06')}</h2>
+            <h2 className="text-base font-bold text-text-primary">{t('dashboard.admin_dashboard_expiring_widget.text_8eb6a72b06')}</h2>
             <p className="text-xs text-secondary">{t('dashboard.admin_dashboard_expiring_widget.text_a126722ec0')}</p>
           </div>
         </div>
@@ -61,7 +61,7 @@ export default function AdminDashboardOverviewExpiringWidget() {
                 {m.name.charAt(0)}
               </div>
               <div className="min-w-0">
-                <p className="text-sm font-semibold text-primary truncate">{m.name}</p>
+                <p className="text-sm font-semibold text-text-primary truncate">{m.name}</p>
                 <p className="text-xs text-secondary truncate">{m.branch} · {m.plan}</p>
               </div>
             </div>

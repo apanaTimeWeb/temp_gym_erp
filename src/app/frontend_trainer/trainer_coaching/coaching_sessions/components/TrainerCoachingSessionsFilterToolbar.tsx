@@ -26,6 +26,7 @@ interface FilterToolbarProps {
   onScheduleClick: () => void;
   onClearFilters: () => void;
   hasActiveFilters: boolean;
+  onExportCsv?: () => void;
 }
 
 export function TrainerCoachingSessionsFilterToolbar({
@@ -45,6 +46,7 @@ export function TrainerCoachingSessionsFilterToolbar({
   onScheduleClick,
   onClearFilters,
   hasActiveFilters,
+  onExportCsv,
 }: FilterToolbarProps) {
   const t = useTranslations('TRAINER_SESSIONS');
 
@@ -162,15 +164,15 @@ export function TrainerCoachingSessionsFilterToolbar({
 
         {/* Action Buttons: Export & Schedule */}
         <div className="flex items-center gap-2">
-          <a
-            href="/__mocks__/trainer/sessions_export.csv"
-            download="trainer_sessions_schedule.csv"
-            className="min-h-10 inline-flex items-center gap-1.5 px-3 py-2 border border-teal-500/30 bg-teal-500/10 hover:bg-teal-500/20 rounded-xl text-xs font-semibold text-teal-600 dark:text-teal-300 motion-safe:transition-colors"
+          <button
+            type="button"
+            onClick={onExportCsv}
+            className="min-h-10 inline-flex items-center gap-1.5 px-3 py-2 border border-teal-500/30 bg-teal-500/10 hover:bg-teal-500/20 rounded-xl text-xs font-semibold text-teal-600 dark:text-teal-300 motion-safe:transition-colors cursor-pointer"
             data-testid="trainer_sessions-export-csv"
           >
             <Download size={14} />
             <span>Export</span>
-          </a>
+          </button>
           <button
             type="button"
             onClick={onScheduleClick}

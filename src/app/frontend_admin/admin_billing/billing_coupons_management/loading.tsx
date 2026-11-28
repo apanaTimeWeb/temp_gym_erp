@@ -7,7 +7,7 @@
  */
 export default function CouponsLoading() {
   return (
-    <div role="status" aria-live="polite" aria-busy="true" className="p-6 space-y-6" data-testid="admin_coupons-loading-state">
+    <div role="status" aria-live="polite" aria-busy="true" className="p-4 sm:p-6 space-y-6" data-testid="admin_coupons-loading-state">
       <span className="sr-only">Loading coupons…</span>
       <div aria-hidden="true">
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">

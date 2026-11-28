@@ -17,7 +17,7 @@ export function AdminGymsComparisonKpis({ formatCurrency }: GymsComparisonKpisPr
           <span className="text-xs font-semibold uppercase tracking-wider">Top Revenue Gym</span>
           <Award size={18} className="text-warning" />
         </div>
-        <div className="text-xl font-bold text-primary">Andheri East</div>
+        <div className="text-xl font-bold text-text-primary">Andheri East</div>
         <div className="mt-1 text-sm font-semibold text-success">{formatCurrency(185000)} / mo</div>
         <div className="mt-2 text-xs text-secondary">Highest membership collection</div>
       </Link>
@@ -27,7 +27,7 @@ export function AdminGymsComparisonKpis({ formatCurrency }: GymsComparisonKpisPr
           <span className="text-xs font-semibold uppercase tracking-wider">Most Cost Efficient</span>
           <TrendingUp size={18} className="text-success" />
         </div>
-        <div className="text-xl font-bold text-primary">Bandra West</div>
+        <div className="text-xl font-bold text-text-primary">Bandra West</div>
         <div className="mt-1 text-sm font-semibold text-success">57.0% Net Margin</div>
         <div className="mt-2 text-xs text-secondary">INR 81,000 net profit</div>
       </Link>
@@ -37,8 +37,8 @@ export function AdminGymsComparisonKpis({ formatCurrency }: GymsComparisonKpisPr
           <span className="text-xs font-semibold uppercase tracking-wider">Highest Active Members</span>
           <Users size={18} className="text-primary" />
         </div>
-        <div className="text-xl font-bold text-primary">Andheri East</div>
-        <div className="mt-1 text-sm font-semibold text-primary">420 Members</div>
+        <div className="text-xl font-bold text-text-primary">Andheri East</div>
+        <div className="mt-1 text-sm font-semibold text-text-primary">420 Members</div>
         <div className="mt-2 text-xs text-secondary">Largest active recurring subscriber base</div>
       </Link>
 
@@ -47,8 +47,8 @@ export function AdminGymsComparisonKpis({ formatCurrency }: GymsComparisonKpisPr
           <span className="text-xs font-semibold uppercase tracking-wider">Capacity Leader</span>
           <Building2 size={18} className="text-info-text" />
         </div>
-        <div className="text-xl font-bold text-primary">Powai</div>
-        <div className="mt-1 text-sm font-semibold text-primary">59.4% Occupancy</div>
+        <div className="text-xl font-bold text-text-primary">Powai</div>
+        <div className="mt-1 text-sm font-semibold text-text-primary">59.4% Occupancy</div>
         <div className="mt-2 text-xs text-secondary">190 / 320 peak utilization</div>
       </Link>
     </section>

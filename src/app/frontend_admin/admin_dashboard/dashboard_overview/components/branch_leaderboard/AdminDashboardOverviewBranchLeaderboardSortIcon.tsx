@@ -17,5 +17,5 @@ import type { AdminDashboardBranchLeaderboardSortIconProps } from '@/app/fronten
  */
 export default function AdminDashboardOverviewBranchLeaderboardSortIcon({ column, sortKey, sortDir }: AdminDashboardBranchLeaderboardSortIconProps) {
   if (column !== sortKey) return <ChevronsUpDown size={18} className="text-disabled"  strokeWidth={2}/>;
-  return sortDir === 'asc' ? <ChevronUp size={18} className="text-primary"  strokeWidth={2}/> : <ChevronDown size={18} className="text-primary"  strokeWidth={2}/>;
+  return sortDir === 'asc' ? <ChevronUp size={18} className="text-text-primary"  strokeWidth={2}/> : <ChevronDown size={18} className="text-text-primary"  strokeWidth={2}/>;
 }

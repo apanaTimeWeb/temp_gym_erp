@@ -38,7 +38,7 @@ export default function AdminBranchesError({ error, reset }: AdminBranchesErrorP
   return (
     <div className="min-h-96 flex flex-col items-center justify-center text-center p-6 bg-card rounded-2xl border border-border mt-4">
       <AlertTriangle className="  text-danger mb-4"  size={18} strokeWidth={2}/>
-      <h3 className="text-lg font-bold text-primary mb-2">{t('branches.AdminBranchesError.text_8d886c0ba6')}</h3>
+      <h3 className="text-lg font-bold text-text-primary mb-2">{t('branches.AdminBranchesError.text_8d886c0ba6')}</h3>
       <p className="text-secondary">{t('branches.AdminBranchesError.text_f10af425f9')}</p>
       <button type="button"
         onClick={() => reset()}

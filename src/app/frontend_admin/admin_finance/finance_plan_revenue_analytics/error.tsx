@@ -22,7 +22,7 @@ export default function Error({
       <div className="bg-danger-bg p-4 rounded-full mb-4" data-testid="admin_plans-error-status-1">
         <AlertTriangle size={18} className="text-danger"  strokeWidth={2}/>
       </div>
-      <h2 className="text-2xl font-bold text-primary mb-2">{t('plans.Error.text_2dc9d37464')}</h2>
+      <h2 className="text-2xl font-bold text-text-primary mb-2">{t('plans.Error.text_2dc9d37464')}</h2>
       <p className="text-secondary text-center max-w-md mb-6">
         {t('plans.Error.text_f10af425f9')}</p>
       <button type="button"

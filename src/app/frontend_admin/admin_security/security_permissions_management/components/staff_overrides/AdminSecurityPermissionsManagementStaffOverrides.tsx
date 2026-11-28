@@ -26,21 +26,21 @@ export default function AdminSecurityPermissionsManagementStaffOverrides() {
   if (overrides.length === 0) {
     const isFilteredEmpty = allOverridesCount > 0 && hasActiveFilters;
     return <div className="bg-card rounded-xl border border-border p-5">
-      <h3 className="text-sm font-semibold text-primary">{t('permissions.admin_permissions_staff_overrides.text_347718c2e3')}</h3>
+      <h3 className="text-sm font-semibold text-text-primary">{t('permissions.admin_permissions_staff_overrides.text_347718c2e3')}</h3>
       <p className="mt-2 text-xs text-secondary">{isFilteredEmpty ? t('permissions.admin_permissions_staff_overrides.noStaffMatch') : t('permissions.admin_permissions_staff_overrides.text_05a1c7e503')}</p>
-      {isFilteredEmpty && <button type="button" onClick={clearFilters} className="mt-3 inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-border bg-input px-3 text-xs font-semibold text-primary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="permissions-management-permissions-management-staff-overrides-clear-filters">{t('permissions.admin_permissions_staff_overrides.clearFilters')}</button>}
+      {isFilteredEmpty && <button type="button" onClick={clearFilters} className="mt-3 inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-border bg-input px-3 text-xs font-semibold text-text-primary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="permissions-management-permissions-management-staff-overrides-clear-filters">{t('permissions.admin_permissions_staff_overrides.clearFilters')}</button>}
     </div>;
   }
 
   return <div className="bg-card rounded-xl border border-border overflow-hidden">
-    <div className="px-5 py-4 border-b border-border"><h3 className="text-base font-semibold text-primary">{t('permissions.admin_permissions_staff_overrides.text_347718c2e3')}</h3><p className="text-xs text-secondary mt-1">{t('permissions.admin_permissions_staff_overrides.text_fe080f8a0d')}</p></div>
-    <div className="divide-y divide-border">
+    <div className="px-5 py-4 border-b border-border"><h3 className="text-base font-semibold text-text-primary">{t('permissions.admin_permissions_staff_overrides.text_347718c2e3')}</h3><p className="text-xs text-secondary mt-1">{t('permissions.admin_permissions_staff_overrides.text_fe080f8a0d')}</p></div>
+    <div className="divide-y divide-border dark:divide-white/[0.07]">
       {overrides.map((item, staffIndex) => <section key={item.staffId} className="p-5">
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
           <div className="min-w-0">
             <Link
               href={`/frontend_admin/admin_hr/hr_staff_management?search=${encodeURIComponent(item.staffName)}`}
-              className="text-sm font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+              className="text-sm font-semibold text-text-primary hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
               title={`View ${item.staffName} in Staff Management`}
             >
               {item.staffName}
@@ -56,7 +56,7 @@ export default function AdminSecurityPermissionsManagementStaffOverrides() {
               <span className="min-w-0 text-sm font-medium text-secondary">{key}</span><span className="text-xs text-secondary">{t('permissions.admin_permissions_staff_overrides.unsupportedPermission')}</span>
             </div>;
             return <div key={key} className="flex items-center justify-between gap-3 rounded-lg border border-border bg-input p-3">
-              <div className="min-w-0"><p className="text-sm font-medium text-primary">{label}</p><p className="text-xs text-secondary">{t('permissions.admin_permissions_staff_overrides.text_c6c69f06e9')}</p></div>
+              <div className="min-w-0"><p className="text-sm font-medium text-text-primary">{label}</p><p className="text-xs text-secondary">{t('permissions.admin_permissions_staff_overrides.text_c6c69f06e9')}</p></div>
               <button type="button" onClick={() => void toggleStaffPermission(item.staffId, item.staffName, key, !enabled)} disabled={saving} aria-pressed={enabled} aria-label={t('permissions.admin_permissions_staff_overrides.auto_permissionToggle', { action: enabled ? t('permissions.admin_permissions_staff_overrides.auto_32447c7d34') : t('permissions.admin_permissions_staff_overrides.auto_5b6239be97'), feature: label, name: item.staffName })} className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95 min-h-11 min-w-11 rounded-full px-3 text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base ${enabled ? 'bg-success text-on-success' : 'bg-surface-zebra text-secondary'}`} data-testid={`admin_permissions-admin_permissions-staff-overrides-toggle-${staffIndex}-${permissionIndex}`}>{enabled ? t('permissions.admin_permissions_staff_overrides.auto_5037b668d6') : t('permissions.admin_permissions_staff_overrides.auto_759b88491c')}</button>
             </div>;
           })}

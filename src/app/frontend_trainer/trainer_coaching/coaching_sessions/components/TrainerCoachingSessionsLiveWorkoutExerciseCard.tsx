@@ -115,7 +115,7 @@ export function TrainerCoachingSessionsLiveWorkoutExerciseCard({
       </div>
 
       {/* Sets Desktop Table */}
-      <div className="hidden md:block overflow-x-auto">
+      <div className="hidden md:block overflow-x-hidden">
         <table className="w-full text-xs text-left">
           <thead className="text-secondary uppercase border-b border-border text-[11px]">
             <tr>

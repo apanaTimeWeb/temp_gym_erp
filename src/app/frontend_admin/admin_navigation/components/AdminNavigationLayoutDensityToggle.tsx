@@ -17,7 +17,7 @@ export default function AdminNavigationLayoutDensityToggle() {
       aria-pressed={density === 'compact'}
       aria-label={density === 'compact' ? t('admin_layout.AdminNavigationLayoutDensityToggle.remaining_useComfortableDensity') : t('admin_layout.AdminNavigationLayoutDensityToggle.remaining_useCompactDensity') }
       title={density === 'compact' ? t('admin_layout.AdminNavigationLayoutDensityToggle.remaining_comfortableDensity') : t('admin_layout.AdminNavigationLayoutDensityToggle.remaining_compactDensity') }
-      className="min-h-11 min-w-11 inline-flex items-center justify-center rounded-lg border border-border bg-input text-secondary hover:bg-surface-hover hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-colors motion-safe:duration-base motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95"
+      className="min-h-10 min-w-10 inline-flex items-center justify-center rounded-xl border border-cyan-400/35 bg-cyan-500/15 text-cyan-300 hover:bg-cyan-500/25 hover:border-cyan-400/60 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base motion-safe:active:scale-95 shadow-[0_2px_10px_rgba(34,211,238,0.16)]"
       data-testid="admin_navigation-admin-density-toggle-toggle"
     >
       <LayoutList size={18} strokeWidth={2} aria-hidden="true" />

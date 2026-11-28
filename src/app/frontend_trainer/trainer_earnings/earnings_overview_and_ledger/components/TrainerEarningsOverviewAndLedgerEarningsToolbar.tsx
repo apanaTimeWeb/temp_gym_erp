@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, FileText, Search, X } from 'lucide-react';
+import { Download, Printer, Search, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { TrainerEarningsDateField } from '@/app/frontend_trainer/trainer_earnings/earnings_overview_and_ledger/types/TrainerEarningsOverviewAndLedgerEarningsDateRangeTypes';
 
@@ -13,6 +13,7 @@ interface TrainerEarningsToolbarProps {
   endDate: string;
   updateUrlParam: (key: string, value: string | null) => void;
   handleDateChange: (key: TrainerEarningsDateField, value: string) => void;
+  onExportCsv?: () => void;
 }
 
 export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
@@ -24,6 +25,7 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
   endDate,
   updateUrlParam,
   handleDateChange,
+  onExportCsv,
 }: TrainerEarningsToolbarProps) {
   const t = useTranslations('TRAINER_EARNINGS');
   const hasActiveFilters = Boolean(draftSearch.trim()) || statusFilter !== 'ALL' || typeFilter !== 'ALL' || Boolean(startDate) || Boolean(endDate);
@@ -88,10 +90,9 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
             data-testid="trainer_earnings-filter-type"
           >
             <option value="ALL">All Types</option>
-            <option value="session">PT Sessions</option>
-            <option value="class">Group Classes</option>
-            <option value="bonus">Bonus / Commission</option>
-            <option value="salary">Base Salary</option>
+            <option value="Commission">PT Commission</option>
+            <option value="Bonus">Target Bonus</option>
+            <option value="Session">PT Session</option>
           </select>
 
           <label htmlFor="trainer-earnings-history-start-date" className="sr-only">{t("TEXT_START_DATE_FF99F5")}</label>
@@ -124,24 +125,24 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
             </button>
           )}
 
-          <a
-            href="/__mocks__/trainer/earnings_export.csv"
-            download="trainer_earnings_statement.csv"
-            className="min-h-10 inline-flex items-center gap-1.5 px-3 py-1.5 border border-teal-500/30 bg-teal-500/10 hover:bg-teal-500/20 text-teal-600 dark:text-teal-300 rounded-xl text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all"
+          <button
+            type="button"
+            onClick={onExportCsv}
+            className="min-h-10 inline-flex items-center gap-1.5 px-3 py-1.5 border border-teal-500/30 bg-teal-500/10 hover:bg-teal-500/20 text-teal-600 dark:text-teal-300 rounded-xl text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all cursor-pointer"
             data-testid="trainer_earnings-export-csv-button"
           >
             <Download size={14} />
             CSV
-          </a>
-          <a
-            href="/__mocks__/trainer/earnings_statement.pdf"
-            download="trainer_earnings_statement.pdf"
-            className="min-h-10 inline-flex items-center gap-1.5 px-3 py-1.5 border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 rounded-xl text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all"
+          </button>
+          <button
+            type="button"
+            onClick={() => window.print()}
+            className="min-h-10 inline-flex items-center gap-1.5 px-3 py-1.5 border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 rounded-xl text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all cursor-pointer"
             data-testid="trainer_earnings-export-pdf-button"
           >
-            <FileText size={14} />
-            PDF
-          </a>
+            <Printer size={14} />
+            Print
+          </button>
         </div>
       </div>
     </div>

@@ -12,7 +12,7 @@ import AdminNotificationsClient from '@/app/frontend_admin/admin_communication/c
 export default function AdminCommunicationNotificationsCenterMain() {
   return (
     <div className="min-h-full pb-10">
-      <div className="w-full p-6 space-y-6">
+      <div className="w-full p-4 sm:p-6 space-y-6">
         <AdminNotificationsClient />
       </div>
     </div>

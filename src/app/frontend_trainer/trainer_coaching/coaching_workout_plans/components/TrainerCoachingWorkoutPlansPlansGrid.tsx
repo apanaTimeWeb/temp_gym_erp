@@ -104,15 +104,19 @@ export default function TrainerWorkoutPlansGrid() {
     if (!assigningPlan || memberIds.length === 0) return;
     setIsBatchAssigning(true);
     try {
-      await Promise.all(
+      const results = await Promise.all(
         memberIds.map((memberId, idx) =>
-          apiFetch(`/trainer/trainer_members/${memberId}/workout`, {
+          apiFetch<{ success?: boolean; message?: string }>(`/trainer/trainer_members/${memberId}/workout`, {
             method: 'PATCH',
-            body: JSON.stringify({ workoutPlanId: assigningPlan.id }),
+            body: JSON.stringify({ workoutPlanId: assigningPlan.id, workoutId: assigningPlan.id }),
             headers: { 'Idempotency-Key': `${key}-${idx}` },
-          }).catch(() => null)
+          })
         )
       );
+      const failed = results.find((res) => !res?.success);
+      if (failed) {
+        throw new Error(failed.message || 'Failed to assign workout plan');
+      }
       showSuccess(`Successfully assigned ${assigningPlan.name} to ${memberIds.length} member${memberIds.length > 1 ? 's' : ''}`, `assign-${assigningPlan.id}`);
       setAssigningPlan(null);
     } catch (err) {

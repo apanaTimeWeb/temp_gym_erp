@@ -16,7 +16,7 @@ import type { AdminHrEmptyStateProps } from '@/app/frontend_admin/admin_hr/hr_st
 export default function AdminHrManagementEmptyState({ title, description }: AdminHrEmptyStateProps) {
   return <div className="flex flex-col items-center justify-center gap-2 py-12 text-center" data-testid="admin_hr-admin_hr-empty-state-state">
     <Users size={18} aria-hidden="true" className="text-secondary"  strokeWidth={2}/>
-    <h3 className="text-base font-semibold text-primary">{title}</h3>
+    <h3 className="text-base font-semibold text-text-primary">{title}</h3>
     <p className="text-sm text-secondary">{description}</p>
   </div>;
 }

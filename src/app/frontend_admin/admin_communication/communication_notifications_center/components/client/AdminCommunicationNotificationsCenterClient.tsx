@@ -25,7 +25,7 @@ export default function AdminCommunicationNotificationsCenterClient() {
     <div className="bg-card border border-border rounded-xl shadow-card overflow-hidden">
       <div className="flex items-center justify-between p-4 border-b border-border bg-header">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="font-semibold text-primary">{t('notifications.admin_notifications_client.text_215ed57ea0')}</span>
+          <span className="font-semibold text-text-primary">{t('notifications.admin_notifications_client.text_215ed57ea0')}</span>
           {unreadCount > 0 && (
             <span className="bg-primary text-on-primary text-xs font-bold px-2 py-0.5 rounded-full" data-testid="notifications-center-notifications-center-client-status-badge">
               {unreadCount} {t('notifications.admin_notifications_client.text_6403f2b7eb')}</span>
@@ -48,7 +48,7 @@ export default function AdminCommunicationNotificationsCenterClient() {
         {isMarkAllPending ? ` ${t('notifications.AdminRepair.markingAll')}` : ''}
       </p>
       {status === 'pending' && <AdminNotificationsListSkeleton />}
-      {isError && <div className="flex items-center justify-between gap-4 border-b border-border bg-danger-bg p-6 text-sm text-danger"><span>{t('notifications.admin_notifications_client.text_b75e7880cd')}</span><button type="button" onClick={() => void retry()} className="motion-safe:transition-all motion-safe:duration-base ease-in-out rounded-lg px-3 py-2 font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11 motion-safe:active:scale-95" data-testid="admin_notifications-admin_notifications-client-control-2">{t('notifications.admin_notifications_client.text_9f5cd8a2e8')}</button></div>}
+      {isError && <div className="flex items-center justify-between gap-4 border-b border-border bg-danger-bg p-6 text-sm text-danger"><span>{t('notifications.admin_notifications_client.text_b75e7880cd')}</span><button type="button" onClick={() => void retry()} className="motion-safe:transition-all motion-safe:duration-base ease-in-out rounded-lg px-3 py-2 font-semibold text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11 motion-safe:active:scale-95" data-testid="admin_notifications-admin_notifications-client-control-2">{t('notifications.admin_notifications_client.text_9f5cd8a2e8')}</button></div>}
       {status === 'success' && <AdminNotificationsList 
         notifications={notifications} 
         onMarkAsRead={markAsRead}

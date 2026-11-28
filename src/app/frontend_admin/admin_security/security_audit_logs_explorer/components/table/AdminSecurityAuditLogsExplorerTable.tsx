@@ -29,9 +29,9 @@ function getActionIcon(action: string) {
   if (action.includes('ADD') || action.includes('CREATE') || action.includes('IMPORT')) return <PlusCircle size={18} strokeWidth={2} className="text-success" />;
   if (action.includes('FAIL')) return <AlertCircle size={18} strokeWidth={2} className="text-danger" />;
   if (action.includes('LOGIN') || action.includes('AUTH')) return <LogIn size={18} strokeWidth={2} className="text-info" />;
-  if (action.includes('MEMBER') || action.includes('STAFF')) return <Users size={18} strokeWidth={2} className="text-primary" />;
+  if (action.includes('MEMBER') || action.includes('STAFF')) return <Users size={18} strokeWidth={2} className="text-text-primary" />;
   if (action.includes('PAYMENT') || action.includes('PAYROLL') || action.includes('EXPENSE')) return <CreditCard size={18} strokeWidth={2} className="text-success" />;
-  return <Edit3 size={18} strokeWidth={2} className="text-primary" />;
+  return <Edit3 size={18} strokeWidth={2} className="text-text-primary" />;
 }
 
 /** Keeps row navigation and inline content together while leaving mutations out of this immutable feature.
@@ -53,27 +53,27 @@ export default function AdminSecurityAuditLogsExplorerTable() {
       <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-card">
         <div className="max-h-[640px] overflow-auto">
           <table data-admin-responsive-table className="w-full text-left text-sm">
-            <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+            <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border">
               <tr>
                 {['audit_logs.admin_audit_logs_table.auto_timestamp', 'audit_logs.admin_audit_logs_table.auto_action', 'audit_logs.admin_audit_logs_table.auto_actor', 'audit_logs.admin_audit_logs_table.auto_entity', 'audit_logs.admin_audit_logs_table.auto_details', 'audit_logs.admin_audit_logs_table.auto_severity'].map((heading, idx) => (
-                  <th key={heading} scope="col" className={`px-4 py-3 text-xs font-semibold uppercase tracking-wider text-secondary whitespace-nowrap ${idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''}`}>{t(heading)}</th>
+                  <th key={heading} scope="col" className={`px-4 py-3 text-xs font-semibold uppercase tracking-wider text-secondary whitespace-nowrap ${idx === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''}`}>{t(heading)}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border dark:divide-white/[0.07]">
               {logs.length === 0 ? <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminAuditLogsEmptyState /></td></tr> : logs.map((log: AuditLog) => (
                 <tr
                   key={log.id}
                   className="hover:bg-surface-hover transition-colors group"
                   data-testid={`admin_audit_logs-admin_audit_logs-table-row-${log.id}`}>
-                  <td data-label={t('audit_logs.admin_audit_logs_table.auto_timestamp')} className="px-4 py-4 text-xs text-secondary whitespace-nowrap sticky start-0 z-10 bg-card border-e border-border">
+                  <td data-label={t('audit_logs.admin_audit_logs_table.auto_timestamp')} className="px-4 py-4 text-xs text-secondary whitespace-nowrap sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border">
                     <div className="flex items-center gap-2">
                       <button type="button" onClick={() => openDetail(log.id)} className="underline underline-offset-2 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary font-medium text-primary hover:text-accent" aria-label={`${t('audit_logs.admin_audit_logs_table.auto_timestamp')}: ${formatDateTime(log.timestamp, locale)}`} data-testid="audit-logs-explorer-audit-logs-explorer-table-open-detail">{formatDateTime(log.timestamp, locale)}</button>
                       <CopyButton text={log.id} label="Copy Log ID" />
                     </div>
                   </td>
-                  <td data-label={t('audit_logs.admin_audit_logs_table.auto_action')} className="px-4 py-4"><div className="flex items-center gap-2.5"><span className="inline-flex min-h-9 min-w-9 items-center justify-center rounded-lg border border-border bg-input">{getActionIcon(log.action)}</span><div><p className="text-sm font-semibold text-primary">{redactAdminAuditText(log.action.replace(/_/g, ' '))}</p><p className="text-xs text-secondary">{redactAdminAuditText(log.entityType)}</p></div></div></td>
-                  <td data-label={t('audit_logs.admin_audit_logs_table.auto_actor')} className="px-4 py-4 text-sm text-primary">{redactAdminAuditText(log.actor)}</td>
+                  <td data-label={t('audit_logs.admin_audit_logs_table.auto_action')} className="px-4 py-4"><div className="flex items-center gap-2.5"><span className="inline-flex min-h-9 min-w-9 items-center justify-center rounded-lg border border-border bg-input">{getActionIcon(log.action)}</span><div><p className="text-sm font-semibold text-text-primary">{redactAdminAuditText(log.action.replace(/_/g, ' '))}</p><p className="text-xs text-secondary">{redactAdminAuditText(log.entityType)}</p></div></div></td>
+                  <td data-label={t('audit_logs.admin_audit_logs_table.auto_actor')} className="px-4 py-4 text-sm text-text-primary">{redactAdminAuditText(log.actor)}</td>
                   <td data-label={t('audit_logs.admin_audit_logs_table.auto_entity')} className="px-4 py-4 text-sm text-secondary">{redactAdminAuditText(`${log.entityType}${log.entityId ? ` · ${log.entityId}` : ''}`)}</td>
                   <td data-label={t('audit_logs.admin_audit_logs_table.auto_details')} className="max-w-sm truncate px-4 py-4 text-sm text-secondary" title={redactAdminAuditText(log.details)}>{redactAdminAuditText(log.details)}</td>
                   <td data-label={t('audit_logs.admin_audit_logs_table.auto_severity')} className="px-4 py-4"><span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold uppercase ${AUDIT_SEVERITY_STYLES[log.severity]}`} data-testid="audit-logs-explorer-audit-logs-explorer-table-status-badge">{log.severity}</span></td>

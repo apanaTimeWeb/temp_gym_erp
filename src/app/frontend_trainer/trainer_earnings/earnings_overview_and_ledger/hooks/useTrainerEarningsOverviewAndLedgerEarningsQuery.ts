@@ -50,11 +50,13 @@ export function useTrainerEarningsQuery() {
   const sortByValue = searchParams.get('sortBy') ?? TRAINER_EARNINGS_EARNINGS_SORT_OPTIONS[0].value;
   const sortBy: TrainerEarningsEarningsSortField = TRAINER_EARNINGS_EARNINGS_SORT_OPTIONS.some((option) => option.value === sortByValue) ? sortByValue as TrainerEarningsEarningsSortField : TRAINER_EARNINGS_EARNINGS_SORT_OPTIONS[0].value;
   const sortDirection: TrainerEarningsEarningsSortDirection = searchParams.get('sortDirection') === 'asc' ? 'asc' : 'desc';
+  const statusFilter = searchParams.get('status') ?? 'ALL';
+  const typeFilter = searchParams.get('type') ?? 'ALL';
 
   const query = useQuery({
-    queryKey: [...TRAINER_EARNINGS_QUERY_KEYS.data({ startDate, endDate, search, page, limit: TRAINER_EARNINGS_EARNINGS_ITEMS_PER_PAGE, sortBy, sortDirection }), range],
+    queryKey: [...TRAINER_EARNINGS_QUERY_KEYS.data({ startDate, endDate, search, page, limit: TRAINER_EARNINGS_EARNINGS_ITEMS_PER_PAGE, sortBy, sortDirection }), range, statusFilter, typeFilter],
     enabled: validDateWindow,
-    queryFn: () => TrainerEarningsApi.fetchEarningsData(startDate, endDate, search, page, TRAINER_EARNINGS_EARNINGS_ITEMS_PER_PAGE, sortBy, sortDirection, range),
+    queryFn: () => TrainerEarningsApi.fetchEarningsData(startDate, endDate, search, page, TRAINER_EARNINGS_EARNINGS_ITEMS_PER_PAGE, sortBy, sortDirection, range, statusFilter, typeFilter),
     staleTime: 5 * 60 * 1000,
   });
 

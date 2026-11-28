@@ -26,6 +26,15 @@ export default function AdminNavigationLayout({ children, headerContextSlot }: A
   const router = useRouter();
 
   useEffect(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return;
+    const tabletQuery = window.matchMedia('(min-width: 768px) and (max-width: 1023px)');
+    if (tabletQuery.matches) setIsCollapsed(true);
+    const handleTabletChange = (event: MediaQueryListEvent) => setIsCollapsed(event.matches);
+    tabletQuery.addEventListener('change', handleTabletChange);
+    return () => tabletQuery.removeEventListener('change', handleTabletChange);
+  }, []);
+
+  useEffect(() => {
     try {
       const storedGym = localStorage.getItem('ghost_login_gym_name');
       if (storedGym) {
@@ -50,7 +59,7 @@ export default function AdminNavigationLayout({ children, headerContextSlot }: A
 
   return (
     <AdminNavigationLayoutDensityProvider>
-      <div className={`${AdminShellPrint.adminShellRoot} min-h-screen bg-page text-primary`} data-admin-shell>
+      <div className={`${AdminShellPrint.adminShellRoot} min-h-screen bg-page text-text-primary trainer-aurora-canvas`} data-admin-shell>
         {ghostGymName && (
           <aside
             role="status"
@@ -75,9 +84,9 @@ export default function AdminNavigationLayout({ children, headerContextSlot }: A
             </button>
           </aside>
         )}
-        <div data-admin-shell-header><AdminNavigationLayoutHeader headerContextSlot={headerContextSlot} /></div>
+        <div data-admin-shell-header><AdminNavigationLayoutHeader headerContextSlot={headerContextSlot} isSidebarCollapsed={isCollapsed} /></div>
         <AdminNavigationLayoutSidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
-        <main data-admin-shell-main className={`min-h-screen pt-16 motion-safe:transition-all motion-safe:duration-slow ${isCollapsed ? 'md:ml-16' : 'md:ml-60'}`}>
+        <main data-admin-shell-main className={`min-h-screen min-w-0 overflow-x-hidden pt-16 motion-safe:transition-all motion-safe:duration-base ${isCollapsed ? 'md:ml-[60px]' : 'md:ml-60'}`}>
           {children}
         </main>
         <AdminNavigationLayoutResponsiveTableProvider />

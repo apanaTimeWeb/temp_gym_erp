@@ -42,7 +42,7 @@ export default function AdminSubscriptionsManagementPlanCard({ plan, onUpgrade, 
       <div>
         <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${style?.bg || ''} ${style?.text || ''}`} data-testid="subscriptions-management-subscriptions-management-plan-card-status-badge-2">{plan.name}</span>
         <div className="mt-3">
-          <span className="text-3xl font-bold text-primary">{fmt(plan.monthlyPrice)}</span>
+          <span className="text-3xl font-bold text-text-primary">{fmt(plan.monthlyPrice)}</span>
           {plan.monthlyPrice > 0 && <span className="text-secondary text-sm">{t('subscriptions.AdminSubscriptionsPlanCard.text_ab0cc39294')}</span>}
         </div>
         {plan.monthlyPrice > 0 && (
@@ -78,12 +78,12 @@ export default function AdminSubscriptionsManagementPlanCard({ plan, onUpgrade, 
       </ul>
 
       {plan.isCurrent ? (
-        <div className="py-2.5 text-center text-sm font-semibold text-primary border border-border rounded-xl bg-surface-highlight">
+        <div className="py-2.5 text-center text-sm font-semibold text-text-primary border border-border rounded-xl bg-surface-highlight">
           {t('subscriptions.AdminSubscriptionsPlanCard.text_52ec63b267')}</div>
       ) : plan.tier === 'enterprise' ? (
         <a
           href={ADMIN_SUBSCRIPTIONS_EXTERNAL_URLS.salesEmail}
-          className="min-h-11 min-w-11 inline-flex items-center justify-center py-2.5 text-center text-sm font-semibold text-primary border border-border rounded-xl hover:bg-input motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out"
+          className="min-h-11 min-w-11 inline-flex items-center justify-center py-2.5 text-center text-sm font-semibold text-text-primary border border-border rounded-xl hover:bg-input motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out"
          data-testid="admin_subscriptions-admin_subscriptions-plan-card-navigate">
           {t('subscriptions.AdminSubscriptionsPlanCard.text_7a0a9bd139')}</a>
       ) : (

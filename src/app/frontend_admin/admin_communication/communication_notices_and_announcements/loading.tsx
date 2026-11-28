@@ -9,7 +9,7 @@ import AdminNavigationLayoutTableSkeleton from '@/app/frontend_admin/admin_commu
  */
 export default function AdminAnnouncementsLoading() {
   return (
-    <div className="p-6 space-y-5" data-testid="admin_announcements-loading-state">
+    <div className="p-4 sm:p-6 space-y-5" data-testid="admin_announcements-loading-state">
       <div className="grid grid-cols-2 xl:grid-cols-3 gap-4">
         {Array.from({ length: 6 }).map((_, i) => (
           <div key={`announcements-skeleton-${i}`} className="h-24 bg-skeleton-base rounded-xl motion-safe:animate-pulse border border-border motion-safe:duration-base" />

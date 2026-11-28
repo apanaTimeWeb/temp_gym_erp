@@ -55,9 +55,9 @@ export default function AdminFinanceBranchProfitAndLoss() {
 
 
   return (
-    <div className="min-h-full pb-10 bg-page text-primary">
+    <div className="min-h-full pb-10 bg-page text-text-primary">
 
-      <div className="p-6 space-y-6">
+      <div className="p-4 sm:p-6 space-y-6">
 
         {/* Period Selector + Export */}
         <div className="flex items-center gap-3">
@@ -88,14 +88,14 @@ export default function AdminFinanceBranchProfitAndLoss() {
         <div>
           <div className="flex items-center justify-between mb-3">
             <div>
-              <h2 className="text-base font-semibold text-primary">{t('finance.admin_finance_pnl.text_209d61d684')}</h2>
+              <h2 className="text-base font-semibold text-text-primary">{t('finance.admin_finance_pnl.text_209d61d684')}</h2>
               <p className="text-xs text-secondary mt-0.5">
                 {t('finance.admin_finance_pnl.text_5c89dc5750')}</p>
             </div>
             {statusFilter !== 'ALL' && (
               <button type="button"
                 onClick={() => setStatusFilter('ALL')}
-                className="motion-safe:transition-all motion-safe:duration-base ease-in-out text-xs font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11 motion-safe:active:scale-95"
+                className="motion-safe:transition-all motion-safe:duration-base ease-in-out text-xs font-semibold text-text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11 motion-safe:active:scale-95"
                data-testid="admin_finance-admin_finance-pnl-main-click">
                 {t('finance.admin_finance_pnl.text_1d98da511f')}</button>
             )}

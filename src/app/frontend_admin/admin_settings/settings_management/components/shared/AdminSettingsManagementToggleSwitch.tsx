@@ -18,7 +18,7 @@ export function AdminSettingsManagementToggleSwitch({ checked, onChange, label, 
   const t = useTranslations();
   return (
     <div className="flex items-center justify-between gap-4 w-full">
-      {label ? <span className="text-sm text-primary">{label}</span> : <span aria-hidden="true" />}
+      {label ? <span className="text-sm text-text-primary">{label}</span> : <span aria-hidden="true" />}
       <button
         type="button"
         disabled={disabled}

@@ -22,12 +22,12 @@ export default function AdminGymsBranchesDirectoryEmptyState({ onClearFilters }:
       <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-subtle">
         <Building2 size={18} className="text-primary" aria-hidden="true"  strokeWidth={2}/>
       </div>
-      <h3 className="mt-4 text-base font-semibold text-primary">{t('branches.admin_branches_empty_state.text_ca43a19c5d')}</h3>
+      <h3 className="mt-4 text-base font-semibold text-text-primary">{t('branches.admin_branches_empty_state.text_ca43a19c5d')}</h3>
       <p className="mt-1 max-w-md text-sm text-secondary">{t('branches.admin_branches_empty_state.text_62a18fb502')}</p>
       <button
         type="button"
         onClick={onClearFilters}
-        className="mt-5 min-h-11 rounded-lg border border-border bg-input px-4 py-2 text-sm font-semibold text-primary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-colors motion-safe:duration-base motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-w-11 motion-safe:active:scale-95"
+        className="mt-5 min-h-11 rounded-lg border border-border bg-input px-4 py-2 text-sm font-semibold text-text-primary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-colors motion-safe:duration-base motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-w-11 motion-safe:active:scale-95"
        data-testid="admin_branches-admin_branches-empty-state-state">
         {t('branches.admin_branches_empty_state.text_412226715c')}</button>
     </div>

@@ -59,10 +59,10 @@ export default function AdminAttendanceDashboardTrendChart() {
   const series = [{ name: t('attendance.admin_attendance_trend_chart.series_checkIns'), data: trend.map((t) => t.count) }];
 
   return (
-    <div className="bg-card rounded-xl border border-border p-5 [&_.apexcharts-tooltip]:!bg-chart-tooltip-bg [&_.apexcharts-tooltip]:!border-border [&_.apexcharts-tooltip]:!text-primary">
+    <div className="bg-card rounded-xl border border-border p-5 [&_.apexcharts-tooltip]:!bg-chart-tooltip-bg [&_.apexcharts-tooltip]:!border-border [&_.apexcharts-tooltip]:!text-text-primary">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <p className="text-sm font-semibold text-primary">{t('attendance.admin_attendance_trend_chart.text_a70e43d730')}</p>
+          <p className="text-sm font-semibold text-text-primary">{t('attendance.admin_attendance_trend_chart.text_a70e43d730')}</p>
           <p className="text-xs text-secondary mt-0.5">{t('attendance.admin_attendance_trend_chart.text_7be3443a0f')}</p>
         </div>
       </div>

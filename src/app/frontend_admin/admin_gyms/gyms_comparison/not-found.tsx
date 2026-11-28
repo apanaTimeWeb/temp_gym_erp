@@ -8,7 +8,7 @@ export default function AdminGymsComparisonNotFound() {
   return (
     <div className="min-h-96 flex flex-col items-center justify-center text-center p-6 bg-card rounded-2xl border border-border mt-4">
       <AlertCircle className="text-secondary mb-4" size={24} strokeWidth={2} />
-      <h3 className="text-lg font-bold text-primary mb-2">Comparison View Not Found</h3>
+      <h3 className="text-lg font-bold text-text-primary mb-2">Comparison View Not Found</h3>
       <p className="text-sm text-secondary mb-6">The requested branch comparison report could not be located.</p>
       <Link
         href={ADMIN_GYMS_COMPARISON_ROUTES.branchesDirectory}

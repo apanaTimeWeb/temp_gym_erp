@@ -82,7 +82,9 @@
     "ERR_AVAILABILITY_TIME_RANGE_INVALID": "उपलब्ध दिनों में समाप्ति समय, प्रारंभ समय के बाद होना चाहिए।",
     "ERR_AVAILABILITY_DAYS_INVALID": "हर सप्ताह के दिन के लिए ठीक एक उपलब्धता प्रविष्टि दें।",
     "ERR_LEAVE_DATE_RANGE_INVALID": "समाप्ति तिथि, प्रारंभ तिथि के समान या उसके बाद होनी चाहिए।",
-    "TEXT_LOADING": "लोड हो रहा है…"
+    "TEXT_LOADING": "लोड हो रहा है…",
+    "TEXT_ACTIONS": "कार्रवाइयाँ",
+    "ERR_INVALID_MEDIA_URL": "कृपया एक मान्य http/https URL दर्ज करें"
   },
   "TEXT_RETRYING": "पुनः प्रयास हो रहा है…",
   "TEXT_SICK_LEAVE": "बीमारी की छुट्टी",

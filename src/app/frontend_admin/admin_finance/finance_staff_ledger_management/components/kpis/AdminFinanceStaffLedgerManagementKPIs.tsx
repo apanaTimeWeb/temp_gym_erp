@@ -48,7 +48,7 @@ export default function AdminFinanceStaffLedgerManagementKPIs() {
           </div>
           <div>
             <p className="text-xs font-medium text-secondary">{k.label}</p>
-            <p className="text-xl font-bold text-primary">{k.value}</p>
+            <p className="text-xl font-bold text-text-primary">{k.value}</p>
           </div>
         </div>
       ))}

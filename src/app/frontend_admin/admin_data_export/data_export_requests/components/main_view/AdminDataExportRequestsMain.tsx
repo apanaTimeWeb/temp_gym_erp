@@ -98,7 +98,7 @@ export default function AdminDataExportRequestsMain() {
   return (
     <main data-testid="admin_data_export-admin_data_export-main-state" className="space-y-6">
       <header>
-        <h1 className="text-page-title font-bold text-primary">{t('text_title')}</h1>
+        <h1 className="text-page-title font-bold text-text-primary">{t('text_title')}</h1>
         <p className="mt-1 text-sm text-secondary">{t('text_description')}</p>
       </header>
 
@@ -107,7 +107,7 @@ export default function AdminDataExportRequestsMain() {
         <div className="flex items-center gap-2 border-b border-border pb-3">
           <FileSpreadsheet size={20} className="text-primary" strokeWidth={2} />
           <div>
-            <h2 id="new-export-heading" className="text-lg font-bold text-primary">New Export</h2>
+            <h2 id="new-export-heading" className="text-lg font-bold text-text-primary">New Export</h2>
             <p className="text-xs text-secondary">Select data type, format, gyms, and date range</p>
           </div>
         </div>
@@ -136,7 +136,7 @@ export default function AdminDataExportRequestsMain() {
                     className={`inline-flex min-h-11 items-center px-4 py-2 rounded-xl text-sm font-medium border motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                       active
                         ? 'border-primary bg-primary text-on-primary shadow-sm'
-                        : 'border-border bg-surface-highlight text-primary hover:bg-surface-hover'
+                        : 'border-border bg-surface-highlight text-text-primary hover:bg-surface-hover'
                     }`}
                   >
                     {dt}
@@ -162,7 +162,7 @@ export default function AdminDataExportRequestsMain() {
                     className={`inline-flex min-h-11 items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium border motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                       active
                         ? 'border-primary bg-primary text-on-primary shadow-sm'
-                        : 'border-border bg-surface-highlight text-primary hover:bg-surface-hover'
+                        : 'border-border bg-surface-highlight text-text-primary hover:bg-surface-hover'
                     }`}
                   >
                     {fmt === 'CSV' && <Database size={15} />}
@@ -191,7 +191,7 @@ export default function AdminDataExportRequestsMain() {
                     className={`inline-flex min-h-11 items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-medium border motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                       active
                         ? 'border-primary bg-primary text-on-primary shadow-sm'
-                        : 'border-border bg-surface-highlight text-primary hover:bg-surface-hover'
+                        : 'border-border bg-surface-highlight text-text-primary hover:bg-surface-hover'
                     }`}
                   >
                     <Building2 size={14} />
@@ -214,7 +214,7 @@ export default function AdminDataExportRequestsMain() {
                   type="date"
                   value={fromDate}
                   onChange={(e) => setFromDate(e.target.value)}
-                  className="w-full min-h-11 rounded-xl border border-border bg-input px-3.5 py-2 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  className="w-full min-h-11 rounded-xl border border-border bg-input px-3.5 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 />
               </div>
             </div>
@@ -228,7 +228,7 @@ export default function AdminDataExportRequestsMain() {
                   type="date"
                   value={toDate}
                   onChange={(e) => setToDate(e.target.value)}
-                  className="w-full min-h-11 rounded-xl border border-border bg-input px-3.5 py-2 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  className="w-full min-h-11 rounded-xl border border-border bg-input px-3.5 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 />
               </div>
             </div>

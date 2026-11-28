@@ -78,11 +78,11 @@ export default function AdminFinanceRevenueReportRevenue() {
       {/* Revenue by Gym */}
       <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
         <div className="px-5 py-4 border-b border-border bg-surface-highlight">
-          <h2 className="text-base font-semibold text-primary">{t('reports.admin_finance_revenue_report.text_177bf7fe0c')}</h2>
+          <h2 className="text-base font-semibold text-text-primary">{t('reports.admin_finance_revenue_report.text_177bf7fe0c')}</h2>
         </div>
         <div className="overflow-x-auto max-h-[640px] overflow-auto">
           <table data-admin-responsive-table className="w-full text-left border-collapse">
-            <thead className="sticky top-0 z-20 bg-surface-highlight">
+            <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038]">
               <tr className="border-b border-border">
                 {revenueHeaders.map((header, index) => {
                   const keys: Array<AdminFinanceRevenueReportSortKey | null> = ['gymName', 'revenue', 'expenses', 'profit', null, 'trendPercent'];
@@ -92,28 +92,28 @@ export default function AdminFinanceRevenueReportRevenue() {
                     <th
                       key={header}
                       className={`px-5 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
-                        index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                        index === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                       }`}
                       aria-sort={key ? (active ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none') : undefined}
                       data-testid={`admin_reports-admin_reports-revenue-header-map59-${index}`}
                     >
                       {key ? <button type="button" onClick={() => handleSort(key)} className="inline-flex min-h-11 items-center gap-1.5 rounded text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" aria-label={t('reports.admin_finance_revenue_report.auto_sortBy', { header })} data-testid="reports-analytics-reports-analytics-revenue-handle-sort">
-                        {header}{active ? (sortDir === 'asc' ? <ChevronUp size={18} aria-hidden="true" className="text-primary" strokeWidth={2} /> : <ChevronDown size={18} aria-hidden="true" className="text-primary" strokeWidth={2} />) : <ChevronsUpDown size={18} aria-hidden="true" className="text-disabled" strokeWidth={2} />}
+                        {header}{active ? (sortDir === 'asc' ? <ChevronUp size={18} aria-hidden="true" className="text-text-primary" strokeWidth={2} /> : <ChevronDown size={18} aria-hidden="true" className="text-text-primary" strokeWidth={2} />) : <ChevronsUpDown size={18} aria-hidden="true" className="text-disabled" strokeWidth={2} />}
                       </button> : header}
                     </th>
                   );
                 })}
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border dark:divide-white/[0.07]">
               {revenueByGym.map((row) => (
                 <tr key={row.gymId} className="hover:bg-surface-hover transition-colors group">
-                  <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-4">
+                  <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border px-5 py-4">
                     <div>
                       <div className="flex items-center gap-1.5">
                         <Link
                           href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(row.gymName)}`}
-                          className="text-sm font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                          className="text-sm font-semibold text-text-primary hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
                           title={`View ${row.gymName} in Branches Directory`}
                         >
                           {row.gymName}
@@ -125,10 +125,10 @@ export default function AdminFinanceRevenueReportRevenue() {
                       </div>
                     </div>
                   </td>
-                  <td className="px-5 py-4 text-sm font-semibold text-primary">{AdminFinanceRevenueReportFormatCurrency(row.revenue, undefined, locale)}</td>
+                  <td className="px-5 py-4 text-sm font-semibold text-text-primary">{AdminFinanceRevenueReportFormatCurrency(row.revenue, undefined, locale)}</td>
                   <td className="px-5 py-4 text-sm text-danger">{AdminFinanceRevenueReportFormatCurrency(row.expenses, undefined, locale)}</td>
                   <td className="px-5 py-4 text-sm font-semibold text-success">{AdminFinanceRevenueReportFormatCurrency(row.profit, undefined, locale)}</td>
-                  <td className="px-5 py-4 text-sm text-primary">{row.revenue > 0 ? `${formatPercent1dp((row.profit / row.revenue) * 100, locale)}%` : '—'}</td>
+                  <td className="px-5 py-4 text-sm text-text-primary">{row.revenue > 0 ? `${formatPercent1dp((row.profit / row.revenue) * 100, locale)}%` : '—'}</td>
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-1.5">
                       {TREND_ICON[row.trend as keyof typeof TREND_ICON]}
@@ -148,7 +148,7 @@ export default function AdminFinanceRevenueReportRevenue() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-card rounded-xl border border-border overflow-hidden">
           <div className="px-5 py-4 border-b border-border">
-            <h2 className="text-base font-semibold text-primary">{t('reports.admin_finance_revenue_report.text_a47fd0727f')}</h2>
+            <h2 className="text-base font-semibold text-text-primary">{t('reports.admin_finance_revenue_report.text_a47fd0727f')}</h2>
           </div>
           <div className="p-5 space-y-3">
             {reportData.revenueByMethod.length === 0 ? (
@@ -160,7 +160,7 @@ export default function AdminFinanceRevenueReportRevenue() {
               return (
                 <div key={row.method}>
                   <div className="flex justify-between text-sm mb-1">
-                    <span className="text-primary font-medium">{row.method}</span>
+                    <span className="text-text-primary font-medium">{row.method}</span>
                     <span className="text-secondary">{AdminFinanceRevenueReportFormatCurrency(row.amount, undefined, locale)} <span className="text-xs">({pct}%)</span></span>
                   </div>
                   <AdminNavigationLayoutProgressBar value={percentage} label={t('reports.admin_finance_revenue_report.auto_methodRevenueShare', { method: row.method })} />
@@ -172,7 +172,7 @@ export default function AdminFinanceRevenueReportRevenue() {
 
         <div className="bg-card rounded-xl border border-border overflow-hidden">
           <div className="px-5 py-4 border-b border-border">
-            <h2 className="text-base font-semibold text-primary">{t('reports.admin_finance_revenue_report.text_098e8b7646')}</h2>
+            <h2 className="text-base font-semibold text-text-primary">{t('reports.admin_finance_revenue_report.text_098e8b7646')}</h2>
           </div>
           <div className="p-5 space-y-3">
             {reportData.revenueByPlan.length === 0 ? (
@@ -184,7 +184,7 @@ export default function AdminFinanceRevenueReportRevenue() {
               return (
                 <div key={row.planName}>
                   <div className="flex justify-between text-sm mb-1">
-                    <span className="text-primary font-medium">{row.planName}</span>
+                    <span className="text-text-primary font-medium">{row.planName}</span>
                     <span className="text-secondary">{AdminFinanceRevenueReportFormatCurrency(row.amount, undefined, locale)} <span className="text-xs">({row.count} {t('reports.admin_finance_revenue_report.text_3757697e2a')})</span></span>
                   </div>
                   <AdminNavigationLayoutProgressBar value={percentage} label={t('reports.admin_finance_revenue_report.auto_planRevenueShare', { plan: row.planName })} variant="info" />
@@ -198,11 +198,11 @@ export default function AdminFinanceRevenueReportRevenue() {
       {/* Monthly Trend */}
       <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
         <div className="px-5 py-4 border-b border-border bg-surface-highlight">
-          <h2 className="text-base font-semibold text-primary">{t('reports.admin_finance_revenue_report.text_d965c78fbc')}</h2>
+          <h2 className="text-base font-semibold text-text-primary">{t('reports.admin_finance_revenue_report.text_d965c78fbc')}</h2>
         </div>
         <div className="overflow-x-auto max-h-[640px] overflow-auto">
           <table data-admin-responsive-table className="w-full text-left border-collapse">
-            <thead className="sticky top-0 z-20 bg-surface-highlight">
+            <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038]">
               <tr className="border-b border-border">
                 {monthlyHeaders.map((header, index) => {
                   const keys: Array<MonthlySortKey | null> = ['month', 'revenue', 'expenses', 'profit', null];
@@ -212,33 +212,33 @@ export default function AdminFinanceRevenueReportRevenue() {
                     <th
                       key={header}
                       className={`px-5 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
-                        index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                        index === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                       }`}
                       aria-sort={key ? (active ? (monthlySortDir === 'asc' ? 'ascending' : 'descending') : 'none') : undefined}
                     >
                       {key ? <button type="button" onClick={() => handleMonthlySort(key)} className="inline-flex min-h-11 items-center gap-1.5 rounded text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" aria-label={t('reports.admin_finance_revenue_report.auto_sortBy', { header })} data-testid={`admin_reports-admin_reports-revenue-monthly-sort-${index}`}>
-                        {header}{active ? (monthlySortDir === 'asc' ? <ChevronUp size={18} aria-hidden="true" className="text-primary" strokeWidth={2} /> : <ChevronDown size={18} aria-hidden="true" className="text-primary" strokeWidth={2} />) : <ChevronsUpDown size={18} aria-hidden="true" className="text-disabled" strokeWidth={2} />}
+                        {header}{active ? (monthlySortDir === 'asc' ? <ChevronUp size={18} aria-hidden="true" className="text-text-primary" strokeWidth={2} /> : <ChevronDown size={18} aria-hidden="true" className="text-text-primary" strokeWidth={2} />) : <ChevronsUpDown size={18} aria-hidden="true" className="text-disabled" strokeWidth={2} />}
                       </button> : header}
                     </th>
                   );
                 })}
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border dark:divide-white/[0.07]">
               {reportData.monthlyRevenue.length === 0 ? (
                 <tr><td colSpan={MONTHLY_REVENUE_COLUMN_COUNT}><AdminReportsEmptyState title={t('reports.admin_finance_revenue_report.text_096b9d52b6')} description={t('reports.admin_finance_revenue_report.auto_a64dbf269d')} /></td></tr>
               ) : monthlyRevenue.map((row) => (
                 <tr key={row.month} className="hover:bg-surface-hover transition-colors group">
-                  <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-3 text-sm font-semibold text-primary">
+                  <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border px-5 py-3 text-sm font-semibold text-text-primary">
                     <div className="flex items-center gap-1.5">
                       <span>{row.month}</span>
                       <CopyButton text={row.month} label={row.month} />
                     </div>
                   </td>
-                  <td className="px-5 py-3 text-sm text-primary">{AdminFinanceRevenueReportFormatCurrency(row.revenue, undefined, locale)}</td>
+                  <td className="px-5 py-3 text-sm text-text-primary">{AdminFinanceRevenueReportFormatCurrency(row.revenue, undefined, locale)}</td>
                   <td className="px-5 py-3 text-sm text-danger">{AdminFinanceRevenueReportFormatCurrency(row.expenses, undefined, locale)}</td>
                   <td className="px-5 py-3 text-sm font-semibold text-success">{AdminFinanceRevenueReportFormatCurrency(row.profit, undefined, locale)}</td>
-                  <td className="px-5 py-3 text-sm text-primary">{row.revenue > 0 ? `${formatPercent1dp((row.profit / row.revenue) * 100, locale)}%` : '—'}</td>
+                  <td className="px-5 py-3 text-sm text-text-primary">{row.revenue > 0 ? `${formatPercent1dp((row.profit / row.revenue) * 100, locale)}%` : '—'}</td>
                 </tr>
               ))}
             </tbody>

@@ -25,7 +25,7 @@ export default function AdminCommunicationNoticesAndAnnouncementsMain() {
 
   return (
     <div className="min-h-full pb-10">
-      <div className="p-6 space-y-5">
+      <div className="p-4 sm:p-6 space-y-5">
 
         {/* Branch Broadcast CTA — the primary send capability for admin role */}
         <div className="bg-card border border-border rounded-xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -34,7 +34,7 @@ export default function AdminCommunicationNoticesAndAnnouncementsMain() {
               <Megaphone size={18} className="text-primary"  strokeWidth={2}/>
             </div>
             <div>
-              <p className="font-semibold text-primary text-sm">{t('announcements.admin_announcements_main.text_ad3057e65c')}</p>
+              <p className="font-semibold text-text-primary text-sm">{t('announcements.admin_announcements_main.text_ad3057e65c')}</p>
               <p className="text-xs text-secondary mt-0.5">
                 {t('announcements.admin_announcements_main.text_71ccab9dbd')}</p>
             </div>

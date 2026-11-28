@@ -17,11 +17,11 @@ export default function AdminProfileOverviewPersonalForm({ profile, form, isSavi
   const t = useTranslations();
   return (
     <form onSubmit={onSubmit} className="space-y-5 rounded-xl border border-border bg-card p-6 shadow-card" data-testid="admin_profile-personal-form">
-      <h2 className="text-base font-semibold text-primary">{t('profile.admin_profile_main.text_ad12e4228c')}</h2>
+      <h2 className="text-base font-semibold text-text-primary">{t('profile.admin_profile_main.text_ad12e4228c')}</h2>
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="admin_profile-name" className="mb-1.5 block text-sm font-medium text-secondary">{t('profile.admin_profile_main.text_64346b483c')}<span className="text-danger">*</span></label>
-          <input id="admin_profile-name" type="text" autoComplete="name" required {...form.register('name')} aria-invalid={form.formState.errors.name ? 'true' : 'false'} aria-describedby={form.formState.errors.name ? 'admin_profile-name-error' : undefined} className="min-h-11 w-full rounded-lg border border-border bg-input px-4 py-2.5 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base" data-testid="admin_profile-name-input" />
+          <input id="admin_profile-name" type="text" autoComplete="name" required {...form.register('name')} aria-invalid={form.formState.errors.name ? 'true' : 'false'} aria-describedby={form.formState.errors.name ? 'admin_profile-name-error' : undefined} className="min-h-11 w-full rounded-lg border border-border bg-input px-4 py-2.5 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base" data-testid="admin_profile-name-input" />
           {form.formState.errors.name && <p id="admin_profile-name-error" role="alert" className="mt-1 text-xs text-danger">{form.formState.errors.name.message}</p>}
         </div>
         <div>
@@ -31,7 +31,7 @@ export default function AdminProfileOverviewPersonalForm({ profile, form, isSavi
         </div>
         <div>
           <label htmlFor="admin_profile-phone" className="mb-1.5 block text-sm font-medium text-secondary">{t('profile.admin_profile_main.text_ab25d61bb1')}</label>
-          <input id="admin_profile-phone" type="tel" autoComplete="tel" {...form.register('phone')} aria-invalid={form.formState.errors.phone ? 'true' : 'false'} aria-describedby={form.formState.errors.phone ? 'admin_profile-phone-error' : undefined} className="min-h-11 w-full rounded-lg border border-border bg-input px-4 py-2.5 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base" data-testid="admin_profile-phone-input" />
+          <input id="admin_profile-phone" type="tel" autoComplete="tel" {...form.register('phone')} aria-invalid={form.formState.errors.phone ? 'true' : 'false'} aria-describedby={form.formState.errors.phone ? 'admin_profile-phone-error' : undefined} className="min-h-11 w-full rounded-lg border border-border bg-input px-4 py-2.5 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base" data-testid="admin_profile-phone-input" />
           {form.formState.errors.phone && <p id="admin_profile-phone-error" role="alert" className="mt-1 text-xs text-danger">{form.formState.errors.phone.message}</p>}
         </div>
         <div>

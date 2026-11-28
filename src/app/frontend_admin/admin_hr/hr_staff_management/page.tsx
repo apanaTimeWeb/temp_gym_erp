@@ -8,7 +8,7 @@ import AdminHrManagementStaffProfileModal from '@/app/frontend_admin/admin_hr/hr
 
 export default function AdminHrStaffPage() {
   const t = useTranslations();
-  return <main className="min-h-full bg-page p-6 text-primary space-y-5">
+  return <main className="min-h-full bg-page p-4 sm:p-6 text-text-primary space-y-5">
     <header><h1 className="text-2xl font-bold">{t('hr.admin_hr_tabs.tab_staff')}</h1></header>
       <AdminHrManagementKPIs />
       <AdminHrManagementStaffTable />

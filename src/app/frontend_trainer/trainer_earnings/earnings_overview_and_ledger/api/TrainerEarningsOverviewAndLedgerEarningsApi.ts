@@ -27,12 +27,16 @@ export const TrainerEarningsApi = {
     sortBy: TrainerEarningsEarningsSortField = 'date',
     sortDirection: TrainerEarningsEarningsSortDirection = 'desc',
     range?: string,
+    status?: string,
+    type?: string,
   ): Promise<TrainerEarningsData> => {
     const params = new URLSearchParams();
     if (range) params.set('range', range);
     if (startDate) params.set('startDate', startDate);
     if (endDate) params.set('endDate', endDate);
     if (search) params.set('search', search);
+    if (status && status !== 'ALL') params.set('status', status);
+    if (type && type !== 'ALL') params.set('type', type);
     params.set('page', String(page));
     params.set('limit', String(limit));
     params.set('sortBy', sortBy);

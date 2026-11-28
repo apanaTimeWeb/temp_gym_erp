@@ -99,7 +99,7 @@ export const AdminNavigationLayoutSearchableDropdown: React.FC<AdminSearchableDr
         aria-controls={isOpen && !disabled ? listboxId : undefined}
         disabled={disabled}
        data-testid={testId}>
-        <span className={`text-sm ${!selectedOption ? 'text-secondary' : 'text-primary'} truncate`}>
+        <span className={`text-sm ${!selectedOption ? 'text-secondary' : 'text-text-primary'} truncate`}>
           {selectedOption ? selectedOption.label : placeholder}
         </span>
         <ChevronDown size={18} className="text-secondary" aria-hidden="true"  strokeWidth={2}/>
@@ -126,7 +126,7 @@ export const AdminNavigationLayoutSearchableDropdown: React.FC<AdminSearchableDr
                 else if (event.key === 'End') { event.preventDefault(); setActiveIndex(Math.max(0, filteredOptions.length - 1)); }
                 else if (event.key === 'Enter') { event.preventDefault(); const option = filteredOptions[activeIndex]; if (option) handleSelect(option.value); }
               }}
-              className="w-full min-h-11 pl-8 pr-4 py-1.5 text-sm bg-input border border-border rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary text-primary placeholder:text-secondary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+              className="w-full min-h-11 pl-8 pr-4 py-1.5 text-sm bg-input border border-border rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary text-text-primary placeholder:text-secondary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page"
               placeholder={t('hr.AdminFinancePayrollDropdown.search')}
               data-testid={testId ? `${testId}-search` : undefined}
               value={searchTerm}
@@ -142,7 +142,7 @@ export const AdminNavigationLayoutSearchableDropdown: React.FC<AdminSearchableDr
                   key={option.value}
                   id={`${listboxId}-option-${__testIdIndex95}`}
                   onMouseEnter={() => setActiveIndex(__testIdIndex95)}
-                  className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page min-w-11 motion-safe:active:scale-95 motion-safe:transition-all motion-safe:duration-base ease-in-out w-full min-h-11 flex items-center justify-between px-3 py-2 text-sm rounded-md text-left cursor-pointer hover:bg-surface-hover ${option.value === value ? 'text-primary font-medium' : 'text-primary'} ${__testIdIndex95 === activeIndex ? 'bg-surface-hover' : ''}`}
+                  className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page min-w-11 motion-safe:active:scale-95 motion-safe:transition-all motion-safe:duration-base ease-in-out w-full min-h-11 flex items-center justify-between px-3 py-2 text-sm rounded-md text-left cursor-pointer hover:bg-surface-hover ${option.value === value ? 'text-text-primary font-medium' : 'text-text-primary'} ${__testIdIndex95 === activeIndex ? 'bg-surface-hover' : ''}`}
                   onClick={() => handleSelect(option.value)}
                   tabIndex={-1}
                   onMouseDown={(event) => event.preventDefault()}
@@ -150,7 +150,7 @@ export const AdminNavigationLayoutSearchableDropdown: React.FC<AdminSearchableDr
                   aria-selected={option.value === value}
                  data-testid={`admin_navigation-admin-searchable-dropdown-search-4-map95-${__testIdIndex95}-1`}>
                   <span className="truncate">{option.label}</span>
-                  {option.value === value && <Check size={18} className="text-primary" aria-hidden="true"  strokeWidth={2}/>}
+                  {option.value === value && <Check size={18} className="text-text-primary" aria-hidden="true"  strokeWidth={2}/>}
                 </div>
               ))
             ) : (

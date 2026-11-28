@@ -40,7 +40,7 @@ export default function AdminFinanceOverviewKPIs() {
         const content = (
           <>
             <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${kpi.bgClass}`}><kpi.icon size={18} className={kpi.colorClass} /></div>
-            <div className="min-w-0"><p className="truncate text-xs font-medium text-secondary">{kpi.label}</p><p className={`truncate text-lg font-bold ${isActive ? kpi.colorClass : 'text-primary'}`}>{kpi.value}</p></div>
+            <div className="min-w-0"><p className="truncate text-xs font-medium text-secondary">{kpi.label}</p><p className={`truncate text-lg font-bold ${isActive ? kpi.colorClass : 'text-text-primary'}`}>{kpi.value}</p></div>
           </>
         );
         const className = `flex items-center gap-3 rounded-xl border-2 bg-card p-4 text-left shadow-card motion-safe:transition-all ${isActive ? kpi.activeBorder : 'border-border'} ${isPendingFilter ? 'hover:shadow-card' : ''}`;

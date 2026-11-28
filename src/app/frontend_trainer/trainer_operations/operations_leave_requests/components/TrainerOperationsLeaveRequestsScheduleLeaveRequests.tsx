@@ -8,14 +8,41 @@ import { useTranslations } from 'next-intl';
 
 import TrainerScheduleLoadingSkeleton from '@/app/frontend_trainer/trainer_operations/operations_leave_requests/components/TrainerOperationsLeaveRequestsScheduleLoadingSkeleton';
 import { useTrainerScheduleQuery } from '@/app/frontend_trainer/trainer_operations/operations_leave_requests/hooks/useTrainerOperationsLeaveRequestsScheduleQuery';
+import { useTrainerScheduleMutations } from '@/app/frontend_trainer/trainer_operations/operations_leave_requests/hooks/useTrainerOperationsLeaveRequestsScheduleMutations';
 import { useTrainerScheduleStore } from '@/app/frontend_trainer/trainer_operations/operations_leave_requests/state/useTrainerOperationsLeaveRequestsScheduleStore';
+import { useTrainerInfrastructureConfirm } from '@/app/frontend_trainer/trainer_operations/operations_leave_requests/hooks/TrainerOperationsLeaveRequestsuseTrainerInfrastructureConfirm';
+import { useTrainerInfrastructureFeedback } from '@/app/frontend_trainer/trainer_operations/operations_leave_requests/hooks/TrainerOperationsLeaveRequestsuseTrainerInfrastructureFeedback';
+import { useTrainerInfrastructureIdempotencyKey } from '@/app/frontend_trainer/trainer_operations/operations_leave_requests/hooks/TrainerOperationsLeaveRequestsuseTrainerInfrastructureIdempotencyKey';
 import { TrainerOperationsLeaveRequestsLeaveKpis } from './TrainerOperationsLeaveRequestsLeaveKpis';
 import { TrainerOperationsLeaveRequestsLeaveTable } from './TrainerOperationsLeaveRequestsLeaveTable';
 
 export default function TrainerScheduleLeaveRequests() {
   const t = useTranslations('TRAINER_SCHEDULE');
   const { data, isPending, isError, isFetching, refetch } = useTrainerScheduleQuery();
+  const { withdrawLeave, withdrawLeavePending } = useTrainerScheduleMutations();
+  const { confirm } = useTrainerInfrastructureConfirm();
+  const { showSuccess, showError } = useTrainerInfrastructureFeedback();
+  const actionKeys = useTrainerInfrastructureIdempotencyKey();
   const openLeaveModal = useTrainerScheduleStore((state) => state.openLeaveModal);
+
+  const handleWithdrawLeave = async (leaveId: string) => {
+    const approved = await confirm({
+      title: 'Withdraw Leave Request',
+      message: `Are you sure you want to withdraw leave request ${leaveId}?`,
+      type: 'danger',
+      confirmText: 'Withdraw',
+    });
+    if (!approved) return;
+    const actionId = `withdraw-leave-${leaveId}`;
+    const key = actionKeys.begin(actionId);
+    try {
+      const response = await withdrawLeave({ id: leaveId, idempotencyKey: key });
+      actionKeys.clear(actionId);
+      showSuccess(response.message, actionId);
+    } catch (err) {
+      showError(err, actionId);
+    }
+  };
 
   const leaveRequests = useMemo(() => data?.leaves ?? [], [data?.leaves]);
   const totalRequests = leaveRequests.length;
@@ -70,6 +97,8 @@ export default function TrainerScheduleLeaveRequests() {
       <TrainerOperationsLeaveRequestsLeaveTable
         leaveRequests={leaveRequests}
         openLeaveModal={openLeaveModal}
+        onWithdrawLeave={handleWithdrawLeave}
+        withdrawing={withdrawLeavePending}
       />
     </div>
   );

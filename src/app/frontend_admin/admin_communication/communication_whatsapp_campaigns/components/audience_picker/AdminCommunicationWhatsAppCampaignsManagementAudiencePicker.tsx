@@ -17,7 +17,7 @@ export default function AdminCommunicationWhatsAppCampaignsManagementAudiencePic
 
   return (
     <section className="rounded-xl border border-border bg-card p-5" aria-labelledby="campaign-audience-heading">
-      <h2 id="campaign-audience-heading" className="mb-4 text-sm font-semibold text-primary">{t('campaigns.admin_campaigns_audience_picker.text_d7613d037b')}</h2>
+      <h2 id="campaign-audience-heading" className="mb-4 text-sm font-semibold text-text-primary">{t('campaigns.admin_campaigns_audience_picker.text_d7613d037b')}</h2>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {audiences.map((audience , __testIdIndex20) => {
           const isSelected = selectedAudienceId === audience.id;
@@ -29,7 +29,7 @@ export default function AdminCommunicationWhatsAppCampaignsManagementAudiencePic
               aria-pressed={isSelected}
               className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95 flex flex-col items-start rounded-xl border p-4 text-left motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${isSelected ? 'border-focus bg-primary-subtle ring-1 ring-primary' : 'border-border bg-input hover:border-focus'}`}
              data-testid={`admin_campaigns-admin_campaigns-audience-picker-click-map20-${__testIdIndex20}-1`}>
-              <span className="text-sm font-semibold text-primary">{audience.name}</span>
+              <span className="text-sm font-semibold text-text-primary">{audience.name}</span>
               <span className="mt-1 text-xs leading-relaxed text-secondary">{audience.description}</span>
             </button>
           );

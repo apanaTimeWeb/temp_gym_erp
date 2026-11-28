@@ -1,5 +1,6 @@
 "use client";
 // RESPONSIBILITY: Owns the notifications page interaction surface: mark-read, mark-all-read, pagination, and error presentation.
+import { useState } from 'react';
 import { Loader2 } from 'lucide-react';
 
 import { useTranslations } from 'next-intl';
@@ -25,6 +26,7 @@ import { useTrainerNotificationsLogic } from '@/app/frontend_trainer/trainer_acc
  */
 export default function TrainerNotificationsContent() {
   const t = useTranslations('TRAINER_NOTIFICATIONS');
+  const [readFilter, setReadFilter] = useState<'all' | 'unread'>('all');
   const {
     notifications,
     unreadCount,
@@ -43,6 +45,10 @@ export default function TrainerNotificationsContent() {
     markAllAsReadPending,
   } = useTrainerNotificationsLogic();
 
+  const displayedNotifications = readFilter === 'unread'
+    ? notifications.filter((n) => n.unread)
+    : notifications;
+
   return (
     <div className="min-h-full pb-10">
       <div className="p-4 sm:p-6 max-w-4xl mx-auto w-full">
@@ -58,6 +64,25 @@ export default function TrainerNotificationsContent() {
                   : t("TEXT_ALL_CAUGHT_UP")}
             </p>
           </div>
+          <div className="relative flex flex-wrap items-center gap-2">
+            <div className="flex rounded-xl border border-border bg-input p-1">
+              <button
+                type="button"
+                onClick={() => setReadFilter('all')}
+                aria-pressed={readFilter === 'all'}
+                className={`px-3 py-1 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${readFilter === 'all' ? 'bg-primary text-on-primary shadow-sm' : 'text-secondary hover:text-text-primary'}`}
+              >
+                All ({notifications.length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setReadFilter('unread')}
+                aria-pressed={readFilter === 'unread'}
+                className={`px-3 py-1 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${readFilter === 'unread' ? 'bg-primary text-on-primary shadow-sm' : 'text-secondary hover:text-text-primary'}`}
+              >
+                Unread ({unreadCount})
+              </button>
+            </div>
           {notifications.length > 0 && (
             <button
               type="button"
@@ -68,6 +93,7 @@ export default function TrainerNotificationsContent() {
               {markAllAsReadPending ? <><Loader2 size={18} className="motion-safe:animate-spin" aria-hidden="true" strokeWidth={2} /> {t("TEXT_MARKING_ALL_AS_READ")}</> : t("TEXT_MARKING_ALL_AS_READ") && t("TEXT_MARK_ALL_AS_READ")}
             </button>
           )}
+          </div>
         </div>
 
         {!isOnline && (
@@ -92,7 +118,7 @@ export default function TrainerNotificationsContent() {
           </div>
         ) : (!isError || notifications.length > 0) ? (
           <div className="bg-card border border-border rounded-xl shadow-card overflow-hidden">
-            <TrainerNotificationsList notifications={notifications} onMarkAsRead={markAsRead} pendingNotificationId={markAsReadPendingId}/>
+            <TrainerNotificationsList notifications={displayedNotifications} onMarkAsRead={markAsRead} pendingNotificationId={markAsReadPendingId}/>
           </div>
         ) : null}
 

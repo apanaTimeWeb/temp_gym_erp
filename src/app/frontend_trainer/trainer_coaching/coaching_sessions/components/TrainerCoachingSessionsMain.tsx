@@ -2,9 +2,10 @@
 // RESPONSIBILITY: Renders the Trainer Sessions workspace by composing filters, session records, and child modal surfaces; orchestration lives in useTrainerSessionsMain.
 // DATA FLOW: page.tsx → useTrainerSessionsMain → Session views/modals.
 
-import { useState, useMemo } from 'react';
-import { Clock, Dumbbell, Loader2, Pencil, User, Users, XCircle, CheckCircle } from 'lucide-react';
+import { useState, useMemo, useEffect } from 'react';
+import { CheckCircle, ChevronLeft, ChevronRight, Clock, Dumbbell, Loader2, Pencil, User, Users, XCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { apiFetch } from '@/lib/api';
 
 import TrainerSessionsAttendanceModal from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/components/TrainerCoachingSessionsAttendanceModal';
 import TrainerSessionsEditModal from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/components/TrainerCoachingSessionsEditModal';
@@ -57,9 +58,25 @@ export default function TrainerSessionsMain() {
   const [sessionType, setSessionType] = useState('ALL');
   const [memberFilter, setMemberFilter] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
+  const [sessionsPage, setSessionsPage] = useState(1);
+  const sessionsPerPage = 10;
 
-  // Client Booking Requests State
+  // Client Booking Requests State (loaded from backend/mock API)
   const [bookingRequests, setBookingRequests] = useState<ClientBookingRequest[]>(INITIAL_BOOKING_REQUESTS);
+
+  useEffect(() => {
+    let active = true;
+    apiFetch<ClientBookingRequest[]>('/trainer/trainer_sessions/booking-requests')
+      .then((res) => {
+        if (active && res?.success && Array.isArray(res.data)) {
+          setBookingRequests(res.data);
+        }
+      })
+      .catch(() => {
+        // Keep initial requests if offline or mocked in isolated unit tests
+      });
+    return () => { active = false; };
+  }, []);
 
   // Live Workout Modal State
   const [liveWorkoutSession, setLiveWorkoutSession] = useState<TrainerSessionsTrainerSession | null>(null);
@@ -69,6 +86,7 @@ export default function TrainerSessionsMain() {
     const booking = bookingRequests.find((b) => b.id === id);
     if (booking) {
       setBookingRequests((prev) => prev.filter((b) => b.id !== id));
+      void apiFetch(`/trainer/trainer_sessions/booking-requests/${id}/accept`, { method: 'POST' }).catch(() => null);
       setShowScheduleModal(true);
     }
   };
@@ -76,6 +94,7 @@ export default function TrainerSessionsMain() {
   // Handle Decline Client Booking
   const handleDeclineBooking = (id: string) => {
     setBookingRequests((prev) => prev.filter((b) => b.id !== id));
+    void apiFetch(`/trainer/trainer_sessions/booking-requests/${id}/decline`, { method: 'POST' }).catch(() => null);
   };
 
   // Handle Completed Live Workout Tracker
@@ -120,6 +139,10 @@ export default function TrainerSessionsMain() {
     });
   }, [sessions, statusDropdown, sessionType, memberFilter, searchQuery]);
 
+  const totalSessionsPages = Math.max(1, Math.ceil(filteredSessions.length / sessionsPerPage));
+  const safeSessionsPage = Math.min(sessionsPage, totalSessionsPages);
+  const paginatedSessions = filteredSessions.slice((safeSessionsPage - 1) * sessionsPerPage, safeSessionsPage * sessionsPerPage);
+
   const hasActiveFilters =
     statusDropdown !== 'ALL' ||
     sessionType !== 'ALL' ||
@@ -131,6 +154,34 @@ export default function TrainerSessionsMain() {
     setSessionType('ALL');
     setMemberFilter('ALL');
     setSearchQuery('');
+    setSessionsPage(1);
+  };
+
+  const handleExportCsv = () => {
+    const header = ['ID', 'Title', 'Type', 'Time', 'Duration', 'Member / Attendees', 'Status'];
+    const csvRows = [
+      header.join(','),
+      ...filteredSessions.map((s) =>
+        [
+          s.id,
+          `"${String(s.title ?? '').replace(/"/g, '""')}"`,
+          s.type,
+          `"${String(s.time ?? '').replace(/"/g, '""')}"`,
+          `"${String(s.duration ?? '').replace(/"/g, '""')}"`,
+          `"${String(s.type === TRAINER_SESSIONS_SESSION_TYPE.PT ? (s.member ?? '') : `${s.attendees}/${s.maxAttendees}`).replace(/"/g, '""')}"`,
+          s.status,
+        ].join(',')
+      ),
+    ];
+    const blob = new Blob([csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'trainer_sessions_schedule.csv';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -163,6 +214,7 @@ export default function TrainerSessionsMain() {
           onScheduleClick={() => setShowScheduleModal(true)}
           onClearFilters={handleClearFilters}
           hasActiveFilters={hasActiveFilters}
+          onExportCsv={handleExportCsv}
         />
 
         {isPending ? <TrainerSessionsLoadingSkeleton /> : isError ? (
@@ -172,7 +224,7 @@ export default function TrainerSessionsMain() {
           </div>
         ) : (
           <div className="grid gap-4">
-            {filteredSessions.map((session) => (
+            {paginatedSessions.map((session) => (
               <div key={session.id} className="bg-card rounded-xl shadow-card border border-border p-5 flex flex-col md:flex-row md:items-center justify-between gap-5 motion-safe:hover:-translate-y-0.5 motion-safe:transition-transform">
                 <div className="flex items-start gap-4">
                   <div className={`p-3 rounded-xl mt-1 ${TRAINER_SESSIONS_SESSION_TYPE_STYLES[session.type]}`}>{session.type === TRAINER_SESSIONS_SESSION_TYPE.PT ? <User size={18} strokeWidth={2} /> : <Users size={18} strokeWidth={2} />}</div>
@@ -211,6 +263,32 @@ export default function TrainerSessionsMain() {
               </div>
             ))}
             {filteredSessions.length === 0 && <TrainerSessionsEmptyState onSchedule={() => setShowScheduleModal(true)} />}
+            {totalSessionsPages > 1 && (
+              <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-border bg-card px-4 py-3 text-xs text-secondary">
+                <span>
+                  Showing <strong className="text-text-primary">{(safeSessionsPage - 1) * sessionsPerPage + 1}</strong>–<strong className="text-text-primary">{Math.min(safeSessionsPage * sessionsPerPage, filteredSessions.length)}</strong> of <strong className="text-text-primary">{filteredSessions.length}</strong> sessions
+                </span>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    disabled={safeSessionsPage <= 1}
+                    onClick={() => setSessionsPage((p) => Math.max(1, p - 1))}
+                    className="min-h-9 inline-flex items-center gap-1 rounded-lg border border-border bg-input px-2.5 py-1 text-xs font-semibold text-text-primary disabled:opacity-40 cursor-pointer"
+                  >
+                    <ChevronLeft size={14} /> Prev
+                  </button>
+                  <span className="font-medium text-text-primary">Page {safeSessionsPage} / {totalSessionsPages}</span>
+                  <button
+                    type="button"
+                    disabled={safeSessionsPage >= totalSessionsPages}
+                    onClick={() => setSessionsPage((p) => Math.min(totalSessionsPages, p + 1))}
+                    className="min-h-9 inline-flex items-center gap-1 rounded-lg border border-border bg-input px-2.5 py-1 text-xs font-semibold text-text-primary disabled:opacity-40 cursor-pointer"
+                  >
+                    Next <ChevronRight size={14} />
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

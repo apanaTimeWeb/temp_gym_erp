@@ -29,7 +29,7 @@ export default function AdminGymsHealthAlertsMonitoringFilters() {
     </div>
     <label className="relative w-full sm:ml-auto sm:max-w-sm">
       <Search size={18} strokeWidth={2} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-secondary" />
-      <input data-testid="admin_gym_health_alerts-admin_gym_health_alerts-filters-filter-3" value={search} onChange={(event) => setSearch(event.target.value)} placeholder={t('gym-health-alerts.admin_gym_health_alerts_filters.text_85dc44cf4f')} aria-label={t('gym-health-alerts.admin_gym_health_alerts_filters.text_85dc44cf4f')} className="min-h-11 w-full rounded-lg border border-border bg-input pl-10 pr-3 text-sm text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out" />
+      <input data-testid="admin_gym_health_alerts-admin_gym_health_alerts-filters-filter-3" value={search} onChange={(event) => setSearch(event.target.value)} placeholder={t('gym-health-alerts.admin_gym_health_alerts_filters.text_85dc44cf4f')} aria-label={t('gym-health-alerts.admin_gym_health_alerts_filters.text_85dc44cf4f')} className="min-h-11 w-full rounded-lg border border-border bg-input pl-10 pr-3 text-sm text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out" />
     </label>
   </div>;
 }

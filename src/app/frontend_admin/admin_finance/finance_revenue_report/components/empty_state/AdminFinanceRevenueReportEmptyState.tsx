@@ -18,7 +18,7 @@ export function AdminFinanceRevenueReportEmptyState({ title, description }: Admi
   return (
     <div className="flex flex-col items-center justify-center gap-2 px-6 py-12 text-center" data-testid="admin_reports-admin_reports-empty-state-state">
       <BarChart3 size={18} aria-hidden="true" className="text-secondary"  strokeWidth={2}/>
-      <h3 className="text-base font-semibold text-primary">{title}</h3>
+      <h3 className="text-base font-semibold text-text-primary">{title}</h3>
       <p className="text-sm text-secondary">{description}</p>
     </div>
   );

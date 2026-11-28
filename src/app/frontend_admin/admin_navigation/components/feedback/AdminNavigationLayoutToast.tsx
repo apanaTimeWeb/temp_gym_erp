@@ -54,7 +54,7 @@ export default function AdminNavigationLayoutToast({ id, message, type, onClose 
 
   return (
     <div
-      role={type === 'error' || type === 'warning' ? 'alert' : 'status'} aria-live={type === 'error' || type === 'warning' ? 'assertive' : 'polite'} aria-atomic="true" className={`fixed bottom-[max(12px,env(safe-area-inset-bottom))] right-3 sm:right-6 z-50 flex items-center gap-3 w-[min(320px,calc(100vw-24px))] p-4 rounded-xl border-y border-r border-l-4 backdrop-blur-xl bg-card text-primary motion-safe:animate-in motion-safe:slide-in-from-right-8 motion-safe:fade-in motion-safe:duration-slow ${shadow} ${borderClass}`}
+      role={type === 'error' || type === 'warning' ? 'alert' : 'status'} aria-live={type === 'error' || type === 'warning' ? 'assertive' : 'polite'} aria-atomic="true" className={`fixed bottom-[max(12px,env(safe-area-inset-bottom))] right-3 sm:right-6 z-50 flex items-center gap-3 w-[min(320px,calc(100vw-24px))] p-4 rounded-xl border-y border-r border-l-4 backdrop-blur-xl bg-card text-text-primary motion-safe:animate-in motion-safe:slide-in-from-right-8 motion-safe:fade-in motion-safe:duration-slow ${shadow} ${borderClass}`}
      data-testid="layout-components-layout-toast-status-region">
       <div className={`${colorClass} flex-shrink-0`}>
         {icon}

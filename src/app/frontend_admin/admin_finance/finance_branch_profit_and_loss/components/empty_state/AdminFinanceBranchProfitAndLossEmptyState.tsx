@@ -35,7 +35,7 @@ export default function AdminFinanceBranchProfitAndLossEmptyState({ statusFilter
           <div className="w-14 h-14 rounded-2xl bg-input flex items-center justify-center border border-border">
             <BarChart3 size={18} strokeWidth={2} className="text-secondary" />
           </div>
-          <p className="text-sm font-semibold text-primary">{t((EMPTY_MESSAGE_KEYS[statusFilter] ?? EMPTY_MESSAGE_KEYS.ALL) as string)}</p>
+          <p className="text-sm font-semibold text-text-primary">{t((EMPTY_MESSAGE_KEYS[statusFilter] ?? EMPTY_MESSAGE_KEYS.ALL) as string)}</p>
           <p className="text-xs text-secondary">{t('finance.AdminFinancePnlEmptyState.text_2ccc4a6f8d')}</p>
           {statusFilter !== FINANCE_PNL_STATUS_FILTERS.ALL && (
             <button type="button"

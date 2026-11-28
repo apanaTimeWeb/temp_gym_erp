@@ -59,7 +59,7 @@ export default function AdminHrManagementStaffProfileModal() {
             <div className="p-2 bg-primary-subtle text-primary rounded-xl">
               <User size={18}  strokeWidth={2}/>
             </div>
-            <h2 id="admin-hr-staff-profile-title" className="text-lg font-bold text-primary">{t('hr.admin_hr_staff_profile_modal.text_42ce83274d')}</h2>
+            <h2 id="admin-hr-staff-profile-title" className="text-lg font-bold text-text-primary">{t('hr.admin_hr_staff_profile_modal.text_42ce83274d')}</h2>
           </div>
           <button type="button" 
             onClick={() => setShowProfileModal(false)}
@@ -80,8 +80,8 @@ export default function AdminHrManagementStaffProfileModal() {
             <div className="flex-1 space-y-4 w-full">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  <h1 className="text-2xl font-bold text-primary leading-tight">{editData.name}</h1>
-                  <p className="text-sm font-medium text-primary mt-1">{editData.role} {t('hr.admin_hr_staff_profile_modal.text_71905e33f0')}{editData.id?.toUpperCase()}</p>
+                  <h1 className="text-2xl font-bold text-text-primary leading-tight">{editData.name}</h1>
+                  <p className="text-sm font-medium text-text-primary mt-1">{editData.role} {t('hr.admin_hr_staff_profile_modal.text_71905e33f0')}{editData.id?.toUpperCase()}</p>
                 </div>
                 {isManager && (
                   <button type="button"
@@ -97,7 +97,7 @@ export default function AdminHrManagementStaffProfileModal() {
                 <div className="flex items-center justify-between gap-3 bg-input p-3 rounded-xl border border-border">
                   <div className="flex items-center gap-3 min-w-0">
                     <Phone size={18} className="text-secondary shrink-0" strokeWidth={2}/>
-                    <span className="text-sm font-medium text-primary">{displayValue(editData.phone)}</span>
+                    <span className="text-sm font-medium text-text-primary">{displayValue(editData.phone)}</span>
                   </div>
                   {editData.phone && (
                     <div className="flex items-center gap-1.5 shrink-0">
@@ -125,7 +125,7 @@ export default function AdminHrManagementStaffProfileModal() {
                 <div className="flex items-center justify-between gap-3 bg-input p-3 rounded-xl border border-border">
                   <div className="flex items-center gap-3 min-w-0">
                     <Mail size={18} className="text-secondary shrink-0" strokeWidth={2}/>
-                    <span className="text-sm font-medium text-primary truncate">{displayValue(editData.email)}</span>
+                    <span className="text-sm font-medium text-text-primary truncate">{displayValue(editData.email)}</span>
                   </div>
                   {editData.email && (
                     <a
@@ -140,7 +140,7 @@ export default function AdminHrManagementStaffProfileModal() {
                 </div>
                 <div className="flex items-center gap-3 bg-input p-3 rounded-xl border border-border">
                   <Calendar size={18} className="text-secondary"  strokeWidth={2}/>
-                  <span className="text-sm font-medium text-primary">
+                  <span className="text-sm font-medium text-text-primary">
                     {t('hr.admin_hr_staff_profile_modal.text_4c0af443a2')}{editData.joinDate ? formatDate(editData.joinDate, locale) : t('hr.admin_hr_staff_profile_modal.auto_d8aa6dd430')}
                   </span>
                 </div>
@@ -161,21 +161,21 @@ export default function AdminHrManagementStaffProfileModal() {
                 <div className="flex items-center justify-between gap-3 bg-input p-3 rounded-xl border border-border">
                   <div className="flex items-center gap-3">
                     <IndianRupee size={18} className="text-secondary"  strokeWidth={2}/>
-                    <span className="text-sm font-medium text-primary">
+                    <span className="text-sm font-medium text-text-primary">
                       {t('hr.admin_hr_staff_profile_modal.text_42b8e99f3c')}{AdminHrFormatCurrency(editData.salary || 0, undefined, locale)}
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5 shrink-0">
                     <Link
                       href={`/frontend_admin/admin_finance/finance_salary_advance_management?search=${encodeURIComponent(editData.name || '')}`}
-                      className="px-2 py-1 text-xs font-semibold rounded bg-card hover:bg-surface-hover border border-border text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                      className="px-2 py-1 text-xs font-semibold rounded bg-card hover:bg-surface-hover border border-border text-text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                       title="Issue Salary Advance"
                     >
                       Advance
                     </Link>
                     <Link
                       href={`/frontend_admin/admin_finance/finance_staff_ledger_management?search=${encodeURIComponent(editData.name || '')}`}
-                      className="px-2 py-1 text-xs font-semibold rounded bg-card hover:bg-surface-hover border border-border text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                      className="px-2 py-1 text-xs font-semibold rounded bg-card hover:bg-surface-hover border border-border text-text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                       title="View Staff Ledger"
                     >
                       Ledger
@@ -184,20 +184,20 @@ export default function AdminHrManagementStaffProfileModal() {
                 </div>
                 <div className="flex items-center gap-3 bg-input p-3 rounded-xl border border-border">
                   <Hash size={18} className="text-secondary"  strokeWidth={2}/>
-                  <span className="text-sm font-medium text-primary">
+                  <span className="text-sm font-medium text-text-primary">
                     {t('hr.admin_hr_staff_profile_modal.text_5f3e72116d')}{displayValue(editData.aadhaar)}
                   </span>
                 </div>
                 <div className="flex items-center gap-3 bg-input p-3 rounded-xl border border-border">
                   <span className="text-xs font-bold border border-border text-secondary rounded px-1">{t('hr.admin_hr_staff_profile_modal.text_f295b2cdff')}</span>
-                  <span className="text-sm font-medium text-primary truncate max-w-40" title={editData.upiId}>
+                  <span className="text-sm font-medium text-text-primary truncate max-w-40" title={editData.upiId}>
                     {displayValue(editData.upiId)}
                   </span>
                 </div>
                 {Boolean(editData.panNumber) && (
                   <div className="flex items-center gap-3 bg-input p-3 rounded-xl border border-border">
                     <span className="text-xs font-bold border border-border text-secondary rounded px-1">PAN</span>
-                    <span className="text-sm font-medium text-primary truncate max-w-40" title={editData.panNumber}>
+                    <span className="text-sm font-medium text-text-primary truncate max-w-40" title={editData.panNumber}>
                       {displayValue(editData.panNumber)}
                     </span>
                   </div>
@@ -205,7 +205,7 @@ export default function AdminHrManagementStaffProfileModal() {
                 {Boolean(editData.bankAccountNumber) && (
                   <div className="flex items-center gap-3 bg-input p-3 rounded-xl border border-border">
                     <Building2 size={18} className="text-secondary" strokeWidth={2}/>
-                    <span className="text-sm font-medium text-primary truncate max-w-40" title={editData.bankAccountNumber}>
+                    <span className="text-sm font-medium text-text-primary truncate max-w-40" title={editData.bankAccountNumber}>
                       {editData.bankName ? `${editData.bankName} - ` : ''}{displayValue(editData.bankAccountNumber)}
                     </span>
                   </div>
@@ -218,20 +218,20 @@ export default function AdminHrManagementStaffProfileModal() {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <Building2 size={18} className="text-primary"  strokeWidth={2}/>
-              <h3 className="text-base font-bold text-primary">{t('hr.admin_hr_staff_profile_modal.text_e24e824b68')}{isManager ? t('hr.admin_hr_staff_profile_modal.auto_3e4eca54ae') : t('hr.admin_hr_staff_profile_modal.auto_1c044fc818')}</h3>
+              <h3 className="text-base font-bold text-text-primary">{t('hr.admin_hr_staff_profile_modal.text_e24e824b68')}{isManager ? t('hr.admin_hr_staff_profile_modal.auto_3e4eca54ae') : t('hr.admin_hr_staff_profile_modal.auto_1c044fc818')}</h3>
             </div>
             
             <div className="border border-border rounded-xl overflow-hidden shadow-card">
               <div className="max-h-60 overflow-auto">
                 <table data-admin-responsive-table className="w-full text-left border-collapse">
-                  <thead className="sticky top-0 z-20 bg-surface-highlight">
+                  <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038]">
                     <tr className="border-b border-border">
-                      <th className="sticky start-0 z-30 bg-surface-highlight border-e border-border px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider" aria-sort={branchSortDirection === 'asc' ? 'ascending' : 'descending'}><button type="button" onClick={() => setBranchSortDirection((current) => current === 'asc' ? 'desc' : 'asc')} className="flex min-h-11 min-w-11 items-center gap-1.5 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="admin_hr-admin_hr-staff-profile-modal-control-4">{t('hr.admin_hr_staff_profile_modal.text_1627510b24')}{branchSortDirection === 'asc' ? <ChevronUp size={18} className="text-primary" strokeWidth={2}/> : <ChevronDown size={18} className="text-primary" strokeWidth={2}/>}</button></th>
+                      <th className="sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider" aria-sort={branchSortDirection === 'asc' ? 'ascending' : 'descending'}><button type="button" onClick={() => setBranchSortDirection((current) => current === 'asc' ? 'desc' : 'asc')} className="flex min-h-11 min-w-11 items-center gap-1.5 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="admin_hr-admin_hr-staff-profile-modal-control-4">{t('hr.admin_hr_staff_profile_modal.text_1627510b24')}{branchSortDirection === 'asc' ? <ChevronUp size={18} className="text-text-primary" strokeWidth={2}/> : <ChevronDown size={18} className="text-text-primary" strokeWidth={2}/>}</button></th>
                       <th className="px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider">{t('hr.admin_hr_staff_profile_modal.text_d219c68101')}</th>
                       {isManager && <th className="px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider text-right">{t('hr.admin_hr_staff_profile_modal.text_6d12c8adbe')}</th>}
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-border">
+                  <tbody className="divide-y divide-border dark:divide-white/[0.07]">
                     {branchesToRender.map((bId , __testIdIndex170) => {
                       if (!bId) return null;
                       const info = branchesById.get(bId);
@@ -240,7 +240,7 @@ export default function AdminHrManagementStaffProfileModal() {
                       
                       return (
                         <tr key={bId} className="hover:bg-surface-hover transition-colors group">
-                          <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-e border-border px-4 py-3 text-sm font-medium text-primary">
+                          <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] group-hover:bg-orange-50 dark:group-hover:bg-[#18243E] border-e border-border px-4 py-3 text-sm font-medium text-text-primary">
                             <div className="flex items-center gap-1.5">
                               <span>{info.name}</span>
                               <CopyButton text={info.name} label={info.name} />

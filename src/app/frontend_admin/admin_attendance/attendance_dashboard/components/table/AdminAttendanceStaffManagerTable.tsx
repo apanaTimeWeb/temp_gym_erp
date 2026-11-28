@@ -107,7 +107,7 @@ export default function AdminAttendanceStaffManagerTable() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="rounded-xl border border-border bg-surface-highlight p-3">
           <div className="text-xs font-semibold text-secondary">Total Staff Logged</div>
-          <div className="text-lg font-bold text-primary mt-0.5">{records.length} Staff</div>
+          <div className="text-lg font-bold text-text-primary mt-0.5">{records.length} Staff</div>
         </div>
         <div className="rounded-xl border border-success bg-success-bg p-3">
           <div className="text-xs font-semibold text-success-text">Present Today</div>
@@ -119,7 +119,7 @@ export default function AdminAttendanceStaffManagerTable() {
         </div>
         <div className="rounded-xl border border-border bg-surface-highlight p-3">
           <div className="text-xs font-semibold text-secondary">Approved Leaves</div>
-          <div className="text-lg font-bold text-primary mt-0.5">{onLeaveCount} Staff</div>
+          <div className="text-lg font-bold text-text-primary mt-0.5">{onLeaveCount} Staff</div>
         </div>
       </div>
 
@@ -133,14 +133,14 @@ export default function AdminAttendanceStaffManagerTable() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search staff or manager..."
-              className="w-full min-h-11 rounded-xl border border-border bg-input pl-9 pr-3 text-xs text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="w-full min-h-11 rounded-xl border border-border bg-input pl-9 pr-3 text-xs text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             />
           </div>
 
           <select
             value={roleFilter}
             onChange={(e) => setRoleFilter(e.target.value)}
-            className="min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             aria-label="Filter by role"
           >
             <option value="all">All Roles (Staff & Managers)</option>
@@ -151,7 +151,7 @@ export default function AdminAttendanceStaffManagerTable() {
           <select
             value={branchFilter}
             onChange={(e) => setBranchFilter(e.target.value)}
-            className="min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             aria-label="Filter by branch"
           >
             <option value="all">All Branches</option>
@@ -164,7 +164,7 @@ export default function AdminAttendanceStaffManagerTable() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             aria-label="Filter by attendance status"
           >
             <option value="all">All Statuses</option>
@@ -188,9 +188,9 @@ export default function AdminAttendanceStaffManagerTable() {
       <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
         <div className="max-h-[640px] overflow-auto">
           <table data-admin-responsive-table className="w-full text-left border-collapse text-xs sm:text-sm">
-            <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border shadow-xs">
+            <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border shadow-xs">
               <tr className="border-b border-border bg-surface-highlight text-secondary">
-                <th className="sticky start-0 z-30 bg-surface-highlight border-e border-border p-3.5 font-bold uppercase tracking-wider text-xs whitespace-nowrap">Staff / Manager Name</th>
+                <th className="sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border p-3.5 font-bold uppercase tracking-wider text-xs whitespace-nowrap">Staff / Manager Name</th>
                 <th className="p-3.5 font-bold uppercase tracking-wider text-xs whitespace-nowrap">Role</th>
                 <th className="p-3.5 font-bold uppercase tracking-wider text-xs whitespace-nowrap">Branch</th>
                 <th className="p-3.5 font-bold uppercase tracking-wider text-xs whitespace-nowrap">Assigned Shift</th>
@@ -201,7 +201,7 @@ export default function AdminAttendanceStaffManagerTable() {
                 <th className="p-3.5 font-bold uppercase tracking-wider text-xs text-right whitespace-nowrap">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border dark:divide-white/[0.07]">
               {filtered.length === 0 ? (
                 <tr>
                   <td colSpan={TABLE_COLUMN_COUNT} className="p-8 text-center text-secondary">
@@ -211,7 +211,7 @@ export default function AdminAttendanceStaffManagerTable() {
               ) : (
                 filtered.map((record) => (
                   <tr key={record.id} className="hover:bg-surface-hover motion-safe:transition-colors group">
-                    <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-e border-border p-3.5 font-semibold text-primary">
+                    <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] group-hover:bg-orange-50 dark:group-hover:bg-[#18243E] border-e border-border p-3.5 font-semibold text-text-primary">
                       <div className="flex items-center gap-2">
                         <span className="w-7 h-7 rounded-full bg-primary-subtle text-primary font-bold flex items-center justify-center text-xs shrink-0">
                           {record.name.charAt(0)}
@@ -233,7 +233,7 @@ export default function AdminAttendanceStaffManagerTable() {
                     </td>
                     <td className="p-3.5">
                       <span className={`px-2 py-0.5 rounded-lg text-xs font-bold ${
-                        record.role === 'Manager' ? 'bg-primary text-on-primary' : 'bg-surface-highlight text-primary border border-border'
+                        record.role === 'Manager' ? 'bg-primary text-on-primary' : 'bg-surface-highlight text-text-primary border border-border'
                       }`}>
                         {record.role}
                       </span>
@@ -244,9 +244,9 @@ export default function AdminAttendanceStaffManagerTable() {
                       </Link>
                     </td>
                     <td className="p-3.5 text-secondary text-xs">{record.shift}</td>
-                    <td className="p-3.5 font-medium text-primary">{record.checkInTime}</td>
+                    <td className="p-3.5 font-medium text-text-primary">{record.checkInTime}</td>
                     <td className="p-3.5 text-secondary">{record.checkOutTime || '—'}</td>
-                    <td className="p-3.5 text-primary font-medium">{record.duration}</td>
+                    <td className="p-3.5 text-text-primary font-medium">{record.duration}</td>
                     <td className="p-3.5">
                       <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold ${
                         record.status === 'present'
@@ -265,7 +265,7 @@ export default function AdminAttendanceStaffManagerTable() {
                       <button
                         type="button"
                         onClick={() => handleOpenEditModal(record)}
-                        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-border bg-card hover:bg-surface-highlight text-primary text-xs font-semibold shadow-xs motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-border bg-card hover:bg-surface-highlight text-text-primary text-xs font-semibold shadow-xs motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                         aria-label={`Adjust attendance punch for ${record.name}`}
                       >
                         <Edit3 size={12} className="text-secondary" />

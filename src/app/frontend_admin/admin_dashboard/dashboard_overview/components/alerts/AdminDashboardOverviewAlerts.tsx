@@ -29,7 +29,7 @@ export default function AdminDashboardOverviewAlerts() {
     switch (severity) {
       case 'high': return <AlertCircle size={18} className="text-danger"  strokeWidth={2}/>;
       case 'medium': return <AlertTriangle size={18} className="text-warning"  strokeWidth={2}/>;
-      default: return <Info size={18} className="text-primary"  strokeWidth={2}/>;
+      default: return <Info size={18} className="text-text-primary"  strokeWidth={2}/>;
     }
   };
 
@@ -49,7 +49,7 @@ export default function AdminDashboardOverviewAlerts() {
             <ShieldAlert size={18}  strokeWidth={2}/>
           </div>
           <div>
-            <h2 className="text-lg font-bold text-primary">{t('dashboard.admin_dashboard_alerts.text_f663d709ad')}</h2>
+            <h2 className="text-lg font-bold text-text-primary">{t('dashboard.admin_dashboard_alerts.text_f663d709ad')}</h2>
             <p className="text-xs text-secondary">{t('dashboard.admin_dashboard_alerts.text_a5f995a220')}</p>
           </div>
         </div>
@@ -67,7 +67,7 @@ export default function AdminDashboardOverviewAlerts() {
                 {getSeverityIcon(alert.severity)}
               </div>
               <div>
-                <p className="text-sm font-medium text-primary">{alert.message}</p>
+                <p className="text-sm font-medium text-text-primary">{alert.message}</p>
                 <p className="text-xs text-secondary mt-1 uppercase font-semibold">
                   {formatDate(alert.date, locale)}
                 </p>

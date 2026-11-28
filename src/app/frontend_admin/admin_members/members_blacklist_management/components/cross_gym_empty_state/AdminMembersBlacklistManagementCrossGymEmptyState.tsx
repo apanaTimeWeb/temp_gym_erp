@@ -17,7 +17,7 @@ export default function AdminMembersBlacklistManagementCrossGymEmptyState() {
   const t = useTranslations();
   return <div className="flex flex-col items-center justify-center gap-2 py-12 text-center" data-testid="admin_blacklist-admin_blacklist-cross-gym-empty-state-state">
     <Ban size={18} aria-hidden="true" className="text-secondary"  strokeWidth={2}/>
-    <h3 className="text-base font-semibold text-primary">{t('blacklist.admin_blacklist_cross_gym_empty_state.text_no_gym_bans')}</h3>
+    <h3 className="text-base font-semibold text-text-primary">{t('blacklist.admin_blacklist_cross_gym_empty_state.text_no_gym_bans')}</h3>
     <p className="text-sm text-secondary">{t('blacklist.admin_blacklist_cross_gym_empty_state.text_no_members')}</p>
   </div>;
 }

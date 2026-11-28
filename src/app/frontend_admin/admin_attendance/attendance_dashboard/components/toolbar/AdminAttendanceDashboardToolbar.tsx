@@ -42,7 +42,7 @@ export default function AdminAttendanceDashboardToolbar() {
           placeholder={t('attendance.admin_attendance_toolbar.text_9ecaf04b35')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-9 pr-4 py-2.5 bg-input border border-border rounded-xl text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary placeholder:text-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
+          className="w-full pl-9 pr-4 py-2.5 bg-input border border-border rounded-xl text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary placeholder:text-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
           aria-label={t('attendance.admin_attendance_toolbar.text_617d2d01c3')}
          data-testid="admin_attendance-admin_attendance-toolbar-control"/>
       </div>

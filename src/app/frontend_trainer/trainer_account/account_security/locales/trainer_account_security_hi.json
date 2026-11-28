@@ -40,7 +40,8 @@
     "ERR_PASSWORD_MISMATCH": "नया पासवर्ड और उसकी पुष्टि समान होनी चाहिए",
     "TEXT_PAGE_TITLE": "मेरी प्रोफ़ाइल",
     "TEXT_PAGE_DESCRIPTION": "अपने अकाउंट विवरण और पासवर्ड प्रबंधित करें।",
-    "TEXT_RETRY": "फिर प्रयास करें"
+    "TEXT_RETRY": "फिर प्रयास करें",
+    "TEXT_VALIDATION_ERROR": "कृपया इस फ़ील्ड की जाँच करें"
   },
   "TRAINER_INFRASTRUCTURE": {
     "TEXT_SELECT_AN_OPTION": "एक विकल्प चुनें...",

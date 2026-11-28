@@ -33,7 +33,7 @@ export default function AdminHrManagementStaffModal() {
  <div data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-hr-staff-modal-title" tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay-backdrop backdrop-blur-sm overflow-y-auto" data-testid="admin_hr-admin_hr-staff-modal-control">
   <div className="my-auto rounded-2xl shadow-dialog w-full max-w-md max-h-dialog-desktop overflow-y-auto custom-scrollbar bg-overlay motion-safe:transition-all motion-safe:duration-base ease-in-out border-2 border-border">
   <div className="sticky top-0 px-8 py-5 border-b border-border bg-card flex items-center justify-between z-10">
-  <h3 id="admin-hr-staff-modal-title" className="text-xl font-bold text-primary">{editId ? t('hr.admin_hr_staff_modal.auto_6185ab8940') : t('hr.admin_hr_staff_modal.auto_b76695b470')}</h3>
+  <h3 id="admin-hr-staff-modal-title" className="text-xl font-bold text-text-primary">{editId ? t('hr.admin_hr_staff_modal.auto_6185ab8940') : t('hr.admin_hr_staff_modal.auto_b76695b470')}</h3>
   <button 
   type="button" 
   onClick={() => void handleClose()} 
@@ -65,7 +65,7 @@ export default function AdminHrManagementStaffModal() {
   {...register(f.key as keyof StaffFormValues, f.type === 'number' ? { valueAsNumber: true } : {})}
   className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page ease-in-out min-h-11 w-full border rounded-xl px-4 py-3 text-sm focus-visible:outline-none focus-visible:ring-2 motion-safe:transition-all motion-safe:duration-base ${
     errors[f.key as keyof StaffFormValues] ? 'border-border focus-visible:ring-primary' : 'border-border focus-visible:ring-primary'
-  } bg-input text-primary`}
+  } bg-input text-text-primary`}
    data-testid={`admin_hr-admin_hr-staff-modal-control-2-map42-${__testIdIndex42}-1`}/>
   {errors[f.key as keyof StaffFormValues] && (
     <p id={`admin-hr-staff-${String(f.key)}-error`} role="alert" className="text-danger text-xs mt-1.5">{getValidationMessage(errors[f.key as keyof StaffFormValues]?.message)}</p>
@@ -76,16 +76,16 @@ export default function AdminHrManagementStaffModal() {
   {isManager ? (
     <div className="sm:col-span-2 space-y-4 p-5 border border-border rounded-xl bg-input">
       <div>
-        <label className="block text-sm font-medium mb-2 text-primary">{t('hr.admin_hr_staff_modal.text_4046da7c63')}</label>
+        <label className="block text-sm font-medium mb-2 text-text-primary">{t('hr.admin_hr_staff_modal.text_4046da7c63')}</label>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {(branches as AdminHrBranchReference[]).map((b, __testIdIndex73) => (
-            <label key={b.id} className={`flex items-center gap-2 p-3 border rounded-xl cursor-pointer motion-safe:transition-colors ${assignedBranches.includes(b.id) ? 'border-focus bg-surface-highlight text-primary' : 'border-border hover:bg-input text-secondary'}`}>
+            <label key={b.id} className={`flex items-center gap-2 p-3 border rounded-xl cursor-pointer motion-safe:transition-colors ${assignedBranches.includes(b.id) ? 'border-focus bg-surface-highlight text-text-primary' : 'border-border hover:bg-input text-secondary'}`}>
               <input 
                 type="checkbox" 
                 value={b.id}
                 checked={assignedBranches.includes(b.id)}
                 onChange={(e) => toggleAssignedBranch(b.id, e.target.checked)}
-                className="w-4 h-4 text-primary bg-input border-border rounded focus-visible:ring-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
+                className="w-4 h-4 text-text-primary bg-input border-border rounded focus-visible:ring-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
                data-testid={`admin_hr-admin_hr-staff-modal-control-3-map73-${__testIdIndex73}-1`}/>
               <span className="text-sm font-medium">{b.name}</span>
             </label>
@@ -172,7 +172,7 @@ export default function AdminHrManagementStaffModal() {
   aria-invalid={Boolean(errors.joinDate)}
   aria-describedby={errors.joinDate ? "admin-hr-staff-join-date-error" : undefined}
   {...register('joinDate')}
-  className="w-full px-4 py-3 border border-border rounded-xl text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-primary motion-safe:transition-all motion-safe:duration-base motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+  className="w-full px-4 py-3 border border-border rounded-xl text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-text-primary motion-safe:transition-all motion-safe:duration-base motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
    data-testid="admin_hr-admin_hr-staff-modal-control-6"/>
   {errors.joinDate && <p id="admin-hr-staff-join-date-error" role="alert" className="text-danger text-xs mt-1.5">{getValidationMessage(errors.joinDate.message)}</p>}
   </div>
@@ -187,7 +187,7 @@ export default function AdminHrManagementStaffModal() {
     type={showPassword ? "text" : "password"}
     placeholder={t('hr.admin_hr_staff_modal.text_ec85145d06')}
     {...register('temporaryPassword')}
-    className="w-full px-4 py-3 border border-border rounded-xl text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-primary motion-safe:transition-all motion-safe:duration-base pr-10 motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+    className="w-full px-4 py-3 border border-border rounded-xl text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-text-primary motion-safe:transition-all motion-safe:duration-base pr-10 motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
      data-testid="admin_hr-admin_hr-staff-modal-control-7"/>
     <button
       type="button"
@@ -203,7 +203,7 @@ export default function AdminHrManagementStaffModal() {
 
   <div className="sm:col-span-2 flex items-center justify-between p-4 border border-border rounded-xl bg-input">
     <div>
-      <label className="block text-sm font-medium text-primary">{t('hr.admin_hr_staff_modal.text_c4de5302a4')}</label>
+      <label className="block text-sm font-medium text-text-primary">{t('hr.admin_hr_staff_modal.text_c4de5302a4')}</label>
       <p className="text-xs text-secondary mt-0.5">{t('hr.admin_hr_staff_modal.text_a87f049aab')}</p>
     </div>
     <label className="relative inline-flex items-center cursor-pointer">

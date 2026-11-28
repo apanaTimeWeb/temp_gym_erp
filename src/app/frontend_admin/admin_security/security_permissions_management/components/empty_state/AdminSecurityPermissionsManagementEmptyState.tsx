@@ -23,7 +23,7 @@ export default function AdminSecurityPermissionsManagementEmptyState() {
   return (
     <div className="flex flex-col items-center justify-center gap-3 px-6 py-12 text-center" data-testid="admin_permissions-admin_permissions-empty-state">
       <ShieldCheck size={18} className="text-secondary" aria-hidden="true"  strokeWidth={2}/>
-      <p className="text-sm font-semibold text-primary">{t('permissions.admin_permissions_empty_state.title')}</p>
+      <p className="text-sm font-semibold text-text-primary">{t('permissions.admin_permissions_empty_state.title')}</p>
       <p className="max-w-md text-sm text-secondary">{t('permissions.admin_permissions_empty_state.description')}</p>
     </div>
   );

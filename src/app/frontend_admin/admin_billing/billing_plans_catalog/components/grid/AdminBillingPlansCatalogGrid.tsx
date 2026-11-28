@@ -67,7 +67,7 @@ export default function AdminBillingPlansCatalogGrid({ logic }: AdminPlansGridPr
             <div className="p-6">
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <h3 className="text-xl font-bold text-primary">{p.name}</h3>
+                  <h3 className="text-xl font-bold text-text-primary">{p.name}</h3>
                   <span className="inline-flex px-2 py-0.5 rounded-full text-xs font-semibold bg-input text-secondary mt-1" data-testid="plans-catalog-plans-catalog-grid-status-badge">
                     {p.tier}
                   </span>
@@ -100,15 +100,15 @@ export default function AdminBillingPlansCatalogGrid({ logic }: AdminPlansGridPr
               <div className="grid grid-cols-2 gap-3 mb-6 bg-input p-4 rounded-xl">
                 <div>
                   <p className="text-xs text-secondary">{t('plans.admin_plans_grid.text_7b01bcf516')}</p>
-                  <p className="font-bold text-primary">{AdminPlansFormatCurrency(p.price1Month, 'INR', locale)}</p>
+                  <p className="font-bold text-text-primary">{AdminPlansFormatCurrency(p.price1Month, 'INR', locale)}</p>
                 </div>
                 <div>
                   <p className="text-xs text-secondary">{t('plans.admin_plans_grid.text_8ce49e113d')}</p>
-                  <p className="font-bold text-primary">{AdminPlansFormatCurrency(p.price3Month, 'INR', locale)}</p>
+                  <p className="font-bold text-text-primary">{AdminPlansFormatCurrency(p.price3Month, 'INR', locale)}</p>
                 </div>
                 <div>
                   <p className="text-xs text-secondary">{t('plans.admin_plans_grid.text_422c023cc8')}</p>
-                  <p className="font-bold text-primary">{AdminPlansFormatCurrency(p.price6Month, 'INR', locale)}</p>
+                  <p className="font-bold text-text-primary">{AdminPlansFormatCurrency(p.price6Month, 'INR', locale)}</p>
                 </div>
                 <div>
                   <p className="text-xs text-secondary">{t('plans.admin_plans_grid.text_2de83657ff')}</p>
@@ -117,7 +117,7 @@ export default function AdminBillingPlansCatalogGrid({ logic }: AdminPlansGridPr
               </div>
 
               <div>
-                <p className="text-xs font-bold text-primary uppercase tracking-wide mb-3 flex items-center gap-1.5">
+                <p className="text-xs font-bold text-text-primary uppercase tracking-wide mb-3 flex items-center gap-1.5">
                   <Tag size={18}  strokeWidth={2}/> {t('plans.admin_plans_grid.text_fc338f87a0')}</p>
                 <ul className="space-y-2.5">
                   {p.features.map((feature) => (

@@ -26,15 +26,15 @@ export default function AdminSubscriptionsManagementPaymentMethod() {
       <div className="flex items-center justify-between p-4 border-b border-border">
         <div className="flex items-center gap-2">
           <CreditCard size={18} className="text-primary"  strokeWidth={2}/>
-          <h3 className="font-semibold text-primary text-sm">{t('subscriptions.admin_subscriptions_payment_method.text_ad68e79c90')}</h3>
+          <h3 className="font-semibold text-text-primary text-sm">{t('subscriptions.admin_subscriptions_payment_method.text_ad68e79c90')}</h3>
         </div>
 
       </div>
-      <div className="divide-y divide-border">
+      <div className="divide-y divide-border dark:divide-white/[0.07]">
         {paymentMethodsStatus === 'pending' ? (
           <div className="p-8 text-center text-sm text-secondary" role="status" data-testid="subscriptions-management-subscriptions-management-payment-method-status-region">{t('subscriptions.AdminSubscriptionsError.loadingPaymentMethods')}</div>
         ) : paymentMethodsStatus === 'error' ? (
-          <div className="p-8 text-center" role="alert"><p className="text-danger">{t('subscriptions.AdminSubscriptionsError.paymentMethodsLoadFailed')}</p><button type="button" onClick={() => void retryPaymentMethods()} className="mt-3 min-h-11 rounded-lg border border-border px-4 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="subscriptions-management-subscriptions-management-payment-method-retry-payment-methods">{t('subscriptions.AdminSubscriptionsError.retry')}</button></div>
+          <div className="p-8 text-center" role="alert"><p className="text-danger">{t('subscriptions.AdminSubscriptionsError.paymentMethodsLoadFailed')}</p><button type="button" onClick={() => void retryPaymentMethods()} className="mt-3 min-h-11 rounded-lg border border-border px-4 text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="subscriptions-management-subscriptions-management-payment-method-retry-payment-methods">{t('subscriptions.AdminSubscriptionsError.retry')}</button></div>
         ) : paymentMethods.length === 0 ? (
           <div className="p-8 text-center text-sm text-secondary"><CreditCard size={24} aria-hidden="true" className="mx-auto mb-2" />{t('subscriptions.admin_subscriptions_payment_method.text_95331a092c')}</div>
         ) : paymentMethods.map((pm, __testIdIndex34) => (

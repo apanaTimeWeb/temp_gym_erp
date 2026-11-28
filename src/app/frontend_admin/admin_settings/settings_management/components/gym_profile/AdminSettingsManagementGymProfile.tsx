@@ -40,7 +40,7 @@ export function AdminSettingsManagementGymProfile({ initialData }: AdminSettings
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="bg-card rounded-xl shadow-card border border-border mt-6" data-testid="admin_settings-admin_settings-gym-profile-control">
       <div className="px-6 py-4 border-b border-border flex items-center justify-between flex-wrap gap-3">
-        <h2 className="font-bold text-primary text-lg">{t('settings.admin_settings_gym_profile.text_9f951d3e9a')}</h2>
+        <h2 className="font-bold text-text-primary text-lg">{t('settings.admin_settings_gym_profile.text_9f951d3e9a')}</h2>
         <div className="flex gap-2">
           <button
             type="button"
@@ -68,7 +68,7 @@ export function AdminSettingsManagementGymProfile({ initialData }: AdminSettings
               aria-describedby={form.formState.errors[f.field] ? `admin-settings-gym-profile-${f.field}-error` : undefined}
               type={f.type}
               {...form.register(f.field)}
-              className="w-full px-3 py-2.5 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+              className="w-full px-3 py-2.5 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-text-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
              data-testid={`admin_settings-admin_settings-gym-profile-control-4-map53-${__testIdIndex53}-1`}/>
             {form.formState.errors[f.field] && (
               <p id={`admin-settings-gym-profile-${f.field}-error`} role="alert" className="text-xs text-danger mt-1">{getValidationMessage(form.formState.errors[f.field]?.message)}</p>

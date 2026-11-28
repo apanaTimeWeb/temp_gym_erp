@@ -13,31 +13,35 @@ const NAV_ITEMS = [
 export default function AdminMembersDomainLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const t = useTranslations();
-  return <div className="min-h-full bg-page text-primary">
-    <nav aria-label={t('admin_navigation.AdminNavigation.membersNavigation')} className="sticky top-0 z-20 border-b border-border bg-header px-3 py-3 sm:px-4">
-      <div className="flex gap-2 overflow-x-auto">
-        {NAV_ITEMS.map((item) => {
-          const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              aria-current={active ? 'page' : undefined}
-              className={`inline-flex min-h-11 shrink-0 items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-colors ${
-                active ? 'border-focus bg-surface-highlight text-primary' : 'border-transparent text-secondary hover:bg-surface-hover hover:text-primary'
-              }`}
-            >
-              <span>{t(item.labelKey)}</span>
-              {'badge' in item && item.badge && (
-                <span className="px-1.5 py-0.5 text-xs font-bold rounded-full bg-danger-bg text-danger-text border border-danger/30">
-                  {item.badge}
-                </span>
-              )}
-            </Link>
-          );
-        })}
-      </div>
-    </nav>
-    {children}
-  </div>;
+  return (
+    <div className="min-h-full bg-page text-text-primary trainer-aurora-canvas">
+      <nav aria-label={t('admin_navigation.AdminNavigation.membersNavigation')} className="border-b border-border/80 bg-header/95 dark:bg-[#0B0F19]/85 backdrop-blur-md px-3 py-2.5 sm:px-6">
+        <div className="flex items-center gap-2 overflow-x-auto trainer-shell-scrollbar">
+          {NAV_ITEMS.map((item) => {
+            const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? 'page' : undefined}
+                className={`inline-flex min-h-10 shrink-0 items-center gap-2 rounded-xl border px-3.5 py-1.5 text-xs sm:text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all ${
+                  active
+                    ? 'border-orange-500/45 bg-orange-500/15 text-orange-600 dark:text-orange-300 shadow-[0_2px_10px_rgba(255,90,31,0.16)]'
+                    : 'border-transparent text-secondary hover:bg-surface-hover hover:text-text-primary'
+                }`}
+              >
+                <span>{t(item.labelKey)}</span>
+                {'badge' in item && item.badge && (
+                  <span className="px-1.5 py-0.5 text-[11px] font-bold rounded-full bg-danger-bg text-danger-text border border-danger/30">
+                    {item.badge}
+                  </span>
+                )}
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
+      {children}
+    </div>
+  );
 }

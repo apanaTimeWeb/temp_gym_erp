@@ -47,11 +47,11 @@ export default function AdminDashboardOverviewMain() {
 
   if (status === 'error') {
     return (
-      <div className="min-h-full p-6 space-y-4">
+      <div className="min-h-full p-4 sm:p-6 space-y-4">
         <div className="flex justify-end"><AdminDashboardDateFilterDropdown /></div>
         <div role="alert" className="rounded-lg border border-border bg-danger-bg p-4 text-danger">
           <p>{error || t('dashboard.DashboardError.text_22b2c820bf')}</p>
-          {isDateRangeValid && <button type="button" onClick={() => void retry()} className="mt-3 min-h-11 rounded-md border border-border px-3 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="dashboard-overview-dashboard-overview-main-retry">{t('dashboard.DashboardError.retryAction')}</button>}
+          {isDateRangeValid && <button type="button" onClick={() => void retry()} className="mt-3 min-h-11 rounded-md border border-border px-3 text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="dashboard-overview-dashboard-overview-main-retry">{t('dashboard.DashboardError.retryAction')}</button>}
         </div>
       </div>
     );
@@ -59,7 +59,7 @@ export default function AdminDashboardOverviewMain() {
 
   return (
     <div className="min-h-full">
-      <div className="p-6 space-y-6">
+      <div className="p-4 sm:p-6 space-y-6">
 
         {/* Toolbar: Branch Filter + Time Range Selector */}
         <div className="flex flex-wrap justify-between items-center gap-4">

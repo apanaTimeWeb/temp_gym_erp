@@ -65,7 +65,7 @@ export default function AdminSalesAnalyticsPendingPayments() {
     return (
       <div role="alert" className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-danger-bg p-4">
         <p className="text-danger">{pendingPaymentsError || t('sales.admin_sales_pending_payments.auto_loadFailed')}</p>
-        <button type="button" onClick={() => void retryPendingPayments()} className="min-h-11 rounded-md border border-border px-3 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="sales-analytics-sales-analytics-pending-payments-retry-pending-payments">{t('sales.SalesError.text_042c862e44')}</button>
+        <button type="button" onClick={() => void retryPendingPayments()} className="min-h-11 rounded-md border border-border px-3 text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="sales-analytics-sales-analytics-pending-payments-retry-pending-payments">{t('sales.SalesError.text_042c862e44')}</button>
       </div>
     );
   }
@@ -82,7 +82,7 @@ export default function AdminSalesAnalyticsPendingPayments() {
                 {p.name.charAt(0)}
               </div>
               <div>
-                <p className="font-medium text-primary">{p.name}</p>
+                <p className="font-medium text-text-primary">{p.name}</p>
                 <p className="text-xs text-secondary">{displayValue(p.plan)} {t('sales.admin_sales_pending_payments.text_ae2f98a099')}</p>
               </div>
             </div>

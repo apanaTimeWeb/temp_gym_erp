@@ -48,24 +48,38 @@ export default function ManagerDashboardOverviewMain() {
   );
 
   return (
-    <>
-      
-      <div className="min-w-0 p-4 sm:p-6 space-y-6">
-        <div className="min-w-0 flex flex-col sm:flex-row justify-between mb-2 gap-3 items-stretch sm:items-center w-full">
-          <h1 className="text-2xl font-bold text-text-primary">{t('COPY_DASHBOARD')}</h1>
-          <ManagerDashboardOverviewDateFilterDropdown  data-testid="manager_dashboard-managerdashboardmain-dashboard-date-filter-dropdown-1"/>
-        </div>
+    <div className="min-h-full pb-10 bg-page trainer-aurora-canvas text-text-primary">
+      <div className="min-w-0 p-4 sm:p-6 space-y-5">
+        {/* Executive Colorful Header Card (matching Trainer) */}
+        <section className="relative overflow-hidden rounded-2xl border border-orange-500/35 bg-card dark:bg-gradient-to-br dark:from-[#291514] dark:via-[#12192B] dark:to-[#0C1322] p-5 sm:p-6 shadow-card space-y-3">
+          <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#FF5A1F] via-[#EC4899] to-[#38BDF8]" />
+          <span aria-hidden="true" className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-orange-500/20 blur-3xl" />
+          <span aria-hidden="true" className="pointer-events-none absolute left-1/3 -bottom-12 h-32 w-44 rounded-full bg-sky-500/15 blur-3xl" />
+          <div className="relative flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div className="space-y-1.5 min-w-0">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/40 bg-orange-500/15 px-3 py-1 text-xs font-semibold text-orange-600 dark:text-orange-300 shadow-[0_2px_10px_rgba(255,90,31,0.16)]">
+                <span className="h-2 w-2 rounded-full bg-orange-500 motion-safe:animate-pulse" aria-hidden="true" />
+                Branch Operations &amp; Executive Hub
+              </span>
+              <h1 className="text-page-title font-extrabold text-text-primary">{t('COPY_DASHBOARD')}</h1>
+              <p className="text-sm text-secondary">Monitor branch revenue, member growth, attendance, and operational KPIs in real time.</p>
+            </div>
+            <div className="w-full lg:w-auto shrink-0">
+              <ManagerDashboardOverviewDateFilterDropdown data-testid="manager_dashboard-managerdashboardmain-dashboard-date-filter-dropdown-1" />
+            </div>
+          </div>
+        </section>
+
         <ManagerDashboardOverviewKPIs />
         
-        {/* CRITICAL FIX: Missing Business Charts */}
-        <div className="grid min-w-0 grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid min-w-0 grid-cols-1 lg:grid-cols-2 gap-5">
           <ManagerDashboardOverviewRevenueChart />
           <ManagerDashboardOverviewMemberGrowthChart />
         </div>
 
-        <div className="grid min-w-0 grid-cols-1 xl:grid-cols-3 gap-6">
+        <div className="grid min-w-0 grid-cols-1 xl:grid-cols-3 gap-5">
           <ManagerDashboardOverviewRecentMembers />
-          <div className="space-y-4">
+          <div className="space-y-4 min-w-0">
             <ManagerDashboardOverviewPendingPayments />
             <ManagerDashboardOverviewExpiringMemberships />
             <ManagerDashboardOverviewPromoCard />
@@ -73,6 +87,6 @@ export default function ManagerDashboardOverviewMain() {
         </div>
         <ManagerDashboardOverviewMembershipDistribution />
       </div>
-    </>
+    </div>
   );
 }

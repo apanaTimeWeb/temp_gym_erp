@@ -18,7 +18,7 @@ export default function AdminBillingPlansCatalogMain() {
   const logic = useAdminPlansLogic();
   return (
     <div className="min-h-full pb-10">
-      <div className="space-y-5 p-6">
+      <div className="space-y-5 p-4 sm:p-6">
         <AdminPlansToolbar logic={logic} />
         <AdminPlansGrid logic={logic} />
       </div>

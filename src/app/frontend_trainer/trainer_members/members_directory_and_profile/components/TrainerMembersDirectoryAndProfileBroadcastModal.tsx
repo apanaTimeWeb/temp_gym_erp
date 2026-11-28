@@ -1,6 +1,7 @@
 "use client";
-import React, { useState } from 'react';
-import { X, Send, Megaphone, Loader2, CheckCircle2, MessageSquare, Mail, Bell, ShieldCheck } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { X, Send, Megaphone, Loader2, CheckCircle2, AlertCircle, MessageSquare, Mail, Bell, ShieldCheck } from 'lucide-react';
+import { apiFetch } from '@/lib/api';
 
 export interface TrainerMembersDirectoryAndProfileBroadcastModalProps {
   isOpen: boolean;
@@ -15,29 +16,59 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
   const [message, setMessage] = useState('');
   const [audience, setAudience] = useState<'ALL' | 'PT_ONLY' | 'ATTENTION_ONLY'>('ALL');
   const [channel, setChannel] = useState<'WHATSAPP' | 'EMAIL' | 'PUSH'>('WHATSAPP');
+  const [counts, setCounts] = useState({ totalCount: 0, ptCount: 0, attentionCount: 0 });
   const [isSending, setIsSending] = useState(false);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    let active = true;
+    apiFetch<{ totalCount: number; ptCount: number; attentionCount: number }>('/trainer/trainer_members/broadcast')
+      .then((res) => {
+        if (active && res?.success && res.data) {
+          setCounts(res.data);
+        }
+      })
+      .catch(() => null);
+    return () => { active = false; };
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!message.trim()) return;
+    if (!message.trim() || isSending) return;
 
     setIsSending(true);
-    // Simulate instantaneous delivery
-    setTimeout(() => {
-      setIsSending(false);
-      setSuccessMsg(`Announcement successfully broadcasted to ${
-        audience === 'ALL' ? 'all 10 trainees' : audience === 'PT_ONLY' ? '7 active 1-on-1 PT clients' : '3 trainees needing attention'
-      } via ${channel === 'WHATSAPP' ? 'WhatsApp' : channel === 'EMAIL' ? 'Email' : 'In-App Notification'}!`);
+    setErrorMsg(null);
+    setSuccessMsg(null);
+    try {
+      const res = await apiFetch<{ recipientCount?: number }>('/trainer/trainer_members/broadcast', {
+        method: 'POST',
+        body: JSON.stringify({
+          subject: subject.trim(),
+          message: message.trim(),
+          audience,
+          channel,
+        }),
+      });
+      if (!res?.success) {
+        throw new Error(res?.message || 'Unable to send broadcast right now.');
+      }
+      const recipientCount = res.data?.recipientCount ?? (audience === 'ALL' ? counts.totalCount : audience === 'PT_ONLY' ? counts.ptCount : counts.attentionCount);
+      setSuccessMsg(`Message sent to ${recipientCount} trainee${recipientCount === 1 ? '' : 's'} via ${channel === 'WHATSAPP' ? 'WhatsApp' : channel === 'EMAIL' ? 'Email' : 'In-App Notification'}.`);
       setTimeout(() => {
         setSuccessMsg(null);
         setSubject('');
         setMessage('');
         onClose();
-      }, 1800);
-    }, 700);
+      }, 1400);
+    } catch (err) {
+      setErrorMsg(err instanceof Error ? err.message : 'Unable to send broadcast right now.');
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -78,7 +109,7 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
           <div className="flex items-start gap-2.5 p-3 rounded-xl bg-info-bg border border-info text-xs text-info">
             <ShieldCheck size={16} className="shrink-0 mt-0.5 text-info" />
             <p>
-              <strong>Trainer Scope:</strong> You can only message trainees assigned directly to you (10 total). Gym-wide announcements to all staff or all gym members are managed by Managers.
+              <strong>Trainer Scope:</strong> You can message trainees assigned directly to you ({counts.totalCount} total). Gym-wide announcements are managed by Managers.
             </p>
           </div>
 
@@ -96,7 +127,7 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
                     : 'border-border bg-input text-secondary hover:text-primary'
                 }`}
               >
-                My Trainees (10)
+                My Trainees ({counts.totalCount})
               </button>
               <button
                 type="button"
@@ -107,7 +138,7 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
                     : 'border-border bg-input text-secondary hover:text-primary'
                 }`}
               >
-                1-on-1 PT (7)
+                1-on-1 PT ({counts.ptCount})
               </button>
               <button
                 type="button"
@@ -118,7 +149,7 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
                     : 'border-border bg-input text-secondary hover:text-primary'
                 }`}
               >
-                Needs Attention (3)
+                Needs Attention ({counts.attentionCount})
               </button>
             </div>
           </div>
@@ -195,6 +226,13 @@ export default function TrainerMembersDirectoryAndProfileBroadcastModal({
               className="w-full p-3 bg-input border border-border rounded-lg text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
             />
           </div>
+
+          {errorMsg && (
+            <div className="p-3 rounded-lg bg-danger-bg text-danger border border-danger flex items-center gap-2 text-xs font-medium" role="alert">
+              <AlertCircle size={16} />
+              <span>{errorMsg}</span>
+            </div>
+          )}
 
           {successMsg && (
             <div className="p-3 rounded-lg bg-success/15 text-success border border-success/30 flex items-center gap-2 text-xs font-medium">

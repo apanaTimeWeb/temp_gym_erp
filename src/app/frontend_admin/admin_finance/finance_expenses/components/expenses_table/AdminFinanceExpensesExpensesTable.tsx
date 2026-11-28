@@ -50,7 +50,7 @@ export default function AdminFinanceOverviewExpensesTable() {
           <select
             value={expenseCategory}
             onChange={(e: ChangeEvent<HTMLSelectElement>) => setExpenseCategory(e.target.value)}
-            className="px-3 py-2 border border-border rounded-xl text-sm bg-input text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary min-h-11 motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+            className="px-3 py-2 border border-border rounded-xl text-sm bg-input text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary min-h-11 motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page"
             aria-label={t('finance.admin_finance_expenses_table.text_a78210146a')}
            data-testid="admin_finance-admin_finance-expenses-table-control">
             <option value="All" data-testid="admin_finance-admin_finance-expenses-table-control-2">{t('finance.admin_finance_expenses_table.text_1fd266c217')}</option>
@@ -66,13 +66,13 @@ export default function AdminFinanceOverviewExpensesTable() {
       <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
         <div className="overflow-x-auto max-h-[640px] overflow-auto">
           <table data-admin-responsive-table className="w-full text-left border-collapse">
-            <thead className="sticky top-0 z-20 bg-surface-highlight">
+            <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038]">
               <tr className="border-b border-border">
                 {['finance.admin_finance_expenses_table.date', 'finance.admin_finance_expenses_table.category', 'finance.admin_finance_expenses_table.branch', 'finance.admin_finance_expenses_table.amount', 'finance.admin_finance_expenses_table.notes', 'finance.admin_finance_expenses_table.recordedBy'].map((heading, idx) => (
                   <th
                     key={heading}
                     className={`px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
-                      idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                      idx === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                     }`}
                   >
                     {t(heading)}
@@ -80,27 +80,27 @@ export default function AdminFinanceOverviewExpensesTable() {
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border dark:divide-white/[0.07]">
               {expensesStatus === 'pending' ? (
                 ['expense-row-1', 'expense-row-2', 'expense-row-3', 'expense-row-4', 'expense-row-5'].map((key) => (
                   <tr key={key} className="motion-safe:animate-pulse motion-safe:duration-base">
                     {['expense-a', 'expense-b', 'expense-c', 'expense-d', 'expense-e', 'expense-f'].map((cell, cIdx) => (
-                      <td key={`${key}-${cell}`} className={`px-4 py-4 ${cIdx === 0 ? 'sticky start-0 z-10 bg-card border-e border-border' : ''}`}>
+                      <td key={`${key}-${cell}`} className={`px-4 py-4 ${cIdx === 0 ? 'sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border' : ''}`}>
                         <div className="h-4 rounded bg-skeleton-base" />
                       </td>
                     ))}
                   </tr>
                 ))
               ) : expensesStatus === 'error' ? (
-                <tr><td colSpan={TABLE_COLUMN_COUNT} className="px-4 py-8 text-center"><p role="alert" className="text-danger">{t('finance.AdminFinanceLogic.genericError')}</p><button type="button" onClick={() => void loadAll()} className="mt-2 min-h-11 rounded-lg border border-border px-4 font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="finance-overview-finance-overview-expenses-table-admin-finance-tabs-retry">{t('finance.admin_finance_tabs.retry')}</button></td></tr>
+                <tr><td colSpan={TABLE_COLUMN_COUNT} className="px-4 py-8 text-center"><p role="alert" className="text-danger">{t('finance.AdminFinanceLogic.genericError')}</p><button type="button" onClick={() => void loadAll()} className="mt-2 min-h-11 rounded-lg border border-border px-4 font-semibold text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="finance-overview-finance-overview-expenses-table-admin-finance-tabs-retry">{t('finance.admin_finance_tabs.retry')}</button></td></tr>
               ) : expenses.length === 0 ? (
                 <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminFinanceEmptyState title={t('finance.admin_finance_expenses_table.text_15f519954e')} description={t('finance.admin_finance_expenses_table.auto_4508b993fb')} /></td></tr>
               ) : (
                 expenses.map((expense: Expense) => (
                   <tr key={expense.id} className="hover:bg-surface-hover transition-colors group">
-                    <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-semibold text-primary whitespace-nowrap">{formatDate(expense.date, locale)}</td>
+                    <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border px-4 py-3 text-sm font-semibold text-text-primary whitespace-nowrap">{formatDate(expense.date, locale)}</td>
                     <td className="px-4 py-3"><span className={`text-xs font-bold px-2.5 py-1 rounded-full ${FINANCE_EXPENSE_CATEGORY_STYLES[expense.category as keyof typeof FINANCE_EXPENSE_CATEGORY_STYLES] ?? 'bg-input text-secondary'}`} data-testid="finance-overview-finance-overview-expenses-table-status-badge">{t(FINANCE_EXPENSE_CATEGORY_LABEL_KEYS[expense.category as keyof typeof FINANCE_EXPENSE_CATEGORY_LABEL_KEYS] ?? 'finance.AdminAuditRepair.other')}</span></td>
-                    <td className="px-4 py-3 text-sm text-primary">
+                    <td className="px-4 py-3 text-sm text-text-primary">
                       <div className="flex items-center gap-1.5">
                         <Link
                           href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(expense.branchName ?? expense.branchId)}`}

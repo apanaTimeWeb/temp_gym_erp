@@ -24,7 +24,7 @@ export function AdminSettingsManagementRoles() {
   }
 
   if (status === 'error') {
-    return <div role="alert" className="mt-6 rounded-xl border border-border bg-danger-bg p-6 text-danger"><span>{t('settings.AdminRepair.rolesLoadFailed')}</span><button type="button" onClick={() => void retry()} className="ml-3 min-h-11 rounded-lg border border-border px-4 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">{t('settings.AdminRepair.retry')}</button></div>;
+    return <div role="alert" className="mt-6 rounded-xl border border-border bg-danger-bg p-6 text-danger"><span>{t('settings.AdminRepair.rolesLoadFailed')}</span><button type="button" onClick={() => void retry()} className="ml-3 min-h-11 rounded-lg border border-border px-4 text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">{t('settings.AdminRepair.retry')}</button></div>;
   }
   if (roles.length === 0) {
     return <div className="bg-card rounded-xl shadow-card border border-border mt-6 p-8 text-center text-sm text-secondary">{t('settings.admin_settings_roles.text_72e56c17df')}</div>;
@@ -34,12 +34,12 @@ export function AdminSettingsManagementRoles() {
     <div className="bg-card rounded-xl shadow-card border border-border mt-6">
       <div className="px-6 py-4 border-b border-border flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h2 className="font-bold text-primary text-lg">{t('settings.admin_settings_roles.text_406b4e0e00')}</h2>
+          <h2 className="font-bold text-text-primary text-lg">{t('settings.admin_settings_roles.text_406b4e0e00')}</h2>
           <p className="text-xs text-secondary">{t('settings.admin_settings_roles.text_81bc7a81b8')}</p>
         </div>
         <Link
           href="/frontend_admin/admin_security/security_permissions_management"
-          className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-border bg-input px-3.5 py-2 text-xs font-semibold text-primary hover:bg-surface-hover transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-border bg-input px-3.5 py-2 text-xs font-semibold text-text-primary hover:bg-surface-hover transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         >
           <span>Manage Permissions</span>
           <ArrowUpRight size={14} aria-hidden="true" />
@@ -54,7 +54,7 @@ export function AdminSettingsManagementRoles() {
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-xl bg-primary-subtle flex items-center justify-center text-primary"><ShieldCheck size={18}  strokeWidth={2}/></div>
                 <div>
-                  <h3 className="font-semibold text-primary text-base capitalize">{role.role}</h3>
+                  <h3 className="font-semibold text-text-primary text-base capitalize">{role.role}</h3>
                   <p className="text-xs text-secondary">{granted} {t('settings.admin_settings_roles.text_de04fa0e29')}{total} {t('settings.admin_settings_roles.text_4a93eb442a')}</p>
                 </div>
               </div>

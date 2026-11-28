@@ -23,7 +23,7 @@ export default function AdminFinancePnlError({ error, reset }: AdminFinancePnlEr
           <AlertTriangle size={18} strokeWidth={2} className="text-danger" />
         </div>
         <div>
-          <h2 className="text-lg font-bold text-primary">{t('finance.AdminFinancePnlError.text_5a61f899b6')}</h2>
+          <h2 className="text-lg font-bold text-text-primary">{t('finance.AdminFinancePnlError.text_5a61f899b6')}</h2>
           <p className="text-sm text-secondary mt-2">
             {t('finance.AdminFinancePnlError.text_83752884ab')}</p>
           <p className="text-xs text-secondary mt-3">{t('finance.AdminFinancePnlError.text_f10af425f9')}</p>

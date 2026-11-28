@@ -17,5 +17,5 @@ import type { AdminAttendanceReportsSortIconProps } from '@/app/frontend_admin/a
  */
 export default function AdminAttendanceReportsSortIcon({ column, sortKey, sortDir }: AdminAttendanceReportsSortIconProps) {
   if (column !== sortKey) return <ChevronsUpDown size={18} className="text-disabled"  strokeWidth={2}/>;
-  return sortDir === 'asc' ? <ChevronUp size={18} className="text-primary"  strokeWidth={2}/> : <ChevronDown size={18} className="text-primary"  strokeWidth={2}/>;
+  return sortDir === 'asc' ? <ChevronUp size={18} className="text-text-primary"  strokeWidth={2}/> : <ChevronDown size={18} className="text-text-primary"  strokeWidth={2}/>;
 }

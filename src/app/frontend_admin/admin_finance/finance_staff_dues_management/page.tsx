@@ -8,7 +8,7 @@ import AdminFinanceStaffDuesManagementDueTable from '@/app/frontend_admin/admin_
 
 export default function AdminFinanceStaffDuesManagementDuesPage() {
   const t = useTranslations();
-  return <AdminNavigationLayoutConfirmProvider><main className="min-h-full bg-page p-6 text-primary space-y-5">
+  return <AdminNavigationLayoutConfirmProvider><main className="min-h-full bg-page p-4 sm:p-6 text-text-primary space-y-5">
     <header><h1 className="text-2xl font-bold">{t('hr.admin_hr_tabs.tab_dues')}</h1></header>
       <AdminFinanceStaffDuesManagementKPIs />
       <AdminFinanceStaffDuesManagementDueTable />

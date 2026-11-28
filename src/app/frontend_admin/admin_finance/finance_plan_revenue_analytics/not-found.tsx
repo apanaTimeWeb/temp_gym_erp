@@ -15,7 +15,7 @@ export default function NotFound() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-96 text-center px-4">
-      <h2 className="text-2xl font-bold text-primary mb-2">{t('plans.NotFound.text_e637d9faea')}</h2>
+      <h2 className="text-2xl font-bold text-text-primary mb-2">{t('plans.NotFound.text_e637d9faea')}</h2>
       <p className="text-secondary mb-6 max-w-md">
         {t('plans.NotFound.text_0b7e734f76')}</p>
       <Link data-testid="admin_plans-admin_plans-revenue-not-found-state" href={ADMIN_PLANS_REVENUE_ROUTES.dashboardFallback} className="px-6 py-2 bg-primary text-on-primary font-bold rounded-lg hover:bg-primary-hover motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page">

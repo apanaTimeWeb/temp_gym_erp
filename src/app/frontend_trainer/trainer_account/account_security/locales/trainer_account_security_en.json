@@ -40,7 +40,8 @@
     "ERR_PASSWORD_MISMATCH": "New password and confirmation must match",
     "TEXT_PAGE_TITLE": "My Profile | Trainer | GymSmart",
     "TEXT_PAGE_DESCRIPTION": "Manage your account details and password.",
-    "TEXT_RETRY": "Retry"
+    "TEXT_RETRY": "Retry",
+    "TEXT_VALIDATION_ERROR": "Please check this field"
   },
   "TRAINER_INFRASTRUCTURE": {
     "TEXT_SELECT_AN_OPTION": "Select an option...",

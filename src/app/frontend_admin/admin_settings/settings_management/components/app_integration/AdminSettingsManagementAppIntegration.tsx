@@ -51,7 +51,7 @@ export function AdminSettingsManagementAppIntegration({ initialData }: AdminSett
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="bg-card rounded-xl shadow-card border border-border mt-6" data-testid="admin_settings-admin_settings-app-integration-submit">
       <div className="px-6 py-4 border-b border-border flex items-center justify-between flex-wrap gap-3">
-        <h2 className="font-bold text-primary text-lg">{t('settings.admin_settings_app_integration.text_f27813fca5')}</h2>
+        <h2 className="font-bold text-text-primary text-lg">{t('settings.admin_settings_app_integration.text_f27813fca5')}</h2>
         <div className="flex gap-2">
           <button
             type="button"
@@ -70,7 +70,7 @@ export function AdminSettingsManagementAppIntegration({ initialData }: AdminSett
         </div>
       </div>
 
-      <div className="p-6 space-y-6">
+      <div className="p-4 sm:p-6 space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {features.map((f, __testIdIndex59) => (
             <div key={f.key} className="flex items-center justify-between p-3 bg-input rounded-xl border border-border">
@@ -84,7 +84,7 @@ export function AdminSettingsManagementAppIntegration({ initialData }: AdminSett
         </div>
 
         <div className="space-y-4 pt-2 border-t border-border">
-          <p className="text-sm font-semibold text-primary">{t('settings.admin_settings_app_integration.text_bd99009f34')}</p>
+          <p className="text-sm font-semibold text-text-primary">{t('settings.admin_settings_app_integration.text_bd99009f34')}</p>
           {[
             { labelKey: 'appStoreIos', key: 'appStoreLink' as const },
             { labelKey: 'playStoreAndroid', key: 'playStoreLink' as const },
@@ -101,7 +101,7 @@ export function AdminSettingsManagementAppIntegration({ initialData }: AdminSett
                     aria-describedby={form.formState.errors[f.key] ? `admin-settings-app-integration-${f.key}-error` : undefined}
                     type="url"
                     {...form.register(f.key)}
-                    className="flex-1 px-3 py-2.5 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+                    className="flex-1 px-3 py-2.5 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-text-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
                    data-testid={`admin_settings-admin_settings-app-integration-control-map75-${__testIdIndex75}-1`}/>
                   {safeLink ? (
                     <a href={link} target="_blank" rel="noopener noreferrer"
@@ -126,7 +126,7 @@ export function AdminSettingsManagementAppIntegration({ initialData }: AdminSett
         </div>
 
         <div className="space-y-4 pt-2 border-t border-border">
-          <p className="text-sm font-semibold text-primary">{t('settings.admin_settings_app_integration.text_aa89cdc2a5')}</p>
+          <p className="text-sm font-semibold text-text-primary">{t('settings.admin_settings_app_integration.text_aa89cdc2a5')}</p>
           <div>
             <label htmlFor="admin-settings-app-integration-api-key" className="block text-sm font-medium text-secondary mb-1">{t('settings.admin_settings_app_integration.text_47acd2028c')}</label>
             <div className="flex gap-2">
@@ -173,7 +173,7 @@ export function AdminSettingsManagementAppIntegration({ initialData }: AdminSett
               aria-invalid={Boolean(form.formState.errors.webhookUrl)}
               type="url"
               {...form.register('webhookUrl')}
-              className="w-full px-3 py-2.5 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+              className="w-full px-3 py-2.5 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-text-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
              data-testid="admin_settings-admin_settings-app-integration-control-4"/>
             {form.formState.errors.webhookUrl && <p id="admin-settings-app-integration-webhookUrl-error" role="alert" className="text-xs text-danger mt-1">{getValidationMessage(form.formState.errors.webhookUrl.message)}</p>}
           </div>

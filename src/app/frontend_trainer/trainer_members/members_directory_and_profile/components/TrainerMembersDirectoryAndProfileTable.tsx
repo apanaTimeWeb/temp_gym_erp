@@ -47,12 +47,14 @@ export default function TrainerMembersTable({ onOpenMember }: TrainerMembersTabl
   const [quickViewMember, setQuickViewMember] = useState<TrainerMembersMember | null>(null);
   const { search, debouncedSearch, statusFilter, progressStatusFilter, currentPage, setCurrentPage, sortBy, sortDirection, setSort } = useTrainerMembersFilters();
   const openMsg = useTrainerMembersStore((state) => state.openMsg);
-  const { data, isPending } = useTrainerMembersQuery({
+  const { data, isPending, isError, isFetching, refetch } = useTrainerMembersQuery({
     page: currentPage,
     pageSize: TRAINER_INFRASTRUCTURE_ITEMS_PER_PAGE,
     search: debouncedSearch,
     status: statusFilter,
     progressStatus: progressStatusFilter,
+    sortBy,
+    sortDirection,
   });
 
   const members = data?.members ?? [];
@@ -77,13 +79,26 @@ export default function TrainerMembersTable({ onOpenMember }: TrainerMembersTabl
         <div className="flex items-center justify-center py-16 flex-1" aria-busy="true" data-testid="trainer_members-members-table_loading">
           <Loader2 className="motion-safe:animate-spin text-orange-500" strokeWidth={2.2} aria-label={t('TEXT_LOADING_MEMBER_STATISTICS')} size={24}/>
         </div>
+      ) : isError ? (
+        <div role="alert" className="flex flex-col items-center justify-center gap-3 py-16 px-4 text-center flex-1" data-testid="trainer_members-members-table_error">
+          <p className="text-sm font-semibold text-danger">{t('TEXT_UNABLE_TO_LOAD_MEMBERS_PLEASE_RETRY')}</p>
+          <button
+            type="button"
+            onClick={() => void refetch()}
+            disabled={isFetching}
+            className="min-h-11 inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-on-primary hover:bg-primary-hover disabled:opacity-60 cursor-pointer"
+          >
+            {isFetching ? <Loader2 size={16} className="motion-safe:animate-spin" /> : null}
+            {t('TEXT_RETRY')}
+          </button>
+        </div>
       ) : (
         <>
-          <div className="hidden md:block max-h-[640px] overflow-auto">
+          <div className="hidden md:block max-h-[640px] overflow-y-auto overflow-x-hidden">
             <table className="w-full text-start border-collapse">
               <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10 shadow-[0_2px_10px_rgba(0,0,0,0.22)]">
                 <tr className="border-b border-border dark:border-white/10" data-testid="trainer_members-TrainerMembersTable-row-1">
-                  {TRAINER_MEMBERS_MEMBERS_TABLE_HEADERS.map((header, index) => {
+                  {TRAINER_MEMBERS_MEMBERS_TABLE_HEADERS.map((header) => {
                     const fieldByHeader: Record<string, TrainerMembersSortField | null> = { ID: 'id', MEMBER: 'name', STATUS: 'status', EXPIRY: 'expiryDate', PROGRESS: 'progressStatus' };
                     const field = fieldByHeader[header] ?? null;
                     const active = field ? sortBy === field : false;
@@ -92,9 +107,7 @@ export default function TrainerMembersTable({ onOpenMember }: TrainerMembersTabl
                       <th
                         key={header}
                         scope="col"
-                        className={`text-start text-[11px] font-bold text-secondary dark:text-slate-300 uppercase tracking-wider px-4 py-3.5 whitespace-nowrap align-middle ${
-                          index === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border dark:border-white/10 shadow-[2px_0_8px_rgba(0,0,0,0.18)]' : ''
-                        }`}
+                        className="text-start text-[11px] font-bold text-secondary dark:text-slate-300 uppercase tracking-wider px-3 py-3.5 whitespace-nowrap align-middle"
                       >
                         {field ? (
                           <button
@@ -125,17 +138,17 @@ export default function TrainerMembersTable({ onOpenMember }: TrainerMembersTabl
                       className="bg-card dark:bg-[#0F172A] hover:bg-orange-50/70 dark:hover:bg-[#18243E] transition-colors group"
                       data-testid={`trainer_members-members-table-row-${member.id}`}
                     >
-                      <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] group-hover:bg-orange-50 dark:group-hover:bg-[#18243E] border-e border-border dark:border-white/10 px-4 py-3.5 text-xs text-secondary font-semibold tabular-nums whitespace-nowrap align-middle transition-colors shadow-[2px_0_8px_rgba(0,0,0,0.12)]">
-                        <div className="flex items-center gap-1.5">
+                      <td className="px-3 py-3.5 text-xs text-secondary font-semibold tabular-nums whitespace-nowrap align-middle">
+                        <div className="flex items-center gap-1">
                           <span className="px-2 py-0.5 rounded-md bg-input dark:bg-white/[0.06] border border-border dark:border-white/10 text-text-primary font-mono text-[11px]">
                             #{member.id.split('-').pop()?.substring(0, 5) || member.id.substring(0, 5)}
                           </span>
                           <CopyButton value={member.id} />
                         </div>
                       </td>
-                      <td className="px-4 py-3.5 align-middle min-w-[220px]">
-                        <div className="flex items-center gap-3">
-                          <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${avatarGradient} flex items-center justify-center font-bold text-sm text-white shrink-0 shadow-sm`} aria-hidden="true">
+                      <td className="px-3 py-3.5 align-middle min-w-0">
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <div className={`w-8 h-8 rounded-xl bg-gradient-to-br ${avatarGradient} flex items-center justify-center font-bold text-xs text-white shrink-0 shadow-sm`} aria-hidden="true">
                             {member.name.charAt(0)}
                           </div>
                           <div className="min-w-0">
@@ -160,15 +173,15 @@ export default function TrainerMembersTable({ onOpenMember }: TrainerMembersTabl
                                 </span>
                               )}
                             </div>
-                            <p className="text-xs text-secondary tabular-nums mt-0.5">{TrainerMembersMaskSensitiveData(member.phone)}</p>
+                            <p className="text-xs text-secondary tabular-nums mt-0.5 truncate">{TrainerMembersMaskSensitiveData(member.phone)}</p>
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3.5 text-sm text-text-primary font-medium whitespace-nowrap align-middle">{displayValue(member.fitnessGoal)}</td>
-                      <td className="px-4 py-3.5 whitespace-nowrap align-middle"><span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border border-current/25 ${statusStyle.bg} ${statusStyle.text}`} data-testid={`trainer_members-members-table-status-${member.id}`}><span className="w-1.5 h-1.5 rounded-full bg-current" aria-hidden="true" />{t(TRAINER_MEMBERS_MEMBER_STATUS_LABEL_KEYS[member.status] ?? 'TEXT_STATUS_UNKNOWN')}</span></td>
-                      <td className="px-4 py-3.5 text-sm text-secondary whitespace-nowrap align-middle tabular-nums">{TrainerMembersFormatDate(member.expiryDate, locale)}</td>
-                      <td className="px-4 py-3.5 text-sm whitespace-nowrap align-middle"><span className={`inline-flex px-2.5 py-1 rounded-lg text-xs font-semibold border border-current/25 ${member.progressStatus === TRAINER_MEMBERS_MEMBER_PROGRESS_STATUS.GOOD ? 'bg-success-bg text-success-text' : member.progressStatus === TRAINER_MEMBERS_MEMBER_PROGRESS_STATUS.NEEDS_ATTENTION ? 'bg-danger-bg text-danger-text' : 'bg-warning-bg text-warning-text'}`} data-testid={`trainer_members-table-progress_state${member.id}`}>{t(member.progressStatus ? TRAINER_MEMBERS_MEMBER_PROGRESS_STATUS_LABEL_KEYS[member.progressStatus] ?? 'TEXT_PROGRESS_UNKNOWN' : 'TEXT_PROGRESS_UNKNOWN')}</span></td>
-                      <td className="px-4 py-3.5 whitespace-nowrap align-middle">
+                      <td className="px-3 py-3.5 text-sm text-text-primary font-medium align-middle max-w-[140px] truncate">{displayValue(member.fitnessGoal)}</td>
+                      <td className="px-3 py-3.5 whitespace-nowrap align-middle"><span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border border-current/25 ${statusStyle.bg} ${statusStyle.text}`} data-testid={`trainer_members-members-table-status-${member.id}`}><span className="w-1.5 h-1.5 rounded-full bg-current" aria-hidden="true" />{t(TRAINER_MEMBERS_MEMBER_STATUS_LABEL_KEYS[member.status] ?? 'TEXT_STATUS_UNKNOWN')}</span></td>
+                      <td className="px-3 py-3.5 text-sm text-secondary whitespace-nowrap align-middle tabular-nums">{TrainerMembersFormatDate(member.expiryDate, locale)}</td>
+                      <td className="px-3 py-3.5 text-sm whitespace-nowrap align-middle"><span className={`inline-flex px-2.5 py-1 rounded-lg text-xs font-semibold border border-current/25 ${member.progressStatus === TRAINER_MEMBERS_MEMBER_PROGRESS_STATUS.GOOD ? 'bg-success-bg text-success-text' : member.progressStatus === TRAINER_MEMBERS_MEMBER_PROGRESS_STATUS.NEEDS_ATTENTION ? 'bg-danger-bg text-danger-text' : 'bg-warning-bg text-warning-text'}`} data-testid={`trainer_members-table-progress_state${member.id}`}>{t(member.progressStatus ? TRAINER_MEMBERS_MEMBER_PROGRESS_STATUS_LABEL_KEYS[member.progressStatus] ?? 'TEXT_PROGRESS_UNKNOWN' : 'TEXT_PROGRESS_UNKNOWN')}</span></td>
+                      <td className="px-3 py-3.5 whitespace-nowrap align-middle">
                         <div className="flex items-center gap-1.5">
                           <button type="button" onClick={(event) => { event.stopPropagation(); setQuickViewMember(member); }} className="min-w-9 min-h-9 inline-flex items-center justify-center p-1.5 rounded-xl bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-500/35 hover:bg-sky-500 hover:text-white motion-safe:transition-all motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer" title="View full details" aria-label={`View details for ${member.name}`} data-testid={`trainer_members-members-table-view-${member.id}`}><Eye size={16} strokeWidth={2.2} aria-hidden="true" /></button>
                           <button type="button" onClick={(event) => { event.stopPropagation(); openMsg({ name: member.name, phone: member.phone, email: member.email }, 'whatsapp', ''); }} className="min-w-9 min-h-9 inline-flex items-center justify-center p-1.5 rounded-xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 border border-emerald-500/35 hover:bg-emerald-500 hover:text-white motion-safe:transition-all motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer" title={t('TEXT_WHATSAPP')} aria-label={t('TEXT_MESSAGE_WHATSAPP_ARIA', { name: member.name })} data-testid={`trainer_members-members-table-whatsapp-${member.id}`}><MessageCircle size={16} strokeWidth={2} aria-hidden="true" /></button>

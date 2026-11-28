@@ -28,7 +28,7 @@ export default function AdminReportsCrossDomainOverviewChart({
     <div className="rounded-xl border border-border bg-surface-highlight p-5 space-y-4">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div>
-          <p className="text-sm font-bold text-primary">
+          <p className="text-sm font-bold text-text-primary">
             {activeChartTab === 'financial' && 'Monthly Revenue vs Expenses vs Net Profit (Last 6 Months)'}
             {activeChartTab === 'attendance' && 'Total Member & Staff Check-Ins (Last 6 Months)'}
             {activeChartTab === 'growth' && 'New Member Enrollments vs Net Member Growth (Last 6 Months)'}
@@ -93,7 +93,7 @@ export default function AdminReportsCrossDomainOverviewChart({
             const height = Math.round((item.checkIns / maxCheckIns) * 100);
             return (
               <div key={item.month} className="flex-1 flex flex-col items-center gap-2 h-full justify-end group">
-                <span className="text-xs font-bold text-primary group-hover:opacity-100 opacity-80">{item.checkIns.toLocaleString()}</span>
+                <span className="text-xs font-bold text-text-primary group-hover:opacity-100 opacity-80">{item.checkIns.toLocaleString()}</span>
                 <div className="w-full max-w-14 flex items-end justify-center h-full">
                   <div
                     className="w-full rounded-t-md bg-info motion-safe:transition-all motion-safe:duration-500 group-hover:opacity-90"
@@ -134,7 +134,7 @@ export default function AdminReportsCrossDomainOverviewChart({
         <span>Jul 2026</span>
         <span>Aug 2026</span>
         <span>Sep 2026</span>
-        <span className="font-bold text-primary">Oct 2026 (Current)</span>
+        <span className="font-bold text-text-primary">Oct 2026 (Current)</span>
       </div>
     </div>
   );

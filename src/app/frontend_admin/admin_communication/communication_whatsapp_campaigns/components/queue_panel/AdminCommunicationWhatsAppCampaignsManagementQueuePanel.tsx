@@ -56,7 +56,7 @@ export default function AdminCommunicationWhatsAppCampaignsManagementQueuePanel(
     <section className="rounded-xl border border-border bg-card p-5" aria-labelledby="campaign-queue-heading">
       <div className="mb-4 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
-          <h2 id="campaign-queue-heading" className="text-sm font-semibold text-primary">{t('campaigns.admin_campaigns_queue_panel.text_f076d0104b')}</h2>
+          <h2 id="campaign-queue-heading" className="text-sm font-semibold text-text-primary">{t('campaigns.admin_campaigns_queue_panel.text_f076d0104b')}</h2>
           <p className="mt-1 text-xs text-secondary">{queue.filter((item) => item.status === CAMPAIGN_QUEUE_STATUS_VALUES.SENT).length} / {queue.length} {t('campaigns.admin_campaigns_queue_panel.text_27e7700fda')}</p>
         </div>
         {queue.length > 0 && (
@@ -75,7 +75,7 @@ export default function AdminCommunicationWhatsAppCampaignsManagementQueuePanel(
       <div className="max-h-96 space-y-2 overflow-y-auto pr-2">
         {queue.length === 0 ? (
           <div className="rounded-lg border border-dashed border-border bg-input p-10 text-center">
-            <p className="text-sm font-medium text-primary">{t('campaigns.admin_campaigns_queue_panel.text_13f89e125e')}</p>
+            <p className="text-sm font-medium text-text-primary">{t('campaigns.admin_campaigns_queue_panel.text_13f89e125e')}</p>
             <p className="mt-1 text-xs text-secondary">{t('campaigns.admin_campaigns_queue_panel.text_5edb1f138a')}</p>
           </div>
         ) : (
@@ -84,7 +84,7 @@ export default function AdminCommunicationWhatsAppCampaignsManagementQueuePanel(
               <div className="flex min-w-0 items-center gap-3">
                 {getAdminCampaignsStatusIcon(item.status)}
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-medium text-primary">{item.recipient.name}</p>
+                  <p className="truncate text-sm font-medium text-text-primary">{item.recipient.name}</p>
                   <p className="truncate text-xs text-secondary">{item.recipient.branchName}</p>
                   <p className="text-xs text-secondary" data-testid={`admin_campaigns-queue-status-${item.recipient.id}`}>{t(`campaigns.admin_campaigns_queue_panel.status_${item.status.toLowerCase()}`)}</p>
                 </div>
@@ -97,7 +97,7 @@ export default function AdminCommunicationWhatsAppCampaignsManagementQueuePanel(
                   </>
                 )}
                 {item.status === CAMPAIGN_QUEUE_STATUS_VALUES.QUEUED && (
-                  <button type="button" onClick={() => handleOpen(index)} className="flex items-center gap-1.5 rounded border border-border bg-card px-3 py-1.5 text-xs font-medium text-primary motion-safe:transition-colors hover:border-focus focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95" data-testid={`admin_campaigns-admin_campaigns-queue-panel-click-4-map70-${index}-3`}>
+                  <button type="button" onClick={() => handleOpen(index)} className="flex items-center gap-1.5 rounded border border-border bg-card px-3 py-1.5 text-xs font-medium text-text-primary motion-safe:transition-colors hover:border-focus focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95" data-testid={`admin_campaigns-admin_campaigns-queue-panel-click-4-map70-${index}-3`}>
                     <ExternalLink size={18} aria-hidden="true"  strokeWidth={2}/>{t('campaigns.admin_campaigns_queue_panel.text_cf9b77061f')}</button>
                 )}
                 

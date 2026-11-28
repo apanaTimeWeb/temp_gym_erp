@@ -10,5 +10,13 @@ export function useTrainerMembersTrainerNotes(id: string) {
     mutationFn: ({ text, key }: { text: string; key: string }) => TrainerMembersTrainerNotesApi.add(id, text, key),
     onSuccess: () => { void client.invalidateQueries({ queryKey: detailKey(id) }); void client.invalidateQueries({ queryKey: ['trainer_members', 'detail', id] }); },
   });
-  return { detail, addNote };
+  const updateNote = useMutation({
+    mutationFn: ({ noteId, text }: { noteId: string; text: string }) => TrainerMembersTrainerNotesApi.update(id, noteId, text),
+    onSuccess: () => { void client.invalidateQueries({ queryKey: detailKey(id) }); void client.invalidateQueries({ queryKey: ['trainer_members', 'detail', id] }); },
+  });
+  const deleteNote = useMutation({
+    mutationFn: (noteId: string) => TrainerMembersTrainerNotesApi.remove(id, noteId),
+    onSuccess: () => { void client.invalidateQueries({ queryKey: detailKey(id) }); void client.invalidateQueries({ queryKey: ['trainer_members', 'detail', id] }); },
+  });
+  return { detail, addNote, updateNote, deleteNote };
 }

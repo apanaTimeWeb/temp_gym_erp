@@ -74,7 +74,7 @@ export default function AdminMembersBlacklistManagementCrossGymView() {
         <div className="w-12 h-12 rounded-full bg-success-bg flex items-center justify-center" data-testid="admin_blacklist-adminblacklistcrossgymview-status-1">
           <Globe size={18} className="text-success"  strokeWidth={2}/>
         </div>
-        <p className="text-base font-semibold text-primary">{t('blacklist.admin_blacklist_cross_gym_view.text_dd683b697d')}</p>
+        <p className="text-base font-semibold text-text-primary">{t('blacklist.admin_blacklist_cross_gym_view.text_dd683b697d')}</p>
         <p className="text-sm text-secondary max-w-sm">
           {t('blacklist.admin_blacklist_cross_gym_view.text_a956fd7d18')}</p>
       </div>
@@ -93,26 +93,26 @@ export default function AdminMembersBlacklistManagementCrossGymView() {
         <div className="max-h-[640px] overflow-auto">
           <table data-admin-responsive-table className="w-full text-sm">
             <thead>
-              <tr className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+              <tr className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border">
                 {HEADER_KEYS.map((h, hIdx) => {
                   const field = sortableFields[h];
                   const ariaSort = field !== sortKey ? 'none' : sortDirection === 'asc' ? 'ascending' : 'descending';
                   const isFirst = hIdx === 0;
-                  return <th key={h} scope="col" aria-sort={field ? ariaSort : undefined} className={`px-4 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${isFirst ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''}`}>
+                  return <th key={h} scope="col" aria-sort={field ? ariaSort : undefined} className={`px-4 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${isFirst ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''}`}>
                     {field ? <button type="button" onClick={() => activateSort(field)} className="inline-flex items-center gap-1.5 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label={t(h)} data-testid="blacklist-management-blacklist-management-cross-gym-view-button">{t(h)}<ArrowUpDown size={14} aria-hidden="true" /></button> : t(h)}
                   </th>;
                 })}
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border dark:divide-white/[0.07]">
               {sortedEntries.map((m: BlacklistedMember , __testIdIndex64) => (
                 <tr key={m.id} className="hover:bg-surface-hover transition-colors group">
-                  <td className="px-4 py-3 sticky start-0 z-10 bg-card border-e border-border">
+                  <td className="px-4 py-3 sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border">
                     <div className="flex items-center gap-2">
                       <div>
                         <Link
                           href={`/frontend_admin/admin_members/members_directory?search=${encodeURIComponent(m.memberName)}`}
-                          className="text-sm font-medium text-primary hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                          className="text-sm font-medium text-text-primary hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
                           title="View in Member Directory"
                         >
                           {m.memberName}
@@ -123,11 +123,11 @@ export default function AdminMembersBlacklistManagementCrossGymView() {
                     </div>
                   </td>
                   <td className="px-4 py-3">
-                    <p className="text-sm text-primary">{maskSensitiveData(m.memberPhone)}</p>
+                    <p className="text-sm text-text-primary">{maskSensitiveData(m.memberPhone)}</p>
                     <p className="text-xs text-secondary truncate max-w-40">{displayValue(m.memberEmail)}</p>
                   </td>
                   <td className="px-4 py-3 max-w-56">
-                    <p className="text-sm text-primary line-clamp-2">{m.reason}</p>
+                    <p className="text-sm text-text-primary line-clamp-2">{m.reason}</p>
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex flex-wrap gap-1">

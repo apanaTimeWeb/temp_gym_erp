@@ -17,7 +17,7 @@ export default function AdminProfileOverviewSecurityForm({ form, isSaving, showC
   const t = useTranslations();
   return (
     <form onSubmit={onSubmit} className="space-y-5 rounded-xl border border-border bg-card p-6 shadow-card" data-testid="admin_profile-security-form">
-      <h2 className="text-base font-semibold text-primary">{t('profile.admin_profile_main.text_49289db43e')}</h2>
+      <h2 className="text-base font-semibold text-text-primary">{t('profile.admin_profile_main.text_49289db43e')}</h2>
       <div className="max-w-md space-y-4">
         <AdminProfilePasswordField label={t('profile.admin_profile_main.auto_898ba9670f')} name="currentPassword" form={form} visible={showCurrent} onToggle={onToggleCurrent} />
         <AdminProfilePasswordField label={t('profile.admin_profile_main.auto_856b015424')} name="newPassword" form={form} visible={showNew} onToggle={onToggleNew} />

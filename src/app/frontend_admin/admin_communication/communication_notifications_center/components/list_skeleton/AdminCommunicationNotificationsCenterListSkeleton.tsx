@@ -15,7 +15,7 @@ export default function AdminCommunicationNotificationsCenterListSkeleton() {
   const t = useTranslations();
 
   return (
-    <div className="divide-y divide-border" aria-busy="true" aria-label={t('notifications.admin_notifications_list_skeleton.text_dc258532ad')}>
+    <div className="divide-y divide-border dark:divide-white/[0.07]" aria-busy="true" aria-label={t('notifications.admin_notifications_list_skeleton.text_dc258532ad')}>
       {[1, 2, 3, 4, 5, 6].map((row) => (
         <div key={`notifications-skeleton-${row}`} className="flex items-start gap-4 p-4 md:px-6">
           <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-skeleton-base motion-safe:animate-pulse motion-safe:duration-base" />

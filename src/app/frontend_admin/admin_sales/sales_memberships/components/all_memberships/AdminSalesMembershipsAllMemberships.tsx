@@ -114,7 +114,7 @@ export default function AdminSalesAnalyticsAllMemberships() {
     return (
       <div role="alert" className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-danger-bg p-4">
         <p className="text-danger">{allMembershipsError || t('sales.admin_sales_all_memberships.auto_loadFailed')}</p>
-        <button type="button" onClick={() => void retryAllMemberships()} className="min-h-11 rounded-md border border-border px-3 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="sales-analytics-sales-analytics-all-memberships-retry-all-memberships">{t('sales.SalesError.text_042c862e44')}</button>
+        <button type="button" onClick={() => void retryAllMemberships()} className="min-h-11 rounded-md border border-border px-3 text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="sales-analytics-sales-analytics-all-memberships-retry-all-memberships">{t('sales.SalesError.text_042c862e44')}</button>
       </div>
     );
   }
@@ -141,7 +141,7 @@ export default function AdminSalesAnalyticsAllMemberships() {
               </div>
               <span className="text-xs font-medium text-secondary">{label}</span>
             </div>
-            <div className={`text-2xl font-bold ${activeFilter === filter ? color : 'text-primary'}`}>
+            <div className={`text-2xl font-bold ${activeFilter === filter ? color : 'text-text-primary'}`}>
               {count === null ? (membershipKpiCountsPending ? t('sales.AdminRepair.loadingCount') : '—') : count}
             </div>
           </button>
@@ -153,12 +153,12 @@ export default function AdminSalesAnalyticsAllMemberships() {
         <div className="max-h-[640px] overflow-auto">
           <table data-admin-responsive-table className="w-full text-sm">
             <thead>
-              <tr className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+              <tr className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border">
                 {tableHeaders.map((h, hIdx) => (
                   <th
                     key={h}
                     className={`text-left text-xs font-semibold text-secondary uppercase tracking-wider px-4 py-3 whitespace-nowrap ${
-                      hIdx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                      hIdx === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                     }`}
                   >
                     {h}
@@ -166,12 +166,12 @@ export default function AdminSalesAnalyticsAllMemberships() {
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border dark:divide-white/[0.07]">
               {filtered.map((r: Member , __testIdIndex151) => {
                 const daysLeft = getAdminSalesMembershipsDaysLeft(r.expiryDate);
                 return (
                   <tr key={r.id} className="hover:bg-surface-hover transition-colors group">
-                    <td className="px-4 py-3 text-sm font-medium text-primary sticky start-0 z-10 bg-card border-e border-border">
+                    <td className="px-4 py-3 text-sm font-medium text-text-primary sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border">
                       <div className="flex items-center gap-2">
                         <Link
                           href={`/frontend_admin/admin_members/members_directory?search=${encodeURIComponent(r.name)}`}
@@ -204,7 +204,7 @@ export default function AdminSalesAnalyticsAllMemberships() {
                         {t(ADMIN_SALES_MEMBERSHIP_STATUS_LABEL_KEYS[r.status] ?? r.status)}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-sm font-medium text-primary whitespace-nowrap">{AdminSalesFormatCurrency(r.paidAmount || 0, 'INR', locale)}</td>
+                    <td className="px-4 py-3 text-sm font-medium text-text-primary whitespace-nowrap">{AdminSalesFormatCurrency(r.paidAmount || 0, 'INR', locale)}</td>
                     <td className={`px-4 py-3 text-sm font-medium whitespace-nowrap ${getDaysLeftColorClass(daysLeft)}`}>
                       {!Number.isFinite(daysLeft) ? '—' : daysLeft <= 0 ? t('sales.admin_sales_all_memberships.auto_112a3f9892') : `${daysLeft}d`}
                     </td>

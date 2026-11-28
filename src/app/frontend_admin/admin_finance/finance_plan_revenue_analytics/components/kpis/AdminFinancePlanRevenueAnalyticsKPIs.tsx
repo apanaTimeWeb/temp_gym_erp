@@ -25,7 +25,7 @@ export default function AdminFinancePlanRevenueAnalyticsKPIs({ aggregates }: Adm
       label: t('plans.AdminAuditRepair.totalRevenue'),
       value: AdminPlansFormatCurrency(aggregates.totalRevenue, undefined, locale),
       icon: IndianRupee,
-      iconColor: 'text-primary',
+      iconColor: 'text-text-primary',
       iconBg: 'bg-primary-subtle',
     },
     {
@@ -62,7 +62,7 @@ export default function AdminFinancePlanRevenueAnalyticsKPIs({ aggregates }: Adm
             </div>
             <div className="overflow-hidden">
               <p className="text-xs font-bold text-secondary uppercase tracking-wider mb-1 truncate">{kpi.label}</p>
-              <p className="text-2xl font-black text-primary truncate" title={kpi.value.toString()}>{kpi.value}</p>
+              <p className="text-2xl font-black text-text-primary truncate" title={kpi.value.toString()}>{kpi.value}</p>
             </div>
           </div>
         );

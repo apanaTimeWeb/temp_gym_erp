@@ -26,7 +26,7 @@ export default function AdminAttendanceReportsNotFound({
   return (
     <div className="min-h-96 flex flex-col items-center justify-center text-center p-6 bg-card rounded-2xl border border-border mt-4">
       <AlertCircle className="  text-secondary mb-4"  size={18} strokeWidth={2}/>
-      <h3 className="text-lg font-bold text-primary mb-2">{resolvedTitle}</h3>
+      <h3 className="text-lg font-bold text-text-primary mb-2">{resolvedTitle}</h3>
       <p className="text-secondary mb-6">{resolvedDescription}</p>
       <Link data-testid="admin_navigation-admin-not-found-navigate" href={returnLink} className="min-h-11 min-w-11 inline-flex items-center justify-center px-4 py-2 bg-primary text-on-primary rounded-lg hover:bg-primary-hover motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page">
         {resolvedReturnText}

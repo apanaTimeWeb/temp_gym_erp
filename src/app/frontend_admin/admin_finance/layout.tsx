@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { ChevronDown } from 'lucide-react';
 
 const NAV_GROUPS = [
   { key: 'transactionsOperations', labelKey: 'admin_navigation.AdminNavigation.financeGroups.transactionsOperations', items: [
@@ -30,26 +29,39 @@ const NAV_GROUPS = [
 export default function AdminFinanceDomainLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const t = useTranslations();
-  return <div className="min-h-full bg-page text-primary">
-    <nav aria-label={t('admin_navigation.AdminNavigation.financeNavigation')} className="sticky top-0 z-20 border-b border-border bg-header px-3 py-3 sm:px-4">
-      <div className="grid gap-2 lg:grid-cols-3">
-        {NAV_GROUPS.map((group) => {
-          const groupActive = group.items.some((item) => pathname === item.href || pathname.startsWith(`${item.href}/`));
-          return <section key={group.key} aria-label={t(group.labelKey)} className="min-w-0 rounded-xl border border-border bg-card">
-            <h2 className="border-b border-border px-3 py-2 text-xs font-semibold uppercase tracking-wide text-secondary flex items-center justify-between">
-              <span>{t(group.labelKey)}</span>
-            </h2>
-            <div className="flex flex-wrap gap-2 p-3">
-              {group.items.map((item) => {
-                const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
-                return <Link key={item.href} href={item.href} aria-current={active ? 'page' : undefined} className={`inline-flex min-h-11 shrink-0 items-center rounded-lg border px-3 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-colors ${active ? 'border-focus bg-surface-highlight text-primary' : 'border-transparent text-secondary hover:bg-surface-hover hover:text-primary'}`}>{t(item.labelKey)}</Link>;
-              })}
-            </div>
-            {groupActive ? <span className="sr-only">{t('admin_navigation.AdminNavigation.activeDomain')}</span> : null}
-          </section>;
-        })}
-      </div>
-    </nav>
-    {children}
-  </div>;
+  return (
+    <div className="min-h-full bg-page text-text-primary trainer-aurora-canvas">
+      <nav aria-label={t('admin_navigation.AdminNavigation.financeNavigation')} className="border-b border-border/80 bg-header/95 dark:bg-[#0B0F19]/85 backdrop-blur-md px-3 py-2.5 sm:px-6">
+        <div className="flex items-center gap-1.5 overflow-x-auto trainer-shell-scrollbar">
+          {NAV_GROUPS.map((group, groupIndex) => {
+            const groupActive = group.items.some((item) => pathname === item.href || pathname.startsWith(`${item.href}/`));
+            return (
+              <div key={group.key} className="flex items-center gap-1.5 shrink-0">
+                {groupIndex > 0 && <span className="h-5 w-px bg-border mx-1 shrink-0" aria-hidden="true" />}
+                {group.items.map((item) => {
+                  const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      aria-current={active ? 'page' : undefined}
+                      className={`inline-flex min-h-10 shrink-0 items-center rounded-xl border px-3.5 py-1.5 text-xs sm:text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all ${
+                        active
+                          ? 'border-orange-500/45 bg-orange-500/15 text-orange-600 dark:text-orange-300 shadow-[0_2px_10px_rgba(255,90,31,0.16)]'
+                          : 'border-transparent text-secondary hover:bg-surface-hover hover:text-text-primary'
+                      }`}
+                    >
+                      {t(item.labelKey)}
+                    </Link>
+                  );
+                })}
+                {groupActive ? <span className="sr-only">{t('admin_navigation.AdminNavigation.activeDomain')}</span> : null}
+              </div>
+            );
+          })}
+        </div>
+      </nav>
+      {children}
+    </div>
+  );
 }

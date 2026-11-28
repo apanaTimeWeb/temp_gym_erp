@@ -76,14 +76,14 @@ export default function AdminHrManagementStaffTable() {
       <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
         <div className="overflow-x-auto max-h-[640px] overflow-auto">
           <table className="w-full border-collapse">
-            <thead className="sticky top-0 z-20 bg-surface-highlight text-secondary">
+            <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] text-secondary">
               <tr className="border-b border-border">
                 {STAFF_TABLE_HEADERS.map((header, idx) => (
                   <th
                     key={header}
                     aria-sort={STAFF_SORT_KEYS[header] && staffSortKey === STAFF_SORT_KEYS[header] ? (staffSortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
                     className={`text-left text-xs font-semibold uppercase tracking-wider px-4 py-3 whitespace-nowrap ${
-                      idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                      idx === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                     }`}
                   >
                     {renderHeader(header)}
@@ -94,10 +94,10 @@ export default function AdminHrManagementStaffTable() {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border dark:divide-white/[0.07]">
               {['staff-skeleton-1','staff-skeleton-2','staff-skeleton-3','staff-skeleton-4','staff-skeleton-5'].map((key) => (
                 <tr key={key} className="animate-pulse">
-                  <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-4"><div className="h-4 bg-skeleton-base rounded w-24 mb-1" /><div className="h-3 bg-skeleton-base rounded w-32" /></td>
+                  <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border px-4 py-4"><div className="h-4 bg-skeleton-base rounded w-24 mb-1" /><div className="h-3 bg-skeleton-base rounded w-32" /></td>
                   <td className="px-4 py-4"><div className="h-4 bg-skeleton-base rounded w-20" /></td><td className="px-4 py-4"><div className="h-4 bg-skeleton-base rounded w-24" /></td><td className="px-4 py-4"><div className="h-4 bg-skeleton-base rounded w-16" /></td><td className="px-4 py-4"><div className="h-4 bg-skeleton-base rounded w-24" /></td><td className="px-4 py-4"><div className="h-4 bg-skeleton-base rounded w-20" /></td><td className="px-4 py-4"><div className="h-4 bg-skeleton-base rounded w-24" /></td><td className="px-4 py-4"><div className="h-6 bg-skeleton-base rounded w-16 ml-auto" /></td>
                 </tr>
               ))}
@@ -112,14 +112,14 @@ export default function AdminHrManagementStaffTable() {
     <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
       <div className="overflow-x-auto max-h-[640px] overflow-auto">
         <table data-admin-responsive-table className="w-full text-left border-collapse">
-          <thead className="sticky top-0 z-20 bg-surface-highlight text-secondary">
+          <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] text-secondary">
             <tr className="border-b border-border">
               {STAFF_TABLE_HEADERS.map((header, idx) => (
                 <th
                   key={header}
                   aria-sort={STAFF_SORT_KEYS[header] && staffSortKey === STAFF_SORT_KEYS[header] ? (staffSortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
                   className={`text-left text-xs font-semibold uppercase tracking-wider px-4 py-3 whitespace-nowrap ${
-                    idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    idx === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                   }`}
                 >
                   {renderHeader(header)}
@@ -130,10 +130,10 @@ export default function AdminHrManagementStaffTable() {
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody className="divide-y divide-border dark:divide-white/[0.07]">
             {staff.map((member , __testIdIndex93) => (
               <tr key={member.id} className="hover:bg-surface-hover transition-colors group" data-testid={`admin_hr-admin_hr-staff-table-row-map93-${__testIdIndex93}`}>
-                <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3">
+                <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border px-4 py-3">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm bg-primary-subtle text-primary" aria-hidden="true">
                       {(member.name || '?').charAt(0).toUpperCase()}
@@ -152,7 +152,7 @@ export default function AdminHrManagementStaffTable() {
                     <div className="flex flex-col">
                       <Link
                         href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(member.primaryBranchId || member.assignedBranches[0] || '')}`}
-                        className="font-medium text-primary hover:underline"
+                        className="font-medium text-text-primary hover:underline"
                       >
                         {displayValue(member.primaryBranchId || member.assignedBranches[0])}
                       </Link>
@@ -167,7 +167,7 @@ export default function AdminHrManagementStaffTable() {
                     </Link>
                   ) : displayValue(member.branch)}
                 </td>
-                <td className="px-4 py-3 text-sm text-primary">{displayValue(member.role)}</td>
+                <td className="px-4 py-3 text-sm text-text-primary">{displayValue(member.role)}</td>
                 <td className="px-4 py-3">{member.isActive === false ? <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-danger text-on-danger border border-border" data-testid={`admin_hr-adminhrstafftable-status-1-map93-${__testIdIndex93}-2`}><Ban size={18} strokeWidth={2}/> {t('hr.admin_hr_staff_table.text_794696a720')}</span> : <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-success text-on-success border border-border" data-testid={`admin_hr-adminhrstafftable-status-2-map93-${__testIdIndex93}-3`}><CheckCircle2 size={18} strokeWidth={2}/> {t('hr.admin_hr_staff_table.text_a733b809d2')}</span>}</td>
                 <td className="px-4 py-3 text-sm text-secondary">{maskSensitiveData(member.phone)}</td><td className="px-4 py-3 text-sm font-medium text-success">{AdminHrFormatCurrency(member.salary, undefined, locale)}</td><td className="px-4 py-3 text-sm text-secondary">{member.joinDate ? formatDate(member.joinDate, locale) : displayValue(null)}</td>
                 <td className="px-4 py-3 text-right"><div className="flex items-center justify-end gap-2"><button type="button" onClick={(event) => { event.stopPropagation(); toggleStaffStatus(member); }} className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 min-w-11 p-1.5 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${member.isActive === false ? 'text-success hover:bg-success-bg' : 'text-danger hover:bg-surface-hover'}`} title={member.isActive === false ? t('hr.admin_hr_staff_table.auto_bb39318850') : t('hr.admin_hr_staff_table.auto_6e2128b7ff')} aria-label={member.isActive === false ? t('admin_hr_staff_table.auto_activate', { name: member.name }) : t('admin_hr_staff_table.auto_suspend', { name: member.name })} data-testid={`admin_hr-admin_hr-staff-table-click-3-map93-${__testIdIndex93}-4`}>{member.isActive === false ? <PlayCircle size={18}  strokeWidth={2}/> : <Ban size={18}  strokeWidth={2}/>}</button><button type="button" onClick={(event) => { event.stopPropagation(); openEdit(member); }} className="min-h-11 min-w-11 p-1.5 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-colors text-secondary hover:text-primary hover:bg-surface-hover" title={t('hr.admin_hr_staff_table.text_5301648dcf')} aria-label={t('admin_hr_staff_table.auto_edit', { name: member.name })} data-testid={`admin_hr-admin_hr-staff-table-click-4-map93-${__testIdIndex93}-5`}><Edit2 size={18}  strokeWidth={2}/></button><button type="button" onClick={(event) => { event.stopPropagation(); deleteStaff(member.id); }} className="min-h-11 min-w-11 p-1.5 rounded transition-colors text-danger hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" title={t('hr.admin_hr_staff_table.text_f6fdbe48dc')} aria-label={t('admin_hr_staff_table.auto_delete', { name: member.name })} data-testid={`admin_hr-admin_hr-staff-table-click-5-map93-${__testIdIndex93}-6`}><Trash2 size={18}  strokeWidth={2}/></button></div></td>

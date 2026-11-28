@@ -16,5 +16,5 @@ import type { AdminHrPerformanceTableSortIconProps } from '@/app/frontend_admin/
  */
 export default function AdminHrPerformanceAnalyticsTableSortIcon({ column, sortKey, sortDir }: AdminHrPerformanceTableSortIconProps) {
   if (column !== sortKey) return <ChevronsUpDown size={18} className="text-disabled"  strokeWidth={2}/>;
-  return sortDir === 'asc' ? <ChevronUp size={18} className="text-primary"  strokeWidth={2}/> : <ChevronDown size={18} className="text-primary"  strokeWidth={2}/>;
+  return sortDir === 'asc' ? <ChevronUp size={18} className="text-text-primary"  strokeWidth={2}/> : <ChevronDown size={18} className="text-text-primary"  strokeWidth={2}/>;
 }

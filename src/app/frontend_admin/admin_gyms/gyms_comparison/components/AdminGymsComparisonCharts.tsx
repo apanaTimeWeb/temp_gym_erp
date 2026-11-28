@@ -20,7 +20,7 @@ export function AdminGymsComparisonCharts({
 }: AdminGymsComparisonChartsProps) {
   return (
     <section className="rounded-2xl border border-border bg-card p-6 shadow-card space-y-4">
-      <h2 className="text-base font-bold text-primary flex items-center gap-2">
+      <h2 className="text-base font-bold text-text-primary flex items-center gap-2">
         <BarChart3 size={18} className="text-primary" />
         <span>Revenue vs Member Scale Benchmarks</span>
       </h2>
@@ -35,7 +35,7 @@ export function AdminGymsComparisonCharts({
             return (
               <div key={b.id} className="space-y-1">
                 <div className="flex justify-between text-xs font-semibold">
-                  <span className="text-primary">{b.name}</span>
+                  <span className="text-text-primary">{b.name}</span>
                   <span className="text-success">{formatCurrency(b.revenue)}</span>
                 </div>
                 <div className="h-3 w-full rounded-full bg-surface-highlight overflow-hidden">
@@ -59,8 +59,8 @@ export function AdminGymsComparisonCharts({
             return (
               <div key={b.id} className="space-y-1">
                 <div className="flex justify-between text-xs font-semibold">
-                  <span className="text-primary">{b.name}</span>
-                  <span className="text-primary">{b.studentsCount} Members</span>
+                  <span className="text-text-primary">{b.name}</span>
+                  <span className="text-text-primary">{b.studentsCount} Members</span>
                 </div>
                 <div className="h-3 w-full rounded-full bg-surface-highlight overflow-hidden">
                   <div

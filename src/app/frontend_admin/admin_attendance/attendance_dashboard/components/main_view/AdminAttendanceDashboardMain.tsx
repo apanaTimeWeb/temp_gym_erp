@@ -32,7 +32,7 @@ export default function AdminAttendanceDashboardMain() {
   const { status, error, summaryStatus, summaryError, trendStatus, trendError, loadAll, retrySummary, retryTrend } = useAdminAttendanceLogic();
 
   return (
-    <div className="min-h-full pb-10 bg-page text-primary">
+    <div className="min-h-full pb-10 bg-page text-text-primary">
 
       {/* Read-only notice banner */}
       <div className="mx-6 mt-4 flex items-center gap-2.5 px-4 py-2.5 bg-info-bg border border-border rounded-xl">
@@ -41,11 +41,11 @@ export default function AdminAttendanceDashboardMain() {
           {t('attendance.admin_attendance_main.text_480de365cc')}</p>
       </div>
 
-      <div className="p-6 space-y-5">
+      <div className="p-4 sm:p-6 space-y-5">
         {/* Top Header & Global Period Control */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-xl font-bold text-primary">
+            <h1 className="text-xl font-bold text-text-primary">
               {t('attendance.admin_attendance_main.text_28a8490d8e') || 'Attendance Overview'}
             </h1>
             <p className="text-xs text-secondary mt-0.5">
@@ -95,7 +95,7 @@ export default function AdminAttendanceDashboardMain() {
         <div className="bg-card rounded-xl border border-border p-5 space-y-4 shadow-card">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border pb-4">
             <div>
-              <p className="text-base font-bold text-primary">
+              <p className="text-base font-bold text-text-primary">
                 {attendanceView === 'members' ? (t('attendance.admin_attendance_main.text_28a8490d8e') || 'Member Attendance Records') : 'Staff & Manager Attendance Logs'}
               </p>
               <p className="text-xs text-secondary mt-0.5">
@@ -107,7 +107,7 @@ export default function AdminAttendanceDashboardMain() {
                 type="button"
                 onClick={() => setAttendanceView('members')}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold motion-safe:transition-colors ${
-                  attendanceView === 'members' ? 'bg-card text-primary shadow-sm' : 'text-secondary hover:text-primary'
+                  attendanceView === 'members' ? 'bg-card text-text-primary shadow-sm' : 'text-secondary hover:text-primary'
                 }`}
               >
                 Member Attendance
@@ -116,7 +116,7 @@ export default function AdminAttendanceDashboardMain() {
                 type="button"
                 onClick={() => setAttendanceView('staff')}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold motion-safe:transition-colors ${
-                  attendanceView === 'staff' ? 'bg-card text-primary shadow-sm' : 'text-secondary hover:text-primary'
+                  attendanceView === 'staff' ? 'bg-card text-text-primary shadow-sm' : 'text-secondary hover:text-primary'
                 }`}
               >
                 Staff & Manager Attendance

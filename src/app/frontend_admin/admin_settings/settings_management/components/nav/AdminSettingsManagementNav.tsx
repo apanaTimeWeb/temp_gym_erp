@@ -44,7 +44,7 @@ export default function AdminSettingsManagementNav() {
             <div className={`w-10 h-10 rounded-xl ${s.bg} flex items-center justify-center mb-3 motion-safe:group-hover:scale-110 motion-safe:transition-transform`}>
               <s.icon size={18} className={s.color} />
             </div>
-            <h3 className="font-semibold text-primary mb-1">{t(s.titleKey)}</h3>
+            <h3 className="font-semibold text-text-primary mb-1">{t(s.titleKey)}</h3>
             <p className="text-sm text-secondary">{t(s.descKey)}</p>
           </Link>
         );

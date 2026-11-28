@@ -75,7 +75,7 @@ export default function AdminDashboardOverviewBranchLeaderboard() {
           <Building2 size={18} strokeWidth={2} />
         </div>
         <div>
-          <h2 className="text-lg font-bold text-primary">
+          <h2 className="text-lg font-bold text-text-primary">
             {t('dashboard.admin_dashboard_branch_leaderboard.text_186698a248')}
           </h2>
           <p className="text-xs text-secondary">
@@ -85,9 +85,9 @@ export default function AdminDashboardOverviewBranchLeaderboard() {
       </div>
       <div className="max-h-[640px] overflow-auto">
         <table data-admin-responsive-table className="w-full text-left border-collapse">
-          <thead className="sticky top-0 z-20 bg-surface-highlight">
+          <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038]">
             <tr className="border-b border-border text-xs font-semibold text-secondary uppercase tracking-wider">
-              <th className="sticky start-0 z-30 bg-surface-highlight border-e border-border py-3 px-4 w-12">
+              <th className="sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border py-3 px-4 w-12">
                 {t('dashboard.admin_dashboard_branch_leaderboard.text_dd48a11495')}
               </th>
               {(['name', 'revenue', 'activeMembers'] as const).map((key, __testIdIndex35) => (
@@ -119,7 +119,7 @@ export default function AdminDashboardOverviewBranchLeaderboard() {
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody className="divide-y divide-border dark:divide-white/[0.07]">
             {rows.map((branch, index) => {
               const selected = selectedBranchId === branch.id;
               return (
@@ -135,12 +135,12 @@ export default function AdminDashboardOverviewBranchLeaderboard() {
                   }}
                   data-testid={`admin_dashboard-admin_dashboard-branch-leaderboard-control-2-map35-${index}-1`}
                 >
-                  <td className="sticky start-0 z-10 bg-card border-e border-border py-3 px-4 text-xs font-bold text-secondary">
+                  <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border py-3 px-4 text-xs font-bold text-secondary">
                     {index + 1}.
                   </td>
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-1.5">
-                      <span className="text-sm font-semibold text-primary">{branch.name}</span>
+                      <span className="text-sm font-semibold text-text-primary">{branch.name}</span>
                       <CopyButton value={branch.name} label={branch.name} />
                       <Link
                         href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(branch.name)}`}
@@ -159,7 +159,7 @@ export default function AdminDashboardOverviewBranchLeaderboard() {
                     </span>
                   </td>
                   <td className="py-3 px-4 text-right">
-                    <span className="text-sm font-medium text-primary">{branch.activeMembers}</span>
+                    <span className="text-sm font-medium text-text-primary">{branch.activeMembers}</span>
                   </td>
                   <td className="py-3 px-4 text-center">
                     <div className="flex justify-center">

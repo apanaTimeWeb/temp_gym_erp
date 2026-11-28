@@ -1,4 +1,4 @@
-import { BarChart2, Building2, Briefcase, CreditCard, Home, Mail, Settings, Shield, Ticket, User, Users, Wrench } from 'lucide-react';
+import { BarChart2, Building2, Briefcase, Cpu, CreditCard, Home, LayoutDashboard, Mail, MessageSquare, Settings, Shield, Ticket, User, UserCheck, Users, Wrench } from 'lucide-react';
 
 import { SUPERADMIN_PLATFORM_SHELL_NAVIGATION_ROUTES as SUPERADMIN_PLATFORM_SHELL_NAVIGATION_DESTINATION_ROUTES_URL_CONTRACT } from '@/app/frontend_superadmin/superadmin_platform_shell/platform_shell_navigation/config/superadmin_platform_shell_navigation.url_config';
 
@@ -13,12 +13,14 @@ export interface SuperadminPlatformShellNavigationItemConfig {
 
 export interface SuperadminPlatformShellNavigationGroupConfig {
   labelKey: string;
+  icon?: LucideIcon;
   items: readonly SuperadminPlatformShellNavigationItemConfig[];
 }
 
 export const SUPERADMIN_NAV_GROUPS: readonly SuperadminPlatformShellNavigationGroupConfig[] = [
   {
     labelKey: 'navigation.groups.overview',
+    icon: LayoutDashboard,
     items: [
       { labelKey: 'navigation.items.dashboard', href: SUPERADMIN_PLATFORM_SHELL_NAVIGATION_DESTINATION_ROUTES_URL_CONTRACT.SUPERADMIN_PLATFORM_SHELL_NAVIGATION_DESTINATION_ROUTES.DASHBOARD, icon: Home },
       { labelKey: 'navigation.items.analytics', href: SUPERADMIN_PLATFORM_SHELL_NAVIGATION_DESTINATION_ROUTES_URL_CONTRACT.SUPERADMIN_PLATFORM_SHELL_NAVIGATION_DESTINATION_ROUTES.ANALYTICS, icon: BarChart2 },
@@ -26,6 +28,7 @@ export const SUPERADMIN_NAV_GROUPS: readonly SuperadminPlatformShellNavigationGr
   },
   {
     labelKey: 'navigation.groups.tenant_management',
+    icon: Building2,
     items: [
       { labelKey: 'navigation.items.gyms', href: SUPERADMIN_PLATFORM_SHELL_NAVIGATION_DESTINATION_ROUTES_URL_CONTRACT.SUPERADMIN_PLATFORM_SHELL_NAVIGATION_DESTINATION_ROUTES.GYMS, icon: Building2 },
       { labelKey: 'navigation.items.billing', href: SUPERADMIN_PLATFORM_SHELL_NAVIGATION_DESTINATION_ROUTES_URL_CONTRACT.SUPERADMIN_PLATFORM_SHELL_NAVIGATION_DESTINATION_ROUTES.BILLING, icon: CreditCard },
@@ -35,6 +38,7 @@ export const SUPERADMIN_NAV_GROUPS: readonly SuperadminPlatformShellNavigationGr
   },
   {
     labelKey: 'navigation.groups.communication',
+    icon: MessageSquare,
     items: [
       { labelKey: 'navigation.items.communication', href: SUPERADMIN_PLATFORM_SHELL_NAVIGATION_DESTINATION_ROUTES_URL_CONTRACT.SUPERADMIN_PLATFORM_SHELL_NAVIGATION_DESTINATION_ROUTES.COMMUNICATION, icon: Mail },
       { labelKey: 'navigation.items.support', href: SUPERADMIN_PLATFORM_SHELL_NAVIGATION_DESTINATION_ROUTES_URL_CONTRACT.SUPERADMIN_PLATFORM_SHELL_NAVIGATION_DESTINATION_ROUTES.SUPPORT, icon: Ticket },
@@ -42,6 +46,7 @@ export const SUPERADMIN_NAV_GROUPS: readonly SuperadminPlatformShellNavigationGr
   },
   {
     labelKey: 'navigation.groups.platform',
+    icon: Cpu,
     items: [
       { labelKey: 'navigation.items.audit_compliance', href: SUPERADMIN_PLATFORM_SHELL_NAVIGATION_DESTINATION_ROUTES_URL_CONTRACT.SUPERADMIN_PLATFORM_SHELL_NAVIGATION_DESTINATION_ROUTES.AUDIT_COMPLIANCE, icon: Shield },
       { labelKey: 'navigation.items.platform_configuration', href: SUPERADMIN_PLATFORM_SHELL_NAVIGATION_DESTINATION_ROUTES_URL_CONTRACT.SUPERADMIN_PLATFORM_SHELL_NAVIGATION_DESTINATION_ROUTES.PLATFORM_CONFIGURATION, icon: Settings },
@@ -50,6 +55,7 @@ export const SUPERADMIN_NAV_GROUPS: readonly SuperadminPlatformShellNavigationGr
   },
   {
     labelKey: 'navigation.groups.account',
+    icon: UserCheck,
     items: [
       { labelKey: 'navigation.items.account', href: SUPERADMIN_PLATFORM_SHELL_NAVIGATION_DESTINATION_ROUTES_URL_CONTRACT.SUPERADMIN_PLATFORM_SHELL_NAVIGATION_DESTINATION_ROUTES.ACCOUNT, icon: User },
     ],

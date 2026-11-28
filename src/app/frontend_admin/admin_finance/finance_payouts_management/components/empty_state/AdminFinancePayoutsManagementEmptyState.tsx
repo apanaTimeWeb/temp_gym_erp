@@ -16,7 +16,7 @@ import type { AdminPayoutsEmptyStateProps } from '@/app/frontend_admin/admin_fin
 export default function AdminFinancePayoutsManagementEmptyState({ title, description }: AdminPayoutsEmptyStateProps) {
   return <div className="flex flex-col items-center justify-center gap-2 py-12 text-center" data-testid="admin_payouts-admin_payouts-empty-state-state">
     <WalletCards size={18} aria-hidden="true" className="text-secondary"  strokeWidth={2}/>
-    <h3 className="text-base font-semibold text-primary">{title}</h3>
+    <h3 className="text-base font-semibold text-text-primary">{title}</h3>
     <p className="text-sm text-secondary">{description}</p>
   </div>;
 }

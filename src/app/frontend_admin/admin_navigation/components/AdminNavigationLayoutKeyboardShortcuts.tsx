@@ -52,18 +52,18 @@ export default function AdminNavigationLayoutKeyboardShortcuts() {
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop p-4 overflow-y-auto" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setHelpOpen(false); }} data-testid="admin_navigation-admin-keyboard-shortcuts-overlay">
-      <section ref={dialogRef} tabIndex={-1} role="dialog" aria-modal="true" aria-labelledby="admin-keyboard-shortcuts-title" className="my-auto w-full max-w-md rounded-xl border border-border bg-overlay p-6 shadow-dialog" data-testid="admin_navigation-admin-keyboard-shortcuts-dialog">
+      <section ref={dialogRef} tabIndex={-1} role="dialog" aria-modal="true" aria-labelledby="admin-keyboard-shortcuts-title" className="my-auto w-full max-w-md rounded-2xl border border-orange-500/35 bg-card dark:bg-[#0E1526]/98 p-6 shadow-dialog" data-testid="admin_navigation-admin-keyboard-shortcuts-dialog">
         <div className="flex items-start justify-between gap-4">
-          <h2 id="admin-keyboard-shortcuts-title" className="text-lg font-semibold text-primary">{t('title')}</h2>
-          <button type="button" onClick={() => setHelpOpen(false)} className="min-h-11 min-w-11 rounded-lg border border-border bg-input text-secondary hover:bg-surface-hover hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" aria-label={t('close')} data-testid="admin_navigation-admin-keyboard-shortcuts-close">
+          <h2 id="admin-keyboard-shortcuts-title" className="text-lg font-semibold text-text-primary">{t('title')}</h2>
+          <button type="button" onClick={() => setHelpOpen(false)} className="min-h-11 min-w-11 rounded-xl border border-border bg-input text-secondary hover:bg-surface-hover hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" aria-label={t('close')} data-testid="admin_navigation-admin-keyboard-shortcuts-close">
             ×
           </button>
         </div>
         <div className="mt-5 space-y-3" aria-label={t('shortcutHelp')}>
-          <div className="flex items-center justify-between gap-4 rounded-lg border border-border bg-input px-3 py-3"><span className="text-sm text-primary">{t('commandPalette')}</span><kbd className="rounded-md border border-border bg-card px-2 py-1 text-xs text-secondary">{t('keyCommandPalette')}</kbd></div>
-          <div className="flex items-center justify-between gap-4 rounded-lg border border-border bg-input px-3 py-3"><span className="text-sm text-primary">{t('closeOverlays')}</span><kbd className="rounded-md border border-border bg-card px-2 py-1 text-xs text-secondary">{t('keyEscape')}</kbd></div>
-          <div className="flex items-center justify-between gap-4 rounded-lg border border-border bg-input px-3 py-3"><span className="text-sm text-primary">{t('submitForm')}</span><kbd className="rounded-md border border-border bg-card px-2 py-1 text-xs text-secondary">{t('keySubmit')}</kbd></div>
-          <div className="flex items-center justify-between gap-4 rounded-lg border border-border bg-input px-3 py-3"><span className="text-sm text-primary">{t('showHelp')}</span><kbd className="rounded-md border border-border bg-card px-2 py-1 text-xs text-secondary">{t('keyHelp')}</kbd></div>
+          <div className="flex items-center justify-between gap-4 rounded-xl border border-border bg-input px-3 py-3"><span className="text-sm text-text-primary">{t('commandPalette')}</span><kbd className="rounded-md border border-border bg-card px-2 py-1 text-xs text-secondary">{t('keyCommandPalette')}</kbd></div>
+          <div className="flex items-center justify-between gap-4 rounded-xl border border-border bg-input px-3 py-3"><span className="text-sm text-text-primary">{t('closeOverlays')}</span><kbd className="rounded-md border border-border bg-card px-2 py-1 text-xs text-secondary">{t('keyEscape')}</kbd></div>
+          <div className="flex items-center justify-between gap-4 rounded-xl border border-border bg-input px-3 py-3"><span className="text-sm text-text-primary">{t('submitForm')}</span><kbd className="rounded-md border border-border bg-card px-2 py-1 text-xs text-secondary">{t('keySubmit')}</kbd></div>
+          <div className="flex items-center justify-between gap-4 rounded-xl border border-border bg-input px-3 py-3"><span className="text-sm text-text-primary">{t('showHelp')}</span><kbd className="rounded-md border border-border bg-card px-2 py-1 text-xs text-secondary">{t('keyHelp')}</kbd></div>
         </div>
       </section>
     </div>

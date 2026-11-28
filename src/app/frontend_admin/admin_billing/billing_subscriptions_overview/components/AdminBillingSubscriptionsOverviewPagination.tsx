@@ -35,13 +35,13 @@ export default function AdminNavigationLayoutPagination({ currentPage, totalPage
     <nav className="px-5 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-border" aria-label={t('admin_layout.AdminNavigationLayoutPagination.text_100325b8d6')}>
       {hasSummary && startItem !== null && endItem !== null ? (
         <div className="text-sm text-center sm:text-left text-secondary" aria-live="polite" data-testid="admin_navigation-admin-pagination-control">
-          {t('admin_layout.AdminNavigationLayoutPagination.text_163d8174ff')}<span className="font-medium text-primary">{startItem}</span> {t('admin_layout.AdminNavigationLayoutPagination.text_4374aaee24')}{' '}
-          <span className="font-medium text-primary">{endItem}</span> {t('admin_layout.AdminNavigationLayoutPagination.text_de04fa0e29')}{' '}
-          <span className="font-medium text-primary">{totalItems}</span> {t('admin_layout.AdminNavigationLayoutPagination.text_cdf7e925f5')}</div>
+          {t('admin_layout.AdminNavigationLayoutPagination.text_163d8174ff')}<span className="font-medium text-text-primary">{startItem}</span> {t('admin_layout.AdminNavigationLayoutPagination.text_4374aaee24')}{' '}
+          <span className="font-medium text-text-primary">{endItem}</span> {t('admin_layout.AdminNavigationLayoutPagination.text_de04fa0e29')}{' '}
+          <span className="font-medium text-text-primary">{totalItems}</span> {t('admin_layout.AdminNavigationLayoutPagination.text_cdf7e925f5')}</div>
       ) : (
         <div className="text-sm text-secondary" aria-live="polite" data-testid="admin_navigation-admin-pagination-control-2">
-          {t('admin_layout.AdminNavigationLayoutPagination.text_fb06270f7c')}<span className="font-medium text-primary">{safePage}</span> {t('admin_layout.AdminNavigationLayoutPagination.text_de04fa0e29')}{' '}
-          <span className="font-medium text-primary">{safeTotalPages}</span>
+          {t('admin_layout.AdminNavigationLayoutPagination.text_fb06270f7c')}<span className="font-medium text-text-primary">{safePage}</span> {t('admin_layout.AdminNavigationLayoutPagination.text_de04fa0e29')}{' '}
+          <span className="font-medium text-text-primary">{safeTotalPages}</span>
         </div>
       )}
 

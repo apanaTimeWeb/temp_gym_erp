@@ -27,7 +27,7 @@ export default function AdminBillingUsageAnalyticsAlert() {
     <div className={`flex items-center justify-between p-3 border-b ${bgColor} ${borderColor} px-6 motion-safe:transition-all motion-safe:duration-slow`} role="status" data-testid="admin_usage-admin_usage-alert-control">
       <div className="flex items-center gap-3">
         <AlertTriangle className={textColor} size={18} aria-hidden="true"  strokeWidth={2}/>
-        <span className="text-sm font-medium text-primary">
+        <span className="text-sm font-medium text-text-primary">
           {isLimitReached
             ? t('usage.admin_usage_alert.auto_07939f69f3')
             : t('usage.admin_usage_alert.auto_c4a86b6a2b')}

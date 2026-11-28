@@ -102,8 +102,7 @@ describe('TrainerNavigationHeader', () => {
     expect(profileMenuBtn).toHaveAttribute('aria-expanded', 'true');
   });
 
-  it('supports branch switcher hover/click and header command palette/shortcuts triggers', () => {
-    const dispatchSpy = vi.spyOn(window, 'dispatchEvent');
+  it('supports branch switcher hover/click and omits search and shortcuts header buttons', () => {
     render(<TrainerNavigationHeader title="Central Gym" branchName="Main Branch" isSidebarCollapsed={false} isMobileSidebarOpen={false} isMobileViewport={false} onToggleSidebar={vi.fn()} />);
 
     const branchTrigger = screen.getByTestId('trainer-header-branch-trigger');
@@ -113,9 +112,7 @@ describe('TrainerNavigationHeader', () => {
     fireEvent.click(screen.getByRole('option', { name: /Downtown Flagship/i }));
     expect(screen.getByTestId('trainer-header-branch-trigger')).toHaveTextContent('Downtown Flagship');
 
-    fireEvent.click(screen.getByTestId('trainer_navigation-header-command_palette_trigger'));
-    fireEvent.click(screen.getByTestId('trainer_navigation-header-shortcuts_trigger'));
-    expect(dispatchSpy).toHaveBeenCalledTimes(2);
-    dispatchSpy.mockRestore();
+    expect(screen.queryByTestId('trainer_navigation-header-command_palette_trigger')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('trainer_navigation-header-shortcuts_trigger')).not.toBeInTheDocument();
   });
 });

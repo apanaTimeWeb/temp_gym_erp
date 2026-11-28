@@ -13,7 +13,11 @@ export default function TrainerCoachingExerciseManagementToolbar() {
   const { search, setSearch, category, setCategory } = useTrainerWorkoutFilters({ canonicalizeUrl: true });
   const { setEditExerciseId, setShowExModal } = useTrainerWorkoutStore();
   const [draft, setDraft] = useState(search);
-  useEffect(() => setDraft(search), [search]);
+  const [prevSearch, setPrevSearch] = useState(search);
+  if (prevSearch !== search) {
+    setPrevSearch(search);
+    setDraft(search);
+  }
   useEffect(() => {
     if (draft === search) return;
     const timeout = setTimeout(() => setSearch(draft), 350);

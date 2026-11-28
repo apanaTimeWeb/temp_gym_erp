@@ -41,7 +41,7 @@ export default function AdminHrPerformanceAnalytics() {
     return (
       <div role="alert" className="p-6 text-center text-danger space-y-3">
         <p>{t('hr.admin_hr_performance.text_4a5e9a0392')}</p>
-        <button type="button" className="min-h-11 min-w-11 rounded-lg border border-border px-4 py-2 text-primary focus-visible:ring-2 focus-visible:ring-primary" onClick={() => { void retry(); }}>
+        <button type="button" className="min-h-11 min-w-11 rounded-lg border border-border px-4 py-2 text-text-primary focus-visible:ring-2 focus-visible:ring-primary" onClick={() => { void retry(); }}>
           {t('hr.HrError.text_042c862e44')}
         </button>
       </div>
@@ -53,7 +53,7 @@ export default function AdminHrPerformanceAnalytics() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-black text-primary tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl font-black text-text-primary tracking-tight flex items-center gap-2">
             <Target className="text-primary" size={18} strokeWidth={2} />
             {t('hr.admin_hr_performance.text_9c59cd5cca')}</h1>
           <p className="text-sm text-secondary mt-1">
@@ -82,7 +82,7 @@ export default function AdminHrPerformanceAnalytics() {
           {/* Table Controls & Table */}
           <div className="space-y-4">
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-              <h2 className="text-lg font-bold text-primary w-full sm:w-auto">{t('hr.admin_hr_performance.text_4a6bceb3d4')}</h2>
+              <h2 className="text-lg font-bold text-text-primary w-full sm:w-auto">{t('hr.admin_hr_performance.text_4a6bceb3d4')}</h2>
               <div className="relative w-full sm:w-72">
                 <span className="absolute inset-y-0 left-3 flex items-center"><Search size={18} className="text-disabled"  strokeWidth={2}/></span>
                 <input

@@ -36,7 +36,7 @@ export default function AdminMembersBlacklistManagementToolbar() {
             placeholder={t('blacklist.admin_blacklist_toolbar.text_212b62a779')}
             value={localSearch}
             onChange={(e) => { setLocalSearch(e.target.value); setSearch(e.target.value); }}
-            className="pl-9 pr-4 py-2 bg-input border border-border rounded-lg text-sm text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary w-64 focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
+            className="pl-9 pr-4 py-2 bg-input border border-border rounded-lg text-sm text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary w-64 focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
            data-testid="admin_blacklist-admin_blacklist-toolbar-control"/>
         </div>
         <div className="w-40"><AdminNavigationLayoutSearchableDropdown options={BLACKLIST_SCOPE_OPTIONS.map((option) => ({ ...option, label: t(option.labelKey) }))} value={scopeFilter} onChange={(v) => setScopeFilter(v as string)} placeholder={t('blacklist.admin_blacklist_toolbar.text_b64efd493e')}  testId="admin_blacklist-admin_blacklist-toolbar-change"/></div>

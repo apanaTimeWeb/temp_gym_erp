@@ -55,7 +55,8 @@
     "TEXT_LOADING_MEMBERS": "सदस्य लोड हो रहे हैं…",
     "TEXT_MEMBER_LOOKUP_FAILED": "सदस्य लोड नहीं हो सके। आगे बढ़ने के लिए पुनः प्रयास करें।",
     "TEXT_NO_MEMBERS_AVAILABLE": "असाइनमेंट के लिए कोई सदस्य उपलब्ध नहीं है।",
-    "TEXT_RETRY": "पुनः प्रयास करें"
+    "TEXT_RETRY": "पुनः प्रयास करें",
+    "ERR_SELECT_AT_LEAST_ONE_MEMBER": "कम से कम एक सदस्य चुनें"
   },
   "TRAINER_INFRASTRUCTURE": {
     "TEXT_SELECT_AN_OPTION": "एक विकल्प चुनें...",

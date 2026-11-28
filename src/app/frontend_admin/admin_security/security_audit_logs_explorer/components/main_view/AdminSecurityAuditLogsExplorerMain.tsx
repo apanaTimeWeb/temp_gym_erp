@@ -19,5 +19,5 @@ import AdminAuditLogsTable from '@/app/frontend_admin/admin_security/security_au
  * @edge-case Preserves documented loading, empty, error, disabled, nullable, and retry behavior without inventing fallback business data.
  */
 export default function AdminSecurityAuditLogsExplorerMain() {
-  return <div className="min-h-full pb-10"><div className="space-y-5 p-6"><AdminAuditLogsKPIs /><AdminAuditLogsToolbar /><AdminAuditLogsTable /></div></div>;
+  return <div className="min-h-full pb-10"><div className="space-y-5 p-4 sm:p-6"><AdminAuditLogsKPIs /><AdminAuditLogsToolbar /><AdminAuditLogsTable /></div></div>;
 }

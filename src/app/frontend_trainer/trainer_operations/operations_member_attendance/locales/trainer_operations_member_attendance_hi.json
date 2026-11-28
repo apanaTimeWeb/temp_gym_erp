@@ -93,7 +93,8 @@
     "TEXT_LOADING_MEMBERS": "सदस्य लोड हो रहे हैं…",
     "TEXT_NO_MEMBERS_AVAILABLE": "उपस्थिति दर्ज करने के लिए कोई सदस्य उपलब्ध नहीं है।",
     "TEXT_UNABLE_TO_LOAD_MEMBERS": "सदस्य लोड नहीं हो सके। आगे बढ़ने के लिए फिर से प्रयास करें।",
-    "TEXT_RETRY_MEMBER_LOOKUP": "सदस्य सूची फिर से लोड करें"
+    "TEXT_RETRY_MEMBER_LOOKUP": "सदस्य सूची फिर से लोड करें",
+    "TEXT_ACTIONS": "कार्रवाइयाँ"
   },
   "TEXT_TAB_MEMBERS": "सदस्य",
   "TEXT_TAB_MY_ATTENDANCE": "मेरी उपस्थिति",

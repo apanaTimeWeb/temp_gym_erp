@@ -88,7 +88,7 @@ export default function AdminFinancePayoutsManagementSummaryTable() {
         <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
           <div className="overflow-x-auto max-h-[640px] overflow-auto">
             <table data-admin-responsive-table className="w-full text-left border-collapse">
-              <thead className="sticky top-0 z-20 bg-surface-highlight">
+              <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038]">
                 <tr className="border-b border-border">
                   {tableColumns.map((h, __testIdIndex40) => (
                     <th
@@ -96,7 +96,7 @@ export default function AdminFinancePayoutsManagementSummaryTable() {
                       scope="col"
                       aria-sort={logic.payoutSortKey === h.key ? (logic.payoutSortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
                       className={`px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-secondary whitespace-nowrap ${
-                        __testIdIndex40 === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                        __testIdIndex40 === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                       }`}
                     >
                       <button
@@ -115,7 +115,7 @@ export default function AdminFinancePayoutsManagementSummaryTable() {
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border">
+              <tbody className="divide-y divide-border dark:divide-white/[0.07]">
                 {logic.payouts.length === 0 ? (
                   <tr>
                     <td colSpan={TABLE_COLUMN_COUNT}>
@@ -128,7 +128,7 @@ export default function AdminFinancePayoutsManagementSummaryTable() {
                 ) : (
                   logic.payouts.map((p) => (
                     <tr key={`${p.gymId}-${p.month}`} className="hover:bg-surface-hover transition-colors group">
-                      <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-medium text-primary">
+                      <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border px-4 py-3 text-sm font-medium text-text-primary">
                         <div className="flex items-center gap-1.5">
                           <Link
                             href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(p.gymName)}`}
@@ -141,7 +141,7 @@ export default function AdminFinancePayoutsManagementSummaryTable() {
                         </div>
                       </td>
                       <td className="px-4 py-3 text-sm text-secondary">{p.month}</td>
-                      <td className="px-4 py-3 text-sm text-primary font-medium"><span>{formatAmount(p.grossRevenue)}</span></td>
+                      <td className="px-4 py-3 text-sm text-text-primary font-medium"><span>{formatAmount(p.grossRevenue)}</span></td>
                       <td className="px-4 py-3 text-sm text-danger"><span>{formatAmount(p.staffPayroll)}</span></td>
                       <td className="px-4 py-3 text-sm text-danger"><span>{formatAmount(p.operationalExpenses)}</span></td>
                       <td className="px-4 py-3 text-sm text-secondary"><span>{formatAmount(p.platformFee)}</span></td>

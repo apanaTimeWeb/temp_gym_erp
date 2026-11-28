@@ -1,7 +1,8 @@
 "use client";
 import React, { useRef } from 'react';
 import { X, Printer, Receipt, CheckCircle2, ShieldCheck, Building2 } from 'lucide-react';
-import { useLocale, useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
+import { getUser } from '@/lib/api';
 import type { TrainerEarningsHistoryRow } from '@/app/frontend_trainer/trainer_earnings/earnings_overview_and_ledger/types/TrainerEarningsOverviewAndLedgerEarningsTypes';
 import { TrainerEarningsFormatCurrency } from '@/app/frontend_trainer/trainer_earnings/earnings_overview_and_ledger/utils/TrainerEarningsOverviewAndLedgerEarningsFormatCurrency';
 import { TrainerEarningsFormatDate } from '@/app/frontend_trainer/trainer_earnings/earnings_overview_and_ledger/utils/TrainerEarningsOverviewAndLedgerEarningsDisplayFormatters';
@@ -17,8 +18,8 @@ export default function TrainerEarningsOverviewAndLedgerPayslipModal({
   row,
   onClose,
 }: TrainerEarningsPayslipModalProps) {
-  const t = useTranslations('TRAINER_EARNINGS');
   const locale = useLocale();
+  const currentUser = getUser();
   const modalRef = useRef<HTMLDivElement>(null);
 
   if (!isOpen || !row) return null;
@@ -95,8 +96,8 @@ export default function TrainerEarningsOverviewAndLedgerPayslipModal({
           <div className="grid grid-cols-2 gap-4 p-4 rounded-xl bg-input border border-border text-xs">
             <div>
               <p className="text-secondary font-medium">Trainer</p>
-              <p className="font-bold text-sm text-text-primary mt-0.5">Certified Personal Trainer</p>
-              <p className="text-secondary mt-1">ID: TRN-001</p>
+              <p className="font-bold text-sm text-text-primary mt-0.5">{currentUser?.name || 'Personal Trainer'}</p>
+              <p className="text-secondary mt-1">ID: {currentUser?.id || 'TRN-001'}</p>
             </div>
             <div>
               <p className="text-secondary font-medium">Session / Reference</p>

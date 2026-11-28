@@ -9,7 +9,7 @@ import AdminNavigationLayoutTableSkeleton from '@/app/frontend_admin/admin_commu
  */
 export default function AdminCampaignsLoading() {
   return (
-    <div className="w-full space-y-6 p-6" data-testid="admin_campaigns-loading-state">
+    <div className="w-full space-y-6 p-4 sm:p-6" data-testid="admin_campaigns-loading-state">
       <div className="h-7 w-56 rounded bg-skeleton-base motion-safe:animate-pulse" />
       <div className="h-4 w-72 rounded bg-skeleton-base motion-safe:animate-pulse" />
       <div className="grid gap-6 lg:grid-cols-3">

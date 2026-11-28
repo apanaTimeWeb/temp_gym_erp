@@ -18,9 +18,9 @@ export default function AdminGymsBranchesDirectoryHeaderSelector() {
   const t = useTranslations();
   const { branchOptions, selectedBranchId, handleChange, status, retry } = useAdminBranchesHeaderSelector();
   return (
-    <div className="hidden lg:flex items-center gap-2 bg-header border border-border rounded-lg px-3 py-1.5">
-      <Building2 size={18} strokeWidth={2} className="text-secondary shrink-0" aria-hidden="true" />
-      {status === 'pending' ? <span role="status" className="text-xs text-secondary" data-testid="branches-directory-branches-directory-header-selector-status-region">{t('admin_branches_header_selector.loading')}</span> : status === 'error' ? <span role="alert" className="text-xs text-danger"><span>{t('admin_branches_header_selector.error')}</span> <button type="button" onClick={() => void retry()} className="underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="branches-directory-branches-directory-header-selector-retry">{t('admin_branches_header_selector.retry')}</button></span> : <AdminNavigationLayoutSearchableDropdown
+    <div className="hidden lg:flex items-center gap-2 bg-white/[0.06] border border-cyan-400/30 rounded-xl px-2.5 py-1 text-white">
+      <Building2 size={16} strokeWidth={2} className="text-cyan-300 shrink-0" aria-hidden="true" />
+      {status === 'pending' ? <span role="status" className="text-xs text-slate-300" data-testid="branches-directory-branches-directory-header-selector-status-region">{t('admin_branches_header_selector.loading')}</span> : status === 'error' ? <span role="alert" className="text-xs text-rose-300"><span>{t('admin_branches_header_selector.error')}</span> <button type="button" onClick={() => void retry()} className="underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="branches-directory-branches-directory-header-selector-retry">{t('admin_branches_header_selector.retry')}</button></span> : <AdminNavigationLayoutSearchableDropdown
         options={branchOptions}
         value={selectedBranchId}
         onChange={handleChange}

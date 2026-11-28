@@ -1,31 +1,36 @@
 "use client";
 
-import { useState, useMemo, Fragment } from 'react';
-import { Calendar, ChevronDown, ChevronUp, Plus } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { ArrowDown, ArrowUp, ArrowUpDown, Calendar, ChevronLeft, ChevronRight, Eye, Plus, Trash2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import CopyButton from '@/components/ui/CopyButton';
-import TrainerInfrastructureTooltip from './TrainerOperationsLeaveRequestsTrainerInfrastructureTooltip';
 import TrainerScheduleEmptyState from './TrainerOperationsLeaveRequestsScheduleEmptyState';
 import { TrainerOperationsLeaveRequestsLeaveFilterBar } from './TrainerOperationsLeaveRequestsLeaveFilterBar';
 import { TrainerOperationsLeaveRequestsLeaveMobileCard } from './TrainerOperationsLeaveRequestsLeaveMobileCard';
-import { TrainerOperationsLeaveRequestsLeaveExpandedDetails } from './TrainerOperationsLeaveRequestsLeaveExpandedDetails';
+import TrainerOperationsLeaveRequestsQuickViewModal from './TrainerOperationsLeaveRequestsQuickViewModal';
 import { TrainerScheduleFormatDate } from '../utils/TrainerOperationsLeaveRequestsScheduleFormatDate';
 import type { TrainerScheduleLeaveRequest } from '../types/TrainerOperationsLeaveRequestsScheduleTypes';
 
 export interface TrainerOperationsLeaveRequestsLeaveTableProps {
   leaveRequests: TrainerScheduleLeaveRequest[];
   openLeaveModal: () => void;
+  onWithdrawLeave?: (id: string) => void | Promise<void>;
+  withdrawing?: boolean;
 }
 
-export function TrainerOperationsLeaveRequestsLeaveTable({ leaveRequests, openLeaveModal }: TrainerOperationsLeaveRequestsLeaveTableProps) {
+export function TrainerOperationsLeaveRequestsLeaveTable({ leaveRequests, openLeaveModal, onWithdrawLeave, withdrawing }: TrainerOperationsLeaveRequestsLeaveTableProps) {
   const t = useTranslations('TRAINER_SCHEDULE');
   const locale = useLocale();
 
-  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [quickViewLeave, setQuickViewLeave] = useState<TrainerScheduleLeaveRequest | null>(null);
   const [statusFilter, setStatusFilter] = useState<'ALL' | 'PENDING' | 'APPROVED' | 'REJECTED'>('ALL');
   const [typeFilter, setTypeFilter] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortField, setSortField] = useState<'startDate' | 'days' | 'status'>('startDate');
+  const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const calculateDays = (start: string, end: string) => {
     try {
@@ -63,7 +68,7 @@ export function TrainerOperationsLeaveRequestsLeaveTable({ leaveRequests, openLe
   };
 
   const filteredLeaves = useMemo(() => {
-    return leaveRequests.filter((leave) => {
+    const matches = leaveRequests.filter((leave) => {
       if (statusFilter !== 'ALL' && leave.status.toUpperCase() !== statusFilter) {
         return false;
       }
@@ -79,14 +84,39 @@ export function TrainerOperationsLeaveRequestsLeaveTable({ leaveRequests, openLe
       }
       return true;
     });
-  }, [leaveRequests, statusFilter, typeFilter, searchQuery]);
+
+    return [...matches].sort((a, b) => {
+      let cmp = 0;
+      if (sortField === 'startDate') {
+        cmp = new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
+      } else if (sortField === 'days') {
+        cmp = calculateDays(a.startDate, a.endDate) - calculateDays(b.startDate, b.endDate);
+      } else if (sortField === 'status') {
+        cmp = a.status.localeCompare(b.status);
+      }
+      return sortDir === 'asc' ? cmp : -cmp;
+    });
+  }, [leaveRequests, statusFilter, typeFilter, searchQuery, sortField, sortDir]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredLeaves.length / itemsPerPage));
+  const safePage = Math.min(currentPage, totalPages);
+  const paginatedLeaves = filteredLeaves.slice((safePage - 1) * itemsPerPage, safePage * itemsPerPage);
+  const toggleSort = (field: 'startDate' | 'days' | 'status') => {
+    if (sortField === field) {
+      setSortDir((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortField(field);
+      setSortDir('asc');
+    }
+    setCurrentPage(1);
+  };
 
   const totalRequests = leaveRequests.length;
   const approvedCount = leaveRequests.filter((l) => l.status.toUpperCase() === 'APPROVED').length;
   const pendingCount = leaveRequests.filter((l) => l.status.toUpperCase() === 'PENDING').length;
   const rejectedCount = leaveRequests.filter((l) => l.status.toUpperCase() === 'REJECTED').length;
   const hasActiveFilters = statusFilter !== 'ALL' || typeFilter !== 'ALL' || searchQuery.trim() !== '';
-  const TABLE_COLUMN_COUNT = 7;
+  const TABLE_COLUMN_COUNT = 6;
 
   return (
     <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
@@ -131,17 +161,31 @@ export function TrainerOperationsLeaveRequestsLeaveTable({ leaveRequests, openLe
       />
 
       {/* Desktop Table View */}
-      <div className="hidden md:block max-h-[640px] overflow-auto custom-scrollbar">
+      <div className="hidden md:block max-h-[640px] overflow-y-auto overflow-x-hidden">
         <table className="w-full text-start border-collapse">
           <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
             <tr className="bg-surface-highlight border-b border-border" data-testid="trainer_schedule-TrainerScheduleLeaveRequests-row-1">
-              <th scope="col" className="sticky start-0 z-30 bg-surface-highlight border-e border-border text-start text-xs font-bold text-secondary uppercase tracking-wider px-4 py-3 whitespace-nowrap">{t('TEXT_ID')}</th>
-              <th scope="col" className="text-start text-xs font-bold text-secondary uppercase tracking-wider px-4 py-3 whitespace-nowrap">{t('TEXT_LEAVE_TYPE_LABEL')}</th>
-              <th scope="col" className="text-start text-xs font-bold text-secondary uppercase tracking-wider px-4 py-3 whitespace-nowrap">{t('TEXT_DATE_RANGE')}</th>
-              <th scope="col" className="text-start text-xs font-bold text-secondary uppercase tracking-wider px-4 py-3 whitespace-nowrap">{t('TEXT_REASON')}</th>
-              <th scope="col" className="text-start text-xs font-bold text-secondary uppercase tracking-wider px-4 py-3 whitespace-nowrap">{t('TEXT_STATUS')}</th>
-              <th scope="col" className="text-start text-xs font-bold text-secondary uppercase tracking-wider px-4 py-3 whitespace-nowrap">{t('TEXT_REQUESTED_ON')}</th>
-              <th scope="col" className="text-center text-xs font-bold text-secondary uppercase tracking-wider px-4 py-3 whitespace-nowrap">{t('TEXT_DETAILS')}</th>
+              <th scope="col" className="text-start text-xs font-bold text-secondary uppercase tracking-wider px-3 py-3 whitespace-nowrap">{t('TEXT_ID')}</th>
+              <th scope="col" className="text-start text-xs font-bold text-secondary uppercase tracking-wider px-3 py-3 whitespace-nowrap">{t('TEXT_LEAVE_TYPE_LABEL')}</th>
+              <th scope="col" className="text-start text-xs font-bold text-secondary uppercase tracking-wider px-3 py-3 whitespace-nowrap">
+                <button type="button" onClick={() => toggleSort('startDate')} className="inline-flex items-center gap-1 hover:text-text-primary cursor-pointer">
+                  <span>{t('TEXT_DATE_RANGE')}</span>
+                  {sortField === 'startDate' ? (sortDir === 'asc' ? <ArrowUp size={13} className="text-orange-500" /> : <ArrowDown size={13} className="text-orange-500" />) : <ArrowUpDown size={13} className="opacity-50" />}
+                </button>
+              </th>
+              <th scope="col" className="text-start text-xs font-bold text-secondary uppercase tracking-wider px-3 py-3 whitespace-nowrap">
+                <button type="button" onClick={() => toggleSort('days')} className="inline-flex items-center gap-1 hover:text-text-primary cursor-pointer">
+                  <span>{t('TEXT_DAYS')}</span>
+                  {sortField === 'days' ? (sortDir === 'asc' ? <ArrowUp size={13} className="text-orange-500" /> : <ArrowDown size={13} className="text-orange-500" />) : <ArrowUpDown size={13} className="opacity-50" />}
+                </button>
+              </th>
+              <th scope="col" className="text-start text-xs font-bold text-secondary uppercase tracking-wider px-3 py-3 whitespace-nowrap">
+                <button type="button" onClick={() => toggleSort('status')} className="inline-flex items-center gap-1 hover:text-text-primary cursor-pointer">
+                  <span>{t('TEXT_STATUS')}</span>
+                  {sortField === 'status' ? (sortDir === 'asc' ? <ArrowUp size={13} className="text-orange-500" /> : <ArrowDown size={13} className="text-orange-500" />) : <ArrowUpDown size={13} className="opacity-50" />}
+                </button>
+              </th>
+              <th scope="col" className="text-center text-xs font-bold text-secondary uppercase tracking-wider px-3 py-3 whitespace-nowrap">{t('TEXT_ACTIONS')}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
@@ -158,88 +202,65 @@ export function TrainerOperationsLeaveRequestsLeaveTable({ leaveRequests, openLe
                 </td>
               </tr>
             ) : (
-              filteredLeaves.map((leave) => {
-                const expanded = expandedId === leave.id;
+              paginatedLeaves.map((leave) => {
                 const statusBadgeClass = getStatusBadgeClass(leave.status);
                 const daysCount = calculateDays(leave.startDate, leave.endDate);
                 return (
-                  <Fragment key={leave.id}>
-                    <tr
-                      data-testid={`trainer_schedule-schedule-leave-request-row-${leave.id}`}
-                      tabIndex={0}
-                      aria-expanded={expanded}
-                      aria-controls={`trainer-schedule-leave-details-${leave.id}`}
-                      onClick={() => setExpandedId((curr) => (curr === leave.id ? null : leave.id))}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          e.preventDefault();
-                          setExpandedId((curr) => (curr === leave.id ? null : leave.id));
-                        }
-                      }}
-                      className={`cursor-pointer hover:bg-surface-hover transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-colors ${
-                        expanded ? 'bg-primary-subtle border-l-4 border-l-primary' : ''
-                      }`}
-                    >
-                      <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-4 text-xs font-bold text-text-primary whitespace-nowrap group-hover:bg-surface-hover transition-colors">
-                        <div className="flex items-center gap-2">
-                          <span className="font-bold text-text-primary text-sm font-mono">{leave.id}</span>
-                          <CopyButton value={leave.id} />
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 whitespace-nowrap">
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold bg-input text-text-primary border border-border">
-                          {getLeaveTypeLabel(leave.leaveType)}
-                        </span>
-                      </td>
-                      <td className="px-4 py-4 text-sm font-semibold text-text-primary whitespace-nowrap">
-                        {TrainerScheduleFormatDate(leave.startDate, locale)} <span className="text-secondary font-normal mx-1">{t('TEXT_TO')}</span> {TrainerScheduleFormatDate(leave.endDate, locale)}
-                        <span className="ml-2 text-xs font-normal text-secondary">
-                          ({daysCount} {daysCount === 1 ? t('TEXT_DAY') : t('TEXT_DAYS')})
-                        </span>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-secondary max-w-xs truncate">
-                        <TrainerInfrastructureTooltip content={leave.reason}>
-                          <span className="truncate block">{leave.reason}</span>
-                        </TrainerInfrastructureTooltip>
-                      </td>
-                      <td className="px-4 py-4 whitespace-nowrap">
-                        <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${statusBadgeClass}`} data-testid={`trainer_schedule-leave-requests-status-state-${leave.id}`}>
-                          {getStatusLabel(leave.status)}
-                        </span>
-                      </td>
-                      <td className="px-4 py-4 text-xs text-secondary whitespace-nowrap">{TrainerScheduleFormatDate(leave.createdAt, locale)}</td>
-                      <td className="px-4 py-4 text-center whitespace-nowrap">
+                  <tr
+                    key={leave.id}
+                    data-testid={`trainer_schedule-schedule-leave-request-row-${leave.id}`}
+                    className="hover:bg-surface-hover transition-colors group"
+                  >
+                    <td className="px-3 py-3.5 text-xs font-bold text-text-primary whitespace-nowrap">
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-bold text-text-primary text-sm font-mono">{leave.id}</span>
+                        <CopyButton value={leave.id} />
+                      </div>
+                    </td>
+                    <td className="px-3 py-3.5 whitespace-nowrap">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold bg-input text-text-primary border border-border">
+                        {getLeaveTypeLabel(leave.leaveType)}
+                      </span>
+                    </td>
+                    <td className="px-3 py-3.5 text-sm font-semibold text-text-primary whitespace-nowrap">
+                      {TrainerScheduleFormatDate(leave.startDate, locale)} <span className="text-secondary font-normal mx-1">{t('TEXT_TO')}</span> {TrainerScheduleFormatDate(leave.endDate, locale)}
+                    </td>
+                    <td className="px-3 py-3.5 text-sm text-secondary whitespace-nowrap">
+                      {daysCount} {daysCount === 1 ? t('TEXT_DAY') : t('TEXT_DAYS')}
+                    </td>
+                    <td className="px-3 py-3.5 whitespace-nowrap">
+                      <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${statusBadgeClass}`} data-testid={`trainer_schedule-leave-requests-status-state-${leave.id}`}>
+                        {getStatusLabel(leave.status)}
+                      </span>
+                    </td>
+                    <td className="px-3 py-3.5 text-center whitespace-nowrap">
+                      <div className="inline-flex items-center justify-center gap-1.5">
                         <button
                           type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setExpandedId((curr) => (curr === leave.id ? null : leave.id));
-                          }}
-                          aria-label={expanded ? t('TEXT_COLLAPSE') : t('TEXT_EXPAND')}
-                          className="p-1.5 rounded-lg border border-sky-500/30 bg-sky-500/10 text-sky-500 hover:bg-sky-500/20 motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                          onClick={() => setQuickViewLeave(leave)}
+                          aria-label={`View leave request ${leave.id}`}
+                          title="View leave details"
+                          className="min-w-9 min-h-9 inline-flex items-center justify-center p-1.5 rounded-xl border border-sky-500/35 bg-sky-500/15 text-sky-600 dark:text-sky-300 hover:bg-sky-500 hover:text-white motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
+                          data-testid={`trainer_schedule-leave-view-${leave.id}`}
                         >
-                          {expanded ? <ChevronUp size={16} strokeWidth={2.5} /> : <ChevronDown size={16} strokeWidth={2.5} />}
+                          <Eye size={16} strokeWidth={2.2} />
                         </button>
-                      </td>
-                    </tr>
-
-                    {/* Inline Expandable Details Row */}
-                    {expanded && (
-                      <tr className="bg-primary-subtle border-b border-border">
-                        <td colSpan={TABLE_COLUMN_COUNT} className="p-0">
-                          <TrainerOperationsLeaveRequestsLeaveExpandedDetails
-                            leave={leave}
-                            locale={locale}
-                            daysCount={daysCount}
-                            statusBadgeClass={statusBadgeClass}
-                            leaveTypeLabel={getLeaveTypeLabel(leave.leaveType)}
-                            statusLabel={getStatusLabel(leave.status)}
-                            onClose={() => setExpandedId(null)}
-                          />
-                        </td>
-                      </tr>
-                    )}
-                  </Fragment>
+                        {onWithdrawLeave && leave.status.toUpperCase() === 'PENDING' && (
+                          <button
+                            type="button"
+                            disabled={withdrawing}
+                            onClick={() => void onWithdrawLeave(leave.id)}
+                            aria-label={`Withdraw leave request ${leave.id}`}
+                            title="Withdraw pending leave request"
+                            className="min-w-9 min-h-9 inline-flex items-center justify-center p-1.5 rounded-xl border border-rose-500/35 bg-rose-500/10 text-rose-500 hover:bg-rose-500/20 disabled:opacity-50 motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
+                            data-testid={`trainer_schedule-leave-withdraw-${leave.id}`}
+                          >
+                            <Trash2 size={15} strokeWidth={2} />
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
                 );
               })
             )}
@@ -254,29 +275,70 @@ export function TrainerOperationsLeaveRequestsLeaveTable({ leaveRequests, openLe
             <div className="p-6 text-center text-secondary text-xs">{t('TEXT_NO_MATCHING_LEAVES')}</div>
           )
         ) : (
-          filteredLeaves.map((leave) => {
+          paginatedLeaves.map((leave) => {
             const statusBadgeClass = getStatusBadgeClass(leave.status);
             const daysCount = calculateDays(leave.startDate, leave.endDate);
             return (
-              <TrainerOperationsLeaveRequestsLeaveMobileCard
-                key={leave.id}
-                leave={leave}
-                statusBadgeClass={statusBadgeClass}
-                statusLabel={getStatusLabel(leave.status)}
-                leaveTypeLabel={getLeaveTypeLabel(leave.leaveType)}
-                daysCount={daysCount}
-              />
+              <div key={leave.id} className="space-y-2">
+                <TrainerOperationsLeaveRequestsLeaveMobileCard
+                  leave={leave}
+                  statusBadgeClass={statusBadgeClass}
+                  statusLabel={getStatusLabel(leave.status)}
+                  leaveTypeLabel={getLeaveTypeLabel(leave.leaveType)}
+                  daysCount={daysCount}
+                />
+                <div className="flex justify-end gap-2">
+                  {onWithdrawLeave && leave.status.toUpperCase() === 'PENDING' && (
+                    <button type="button" disabled={withdrawing} onClick={() => void onWithdrawLeave(leave.id)} className="min-h-9 inline-flex items-center gap-1.5 rounded-xl border border-rose-500/35 bg-rose-500/10 text-rose-500 px-3 text-xs font-semibold disabled:opacity-50">
+                      <Trash2 size={14} /> Withdraw
+                    </button>
+                  )}
+                  <button type="button" onClick={() => setQuickViewLeave(leave)} className="min-h-9 inline-flex items-center gap-1.5 rounded-xl border border-sky-500/35 bg-sky-500/15 text-sky-600 dark:text-sky-300 px-3 text-xs font-semibold">
+                    <Eye size={14} /> View Full Details
+                  </button>
+                </div>
+              </div>
             );
           })
         )}
       </div>
 
-      {/* In-Card Bottom-Pinned Footer Summary */}
+      {/* In-Card Bottom-Pinned Footer Summary & Pagination */}
       <div className="border-t border-border px-4 py-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between bg-card text-xs text-secondary">
         <p>
-          Showing <span className="font-semibold text-text-primary">{filteredLeaves.length}</span> of <span className="font-semibold text-text-primary">{totalRequests}</span> leave requests
+          Showing <span className="font-semibold text-text-primary">{filteredLeaves.length === 0 ? 0 : (safePage - 1) * itemsPerPage + 1}</span>–<span className="font-semibold text-text-primary">{Math.min(safePage * itemsPerPage, filteredLeaves.length)}</span> of <span className="font-semibold text-text-primary">{filteredLeaves.length}</span> leave requests ({totalRequests} total)
         </p>
+        {totalPages > 1 && (
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              disabled={safePage <= 1}
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              className="min-h-9 inline-flex items-center gap-1 rounded-lg border border-border bg-input px-2.5 py-1 text-xs font-semibold text-text-primary disabled:opacity-40 hover:bg-surface-hover cursor-pointer"
+            >
+              <ChevronLeft size={14} /> Prev
+            </button>
+            <span className="text-xs font-medium text-text-primary">Page {safePage} / {totalPages}</span>
+            <button
+              type="button"
+              disabled={safePage >= totalPages}
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              className="min-h-9 inline-flex items-center gap-1 rounded-lg border border-border bg-input px-2.5 py-1 text-xs font-semibold text-text-primary disabled:opacity-40 hover:bg-surface-hover cursor-pointer"
+            >
+              Next <ChevronRight size={14} />
+            </button>
+          </div>
+        )}
       </div>
+
+      <TrainerOperationsLeaveRequestsQuickViewModal
+        leave={quickViewLeave}
+        onClose={() => setQuickViewLeave(null)}
+        getStatusLabel={getStatusLabel}
+        getStatusBadgeClass={getStatusBadgeClass}
+        getLeaveTypeLabel={getLeaveTypeLabel}
+        calculateDays={calculateDays}
+      />
     </div>
   );
 }

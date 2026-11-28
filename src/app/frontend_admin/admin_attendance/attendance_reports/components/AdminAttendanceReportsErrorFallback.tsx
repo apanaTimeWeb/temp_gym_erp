@@ -46,13 +46,13 @@ export default function AdminAttendanceReportsErrorFallback({ error, reset, modu
           <ShieldOff size={18} className="text-warning"  strokeWidth={2}/>
         </div>
         <div className="space-y-1">
-          <p className="text-lg font-bold text-primary">{t('admin_layout.AdminNavigationLayoutErrorFallback.text_1647b9db6c')}</p>
+          <p className="text-lg font-bold text-text-primary">{t('admin_layout.AdminNavigationLayoutErrorFallback.text_1647b9db6c')}</p>
           <p className="text-sm text-secondary max-w-sm" data-testid={`admin_navigation-admin-error-fallback-${moduleName}-forbidden-error`} role="alert">
             {t('admin_layout.AdminNavigationLayoutErrorFallback.text_f329d9bd73')} {t('admin_layout.AdminNavigationLayoutErrorFallback.text_1807102ea0')}</p>
         </div>
         <Link data-testid="admin_navigation-admin-error-fallback-back"
           href={ADMIN_DASHBOARD_URL}
-          className="flex min-h-11 min-w-11 items-center gap-2 px-5 py-2.5 bg-card border border-border rounded-xl text-sm font-medium text-primary hover:bg-input motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+          className="flex min-h-11 min-w-11 items-center gap-2 px-5 py-2.5 bg-card border border-border rounded-xl text-sm font-medium text-text-primary hover:bg-input motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page"
         >
           <LayoutDashboard size={18}  strokeWidth={2}/> {t('admin_layout.AdminNavigationLayoutErrorFallback.text_8fb719081e')}</Link>
       </div>
@@ -61,7 +61,7 @@ export default function AdminAttendanceReportsErrorFallback({ error, reset, modu
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen gap-4 p-6 text-center">
-      <p className="text-base font-semibold text-primary" data-testid={`admin_navigation-admin-error-fallback-${moduleName}-generic-error`} role="alert">{t('admin_layout.AdminNavigationLayoutErrorFallback.text_af14db2628')}</p>
+      <p className="text-base font-semibold text-text-primary" data-testid={`admin_navigation-admin-error-fallback-${moduleName}-generic-error`} role="alert">{t('admin_layout.AdminNavigationLayoutErrorFallback.text_af14db2628')}</p>
       <p className="text-sm text-secondary max-w-sm">
         {t('admin_layout.AdminNavigationLayoutErrorFallback.text_5440beb3f9')}</p>
       <button type="button"

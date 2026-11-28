@@ -23,7 +23,7 @@ export default function AdminProfileOverviewTabsNavigation({ activeTab, onTabCha
             key={id}
             onClick={() => onTabChange(id)}
             aria-pressed={activeTab === id}
-            className={`min-h-11 min-w-11 inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-colors motion-safe:duration-base ${activeTab === id ? 'bg-card text-primary shadow-card' : 'text-secondary hover:text-primary'}`}
+            className={`min-h-11 min-w-11 inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-colors motion-safe:duration-base ${activeTab === id ? 'bg-card text-text-primary shadow-card' : 'text-secondary hover:text-primary'}`}
             data-testid={`admin_profile-tabs-${id}`}
           >
             <Icon size={18} strokeWidth={2} aria-hidden="true" />

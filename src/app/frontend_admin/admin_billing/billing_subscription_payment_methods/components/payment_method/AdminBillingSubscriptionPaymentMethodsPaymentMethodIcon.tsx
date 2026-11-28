@@ -18,5 +18,5 @@ import type { AdminSubscriptionsPaymentMethodIconProps } from '@/app/frontend_ad
 export default function AdminSubscriptionsManagementPaymentMethodIcon({ type }: AdminSubscriptionsPaymentMethodIconProps) {
   if (type === 'upi') return <Smartphone size={18} className="text-success"  strokeWidth={2}/>;
   if (type === 'netbanking') return <Building2 size={18} className="text-info"  strokeWidth={2}/>;
-  return <CreditCard size={18} className="text-primary"  strokeWidth={2}/>;
+  return <CreditCard size={18} className="text-text-primary"  strokeWidth={2}/>;
 }

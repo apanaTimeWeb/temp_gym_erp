@@ -18,7 +18,7 @@ export default function AdminFinancePnlLoading() {
         </div>
       </div>
 
-      <div className="p-6 space-y-6">
+      <div className="p-4 sm:p-6 space-y-6">
         {/* Period Selector Skeleton */}
         <div className="flex justify-between">
           <div className="h-10 w-96 bg-skeleton-base rounded-xl motion-safe:animate-pulse motion-safe:duration-base" />

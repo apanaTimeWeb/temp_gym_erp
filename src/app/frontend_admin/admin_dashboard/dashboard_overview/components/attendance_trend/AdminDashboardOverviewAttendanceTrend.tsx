@@ -78,12 +78,12 @@ export default function AdminDashboardOverviewAttendanceTrend() {
             <CalendarCheck size={18} strokeWidth={2} className="text-info" />
           </div>
           <div>
-            <h2 className="text-base font-bold text-primary">{t('dashboard.admin_dashboard_attendance_trend.text_0bf09b5516')}</h2>
+            <h2 className="text-base font-bold text-text-primary">{t('dashboard.admin_dashboard_attendance_trend.text_0bf09b5516')}</h2>
             <p className="text-xs text-secondary">{t('dashboard.admin_dashboard_attendance_trend.text_393230b08a')}</p>
           </div>
         </div>
         <div className="text-right">
-          <p className="text-lg font-bold text-primary">{formatNumber(total, locale)}</p>
+          <p className="text-lg font-bold text-text-primary">{formatNumber(total, locale)}</p>
           <p className="text-xs text-secondary">{t('dashboard.admin_dashboard_attendance_trend.text_cdc93143c6')}{avg}{t('dashboard.admin_dashboard_attendance_trend.text_9613df14d6')}</p>
         </div>
       </div>

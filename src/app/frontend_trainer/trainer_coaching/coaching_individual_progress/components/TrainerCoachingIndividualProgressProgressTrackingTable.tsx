@@ -2,13 +2,12 @@
 // RESPONSIBILITY: Renders the paginated Progress entries table/card stack with responsive search and dropdown filtering.
 // DATA FLOW: Query response → filtered rows/cards; URL page/sort → query refresh; delete → typed confirmation → mutation.
 
-import { Fragment, useState, useMemo } from 'react';
-import { Pencil, Trash2 } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Eye, Pencil, Trash2 } from 'lucide-react';
+import TrainerCoachingIndividualProgressQuickViewModal from '@/app/frontend_trainer/trainer_coaching/coaching_individual_progress/components/TrainerCoachingIndividualProgressQuickViewModal';
 import { useLocale, useTranslations } from 'next-intl';
 
 import CopyButton from '@/components/ui/CopyButton';
-import { useTrainerInfrastructureConfirm } from '@/app/frontend_trainer/trainer_coaching/coaching_individual_progress/hooks/TrainerCoachingIndividualProgressuseTrainerInfrastructureConfirm';
-import TrainerInfrastructureTooltip from '@/app/frontend_trainer/trainer_coaching/coaching_individual_progress/components/TrainerCoachingIndividualProgressTrainerInfrastructureTooltip';
 import TrainerInfrastructurePagination from '@/app/frontend_trainer/trainer_coaching/coaching_individual_progress/components/TrainerCoachingIndividualProgressTrainerInfrastructurePagination';
 import TrainerProgressTrackingSortDirectionIcon from '@/app/frontend_trainer/trainer_coaching/coaching_individual_progress/components/TrainerCoachingIndividualProgressProgressTrackingSortDirectionIcon';
 import { TRAINER_PROGRESS_TRACKING_PROGRESS_TABLE_COLUMNS } from '@/app/frontend_trainer/trainer_coaching/coaching_individual_progress/utils/TrainerCoachingIndividualProgressProgressTrackingConstants';
@@ -32,23 +31,14 @@ export default function TrainerProgressTrackingTable({
 }: TrainerProgressTrackingTableProps) {
   const locale = useLocale();
   const t = useTranslations('TRAINER_PROGRESS_TRACKING');
-  const { confirm } = useTrainerInfrastructureConfirm();
 
-  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [quickViewEntry, setQuickViewEntry] = useState<TrainerProgressTrackingProgressEntry | null>(null);
   const [dateRangeFilter, setDateRangeFilter] = useState<'all' | '30d' | '3m' | '6m' | 'this_year'>('all');
   const [bmiCategoryFilter, setBmiCategoryFilter] = useState<'all' | 'normal' | 'overweight' | 'underweight' | 'body_fat'>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleDelete = async (entry: TrainerProgressTrackingProgressEntry) => {
-    const approved = await confirm({
-      title: t('TEXT_DELETE_ENTRY_TITLE'),
-      message: t('TEXT_DELETE_ENTRY_MESSAGE', { date: entry.date }),
-      type: 'danger',
-      confirmText: t('TEXT_DELETE'),
-      requireTypedConfirmation: true,
-      confirmationPhrase: t('TEXT_DELETE_ENTRY_CONFIRMATION'),
-    });
-    if (approved) onDelete(entry.id);
+  const handleDelete = (entry: TrainerProgressTrackingProgressEntry) => {
+    onDelete(entry.id);
   };
 
   const filteredEntries = useMemo(() => {
@@ -83,7 +73,14 @@ export default function TrainerProgressTrackingTable({
 
   const hasActiveFilters = dateRangeFilter !== 'all' || bmiCategoryFilter !== 'all' || searchQuery.trim() !== '';
   const totalPages = Math.max(1, Math.ceil(totalEntries / itemsPerPage));
-  const TABLE_COLUMN_COUNT = TRAINER_PROGRESS_TRACKING_PROGRESS_TABLE_COLUMNS.length + 1;
+  const compactColumns = TRAINER_PROGRESS_TRACKING_PROGRESS_TABLE_COLUMNS.filter((col) =>
+    col.field === 'date' ||
+    col.field === 'weightKg' ||
+    col.field === 'bmi' ||
+    col.field === 'bodyFatPercent' ||
+    col.field === 'muscleMassKg'
+  );
+  const TABLE_COLUMN_COUNT = compactColumns.length + 1;
 
   return (
     <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden space-y-0">
@@ -99,18 +96,16 @@ export default function TrainerProgressTrackingTable({
       />
 
       {/* Desktop Table View */}
-      <div className="hidden md:block overflow-x-auto">
-        <div className="max-h-[640px] overflow-auto">
-          <table className="w-full text-sm">
+      <div className="hidden md:block">
+        <div className="max-h-[640px] overflow-y-auto overflow-x-hidden">
+          <table className="w-full text-sm border-collapse">
             <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
               <tr data-testid="trainer_progress_tracking-TrainerProgressTrackingTable-row-1">
-                {TRAINER_PROGRESS_TRACKING_PROGRESS_TABLE_COLUMNS.map((column: { labelKey: string; field: string | null }, index: number) => (
+                {compactColumns.map((column: { labelKey: string; field: string | null }) => (
                   <th
                     key={column.labelKey}
                     scope="col"
-                    className={`px-4 py-3 text-start text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
-                      index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
-                    }`}
+                    className="px-3 py-3 text-start text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap"
                   >
                     {column.field ? (
                       <button
@@ -128,7 +123,7 @@ export default function TrainerProgressTrackingTable({
                     )}
                   </th>
                 ))}
-                <th scope="col" className="px-4 py-3 text-start text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap">{t('TEXT_ACTIONS')}</th>
+                <th scope="col" className="px-3 py-3 text-start text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap">{t('TEXT_ACTIONS')}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
@@ -142,73 +137,57 @@ export default function TrainerProgressTrackingTable({
                   </td>
                 </tr>
               ) : (
-                filteredEntries.map((entry) => {
-                  const expanded = expandedId === entry.id;
-                  return (
-                    <Fragment key={entry.id}>
-                      <tr data-testid={`trainer_progress_tracking-progress-table-row-${entry.id}`} className="hover:bg-surface-hover transition-colors group">
-                        <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-text-primary whitespace-nowrap group-hover:bg-surface-hover transition-colors">
-                          <div className="flex items-center gap-2">
-                            <button
-                              type="button"
-                              aria-expanded={expanded}
-                              aria-controls={expanded ? `trainer-progress-entry-notes-${entry.id}` : undefined}
-                              onClick={() => setExpandedId((current) => current === entry.id ? null : entry.id)}
-                              className="min-h-11 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring underline-offset-2 hover:underline font-bold text-primary text-sm"
-                              data-testid={`trainer_progress_tracking-progress-table-expand-${entry.id}`}
-                            >
-                              {TrainerProgressTrackingFormatDate(entry.date, locale)}
-                            </button>
-                            <CopyButton value={entry.date} />
-                          </div>
-                          <p className="text-xs text-secondary font-mono flex items-center gap-1.5 mt-0.5">#{entry.id.slice(-6)}</p>
-                        </td>
-                        <td className="px-4 py-3 text-text-primary">{TrainerProgressTrackingFormatNumber(entry.weightKg, locale)}</td>
-                        <td className="px-4 py-3 text-text-primary">{TrainerProgressTrackingFormatNumber(entry.heightCm, locale)}</td>
-                        <td className="px-4 py-3 text-text-primary">{TrainerProgressTrackingFormatNumber(entry.bmi, locale)}</td>
-                        <td className="px-4 py-3 text-text-primary">{entry.bodyFatPercent == null ? displayValue(entry.bodyFatPercent) : `${TrainerProgressTrackingFormatNumber(entry.bodyFatPercent, locale)}%`}</td>
-                        <td className="px-4 py-3 text-text-primary">{entry.muscleMassKg == null ? displayValue(entry.muscleMassKg) : TrainerProgressTrackingFormatNumber(entry.muscleMassKg, locale)}</td>
-                        <td className="px-4 py-3 text-text-primary">{entry.waistCm == null ? displayValue(entry.waistCm) : TrainerProgressTrackingFormatNumber(entry.waistCm, locale)}</td>
-                        <td className="px-4 py-3 text-secondary max-w-40">
-                          <TrainerInfrastructureTooltip content={String(displayValue(entry.notes))}>
-                            <span className="block max-w-40 truncate">{displayValue(entry.notes)}</span>
-                          </TrainerInfrastructureTooltip>
-                        </td>
-                        <td className="px-4 py-3">
-                          <div className="flex items-center gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100 motion-safe:transition-opacity">
-                            <button
-                              type="button"
-                              onClick={(e) => { e.stopPropagation(); onEdit(entry); }}
-                              className="min-w-10 min-h-10 inline-flex items-center justify-center p-1.5 rounded-lg border border-amber-500/25 bg-amber-500/10 text-amber-500 hover:bg-amber-500/20 motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
-                              aria-label={t('TEXT_EDIT_ENTRY_65440F')}
-                              title={t('TEXT_EDIT_ENTRY_65440F')}
-                              data-testid={`trainer_progress_tracking-progress-table-edit-${entry.id}`}
-                            >
-                              <Pencil size={16} strokeWidth={2} aria-hidden="true" />
-                            </button>
-                            <button
-                              type="button"
-                              onClick={(e) => { e.stopPropagation(); void handleDelete(entry); }}
-                              className="min-w-10 min-h-10 inline-flex items-center justify-center p-1.5 rounded-lg border border-rose-500/25 bg-rose-500/10 text-rose-500 hover:bg-rose-500/20 motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
-                              aria-label={t('TEXT_DELETE_ENTRY')}
-                              title={t('TEXT_DELETE_ENTRY')}
-                              data-testid={`trainer_progress_tracking-progress-table-delete-${entry.id}`}
-                            >
-                              <Trash2 size={16} strokeWidth={2} aria-hidden="true" />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                      {expanded && (
-                        <tr id={`trainer-progress-entry-notes-${entry.id}`} className="bg-surface-highlight" data-testid="trainer_progress_tracking-TrainerProgressTrackingTable-row-2">
-                          <td colSpan={TABLE_COLUMN_COUNT} className="px-4 py-3 text-sm text-secondary">
-                            {displayValue(entry.notes)}
-                          </td>
-                        </tr>
-                      )}
-                    </Fragment>
-                  );
-                })
+                filteredEntries.map((entry) => (
+                  <tr key={entry.id} data-testid={`trainer_progress_tracking-progress-table-row-${entry.id}`} className="hover:bg-surface-hover transition-colors group">
+                    <td className="px-3 py-3 text-text-primary whitespace-nowrap">
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-text-primary text-sm">
+                          {TrainerProgressTrackingFormatDate(entry.date, locale)}
+                        </span>
+                        <CopyButton value={entry.date} />
+                      </div>
+                      <p className="text-xs text-secondary font-mono flex items-center gap-1.5 mt-0.5">#{entry.id.slice(-6)}</p>
+                    </td>
+                    <td className="px-3 py-3 text-text-primary whitespace-nowrap">{TrainerProgressTrackingFormatNumber(entry.weightKg, locale)} kg</td>
+                    <td className="px-3 py-3 text-text-primary whitespace-nowrap">{TrainerProgressTrackingFormatNumber(entry.bmi, locale)}</td>
+                    <td className="px-3 py-3 text-text-primary whitespace-nowrap">{entry.bodyFatPercent == null ? displayValue(entry.bodyFatPercent) : `${TrainerProgressTrackingFormatNumber(entry.bodyFatPercent, locale)}%`}</td>
+                    <td className="px-3 py-3 text-text-primary whitespace-nowrap">{entry.muscleMassKg == null ? displayValue(entry.muscleMassKg) : `${TrainerProgressTrackingFormatNumber(entry.muscleMassKg, locale)} kg`}</td>
+                    <td className="px-3 py-3 whitespace-nowrap">
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          type="button"
+                          onClick={(e) => { e.stopPropagation(); setQuickViewEntry(entry); }}
+                          className="min-w-9 min-h-9 inline-flex items-center justify-center p-1.5 rounded-xl border border-sky-500/35 bg-sky-500/15 text-sky-600 dark:text-sky-300 hover:bg-sky-500 hover:text-white motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
+                          aria-label={`View details for ${entry.date}`}
+                          title="View full measurements"
+                          data-testid={`trainer_progress_tracking-progress-table-view-${entry.id}`}
+                        >
+                          <Eye size={16} strokeWidth={2.2} aria-hidden="true" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={(e) => { e.stopPropagation(); onEdit(entry); }}
+                          className="min-w-9 min-h-9 inline-flex items-center justify-center p-1.5 rounded-xl border border-amber-500/25 bg-amber-500/10 text-amber-500 hover:bg-amber-500/20 motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
+                          aria-label={t('TEXT_EDIT_ENTRY_65440F')}
+                          title={t('TEXT_EDIT_ENTRY_65440F')}
+                          data-testid={`trainer_progress_tracking-progress-table-edit-${entry.id}`}
+                        >
+                          <Pencil size={16} strokeWidth={2} aria-hidden="true" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={(e) => { e.stopPropagation(); void handleDelete(entry); }}
+                          className="min-w-9 min-h-9 inline-flex items-center justify-center p-1.5 rounded-xl border border-rose-500/25 bg-rose-500/10 text-rose-500 hover:bg-rose-500/20 motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
+                          aria-label={t('TEXT_DELETE_ENTRY')}
+                          title={t('TEXT_DELETE_ENTRY')}
+                          data-testid={`trainer_progress_tracking-progress-table-delete-${entry.id}`}
+                        >
+                          <Trash2 size={16} strokeWidth={2} aria-hidden="true" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
               )}
             </tbody>
           </table>
@@ -229,15 +208,13 @@ export default function TrainerProgressTrackingTable({
               </span>
             </div>
             <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-              <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_WEIGHT_KG')}</span><span className="text-text-primary">{TrainerProgressTrackingFormatNumber(entry.weightKg, locale)}</span></p>
-              <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_HEIGHT_CM')}</span><span className="text-text-primary">{TrainerProgressTrackingFormatNumber(entry.heightCm, locale)}</span></p>
+              <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_WEIGHT_KG')}</span><span className="text-text-primary">{TrainerProgressTrackingFormatNumber(entry.weightKg, locale)} kg</span></p>
               <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_BMI')}</span><span className="text-text-primary">{TrainerProgressTrackingFormatNumber(entry.bmi, locale)}</span></p>
               <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_BODY_FAT_PERCENT')}</span><span className="text-text-primary">{entry.bodyFatPercent == null ? displayValue(entry.bodyFatPercent) : `${TrainerProgressTrackingFormatNumber(entry.bodyFatPercent, locale)}%`}</span></p>
-              <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_MUSCLE_MASS_KG')}</span><span className="text-text-primary">{entry.muscleMassKg == null ? displayValue(entry.muscleMassKg) : TrainerProgressTrackingFormatNumber(entry.muscleMassKg, locale)}</span></p>
-              <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_WAIST_CM')}</span><span className="text-text-primary">{entry.waistCm == null ? displayValue(entry.waistCm) : TrainerProgressTrackingFormatNumber(entry.waistCm, locale)}</span></p>
-              <p className="col-span-2"><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_NOTES')}</span><span className="text-text-primary">{displayValue(entry.notes)}</span></p>
+              <p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_MUSCLE_MASS_KG')}</span><span className="text-text-primary">{entry.muscleMassKg == null ? displayValue(entry.muscleMassKg) : `${TrainerProgressTrackingFormatNumber(entry.muscleMassKg, locale)} kg`}</span></p>
             </div>
             <div className="mt-4 pt-3 border-t border-border flex gap-2">
+              <button type="button" onClick={() => setQuickViewEntry(entry)} className="min-h-11 inline-flex items-center justify-center gap-1.5 rounded-xl border border-sky-500/35 bg-sky-500/15 text-sky-600 dark:text-sky-300 font-semibold px-3 text-xs"><Eye size={16} />View</button>
               <button type="button" onClick={() => onEdit(entry)} className="min-h-11 flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-300 font-semibold hover:bg-amber-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all" aria-label={t('TEXT_EDIT_ENTRY_65440F')} data-testid="trainer_progress_tracking-trainerprogresstrackingtable-button_5">
                 <Pencil size={16} strokeWidth={2} aria-hidden="true" />{t('TEXT_EDIT')}
               </button>
@@ -251,6 +228,7 @@ export default function TrainerProgressTrackingTable({
       </div>
 
       <TrainerInfrastructurePagination currentPage={currentPage} totalPages={totalPages} totalItems={totalEntries} itemsPerPage={itemsPerPage} onPageChange={onPageChange} />
+      <TrainerCoachingIndividualProgressQuickViewModal entry={quickViewEntry} onClose={() => setQuickViewEntry(null)} onEdit={onEdit} />
     </div>
   );
 }

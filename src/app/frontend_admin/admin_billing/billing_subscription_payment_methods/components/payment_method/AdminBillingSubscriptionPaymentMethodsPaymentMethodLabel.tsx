@@ -19,10 +19,10 @@ import { maskAdminSubscriptionsUpiIdentifier } from '@/app/frontend_admin/admin_
 export default function AdminSubscriptionsManagementPaymentMethodLabel({ paymentMethod }: AdminSubscriptionsPaymentMethodLabelProps) {
   const t = useTranslations();
 
-  if (paymentMethod.type === 'upi') return <span className="text-sm font-semibold text-primary" aria-label={t('subscriptions.AdminSubscriptionsPaymentMethodLabel.text_5871b8d86f')}>{maskAdminSubscriptionsUpiIdentifier(paymentMethod.upiId)}</span>;
-  if (paymentMethod.type === 'netbanking') return <span className="text-sm font-semibold text-primary">{paymentMethod.bankName} {t('subscriptions.AdminSubscriptionsPaymentMethodLabel.text_3f2b426323')}</span>;
+  if (paymentMethod.type === 'upi') return <span className="text-sm font-semibold text-text-primary" aria-label={t('subscriptions.AdminSubscriptionsPaymentMethodLabel.text_5871b8d86f')}>{maskAdminSubscriptionsUpiIdentifier(paymentMethod.upiId)}</span>;
+  if (paymentMethod.type === 'netbanking') return <span className="text-sm font-semibold text-text-primary">{paymentMethod.bankName} {t('subscriptions.AdminSubscriptionsPaymentMethodLabel.text_3f2b426323')}</span>;
   return (
-    <span className="text-sm font-semibold text-primary">
+    <span className="text-sm font-semibold text-text-primary">
       {paymentMethod.brand} •••• {paymentMethod.last4}
       <span className="text-xs text-secondary ml-2">{t('subscriptions.AdminSubscriptionsPaymentMethodLabel.text_5871b8d86f')}{paymentMethod.expiryMonth}/{paymentMethod.expiryYear}</span>
     </span>

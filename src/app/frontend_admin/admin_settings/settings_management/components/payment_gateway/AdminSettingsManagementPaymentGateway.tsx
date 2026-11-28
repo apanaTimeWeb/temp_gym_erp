@@ -37,7 +37,7 @@ export function AdminSettingsManagementPaymentGateway({ initialData }: AdminSett
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="bg-card rounded-xl shadow-card border border-border mt-6" data-testid="admin_settings-admin_settings-payment-gateway-submit">
       <div className="px-6 py-4 border-b border-border flex items-center justify-between flex-wrap gap-3">
-        <h2 className="font-bold text-primary text-lg">{t('settings.admin_settings_payment_gateway.text_ec48c5e870')}</h2>
+        <h2 className="font-bold text-text-primary text-lg">{t('settings.admin_settings_payment_gateway.text_ec48c5e870')}</h2>
         <div className="flex gap-2">
           <button
             type="button"
@@ -56,14 +56,14 @@ export function AdminSettingsManagementPaymentGateway({ initialData }: AdminSett
         </div>
       </div>
 
-      <div className="p-6 space-y-6">
+      <div className="p-4 sm:p-6 space-y-6">
         <div className="bg-input rounded-xl border border-border p-4 space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-primary-subtle flex items-center justify-center">
                 <CreditCard size={18} className="text-primary"  strokeWidth={2}/>
               </div>
-              <p className="text-sm font-semibold text-primary">{t('settings.admin_settings_payment_gateway.text_a3ccb33027')}</p>
+              <p className="text-sm font-semibold text-text-primary">{t('settings.admin_settings_payment_gateway.text_a3ccb33027')}</p>
             </div>
             <div className="w-48">
               <AdminSettingsToggleSwitch
@@ -81,7 +81,7 @@ export function AdminSettingsManagementPaymentGateway({ initialData }: AdminSett
                   type="text"
                   id="admin-settings-payment-razorpay-key-id" aria-invalid={Boolean(form.formState.errors.razorpayKeyId)} aria-describedby={form.formState.errors.razorpayKeyId ? "admin-settings-payment-razorpayKeyId-error" : undefined} {...form.register('razorpayKeyId')}
                   placeholder={t('settings.admin_settings_payment_gateway.text_32ec86eb15')}
-                  className="w-full px-3 py-2 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-primary font-mono motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+                  className="w-full px-3 py-2 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-text-primary font-mono motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
                  data-testid="admin_settings-admin_settings-payment-gateway-control"/>
                 {form.formState.errors.razorpayKeyId && <p id="admin-settings-payment-razorpayKeyId-error" role="alert" className="text-xs text-danger mt-1">{getValidationMessage(form.formState.errors.razorpayKeyId.message)}</p>}
               </div>
@@ -93,7 +93,7 @@ export function AdminSettingsManagementPaymentGateway({ initialData }: AdminSett
                     id="admin-settings-payment-razorpay-webhook-secret" aria-invalid={Boolean(form.formState.errors.razorpayWebhookSecret)} aria-describedby={form.formState.errors.razorpayWebhookSecret ? "admin-settings-payment-razorpayWebhookSecret-error" : undefined} {...form.register('razorpayWebhookSecret')}
                     autoComplete="off" spellCheck={false}
                     placeholder={t('settings.admin_settings_payment_gateway.text_9d1a8d8480')}
-                    className="flex-1 px-3 py-2 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+                    className="flex-1 px-3 py-2 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-text-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
                    data-testid="admin_settings-admin_settings-payment-gateway-control-2"/>
                 {form.formState.errors.razorpayWebhookSecret && <p id="admin-settings-payment-razorpayWebhookSecret-error" role="alert" className="text-xs text-danger mt-1">{getValidationMessage(form.formState.errors.razorpayWebhookSecret.message)}</p>}
                   <button
@@ -117,7 +117,7 @@ export function AdminSettingsManagementPaymentGateway({ initialData }: AdminSett
               <div className="w-8 h-8 rounded-lg bg-success-bg flex items-center justify-center">
                 <Receipt size={18} className="text-success"  strokeWidth={2}/>
               </div>
-              <p className="text-sm font-semibold text-primary">{t('settings.admin_settings_payment_gateway.text_40c662cbb8')}</p>
+              <p className="text-sm font-semibold text-text-primary">{t('settings.admin_settings_payment_gateway.text_40c662cbb8')}</p>
             </div>
             <div className="w-48">
               <AdminSettingsToggleSwitch
@@ -134,7 +134,7 @@ export function AdminSettingsManagementPaymentGateway({ initialData }: AdminSett
                 type="text"
                 id="admin-settings-payment-upi-id" aria-invalid={Boolean(form.formState.errors.upiId)} aria-describedby={form.formState.errors.upiId ? "admin-settings-payment-upiId-error" : undefined} {...form.register('upiId')}
                 placeholder={t('settings.admin_settings_payment_gateway.text_49e07d4849')}
-                className="w-full px-3 py-2 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+                className="w-full px-3 py-2 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-text-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
                data-testid="admin_settings-admin_settings-payment-gateway-control-3"/>
                 {form.formState.errors.upiId && <p id="admin-settings-payment-upiId-error" role="alert" className="text-xs text-danger mt-1">{getValidationMessage(form.formState.errors.upiId.message)}</p>}
             </div>
@@ -142,7 +142,7 @@ export function AdminSettingsManagementPaymentGateway({ initialData }: AdminSett
         </div>
 
         <div className="space-y-3 pt-2 border-t border-border">
-          <p className="text-sm font-semibold text-primary">{t('settings.admin_settings_payment_gateway.text_a52a31d210')}</p>
+          <p className="text-sm font-semibold text-text-primary">{t('settings.admin_settings_payment_gateway.text_a52a31d210')}</p>
           <div className="flex items-center justify-between p-3 bg-input rounded-xl border border-border">
             <AdminSettingsToggleSwitch
               checked={formValues.cashEnabled ?? initialData.cashEnabled}
@@ -164,7 +164,7 @@ export function AdminSettingsManagementPaymentGateway({ initialData }: AdminSett
               aria-describedby={form.formState.errors.receiptPrefix ? "admin-settings-payment-receiptPrefix-error" : undefined} id="admin-settings-payment-receipt-prefix" aria-invalid={Boolean(form.formState.errors.receiptPrefix)} {...form.register('receiptPrefix')}
               maxLength={6}
               placeholder={t('settings.admin_settings_payment_gateway.text_b00288757d')}
-              className="w-32 px-3 py-2.5 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-primary font-mono uppercase motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+              className="w-32 px-3 py-2.5 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-text-primary font-mono uppercase motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
              data-testid="admin_settings-admin_settings-payment-gateway-control-4"/>
             {form.formState.errors.receiptPrefix && <p id="admin-settings-payment-receiptPrefix-error" role="alert" className="text-xs text-danger mt-1">{getValidationMessage(form.formState.errors.receiptPrefix.message)}</p>}
             <p className="text-xs text-secondary mt-1">{t('settings.admin_settings_payment_gateway.text_e4d59c7391')}</p>

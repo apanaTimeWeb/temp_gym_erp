@@ -43,7 +43,7 @@ export default function AdminSalesMembershipGrowthReportAnalyticsMembership() {
       <div className="bg-card rounded-xl border border-border p-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
           <div>
-            <h3 className="text-sm font-bold text-primary">Visual Branch Growth & Acquisition Dynamics</h3>
+            <h3 className="text-sm font-bold text-text-primary">Visual Branch Growth & Acquisition Dynamics</h3>
             <p className="text-xs text-secondary mt-0.5">Comparative breakdown of new additions, renewals, and exits across operational branches</p>
           </div>
           <div className="flex items-center gap-4 text-xs">
@@ -64,7 +64,7 @@ export default function AdminSalesMembershipGrowthReportAnalyticsMembership() {
                   <div className="flex items-center justify-between mb-1">
                     <Link
                       href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(row.gymName)}`}
-                      className="text-xs font-bold text-primary truncate hover:underline"
+                      className="text-xs font-bold text-text-primary truncate hover:underline"
                       title={`View ${row.gymName} in Branches Directory`}
                     >
                       {row.gymName}
@@ -74,7 +74,7 @@ export default function AdminSalesMembershipGrowthReportAnalyticsMembership() {
                     </span>
                   </div>
                   <div className="text-xs text-secondary mb-2.5">
-                    Active: <strong className="text-primary">{formatNumber(row.activeMembers, locale)}</strong>
+                    Active: <strong className="text-text-primary">{formatNumber(row.activeMembers, locale)}</strong>
                   </div>
                   
                   {/* Visual Segmented bar */}
@@ -106,18 +106,18 @@ export default function AdminSalesMembershipGrowthReportAnalyticsMembership() {
 
       <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
         <div className="px-5 py-4 border-b border-border bg-surface-highlight">
-          <h2 className="text-base font-semibold text-primary">{t('reports.admin_reports_membership.text_fd05c3efa5')}</h2>
+          <h2 className="text-base font-semibold text-text-primary">{t('reports.admin_reports_membership.text_fd05c3efa5')}</h2>
           <p className="text-xs text-secondary mt-0.5">{t('reports.admin_reports_membership.text_e044ab4747')}</p>
         </div>
         <div className="max-h-[640px] overflow-auto">
           <table data-admin-responsive-table className="w-full text-sm">
             <thead>
-              <tr className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+              <tr className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border">
                 {TABLE_HEADERS.map((h, hIdx) => (
                   <th
                     key={h}
                     className={`px-5 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
-                      hIdx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                      hIdx === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                     }`}
                   >
                     {t(h)}
@@ -125,12 +125,12 @@ export default function AdminSalesMembershipGrowthReportAnalyticsMembership() {
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border dark:divide-white/[0.07]">
               {reportData.membershipGrowth.length === 0 ? (
                 <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminSalesMembershipGrowthReportEmptyState title={t('reports.admin_reports_membership.emptyTitle')} description={t('reports.admin_reports_membership.emptyDescription')} /></td></tr>
               ) : reportData.membershipGrowth.map((row , __testIdIndex41) => (
                 <tr key={row.gymId} className="hover:bg-surface-hover transition-colors group">
-                  <td className="px-5 py-4 text-sm font-semibold text-primary sticky start-0 z-10 bg-card border-e border-border">
+                  <td className="px-5 py-4 text-sm font-semibold text-text-primary sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border">
                     <div className="flex items-center gap-2">
                       <Link
                         href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(row.gymName)}`}
@@ -142,7 +142,7 @@ export default function AdminSalesMembershipGrowthReportAnalyticsMembership() {
                       <CopyButton text={row.gymName} label="Copy gym name" />
                     </div>
                   </td>
-                  <td className="px-5 py-4 text-sm text-primary whitespace-nowrap">{formatNumber(row.activeMembers, locale)}</td>
+                  <td className="px-5 py-4 text-sm text-text-primary whitespace-nowrap">{formatNumber(row.activeMembers, locale)}</td>
                   <td className="px-5 py-4 whitespace-nowrap">
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-success-bg text-success-text" data-testid={`admin_sales-adminreportsmembership-status-1-map41-${__testIdIndex41}-1`}>+{row.newMembers}</span>
                   </td>
@@ -162,8 +162,8 @@ export default function AdminSalesMembershipGrowthReportAnalyticsMembership() {
             </tbody>
             <tfoot>
               <tr className="bg-surface-highlight border-t-2 border-border font-bold">
-                <td className="px-5 py-3 text-sm text-primary sticky start-0 z-10 bg-surface-highlight border-e border-border">{t('reports.admin_reports_membership.text_b25928c699')}</td>
-                <td className="px-5 py-3 text-sm text-primary whitespace-nowrap">
+                <td className="px-5 py-3 text-sm text-text-primary sticky start-0 z-10 bg-slate-100 dark:bg-[#152038] border-e border-border">{t('reports.admin_reports_membership.text_b25928c699')}</td>
+                <td className="px-5 py-3 text-sm text-text-primary whitespace-nowrap">
                   {formatNumber(reportData.membershipGrowth.reduce((s: number, r) => s + r.activeMembers, 0), locale)}
                 </td>
                 <td className="px-5 py-3 text-sm text-success whitespace-nowrap">

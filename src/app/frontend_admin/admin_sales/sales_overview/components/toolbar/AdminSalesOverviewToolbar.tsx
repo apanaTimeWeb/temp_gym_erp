@@ -48,7 +48,7 @@ export default function AdminSalesAnalyticsToolbar() {
               value={localSearch}
               onChange={(e: ChangeEvent<HTMLInputElement>) => setLocalSearch(e.target.value)}
               placeholder={t('sales.admin_sales_toolbar.text_6d7a30a931')}
-              className="pl-9 pr-3 py-2 border border-border rounded-lg text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary w-40 sm:w-56 bg-input text-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
+              className="pl-9 pr-3 py-2 border border-border rounded-lg text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary w-40 sm:w-56 bg-input text-text-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
              data-testid="admin_sales-admin_sales-toolbar-control"/>
           </div>
           <button

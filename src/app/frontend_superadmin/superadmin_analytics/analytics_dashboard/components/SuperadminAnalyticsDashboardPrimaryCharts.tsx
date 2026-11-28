@@ -1,6 +1,5 @@
 // RESPONSIBILITY: Renders/orchestrates SuperadminAnalyticsDashboardPrimaryCharts within its owning Superadmin feature module; no direct backend implementation.
 'use client';
-// RESPONSIBILITY: Renders the two primary analytics charts from the feature chart view-model.
 import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
 
@@ -8,25 +7,21 @@ import { SuperadminAnalyticsDashboardChartEmptyState } from '@/app/frontend_supe
 
 import type { SuperadminAnalyticsPrimaryChartsProps } from '@/app/frontend_superadmin/superadmin_analytics/analytics_dashboard/types/superadmin_analytics_dashboard_primary_charts.types';
 
-
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-/**
- * @description Displays the revenue trend and gym-growth charts using precomputed feature options and series.
- * @dependencies Uses ApexCharts and the feature-owned chart view-model.
- * @edge-case Empty series remain empty; the chart component does not fabricate records.
- */
 export function SuperadminAnalyticsDashboardPrimaryCharts({ charts }: SuperadminAnalyticsPrimaryChartsProps) {
   const t = useTranslations('superadmin_analytics');
   return (
-    <section className="grid grid-cols-1 gap-6 lg:grid-cols-2" aria-label={t('ui.analytics_charts')}>
-      <article className="rounded-xl border border-border bg-card p-6 shadow-card">
-        <h2 className="mb-6 text-base font-semibold text-primary">{t('ui.monthly_income_growth_trend_f50c47f')}</h2>
-        {charts.mrrAreaSeries[0]?.data.length ? <div className="h-72"><Chart options={charts.mrrAreaOptions} series={charts.mrrAreaSeries} type="area" height="100%" /></div> : <SuperadminAnalyticsDashboardChartEmptyState />}
+    <section className="grid grid-cols-1 gap-5 lg:grid-cols-2" aria-label={t('ui.analytics_charts')}>
+      <article className="relative overflow-hidden rounded-2xl border border-border dark:border-white/10 bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] p-5 sm:p-6 shadow-card min-w-0">
+        <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#FF5A1F] via-[#38BDF8] to-transparent" />
+        <h2 className="mb-5 text-base font-bold text-primary">{t('ui.monthly_income_growth_trend_f50c47f')}</h2>
+        {charts.mrrAreaSeries[0]?.data.length ? <div className="h-72 min-w-0"><Chart options={charts.mrrAreaOptions} series={charts.mrrAreaSeries} type="area" height="100%" /></div> : <SuperadminAnalyticsDashboardChartEmptyState />}
       </article>
-      <article className="rounded-xl border border-border bg-card p-6 shadow-card">
-        <h2 className="mb-6 text-base font-semibold text-primary">{t('ui.gym_growth_vs_members_lost_a78d866')}</h2>
-        {charts.tenantBarSeries[0]?.data.length ? <div className="h-72"><Chart options={charts.tenantBarOptions} series={charts.tenantBarSeries} type="bar" height="100%" /></div> : <SuperadminAnalyticsDashboardChartEmptyState />}
+      <article className="relative overflow-hidden rounded-2xl border border-border dark:border-white/10 bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] p-5 sm:p-6 shadow-card min-w-0">
+        <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#38BDF8] via-[#10B981] to-transparent" />
+        <h2 className="mb-5 text-base font-bold text-primary">{t('ui.gym_growth_vs_members_lost_a78d866')}</h2>
+        {charts.tenantBarSeries[0]?.data.length ? <div className="h-72 min-w-0"><Chart options={charts.tenantBarOptions} series={charts.tenantBarSeries} type="bar" height="100%" /></div> : <SuperadminAnalyticsDashboardChartEmptyState />}
       </article>
     </section>
   );

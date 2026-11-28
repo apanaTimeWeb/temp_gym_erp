@@ -56,14 +56,14 @@ export default function AdminSubscriptionsManagementInvoices() {
       <div className="flex items-center justify-between border-b border-border p-4 bg-surface-highlight">
         <div className="flex items-center gap-2">
           <FileText size={18} className="text-primary" aria-hidden="true"  strokeWidth={2}/>
-          <h3 className="text-sm font-semibold text-primary">{t('subscriptions.admin_billing_subscription_invoices.text_50d038cf02')}</h3>
+          <h3 className="text-sm font-semibold text-text-primary">{t('subscriptions.admin_billing_subscription_invoices.text_50d038cf02')}</h3>
         </div>
         <span className="text-xs text-secondary">{invoiceTotal} {t('subscriptions.admin_billing_subscription_invoices.text_c3e815afba')}</span>
       </div>
       {invoicesStatus === 'pending' ? (
         <div className="p-8 text-center text-sm text-secondary" role="status" data-testid="subscriptions-management-subscriptions-management-invoices-status-region">{t('subscriptions.AdminSubscriptionsError.loadingInvoices')}</div>
       ) : invoicesStatus === 'error' ? (
-        <div className="p-8 text-center" role="alert"><p className="text-danger">{t('subscriptions.AdminSubscriptionsError.invoiceLoadFailed')}</p><button type="button" onClick={() => void retryInvoices()} className="mt-3 min-h-11 rounded-lg border border-border px-4 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="subscriptions-management-subscriptions-management-invoices-retry-invoices">{t('subscriptions.AdminSubscriptionsError.retry')}</button></div>
+        <div className="p-8 text-center" role="alert"><p className="text-danger">{t('subscriptions.AdminSubscriptionsError.invoiceLoadFailed')}</p><button type="button" onClick={() => void retryInvoices()} className="mt-3 min-h-11 rounded-lg border border-border px-4 text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="subscriptions-management-subscriptions-management-invoices-retry-invoices">{t('subscriptions.AdminSubscriptionsError.retry')}</button></div>
       ) : invoices.length === 0 ? (
         <AdminSubscriptionsEmptyState
           title={t('subscriptions.admin_billing_subscription_invoices.text_5e193a73d8')}
@@ -73,13 +73,13 @@ export default function AdminSubscriptionsManagementInvoices() {
         <>
           <div className="max-h-[640px] overflow-auto">
             <table data-admin-responsive-table className="w-full text-left border-collapse">
-              <thead className="sticky top-0 z-20 bg-surface-highlight">
+              <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038]">
                 <tr className="border-b border-border">
                   {['subscriptions.admin_billing_subscription_invoices.invoice', 'subscriptions.admin_billing_subscription_invoices.date', 'subscriptions.admin_billing_subscription_invoices.plan', 'subscriptions.admin_billing_subscription_invoices.billing', 'subscriptions.admin_billing_subscription_invoices.amount', 'subscriptions.admin_billing_subscription_invoices.status', ''].map((header, idx) => (
                     <th
                       key={header || idx}
                       className={`whitespace-nowrap px-4 py-3 text-xs font-semibold uppercase tracking-wider text-secondary ${
-                        idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                        idx === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                       } ${idx === 6 ? 'text-right' : ''}`}
                     >
                       {header ? t(header) : <span className="sr-only">{t('subscriptions.admin_billing_subscription_invoices.actions')}</span>}
@@ -87,14 +87,14 @@ export default function AdminSubscriptionsManagementInvoices() {
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border">
+              <tbody className="divide-y divide-border dark:divide-white/[0.07]">
                 {invoices.map((invoice , __testIdIndex73) => {
                   const statusStyle = ADMIN_SUBSCRIPTIONS_INVOICE_STATUS_STYLES[invoice.status];
                   const safeInvoicePdfUrl = isSafeAdminSubscriptionsInvoicePdfUrl(invoice.pdfUrl);
 
                   return (
                     <tr key={invoice.id} className="hover:bg-surface-hover transition-colors group">
-                      <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-bold text-primary">
+                      <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border px-4 py-3 text-sm font-bold text-text-primary">
                         <div className="flex items-center gap-1.5">
                           <span>{invoice.invoiceNo}</span>
                           <CopyButton text={invoice.invoiceNo} label={invoice.invoiceNo} />
@@ -103,7 +103,7 @@ export default function AdminSubscriptionsManagementInvoices() {
                       <td className="whitespace-nowrap px-4 py-3 text-sm text-secondary">
                         {formatDate(invoice.date, locale)}
                       </td>
-                      <td className="px-4 py-3 text-sm text-primary">
+                      <td className="px-4 py-3 text-sm text-text-primary">
                         <Link
                           href="/frontend_admin/admin_billing/billing_subscription_plans"
                           className="hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
@@ -113,7 +113,7 @@ export default function AdminSubscriptionsManagementInvoices() {
                         </Link>
                       </td>
                       <td className="px-4 py-3 text-xs capitalize text-secondary">{invoice.billingCycle}</td>
-                      <td className="px-4 py-3 text-sm font-semibold text-primary"><span>{AdminSubscriptionsFormatCurrency(invoice.amount, 'INR', locale) !== '—' ? AdminSubscriptionsFormatCurrency(invoice.amount, 'INR', locale) : (Number.isFinite(invoice.amount) ? `₹${(invoice.amount > 1000 ? invoice.amount / 100 : invoice.amount).toLocaleString(locale)}` : '—')}</span></td>
+                      <td className="px-4 py-3 text-sm font-semibold text-text-primary"><span>{AdminSubscriptionsFormatCurrency(invoice.amount, 'INR', locale) !== '—' ? AdminSubscriptionsFormatCurrency(invoice.amount, 'INR', locale) : (Number.isFinite(invoice.amount) ? `₹${(invoice.amount > 1000 ? invoice.amount / 100 : invoice.amount).toLocaleString(locale)}` : '—')}</span></td>
                       <td className="px-4 py-3">
                         <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${statusStyle.backgroundClass} ${statusStyle.textClass}`} data-testid="subscriptions-management-subscriptions-management-invoices-status-badge-2">
                           {renderInvoiceStatusIcon(invoice.status)}

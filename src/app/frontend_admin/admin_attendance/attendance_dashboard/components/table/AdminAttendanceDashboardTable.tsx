@@ -87,7 +87,7 @@ export default function AdminAttendanceDashboardTable() {
     <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
       <div className="max-h-[640px] overflow-auto">
         <table data-admin-responsive-table className="w-full text-left border-collapse text-xs sm:text-sm">
-          <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border shadow-xs">
+          <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border shadow-xs">
             <tr>
               {ATTENDANCE_TABLE_HEADER_KEYS.map((key, index) => {
                 const columnSortKey = ATTENDANCE_SORT_KEYS[index];
@@ -99,7 +99,7 @@ export default function AdminAttendanceDashboardTable() {
                     scope="col"
                     aria-sort={active ? (sortDirection === 'asc' ? 'ascending' : 'descending') : 'none'}
                     className={`px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
-                      isFirst ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                      isFirst ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                     }`}
                   >
                     <button
@@ -119,10 +119,10 @@ export default function AdminAttendanceDashboardTable() {
               })}
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody className="divide-y divide-border dark:divide-white/[0.07]">
             {sortedRecords.map((r) => (
               <tr key={r.id} className="hover:bg-surface-hover motion-safe:transition-colors motion-safe:duration-base group">
-                <td className="px-4 py-3 sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-e border-border">
+                <td className="px-4 py-3 sticky start-0 z-10 bg-card dark:bg-[#0F172A] group-hover:bg-orange-50 dark:group-hover:bg-[#18243E] border-e border-border">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-primary-subtle flex items-center justify-center text-primary text-xs font-bold flex-shrink-0">
                       {r.memberName.charAt(0).toUpperCase()}
@@ -131,7 +131,7 @@ export default function AdminAttendanceDashboardTable() {
                       <div className="flex items-center gap-1.5">
                         <Link
                           href={`/frontend_admin/admin_members/members_directory?search=${encodeURIComponent(r.memberName)}`}
-                          className="text-sm font-semibold text-primary hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                          className="text-sm font-semibold text-text-primary hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
                           title="View member profile"
                         >
                           {r.memberName}
@@ -147,7 +147,7 @@ export default function AdminAttendanceDashboardTable() {
                 <td className="px-4 py-3">
                   <Link
                     href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(r.branchName)}`}
-                    className="text-sm text-primary hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                    className="text-sm text-text-primary hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
                     title="View branch"
                   >
                     {r.branchName}
@@ -157,31 +157,31 @@ export default function AdminAttendanceDashboardTable() {
                   {r.planName ? (
                     <Link
                       href={`/frontend_admin/admin_billing/billing_plans_catalog?search=${encodeURIComponent(r.planName)}`}
-                      className="text-sm text-primary hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                      className="text-sm text-text-primary hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
                       title={`View ${r.planName} plan`}
                     >
                       {r.planName}
                     </Link>
                   ) : (
-                    <span className="text-sm text-primary">—</span>
+                    <span className="text-sm text-text-primary">—</span>
                   )}
                 </td>
                 <td className="px-4 py-3">
                   {r.sessionType === 'PT' && r.trainerName ? (
                     <Link
                       href={`/frontend_admin/admin_hr/hr_staff_management?search=${encodeURIComponent(r.trainerName)}`}
-                      className="text-sm text-primary hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                      className="text-sm text-text-primary hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
                       title="View trainer"
                     >
                       {r.trainerName}
                     </Link>
                   ) : (
-                    <span className="text-sm text-primary">{displayValue(null)}</span>
+                    <span className="text-sm text-text-primary">{displayValue(null)}</span>
                   )}
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-1.5 whitespace-nowrap">
-                    <span className="text-sm text-primary">
+                    <span className="text-sm text-text-primary">
                       {formatAttendanceTime(r.checkInTime, locale)}
                     </span>
                     {r.checkInMethod && (
@@ -192,7 +192,7 @@ export default function AdminAttendanceDashboardTable() {
                   </div>
                 </td>
                 <td className="px-4 py-3">
-                  <span className="text-sm text-primary whitespace-nowrap">
+                  <span className="text-sm text-text-primary whitespace-nowrap">
                     {formatAttendanceTime(r.checkOutTime, locale)}
                   </span>
                 </td>

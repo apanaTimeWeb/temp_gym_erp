@@ -14,6 +14,34 @@ export default function TrainerAttendanceMain() {
   const t = useTranslations('TRAINER_ATTENDANCE');
   const model = useTrainerAttendanceMain();
 
+  const handleExportCsv = () => {
+    const header = ['ID', 'Type', 'Name', 'Date', 'Check In', 'Check Out', 'Duration (min)', 'Method'];
+    const csvRows = [
+      header.join(','),
+      ...model.records.map((r) =>
+        [
+          r.id,
+          r.type,
+          `"${String(r.member?.name ?? r.staff?.name ?? '').replace(/"/g, '""')}"`,
+          r.date,
+          r.checkIn ?? '',
+          r.checkOut ?? '',
+          r.durationMinutes ?? '',
+          r.checkInMethod ?? '',
+        ].join(',')
+      ),
+    ];
+    const blob = new Blob([csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'trainer_attendance_report.csv';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="min-h-full pb-10 attendance-module bg-page text-text-primary">
       <div className="p-4 sm:p-6 space-y-5">
@@ -31,6 +59,7 @@ export default function TrainerAttendanceMain() {
             setFilterDate={model.filters.setFilterDate}
             onAddRecord={model.openModal}
             onRefresh={model.handleRefresh}
+            onExportCsv={handleExportCsv}
             onSelfCheckIn={model.handleSelfCheckIn}
             onSelfCheckOut={model.handleSelfCheckOut}
             selfCheckInPending={model.selfCheckInPending}

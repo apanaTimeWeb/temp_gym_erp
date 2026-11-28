@@ -27,7 +27,7 @@ export default function AdminCommunicationWhatsAppCampaignsManagementMain() {
   return (
     <div className="space-y-6 bg-page">
       <header className="flex flex-col gap-2">
-        <h1 className="flex items-center gap-2 text-xl font-bold text-primary"><Rocket size={18} aria-hidden="true"  strokeWidth={2}/>{t('campaigns.admin_campaigns_main.text_b03d458e96')}</h1>
+        <h1 className="flex items-center gap-2 text-xl font-bold text-text-primary"><Rocket size={18} aria-hidden="true"  strokeWidth={2}/>{t('campaigns.admin_campaigns_main.text_b03d458e96')}</h1>
         <p className="text-sm text-secondary">{t('campaigns.admin_campaigns_main.text_0b4a5a9636')}</p>
       </header>
 

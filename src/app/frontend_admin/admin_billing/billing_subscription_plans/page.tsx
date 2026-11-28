@@ -9,7 +9,7 @@ import { AdminNavigationLayoutConfirmProvider as AdminBillingLocalConfirmProvide
 function AdminBillingSubscriptionPlansPageContent() {
   const t = useTranslations();
   const { retrySubscription, status } = useAdminSubscriptionsLogic();
-  return <main className="min-h-full bg-page p-6 text-primary space-y-5">
+  return <main className="min-h-full bg-page p-4 sm:p-6 text-text-primary space-y-5">
     <h1 className="text-2xl font-bold">{t('subscriptions.admin_subscriptions_main.auto_tabPlans')}</h1>
     {status === 'pending' && <p role="status" className="rounded-lg border border-border bg-card p-4">{t('subscriptions.AdminSubscriptionsError.loadingSubscription')}</p>}
     {status === 'error' && <div role="alert" className="rounded-lg border border-danger bg-danger-bg p-4 text-danger"><p>{t('subscriptions.AdminSubscriptionsError.subscriptionLoadFailed')}</p><button type="button" onClick={()=>void retrySubscription()} className="mt-2 min-h-11 rounded-lg border border-danger px-3">{t('subscriptions.AdminSubscriptionsError.retry')}</button></div>}

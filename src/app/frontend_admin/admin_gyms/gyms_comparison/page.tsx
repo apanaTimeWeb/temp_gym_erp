@@ -69,7 +69,7 @@ export default function GymsComparisonPage() {
   };
 
   return (
-    <main className="space-y-6 p-6 min-h-full bg-page text-primary">
+    <main className="space-y-6 p-4 sm:p-6 min-h-full bg-page text-text-primary">
       {/* Header */}
       <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -77,7 +77,7 @@ export default function GymsComparisonPage() {
             <span className="p-2 rounded-xl bg-primary-subtle text-primary border border-border">
               <BarChart3 size={22} strokeWidth={2} />
             </span>
-            <h1 className="text-2xl font-bold text-primary">Gym Comparison</h1>
+            <h1 className="text-2xl font-bold text-text-primary">Gym Comparison</h1>
           </div>
           <p className="mt-1 text-sm text-secondary">
             Side-by-side performance benchmarking across your gyms
@@ -88,7 +88,7 @@ export default function GymsComparisonPage() {
           <button
             type="button"
             onClick={handleExportCsv}
-            className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-border bg-card px-4 py-2 text-sm font-semibold text-primary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all"
+            className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-border bg-card px-4 py-2 text-sm font-semibold text-text-primary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all"
           >
             <Download size={16} />
             <span>Export CSV</span>
@@ -96,7 +96,7 @@ export default function GymsComparisonPage() {
           <button
             type="button"
             onClick={() => window.print()}
-            className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-border bg-card px-4 py-2 text-sm font-semibold text-primary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all"
+            className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-border bg-card px-4 py-2 text-sm font-semibold text-text-primary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all"
           >
             <Printer size={16} />
             <span>Print Report</span>
@@ -126,7 +126,7 @@ export default function GymsComparisonPage() {
                 value={branchSearch}
                 onChange={(e) => setBranchSearch(e.target.value)}
                 placeholder="Search gyms..."
-                className="w-full pl-8 pr-7 py-1 bg-input border border-border rounded-lg text-xs text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+                className="w-full pl-8 pr-7 py-1 bg-input border border-border rounded-lg text-xs text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
               />
               {branchSearch && (
                 <button
@@ -146,7 +146,7 @@ export default function GymsComparisonPage() {
                 type="button"
                 onClick={() => setMetricFilter('all')}
                 className={`px-3 py-1 rounded-lg text-xs font-semibold motion-safe:transition-colors ${
-                  metricFilter === 'all' ? 'bg-card text-primary shadow-sm' : 'text-secondary hover:text-primary'
+                  metricFilter === 'all' ? 'bg-card text-text-primary shadow-sm' : 'text-secondary hover:text-primary'
                 }`}
               >
                 All Metrics
@@ -155,7 +155,7 @@ export default function GymsComparisonPage() {
                 type="button"
                 onClick={() => setMetricFilter('financial')}
                 className={`px-3 py-1 rounded-lg text-xs font-semibold motion-safe:transition-colors ${
-                  metricFilter === 'financial' ? 'bg-card text-primary shadow-sm' : 'text-secondary hover:text-primary'
+                  metricFilter === 'financial' ? 'bg-card text-text-primary shadow-sm' : 'text-secondary hover:text-primary'
                 }`}
               >
                 Financials
@@ -164,7 +164,7 @@ export default function GymsComparisonPage() {
                 type="button"
                 onClick={() => setMetricFilter('operations')}
                 className={`px-3 py-1 rounded-lg text-xs font-semibold motion-safe:transition-colors ${
-                  metricFilter === 'operations' ? 'bg-card text-primary shadow-sm' : 'text-secondary hover:text-primary'
+                  metricFilter === 'operations' ? 'bg-card text-text-primary shadow-sm' : 'text-secondary hover:text-primary'
                 }`}
               >
                 Operations

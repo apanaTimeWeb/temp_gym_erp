@@ -13,7 +13,7 @@ import { AdminNavigationLayoutSearchableDropdown } from '@/app/frontend_admin/ad
 export default function AdminFinanceSummaryPage() {
   const t = useTranslations();
   const { search, setSearch, methodFilter, setMethodFilter, statusFilter, setStatusFilter, isError, error, loadAll } = useAdminFinanceLogic();
-  return <main className="min-h-full bg-page p-6 text-primary space-y-5">
+  return <main className="min-h-full bg-page p-4 sm:p-6 text-text-primary space-y-5">
     <header className="flex flex-wrap items-center justify-between gap-3"><h1 className="text-2xl font-bold">{t('finance.admin_finance_tabs.summary')}</h1><AdminFinanceOverviewDateFilterDropdown /></header>
     {isError && <div role="alert" className="rounded-xl border border-danger bg-danger-bg p-4 text-danger"><p>{error || t('finance.admin_finance_tabs.financeLoadError')}</p><button type="button" onClick={()=>void loadAll()} className="mt-2 min-h-11 rounded-lg border border-danger px-4">{t('finance.admin_finance_tabs.retry')}</button></div>}
     <AdminFinanceOverviewKPIs />

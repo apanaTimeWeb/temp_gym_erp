@@ -82,7 +82,9 @@
     "ERR_AVAILABILITY_TIME_RANGE_INVALID": "End time must be later than start time for available days.",
     "ERR_AVAILABILITY_DAYS_INVALID": "Provide exactly one availability entry for each weekday.",
     "ERR_LEAVE_DATE_RANGE_INVALID": "End date must be the same as or later than start date.",
-    "TEXT_LOADING": "Loading…"
+    "TEXT_LOADING": "Loading…",
+    "TEXT_ACTIONS": "Actions",
+    "ERR_INVALID_MEDIA_URL": "Please enter a valid http/https URL"
   },
   "TEXT_RETRYING": "Retrying…",
   "TEXT_SICK_LEAVE": "Sick Leave",

@@ -24,18 +24,18 @@ export default function AdminFinanceSalaryAdvanceManagementAdvanceTable() {
   const { register, formState: { errors } } = form;
 
   return (
-    <div className="w-full bg-card p-6 rounded-xl border border-border">
-      <h2 className="text-xl font-bold mb-6 text-primary">{t('hr.admin_hr_advance_table.text_1a794f7e6b')}</h2>
+    <div className="w-full bg-card p-4 sm:p-6 rounded-xl border border-border">
+      <h2 className="text-xl font-bold mb-6 text-text-primary">{t('hr.admin_hr_advance_table.text_1a794f7e6b')}</h2>
       <form onSubmit={submit} className="space-y-5" noValidate data-testid="admin_hr-admin_hr-advance-table-submit">
         <div>
-          <label htmlFor="admin-hr-advance-staff" className="block text-sm font-medium mb-1 text-primary">{t('hr.admin_hr_advance_table.text_88d53ffc1d')}</label>
+          <label htmlFor="admin-hr-advance-staff" className="block text-sm font-medium mb-1 text-text-primary">{t('hr.admin_hr_advance_table.text_88d53ffc1d')}</label>
           <select
             id="admin-hr-advance-staff"
             required
             {...register('staffId')}
             aria-invalid={errors.staffId ? 'true' : 'false'}
             aria-describedby={errors.staffId ? 'admin_hr-advance-staff-error' : undefined}
-            className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-card text-primary focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:outline-none focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+            className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-card text-text-primary focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:outline-none focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
             data-testid="admin_hr-admin_hr-advance-table-control"
           >
             <option value="" disabled data-testid="admin_hr-admin_hr-advance-table-control-2">{t('hr.admin_hr_advance_table.text_137fc8d360')}</option>
@@ -57,7 +57,7 @@ export default function AdminFinanceSalaryAdvanceManagementAdvanceTable() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="admin-hr-advance-amount" className="block text-sm font-medium mb-1 text-primary">{t('hr.admin_hr_advance_table.text_76aa32f207')}</label>
+            <label htmlFor="admin-hr-advance-amount" className="block text-sm font-medium mb-1 text-text-primary">{t('hr.admin_hr_advance_table.text_76aa32f207')}</label>
             <input
               id="admin-hr-advance-amount"
               type="number"
@@ -67,22 +67,22 @@ export default function AdminFinanceSalaryAdvanceManagementAdvanceTable() {
               {...register('amount', { valueAsNumber: true })}
               aria-invalid={errors.amount ? 'true' : 'false'}
               aria-describedby={errors.amount ? 'admin_hr-advance-amount-error' : undefined}
-              className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-card text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
+              className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-card text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
               data-testid="admin_hr-admin_hr-advance-table-control-4"
             />
             {errors.amount && <p id="admin_hr-advance-amount-error" className="mt-1 text-xs text-danger">{getValidationMessage(errors.amount.message)}</p>}
           </div>
           <div>
-            <label htmlFor="admin-hr-advance-payment-mode" className="block text-sm font-medium mb-1 text-primary">{t('hr.admin_hr_advance_table.text_23b35c414a')}</label>
-            <select id="admin-hr-advance-payment-mode" {...register('paymentMode')} className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-card text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11" data-testid="admin_hr-admin_hr-advance-table-control-5">
+            <label htmlFor="admin-hr-advance-payment-mode" className="block text-sm font-medium mb-1 text-text-primary">{t('hr.admin_hr_advance_table.text_23b35c414a')}</label>
+            <select id="admin-hr-advance-payment-mode" {...register('paymentMode')} className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-card text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11" data-testid="admin_hr-admin_hr-advance-table-control-5">
               {FINANCE_SALARY_ADVANCE_PAYMENT_MODE_OPTIONS.map((option) => <option key={option.value} value={option.value} data-testid={`finance_salary_advance_management-finance_salary_advance_management-advance-payment-option-${option.value.toLowerCase().replaceAll(' ', '-')}`}>{t(`hr.admin_hr_advance_table.text_${option.value === 'Cash' ? '758ec54e43' : option.value === 'Bank Transfer' ? '17ef50d8f8' : option.value === 'UPI' ? 'f295b2cdff' : '6c0a136376'}`)}</option>)}
             </select>
           </div>
         </div>
 
         <div>
-          <label htmlFor="admin-hr-advance-notes" className="block text-sm font-medium mb-1 text-primary">{t('hr.admin_hr_advance_table.text_69a6dd8283')}</label>
-          <textarea id="admin-hr-advance-notes" {...register('notes')} aria-invalid={errors.notes ? 'true' : 'false'} aria-describedby={errors.notes ? 'admin_hr-advance-notes-error' : undefined} className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-card text-primary min-h-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11" placeholder={t('hr.admin_hr_advance_table.text_3cd6e5ef0c')} data-testid="admin_hr-admin_hr-advance-table-control-10" />
+          <label htmlFor="admin-hr-advance-notes" className="block text-sm font-medium mb-1 text-text-primary">{t('hr.admin_hr_advance_table.text_69a6dd8283')}</label>
+          <textarea id="admin-hr-advance-notes" {...register('notes')} aria-invalid={errors.notes ? 'true' : 'false'} aria-describedby={errors.notes ? 'admin_hr-advance-notes-error' : undefined} className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-card text-text-primary min-h-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11" placeholder={t('hr.admin_hr_advance_table.text_3cd6e5ef0c')} data-testid="admin_hr-admin_hr-advance-table-control-10" />
           {errors.notes && <p id="admin_hr-advance-notes-error" className="mt-1 text-xs text-danger">{getValidationMessage(errors.notes.message)}</p>}
         </div>
 

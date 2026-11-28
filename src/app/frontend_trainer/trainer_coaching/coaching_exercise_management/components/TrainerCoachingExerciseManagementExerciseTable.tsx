@@ -6,7 +6,10 @@
  * @edge-cases Handles nullable values, long exercise names, repeated edits/deletes, keyboard access, and mobile action reachability.
  */
 // DATA FLOW: URL search/filter/sort/page → TanStack Query → exercises → UI action → mutation → query invalidation.
-import { ArrowDown, ArrowUp, ArrowUpDown, Edit2, Loader2, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowDown, ArrowUp, ArrowUpDown, Edit2, Eye, Loader2, Trash2 } from 'lucide-react';
+import TrainerCoachingExerciseManagementQuickViewModal from '@/app/frontend_trainer/trainer_coaching/coaching_exercise_management/components/TrainerCoachingExerciseManagementQuickViewModal';
+import type { TrainerWorkoutExercise } from '@/app/frontend_trainer/trainer_coaching/coaching_exercise_management/types/TrainerCoachingExerciseManagementTypes';
 
 import { useTranslations } from 'next-intl';
 
@@ -67,6 +70,7 @@ export default function TrainerWorkoutExerciseTable() {
   const { search, category, page, setPage, sortBy, sortDirection, setSort } = useTrainerWorkoutFilters();
   const { data, isPending, isError, isFetching, error, refetch } = useTrainerWorkoutExercisesQuery(search, category, page, sortBy, sortDirection);
   const { setEditExerciseId, setShowExModal } = useTrainerWorkoutStore();
+  const [quickViewExercise, setQuickViewExercise] = useState<TrainerWorkoutExercise | null>(null);
   const { deleteExercise } = useTrainerWorkoutMutations();
   const { confirm } = useTrainerInfrastructureConfirm();
   const { showSuccess, showError } = useTrainerInfrastructureFeedback();
@@ -110,18 +114,16 @@ export default function TrainerWorkoutExerciseTable() {
     <div className="flex flex-col h-full min-h-96 gap-4">
       <div className="hidden md:block flex-1">
         <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
-          <div className="max-h-[640px] overflow-auto">
-            <table className="w-full">
+          <div className="max-h-[640px] overflow-y-auto overflow-x-hidden">
+            <table className="w-full text-start border-collapse">
               <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
                 <tr data-testid="trainer_workout-TrainerWorkoutExerciseTable-row-1">
-                  {headers.map((header, index) => (
+                  {headers.map((header) => (
                     <th
                       key={header.label}
                       scope="col"
                       aria-sort={header.field ? (sortBy === header.field ? (sortDirection === 'asc' ? 'ascending' : 'descending') : 'none') : undefined}
-                      className={`text-start text-xs font-semibold text-secondary uppercase tracking-wider px-4 py-3 whitespace-nowrap ${
-                        index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
-                      }`}
+                      className="text-start text-xs font-semibold text-secondary uppercase tracking-wider px-3 py-3 whitespace-nowrap"
                     >
                       {header.field ? (
                         <button
@@ -152,22 +154,23 @@ export default function TrainerWorkoutExerciseTable() {
                     className="hover:bg-surface-hover transition-colors group focus-within:bg-surface-hover"
                     data-testid={`trainer_workout-exercise-table_row${exercise.id}`}
                   >
-                    <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-medium text-text-primary whitespace-nowrap group-hover:bg-surface-hover transition-colors">
-                      <div className="flex items-center gap-2">
+                    <td className="px-3 py-3 text-sm font-medium text-text-primary group-hover:bg-surface-hover transition-colors">
+                      <div className="flex items-center gap-2 min-w-0">
                         <TrainerInfrastructureTooltip content={String(displayValue(exercise.name))}>
-                          <span className="truncate max-w-xs inline-block font-bold text-text-primary text-sm">{displayValue(exercise.name)}</span>
+                          <span className="truncate max-w-[220px] inline-block font-bold text-text-primary text-sm">{displayValue(exercise.name)}</span>
                         </TrainerInfrastructureTooltip>
                         <CopyButton value={String(exercise.name ?? '')} />
                       </div>
                       <p className="text-xs text-secondary font-mono flex items-center gap-1.5 mt-0.5">#{exercise.id.slice(-6)}</p>
                     </td>
-                    <td className="px-4 py-3 text-sm text-secondary">{Array.isArray(exercise.muscleGroup) ? displayValue(exercise.muscleGroup.join(', ')) : displayValue(exercise.muscleGroup)}</td>
-                    <td className="px-4 py-3"><span className="text-xs bg-input text-secondary border border-border px-2 py-1 rounded-full">{displayValue(exercise.equipment)}</span></td>
-                    <td className="px-4 py-3"><span className={`text-xs px-2.5 py-0.5 rounded-full font-semibold ${TRAINER_WORKOUT_DIFFICULTY_STYLES[exercise.difficulty as keyof typeof TRAINER_WORKOUT_DIFFICULTY_STYLES] ?? 'bg-input text-secondary'}`}>{displayValue(exercise.difficulty)}</span></td>
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-1.5 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100 motion-safe:transition-opacity">
-                        <button type="button" aria-label={t('TEXT_EDIT_EXERCISE_ARIA', { name: exercise.name })} title={t('TEXT_EDIT_EXERCISE_ARIA', { name: exercise.name })} onClick={(event) => { event.stopPropagation(); openExerciseEditor(exercise.id); }} className="min-w-10 min-h-10 inline-flex items-center justify-center p-1.5 text-amber-500 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/25 rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid={`trainer_workout-exercise-table-edit-${exercise.id}`}><Edit2 size={16} strokeWidth={2} aria-hidden="true" /></button>
-                        <button type="button" aria-label={t('TEXT_DELETE_EXERCISE_ARIA', { name: exercise.name })} title={t('TEXT_DELETE_EXERCISE_ARIA', { name: exercise.name })} onClick={(event) => { event.stopPropagation(); void handleDelete(exercise.id); }} className="min-w-10 min-h-10 inline-flex items-center justify-center p-1.5 text-rose-500 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/25 rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid={`trainer_workout-exercise-table-delete-${exercise.id}`}><Trash2 size={16} strokeWidth={2} aria-hidden="true" /></button>
+                    <td className="px-3 py-3 text-sm text-secondary max-w-[180px] truncate">{Array.isArray(exercise.muscleGroup) ? displayValue(exercise.muscleGroup.join(', ')) : displayValue(exercise.muscleGroup)}</td>
+                    <td className="px-3 py-3 whitespace-nowrap"><span className="text-xs bg-input text-secondary border border-border px-2 py-1 rounded-full">{displayValue(exercise.equipment)}</span></td>
+                    <td className="px-3 py-3 whitespace-nowrap"><span className={`text-xs px-2.5 py-0.5 rounded-full font-semibold ${TRAINER_WORKOUT_DIFFICULTY_STYLES[exercise.difficulty as keyof typeof TRAINER_WORKOUT_DIFFICULTY_STYLES] ?? 'bg-input text-secondary'}`}>{displayValue(exercise.difficulty)}</span></td>
+                    <td className="px-3 py-3 whitespace-nowrap">
+                      <div className="flex items-center gap-1.5">
+                        <button type="button" aria-label={`View details for ${exercise.name}`} title="View details" onClick={(event) => { event.stopPropagation(); setQuickViewExercise(exercise); }} className="min-w-9 min-h-9 inline-flex items-center justify-center p-1.5 text-sky-600 dark:text-sky-300 bg-sky-500/15 hover:bg-sky-500 hover:text-white border border-sky-500/35 rounded-xl motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer" data-testid={`trainer_workout-exercise-table-view-${exercise.id}`}><Eye size={16} strokeWidth={2.2} aria-hidden="true" /></button>
+                        <button type="button" aria-label={t('TEXT_EDIT_EXERCISE_ARIA', { name: exercise.name })} title={t('TEXT_EDIT_EXERCISE_ARIA', { name: exercise.name })} onClick={(event) => { event.stopPropagation(); openExerciseEditor(exercise.id); }} className="min-w-9 min-h-9 inline-flex items-center justify-center p-1.5 text-amber-500 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/25 rounded-xl motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer" data-testid={`trainer_workout-exercise-table-edit-${exercise.id}`}><Edit2 size={16} strokeWidth={2} aria-hidden="true" /></button>
+                        <button type="button" aria-label={t('TEXT_DELETE_EXERCISE_ARIA', { name: exercise.name })} title={t('TEXT_DELETE_EXERCISE_ARIA', { name: exercise.name })} onClick={(event) => { event.stopPropagation(); void handleDelete(exercise.id); }} className="min-w-9 min-h-9 inline-flex items-center justify-center p-1.5 text-rose-500 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/25 rounded-xl motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer" data-testid={`trainer_workout-exercise-table-delete-${exercise.id}`}><Trash2 size={16} strokeWidth={2} aria-hidden="true" /></button>
                       </div>
                     </td>
                   </tr>
@@ -183,8 +186,13 @@ export default function TrainerWorkoutExerciseTable() {
         </div>
       </div>
 
-    <div className="md:hidden space-y-3 p-3">{exercises.length === 0 ? <TrainerWorkoutExerciseEmptyState search={search} /> : exercises.map((exercise) => <article key={exercise.id} className="bg-card rounded-xl border border-border p-4 shadow-card" data-testid={`trainer_workout-exercise-table_card${exercise.id}`}><div className="flex items-start justify-between gap-3"><div className="min-w-0"><TrainerInfrastructureTooltip content={String(displayValue(exercise.name))}><h3 className="font-semibold text-text-primary truncate">{displayValue(exercise.name)}</h3></TrainerInfrastructureTooltip><p className="text-xs text-secondary">{t('TEXT_EXERCISE')}</p></div><span className={`shrink-0 inline-flex px-2 py-1 rounded-full text-xs font-semibold ${TRAINER_WORKOUT_DIFFICULTY_STYLES[exercise.difficulty as keyof typeof TRAINER_WORKOUT_DIFFICULTY_STYLES] ?? 'bg-input text-secondary'}`}>{displayValue(exercise.difficulty)}</span></div><div className="mt-4 space-y-3 text-sm"><p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_PRIMARY_MUSCLE')}</span><span className="text-text-primary">{Array.isArray(exercise.muscleGroup) ? displayValue(exercise.muscleGroup.join(', ')) : displayValue(exercise.muscleGroup)}</span></p><p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_EQUIPMENT')}</span><span className="text-text-primary">{displayValue(exercise.equipment)}</span></p></div><div className="mt-4 pt-3 border-t border-border flex gap-2"><button type="button" onClick={() => { setEditExerciseId(exercise.id); setShowExModal(true); }} className="min-h-11 flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-300 font-semibold hover:bg-amber-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" aria-label={t('TEXT_EDIT_EXERCISE_ARIA', { name: exercise.name })} data-testid={`trainer_workout-exercise-table-mobile-edit-${exercise.id}`}><Edit2 size={18} strokeWidth={2} aria-hidden="true"/>{t('TEXT_EDIT_EXERCISE')}</button><button type="button" onClick={() => void handleDelete(exercise.id)} className="min-h-11 flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-500 font-semibold hover:bg-rose-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" aria-label={t('TEXT_DELETE_EXERCISE_ARIA', { name: exercise.name })} data-testid={`trainer_workout-exercise-table-mobile-delete-${exercise.id}`}><Trash2 size={18} strokeWidth={2} aria-hidden="true"/>{t('TEXT_DELETE')}</button></div></article>)}</div>
+    <div className="md:hidden space-y-3 p-3">{exercises.length === 0 ? <TrainerWorkoutExerciseEmptyState search={search} /> : exercises.map((exercise) => <article key={exercise.id} className="bg-card rounded-xl border border-border p-4 shadow-card" data-testid={`trainer_workout-exercise-table_card${exercise.id}`}><div className="flex items-start justify-between gap-3"><div className="min-w-0"><TrainerInfrastructureTooltip content={String(displayValue(exercise.name))}><h3 className="font-semibold text-text-primary truncate">{displayValue(exercise.name)}</h3></TrainerInfrastructureTooltip><p className="text-xs text-secondary">{t('TEXT_EXERCISE')}</p></div><span className={`shrink-0 inline-flex px-2 py-1 rounded-full text-xs font-semibold ${TRAINER_WORKOUT_DIFFICULTY_STYLES[exercise.difficulty as keyof typeof TRAINER_WORKOUT_DIFFICULTY_STYLES] ?? 'bg-input text-secondary'}`}>{displayValue(exercise.difficulty)}</span></div><div className="mt-4 space-y-3 text-sm"><p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_PRIMARY_MUSCLE')}</span><span className="text-text-primary">{Array.isArray(exercise.muscleGroup) ? displayValue(exercise.muscleGroup.join(', ')) : displayValue(exercise.muscleGroup)}</span></p><p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_EQUIPMENT')}</span><span className="text-text-primary">{displayValue(exercise.equipment)}</span></p></div><div className="mt-4 pt-3 border-t border-border flex gap-2"><button type="button" onClick={() => setQuickViewExercise(exercise)} className="min-h-11 inline-flex items-center justify-center gap-1.5 rounded-xl border border-sky-500/35 bg-sky-500/15 text-sky-600 dark:text-sky-300 font-semibold px-3 text-xs" aria-label={`View details for ${exercise.name}`}><Eye size={16} />View</button><button type="button" onClick={() => { setEditExerciseId(exercise.id); setShowExModal(true); }} className="min-h-11 flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-300 font-semibold hover:bg-amber-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" aria-label={t('TEXT_EDIT_EXERCISE_ARIA', { name: exercise.name })} data-testid={`trainer_workout-exercise-table-mobile-edit-${exercise.id}`}><Edit2 size={18} strokeWidth={2} aria-hidden="true"/>{t('TEXT_EDIT_EXERCISE')}</button><button type="button" onClick={() => void handleDelete(exercise.id)} className="min-h-11 flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-500 font-semibold hover:bg-rose-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" aria-label={t('TEXT_DELETE_EXERCISE_ARIA', { name: exercise.name })} data-testid={`trainer_workout-exercise-table-mobile-delete-${exercise.id}`}><Trash2 size={18} strokeWidth={2} aria-hidden="true"/>{t('TEXT_DELETE')}</button></div></article>)}</div>
     <TrainerInfrastructurePagination currentPage={page} totalPages={totalPages} totalItems={totalExercises} itemsPerPage={TRAINER_INFRASTRUCTURE_ITEMS_PER_PAGE} onPageChange={setPage}/>
+    <TrainerCoachingExerciseManagementQuickViewModal
+      exercise={quickViewExercise}
+      onClose={() => setQuickViewExercise(null)}
+      onEdit={openExerciseEditor}
+    />
     </div>
   );
 }

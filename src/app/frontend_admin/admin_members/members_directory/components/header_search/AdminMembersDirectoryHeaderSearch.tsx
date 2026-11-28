@@ -46,7 +46,7 @@ export function AdminMembersDirectoryHeaderSearch() {
       <input
         type="text"
         placeholder={t('members.admin_members_header_search.text_c698311c9b')}
-        className="w-56 pl-9 pr-4 py-2 bg-input border border-border rounded-xl text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary text-primary placeholder:text-secondary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+        className="w-56 pl-9 pr-4 py-2 bg-input border border-border rounded-xl text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary text-text-primary placeholder:text-secondary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
         value={searchQuery}
         onChange={(e) => { setSearchQuery(e.target.value); setShowSearch(true); setActiveOptionIndex(-1); }}
         onFocus={() => setShowSearch(true)}
@@ -109,7 +109,7 @@ export function AdminMembersDirectoryHeaderSearch() {
                       {m.name.charAt(0)}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-semibold text-primary truncate">{m.name}</p>
+                      <p className="text-sm font-semibold text-text-primary truncate">{m.name}</p>
                       <p className="text-xs text-secondary truncate">{m.branchName}</p>
                     </div>
                   </div>
@@ -118,7 +118,7 @@ export function AdminMembersDirectoryHeaderSearch() {
               <Link
                 href={ADMIN_MEMBERS_ROUTES.root}
                 onClick={() => { setSearchQuery(''); setShowSearch(false); setActiveOptionIndex(-1); }}
-                className="block px-3 py-2.5 text-center text-xs font-bold text-primary hover:bg-input motion-safe:transition-colors border-t border-border motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+                className="block px-3 py-2.5 text-center text-xs font-bold text-text-primary hover:bg-input motion-safe:transition-colors border-t border-border motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page"
                data-testid="admin_members-admin_members-header-search-search-4">
                 {t('members.admin_members_header_search.text_bf33f2c023')}</Link>
             </>

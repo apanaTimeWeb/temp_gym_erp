@@ -64,13 +64,13 @@ export default function AdminMembersDirectoryTable() {
     <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
       <div className="overflow-x-auto max-h-[640px] overflow-auto">
         <table data-admin-responsive-table className="w-full text-left border-collapse">
-          <thead className="sticky top-0 z-20 bg-surface-highlight">
+          <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038]">
             <tr className="border-b border-border">
               {MEMBER_TABLE_HEADER_KEYS.map((key, idx) => (
                 <th
                   key={key}
                   className={`px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
-                    idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    idx === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                   }`}
                 >
                   {t(key)}
@@ -78,7 +78,7 @@ export default function AdminMembersDirectoryTable() {
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody className="divide-y divide-border dark:divide-white/[0.07]">
             {members.map((m , __testIdIndex61) => (
               <tr
                 key={m.id}
@@ -89,7 +89,7 @@ export default function AdminMembersDirectoryTable() {
                 onKeyDown={(event) => { if ((event.key === 'Enter' || event.key === ' ') && event.target === event.currentTarget) { event.preventDefault(); router.push(memberProfileHref(m.id)); } }}
                 className="hover:bg-surface-hover transition-colors group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 data-testid={`admin_members-admin_members-table-row-map61-${__testIdIndex61}`}>
-                <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3">
+                <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border px-4 py-3">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-primary-subtle flex items-center justify-center text-primary text-xs font-bold flex-shrink-0" aria-hidden="true">
                       {m.name.charAt(0).toUpperCase()}
@@ -106,13 +106,13 @@ export default function AdminMembersDirectoryTable() {
                   </div>
                 </td>
                 <td className="px-4 py-3">
-                  <span className="text-sm text-primary">{m.branchName}</span>
+                  <span className="text-sm text-text-primary">{m.branchName}</span>
                 </td>
                 <td className="px-4 py-3">
-                  <span className="text-sm text-primary">{m.planName}</span>
+                  <span className="text-sm text-text-primary">{m.planName}</span>
                 </td>
                 <td className="px-4 py-3">
-                  <span className="text-sm text-primary whitespace-nowrap">
+                  <span className="text-sm text-text-primary whitespace-nowrap">
                     {formatDate(m.joinDate, locale)}
                   </span>
                 </td>
@@ -122,7 +122,7 @@ export default function AdminMembersDirectoryTable() {
                   </span>
                 </td>
                 <td className="px-4 py-3">
-                  <span className="text-sm text-primary whitespace-nowrap">
+                  <span className="text-sm text-text-primary whitespace-nowrap">
                     {formatDate(m.expiryDate, locale)}
                   </span>
                 </td>

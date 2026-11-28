@@ -93,7 +93,7 @@ export default function AdminDashboardOverviewRevenueTrend() {
           <BarChart3 size={18} strokeWidth={2} />
         </div>
         <div>
-          <h2 className="text-base font-bold text-primary">{t('dashboard.admin_dashboard_revenue_trend.text_cc3465852a')}</h2>
+          <h2 className="text-base font-bold text-text-primary">{t('dashboard.admin_dashboard_revenue_trend.text_cc3465852a')}</h2>
           <p className="text-xs text-secondary">{t('dashboard.admin_dashboard_revenue_trend.text_75caecb7dc')}</p>
         </div>
       </div>

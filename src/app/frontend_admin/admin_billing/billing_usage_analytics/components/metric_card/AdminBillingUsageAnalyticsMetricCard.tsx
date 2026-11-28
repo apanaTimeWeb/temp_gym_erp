@@ -39,7 +39,7 @@ export default function AdminBillingUsageAnalyticsMetricCard({ metric, onUpgrade
   return (
     <div className={`bg-card rounded-xl border p-5 space-y-3 hover:border-focus motion-safe:transition-all motion-safe:duration-base ${borderColor}`}>
       <div className="flex items-center justify-between">
-        <p className="text-sm font-semibold text-primary">{metric.label}</p>
+        <p className="text-sm font-semibold text-text-primary">{metric.label}</p>
         <span className={`text-xs font-bold ${textColor}`}>{pct}%</span>
       </div>
       <AdminNavigationLayoutProgressBar

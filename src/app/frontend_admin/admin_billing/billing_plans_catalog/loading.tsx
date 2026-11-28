@@ -8,7 +8,7 @@ import AdminNavigationLayoutTableSkeleton from '@/app/frontend_admin/admin_billi
  */
 export default function Loading() {
  return (
- <div className="min-h-screen flex flex-col p-6 space-y-5 bg-page" data-testid="admin_plans-loading-state">
+ <div className="min-h-screen flex flex-col p-4 sm:p-6 space-y-5 bg-page" data-testid="admin_plans-loading-state">
  <div className="h-20 bg-skeleton-base rounded-xl motion-safe:animate-pulse motion-safe:duration-base"></div>
  <AdminNavigationLayoutTableSkeleton rows={8} />
  

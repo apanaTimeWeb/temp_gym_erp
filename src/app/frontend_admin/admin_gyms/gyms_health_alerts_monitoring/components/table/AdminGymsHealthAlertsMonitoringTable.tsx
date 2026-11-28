@@ -77,7 +77,7 @@ export default function AdminGymsHealthAlertsMonitoringTable() {
       <th
         scope="col"
         aria-sort={active ? (sortDirection === 'asc' ? 'ascending' : 'descending') : 'none'}
-        className={`px-4 py-3 ${key === 'severity' ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''}`}
+        className={`px-4 py-3 ${key === 'severity' ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''}`}
       >
         <button
           type="button"
@@ -95,21 +95,21 @@ export default function AdminGymsHealthAlertsMonitoringTable() {
 
   if (status === 'pending') return <AdminNavigationLayoutTableSkeleton rows={6} cols={TABLE_COLUMN_COUNT} />;
   if (status === 'error') return <div className="rounded-2xl border border-border bg-card p-8 text-center text-sm text-danger shadow-card" role="alert" data-testid="admin_gym_health_alerts-admin_gym_health_alerts-table-control"><p>{t('gym-health-alerts.admin_gym_health_alerts_table.text_9f3ad23bcd')}</p><button type="button" onClick={() => void retryAlerts()} className="mt-3 min-h-11 rounded px-3 underline text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="gym-health-alerts-monitoring-gym-health-alerts-monitoring-table-retry-alerts">{t('gym-health-alerts.admin_gym_health_alerts_table.retry')}</button></div>;
-  if (!alerts.length) return <div className="rounded-2xl border border-border bg-card p-10 text-center shadow-card">{!hasActiveFilters && <CheckCircle2 size={18} strokeWidth={2} className="mx-auto mb-3 text-success" aria-hidden="true" />}<p className="text-sm font-semibold text-primary">{t(hasActiveFilters ? 'gym-health-alerts.admin_gym_health_alerts_table.noMatches' : 'gym-health-alerts.admin_gym_health_alerts_table.text_d0a3276f46')}</p></div>;
+  if (!alerts.length) return <div className="rounded-2xl border border-border bg-card p-10 text-center shadow-card">{!hasActiveFilters && <CheckCircle2 size={18} strokeWidth={2} className="mx-auto mb-3 text-success" aria-hidden="true" />}<p className="text-sm font-semibold text-text-primary">{t(hasActiveFilters ? 'gym-health-alerts.admin_gym_health_alerts_table.noMatches' : 'gym-health-alerts.admin_gym_health_alerts_table.text_d0a3276f46')}</p></div>;
 
   return (
     <section className="rounded-2xl border border-border bg-card shadow-card overflow-hidden" aria-label={t('gym-health-alerts.admin_gym_health_alerts_table.text_b969680a49')}>
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-3 bg-surface-highlight">
         <p className="text-sm text-secondary" aria-live="polite" data-testid="gym-health-alerts-monitoring-gym-health-alerts-monitoring-table-live-region">{t('gym-health-alerts.admin_gym_health_alerts_table.paginationSummary', { start: startRecord, end: endRecord, total: sortedAlerts.length })}</p>
         <label className="flex items-center gap-2 text-sm text-secondary">{t('gym-health-alerts.admin_gym_health_alerts_table.rowsPerPage')}
-          <select value={pageSize} onChange={(event) => setPageSize(Number(event.target.value))} className="min-h-11 rounded-md border border-border bg-input px-2 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label={t('gym-health-alerts.admin_gym_health_alerts_table.rowsPerPage')} data-testid="gym-health-alerts-monitoring-gym-health-alerts-monitoring-table-set-page-size">
+          <select value={pageSize} onChange={(event) => setPageSize(Number(event.target.value))} className="min-h-11 rounded-md border border-border bg-input px-2 text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label={t('gym-health-alerts.admin_gym_health_alerts_table.rowsPerPage')} data-testid="gym-health-alerts-monitoring-gym-health-alerts-monitoring-table-set-page-size">
             {[10, 25, 50].map((size) => <option key={size} value={size}>{size}</option>)}
           </select>
         </label>
       </div>
       <div className="overflow-x-auto max-h-[640px] overflow-auto">
         <table className="w-full text-left border-collapse" data-admin-responsive-table>
-          <thead className="sticky top-0 z-20 bg-surface-highlight">
+          <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038]">
             <tr className="border-b border-border text-xs uppercase tracking-wider text-secondary">
               {renderSortHeader('severity', t('gym-health-alerts.admin_gym_health_alerts_table.text_de314fa0c9'))}
               {renderSortHeader('title', t('gym-health-alerts.admin_gym_health_alerts_table.text_b969680a49'))}
@@ -119,26 +119,26 @@ export default function AdminGymsHealthAlertsMonitoringTable() {
               <th scope="col" className="px-4 py-3 text-right">{t('gym-health-alerts.admin_gym_health_alerts_table.text_70afe9eff3')}</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody className="divide-y divide-border dark:divide-white/[0.07]">
             {visibleAlerts.map((alert) => {
               const href = resolveActionUrl(alert.actionKey);
               return (
                 <tr key={alert.id} className="hover:bg-surface-hover transition-colors group">
-                  <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-4">
+                  <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border px-5 py-4">
                     <span className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-semibold uppercase ${GYM_HEALTH_ALERT_SEVERITY_STYLES[alert.severity]}`} data-testid={`admin_gym_health_alerts-admin_gym_health_alerts-table-severity-${alert.id}`}>{t(GYM_HEALTH_ALERT_SEVERITY_LABEL_KEYS[alert.severity])}</span>
                   </td>
                   <td className="px-4 py-4">
                     <div className="flex items-center gap-1.5">
-                      <p className="text-sm font-semibold text-primary">{alert.title}</p>
+                      <p className="text-sm font-semibold text-text-primary">{alert.title}</p>
                       <CopyButton text={alert.title} label={alert.title} />
                     </div>
                     <p className="mt-1 text-xs text-secondary">{alert.description}</p>
                     <p className="mt-1 text-xs text-secondary">{alert.metric} {t('gym-health-alerts.admin_gym_health_alerts_table.text_e7d139364f')}{alert.threshold}</p>
                   </td>
-                  <td className="px-4 py-4 text-sm text-primary">
+                  <td className="px-4 py-4 text-sm text-text-primary">
                     <Link
                       href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(alert.gymName)}`}
-                      className="font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
+                      className="font-medium text-text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
                       title={`View ${alert.gymName} in Branches Directory`}
                     >
                       {alert.gymName}
@@ -154,9 +154,9 @@ export default function AdminGymsHealthAlertsMonitoringTable() {
         </table>
       </div>
       <nav aria-label={t('gym-health-alerts.admin_gym_health_alerts_table.paginationNavigation')} className="flex items-center justify-end gap-2 border-t border-border p-3 bg-surface-highlight">
-        <button type="button" disabled={activePage <= 1} onClick={() => setPage((current) => Math.max(1, current - 1))} className="min-h-11 inline-flex items-center gap-1 rounded-md border border-border px-3 text-sm text-primary disabled:cursor-not-allowed disabled:text-disabled focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="gym-health-alerts-monitoring-gym-health-alerts-monitoring-table-set-page"><ChevronLeft size={16} aria-hidden="true" />{t('gym-health-alerts.admin_gym_health_alerts_table.previousPage')}</button>
+        <button type="button" disabled={activePage <= 1} onClick={() => setPage((current) => Math.max(1, current - 1))} className="min-h-11 inline-flex items-center gap-1 rounded-md border border-border px-3 text-sm text-text-primary disabled:cursor-not-allowed disabled:text-disabled focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="gym-health-alerts-monitoring-gym-health-alerts-monitoring-table-set-page"><ChevronLeft size={16} aria-hidden="true" />{t('gym-health-alerts.admin_gym_health_alerts_table.previousPage')}</button>
         <span className="min-w-20 text-center text-sm text-secondary" aria-live="polite" data-testid="gym-health-alerts-monitoring-gym-health-alerts-monitoring-table-live-region-2">{t('gym-health-alerts.admin_gym_health_alerts_table.pageSummary', { page: activePage, pages: totalPages })}</span>
-        <button type="button" disabled={activePage >= totalPages} onClick={() => setPage((current) => Math.min(totalPages, current + 1))} className="min-h-11 inline-flex items-center gap-1 rounded-md border border-border px-3 text-sm text-primary disabled:cursor-not-allowed disabled:text-disabled focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="gym-health-alerts-monitoring-gym-health-alerts-monitoring-table-set-page-2">{t('gym-health-alerts.admin_gym_health_alerts_table.nextPage')}<ChevronRight size={16} aria-hidden="true" /></button>
+        <button type="button" disabled={activePage >= totalPages} onClick={() => setPage((current) => Math.min(totalPages, current + 1))} className="min-h-11 inline-flex items-center gap-1 rounded-md border border-border px-3 text-sm text-text-primary disabled:cursor-not-allowed disabled:text-disabled focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="gym-health-alerts-monitoring-gym-health-alerts-monitoring-table-set-page-2">{t('gym-health-alerts.admin_gym_health_alerts_table.nextPage')}<ChevronRight size={16} aria-hidden="true" /></button>
       </nav>
     </section>
   );

@@ -27,7 +27,7 @@ export default function AdminSettingsManagementBanner() {
       <p className="text-on-primary mb-4">{t('settings.admin_settings_banner.text_bf906b06a3')}</p>
       
       <div className="bg-surface-hover rounded-lg p-4 backdrop-blur-sm border border-border">
-        <p className="text-primary text-xs font-medium uppercase tracking-wider mb-1">{t('settings.admin_settings_banner.text_22987bc421')}</p>
+        <p className="text-text-primary text-xs font-medium uppercase tracking-wider mb-1">{t('settings.admin_settings_banner.text_22987bc421')}</p>
         <p className="text-2xl font-black tracking-tight mb-4">{ADMIN_GYM_CONFIGURATION.phone}</p>
         <div className="flex flex-col sm:flex-row gap-3">
           {whatsappHref ? (

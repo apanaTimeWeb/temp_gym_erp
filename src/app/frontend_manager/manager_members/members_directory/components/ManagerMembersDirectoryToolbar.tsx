@@ -85,40 +85,40 @@ export default function ManagerMembersDirectoryToolbar() {
   ];
 
   return (
-    <div className="bg-card rounded-xl shadow-card border border-border p-4 flex flex-col gap-3">
+    <div className="relative z-30 bg-card dark:bg-gradient-to-r dark:from-[#101C2F] dark:via-[#131C30] dark:to-[#101726] rounded-2xl shadow-card border border-border dark:border-emerald-500/30 p-4 flex flex-col gap-3">
       {/* Row 1: Search + Primary Actions */}
-      <div className="flex flex-col lg:flex-row gap-3 items-start lg:items-center justify-between">
+      <div className="flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between">
         <div className="relative w-full lg:w-72">
-          <Search size={18} strokeWidth={2} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
-          <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "pl-9 pr-3 py-2.5 border border-border rounded-xl text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page w-full bg-input text-text-primary"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_members-members-toolbar-input-value"
+          <Search size={17} strokeWidth={2.2} className="absolute left-3 top-1/2 -translate-y-1/2 text-emerald-400 pointer-events-none" />
+          <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 pl-9 pr-3 py-2 border border-border dark:border-white/15 hover:border-emerald-500/45 rounded-xl text-sm w-full bg-input dark:bg-[#0B1220] text-text-primary placeholder:text-secondary"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_members-members-toolbar-input-value"
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder={t("COPY_SEARCH_NAME_PHONE")}
             
            aria-label={t("COPY_SEARCH_NAME_PHONE")}/>
         </div>
-        <div className="flex flex-wrap gap-2 w-full lg:w-auto">
+        <div className="flex flex-wrap gap-2 w-full lg:w-auto items-center justify-start lg:justify-end">
           <button data-testid="manager_members-members-toolbar-refresh"
             onClick={handleRefresh}
-            className="flex justify-center items-center gap-2 px-3 py-2.5 text-sm border border-border rounded-xl hover:opacity-80 text-text-primary w-full sm:w-auto motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"
+            className="min-h-11 flex justify-center items-center gap-2 px-3.5 py-2 text-sm border border-sky-500/35 bg-sky-500/15 hover:bg-sky-500/25 rounded-xl text-sky-600 dark:text-sky-300 font-semibold w-full sm:w-auto motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none cursor-pointer"
            type="button">
-            <RefreshCw size={18} strokeWidth={2}/>{t("COPY_REFRESH")}</button>
+            <RefreshCw size={16} strokeWidth={2.2}/>{t("COPY_REFRESH")}</button>
           {/* Export buttons — CRITICAL FIX */}
           {MEMBER_EXPORT_FORMATS.map((fmt, mapIndex) => (
-            <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "flex justify-center items-center gap-2 px-3 py-2.5 text-sm border border-border rounded-xl hover:bg-primary-subtle text-text-secondary hover:text-primary motion-safe:transition-all w-full sm:w-auto motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_members-members-managermemberstoolbar-button-exportmembers-${mapIndex}`}
+            <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 flex justify-center items-center gap-2 px-3.5 py-2 text-sm border border-teal-500/35 bg-teal-500/15 hover:bg-teal-500/25 rounded-xl text-teal-600 dark:text-teal-300 font-semibold motion-safe:transition-all w-full sm:w-auto motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none cursor-pointer"].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_members-members-managermemberstoolbar-button-exportmembers-${mapIndex}`}
               key={fmt.value}
               onClick={() => void exportMembers(fmt.value)}
               
               aria-label={fmt.label}
              type="button">
-              <Download size={18} strokeWidth={2}/> {fmt.label}
+              <Download size={16} strokeWidth={2}/> {fmt.label}
             </button>
           ))}
           <button data-testid="manager_members-members-toolbar-add"
             onClick={openAdd}
-            className="flex justify-center items-center gap-2 px-4 py-2.5 text-sm font-semibold text-on-primary bg-primary rounded-xl motion-safe:transition-all hover:bg-primary-hover w-full sm:w-auto motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"
+            className="min-h-11 flex justify-center items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-[#FF5A1F] to-[#F97316] rounded-xl motion-safe:transition-all hover:brightness-110 shadow-[0_4px_14px_rgba(255,90,31,0.3)] w-full sm:w-auto motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none cursor-pointer"
            type="button">
-            <Plus size={18} strokeWidth={2}/>{t("COPY_ADD_MEMBER")}</button>
+            <Plus size={17} strokeWidth={2}/>{t("COPY_ADD_MEMBER")}</button>
         </div>
       </div>
 
@@ -182,7 +182,7 @@ export default function ManagerMembersDirectoryToolbar() {
           />
         </div>
         {/* Expiry Date Range — CRITICAL FIX */}
-        <div className="flex items-center gap-1.5 border border-border rounded-xl px-3 py-1.5 bg-input text-sm w-full sm:w-auto">
+        <div className="flex flex-wrap sm:flex-nowrap items-center gap-1.5 border border-border rounded-xl px-3 py-1.5 bg-input text-sm w-full sm:w-auto">
           <Calendar size={18} strokeWidth={2} className="text-text-secondary shrink-0" data-testid="manager_members-managermemberstoolbar-interactive"/>
           <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "bg-transparent text-text-secondary focus-visible:outline-none text-xs"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_members-members-toolbar-input-date-1"
             type="date"

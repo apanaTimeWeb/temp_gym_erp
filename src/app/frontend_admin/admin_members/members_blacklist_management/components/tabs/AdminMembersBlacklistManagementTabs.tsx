@@ -30,7 +30,7 @@ export default function AdminMembersBlacklistManagementTabs() {
             onClick={() => setActiveTab(tab.value)}
             className={`motion-safe:duration-base ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium motion-safe:transition-all ${
               isActive
-                ? 'bg-card text-primary shadow-card border border-border'
+                ? 'bg-card text-text-primary shadow-card border border-border'
                 : 'text-secondary hover:text-primary'
             }`}
            data-testid={`admin_blacklist-admin_blacklist-tabs-click-map20-${__testIdIndex20}-1`}>

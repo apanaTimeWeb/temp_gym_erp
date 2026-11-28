@@ -56,7 +56,7 @@ export default function AdminFinanceStaffLedgerManagementLedgerTable() {
     <div className="space-y-4">
       <div className="flex flex-col sm:flex-row justify-between gap-4 items-end">
         <div>
-          <h2 className="text-lg font-bold text-primary">{t('hr.admin_hr_ledger_table.text_a77422ce93')}</h2>
+          <h2 className="text-lg font-bold text-text-primary">{t('hr.admin_hr_ledger_table.text_a77422ce93')}</h2>
           <p className="text-sm text-secondary">{t('hr.admin_hr_ledger_table.text_b7a1514f11')}</p>
         </div>
         <div className="w-full sm:w-64">
@@ -75,7 +75,7 @@ export default function AdminFinanceStaffLedgerManagementLedgerTable() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
           <div className="bg-card p-4 rounded-xl border border-border">
             <p className="text-xs text-secondary uppercase">{t('hr.admin_hr_ledger_table.text_c4cbb9027e')}</p>
-            <p className="text-xl font-bold text-primary">{AdminFinanceStaffLedgerManagementFormatCurrency(selectedStaff.salary ?? 0, undefined, locale)}{t('hr.admin_hr_ledger_table.text_e9e0ceb5e8')}</p>
+            <p className="text-xl font-bold text-text-primary">{AdminFinanceStaffLedgerManagementFormatCurrency(selectedStaff.salary ?? 0, undefined, locale)}{t('hr.admin_hr_ledger_table.text_e9e0ceb5e8')}</p>
           </div>
           <div className="bg-card p-4 rounded-xl border border-border">
             <p className="text-xs text-secondary uppercase">{t('hr.admin_hr_ledger_table.text_9f119bb465')}</p>
@@ -91,7 +91,7 @@ export default function AdminFinanceStaffLedgerManagementLedgerTable() {
       <div className="border border-border rounded-2xl overflow-hidden bg-card shadow-card">
         <div className="overflow-x-auto max-h-[640px] overflow-auto">
           <table data-admin-responsive-table className="w-full text-left border-collapse">
-            <thead className="sticky top-0 z-20 bg-surface-highlight">
+            <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038]">
               <tr className="border-b border-border text-sm">
                 {ledgerColumns.map((column, __testIdIndex88) => {
                   const active = column.key !== null && sortKey === column.key;
@@ -99,14 +99,14 @@ export default function AdminFinanceStaffLedgerManagementLedgerTable() {
                     <th
                       key={column.label}
                       className={`p-4 font-medium text-secondary whitespace-nowrap ${
-                        __testIdIndex88 === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                        __testIdIndex88 === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                       } ${column.key ? 'select-none' : ''} ${column.key === 'balance' ? 'text-right' : ''}`}
                       aria-sort={active ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
                     >
                       {column.key ? (
                         <button type="button" onClick={() => handleSort(column.key as AdminFinanceStaffLedgerManagementLedgerSortKey)} className="inline-flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded min-h-11 min-w-11 active:scale-95" data-testid={`admin_hr-admin_hr-ledger-table-click-map88-${__testIdIndex88}-1`}>
                           {column.label}
-                          {active ? (sortDir === 'asc' ? <ChevronUp size={18} className="text-primary" aria-hidden="true"  strokeWidth={2}/> : <ChevronDown size={18} className="text-primary" aria-hidden="true"  strokeWidth={2}/>) : <ChevronsUpDown size={18} className="text-disabled" aria-hidden="true"  strokeWidth={2}/>}
+                          {active ? (sortDir === 'asc' ? <ChevronUp size={18} className="text-text-primary" aria-hidden="true"  strokeWidth={2}/> : <ChevronDown size={18} className="text-text-primary" aria-hidden="true"  strokeWidth={2}/>) : <ChevronsUpDown size={18} className="text-disabled" aria-hidden="true"  strokeWidth={2}/>}
                         </button>
                       ) : column.label}
                     </th>
@@ -114,7 +114,7 @@ export default function AdminFinanceStaffLedgerManagementLedgerTable() {
                 })}
               </tr>
             </thead>
-            <tbody className="text-sm divide-y divide-border">
+            <tbody className="text-sm divide-y divide-border dark:divide-white/[0.07]">
               {loading ? (
                 <tr><td colSpan={TABLE_COLUMN_COUNT} className="text-center p-8 text-secondary">{t('hr.admin_hr_ledger_table.text_b3e27da8cc')}</td></tr>
               ) : error ? (
@@ -127,7 +127,7 @@ export default function AdminFinanceStaffLedgerManagementLedgerTable() {
               ) : (
                 sortedLedger.map((entry , __testIdIndex109) => (
                   <tr key={entry.id} className="hover:bg-surface-hover transition-colors group">
-                    <td className="sticky start-0 z-10 bg-card border-e border-border p-4 text-primary whitespace-nowrap">
+                    <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border p-4 text-text-primary whitespace-nowrap">
                       <div className="flex items-center gap-1.5">
                         <span>{formatDate(entry.date, locale)}</span>
                         <CopyButton text={formatDate(entry.date, locale)} label={formatDate(entry.date, locale)} />
@@ -137,7 +137,7 @@ export default function AdminFinanceStaffLedgerManagementLedgerTable() {
                     <td className="p-4 text-secondary max-w-48 truncate" title={entry.notes}>{displayValue(entry.notes)}</td>
                     <td className="p-4 text-success text-right">{entry.credit ? AdminFinanceStaffLedgerManagementFormatCurrency(entry.credit, undefined, locale) : '—'}</td>
                     <td className="p-4 text-danger text-right">{entry.debit ? AdminFinanceStaffLedgerManagementFormatCurrency(entry.debit, undefined, locale) : '—'}</td>
-                    <td className="p-4 text-primary font-semibold text-right">{AdminFinanceStaffLedgerManagementFormatCurrency(entry.balance, undefined, locale)}</td>
+                    <td className="p-4 text-text-primary font-semibold text-right">{AdminFinanceStaffLedgerManagementFormatCurrency(entry.balance, undefined, locale)}</td>
                   </tr>
                 ))
               )}

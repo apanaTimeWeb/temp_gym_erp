@@ -38,18 +38,18 @@ export default function AdminReportsCrossDomainOverview() {
       <header className="space-y-2">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="flex items-center gap-3">
-            <span className="rounded-xl border border-border bg-surface-highlight p-2 text-primary">
+            <span className="rounded-xl border border-border bg-surface-highlight p-2 text-text-primary">
               <FileBarChart size={24} aria-hidden="true" />
             </span>
             <div>
-              <h1 className="text-2xl font-bold text-primary">{t('admin_navigation.AdminNavigation.reportsCatalog.title')}</h1>
+              <h1 className="text-2xl font-bold text-text-primary">{t('admin_navigation.AdminNavigation.reportsCatalog.title')}</h1>
               <p className="text-xs text-secondary mt-0.5">Comprehensive multi-domain business intelligence, visual graph analytics and performance audits</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <Link
               href="/frontend_admin/admin_gyms/gyms_comparison"
-              className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-border bg-card px-3.5 py-2 text-xs font-semibold text-primary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shadow-sm"
+              className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-border bg-card px-3.5 py-2 text-xs font-semibold text-text-primary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shadow-sm"
             >
               <BarChart3 size={15} />
               <span>Gym Comparison Benchmarks</span>
@@ -70,7 +70,7 @@ export default function AdminReportsCrossDomainOverview() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border pb-4">
           <div className="flex items-center gap-2">
             <BarChart3 size={18} className="text-primary" />
-            <h2 className="text-base font-bold text-primary">Cross-Domain Performance Benchmarks & Trend Graphs</h2>
+            <h2 className="text-base font-bold text-text-primary">Cross-Domain Performance Benchmarks & Trend Graphs</h2>
           </div>
           <div className="flex items-center gap-2">
             <div className="flex items-center rounded-xl border border-border bg-surface-highlight p-1">
@@ -78,7 +78,7 @@ export default function AdminReportsCrossDomainOverview() {
                 type="button"
                 onClick={() => setActiveChartTab('financial')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold motion-safe:transition-colors ${
-                  activeChartTab === 'financial' ? 'bg-card text-primary shadow-sm' : 'text-secondary hover:text-primary'
+                  activeChartTab === 'financial' ? 'bg-card text-text-primary shadow-sm' : 'text-secondary hover:text-primary'
                 }`}
               >
                 Financial Trends
@@ -87,7 +87,7 @@ export default function AdminReportsCrossDomainOverview() {
                 type="button"
                 onClick={() => setActiveChartTab('attendance')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold motion-safe:transition-colors ${
-                  activeChartTab === 'attendance' ? 'bg-card text-primary shadow-sm' : 'text-secondary hover:text-primary'
+                  activeChartTab === 'attendance' ? 'bg-card text-text-primary shadow-sm' : 'text-secondary hover:text-primary'
                 }`}
               >
                 Attendance Volume
@@ -96,7 +96,7 @@ export default function AdminReportsCrossDomainOverview() {
                 type="button"
                 onClick={() => setActiveChartTab('growth')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold motion-safe:transition-colors ${
-                  activeChartTab === 'growth' ? 'bg-card text-primary shadow-sm' : 'text-secondary hover:text-primary'
+                  activeChartTab === 'growth' ? 'bg-card text-text-primary shadow-sm' : 'text-secondary hover:text-primary'
                 }`}
               >
                 Member Growth
@@ -124,10 +124,10 @@ export default function AdminReportsCrossDomainOverview() {
           <div className="rounded-xl border border-border bg-surface-highlight p-4 flex items-center justify-between">
             <div>
               <p className="text-xs font-semibold text-secondary uppercase tracking-wider">Active Member Network</p>
-              <p className="text-xl font-bold text-primary mt-1">1,160 Members</p>
+              <p className="text-xl font-bold text-text-primary mt-1">1,160 Members</p>
               <p className="text-xs text-secondary mt-0.5">+118 net new members</p>
             </div>
-            <span className="p-2.5 rounded-xl bg-card border border-border text-primary">
+            <span className="p-2.5 rounded-xl bg-card border border-border text-text-primary">
               <Users size={20} />
             </span>
           </div>
@@ -135,7 +135,7 @@ export default function AdminReportsCrossDomainOverview() {
           <div className="rounded-xl border border-border bg-surface-highlight p-4 flex items-center justify-between">
             <div>
               <p className="text-xs font-semibold text-secondary uppercase tracking-wider">Avg Check-In Rate</p>
-              <p className="text-xl font-bold text-primary mt-1">78.4% Capacity</p>
+              <p className="text-xl font-bold text-text-primary mt-1">78.4% Capacity</p>
               <p className="text-xs text-secondary mt-0.5">Peak time: 06:00 - 09:30 AM</p>
             </div>
             <span className="p-2.5 rounded-xl bg-card border border-border text-info-text">
@@ -169,13 +169,13 @@ export default function AdminReportsCrossDomainOverview() {
                   title={`View ${branch.name} in Branches Directory`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-primary text-xs">{branch.name}</span>
+                    <span className="font-bold text-text-primary text-xs">{branch.name}</span>
                     <span className="text-xs font-semibold text-success">{branch.profitMargin} Net</span>
                   </div>
                   <div className="space-y-1">
                     <div className="flex justify-between text-xs text-secondary">
                       <span>Monthly Rev</span>
-                      <span className="font-semibold text-primary">{branch.revenueFormatted}</span>
+                      <span className="font-semibold text-text-primary">{branch.revenueFormatted}</span>
                     </div>
                     <div className="h-2 w-full rounded-full bg-border overflow-hidden">
                       <div className="h-full bg-primary rounded-full" style={{ width: `${widthPct}%` }} />
@@ -195,7 +195,7 @@ export default function AdminReportsCrossDomainOverview() {
 
       {/* REPORT DOMAIN CARDS */}
       <section className="space-y-4" aria-label="Detailed Domain Reports">
-        <h2 className="text-base font-bold text-primary flex items-center gap-2">
+        <h2 className="text-base font-bold text-text-primary flex items-center gap-2">
           <Layers size={18} />
           <span>Domain-Specific Detailed Reports</span>
         </h2>
@@ -208,7 +208,7 @@ export default function AdminReportsCrossDomainOverview() {
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="rounded-xl border border-border bg-surface-highlight p-2 text-primary group-hover:bg-surface-hover group-hover:text-primary motion-safe:transition-colors">
+                  <span className="rounded-xl border border-border bg-surface-highlight p-2 text-text-primary group-hover:bg-surface-hover group-hover:text-primary motion-safe:transition-colors">
                     <FileBarChart size={20} aria-hidden="true" />
                   </span>
                   <span className="inline-flex items-center gap-1 text-xs font-semibold text-secondary group-hover:text-primary motion-safe:transition-colors">
@@ -217,7 +217,7 @@ export default function AdminReportsCrossDomainOverview() {
                   </span>
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-primary group-hover:text-primary motion-safe:transition-colors">
+                  <h3 className="text-base font-bold text-text-primary group-hover:text-primary motion-safe:transition-colors">
                     {t(report.titleKey)}
                   </h3>
                   <p className="mt-1 text-xs text-secondary leading-relaxed">

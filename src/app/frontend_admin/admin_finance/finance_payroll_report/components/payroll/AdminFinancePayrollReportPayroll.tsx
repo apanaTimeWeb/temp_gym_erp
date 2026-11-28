@@ -38,7 +38,7 @@ export default function AdminFinancePayrollReportPayroll() {
       {/* Summary Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: t('reports.AdminAuditRepair.totalPayroll'), value: AdminFinancePayrollReportFormatCurrency(totalPayroll, undefined, locale), color: 'text-primary' },
+          { label: t('reports.AdminAuditRepair.totalPayroll'), value: AdminFinancePayrollReportFormatCurrency(totalPayroll, undefined, locale), color: 'text-text-primary' },
           { label: t('reports.AdminAuditRepair.paid'), value: AdminFinancePayrollReportFormatCurrency(totalPaid, undefined, locale), color: 'text-success' },
           { label: t('reports.AdminAuditRepair.pending'), value: AdminFinancePayrollReportFormatCurrency(totalPending, undefined, locale), color: 'text-danger' },
           { label: t('reports.AdminAuditRepair.advances'), value: AdminFinancePayrollReportFormatCurrency(totalAdvances, undefined, locale), color: 'text-warning' },
@@ -53,17 +53,17 @@ export default function AdminFinancePayrollReportPayroll() {
       {/* Payroll Table */}
       <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
         <div className="px-5 py-4 border-b border-border bg-surface-highlight">
-          <h2 className="text-base font-semibold text-primary">{t('reports.admin_finance_payroll_report.text_86bb288973')}</h2>
+          <h2 className="text-base font-semibold text-text-primary">{t('reports.admin_finance_payroll_report.text_86bb288973')}</h2>
         </div>
         <div className="overflow-x-auto max-h-[640px] overflow-auto">
           <table data-admin-responsive-table className="w-full text-left border-collapse">
-            <thead className="sticky top-0 z-20 bg-surface-highlight">
+            <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038]">
               <tr className="border-b border-border">
                 {['reports.AdminAuditRepair.gym', 'reports.AdminAuditRepair.staffCount', 'reports.AdminAuditRepair.totalPayroll', 'reports.AdminAuditRepair.paid', 'reports.AdminAuditRepair.pending', 'reports.AdminAuditRepair.advances', 'reports.AdminAuditRepair.status'].map((h, idx) => (
                   <th
                     key={h}
                     className={`px-5 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
-                      idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                      idx === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                     }`}
                   >
                     {t(h)}
@@ -71,12 +71,12 @@ export default function AdminFinancePayrollReportPayroll() {
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border dark:divide-white/[0.07]">
               {reportData.payrollSummary.length === 0 ? (
                 <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminReportsEmptyState title={t('reports.admin_finance_payroll_report.text_9062d7cc94')} description={t('reports.admin_finance_payroll_report.auto_2a76b3d03a')} /></td></tr>
               ) : reportData.payrollSummary.map((row , __testIdIndex62) => (
                 <tr key={row.gymId} className="hover:bg-surface-hover transition-colors group">
-                  <td className="sticky start-0 z-10 bg-card border-e border-border px-5 py-4 text-sm font-semibold text-primary">
+                  <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border px-5 py-4 text-sm font-semibold text-text-primary">
                     <div className="flex items-center gap-1.5">
                       <Link
                         href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(row.gymName)}`}
@@ -88,8 +88,8 @@ export default function AdminFinancePayrollReportPayroll() {
                       <CopyButton text={row.gymName} label={row.gymName} />
                     </div>
                   </td>
-                  <td className="px-5 py-4 text-sm text-primary">{row.totalStaff}</td>
-                  <td className="px-5 py-4 text-sm font-semibold text-primary">{AdminFinancePayrollReportFormatCurrency(row.totalPayroll, undefined, locale)}</td>
+                  <td className="px-5 py-4 text-sm text-text-primary">{row.totalStaff}</td>
+                  <td className="px-5 py-4 text-sm font-semibold text-text-primary">{AdminFinancePayrollReportFormatCurrency(row.totalPayroll, undefined, locale)}</td>
                   <td className="px-5 py-4 text-sm text-success">{AdminFinancePayrollReportFormatCurrency(row.paid, undefined, locale)}</td>
                   <td className="px-5 py-4 text-sm text-danger">{AdminFinancePayrollReportFormatCurrency(row.pending, undefined, locale)}</td>
                   <td className="px-5 py-4 text-sm text-warning">{AdminFinancePayrollReportFormatCurrency(row.advances, undefined, locale)}</td>

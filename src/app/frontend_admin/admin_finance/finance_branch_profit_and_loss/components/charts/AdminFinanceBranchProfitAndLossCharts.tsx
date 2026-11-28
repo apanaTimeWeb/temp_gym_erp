@@ -141,7 +141,7 @@ export default function AdminFinanceBranchProfitAndLossCharts({ data }: AdminFin
     <div className="grid grid-cols-1 xl:grid-cols-5 gap-6">
       {/* Grouped Bar Chart — Revenue vs Expenses */}
       <div className="xl:col-span-3 bg-card border border-border rounded-xl p-5">
-        <p className="text-sm font-semibold text-primary mb-4">{t('finance.AdminFinancePnlCharts.text_c7ebaca60f')}</p>
+        <p className="text-sm font-semibold text-text-primary mb-4">{t('finance.AdminFinancePnlCharts.text_c7ebaca60f')}</p>
         <ReactApexChart
           type="bar"
           series={barSeries}
@@ -152,7 +152,7 @@ export default function AdminFinanceBranchProfitAndLossCharts({ data }: AdminFin
 
       {/* Donut — Profit Share */}
       <div className="xl:col-span-2 bg-card border border-border rounded-xl p-5">
-        <p className="text-sm font-semibold text-primary mb-4">{t('finance.AdminFinancePnlCharts.text_f2fc0d3c2b')}</p>
+        <p className="text-sm font-semibold text-text-primary mb-4">{t('finance.AdminFinancePnlCharts.text_f2fc0d3c2b')}</p>
         {profits.length === 0 ? (
           <div className="h-64 flex items-center justify-center text-sm text-secondary">
             {t('finance.AdminFinancePnlCharts.text_7c2d057fd5')}</div>

@@ -9,7 +9,7 @@ import AdminNavigationLayoutTableSkeleton from '@/app/frontend_admin/admin_commu
  */
 export default function AdminNotificationsLoading() {
   return (
-    <div className="p-6 space-y-6" data-testid="admin_notifications-loading-state">
+    <div className="p-4 sm:p-6 space-y-6" data-testid="admin_notifications-loading-state">
       <div className="h-10 w-48 bg-skeleton-base rounded-lg border border-border motion-safe:animate-pulse motion-safe:duration-base" />
       <div className="h-10 w-1/3 bg-skeleton-base rounded-lg border border-border motion-safe:animate-pulse motion-safe:duration-base" />
       <AdminNavigationLayoutTableSkeleton rows={8} />

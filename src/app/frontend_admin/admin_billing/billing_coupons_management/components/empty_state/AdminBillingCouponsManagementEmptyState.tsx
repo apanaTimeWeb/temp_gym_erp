@@ -24,7 +24,7 @@ export default function AdminBillingCouponsManagementEmptyState() {
         <Tag size={18} className="text-primary"  strokeWidth={2}/>
       </div>
       <div className="text-center">
-        <p className="text-base font-semibold text-primary">{t('coupons.admin_coupons_empty_state.text_6511a4c55d')}</p>
+        <p className="text-base font-semibold text-text-primary">{t('coupons.admin_coupons_empty_state.text_6511a4c55d')}</p>
         <p className="text-sm text-secondary mt-1">{t('coupons.admin_coupons_empty_state.text_0c9ea45172')}</p>
       </div>
       <button type="button"

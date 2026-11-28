@@ -41,9 +41,10 @@ export default function ManagerBusinessSettingsMain() {
   if (isError && !settings) return <div data-testid="manager_settings-manager-settings-main-status" role="alert" className="m-6 flex flex-col gap-3 rounded-xl border border-danger bg-danger-bg p-5 text-sm"><p className="font-semibold text-danger-text">{ManagerInfrastructureGetErrorMessage(error, t('TEXT_GENERIC_ERROR'))}</p><button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 w-fit rounded-lg bg-primary text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_settings-manager-settings-main-button-action" type="button" onClick={() => void retry()} >{t("COPY_RETRY")}</button></div>;
 
   return (
-    <div className="w-full max-w-5xl space-y-6 bg-page text-text-primary">
-      <div>
-        <h1 className="text-page-title font-bold text-text-primary">{t("COPY_APP_SETTINGS")}</h1>
+    <div className="w-full max-w-6xl p-4 sm:p-6 space-y-6 text-text-primary">
+      <div className="relative overflow-hidden rounded-2xl border border-cyan-500/30 bg-card dark:bg-gradient-to-br dark:from-[#0E2438] dark:via-[#121B2E] dark:to-[#0C1220] p-5 sm:p-6 shadow-card">
+        <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#22D3EE] via-[#3B82F6] to-[#FF5A1F]" />
+        <h1 className="text-page-title font-extrabold text-text-primary">{t("COPY_APP_SETTINGS")}</h1>
         <p className="mt-1 text-sm text-text-secondary">{t("COPY_MANAGE_PREFERENCES_APP_BEHAVIOUR")}</p>
       </div>
 
@@ -168,7 +169,7 @@ export default function ManagerBusinessSettingsMain() {
 
               <div className="p-4 bg-input rounded-xl border border-border space-y-3">
                 <h3 className="text-xs font-bold text-text-secondary uppercase tracking-wider">Enabled Operational Modules</h3>
-                <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                   {[
                     'WhatsApp Automation',
                     'Biometric QR / Face Sync',

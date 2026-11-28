@@ -16,7 +16,7 @@ import type { AdminPlansEmptyStateProps } from '@/app/frontend_admin/admin_billi
 export default function AdminBillingPlansCatalogEmptyState({ title, description }: AdminPlansEmptyStateProps) {
   return <div className="flex flex-col items-center justify-center gap-2 py-12 text-center" data-testid="admin_plans-admin_plans-empty-state-state">
     <CreditCard size={18} aria-hidden="true" className="text-secondary"  strokeWidth={2}/>
-    <h3 className="text-base font-semibold text-primary">{title}</h3>
+    <h3 className="text-base font-semibold text-text-primary">{title}</h3>
     <p className="text-sm text-secondary">{description}</p>
   </div>;
 }

@@ -27,7 +27,7 @@ export default function AdminFinanceOverviewRevenueSummary() {
       aria-labelledby="admin-finance-revenue-summary-heading"
       className="p-4 bg-card rounded-xl border border-border shadow-card"
     >
-      <h3 id="admin-finance-revenue-summary-heading" className="font-semibold text-primary">
+      <h3 id="admin-finance-revenue-summary-heading" className="font-semibold text-text-primary">
         {t('finance.admin_finance_revenue_summary.text_ad2e428a29')}
       </h3>
 
@@ -43,7 +43,7 @@ export default function AdminFinanceOverviewRevenueSummary() {
           <button
             type="button"
             onClick={() => void loadAll()}
-            className="mt-3 min-h-11 rounded-lg border border-border px-4 font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+            className="mt-3 min-h-11 rounded-lg border border-border px-4 font-semibold text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page"
            data-testid="finance-overview-finance-overview-revenue-summary-admin-finance-tabs-retry">
             {t('finance.admin_finance_tabs.retry')}
           </button>
@@ -69,7 +69,7 @@ export default function AdminFinanceOverviewRevenueSummary() {
                     label={t('admin_finance_revenue_summary.auto_revenueShare', { month: item.month })}
                   />
                   {item.revenue > 0 && (
-                    <span className="text-xs font-medium text-primary">
+                    <span className="text-xs font-medium text-text-primary">
                       {AdminFinanceFormatCurrency(item.revenue, 'INR', locale)}
                     </span>
                   )}

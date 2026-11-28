@@ -13,8 +13,6 @@ import { TrainerNavigationConfirmProvider } from '@/app/frontend_trainer/trainer
 
 import TrainerNavigationToastHost from '@/app/frontend_trainer/trainer_navigation/components/TrainerNavigationToastHost';
 
-import TrainerNavigationCommandPalette from '@/app/frontend_trainer/trainer_navigation/components/TrainerNavigationCommandPalette';
-
 import TrainerNavigationHeader from '@/app/frontend_trainer/trainer_navigation/components/TrainerNavigationHeader';
 
 import '@/app/frontend_trainer/trainer_navigation/components/TrainerNavigationShell.css';
@@ -86,7 +84,6 @@ export default function TrainerNavigationMain({ children }: TrainerNavigationMai
         >
           {t('TEXT_SKIP_TO_MAIN_CONTENT')}
         </a>
-        <TrainerNavigationCommandPalette />
         <TrainerNavigationHeader
           title={gymTitle}
           branchName={branchName}

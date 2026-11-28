@@ -49,10 +49,10 @@ export default function AdminAttendanceReportsTable() {
   return (
     <div className="space-y-6">
       <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
-        <div className="px-5 py-4 border-b border-border"><h2 className="text-base font-semibold text-primary">{t('reports.admin_reports_attendance.text_aff29fd842')}</h2></div>
+        <div className="px-5 py-4 border-b border-border"><h2 className="text-base font-semibold text-text-primary">{t('reports.admin_reports_attendance.text_aff29fd842')}</h2></div>
         <div className="max-h-[640px] overflow-auto">
           <table data-admin-responsive-table className="w-full text-left border-collapse text-xs sm:text-sm">
-            <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border shadow-xs">
+            <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border shadow-xs">
               <tr className="bg-surface-highlight">
                 {headers.map((header, index) => {
                   const isFirst = index === 0;
@@ -60,7 +60,7 @@ export default function AdminAttendanceReportsTable() {
                     <th
                       key={header.key}
                       className={`px-5 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
-                        isFirst ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                        isFirst ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                       }`}
                       aria-sort={sortKey === header.key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
                     >
@@ -72,10 +72,10 @@ export default function AdminAttendanceReportsTable() {
                 })}
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border dark:divide-white/[0.07]">
               {rows.length === 0 ? <tr><td colSpan={SUMMARY_TABLE_COLUMN_COUNT}><AdminAttendanceReportsEmptyState title={t('reports.admin_reports_attendance.text_0e47830c90')} description={t('reports.admin_reports_attendance.auto_1d0c4b148c')} /></td></tr> : rows.map((row) => (
                 <tr key={row.gymId} className="hover:bg-surface-hover motion-safe:transition-colors motion-safe:duration-base group">
-                  <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-e border-border px-5 py-4 text-sm font-semibold text-primary">
+                  <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] group-hover:bg-orange-50 dark:group-hover:bg-[#18243E] border-e border-border px-5 py-4 text-sm font-semibold text-text-primary">
                     <div className="flex items-center gap-1.5">
                       <Link
                         href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(row.gymName)}`}
@@ -87,9 +87,9 @@ export default function AdminAttendanceReportsTable() {
                       <CopyButton value={row.gymName} label="Copy gym name" className="opacity-0 group-hover:opacity-100" />
                     </div>
                   </td>
-                  <td className="px-5 py-4 text-sm text-primary">{row.avgDailyAttendance}</td>
-                  <td className="px-5 py-4 text-sm text-primary">{formatNumber(row.totalCheckIns, locale)}</td>
-                  <td className="px-5 py-4"><div className="flex items-center gap-2"><div className="flex-1 max-w-24"><AdminAttendanceReportsProgressBar value={row.attendanceRate} label={t('reports.admin_reports_attendance.auto_attendanceRate', { gym: row.gymName })} variant="success" /></div><span className="text-sm font-semibold text-primary">{formatPercent1dp(row.attendanceRate, locale)}%</span></div></td>
+                  <td className="px-5 py-4 text-sm text-text-primary">{row.avgDailyAttendance}</td>
+                  <td className="px-5 py-4 text-sm text-text-primary">{formatNumber(row.totalCheckIns, locale)}</td>
+                  <td className="px-5 py-4"><div className="flex items-center gap-2"><div className="flex-1 max-w-24"><AdminAttendanceReportsProgressBar value={row.attendanceRate} label={t('reports.admin_reports_attendance.auto_attendanceRate', { gym: row.gymName })} variant="success" /></div><span className="text-sm font-semibold text-text-primary">{formatPercent1dp(row.attendanceRate, locale)}%</span></div></td>
                   <td className="px-5 py-4"><span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary-subtle text-primary" data-testid="reports-analytics-reports-analytics-attendance-status-badge">{dayLabels[row.peakDay as keyof typeof dayLabels] ?? row.peakDay}</span></td>
                 </tr>
               ))}
@@ -98,22 +98,22 @@ export default function AdminAttendanceReportsTable() {
         </div>
       </div>
       <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
-        <div className="px-5 py-4 border-b border-border flex items-center justify-between"><h2 className="text-base font-semibold text-primary">{t('reports.admin_reports_attendance.text_373e6c1e10')}</h2><div className="flex items-center gap-3 text-xs text-secondary"><span>{t('reports.admin_reports_attendance.text_cabfc9d38a')}</span><span>{t('reports.admin_reports_attendance.text_ff8daa2365')}</span><span>{t('reports.admin_reports_attendance.text_c040292c67')}</span><span>{t('reports.admin_reports_attendance.text_4e0fa4378f')}</span></div></div>
+        <div className="px-5 py-4 border-b border-border flex items-center justify-between"><h2 className="text-base font-semibold text-text-primary">{t('reports.admin_reports_attendance.text_373e6c1e10')}</h2><div className="flex items-center gap-3 text-xs text-secondary"><span>{t('reports.admin_reports_attendance.text_cabfc9d38a')}</span><span>{t('reports.admin_reports_attendance.text_ff8daa2365')}</span><span>{t('reports.admin_reports_attendance.text_c040292c67')}</span><span>{t('reports.admin_reports_attendance.text_4e0fa4378f')}</span></div></div>
         <div className="p-5 max-h-[640px] overflow-auto">
           <table data-admin-responsive-table className="w-full border-collapse">
             <thead className="sticky top-0 z-20 bg-card border-b border-border shadow-xs">
               <tr>
-                <th className="sticky start-0 z-30 bg-card border-e border-border text-left text-xs font-semibold text-secondary uppercase tracking-wider pb-3 pr-4 w-32">{t('reports.admin_reports_attendance.text_bc4359231d')}</th>
+                <th className="sticky start-0 z-30 bg-card dark:bg-[#0F172A] border-e border-border text-left text-xs font-semibold text-secondary uppercase tracking-wider pb-3 pr-4 w-32">{t('reports.admin_reports_attendance.text_bc4359231d')}</th>
                 {(['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] as const).map((day) => <th key={day} className="text-center text-xs font-semibold text-secondary uppercase tracking-wider pb-3 px-1">{dayLabels[day]}</th>)}
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border dark:divide-white/[0.07]">
               {rows.length === 0 ? <tr><td colSpan={HEATMAP_TABLE_COLUMN_COUNT}><AdminAttendanceReportsEmptyState title={t('reports.admin_reports_attendance.text_c221964277')} description={t('reports.admin_reports_attendance.auto_f0707f1ee7')} /></td></tr> : rows.map((gym) => {
                 const heatmap = (reportData as AdminAttendanceReportsReportData).attendanceHeatmap ?? [];
                 const byDay = heatmap.filter((cell) => cell.gymId === gym.gymId);
                 return (
                   <tr key={gym.gymId} className="hover:bg-surface-hover motion-safe:transition-colors group">
-                    <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-e border-border text-sm font-medium text-primary pr-4 py-2 transition-colors">
+                    <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] group-hover:bg-orange-50 dark:group-hover:bg-[#18243E] border-e border-border text-sm font-medium text-text-primary pr-4 py-2 transition-colors">
                       <div className="flex items-center gap-1.5">
                         <Link
                           href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(gym.gymName)}`}

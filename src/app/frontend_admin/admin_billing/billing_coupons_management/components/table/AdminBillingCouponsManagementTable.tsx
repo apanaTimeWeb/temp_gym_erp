@@ -36,7 +36,7 @@ export default function AdminBillingCouponsManagementTable() {
   const { coupons, status, error, retry, openEdit, deleteCoupon, toggleCoupon, currentPage, setCurrentPage, totalPages, totalItems } = useAdminCouponsLogic();
 
   if (status === 'pending') return <AdminNavigationLayoutTableSkeleton rows={6} cols={TABLE_COLUMN_COUNT} />;
-  if (status === 'error') return <div role="alert" className="rounded-lg border border-border bg-danger-bg p-4 text-danger">{t('coupons.admin_coupons_table.loadError')} <button type="button" onClick={() => void retry()} className="ml-3 min-h-11 rounded-md border border-border px-3 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="coupons-management-coupons-management-table-retry">{t('coupons.admin_coupons_table.retry')}</button></div>;
+  if (status === 'error') return <div role="alert" className="rounded-lg border border-border bg-danger-bg p-4 text-danger">{t('coupons.admin_coupons_table.loadError')} <button type="button" onClick={() => void retry()} className="ml-3 min-h-11 rounded-md border border-border px-3 text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="coupons-management-coupons-management-table-retry">{t('coupons.admin_coupons_table.retry')}</button></div>;
 
   if (coupons.length === 0) return <AdminCouponsEmptyState />;
 
@@ -58,7 +58,7 @@ export default function AdminBillingCouponsManagementTable() {
     <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
       <div className="max-h-[640px] overflow-auto">
         <table data-admin-responsive-table className="w-full text-left border-collapse text-xs sm:text-sm">
-          <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border shadow-xs">
+          <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border shadow-xs">
             <tr className="bg-surface-highlight">
               {COUPON_TABLE_HEADER_KEYS.map((key, index) => {
                 const isFirst = index === 0;
@@ -66,7 +66,7 @@ export default function AdminBillingCouponsManagementTable() {
                   <th
                     key={key}
                     className={`px-5 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
-                      isFirst ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                      isFirst ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                     }`}
                   >
                     {t(key)}
@@ -75,13 +75,13 @@ export default function AdminBillingCouponsManagementTable() {
               })}
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody className="divide-y divide-border dark:divide-white/[0.07]">
             {coupons.map((coupon: Coupon , __testIdIndex54) => (
               <tr
                 key={coupon.id}
                 className="hover:bg-surface-hover motion-safe:transition-colors group motion-safe:duration-base"
                 data-testid={`admin_coupons-admin_coupons-table-row-${__testIdIndex54}`}>
-                <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-e border-border px-5 py-4">
+                <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] group-hover:bg-orange-50 dark:group-hover:bg-[#18243E] border-e border-border px-5 py-4">
                   <div className="flex items-center gap-2">
                     <button type="button" onClick={() => openEdit(coupon)} disabled={coupon.status === COUPON_STATUS.EXPIRED || coupon.validUntil < todayLocalKey} aria-label={t('admin_coupons_table.auto_editCoupon', { code: coupon.code })} className="font-mono text-sm font-bold text-primary bg-primary-subtle px-2 py-1 rounded min-h-11 underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid={`admin_coupons-admin_coupons-table-edit-code-${__testIdIndex54}`}>{coupon.code}</button>
                     <button type="button"
@@ -94,11 +94,11 @@ export default function AdminBillingCouponsManagementTable() {
                   </div>
                   <p className="text-xs text-secondary mt-1 truncate max-w-48">{coupon.description}</p>
                 </td>
-                <td className="px-5 py-4 text-sm font-semibold text-primary">
+                <td className="px-5 py-4 text-sm font-semibold text-text-primary">
                   {coupon.type === 'percentage' ? `${coupon.value}% ${t('coupons.AdminCouponsCatalog.off')}` : `${AdminCouponsFormatCurrency(coupon.value, locale)} ${t('coupons.AdminCouponsCatalog.off')}`}
                   {coupon.minOrderAmount > 0 && <p className="text-xs text-secondary font-normal">{t('coupons.admin_coupons_table.text_21be6e4ee3')}{AdminCouponsFormatCurrency(coupon.minOrderAmount, locale)}</p>}
                 </td>
-                <td className="px-5 py-4 text-sm text-primary">
+                <td className="px-5 py-4 text-sm text-text-primary">
                   <div className="flex flex-wrap gap-1">
                     {coupon.assignedGymNames.map((gymName, gIdx) => (
                       <span key={gymName}>
@@ -107,7 +107,7 @@ export default function AdminBillingCouponsManagementTable() {
                         ) : (
                           <Link
                             href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(gymName)}`}
-                            className="hover:underline text-primary"
+                            className="hover:underline text-text-primary"
                             title={`View ${gymName} in Branches Directory`}
                           >
                             {gymName}
@@ -121,7 +121,7 @@ export default function AdminBillingCouponsManagementTable() {
                 <td className="px-5 py-4">
                   {coupon.usageLimit ? (
                     <>
-                      <div className="text-sm text-primary">{coupon.usedCount} / {coupon.usageLimit} {t('coupons.admin_coupons_table.text_02c0e4a1da')}</div>
+                      <div className="text-sm text-text-primary">{coupon.usedCount} / {coupon.usageLimit} {t('coupons.admin_coupons_table.text_02c0e4a1da')}</div>
                       <div className="mt-1 w-20">
                         <AdminNavigationLayoutProgressBar
                           value={coupon.usageLimit > 0 ? (coupon.usedCount / coupon.usageLimit) * 100 : 0}
@@ -130,10 +130,10 @@ export default function AdminBillingCouponsManagementTable() {
                       </div>
                     </>
                   ) : (
-                    <div className="text-sm text-primary">{coupon.usedCount} {t('coupons.admin_coupons_table.text_11f5c0dfb7')}</div>
+                    <div className="text-sm text-text-primary">{coupon.usedCount} {t('coupons.admin_coupons_table.text_11f5c0dfb7')}</div>
                   )}
                 </td>
-                <td className="px-5 py-4 text-sm text-primary whitespace-nowrap">{formatDate(coupon.validUntil)}</td>
+                <td className="px-5 py-4 text-sm text-text-primary whitespace-nowrap">{formatDate(coupon.validUntil)}</td>
                 <td className="px-5 py-4">
                   <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold capitalize ${COUPON_STATUS_STYLES[coupon.status] ?? 'bg-input text-secondary'}`} data-testid="coupons-management-coupons-management-table-status-badge">
                     {t(COUPON_STATUS_LABEL_KEYS[coupon.status] as string)}

@@ -1,52 +1,45 @@
 // RESPONSIBILITY: Renders/orchestrates SuperadminPlatformShellNavigationSidebar within its owning Superadmin feature module; no direct backend implementation.
 'use client';
-/**
- * RESPONSIBILITY: React component SuperadminPlatformShellNavigationSidebar owned by the SuperadminPlatformShellLayoutStyles feature boundary.
- * INTENT: Keep this file’s presentation, logic, and state responsibility isolated from unrelated business modules.
- * STATE DEPENDENCIES: useState, useEffect, useMemo, usePathname
- * MODULE DEPENDENCIES: next/image, next/link, next/navigation, react, lucide-react, next-intl, @/lib/api, @/app/frontend_superadmin/superadmin_platform_shell/platform_shell_navigation/constants/superadmin_platform_shell_navigation_config.constants, @/app/frontend_superadmin/superadmin_platform_shell/platform_shell_navigation/types/SuperadminPlatformShellLayoutTypes
- * EDGE CASES: Preserve implemented loading, empty, error, disabled, cancellation, retry, and repeated-action behavior.
- * REPAIR CONSTRAINT: Cross-feature business dependencies require explicit documentation; do not move business logic into global UI infrastructure.
- */
-// RESPONSIBILITY: Renders the collapsible left navigation sidebar with nav items, user identity footer, and mobile drawer. No API calls.
-
+// RESPONSIBILITY: Renders the collapsible left navigation sidebar matching Trainer Obsidian Aurora UI with jewel icons, search, collapsible groups, and mobile drawer. No API calls.
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-import { Search } from 'lucide-react';
+import { ChevronDown, LayoutDashboard, Menu, Search, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { getUser } from '@/lib/api';
-
+import SuperadminPlatformShellNavigationBrandIcon from '@/app/frontend_superadmin/superadmin_platform_shell/platform_shell_navigation/components/SuperadminPlatformShellNavigationBrandIcon';
+import {
+  DEFAULT_SUPERADMIN_NAV_COLOR,
+  SUPERADMIN_NAV_GROUP_COLORS,
+  SUPERADMIN_NAV_ITEM_COLORS,
+} from '@/app/frontend_superadmin/superadmin_platform_shell/platform_shell_navigation/components/SuperadminPlatformShellNavigationSidebarColors';
+import '@/app/frontend_superadmin/superadmin_platform_shell/platform_shell_navigation/components/SuperadminPlatformShellNavigationSidebar.css';
 import { SUPERADMIN_NAV_GROUPS } from '@/app/frontend_superadmin/superadmin_platform_shell/platform_shell_navigation/constants/superadmin_platform_shell_navigation_config.constants';
+import { SUPERADMIN_PLATFORM_SHELL_NAVIGATION_ROUTES } from '@/app/frontend_superadmin/superadmin_platform_shell/platform_shell_navigation/config/superadmin_platform_shell_navigation.url_config';
 
 import type { SuperadminPlatformShellLayoutSidebarProps } from '@/app/frontend_superadmin/superadmin_platform_shell/platform_shell_navigation/types/superadmin_platform_shell_navigation.types';
 
-/** @description Renders the Superadmin role navigation shell and its responsive collapsed state. @dependencies Consumes role-owned navigation configuration and approved UI primitives. @edge-case Keeps navigation keyboard accessible in both expanded and collapsed modes. */
-export default function SuperadminPlatformShellNavigationSidebar({ isCollapsed, setIsCollapsed }: SuperadminPlatformShellLayoutSidebarProps) {
+/** @description Renders the Superadmin role navigation shell and its responsive collapsed/mobile drawer states matching Trainer UI. @dependencies Consumes role-owned navigation configuration and approved UI primitives. @edge-case Keeps navigation keyboard accessible in both expanded and collapsed modes. */
+export default function SuperadminPlatformShellNavigationSidebar({
+  isCollapsed,
+  setIsCollapsed,
+  isMobileOpen: controlledMobileOpen,
+  setIsMobileOpen: controlledSetMobileOpen,
+}: SuperadminPlatformShellLayoutSidebarProps) {
   const t = useTranslations('SuperadminPlatformShellLayoutStyles');
   const pathname = usePathname();
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [isMobileViewport, setIsMobileViewport] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const drawerCloseRef = useRef<HTMLButtonElement | null>(null);
-  const searchInputRef = useRef<HTMLInputElement | null>(null);
-  const drawerTriggerRef = useRef<HTMLElement | null>(null);
-  const user = getUser();
+  const [internalMobileOpen, setInternalMobileOpen] = useState(false);
+  const isMobileOpen = controlledMobileOpen ?? internalMobileOpen;
+  const setIsMobileOpen = controlledSetMobileOpen ?? setInternalMobileOpen;
 
-  const focusDrawer = useMemo(() => {
-    return (container: HTMLElement | null) => {
-      if (!container) return;
-      const focusable = Array.from(container.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      ));
-      focusable[0]?.focus();
-    };
-  }, []);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
+  const sidebarRef = useRef<HTMLElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const prevPathnameRef = useRef(pathname);
 
   useEffect(() => {
     const updateViewport = () => {
@@ -57,213 +50,316 @@ export default function SuperadminPlatformShellNavigationSidebar({ isCollapsed, 
     updateViewport();
     window.addEventListener('resize', updateViewport);
     return () => window.removeEventListener('resize', updateViewport);
-  }, []);
+  }, [setIsMobileOpen]);
 
-  // Sets mounted=true once on client-side hydration to safely read user data (avoids SSR mismatch).
-  /* eslint-disable react-hooks/set-state-in-effect */
-// EFFECT: Synchronizes this component effect with its declared React dependencies in SuperadminPlatformShellLayoutStyles/SuperadminPlatformShellNavigationMain/SuperadminPlatformShellNavigationSidebar.tsx.
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-  /* eslint-enable react-hooks/set-state-in-effect */
-
-  // Listens for the global 'toggle-sidebar' event dispatched by SuperadminPlatformShellNavigationHeader's hamburger button.
-  // On mobile (<768px) toggles the drawer; tablet/desktop toggle the collapsed icon-only mode..
-// EFFECT: Synchronizes this component effect with its declared React dependencies in SuperadminPlatformShellLayoutStyles/SuperadminPlatformShellNavigationMain/SuperadminPlatformShellNavigationSidebar.tsx.
   useEffect(() => {
     const handleToggle = () => {
       if (window.innerWidth < 768) {
-        drawerTriggerRef.current = document.getElementById('superadmin-sidebar-toggle');
-        setIsMobileOpen(v => !v);
+        setIsMobileOpen(!isMobileOpen);
       } else {
         setIsCollapsed(!isCollapsed);
       }
     };
     window.addEventListener('toggle-sidebar', handleToggle);
     return () => window.removeEventListener('toggle-sidebar', handleToggle);
-  }, [isCollapsed, setIsCollapsed]);
+  }, [isCollapsed, setIsCollapsed, isMobileOpen, setIsMobileOpen]);
 
-// EFFECT: Synchronizes the component state/effect side effect with its declared dependencies and cleans up the subscription or listener when the owner unmounts or dependencies change.
   useEffect(() => {
-    const previousOverflow = document.body.style.overflow;
-    if (!isMobileOpen) {
-      document.body.style.overflow = previousOverflow;
-      drawerTriggerRef.current?.focus();
-      return;
+    if (prevPathnameRef.current !== pathname) {
+      prevPathnameRef.current = pathname;
+      if (isMobileOpen) setIsMobileOpen(false);
     }
-    document.body.style.overflow = 'hidden';
-    focusDrawer(drawerCloseRef.current?.closest('aside') ?? null);
+  }, [pathname, isMobileOpen, setIsMobileOpen]);
+
+  useEffect(() => {
+    if (!isMobileOpen) return;
+    const previouslyFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const first = sidebarRef.current?.querySelector<HTMLElement>('a[href], button:not([disabled]), input:not([disabled])');
+    first?.focus();
+    document.body.classList.add('overflow-hidden');
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         event.preventDefault();
         setIsMobileOpen(false);
+        document.getElementById('superadmin-sidebar-toggle')?.focus();
         return;
       }
       if (event.key !== 'Tab') return;
-      const aside = drawerCloseRef.current?.closest('aside');
-      if (!aside) return;
-      const focusable = Array.from(aside.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      ));
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      const active = document.activeElement;
-      if (event.shiftKey && active === first) { event.preventDefault(); last?.focus(); }
-      else if (!event.shiftKey && active === last) { event.preventDefault(); first?.focus(); }
+      const focusable = sidebarRef.current?.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), input:not([disabled])');
+      if (!focusable?.length) return;
+      const firstFocusable = focusable[0]!;
+      const lastFocusable = focusable[focusable.length - 1]!;
+      if (event.shiftKey && document.activeElement === firstFocusable) {
+        event.preventDefault();
+        lastFocusable.focus();
+      } else if (!event.shiftKey && document.activeElement === lastFocusable) {
+        event.preventDefault();
+        firstFocusable.focus();
+      }
     };
+
     document.addEventListener('keydown', handleKeyDown);
     return () => {
-      document.body.style.overflow = previousOverflow;
       document.removeEventListener('keydown', handleKeyDown);
+      document.body.classList.remove('overflow-hidden');
+      previouslyFocused?.focus();
     };
-  }, [focusDrawer, isMobileOpen]);
+  }, [isMobileOpen, setIsMobileOpen]);
 
-  // Closes the mobile drawer whenever the route changes (user navigated to a new page).
-  /* eslint-disable react-hooks/set-state-in-effect */
-// EFFECT: Synchronizes this component effect with its declared React dependencies in SuperadminPlatformShellLayoutStyles/SuperadminPlatformShellNavigationMain/SuperadminPlatformShellNavigationSidebar.tsx.
-  useEffect(() => {
-    setIsMobileOpen(false);
-  }, [pathname]);
-  /* eslint-enable react-hooks/set-state-in-effect */
-
-  // Filter groups based on search query
   const filteredNavGroups = useMemo(() => {
-    if (!searchQuery.trim()) return SUPERADMIN_NAV_GROUPS;
-    const lowerQuery = searchQuery.toLowerCase();
-    
+    const normalized = searchQuery.trim().toLowerCase();
+    if (!normalized) return SUPERADMIN_NAV_GROUPS;
     return SUPERADMIN_NAV_GROUPS
-      .map(group => ({
+      .map((group) => ({
         ...group,
-        items: group.items.filter(item => t(item.labelKey).toLowerCase().includes(lowerQuery))
+        items: group.items.filter((item) => t(item.labelKey).toLowerCase().includes(normalized)),
       }))
-      .filter(group => group.items.length > 0);
+      .filter((group) => group.items.length > 0);
   }, [searchQuery, t]);
+
+  const gymBrandText = t('ui.gymsmart_8e4d6efe');
+  const hasGymSmartSplit = gymBrandText === 'GymSmart';
+  const showLabel = !isCollapsed || isMobileOpen;
 
   return (
     <>
-      {/* Mobile Backdrop */}
       {isMobileOpen && (
-        <div
-          className="fixed inset-0 bg-overlay-backdrop backdrop-blur-sm z-10 lg:hidden motion-safe:transition-opacity motion-safe:duration-base"
+        <button
+          type="button"
+          aria-label={t('ui.close_sidebar')}
+          className="superadmin-mobile-backdrop superadmin-mobile-backdrop-safe-area focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
           onClick={() => setIsMobileOpen(false)}
-         data-testid="superadmin_platform_shell_layout-superadminsidebar-interaction-layer-1"/>
+          data-testid="superadmin_platform_shell_layout-superadminsidebar-interaction-layer-1"
+        />
       )}
 
-      <aside aria-hidden={isMobileViewport && !isMobileOpen} inert={isMobileViewport && !isMobileOpen ? true : undefined} className={`fixed start-0 top-16 bottom-0 bg-sidebar border-e border-border z-20 flex flex-col motion-safe:transition-all motion-safe:duration-slow ${
-        isCollapsed ? 'w-64 md:w-16' : 'w-64 md:w-64'
-      } ${isMobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`} aria-label={t('ui.superadmin_sidebar_label')}>
+      <aside
+        ref={sidebarRef}
+        id="superadmin-sidebar"
+        role={isMobileOpen ? 'dialog' : undefined}
+        aria-label={t('ui.superadmin_sidebar_label')}
+        aria-modal={isMobileOpen || undefined}
+        aria-hidden={isMobileViewport && !isMobileOpen ? true : undefined}
+        className={`superadmin-sidebar superadmin-sidebar-safe-area motion-safe:transition-all motion-safe:duration-base ${
+          isCollapsed ? 'superadmin-sidebar-collapsed' : ''
+        } ${isMobileOpen ? 'superadmin-sidebar-open' : ''}`}
+      >
+        {/* Top Brand + Toggle Header matching Trainer Sidebar */}
+        <div className="h-16 flex items-center gap-2.5 px-3 border-b border-white/10 bg-white/[0.02] shrink-0">
+          <button
+            type="button"
+            onClick={isMobileOpen ? () => setIsMobileOpen(false) : () => setIsCollapsed(!isCollapsed)}
+            aria-label={isMobileOpen ? t('ui.close_sidebar') : t('ui.toggle_sidebar_d4bbf74f')}
+            className="min-w-9 min-h-9 w-9 h-9 inline-flex items-center justify-center rounded-xl text-slate-300 hover:text-white hover:bg-orange-500/20 border border-white/10 hover:border-orange-500/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shrink-0 motion-safe:transition-all cursor-pointer"
+            data-testid="SuperadminPlatformShellLayoutStyles-superadmin-sidebar-superadmin-sidebar-close"
+          >
+            {isMobileOpen ? <X size={18} strokeWidth={2} aria-hidden="true" /> : <Menu size={18} strokeWidth={2} aria-hidden="true" />}
+          </button>
 
-        {isMobileOpen && (
-          <div className="flex items-center justify-end border-b border-border px-4 py-2 md:hidden">
-            <button ref={drawerCloseRef} type="button" onClick={() => setIsMobileOpen(false)} aria-label={t('ui.close_sidebar')} className="min-h-11 min-w-11 inline-flex items-center justify-center rounded-lg text-secondary hover:text-primary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="SuperadminPlatformShellLayoutStyles-superadmin-sidebar-superadmin-sidebar-close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-        )}
-
-        {/* Logo & Toggle */}
-        <div className="flex items-center justify-center px-4 py-5 border-b border-border shrink-0">
-          <div className="flex items-center gap-3 overflow-hidden">
-            <Image src="/logo.png" alt={t('ui.gymsmart_admin_2b8e9f13')} width={44} height={44} className="object-contain min-w-11 rounded-lg" />
-            {(!isCollapsed || isMobileOpen) && (
-              <div className="whitespace-nowrap motion-safe:transition-opacity motion-safe:duration-slow flex flex-col">
-                <span className="text-primary font-bold text-lg leading-tight tracking-tight">{t('ui.gymsmart_8e4d6efe')}</span>
-                <span className="text-xs text-warning font-bold uppercase tracking-wider -mt-0.5">{t('ui.admin_system_100f28d6')}</span>
+          {showLabel && (
+            <Link
+              href={SUPERADMIN_PLATFORM_SHELL_NAVIGATION_ROUTES.SUPERADMIN_PLATFORM_SHELL_NAVIGATION_DESTINATION_ROUTES.DASHBOARD}
+              onClick={() => { if (typeof window !== 'undefined' && window.innerWidth < 768) setIsMobileOpen(false); }}
+              className="flex items-center gap-2.5 min-w-0 flex-1 group no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring rounded-lg"
+            >
+              <span
+                className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FF5A1F] via-[#EC4899] to-[#8B5CF6] border border-white/25 text-white flex items-center justify-center shrink-0 shadow-[0_4px_16px_rgba(255,90,31,0.45)] motion-safe:transition-transform motion-safe:duration-base group-hover:scale-105"
+                aria-hidden="true"
+              >
+                <SuperadminPlatformShellNavigationBrandIcon className="w-[19px] h-[19px]" />
+              </span>
+              <div className="whitespace-nowrap flex flex-col min-w-0 justify-center">
+                <span className="flex items-center text-[17px] leading-none tracking-tight truncate">
+                  {hasGymSmartSplit ? (
+                    <>
+                      <span className="text-white font-extrabold">Gym</span>
+                      <span className="bg-gradient-to-r from-[#FF5A1F] via-[#EC4899] to-[#A78BFA] bg-clip-text text-transparent font-black">Smart</span>
+                    </>
+                  ) : (
+                    <span className="text-white font-extrabold">{gymBrandText}</span>
+                  )}
+                </span>
+                <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-orange-400 leading-none mt-1.5 truncate">
+                  {t('ui.superadmin_role')}
+                </span>
               </div>
-            )}
-          </div>
+            </Link>
+          )}
         </div>
 
-        {/* Search Box */}
-        {(!isCollapsed || isMobileOpen) && (
-          <div className={`px-4 py-3 ${isMobileOpen ? 'block' : 'hidden md:block'} border-b border-border shrink-0`}>
+        {/* Search Input (Expanded) */}
+        {showLabel && (
+          <div className="px-3 py-3 border-b border-white/10 shrink-0">
+            <label htmlFor="superadmin-sidebar-search" className="sr-only">{t('ui.search_menu_97ecae35')}</label>
             <div className="relative">
-              <div className="absolute inset-y-0 start-0 ps-3 flex items-center pointer-events-none">
-                <Search size={18} className="text-secondary" />
-              </div>
+              <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-[#FF5A1F] pointer-events-none" aria-hidden="true" strokeWidth={2.2} />
               <input
                 ref={searchInputRef}
-                type="text"
+                id="superadmin-sidebar-search"
+                type="search"
                 aria-label={t('ui.search_menu_97ecae35')}
                 placeholder={t('ui.search_menu_97ecae35')}
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="block w-full ps-9 pe-3 py-2 min-h-11 border border-border rounded-lg leading-5 bg-input text-primary placeholder-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-focus sm:text-sm motion-safe:transition-colors motion-safe:duration-base"
-               data-testid="SuperadminPlatformShellLayoutStyles-superadmin-sidebar-layout-superadmin-sidebar-text"/>
+                onChange={(event) => setSearchQuery(event.target.value)}
+                className="block w-full min-h-10 ps-9 pe-8 py-2 border border-white/15 hover:border-orange-500/45 rounded-xl bg-white/[0.06] text-sm text-white placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:border-focus motion-safe:transition-colors motion-safe:duration-base"
+                data-testid="SuperadminPlatformShellLayoutStyles-superadmin-sidebar-layout-superadmin-sidebar-text"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  aria-label="Clear menu search"
+                  className="absolute end-2 top-1/2 -translate-y-1/2 p-1 rounded-md text-slate-400 hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring cursor-pointer"
+                >
+                  <X size={14} aria-hidden="true" />
+                </button>
+              )}
             </div>
           </div>
         )}
-        
+
+        {/* Search Trigger (Collapsed) */}
         {isCollapsed && !isMobileOpen && (
-          <div className="flex items-center justify-center px-4 py-3 border-b border-border shrink-0">
-            <button type="button"
-              onClick={() => { setSearchQuery(''); setIsCollapsed(false); window.requestAnimationFrame(() => searchInputRef.current?.focus()); }}
+          <div className="flex items-center justify-center px-2 py-3 border-b border-white/10 shrink-0">
+            <button
+              type="button"
+              onClick={() => {
+                setSearchQuery('');
+                setIsCollapsed(false);
+                window.requestAnimationFrame(() => searchInputRef.current?.focus());
+              }}
               aria-label={t('ui.search_menu_898fbc2a')}
-              className="min-h-11 min-w-11 p-2 rounded-lg text-secondary hover:text-primary hover:bg-input motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:duration-base"
-             data-testid="SuperadminPlatformShellLayoutStyles-superadmin-sidebar-superadmin-sidebar-search-menu">
+              title={t('ui.search_menu_898fbc2a')}
+              className="min-w-11 min-h-11 p-2 rounded-xl text-orange-400 bg-orange-500/10 border border-orange-500/25 hover:bg-orange-500/20 motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-base motion-safe:active:scale-95 cursor-pointer"
+              data-testid="SuperadminPlatformShellLayoutStyles-superadmin-sidebar-superadmin-sidebar-search-menu"
+            >
               <Search size={18} strokeWidth={2} aria-hidden="true" />
             </button>
           </div>
         )}
 
-        {/* Nav */}
-        <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-4 custom-scrollbar">
+        {/* Navigation Groups with Jewel Badges */}
+        <nav
+          className={`flex-1 overflow-y-auto py-3.5 ${showLabel ? 'px-2.5 space-y-4' : 'px-1.5 space-y-2.5'} superadmin-shell-scrollbar`}
+          aria-label={t('ui.superadmin_sidebar_label')}
+        >
           {filteredNavGroups.length === 0 ? (
-            <div className="text-center py-4 text-sm text-secondary">
-              {t('ui.no_matches_found_d132286c')}</div>
+            <p className="text-center py-4 text-sm text-slate-400">{t('ui.no_matches_found_d132286c')}</p>
           ) : (
-            filteredNavGroups.map((group) => (
-              <div key={group.labelKey}>
-                {group.items.length > 1 && (!isCollapsed || isMobileOpen) && (
-                  <p className={`${isMobileOpen ? 'block' : 'hidden md:block'} text-xs font-semibold text-disabled mb-2 px-2 uppercase tracking-wider`}>
-                    {t(group.labelKey)}
-                  </p>
-                )}
-                <div className="space-y-1">
-                  {group.items.map((item) => {
-                    const active = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
-                    const Icon = item.icon;
-                    const showLabel = !isCollapsed || isMobileOpen;
-                    const labelVisibilityClass = (() => { if (isMobileOpen) { return ('inline'); } if (!isCollapsed) { return ('hidden md:inline'); } return ('hidden'); })();
+            filteredNavGroups.map((group, groupIndex) => {
+              const activeGroup = group.items.some((item) => pathname === item.href || pathname.startsWith(`${item.href}/`));
+              const searching = searchQuery.trim().length > 0;
+              const showChildren = !showLabel ? true : (searching || (expandedGroups[group.labelKey] ?? true));
+              const sectionId = `superadmin-domain-${group.labelKey.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+              const groupColor = SUPERADMIN_NAV_GROUP_COLORS[group.labelKey] ?? DEFAULT_SUPERADMIN_NAV_COLOR;
+              const GroupIcon = group.icon ?? LayoutDashboard;
 
-                    return (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        title={!showLabel ? t(item.labelKey) : ''}
-                        className={`flex items-center gap-3 py-2.5 rounded-xl font-medium motion-safe:transition-all motion-safe:duration-base group cursor-pointer ${
-                          !showLabel ? 'justify-center px-0' : 'px-3.5'
-                        } ${
-                          active
-                            ? 'bg-primary-subtle text-primary border-s-2 border-focus'
-                            : 'text-secondary hover:text-primary hover:bg-surface-hover border-s-2 border-transparent'
-                        } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11`}
-                        
-                       aria-current={active ? 'page' : undefined}
-                       data-testid={`SuperadminPlatformShellLayoutStyles-superadmin-sidebar-link-${item.href.replace(/[^a-zA-Z0-9_-]/g, '-')}`}>
-                        <Icon size={18} className={active ? 'text-primary' : 'text-secondary group-hover:text-primary motion-safe:transition-colors'} />
-                        {showLabel && <span className={`text-sm whitespace-nowrap ${labelVisibilityClass}`}>{t(item.labelKey)}</span>}
-                      </Link>
-                    );
-                  })}
+              return (
+                <div
+                  key={group.labelKey}
+                  className={groupIndex > 0 ? (showLabel ? 'pt-3 border-t border-white/[0.07]' : 'pt-2 border-t border-white/10') : ''}
+                >
+                  {showLabel && (
+                    <button
+                      type="button"
+                      aria-expanded={showChildren}
+                      aria-controls={sectionId}
+                      onClick={() => {
+                        setExpandedGroups((previous) => ({ ...previous, [group.labelKey]: !showChildren }));
+                      }}
+                      className={`flex w-full min-h-8 items-center justify-between gap-2 rounded-lg px-2 py-1 text-start text-[11px] font-bold uppercase tracking-wider focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-colors cursor-pointer ${
+                        activeGroup ? 'bg-white/[0.04]' : 'hover:bg-white/[0.05]'
+                      }`}
+                    >
+                      <span className="flex items-center gap-2 min-w-0">
+                        <span
+                          className="w-5 h-5 rounded-md inline-flex items-center justify-center shrink-0"
+                          style={{
+                            color: groupColor.iconColor,
+                            backgroundColor: groupColor.bg,
+                            border: `1px solid ${groupColor.iconColor}40`,
+                            boxShadow: activeGroup ? groupColor.activeShadow : undefined,
+                          }}
+                          aria-hidden="true"
+                        >
+                          <GroupIcon size={12} strokeWidth={2.4} />
+                        </span>
+                        <span className="truncate" style={{ color: groupColor.iconColor }}>{t(group.labelKey)}</span>
+                      </span>
+                      <ChevronDown
+                        size={14}
+                        strokeWidth={2.2}
+                        aria-hidden="true"
+                        className={`shrink-0 text-slate-400 motion-safe:transition-transform ${showChildren ? 'rotate-180' : ''}`}
+                      />
+                    </button>
+                  )}
+
+                  <div
+                    id={sectionId}
+                    hidden={!showChildren}
+                    className={
+                      showLabel
+                        ? 'mt-2.5 space-y-1.5 ps-2 ms-1.5 border-s border-white/[0.08]'
+                        : 'space-y-1.5 flex flex-col items-center'
+                    }
+                  >
+                    {group.items.map((item) => {
+                      const active = pathname === item.href || (item.href !== '/' && pathname.startsWith(`${item.href}/`)) || pathname === item.href;
+                      const Icon = item.icon;
+                      const itemColor = SUPERADMIN_NAV_ITEM_COLORS[item.labelKey] ?? groupColor;
+
+                      return (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          title={t(item.labelKey)}
+                          aria-label={!showLabel ? t(item.labelKey) : undefined}
+                          aria-current={active ? 'page' : undefined}
+                          onClick={() => { if (typeof window !== 'undefined' && window.innerWidth < 768) setIsMobileOpen(false); }}
+                          style={
+                            active
+                              ? {
+                                  borderColor: itemColor.iconColor,
+                                  background: `linear-gradient(90deg, ${itemColor.activeBg} 0%, ${itemColor.bg} 55%, transparent 100%)`,
+                                  boxShadow: '0 2px 10px rgba(0, 0, 0, 0.25)',
+                                }
+                              : undefined
+                          }
+                          className={`group flex min-h-10 items-center rounded-xl text-[13px] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all ${
+                            showLabel
+                              ? 'w-full gap-2.5 px-2.5 py-1.5 border-s-[3px]'
+                              : 'w-11 h-11 justify-center px-0 border'
+                          } ${
+                            active
+                              ? 'text-white font-semibold'
+                              : 'border-transparent text-slate-300 hover:bg-white/[0.07] hover:text-white'
+                          }`}
+                          data-testid={`SuperadminPlatformShellLayoutStyles-superadmin-sidebar-link-${item.href.replace(/[^a-zA-Z0-9_-]/g, '-')}`}
+                        >
+                          <span
+                            className="w-7 h-7 rounded-lg inline-flex items-center justify-center shrink-0 motion-safe:transition-all motion-safe:duration-fast group-hover:scale-110 group-hover:brightness-125"
+                            style={{
+                              color: itemColor.iconColor,
+                              backgroundColor: active ? itemColor.activeBg : itemColor.bg,
+                              border: `1px solid ${itemColor.iconColor}${active ? '88' : '38'}`,
+                              boxShadow: active ? itemColor.activeShadow : undefined,
+                            }}
+                            aria-hidden="true"
+                          >
+                            <Icon size={15} strokeWidth={2.2} />
+                          </span>
+                          {showLabel && <span className="truncate">{t(item.labelKey)}</span>}
+                        </Link>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            ))
+              );
+            })
           )}
         </nav>
-
-        {/* User */}
-        <div className={`px-4 py-4 border-t border-border bg-header shrink-0 flex items-center ${(() => { if (isMobileOpen) { return ('gap-3'); } if (!isCollapsed) { return ('justify-center md:justify-start md:gap-3'); } return ('justify-center'); })()}`}>
-          <div className="w-10 h-10 min-w-10 rounded-full flex items-center justify-center text-on-primary text-sm font-bold border border-border bg-primary">
-            {mounted ? (user?.name?.charAt(0)?.toUpperCase() || 'A') : 'A'}
-          </div>
-          {(!isCollapsed || isMobileOpen) && (
-            <div className={`${isMobileOpen ? 'block' : 'hidden md:block'} whitespace-nowrap overflow-hidden flex-1`}>
-              <div className="text-primary text-sm font-bold truncate">{mounted ? (user?.name || t('ui.superadmin_user')) : t('ui.superadmin_user')}</div>
-              <div className="text-secondary text-xs truncate">{mounted ? (user?.role || t('ui.superadmin_role')) : t('ui.superadmin_role')}</div>
-            </div>
-          )}
-        </div>
       </aside>
     </>
   );

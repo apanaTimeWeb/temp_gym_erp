@@ -31,7 +31,7 @@ export default function AdminFinancePlanRevenueAnalyticsTable({ data, sortKey, s
     <div className="bg-card border border-border rounded-2xl shadow-card overflow-hidden flex flex-col">
       <div className="overflow-x-auto max-h-[640px] overflow-auto">
         <table data-admin-responsive-table className="w-full text-left border-collapse">
-          <thead className="sticky top-0 z-20 bg-surface-highlight">
+          <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038]">
             <tr className="border-b border-border">
               {REVENUE_TABLE_HEADERS.map((header, index) => {
                 const isSorted = sortKey === header.key;
@@ -42,7 +42,7 @@ export default function AdminFinancePlanRevenueAnalyticsTable({ data, sortKey, s
                     scope="col"
                     aria-sort={sort}
                     className={`px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
-                      index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                      index === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                     }`}
                   >
                     {header.sortable ? (
@@ -56,12 +56,12 @@ export default function AdminFinancePlanRevenueAnalyticsTable({ data, sortKey, s
               })}
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody className="divide-y divide-border dark:divide-white/[0.07]">
             {data.length === 0 ? (
               <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminPlansEmptyState title={t('plans.AdminPlansRevenueTable.text_6a50bf56d9')} description={t('plans.AdminPlansRevenueTable.auto_7a5702dc84')} /></td></tr>
             ) : data.map((row) => (
               <tr key={row.id} className="hover:bg-surface-hover transition-colors group">
-                <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3.5 text-sm font-semibold text-primary">
+                <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border px-4 py-3.5 text-sm font-semibold text-text-primary">
                   <div className="flex items-center gap-1.5">
                     <Link
                       href={`/frontend_admin/admin_billing/billing_plans_catalog?search=${encodeURIComponent(row.planName)}`}
@@ -74,10 +74,10 @@ export default function AdminFinancePlanRevenueAnalyticsTable({ data, sortKey, s
                   </div>
                 </td>
                 <td className="px-4 py-3.5"><span className="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-primary-subtle text-primary" data-testid="plans-revenue-analytics-plans-revenue-analytics-table-status-badge">{row.tier}</span></td>
-                <td className="px-4 py-3.5 text-sm font-medium text-primary">{formatNumber(row.activeSubscriptions, locale)}</td>
-                <td className="px-4 py-3.5 text-sm font-medium text-primary">{row.newSignups > 0 ? `+${formatNumber(row.newSignups, locale)}` : formatNumber(row.newSignups, locale)}</td>
-                <td className="px-4 py-3.5 text-sm font-medium text-primary">{formatPercent1dp(row.renewalRate, locale)}%</td>
-                <td className="px-4 py-3.5 text-sm font-black text-primary">{AdminPlansFormatCurrency(row.totalRevenue, undefined, locale)}</td>
+                <td className="px-4 py-3.5 text-sm font-medium text-text-primary">{formatNumber(row.activeSubscriptions, locale)}</td>
+                <td className="px-4 py-3.5 text-sm font-medium text-text-primary">{row.newSignups > 0 ? `+${formatNumber(row.newSignups, locale)}` : formatNumber(row.newSignups, locale)}</td>
+                <td className="px-4 py-3.5 text-sm font-medium text-text-primary">{formatPercent1dp(row.renewalRate, locale)}%</td>
+                <td className="px-4 py-3.5 text-sm font-black text-text-primary">{AdminPlansFormatCurrency(row.totalRevenue, undefined, locale)}</td>
               </tr>
             ))}
           </tbody>

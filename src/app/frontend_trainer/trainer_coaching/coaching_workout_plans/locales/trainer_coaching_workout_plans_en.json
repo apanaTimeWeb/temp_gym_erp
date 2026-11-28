@@ -122,7 +122,10 @@
     "ERR_INVALID_END_DATE": "Enter a valid end date",
     "ERR_END_DATE_BEFORE_START": "End date must be on or after the start date",
     "TEXT_LOADING_WORKOUT_DATABASE": "Loading workout database totals",
-    "TEXT_UNABLE_TO_LOAD_WORKOUT_DATABASE": "Unable to load workout database totals. Please retry."
+    "TEXT_UNABLE_TO_LOAD_WORKOUT_DATABASE": "Unable to load workout database totals. Please retry.",
+    "TEXT_CLEAR_ALL": "Clear All",
+    "ERR_INVALID_DATE": "Please enter a valid date",
+    "ERR_MAX_DAYS_PER_WEEK": "Maximum 7 days per week allowed"
   },
   "TEXT_RETRYING": "Retrying…",
   "TRAINER_INFRASTRUCTURE": {

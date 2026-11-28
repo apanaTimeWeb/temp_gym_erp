@@ -48,26 +48,22 @@ export default function TrainerProgressTrackingComparisonTable({ snapshots }: Tr
   const t = useTranslations('TRAINER_PROGRESS_TRACKING');
   if (snapshots.length === 0) return <div className="bg-card rounded-xl border border-border p-8 text-center text-sm text-secondary" data-testid="trainer_progress_tracking-progress-tracking_comparison_table_empty">{t('TEXT_NO_MEMBERS_SELECTED_FOR_COMPARISON')}</div>;
 
-  const TABLE_COLUMN_COUNT = 9;
-
   return (
     <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
       <div className="px-5 py-3.5 border-b border-border bg-header">
         <h3 className="text-sm font-semibold text-text-primary">{t('TEXT_MEMBER_COMPARISON_LATEST_SNAPSHOT')}</h3>
         <p className="text-xs text-secondary mt-0.5">{t('TEXT_CHANGE_FROM_FIRST_TO_LATEST_ENTRY')}</p>
       </div>
-      <div className="hidden md:block overflow-x-auto">
-        <div className="max-h-[640px] overflow-auto">
-          <table className="w-full text-sm">
+      <div className="hidden md:block">
+        <div className="max-h-[640px] overflow-y-auto overflow-x-hidden">
+          <table className="w-full text-sm border-collapse">
             <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
               <tr data-testid="trainer_progress_tracking-TrainerProgressTrackingComparisonTable-row-1">
-                {['TEXT_MEMBER', 'TEXT_TREND', 'TEXT_WEIGHT_KG', 'TEXT_BMI', 'TEXT_BODY_FAT_PERCENT', 'TEXT_MUSCLE_MASS_KG', 'TEXT_DELTA_WEIGHT', 'TEXT_DELTA_MUSCLE', 'TEXT_ENTRIES'].map((key, index) => (
+                {['TEXT_MEMBER', 'TEXT_TREND', 'TEXT_WEIGHT_KG', 'TEXT_BMI', 'TEXT_DELTA_WEIGHT', 'TEXT_DELTA_MUSCLE'].map((key) => (
                   <th
                     key={key}
                     scope="col"
-                    className={`px-4 py-3 text-start text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
-                      index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
-                    }`}
+                    className="px-3 py-3 text-start text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap"
                   >
                     {t(key)}
                   </th>
@@ -84,28 +80,25 @@ export default function TrainerProgressTrackingComparisonTable({ snapshots }: Tr
                     className="hover:bg-surface-hover transition-colors group"
                     data-testid="trainer_progress_tracking-TrainerProgressTrackingComparisonTable-row-2"
                   >
-                    <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 font-medium text-text-primary whitespace-nowrap group-hover:bg-surface-hover transition-colors">
-                      <div className="flex items-center gap-2">
+                    <td className="px-3 py-3 font-medium text-text-primary">
+                      <div className="flex items-center gap-2 min-w-0">
                         <div className="w-7 h-7 rounded-full bg-primary-subtle flex items-center justify-center text-primary text-xs font-bold shrink-0" aria-hidden="true">
                           {snapshot.memberName.charAt(0)}
                         </div>
-                        <span className="font-bold text-text-primary text-sm">{snapshot.memberName}</span>
+                        <span className="font-bold text-text-primary text-sm truncate">{snapshot.memberName}</span>
                         <CopyButton value={snapshot.memberName} />
                       </div>
                       <p className="text-xs text-secondary font-mono flex items-center gap-1.5 mt-0.5 ms-9">#{snapshot.memberId.slice(-6)}</p>
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-3 py-3 whitespace-nowrap">
                       <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border ${trend.cls}`}>
-                        <TrendIcon size={18} strokeWidth={2} aria-hidden="true" />{t(trend.labelKey)}
+                        <TrendIcon size={16} strokeWidth={2} aria-hidden="true" />{t(trend.labelKey)}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-text-primary">{snapshot.latestWeightKg == null ? '—' : TrainerProgressTrackingFormatNumber(snapshot.latestWeightKg, locale)}</td>
-                    <td className="px-4 py-3 text-text-primary">{snapshot.latestBmi == null ? '—' : TrainerProgressTrackingFormatNumber(snapshot.latestBmi, locale)}</td>
-                    <td className="px-4 py-3 text-text-primary">{snapshot.latestBodyFatPercent == null ? '—' : `${TrainerProgressTrackingFormatNumber(snapshot.latestBodyFatPercent, locale)}%`}</td>
-                    <td className="px-4 py-3 text-text-primary">{snapshot.latestMuscleMassKg == null ? '—' : TrainerProgressTrackingFormatNumber(snapshot.latestMuscleMassKg, locale)}</td>
-                    <td className="px-4 py-3"><TrainerProgressTrackingComparisonDelta value={snapshot.weightChangeKg} lowerIsBetter={true} /></td>
-                    <td className="px-4 py-3"><TrainerProgressTrackingComparisonDelta value={snapshot.muscleMassChange} lowerIsBetter={false} /></td>
-                    <td className="px-4 py-3 text-secondary">{TrainerProgressTrackingFormatNumber(snapshot.totalEntries, locale)}</td>
+                    <td className="px-3 py-3 text-text-primary whitespace-nowrap">{snapshot.latestWeightKg == null ? '—' : TrainerProgressTrackingFormatNumber(snapshot.latestWeightKg, locale)}</td>
+                    <td className="px-3 py-3 text-text-primary whitespace-nowrap">{snapshot.latestBmi == null ? '—' : TrainerProgressTrackingFormatNumber(snapshot.latestBmi, locale)}</td>
+                    <td className="px-3 py-3 whitespace-nowrap"><TrainerProgressTrackingComparisonDelta value={snapshot.weightChangeKg} lowerIsBetter={true} /></td>
+                    <td className="px-3 py-3 whitespace-nowrap"><TrainerProgressTrackingComparisonDelta value={snapshot.muscleMassChange} lowerIsBetter={false} /></td>
                   </tr>
                 );
               })}

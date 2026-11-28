@@ -45,15 +45,15 @@ export default function ManagerInquiriesPipelineToolbar() {
   }
 
   return (
-    <div className="bg-card rounded-xl shadow-card border border-border p-4 flex flex-wrap gap-3 items-center justify-between">
-      <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "border border-border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page  w-full sm:w-64  bg-input text-text-primary"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_inquiries-manager-inquiries-toolbar-input-value"
+    <div className="relative z-30 bg-card dark:bg-gradient-to-r dark:from-[#0E1C30] dark:via-[#131C30] dark:to-[#101726] rounded-2xl shadow-card border border-border dark:border-sky-500/30 p-4 flex flex-col xl:flex-row gap-3 items-stretch xl:items-center justify-between">
+      <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 border border-border dark:border-white/15 rounded-xl px-4 py-2.5 text-sm w-full xl:max-w-xs bg-input dark:bg-[#0B1220] text-text-primary placeholder:text-secondary"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_inquiries-manager-inquiries-toolbar-input-value"
         value={search}
         onChange={e => setSearch(e.target.value)}
         placeholder={t("COPY_SEARCH_NAME_PHONE")}
         
        aria-label={t("COPY_SEARCH_NAME_PHONE")}/>
-      <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-        <div className="w-48">
+      <div className="flex flex-wrap gap-2.5 w-full xl:w-auto items-center justify-start xl:justify-end">
+        <div className="w-full sm:w-48">
           <ManagerSearchableDropdown dataTestId="manager_inquiries-managerinquiriestoolbar-managersearchabledropdown-1"
             value={statusFilter}
             onChange={(val) => setStatusFilter(String(val))}
@@ -64,7 +64,7 @@ export default function ManagerInquiriesPipelineToolbar() {
             ]}
            data-testid="manager_inquiries-managerinquiriestoolbar-searchable-dropdown-1"/>
         </div>
-        <div className="w-44">
+        <div className="w-full sm:w-44">
           <ManagerSearchableDropdown
             dataTestId="manager_inquiries-managerinquiriestoolbar-date-filter"
             value={dateFilter}
@@ -82,7 +82,7 @@ export default function ManagerInquiriesPipelineToolbar() {
           />
         </div>
         {dateFilter === 'custom' && (
-          <div className="flex items-center gap-1.5 border border-border rounded-xl px-3 py-1.5 bg-input text-sm">
+          <div className="flex flex-wrap items-center gap-1.5 border border-border rounded-xl px-3 py-1.5 bg-input text-sm w-full sm:w-auto">
             <input
               type="date"
               value={startDate || ''}
@@ -102,18 +102,18 @@ export default function ManagerInquiriesPipelineToolbar() {
             />
           </div>
         )}
-        <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-w-32 flex items-center gap-2 px-3 py-2.5 text-sm border border-border rounded-xl motion-safe:transition-all text-text-secondary motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_inquiries-manager-inquiries-toolbar-button-refresh"
+        <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 inline-flex items-center justify-center gap-2 px-3.5 py-2 text-sm border border-sky-500/35 bg-sky-500/15 hover:bg-sky-500/25 rounded-xl motion-safe:transition-all text-sky-600 dark:text-sky-300 font-semibold motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 cursor-pointer"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_inquiries-manager-inquiries-toolbar-button-refresh"
           onClick={() => void refresh()}
           
           aria-label={t("COPY_REFRESH_INQUIRIES")}
          type="button">
-          <RefreshCw size={18} strokeWidth={2} />
+          <RefreshCw size={17} strokeWidth={2.2} />
         </button>
         <button data-testid="manager_inquiries-manager-inquiries-toolbar-add"
           onClick={openAdd}
-          className="flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-on-primary bg-primary rounded-xl hover:bg-primary-hover motion-safe:transition-all motion-safe:duration-200 motion-safe:active:scale-95 ease-in-out focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"
+          className="min-h-11 inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-[#FF5A1F] to-[#F97316] rounded-xl hover:brightness-110 shadow-[0_4px_14px_rgba(255,90,31,0.3)] motion-safe:transition-all motion-safe:duration-200 motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none cursor-pointer"
          type="button">
-          <Plus size={18} strokeWidth={2}/>{t("COPY_ADD_INQUIRY")}</button>
+          <Plus size={17} strokeWidth={2}/>{t("COPY_ADD_INQUIRY")}</button>
       </div>
     </div>
   );

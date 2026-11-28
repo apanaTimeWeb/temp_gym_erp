@@ -39,17 +39,17 @@ export default function AdminFinanceStaffDuesManagementDueTable() {
           <div>
             <h4 className="font-semibold text-warning text-sm">{t('hr.admin_hr_due_table.text_afcfe5d61e')}</h4>
             <p className="text-sm text-secondary mt-1">
-              {t('hr.admin_hr_due_table.text_799c9f2a12')}{staff.filter((member) => (member.currentDue || 0) > 0).length} {t('hr.admin_hr_due_table.text_0f3f0bbd43')}<strong className="ml-1 text-primary">{AdminFinanceStaffDuesManagementFormatCurrency(staff.reduce((sum, member) => sum + (member.currentDue || 0), 0), undefined, locale)}</strong>
+              {t('hr.admin_hr_due_table.text_799c9f2a12')}{staff.filter((member) => (member.currentDue || 0) > 0).length} {t('hr.admin_hr_due_table.text_0f3f0bbd43')}<strong className="ml-1 text-text-primary">{AdminFinanceStaffDuesManagementFormatCurrency(staff.reduce((sum, member) => sum + (member.currentDue || 0), 0), undefined, locale)}</strong>
             </p>
           </div>
         </div>
       )}
 
       <div className="bg-card p-6 rounded-xl border border-border">
-        <h2 className="text-xl font-bold mb-6 text-primary">{t('hr.admin_hr_due_table.text_09b5727d9f')}</h2>
+        <h2 className="text-xl font-bold mb-6 text-text-primary">{t('hr.admin_hr_due_table.text_09b5727d9f')}</h2>
         <form onSubmit={submit} className="space-y-5" noValidate data-testid="admin_hr-admin_hr-due-table-submit">
           <div>
-            <label htmlFor="admin-hr-due-staff" className="block text-sm font-medium mb-1 text-primary">{t('hr.admin_hr_due_table.text_88d53ffc1d')}</label>
+            <label htmlFor="admin-hr-due-staff" className="block text-sm font-medium mb-1 text-text-primary">{t('hr.admin_hr_due_table.text_88d53ffc1d')}</label>
             <select
               id="admin-hr-due-staff"
               required
@@ -60,7 +60,7 @@ export default function AdminFinanceStaffDuesManagementDueTable() {
                 const nextId = event.target.value;
                 setValue('staffId', nextId, { shouldDirty: true, shouldValidate: true });
               }}
-              className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-card text-primary focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:outline-none focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+              className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-card text-text-primary focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:outline-none focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
               data-testid="admin_hr-admin_hr-due-table-control"
             >
               <option value="" disabled data-testid="admin_hr-admin_hr-due-table-control-2">{t('hr.admin_hr_due_table.text_137fc8d360')}</option>
@@ -82,7 +82,7 @@ export default function AdminFinanceStaffDuesManagementDueTable() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="admin-hr-due-amount" className="block text-sm font-medium mb-1 text-primary">{t('hr.admin_hr_due_table.text_7d42d495a3')}</label>
+              <label htmlFor="admin-hr-due-amount" className="block text-sm font-medium mb-1 text-text-primary">{t('hr.admin_hr_due_table.text_7d42d495a3')}</label>
               <input
                 id="admin-hr-due-amount"
                 type="number"
@@ -93,22 +93,22 @@ export default function AdminFinanceStaffDuesManagementDueTable() {
                 {...register('amount', { valueAsNumber: true })}
                 aria-invalid={errors.amount ? 'true' : 'false'}
                 aria-describedby={errors.amount ? 'admin_hr-due-amount-error' : undefined}
-                className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-card text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
+                className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-card text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
                 data-testid="admin_hr-admin_hr-due-table-control-4"
               />
               {errors.amount && <p id="admin_hr-due-amount-error" className="mt-1 text-xs text-danger">{getValidationMessage(errors.amount.message)}</p>}
             </div>
             <div>
-              <label htmlFor="admin-hr-due-payment-mode" className="block text-sm font-medium mb-1 text-primary">{t('hr.admin_hr_due_table.text_23b35c414a')}</label>
-              <select id="admin-hr-due-payment-mode" {...register('paymentMode')} className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-card text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11" data-testid="admin_hr-admin_hr-due-table-control-5">
+              <label htmlFor="admin-hr-due-payment-mode" className="block text-sm font-medium mb-1 text-text-primary">{t('hr.admin_hr_due_table.text_23b35c414a')}</label>
+              <select id="admin-hr-due-payment-mode" {...register('paymentMode')} className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-card text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11" data-testid="admin_hr-admin_hr-due-table-control-5">
                 {FINANCE_STAFF_DUES_PAYMENT_MODE_OPTIONS.map((option) => <option key={option.value} value={option.value} data-testid={`finance_staff_dues_management-finance_staff_dues_management-due-payment-option-${option.value.toLowerCase().replaceAll(' ', '-')}`}>{t(`hr.admin_hr_due_table.text_${option.value === 'Cash' ? '758ec54e43' : option.value === 'Bank Transfer' ? '17ef50d8f8' : option.value === 'UPI' ? 'f295b2cdff' : '6c0a136376'}`)}</option>)}
               </select>
             </div>
           </div>
 
           <div>
-            <label htmlFor="admin-hr-due-notes" className="block text-sm font-medium mb-1 text-primary">{t('hr.admin_hr_due_table.text_70440046a3')}</label>
-            <textarea id="admin-hr-due-notes" {...register('notes')} aria-invalid={errors.notes ? 'true' : 'false'} aria-describedby={errors.notes ? 'admin_hr-due-notes-error' : undefined} className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-card text-primary min-h-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11" placeholder={t('hr.admin_hr_due_table.text_1bc42af408')} data-testid="admin_hr-admin_hr-due-table-control-10" />
+            <label htmlFor="admin-hr-due-notes" className="block text-sm font-medium mb-1 text-text-primary">{t('hr.admin_hr_due_table.text_70440046a3')}</label>
+            <textarea id="admin-hr-due-notes" {...register('notes')} aria-invalid={errors.notes ? 'true' : 'false'} aria-describedby={errors.notes ? 'admin_hr-due-notes-error' : undefined} className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-card text-text-primary min-h-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11" placeholder={t('hr.admin_hr_due_table.text_1bc42af408')} data-testid="admin_hr-admin_hr-due-table-control-10" />
             {errors.notes && <p id="admin_hr-due-notes-error" className="mt-1 text-xs text-danger">{getValidationMessage(errors.notes.message)}</p>}
           </div>
 

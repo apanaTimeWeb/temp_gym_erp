@@ -40,14 +40,14 @@ export default function AdminHrPerformanceAnalyticsTable({
     <div className="bg-card border border-border rounded-2xl shadow-card overflow-hidden">
       <div className="overflow-x-auto max-h-[640px] overflow-auto">
         <table data-admin-responsive-table className="w-full text-left border-collapse">
-          <thead className="sticky top-0 z-20 bg-surface-highlight">
+          <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038]">
             <tr className="border-b border-border">
               {PERFORMANCE_TABLE_HEADERS.map((h, index) => (
                 <th
                   key={h.key}
                   scope="col"
                   className={`px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
-                    index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    index === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                   }`}
                   aria-sort={h.sortable ? (sortKey === h.key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none') : undefined}
                   data-testid={`admin_hr-admin_hr-performance-table-control-map41-${index}-1`}
@@ -62,7 +62,7 @@ export default function AdminHrPerformanceAnalyticsTable({
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody className="divide-y divide-border dark:divide-white/[0.07]">
             {data.length === 0 ? (
               <tr>
                 <td colSpan={TABLE_COLUMN_COUNT}><AdminHrEmptyState title={t('hr.AdminHrPerformanceTable.text_04f991ef9b')} description={t('hr.AdminHrPerformanceTable.auto_36595ed797')} /></td>
@@ -72,7 +72,7 @@ export default function AdminHrPerformanceAnalyticsTable({
                 const statusCfg = PERFORMANCE_STATUS_CONFIG[staff.status];
                 return (
                   <tr key={staff.id} className="hover:bg-surface-hover transition-colors group">
-                    <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3.5">
+                    <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border px-4 py-3.5">
                       <div className="flex items-center gap-2.5">
                         <div className="w-8 h-8 rounded-lg bg-primary-subtle flex items-center justify-center text-primary text-xs font-bold flex-shrink-0">
                           {staff.name.charAt(0)}
@@ -81,7 +81,7 @@ export default function AdminHrPerformanceAnalyticsTable({
                           <div className="flex items-center gap-1.5">
                             <Link
                               href={`/frontend_admin/admin_hr/hr_staff_management?search=${encodeURIComponent(staff.name)}`}
-                              className="text-sm font-semibold text-primary truncate hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                              className="text-sm font-semibold text-text-primary truncate hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
                               title={`View ${staff.name} in Staff Management`}
                             >
                               {staff.name}
@@ -99,10 +99,10 @@ export default function AdminHrPerformanceAnalyticsTable({
                       </div>
                     </td>
                     <td className="px-4 py-3.5 text-sm text-secondary">{staff.role}</td>
-                    <td className="px-4 py-3.5 text-sm font-medium text-primary">{formatNumber(staff.sessionsTaken, locale)}</td>
-                    <td className="px-4 py-3.5 text-sm font-medium text-primary">{formatNumber(staff.membersAdded, locale)}</td>
-                    <td className="px-4 py-3.5 text-sm font-medium text-primary">{staff.attendancePct}%</td>
-                    <td className="px-4 py-3.5 text-sm font-bold text-primary">{formatDecimal(staff.rating, locale)} <span className="text-warning text-xs">★</span></td>
+                    <td className="px-4 py-3.5 text-sm font-medium text-text-primary">{formatNumber(staff.sessionsTaken, locale)}</td>
+                    <td className="px-4 py-3.5 text-sm font-medium text-text-primary">{formatNumber(staff.membersAdded, locale)}</td>
+                    <td className="px-4 py-3.5 text-sm font-medium text-text-primary">{staff.attendancePct}%</td>
+                    <td className="px-4 py-3.5 text-sm font-bold text-text-primary">{formatDecimal(staff.rating, locale)} <span className="text-warning text-xs">★</span></td>
                     <td className="px-4 py-3.5">
                       <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${statusCfg?.bgClass} ${statusCfg?.textClass}`} data-testid="hr-performance-analytics-hr-performance-analytics-table-status-badge">
                         {statusCfg?.labelKey ? t(statusCfg.labelKey) : staff.status}

@@ -122,7 +122,10 @@
     "ERR_INVALID_END_DATE": "मान्य समाप्ति तिथि दर्ज करें",
     "ERR_END_DATE_BEFORE_START": "समाप्ति तिथि प्रारंभ तिथि के बराबर या उसके बाद होनी चाहिए",
     "TEXT_LOADING_WORKOUT_DATABASE": "वर्कआउट डेटाबेस के आँकड़े लोड हो रहे हैं",
-    "TEXT_UNABLE_TO_LOAD_WORKOUT_DATABASE": "वर्कआउट डेटाबेस के आँकड़े लोड नहीं हो सके। कृपया फिर प्रयास करें।"
+    "TEXT_UNABLE_TO_LOAD_WORKOUT_DATABASE": "वर्कआउट डेटाबेस के आँकड़े लोड नहीं हो सके। कृपया फिर प्रयास करें।",
+    "TEXT_CLEAR_ALL": "सभी साफ़ करें",
+    "ERR_INVALID_DATE": "कृपया एक मान्य तिथि दर्ज करें",
+    "ERR_MAX_DAYS_PER_WEEK": "प्रति सप्ताह अधिकतम 7 दिन अनुमत हैं"
   },
   "TEXT_RETRYING": "पुनः प्रयास हो रहा है…",
   "TRAINER_INFRASTRUCTURE": {

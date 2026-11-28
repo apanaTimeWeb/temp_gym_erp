@@ -10,7 +10,7 @@ import { useTranslations } from 'next-intl';
 export default function ReportsLoading() {
   const t = useTranslations();
   return (
-    <div className="p-6 space-y-6" data-testid="admin_attendance-loading-state" role="status" aria-live="polite" aria-busy="true">
+    <div className="p-4 sm:p-6 space-y-6" data-testid="admin_attendance-loading-state" role="status" aria-live="polite" aria-busy="true">
       <span className="sr-only">{t('reports.admin_reports_main.loadingSection')}</span>
       <div aria-hidden="true">
       <div className="h-8 w-48 bg-skeleton-base rounded-lg motion-safe:animate-pulse border border-border motion-safe:duration-base" />

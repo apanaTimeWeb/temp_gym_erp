@@ -29,7 +29,7 @@ export default function AdminNavigationLayoutSidebarUserFooter({
       </div>
       {showDetails && (
         <div className={`whitespace-nowrap overflow-hidden flex-1 ${isMobileOpen ? 'block' : 'hidden md:block'}`}>
-          <div className="text-primary text-sm font-bold truncate">{displayName}</div>
+          <div className="text-text-primary text-sm font-bold truncate">{displayName}</div>
           <div className="text-secondary text-xs truncate">{displayRole}</div>
         </div>
       )}

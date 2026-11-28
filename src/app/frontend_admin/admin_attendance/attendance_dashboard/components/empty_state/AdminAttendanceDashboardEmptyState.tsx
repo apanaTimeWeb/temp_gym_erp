@@ -23,7 +23,7 @@ export default function AdminAttendanceDashboardEmptyState({ hasFilters }: Admin
       <div className="w-14 h-14 rounded-full bg-input flex items-center justify-center">
         <CalendarX size={18} strokeWidth={2} className="text-secondary" />
       </div>
-      <p className="text-base font-semibold text-primary">
+      <p className="text-base font-semibold text-text-primary">
         {hasFilters ? t('attendance.admin_attendance_empty_state.auto_78cd6b3dc7') : t('attendance.admin_attendance_empty_state.auto_8da6855922')}
       </p>
       <p className="text-sm text-secondary text-center max-w-xs">

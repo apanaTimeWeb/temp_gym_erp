@@ -37,7 +37,7 @@ export default function AdminCommunicationNoticesAndAnnouncementsModal() {
                 <Megaphone size={18} className="text-primary"  strokeWidth={2}/>
               </div>
               <div>
-                <h3 id="admin-announcements-dialog-title" className="font-bold text-primary">{isEdit ? t('announcements.admin_announcements_modal.auto_b07da8e396') : t('announcements.admin_announcements_modal.auto_721b86aeda')}</h3>
+                <h3 id="admin-announcements-dialog-title" className="font-bold text-text-primary">{isEdit ? t('announcements.admin_announcements_modal.auto_b07da8e396') : t('announcements.admin_announcements_modal.auto_721b86aeda')}</h3>
                 <p className="text-xs text-secondary">{isEdit ? t('announcements.admin_announcements_modal.auto_20f51762b1') : t('announcements.admin_announcements_modal.auto_a2deb25a6b')}</p>
               </div>
             </div>
@@ -56,7 +56,7 @@ export default function AdminCommunicationNoticesAndAnnouncementsModal() {
                 {...register('title')}
                 id="admin-announcement-title" aria-invalid={Boolean(errors.title)} aria-describedby={errors.title ? 'admin-announcement-title-error' : undefined}
                 placeholder={t('announcements.admin_announcements_modal.text_b6d5688f06')}
-                className="w-full px-4 py-2.5 bg-input border border-border rounded-xl text-sm text-primary focus-visible:outline-none focus-visible:border-focus focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
+                className="w-full px-4 py-2.5 bg-input border border-border rounded-xl text-sm text-text-primary focus-visible:outline-none focus-visible:border-focus focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
                data-testid="admin_announcements-admin_announcements-modal-control"/>
               {errors.title && <p id="admin-announcement-title-error" role="alert" className="text-xs text-danger mt-1">{t(errors.title.message ?? 'announcements.validation.titleRequired')}</p>}
             </div>
@@ -69,7 +69,7 @@ export default function AdminCommunicationNoticesAndAnnouncementsModal() {
                 id="admin-announcement-body" aria-invalid={Boolean(errors.body)} aria-describedby={errors.body ? 'admin-announcement-body-error' : undefined}
                 rows={4}
                 placeholder={t('announcements.admin_announcements_modal.text_6021925ec7')}
-                className="w-full px-4 py-2.5 bg-input border border-border rounded-xl text-sm text-primary focus-visible:outline-none focus-visible:border-focus focus-visible:ring-2 focus-visible:ring-primary resize-none focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
+                className="w-full px-4 py-2.5 bg-input border border-border rounded-xl text-sm text-text-primary focus-visible:outline-none focus-visible:border-focus focus-visible:ring-2 focus-visible:ring-primary resize-none focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
                data-testid="admin_announcements-admin_announcements-modal-control-2"/>
               {errors.body && <p id="admin-announcement-body-error" role="alert" className="text-xs text-danger mt-1">{t(errors.body.message ?? 'announcements.validation.bodyRequired')}</p>}
             </div>
@@ -81,7 +81,7 @@ export default function AdminCommunicationNoticesAndAnnouncementsModal() {
                 <select
                   id="admin-announcement-priority"
                   {...register('priority')}
-                  className="w-full px-4 py-2.5 bg-input border border-border rounded-xl text-sm text-primary focus-visible:outline-none focus-visible:border-focus motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+                  className="w-full px-4 py-2.5 bg-input border border-border rounded-xl text-sm text-text-primary focus-visible:outline-none focus-visible:border-focus motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
                  data-testid="admin_announcements-admin_announcements-modal-control-3">
                   {ANNOUNCEMENT_PRIORITY_OPTIONS.map((o, __testIdIndex81) => (
                     <option key={o.value} value={o.value} data-testid={`admin_announcements-admin_announcements-modal-control-4-map81-${__testIdIndex81}-1`}>{t(o.labelKey)}</option>
@@ -92,7 +92,7 @@ export default function AdminCommunicationNoticesAndAnnouncementsModal() {
                 <label htmlFor="admin-announcement-pinned" className="flex items-center gap-3 cursor-pointer p-3 bg-input border border-border rounded-xl hover:border-focus motion-safe:transition-colors motion-safe:duration-base">
                   <input id="admin-announcement-pinned" type="checkbox" {...register('isPinned')} className="w-4 h-4 accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"  data-testid="admin_announcements-admin_announcements-modal-control-5"/>
                   <div>
-                    <p className="text-sm font-semibold text-primary">{t('announcements.admin_announcements_modal.text_f49bd7f256')}</p>
+                    <p className="text-sm font-semibold text-text-primary">{t('announcements.admin_announcements_modal.text_f49bd7f256')}</p>
                     <p className="text-xs text-secondary">{t('announcements.admin_announcements_modal.text_81962d4053')}</p>
                   </div>
                 </label>
@@ -176,7 +176,7 @@ export default function AdminCommunicationNoticesAndAnnouncementsModal() {
                   type="datetime-local"
                   {...register('publishedAt')}
                   aria-invalid={Boolean(errors.publishedAt)} aria-describedby={errors.publishedAt ? 'admin-announcement-published-at-error' : undefined}
-                  className="w-full px-4 py-2.5 bg-input border border-border rounded-xl text-sm text-primary focus-visible:outline-none focus-visible:border-focus focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
+                  className="w-full px-4 py-2.5 bg-input border border-border rounded-xl text-sm text-text-primary focus-visible:outline-none focus-visible:border-focus focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
                  data-testid="admin_announcements-admin_announcements-modal-control-6"/>
                 {errors.publishedAt && <p id="admin-announcement-published-at-error" role="alert" className="text-xs text-danger mt-1">{t(errors.publishedAt.message ?? 'announcements.validation.publishedAtRequired')}</p>}
               </div>
@@ -187,7 +187,7 @@ export default function AdminCommunicationNoticesAndAnnouncementsModal() {
                   type="datetime-local"
                   {...register('expiresAt')}
                   aria-invalid={Boolean(errors.expiresAt)} aria-describedby={errors.expiresAt ? 'admin-announcement-expires-at-error' : undefined}
-                  className="w-full px-4 py-2.5 bg-input border border-border rounded-xl text-sm text-primary focus-visible:outline-none focus-visible:border-focus focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
+                  className="w-full px-4 py-2.5 bg-input border border-border rounded-xl text-sm text-text-primary focus-visible:outline-none focus-visible:border-focus focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
                  data-testid="admin_announcements-admin_announcements-modal-control-7"/>
                 {errors.expiresAt && <p id="admin-announcement-expires-at-error" role="alert" className="text-xs text-danger mt-1">{t(errors.expiresAt.message ?? 'announcements.validation.expiresAtRequired')}</p>}
               </div>

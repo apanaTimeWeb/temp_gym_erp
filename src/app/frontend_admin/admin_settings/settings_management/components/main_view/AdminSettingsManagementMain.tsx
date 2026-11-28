@@ -15,7 +15,7 @@ import AdminSettingsBanner from '@/app/frontend_admin/admin_settings/settings_ma
  */
 export default function AdminSettingsManagementMain() {
   return (
-    <div className="min-h-full pb-10 settings-module bg-page text-primary">
+    <div className="min-h-full pb-10 settings-module bg-page text-text-primary">
       <div className="p-6">
         <AdminSettingsContent />
         <AdminSettingsBanner />

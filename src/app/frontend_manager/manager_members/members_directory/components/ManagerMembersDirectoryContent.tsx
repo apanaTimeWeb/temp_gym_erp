@@ -40,7 +40,7 @@ export function ManagerMembersDirectoryContent() {
         {!isMemberProfileView ? (
           <>
             
-            <div className="p-6 space-y-5">
+            <div className="p-4 sm:p-6 space-y-5">
               <ManagerMembersDirectoryKPIs />
               <div className="space-y-4">
                 <ManagerMembersDirectoryToolbar />

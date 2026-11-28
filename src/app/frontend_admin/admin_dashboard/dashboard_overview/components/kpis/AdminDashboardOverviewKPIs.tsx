@@ -39,7 +39,7 @@ export default function AdminDashboardOverviewKPIs() {
         changeType="neutral"
         icon={Users}
         iconBg="bg-primary-subtle"
-        iconColor="text-primary"
+        iconColor="text-text-primary"
         href="/frontend_admin/admin_attendance/attendance_dashboard"
        testId="admin_dashboard-admindashboardkpis-kpi-1"/>
       <AdminNavigationLayoutStatCard
@@ -61,7 +61,7 @@ export default function AdminDashboardOverviewKPIs() {
         changeType="neutral"
         icon={DollarSign}
         iconBg="bg-primary-subtle"
-        iconColor="text-primary"
+        iconColor="text-text-primary"
         href="/frontend_admin/admin_finance/finance_revenue_report"
        testId="admin_dashboard-admindashboardkpis-kpi-3"/>
       <AdminNavigationLayoutStatCard

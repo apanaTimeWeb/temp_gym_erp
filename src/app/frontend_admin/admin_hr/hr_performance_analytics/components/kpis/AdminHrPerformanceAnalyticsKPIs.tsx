@@ -27,7 +27,7 @@ export default function AdminHrPerformanceAnalyticsKPIs({ aggregates }: AdminHrP
       label: t('hr.AdminAuditRepair.totalSessions'),
       value: formatNumber(aggregates.totalSessions, locale),
       icon: Calendar,
-      iconColor: 'text-primary',
+      iconColor: 'text-text-primary',
       iconBg: 'bg-primary-subtle',
     },
     {
@@ -67,7 +67,7 @@ export default function AdminHrPerformanceAnalyticsKPIs({ aggregates }: AdminHrP
             </div>
             <div>
               <p className="text-xs font-bold text-secondary uppercase tracking-wider mb-1">{kpi.label}</p>
-              <p className="text-2xl font-black text-primary">{kpi.value}</p>
+              <p className="text-2xl font-black text-text-primary">{kpi.value}</p>
             </div>
           </div>
         );

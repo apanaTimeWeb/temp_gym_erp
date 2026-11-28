@@ -36,7 +36,7 @@ export default function AdminBillingPlansCatalogModal({ logic }: AdminPlansModal
     <div ref={dialogRef} data-admin-dialog="true" role="dialog" aria-modal="true" aria-labelledby="admin-plans-modal-title" tabIndex={-1} className="fixed inset-0 bg-overlay-backdrop backdrop-blur-sm z-40 flex items-center justify-center p-4 overflow-y-auto" data-testid="admin_plans-admin_plans-modal-control">
       <div className="my-auto bg-overlay rounded-2xl shadow-dialog shadow-dialog w-full max-w-md max-h-dialog-desktop overflow-y-auto border border-border">
         <div className="sticky top-0 bg-card px-6 py-4 border-b border-border flex items-center justify-between">
-          <h3 id="admin-plans-modal-title" className="text-lg font-bold text-primary">
+          <h3 id="admin-plans-modal-title" className="text-lg font-bold text-text-primary">
             {editId ? t('plans.admin_plans_modal.remaining_editPlan') : t('plans.admin_plans_modal.remaining_createNewPlan')}
           </h3>
           <button
@@ -59,7 +59,7 @@ export default function AdminBillingPlansCatalogModal({ logic }: AdminPlansModal
                 aria-invalid={Boolean(errors.name)}
                 aria-describedby={errors.name ? 'admin-plan-name-error' : undefined}
                 {...register('name')}
-                className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-primary motion-safe:transition-colors ${
+                className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-text-primary motion-safe:transition-colors ${
                   errors.name ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-primary'
                 }`}
                data-testid="admin_plans-admin_plans-modal-control-2"/>
@@ -104,7 +104,7 @@ export default function AdminBillingPlansCatalogModal({ logic }: AdminPlansModal
                   placeholder={t('plans.AdminPlansModal.text_zeroPlaceholder')}
                   onKeyDown={(e) => { if (e.key === '-' || e.key === 'e' || e.key === '+') e.preventDefault(); }}
                   {...register(f.key as keyof PlanFormValues)}
-                  className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-primary motion-safe:transition-colors ${
+                  className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-text-primary motion-safe:transition-colors ${
                     errors[f.key as keyof PlanFormValues] ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-primary'
                   }`}
                  data-testid={`admin_plans-admin_plans-modal-control-3-map82-${__testIdIndex82}-1`}/>
@@ -129,7 +129,7 @@ export default function AdminBillingPlansCatalogModal({ logic }: AdminPlansModal
                 aria-describedby={errors.joiningFee ? 'admin-plan-joining-fee-error' : undefined}
                 onKeyDown={(e) => { if (e.key === '-' || e.key === 'e' || e.key === '+') e.preventDefault(); }}
                 {...register('joiningFee')}
-                className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-primary motion-safe:transition-colors ${
+                className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-text-primary motion-safe:transition-colors ${
                   errors.joiningFee ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-primary'
                 }`}
                 data-testid="admin_plans-modal-joining-fee"
@@ -150,7 +150,7 @@ export default function AdminBillingPlansCatalogModal({ logic }: AdminPlansModal
                 aria-describedby={errors.ptSessionsIncluded ? 'admin-plan-pt-sessions-error' : undefined}
                 onKeyDown={(e) => { if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') e.preventDefault(); }}
                 {...register('ptSessionsIncluded')}
-                className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-primary motion-safe:transition-colors ${
+                className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-text-primary motion-safe:transition-colors ${
                   errors.ptSessionsIncluded ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-primary'
                 }`}
                 data-testid="admin_plans-modal-pt-sessions"
@@ -172,7 +172,7 @@ export default function AdminBillingPlansCatalogModal({ logic }: AdminPlansModal
                 aria-describedby={errors.taxRate ? 'admin-plan-tax-rate-error' : undefined}
                 onKeyDown={(e) => { if (e.key === '-' || e.key === 'e' || e.key === '+') e.preventDefault(); }}
                 {...register('taxRate')}
-                className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-primary motion-safe:transition-colors ${
+                className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 bg-input text-text-primary motion-safe:transition-colors ${
                   errors.taxRate ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-primary'
                 }`}
                 data-testid="admin_plans-modal-tax-rate"
@@ -185,11 +185,11 @@ export default function AdminBillingPlansCatalogModal({ logic }: AdminPlansModal
               id="admin-plan-freeze-allowed"
               type="checkbox"
               {...register('freezeAllowed')}
-              className="h-4 w-4 rounded border-border text-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page cursor-pointer"
+              className="h-4 w-4 rounded border-border text-text-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page cursor-pointer"
               data-testid="admin_plans-modal-freeze-allowed"
             />
             <label htmlFor="admin-plan-freeze-allowed" className="text-sm cursor-pointer select-none">
-              <span className="font-medium text-primary block">{t('plans.admin_plans_modal.freezeAllowedTitle')}</span>
+              <span className="font-medium text-text-primary block">{t('plans.admin_plans_modal.freezeAllowedTitle')}</span>
               <span className="text-xs text-secondary block">{t('plans.admin_plans_modal.freezeAllowedDescription')}</span>
             </label>
           </div>
@@ -202,7 +202,7 @@ export default function AdminBillingPlansCatalogModal({ logic }: AdminPlansModal
               aria-describedby={errors.features ? 'admin-plan-features-error' : undefined}
               placeholder={t('plans.admin_plans_modal.auto_eeae04113e')}
               {...register('features')}
-              className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 resize-none bg-input text-primary motion-safe:transition-colors ${
+              className={`focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 w-full border rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 resize-none bg-input text-text-primary motion-safe:transition-colors ${
                 errors.features ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-primary'
               }`}
              data-testid="admin_plans-admin_plans-modal-control-4"/>
@@ -212,7 +212,7 @@ export default function AdminBillingPlansCatalogModal({ logic }: AdminPlansModal
             <button
               type="button"
               onClick={() => void handleClose()}
-              className="flex-1 py-2.5 border border-border rounded-xl text-sm font-medium text-primary hover:bg-surface-hover motion-safe:transition-all motion-safe:duration-base motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page ease-in-out min-h-11 min-w-11"
+              className="flex-1 py-2.5 border border-border rounded-xl text-sm font-medium text-text-primary hover:bg-surface-hover motion-safe:transition-all motion-safe:duration-base motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page ease-in-out min-h-11 min-w-11"
              data-testid="admin_plans-admin_plans-modal-click-2">
               {t('plans.admin_plans_modal.text_77dfd2135f')}</button>
             <button

@@ -26,14 +26,14 @@ export default function AdminBillingPlansCatalogToolbar({ logic }: AdminPlansToo
   return (
     <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-card p-4 shadow-card">
       <div className="flex flex-wrap items-center gap-4">
-        <p className="hidden text-sm text-secondary sm:block">{t('plans.admin_plans_toolbar.text_61b770863d')}<span className="font-bold text-primary">{plans.length}</span></p>
+        <p className="hidden text-sm text-secondary sm:block">{t('plans.admin_plans_toolbar.text_61b770863d')}<span className="font-bold text-text-primary">{plans.length}</span></p>
         <div className="relative">
           <span className="absolute inset-y-0 left-3 flex items-center"><Search size={18} className="text-secondary" aria-hidden="true"  strokeWidth={2}/></span>
           <label htmlFor="admin_plans-search" className="sr-only">{t('plans.admin_plans_toolbar.text_6e18b08ca2')}</label>
-          <input id="admin_plans-search" value={localSearch} onChange={(event) => setLocalSearch(event.target.value)} placeholder={t('plans.admin_plans_toolbar.text_6b5429fd0b')} className="w-48 rounded-lg border border-border bg-input py-2 pl-9 pr-3 text-sm text-primary focus-visible:border-focus focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:w-64 focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"  data-testid="admin_plans-admin_plans-toolbar-search"/>
+          <input id="admin_plans-search" value={localSearch} onChange={(event) => setLocalSearch(event.target.value)} placeholder={t('plans.admin_plans_toolbar.text_6b5429fd0b')} className="w-48 rounded-lg border border-border bg-input py-2 pl-9 pr-3 text-sm text-text-primary focus-visible:border-focus focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:w-64 focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"  data-testid="admin_plans-admin_plans-toolbar-search"/>
         </div>
         <label htmlFor="admin_plans-tier" className="sr-only">{t('plans.admin_plans_toolbar.text_0e08b1c93a')}</label>
-        <select id="admin_plans-tier" value={tierFilter} onChange={(event) => setTierFilter(event.target.value)} className="rounded-lg border border-border bg-input px-3 py-2 text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11" data-testid="admin_plans-admin_plans-toolbar-control">
+        <select id="admin_plans-tier" value={tierFilter} onChange={(event) => setTierFilter(event.target.value)} className="rounded-lg border border-border bg-input px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11" data-testid="admin_plans-admin_plans-toolbar-control">
           <option value="All" data-testid="admin_plans-admin_plans-toolbar-control-2">{t('plans.admin_plans_toolbar.text_bb7f93d151')}</option>
           {TIERS.map((tier , __testIdIndex47) => <option key={tier} value={tier} data-testid={`admin_plans-admin_plans-toolbar-control-3-map47-${__testIdIndex47}-1`}>{tier}</option>)}
         </select>

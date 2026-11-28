@@ -40,10 +40,16 @@ export function useTrainerScheduleMutations() {
     mutationFn: ({ data, idempotencyKey }: TrainerScheduleRequestLeaveMutationVariables) => TrainerScheduleApi.requestLeave(data, idempotencyKey),
     onSuccess: invalidateSchedule,
   });
+  const withdrawLeaveMutation = useMutation({
+    mutationFn: ({ id, idempotencyKey }: { id: string; idempotencyKey: string }) => TrainerScheduleApi.withdrawLeave(id, idempotencyKey),
+    onSuccess: invalidateSchedule,
+  });
   return {
     updateAvailability: useCallback((variables: TrainerScheduleUpdateAvailabilityMutationVariables) => updateAvailabilityMutation.mutateAsync(variables), [updateAvailabilityMutation]),
     updateAvailabilityPending: updateAvailabilityMutation.isPending,
     requestLeave: useCallback((variables: TrainerScheduleRequestLeaveMutationVariables) => requestLeaveMutation.mutateAsync(variables), [requestLeaveMutation]),
     requestLeavePending: requestLeaveMutation.isPending,
+    withdrawLeave: useCallback((variables: { id: string; idempotencyKey: string }) => withdrawLeaveMutation.mutateAsync(variables), [withdrawLeaveMutation]),
+    withdrawLeavePending: withdrawLeaveMutation.isPending,
   };
 }

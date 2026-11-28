@@ -51,13 +51,13 @@ export default function AdminFinanceBranchProfitAndLossTable({
     <div className="bg-card border border-border rounded-2xl shadow-card overflow-hidden">
       <div className="overflow-x-auto max-h-[640px] overflow-auto">
         <table data-admin-responsive-table className="w-full text-left border-collapse">
-          <thead className="sticky top-0 z-20 bg-surface-highlight">
+          <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038]">
             <tr className="border-b border-border">
               {PNL_TABLE_HEADERS.map((h, __testIdIndex50) => (
                 <th
                   key={h.key}
                   className={`px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
-                    __testIdIndex50 === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    __testIdIndex50 === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                   }`}
                   aria-sort={h.sortable && sortKey === h.key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
                  data-testid={`admin_finance-admin_finance-pnl-table-header-map50-${__testIdIndex50}`}>
@@ -71,7 +71,7 @@ export default function AdminFinanceBranchProfitAndLossTable({
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody className="divide-y divide-border dark:divide-white/[0.07]">
             {data.length === 0 ? (
               <AdminFinancePnlEmptyState statusFilter={statusFilter} onReset={onResetFilter} />
             ) : (
@@ -91,7 +91,7 @@ export default function AdminFinanceBranchProfitAndLossTable({
                      data-testid={`admin_finance-admin_finance-pnl-table-row-map77-${__testIdIndex77}`}>
 
                       {/* Branch Name */}
-                      <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3.5">
+                      <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border px-4 py-3.5">
                         <div className="flex items-center gap-2.5">
                           <div className={`w-8 h-8 rounded-lg bg-primary-subtle flex items-center justify-center text-primary text-xs font-bold flex-shrink-0`}>
                             {branch.branchName.charAt(0)}
@@ -100,7 +100,7 @@ export default function AdminFinanceBranchProfitAndLossTable({
                             <div className="flex items-center gap-1.5">
                               <Link
                                 href={`/frontend_admin/admin_gyms/gyms_branches_directory?search=${encodeURIComponent(branch.branchName)}`}
-                                className="text-sm font-semibold text-primary truncate hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                                className="text-sm font-semibold text-text-primary truncate hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
                                 title={`View ${branch.branchName} in Branches Directory`}
                               >
                                 {branch.branchName}

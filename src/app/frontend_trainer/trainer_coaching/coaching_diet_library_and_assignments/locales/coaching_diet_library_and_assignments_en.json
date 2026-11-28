@@ -55,7 +55,8 @@
     "TEXT_LOADING_MEMBERS": "Loading members…",
     "TEXT_MEMBER_LOOKUP_FAILED": "Could not load members. Retry to continue.",
     "TEXT_NO_MEMBERS_AVAILABLE": "No members are available for assignment.",
-    "TEXT_RETRY": "Retry"
+    "TEXT_RETRY": "Retry",
+    "ERR_SELECT_AT_LEAST_ONE_MEMBER": "Select at least one member"
   },
   "TRAINER_INFRASTRUCTURE": {
     "TEXT_SELECT_AN_OPTION": "Select an option...",

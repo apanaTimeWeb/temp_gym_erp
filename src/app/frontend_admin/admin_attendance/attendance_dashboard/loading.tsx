@@ -10,7 +10,7 @@ import { useTranslations } from 'next-intl';
 export default function AdminAttendanceLoading() {
   const t = useTranslations();
   return (
-    <div className="p-6 space-y-5" aria-busy="true" data-testid="admin_attendance-loading-state">
+    <div className="p-4 sm:p-6 space-y-5" aria-busy="true" data-testid="admin_attendance-loading-state">
       <p role="status" aria-live="polite" className="sr-only">{t('attendance.AdminAuditRepair.loadingAttendance')}</p>
       <div aria-hidden="true">
       {/* KPI skeletons */}

@@ -18,7 +18,7 @@ export default function AdminGymsComparisonError({
   return (
     <div className="min-h-96 flex flex-col items-center justify-center text-center p-6 bg-card rounded-2xl border border-border mt-4" data-testid="admin_gyms_comparison-error-state">
       <AlertTriangle className="text-danger mb-4" size={24} strokeWidth={2} />
-      <h3 className="text-lg font-bold text-primary mb-2">Unable to load comparison data</h3>
+      <h3 className="text-lg font-bold text-text-primary mb-2">Unable to load comparison data</h3>
       <p className="text-sm text-secondary max-w-md mb-4">
         An error occurred while preparing branch comparison metrics. You can try again or return to branch directory.
       </p>

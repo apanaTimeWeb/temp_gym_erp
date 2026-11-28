@@ -47,12 +47,12 @@ export default function AdminFinancePayoutsManagementPnLStatement() {
   return (
     <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-card">
       <div className="border-b border-border px-5 py-3 bg-surface-highlight">
-        <p className="text-sm font-semibold text-primary">{t('payouts.admin_payouts_pnl_statement.text_587bef7062')}</p>
+        <p className="text-sm font-semibold text-text-primary">{t('payouts.admin_payouts_pnl_statement.text_587bef7062')}</p>
         <p className="mt-0.5 text-xs text-secondary">{t('payouts.admin_payouts_pnl_statement.text_b968ad7e9b')}</p>
       </div>
       <div className="overflow-x-auto max-h-[640px] overflow-auto">
         <table data-admin-responsive-table className="w-full text-left border-collapse">
-          <thead className="sticky top-0 z-20 bg-surface-highlight">
+          <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038]">
             <tr className="border-b border-border">
               {headers.map((header, idx) => (
                 <th
@@ -60,7 +60,7 @@ export default function AdminFinancePayoutsManagementPnLStatement() {
                   scope="col"
                   aria-sort={logic.pnlSortKey === header.key ? (logic.pnlSortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
                   className={`whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-secondary ${
-                    idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    idx === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                   }`}
                 >
                   <button type="button" onClick={() => logic.onPnlSort(header.key)} aria-label={header.label} className="inline-flex min-h-11 min-w-11 items-center gap-1.5 rounded text-left hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="payouts-management-payouts-management-pn-l-statement-on-pnl-sort">
@@ -70,13 +70,13 @@ export default function AdminFinancePayoutsManagementPnLStatement() {
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody className="divide-y divide-border dark:divide-white/[0.07]">
             {logic.pnlData.length === 0 ? (
               <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminPayoutsEmptyState title={t('payouts.admin_payouts_pnl_statement.text_f19bc6d402')} description={t('payouts.admin_payouts_pnl_statement.auto_55e2fbeab5')} /></td></tr>
             ) : (
               logic.pnlData.map((row) => (
                 <tr key={`${row.gymId}-${row.month}`} className="hover:bg-surface-hover transition-colors group">
-                  <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-medium text-primary">
+                  <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border px-4 py-3 text-sm font-medium text-text-primary">
                     <div className="flex items-center gap-1.5">
                       <span>{row.gymName}</span>
                       <CopyButton text={row.gymName} label={row.gymName} />

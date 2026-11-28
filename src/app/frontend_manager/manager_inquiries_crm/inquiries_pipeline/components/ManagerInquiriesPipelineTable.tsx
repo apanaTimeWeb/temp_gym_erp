@@ -83,11 +83,12 @@ export default function ManagerInquiriesPipelineTable() {
   }
 
   return (
-    <div className="bg-card rounded-2xl shadow-card border border-border overflow-hidden flex flex-col">
+    <div className="relative bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] rounded-2xl shadow-card border border-border dark:border-sky-500/30 overflow-hidden flex flex-col">
+      <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#38BDF8] via-[#6366F1] to-[#FF5A1F] z-30" />
       <div className="max-h-[640px] overflow-auto">
         <ManagerInfrastructureResponsiveTable labels={['', ...INQUIRIES_TABLE_HEADER_KEYS.map((labelKey) => t(labelKey))]}>
           <table className="w-full text-left border-collapse">
-            <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+            <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10 shadow-[0_2px_10px_rgba(0,0,0,0.18)]">
               <tr>
                 <th className="px-5 py-3 w-12 text-left sticky start-0 z-30 bg-surface-highlight border-e border-border">
                   <input className="w-4 h-4 rounded border-border text-text-primary focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer" data-testid="manager_inquiries-inquiries-table-input-checkbox-toggle"

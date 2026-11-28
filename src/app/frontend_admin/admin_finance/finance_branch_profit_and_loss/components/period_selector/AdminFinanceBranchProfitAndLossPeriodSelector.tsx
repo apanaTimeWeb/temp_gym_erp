@@ -45,7 +45,7 @@ export default function AdminFinanceBranchProfitAndLossPeriodSelector({
         ))}
       </div>
 
-      <button type="button" disabled={!canExport} title={!canExport ? t('finance.admin_finance_tabs.exportNoRows') : undefined} onClick={onExport} className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-semibold text-primary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="finance-pnl-report-finance-pnl-report-period-selector-admin-finance-tabs-export-no-rows"><Download size={16} strokeWidth={2} />{t('finance.admin_finance_tabs.exportCsv')}</button>
+      <button type="button" disabled={!canExport} title={!canExport ? t('finance.admin_finance_tabs.exportNoRows') : undefined} onClick={onExport} className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-semibold text-text-primary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="finance-pnl-report-finance-pnl-report-period-selector-admin-finance-tabs-export-no-rows"><Download size={16} strokeWidth={2} />{t('finance.admin_finance_tabs.exportCsv')}</button>
     </div>
   );
 }

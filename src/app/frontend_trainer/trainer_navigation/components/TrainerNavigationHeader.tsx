@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 
 import type { KeyboardEvent as ReactKeyboardEvent } from 'react';
 
-import { Bell, Building2, Check, ChevronDown, ChevronRight, HelpCircle, LogOut, MapPin, Menu, Search, ShieldCheck, User } from 'lucide-react';
+import { Bell, Building2, Check, ChevronDown, ChevronRight, LogOut, MapPin, Menu, ShieldCheck, User } from 'lucide-react';
 
 import { useTranslations } from 'next-intl';
 
@@ -307,34 +307,6 @@ export default function TrainerNavigationHeader({ title, subtitle, branchName, i
       </div>
 
       <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-        <button
-          type="button"
-          aria-label={t('TEXT_SEARCH_OR_JUMP')}
-          title={`${t('TEXT_COMMAND_PALETTE')} (Ctrl+K)`}
-          data-testid="trainer_navigation-header-command_palette_trigger"
-          onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, bubbles: true }))}
-          className="min-w-10 h-10 inline-flex items-center justify-center lg:justify-between gap-2.5 rounded-xl border border-white/15 bg-white/[0.05] hover:bg-orange-500/15 hover:border-orange-400/50 px-2.5 lg:px-3 text-xs font-medium text-slate-300 hover:text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
-        >
-          <span className="inline-flex items-center gap-2">
-            <Search size={15} className="text-[#FF5A1F]" strokeWidth={2.2} aria-hidden="true" />
-            <span className="hidden lg:inline">{t('TEXT_SEARCH_MENU')}</span>
-          </span>
-          <kbd className="hidden lg:inline-flex items-center rounded border border-white/15 bg-white/[0.06] px-1.5 py-0.5 text-[10px] font-semibold text-slate-300">
-            Ctrl K
-          </kbd>
-        </button>
-
-        <button
-          type="button"
-          aria-label={t('TEXT_KEYBOARD_SHORTCUTS')}
-          title={`${t('TEXT_KEYBOARD_SHORTCUTS')} (?)`}
-          data-testid="trainer_navigation-header-shortcuts_trigger"
-          onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: '?', shiftKey: true, bubbles: true }))}
-          className="hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-xl border border-purple-400/35 bg-purple-500/15 text-purple-300 hover:bg-purple-500/25 hover:border-purple-400/60 hover:text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shadow-[0_2px_10px_rgba(168,85,247,0.18)] cursor-pointer"
-        >
-          <HelpCircle size={17} strokeWidth={2} aria-hidden="true" />
-        </button>
-
         <ThemeToggle />
         <div
           ref={notificationsRef}

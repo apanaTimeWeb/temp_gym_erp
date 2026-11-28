@@ -31,7 +31,7 @@ export default function AdminSecurityPermissionsManagementToolbar() {
       </div>
       <div className="relative w-full sm:max-w-xs">
         <Search size={18} strokeWidth={2} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-secondary" />
-        <input data-testid="admin_permissions-admin_permissions-toolbar-control-2" value={staffSearch} onChange={(event) => setStaffSearch(event.target.value)} placeholder={t('permissions.admin_permissions_toolbar.text_efceb97cfb')} aria-label={t('permissions.admin_permissions_toolbar.text_efceb97cfb')} className="min-h-11 w-full rounded-lg border border-border bg-input pl-10 pr-3 text-sm text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out" />
+        <input data-testid="admin_permissions-admin_permissions-toolbar-control-2" value={staffSearch} onChange={(event) => setStaffSearch(event.target.value)} placeholder={t('permissions.admin_permissions_toolbar.text_efceb97cfb')} aria-label={t('permissions.admin_permissions_toolbar.text_efceb97cfb')} className="min-h-11 w-full rounded-lg border border-border bg-input pl-10 pr-3 text-sm text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out" />
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { AdminPayoutsFormatCurrency } from '@/app/frontend_admin/admin_finance/finance_payouts_management/utils/AdminFinancePayoutsManagementFormatCurrency';
 import type { AdminPayoutsPnLStatementCellProps } from '@/app/frontend_admin/admin_finance/finance_payouts_management/types/AdminFinancePayoutsManagementPnLStatementCellPropsTypes';
 
-export default function AdminFinancePayoutsManagementPnLStatementCell({ value, tone = 'text-primary' }: AdminPayoutsPnLStatementCellProps) {
+export default function AdminFinancePayoutsManagementPnLStatementCell({ value, tone = 'text-text-primary' }: AdminPayoutsPnLStatementCellProps) {
   const locale = useLocale();
   const formatted = typeof value === 'number' ? AdminPayoutsFormatCurrency(value, 'INR', locale) : '—';
   return <td className={`px-4 py-3 text-sm ${tone}`}><span>{formatted !== '—' ? formatted : (Number.isFinite(value) ? `₹${value.toLocaleString(locale)}` : '—')}</span></td>;

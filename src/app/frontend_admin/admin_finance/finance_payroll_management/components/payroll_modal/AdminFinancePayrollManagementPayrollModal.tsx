@@ -35,7 +35,7 @@ export default function AdminFinancePayrollManagementPayrollModal() {
       <div className="my-auto w-full max-w-md rounded-2xl shadow-dialog flex flex-col max-h-dialog-desktop overflow-hidden bg-overlay border-2 border-border">
         
         <div className="flex items-center justify-between px-8 py-5 border-b border-border shrink-0 bg-overlay">
-          <h2 id="admin-hr-payroll-title" className="text-xl font-bold text-primary">
+          <h2 id="admin-hr-payroll-title" className="text-xl font-bold text-text-primary">
             {t('hr.admin_hr_payroll_modal.text_998b7ddeda')}</h2>
           <button type="button" onClick={() => void handleClose()} className="p-2 rounded-full hover:bg-surface-hover motion-safe:transition-colors text-secondary hover:text-primary motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95" data-testid="admin_hr-admin_hr-payroll-modal-click">
             <X size={18}  strokeWidth={2}/>
@@ -70,7 +70,7 @@ export default function AdminFinancePayrollManagementPayrollModal() {
               <input 
                 id="admin-hr-payroll-month" type="month" aria-invalid={Boolean(errors.month)} aria-describedby={errors.month ? "admin-hr-payroll-month-error" : undefined}
                 {...register('month')}
-                className="w-full px-4 py-3 border border-border rounded-xl text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-primary motion-safe:transition-all motion-safe:duration-base motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+                className="w-full px-4 py-3 border border-border rounded-xl text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-text-primary motion-safe:transition-all motion-safe:duration-base motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
                data-testid="admin_hr-admin_hr-payroll-modal-control-2"/>
               {errors.month && <p id="admin-hr-payroll-month-error" role="alert" className="text-danger text-xs mt-1.5">{getValidationMessage(errors.month.message)}</p>}
             </div>
@@ -81,7 +81,7 @@ export default function AdminFinancePayrollManagementPayrollModal() {
                 id="admin-hr-payroll-amount" type="number" min="0" step="1" aria-invalid={Boolean(errors.amount)} aria-describedby={errors.amount ? "admin-hr-payroll-amount-error" : undefined} onKeyDown={(e) => { if (['e', 'E', '-', '+'].includes(e.key)) e.preventDefault(); }}
                 {...register('amount', { valueAsNumber: true })}
                 readOnly
-                className="w-full px-4 py-3 border border-dashed border-border rounded-xl text-sm bg-input text-primary cursor-default opacity-100 min-h-11 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+                className="w-full px-4 py-3 border border-dashed border-border rounded-xl text-sm bg-input text-text-primary cursor-default opacity-100 min-h-11 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page"
                data-testid="admin_hr-admin_hr-payroll-modal-control-3"/>
               <p className="text-xs text-secondary mt-1.5">
                 {calculationInfo ? calculationInfo : t('hr.admin_hr_payroll_modal.auto_0b653ad05a')}</p>
@@ -93,7 +93,7 @@ export default function AdminFinancePayrollManagementPayrollModal() {
               <textarea id="admin-hr-payroll-notes"
                 {...register('notes')}
                 rows={3}
-                className="w-full px-4 py-3 rounded-xl border border-border text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base resize-none bg-input text-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+                className="w-full px-4 py-3 rounded-xl border border-border text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all motion-safe:duration-base resize-none bg-input text-text-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
                 placeholder={t('hr.admin_hr_payroll_modal.text_ba40661c4f')}
                data-testid="admin_hr-admin_hr-payroll-modal-control-4"/>
             </div>

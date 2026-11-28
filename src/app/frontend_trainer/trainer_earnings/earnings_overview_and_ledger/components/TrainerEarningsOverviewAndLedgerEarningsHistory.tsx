@@ -5,9 +5,9 @@
  * @dependencies Consumes earnings query results and module-local formatter/configuration contracts.
  * @edge-cases Handles nullable descriptions/dates, localized currency formatting, empty history, long text truncation, and stable loading layout.
  */
-import { Fragment, useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
-import { ArrowDown, ArrowUp, ArrowUpDown, Loader2, Receipt } from 'lucide-react';
+import { ArrowDown, ArrowUp, ArrowUpDown, Eye, Loader2, Receipt } from 'lucide-react';
 
 import { useLocale, useTranslations } from 'next-intl';
 
@@ -49,11 +49,15 @@ export default function TrainerEarningsHistory() {
   const pathname = usePathname();
   const router = useRouter();
   const [draftSearch, setDraftSearch] = useState(searchParams.get('search') ?? '');
-  const [expandedRowId, setExpandedRowId] = useState<string | null>(null);
   const [selectedPayslipRow, setSelectedPayslipRow] = useState<TrainerEarningsHistoryRow | null>(null);
   const debouncedSearch = useTrainerInfrastructureDebounce(draftSearch, 300);
 
   const search = searchParams.get('search') ?? '';
+  const [prevSearch, setPrevSearch] = useState(search);
+  if (prevSearch !== search) {
+    setPrevSearch(search);
+    setDraftSearch(search);
+  }
   const statusFilter = searchParams.get('status') ?? 'ALL';
   const typeFilter = searchParams.get('type') ?? 'ALL';
   const currentPageValue = Number(searchParams.get('page') ?? '1');
@@ -65,7 +69,7 @@ export default function TrainerEarningsHistory() {
   const endDate = searchParams.get('endDate') ?? '';
 
   /* Synchronizes the debounced search input into URL state; the 300ms debounce is the server-search boundary. */
-// Effect contract: synchronize local earnings controls with the URL/query state and reset pagination when filters change.
+  // Effect contract: synchronize local earnings controls with the URL/query state and reset pagination when filters change.
   useEffect(() => {
     if (debouncedSearch === search) return;
     const params = new URLSearchParams(searchParams.toString());
@@ -74,12 +78,6 @@ export default function TrainerEarningsHistory() {
     params.set('page', '1');
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }, [debouncedSearch, pathname, router, search, searchParams]);
-
-  /* Keeps draft input synchronized with browser back/forward navigation without overwriting active typing mid-debounce. */
-// Effect contract: synchronize local earnings controls with the URL/query state and reset pagination when filters change.
-  useEffect(() => {
-    if (draftSearch !== search && debouncedSearch === draftSearch) setDraftSearch(search);
-  }, [debouncedSearch, draftSearch, search]);
 
   const updateUrlParam = (key: string, value: string | null) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -109,12 +107,12 @@ export default function TrainerEarningsHistory() {
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
-  
+
 
   const { data, isPending, isError, isFetching, refetch } = useTrainerEarningsQuery();
 
-  const history = data?.history ?? [];
   const filteredHistory = useMemo(() => {
+    const history = data?.history ?? [];
     return history.filter((row) => {
       if (statusFilter !== 'ALL' && row.status.toLowerCase() !== statusFilter.toLowerCase()) {
         return false;
@@ -124,7 +122,7 @@ export default function TrainerEarningsHistory() {
       }
       return true;
     });
-  }, [history, statusFilter, typeFilter]);
+  }, [data?.history, statusFilter, typeFilter]);
   const hasPaginationMetadata = Boolean(
     data &&
     typeof data.historyTotal === 'number' &&
@@ -142,10 +140,38 @@ export default function TrainerEarningsHistory() {
   }
 
   if (isError || !data || !hasPaginationMetadata) {
-    return <div className="m-4 p-5 bg-danger-bg border border-border rounded-xl " role="alert" data-testid={data && !isError && !hasPaginationMetadata ? "trainer_earnings-earnings-history_pagination_metadata_error" : "trainer_earnings-earnings-history_unable_to_load_earnings_history"}><p className="text-sm text-danger " data-testid="trainer_earnings-history-error_state">{t("TEXT_UNABLE_TO_LOAD_EARNINGS_HISTORY")}</p><button type="button" onClick={() => void refetch()} disabled={isFetching} className="mt-3 min-h-11 min-w-28 inline-flex items-center justify-center gap-2 px-4 rounded-lg bg-danger text-on-danger motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_earnings-trainerearningshistory-button_1">{isFetching ? <><Loader2 size={18} className="motion-safe:animate-spin" aria-hidden="true" strokeWidth={2}/>{t("TEXT_RETRYING")}</> : t("TEXT_RETRY")}</button></div>;
+    return <div className="m-4 p-5 bg-danger-bg border border-border rounded-xl " role="alert" data-testid={data && !isError && !hasPaginationMetadata ? "trainer_earnings-earnings-history_pagination_metadata_error" : "trainer_earnings-earnings-history_unable_to_load_earnings_history"}><p className="text-sm text-danger " data-testid="trainer_earnings-history-error_state">{t("TEXT_UNABLE_TO_LOAD_EARNINGS_HISTORY")}</p><button type="button" onClick={() => void refetch()} disabled={isFetching} className="mt-3 min-h-11 min-w-28 inline-flex items-center justify-center gap-2 px-4 rounded-lg bg-danger text-on-danger motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_earnings-trainerearningshistory-button_1">{isFetching ? <><Loader2 size={18} className="motion-safe:animate-spin" aria-hidden="true" strokeWidth={2} />{t("TEXT_RETRYING")}</> : t("TEXT_RETRY")}</button></div>;
   }
 
-  const TABLE_COLUMN_COUNT = 4;
+  const handleExportCsv = () => {
+    const header = ['ID', 'Date', 'Type', 'Description', 'Amount', 'TDS', 'Net Payout', 'Currency', 'Status', 'Invoice'];
+    const csvRows = [
+      header.join(','),
+      ...filteredHistory.map((r) =>
+        [
+          r.id,
+          r.date,
+          r.type,
+          `"${String(r.description ?? '').replace(/"/g, '""')}"`,
+          r.amount,
+          r.tdsDeducted ?? Math.round(r.amount * 0.1),
+          r.netPayout ?? (r.amount - (r.tdsDeducted ?? Math.round(r.amount * 0.1))),
+          r.currency,
+          r.status,
+          r.invoiceNumber ?? '',
+        ].join(',')
+      ),
+    ];
+    const blob = new Blob([csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'trainer_earnings_statement.csv';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <div className="bg-card border border-border rounded-2xl shadow-card flex flex-col h-full overflow-hidden">
@@ -158,100 +184,87 @@ export default function TrainerEarningsHistory() {
         endDate={endDate}
         updateUrlParam={updateUrlParam}
         handleDateChange={handleDateChange}
+        onExportCsv={handleExportCsv}
       />
 
-      <div className="flex-1 overflow-x-auto custom-scrollbar">
+      <div className="flex-1 overflow-x-hidden">
         {filteredHistory.length === 0 ? <TrainerEarningsEmptyState /> : (
           <>
-          <div className="md:hidden divide-y divide-border">{filteredHistory.map((row) => { const style = TRAINER_EARNINGS_PAYOUT_STATUS_STYLES[row.status]; return <article key={row.id} className="p-4 bg-card" data-testid={`trainer_earnings-history-card${row.id}`}><div className="flex items-start justify-between gap-3"><div className="min-w-0"><TrainerInfrastructureTooltip content={row.description}><p className="font-medium text-text-primary truncate">{row.description}</p></TrainerInfrastructureTooltip><p className="text-xs text-secondary mt-1">{TrainerEarningsFormatDate(row.date, locale)} · {t(`TEXT_TYPE_${row.type.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`)}</p></div><span className={`shrink-0 inline-flex px-2 py-0.5 rounded-full text-xs font-semibold ${style?.bg ?? 'bg-input'} ${style?.text ?? 'text-secondary'}`} data-testid={`trainer_earnings-earnings-history-mobile-status-${row.id}`}>{style ? t(`TEXT_STATUS_${row.status.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`) : t('TEXT_STATUS_UNKNOWN')}</span></div><div className="mt-3 flex items-center justify-between gap-3"><span className="text-xs text-secondary">{t('TEXT_NET_PAYOUT')}</span><span className="text-sm font-semibold text-text-primary">{row.netPayout == null ? displayValue(row.netPayout) : TrainerEarningsFormatCurrency(row.netPayout, row.currency, locale)}</span></div><div className="mt-2.5 pt-2 border-t border-border flex justify-end"><button type="button" onClick={() => setSelectedPayslipRow(row)} className="min-h-8 inline-flex items-center gap-1.5 px-3 py-1 bg-sky-500/15 hover:bg-sky-500/25 text-sky-600 dark:text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" data-testid={`trainer_earnings-mobile-view-payslip-${row.id}`}><Receipt size={13} />View Payslip</button></div></article>})}</div>
-          <div className="hidden md:block max-h-[640px] overflow-auto custom-scrollbar">
-            <table className="w-full min-w-full text-start border-collapse">
-              <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
-                <tr className="bg-surface-highlight border-b border-border" data-testid="trainer_earnings-TrainerEarningsHistory-row-1">
-                  {TRAINER_EARNINGS_EARNINGS_SORT_OPTIONS.map((column, index) => {
-                    const active = sortBy === column.value;
-                    const SortIcon = active ? (sortDirection === 'asc' ? ArrowUp : ArrowDown) : ArrowUpDown;
-                    return (
-                      <th
-                        key={column.value}
-                        scope="col"
-                        className={`py-3 px-4 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
-                          index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
-                        } ${column.value === 'amount' || column.value === 'status' ? 'text-end' : ''}`}
-                      >
-                        <button
-                          type="button"
-                          onClick={() => handleSort(column.value)}
-                          className="min-w-11 inline-flex items-center gap-1 min-h-11 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
-                          aria-label={`${t(`TEXT_SORT_${column.value.toUpperCase()}`)}: ${active ? (sortDirection === 'asc' ? t("TEXT_DESCENDING") : t("TEXT_ASCENDING")) : t("TEXT_ASCENDING")}`}
-                          data-testid={`trainer_earnings-earnings-history-sort-${column.value}`}
+            <div className="md:hidden divide-y divide-border">{filteredHistory.map((row) => { const style = TRAINER_EARNINGS_PAYOUT_STATUS_STYLES[row.status]; return <article key={row.id} className="p-4 bg-card" data-testid={`trainer_earnings-history-card${row.id}`}><div className="flex items-start justify-between gap-3"><div className="min-w-0"><TrainerInfrastructureTooltip content={row.description}><p className="font-medium text-text-primary truncate">{row.description}</p></TrainerInfrastructureTooltip><p className="text-xs text-secondary mt-1">{TrainerEarningsFormatDate(row.date, locale)} · {t(`TEXT_TYPE_${row.type.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`)}</p></div><span className={`shrink-0 inline-flex px-2 py-0.5 rounded-full text-xs font-semibold ${style?.bg ?? 'bg-input'} ${style?.text ?? 'text-secondary'}`} data-testid={`trainer_earnings-earnings-history-mobile-status-${row.id}`}>{style ? t(`TEXT_STATUS_${row.status.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`) : t('TEXT_STATUS_UNKNOWN')}</span></div><div className="mt-3 flex items-center justify-between gap-3"><span className="text-xs text-secondary">{t('TEXT_NET_PAYOUT')}</span><span className="text-sm font-semibold text-text-primary">{row.netPayout == null ? displayValue(row.netPayout) : TrainerEarningsFormatCurrency(row.netPayout, row.currency, locale)}</span></div><div className="mt-2.5 pt-2 border-t border-border flex justify-end"><button type="button" onClick={() => setSelectedPayslipRow(row)} className="min-h-8 inline-flex items-center gap-1.5 px-3 py-1 bg-sky-500/15 hover:bg-sky-500/25 text-sky-600 dark:text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" data-testid={`trainer_earnings-mobile-view-payslip-${row.id}`}><Receipt size={13} />View Payslip</button></div></article> })}</div>
+            <div className="hidden md:block max-h-[640px] overflow-y-auto overflow-x-hidden">
+              <table className="w-full text-start border-collapse">
+                <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+                  <tr className="bg-surface-highlight border-b border-border" data-testid="trainer_earnings-TrainerEarningsHistory-row-1">
+                    {TRAINER_EARNINGS_EARNINGS_SORT_OPTIONS.map((column) => {
+                      const active = sortBy === column.value;
+                      const SortIcon = active ? (sortDirection === 'asc' ? ArrowUp : ArrowDown) : ArrowUpDown;
+                      return (
+                        <th
+                          key={column.value}
+                          scope="col"
+                          className={`py-3 px-3 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${column.value === 'amount' || column.value === 'status' ? 'text-end' : ''
+                            }`}
                         >
-                          {t(`TEXT_SORT_${column.value.toUpperCase()}`)}
-                          <SortIcon size={16} strokeWidth={2.2} aria-hidden="true" className={active ? 'text-orange-500' : 'text-secondary/60'} />
-                        </button>
-                      </th>
-                    );
-                  })}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {filteredHistory.map((row) => {
-                  const style = TRAINER_EARNINGS_PAYOUT_STATUS_STYLES[row.status];
-                  const expanded = expandedRowId === row.id;
-                  return (
-                    <Fragment key={row.id}>
+                          <button
+                            type="button"
+                            onClick={() => handleSort(column.value)}
+                            className="min-w-11 inline-flex items-center gap-1 min-h-11 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+                            aria-label={`${t(`TEXT_SORT_${column.value.toUpperCase()}`)}: ${active ? (sortDirection === 'asc' ? t("TEXT_DESCENDING") : t("TEXT_ASCENDING")) : t("TEXT_ASCENDING")}`}
+                            data-testid={`trainer_earnings-earnings-history-sort-${column.value}`}
+                          >
+                            {t(`TEXT_SORT_${column.value.toUpperCase()}`)}
+                            <SortIcon size={16} strokeWidth={2.2} aria-hidden="true" className={active ? 'text-orange-500' : 'text-secondary/60'} />
+                          </button>
+                        </th>
+                      );
+                    })}
+                    <th scope="col" className="py-3 px-3 text-center text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {filteredHistory.map((row) => {
+                    const style = TRAINER_EARNINGS_PAYOUT_STATUS_STYLES[row.status];
+                    return (
                       <tr
+                        key={row.id}
                         data-testid={`trainer_earnings-earnings-history-row-${row.id}`}
-                        tabIndex={0}
-                        aria-expanded={expanded}
-                        aria-controls={`trainer-earnings-row-${row.id}-details`}
-                        onClick={() => setExpandedRowId(expanded ? null : row.id)}
-                        onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setExpandedRowId(expanded ? null : row.id); } }}
-                        className="cursor-pointer hover:bg-surface-hover transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus-ring"
+                        className="hover:bg-surface-hover transition-colors group"
                       >
-                        <td className="sticky start-0 z-10 bg-card border-e border-border py-3 px-4 text-sm text-secondary whitespace-nowrap group-hover:bg-surface-hover transition-colors">
+                        <td className="py-3 px-3 text-sm text-secondary whitespace-nowrap">
                           <div className="flex items-center gap-2">
                             <span className="font-bold text-text-primary text-sm">{TrainerEarningsFormatDate(row.date, locale)}</span>
                             <CopyButton value={TrainerEarningsFormatDate(row.date, locale)} />
                           </div>
                           <p className="text-xs text-secondary font-mono flex items-center gap-1.5 mt-0.5">#{row.id.slice(-6)}</p>
                         </td>
-                        <td className="py-3 px-4">
+                        <td className="py-3 px-3 min-w-0">
                           <TrainerInfrastructureTooltip content={row.description}>
-                            <p className="text-sm font-medium text-text-primary truncate max-w-80">{row.description}</p>
+                            <p className="text-sm font-medium text-text-primary truncate max-w-[220px]">{row.description}</p>
                           </TrainerInfrastructureTooltip>
-                          <p className="text-xs text-secondary mt-0.5 motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95">{t(`TEXT_TYPE_${row.type.toUpperCase().replace(/[^A-Z0-9]+/g, "_")}`)}</p>
+                          <p className="text-xs text-secondary mt-0.5">{t(`TEXT_TYPE_${row.type.toUpperCase().replace(/[^A-Z0-9]+/g, "_")}`)}</p>
                         </td>
-                        <td className="py-3 px-4 text-sm font-semibold text-text-primary text-end whitespace-nowrap">{TrainerEarningsFormatCurrency(row.amount, row.currency, locale)}</td>
-                        <td className="py-3 px-4 text-end"><span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider ${style?.bg ?? 'bg-input'} ${style?.text ?? 'text-secondary'}`} data-testid={`trainer_earnings-earnings-history-status-${row.id}`}>{style ? t(`TEXT_STATUS_${row.status.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`) : t('TEXT_STATUS_UNKNOWN')}</span></td>
+                        <td className="py-3 px-3 text-sm font-semibold text-text-primary text-end whitespace-nowrap">{TrainerEarningsFormatCurrency(row.amount, row.currency, locale)}</td>
+                        <td className="py-3 px-3 text-end whitespace-nowrap"><span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider ${style?.bg ?? 'bg-input'} ${style?.text ?? 'text-secondary'}`} data-testid={`trainer_earnings-earnings-history-status-${row.id}`}>{style ? t(`TEXT_STATUS_${row.status.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`) : t('TEXT_STATUS_UNKNOWN')}</span></td>
+                        <td className="py-3 px-3 text-center whitespace-nowrap">
+                          <button
+                            type="button"
+                            onClick={() => setSelectedPayslipRow(row)}
+                            className="min-w-9 min-h-9 inline-flex items-center justify-center p-1.5 rounded-xl border border-sky-500/35 bg-sky-500/15 text-sky-600 dark:text-sky-300 hover:bg-sky-500 hover:text-white motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
+                            aria-label={`View payslip details for ${row.description}`}
+                            title="View full payout & payslip details"
+                            data-testid={`trainer_earnings-view-payslip-${row.id}`}
+                          >
+                            <Eye size={16} strokeWidth={2.2} aria-hidden="true" />
+                          </button>
+                        </td>
                       </tr>
-                      {expanded && (
-                        <tr id={`trainer-earnings-row-${row.id}-details`} key={`${row.id}-details`} data-testid="trainer_earnings-TrainerEarningsHistory-row-2">
-                          <td colSpan={TABLE_COLUMN_COUNT} className="px-4 py-3 bg-input">
-                            <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-secondary">
-                              <div className="flex flex-wrap gap-4">
-                                <span><strong className="text-text-primary">{t("TEXT_SESSION_ID")}</strong> {displayValue(row.sessionId)}</span>
-                                <span><strong className="text-text-primary">{t("TEXT_INVOICE")}</strong> {displayValue(row.invoiceNumber)}</span>
-                                <span><strong className="text-text-primary">{t("TEXT_NET_PAYOUT")}</strong> {row.netPayout == null ? displayValue(row.netPayout) : TrainerEarningsFormatCurrency(row.netPayout, row.currency, locale)}</span>
-                              </div>
-                              <button
-                                type="button"
-                                onClick={(e) => { e.stopPropagation(); setSelectedPayslipRow(row); }}
-                                className="min-h-8 inline-flex items-center gap-1.5 px-3 py-1 bg-primary text-on-primary rounded-lg text-xs font-semibold hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
-                                data-testid={`trainer_earnings-view-payslip-${row.id}`}
-                              >
-                                <Receipt size={13} />View Payslip
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      )}
-                    </Fragment>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </>
         )}
       </div>

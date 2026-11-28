@@ -24,7 +24,7 @@ export default function AdminMembersBlacklistManagementEmptyState() {
         <Ban size={18} className="text-danger"  strokeWidth={2}/>
       </div>
       <div className="text-center">
-        <p className="text-base font-semibold text-primary">{t('blacklist.admin_blacklist_empty_state.text_209fc8147a')}</p>
+        <p className="text-base font-semibold text-text-primary">{t('blacklist.admin_blacklist_empty_state.text_209fc8147a')}</p>
         <p className="text-sm text-secondary mt-1">{t('blacklist.admin_blacklist_empty_state.text_c92ec0d993')}</p>
       </div>
       <button type="button" onClick={openAdd} className="px-4 py-2 bg-danger text-on-danger rounded-lg text-sm font-semibold hover:opacity-90 motion-safe:transition-opacity motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95" data-testid="admin_blacklist-admin_blacklist-empty-state-state">

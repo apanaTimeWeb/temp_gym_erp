@@ -83,14 +83,14 @@ export default function AdminFinancePayrollManagementPayrollTable() {
       <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
         <div className="overflow-x-auto max-h-[640px] overflow-auto">
           <table className="w-full border-collapse">
-            <thead className="sticky top-0 z-20 bg-surface-highlight text-secondary">
+            <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] text-secondary">
               <tr className="border-b border-border">
                 {ADMIN_FINANCE_PAYROLL_MANAGEMENT_TABLE_HEADERS.map((header, idx) => (
                   <th
                     key={header}
                     aria-sort={PAYROLL_SORT_KEYS[header] && payrollSortKey === PAYROLL_SORT_KEYS[header] ? (payrollSortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
                     className={`text-left text-xs font-semibold uppercase tracking-wider px-4 py-3 whitespace-nowrap ${
-                      idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                      idx === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                     }`}
                   >
                     {renderHeader(header)}
@@ -101,11 +101,11 @@ export default function AdminFinancePayrollManagementPayrollTable() {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border dark:divide-white/[0.07]">
               {['payroll-skeleton-1', 'payroll-skeleton-2', 'payroll-skeleton-3', 'payroll-skeleton-4', 'payroll-skeleton-5'].map((key) => (
                 <tr key={key} className="animate-pulse bg-card">
                   {['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'].map((cell, cIdx) => (
-                    <td key={`${key}-${cell}`} className={`px-4 py-4 ${cIdx === 0 ? 'sticky start-0 z-10 bg-card border-e border-border' : ''}`}>
+                    <td key={`${key}-${cell}`} className={`px-4 py-4 ${cIdx === 0 ? 'sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border' : ''}`}>
                       <div className="h-4 bg-skeleton-base rounded w-24" />
                     </td>
                   ))}
@@ -151,14 +151,14 @@ export default function AdminFinancePayrollManagementPayrollTable() {
       <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
         <div className="overflow-x-auto max-h-[640px] overflow-auto">
           <table data-admin-responsive-table className="w-full text-left border-collapse">
-            <thead className="sticky top-0 z-20 bg-surface-highlight text-secondary">
+            <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] text-secondary">
               <tr className="border-b border-border">
                 {ADMIN_FINANCE_PAYROLL_MANAGEMENT_TABLE_HEADERS.map((header, idx) => (
                   <th
                     key={header}
                     aria-sort={PAYROLL_SORT_KEYS[header] && payrollSortKey === PAYROLL_SORT_KEYS[header] ? (payrollSortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
                     className={`text-left text-xs font-semibold uppercase tracking-wider px-4 py-3 whitespace-nowrap ${
-                      idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                      idx === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                     }`}
                   >
                     {renderHeader(header)}
@@ -169,23 +169,23 @@ export default function AdminFinancePayrollManagementPayrollTable() {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border dark:divide-white/[0.07]">
               {payrolls.map((payroll, __testIdIndex45) => {
                 const salary = staff.find((member) => member.id === payroll.staffId)?.salary ?? 0;
                 return (
                   <tr key={payroll.id} className="hover:bg-surface-hover transition-colors group">
-                    <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3">
+                    <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border px-4 py-3">
                       <div className="flex items-center gap-1.5">
                         {payroll.staff?.name ? (
                           <Link
                             href={`/frontend_admin/admin_hr/hr_staff_management?search=${encodeURIComponent(payroll.staff.name)}`}
-                            className="text-sm font-medium text-primary hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                            className="text-sm font-medium text-text-primary hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
                             title="View staff profile"
                           >
                             {payroll.staff.name}
                           </Link>
                         ) : (
-                          <p className="text-sm font-medium text-primary">{t('admin_hr_payroll_table.auto_staffFallback', { id: payroll.staffId })}</p>
+                          <p className="text-sm font-medium text-text-primary">{t('admin_hr_payroll_table.auto_staffFallback', { id: payroll.staffId })}</p>
                         )}
                         {payroll.staff?.name && <CopyButton text={payroll.staff.name} label={payroll.staff.name} />}
                       </div>
@@ -194,7 +194,7 @@ export default function AdminFinancePayrollManagementPayrollTable() {
                         {payroll.staff?.name && (
                           <Link
                             href={`/frontend_admin/admin_finance/finance_staff_ledger_management?search=${encodeURIComponent(payroll.staff.name)}`}
-                            className="text-[10px] text-primary hover:underline font-semibold"
+                            className="text-[10px] text-text-primary hover:underline font-semibold"
                             title="View Ledger"
                           >
                             Ledger
@@ -202,9 +202,9 @@ export default function AdminFinancePayrollManagementPayrollTable() {
                         )}
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-sm text-primary">{payroll.month}</td>
+                    <td className="px-4 py-3 text-sm text-text-primary">{payroll.month}</td>
                     <td className="px-4 py-3 text-sm font-medium text-right">{AdminFinancePayrollManagementFormatCurrency(salary, undefined, locale)}</td>
-                    <td className="px-4 py-3 text-sm font-bold text-primary text-right">{AdminFinancePayrollManagementFormatCurrency(payroll.amount || 0, undefined, locale)}</td>
+                    <td className="px-4 py-3 text-sm font-bold text-text-primary text-right">{AdminFinancePayrollManagementFormatCurrency(payroll.amount || 0, undefined, locale)}</td>
                     <td className="px-4 py-3 text-sm font-bold text-success text-right">{AdminFinancePayrollManagementFormatCurrency(payroll.paidAmount || 0, undefined, locale)}</td>
                     <td className="px-4 py-3 text-sm font-bold text-danger text-right">{AdminFinancePayrollManagementFormatCurrency(payroll.pendingAmount || 0, undefined, locale)}</td>
                     <td className="px-4 py-3">

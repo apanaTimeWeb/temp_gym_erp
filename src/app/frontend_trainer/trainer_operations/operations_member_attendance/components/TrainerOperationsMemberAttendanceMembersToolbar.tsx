@@ -2,18 +2,21 @@
 import type { TrainerOperationsMemberAttendanceToolbarModel } from '../types/TrainerOperationsOperationsMemberAttendanceAuxiliaryTypes';
 // RESPONSIBILITY: Members-only attendance controls; never exposes trainer self-attendance actions.
 import { useEffect, useState } from 'react';
-import { Loader2, Plus, RefreshCw, Search, X } from 'lucide-react';
+import { Download, Loader2, Plus, RefreshCw, Search, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import TrainerInfrastructureSearchableDropdown from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/components/TrainerOperationsMemberAttendanceTrainerInfrastructureSearchableDropdown';
 import { TRAINER_ATTENDANCE_DATE_FILTER_OPTIONS } from '../utils/TrainerOperationsMemberAttendanceAttendanceConstants';
 import type { useTrainerAttendanceMain } from '../hooks/useTrainerOperationsMemberAttendanceAttendanceMain';
 
 
-export default function TrainerOperationsMemberAttendanceMembersToolbar({ model }: { model: TrainerOperationsMemberAttendanceToolbarModel }) {
+export default function TrainerOperationsMemberAttendanceMembersToolbar({ model, onExportCsv }: { model: TrainerOperationsMemberAttendanceToolbarModel; onExportCsv?: () => void }) {
   const t = useTranslations('TRAINER_ATTENDANCE');
   const [search, setSearch] = useState(model.search);
-  // Keep the URL filter stable during rapid keyboard input (minimum 300ms debounce).
-  useEffect(() => { setSearch(model.search); }, [model.search]);
+  const [prevSearch, setPrevSearch] = useState(model.search);
+  if (prevSearch !== model.search) {
+    setPrevSearch(model.search);
+    setSearch(model.search);
+  }
   useEffect(() => {
     if (search === model.search) return;
     const timer = setTimeout(() => model.filters.setSearch(search), 350);
@@ -63,6 +66,17 @@ export default function TrainerOperationsMemberAttendanceMembersToolbar({ model 
         {model.isRefreshing ? <Loader2 size={18} className="motion-safe:animate-spin" aria-hidden="true" /> : <RefreshCw size={18} aria-hidden="true" />}
         <span>{t('TEXT_REFRESH')}</span>
       </button>
+      {onExportCsv && (
+        <button
+          type="button"
+          onClick={onExportCsv}
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-teal-500/30 bg-teal-500/10 hover:bg-teal-500/20 px-3.5 text-sm text-teal-600 dark:text-teal-300 font-semibold motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
+          data-testid="trainer-member-attendance-export-csv"
+        >
+          <Download size={16} aria-hidden="true" />
+          <span>Export</span>
+        </button>
+      )}
       <button type="button" onClick={model.openModal} disabled={model.markAttendancePending}
         className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary hover:bg-primary-hover px-4 font-semibold text-on-primary shadow-sm shadow-orange-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring disabled:opacity-60">
         <Plus size={18} strokeWidth={2} aria-hidden="true" />{t('TEXT_ADD_RECORD')}

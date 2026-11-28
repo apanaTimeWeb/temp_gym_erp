@@ -4,6 +4,7 @@ import { Search, RefreshCw, Megaphone, Download, X } from 'lucide-react';
 import { useState } from 'react';
 
 import { useTranslations } from 'next-intl';
+import { TrainerMembersApi } from '@/app/frontend_trainer/trainer_members/members_directory_and_profile/api/TrainerMembersDirectoryAndProfileApi';
 
 import TrainerInfrastructureSearchableDropdown from '@/app/frontend_trainer/trainer_members/members_directory_and_profile/components/TrainerMembersDirectoryAndProfileTrainerInfrastructureSearchableDropdown';
 
@@ -25,6 +26,7 @@ import TrainerMembersDirectoryAndProfileBroadcastModal from './TrainerMembersDir
 export default function TrainerMembersToolbar() {
   const t = useTranslations('TRAINER_MEMBERS');
   const [showBroadcastModal, setShowBroadcastModal] = useState(false);
+  const [exportingCsv, setExportingCsv] = useState(false);
   const {
     localSearch,
     setLocalSearch,
@@ -36,6 +38,46 @@ export default function TrainerMembersToolbar() {
   } = useTrainerMembersToolbar();
 
   const hasActiveFilters = Boolean(localSearch.trim()) || statusFilter !== 'All' || progressStatusFilter !== 'All';
+
+  const handleExportCsv = async () => {
+    setExportingCsv(true);
+    try {
+      const params: Record<string, string> = { page: '1', limit: '200' };
+      if (localSearch.trim()) params.search = localSearch.trim();
+      if (statusFilter !== 'All') params.status = statusFilter;
+      if (progressStatusFilter !== 'All') params.progressStatus = progressStatusFilter;
+      const res = await TrainerMembersApi.fetchMembers(params);
+      const list = res.success && res.data?.members ? res.data.members : [];
+      const header = ['ID', 'Name', 'Email', 'Phone', 'Fitness Goal', 'Status', 'Expiry Date', 'Progress Status', 'PT Client'];
+      const rows = [
+        header.join(','),
+        ...list.map((m) =>
+          [
+            m.id,
+            `"${String(m.name ?? '').replace(/"/g, '""')}"`,
+            `"${String(m.email ?? '').replace(/"/g, '""')}"`,
+            `"${String(m.phone ?? '').replace(/"/g, '""')}"`,
+            `"${String(m.fitnessGoal ?? '').replace(/"/g, '""')}"`,
+            m.status,
+            m.expiryDate ?? '',
+            m.progressStatus ?? '',
+            m.isPT ? 'Yes' : 'No',
+          ].join(',')
+        ),
+      ];
+      const blob = new Blob([rows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'trainees_roster.csv';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    } finally {
+      setExportingCsv(false);
+    }
+  };
 
   return (
     <div className="relative z-30 bg-card dark:bg-gradient-to-r dark:from-[#101C2F] dark:via-[#131C30] dark:to-[#101726] rounded-2xl shadow-card border border-border dark:border-emerald-500/30 p-4 flex flex-col xl:flex-row gap-3 items-stretch xl:items-center justify-between">
@@ -99,15 +141,16 @@ export default function TrainerMembersToolbar() {
           Message Trainees
         </button>
 
-        <a
-          href="/__mocks__/trainer/member_progress_export.csv"
-          download="trainees_roster.csv"
-          className="min-h-11 inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-sm border border-teal-500/35 bg-teal-500/15 hover:bg-teal-500/25 rounded-xl motion-safe:transition-colors text-teal-600 dark:text-teal-300 font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+        <button
+          type="button"
+          onClick={() => void handleExportCsv()}
+          disabled={exportingCsv}
+          className="min-h-11 inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-sm border border-teal-500/35 bg-teal-500/15 hover:bg-teal-500/25 rounded-xl motion-safe:transition-colors text-teal-600 dark:text-teal-300 font-semibold disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
           data-testid="trainer_members-export-csv-button"
         >
           <Download size={15} />
-          Export
-        </a>
+          {exportingCsv ? 'Exporting...' : 'Export'}
+        </button>
 
         <button type="button" 
           onClick={handleRefresh} 

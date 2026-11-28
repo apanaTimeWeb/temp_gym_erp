@@ -20,7 +20,7 @@ export default function AdminSubscriptionsManagementPlanCards() {
   const t = useTranslations();
   const { plans, handleUpgrade, upgrading, plansStatus, plansError, retryPlans } = useAdminSubscriptionsLogic();
   if (plansStatus === 'pending') return <div className="p-8 text-center text-secondary" role="status" data-testid="subscriptions-management-subscriptions-management-plan-cards-status-region">{t('subscriptions.AdminSubscriptionsError.loadingPlans')}</div>;
-  if (plansStatus === 'error') return <div className="p-8 text-center" role="alert"><p className="text-danger">{t('subscriptions.AdminSubscriptionsError.plansLoadFailed')}</p><button type="button" onClick={() => void retryPlans()} className="mt-3 min-h-11 rounded-lg border border-border px-4 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="subscriptions-management-subscriptions-management-plan-cards-retry-plans">{t('subscriptions.AdminSubscriptionsError.retry')}</button></div>;
+  if (plansStatus === 'error') return <div className="p-8 text-center" role="alert"><p className="text-danger">{t('subscriptions.AdminSubscriptionsError.plansLoadFailed')}</p><button type="button" onClick={() => void retryPlans()} className="mt-3 min-h-11 rounded-lg border border-border px-4 text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="subscriptions-management-subscriptions-management-plan-cards-retry-plans">{t('subscriptions.AdminSubscriptionsError.retry')}</button></div>;
   if (plans.length === 0) return <div className="p-8 text-center text-secondary">{t('subscriptions.AdminSubscriptionsError.noPlans')}</div>;
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">

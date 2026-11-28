@@ -37,8 +37,8 @@ export default function AdminBillingUsageAnalyticsMain() {
   return (
     <>
       <AdminUsageAlert />
-    <div className="min-h-full pb-10 bg-page text-primary">
-      <div className="p-6 space-y-6">
+    <div className="min-h-full pb-10 bg-page text-text-primary">
+      <div className="p-4 sm:p-6 space-y-6">
         {status === 'pending' && !data ? (
           <div role="status" className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4" aria-label={t('usage.admin_usage_main.text_435f18dc05')} data-testid="usage-analytics-usage-analytics-main-status-region">
             {['usage-1','usage-2','usage-3','usage-4','usage-5','usage-6'].map((skeletonId) => <div key={skeletonId} className="h-28 rounded-xl bg-skeleton-base motion-safe:animate-pulse motion-safe:duration-base" />)}
@@ -53,14 +53,14 @@ export default function AdminBillingUsageAnalyticsMain() {
             </div>
             <div>
               <p className="text-xs text-secondary uppercase tracking-wider font-semibold">{t('usage.admin_usage_main.text_440a9f2ca1')}</p>
-              <p className="text-xl font-bold text-primary">{data?.planName}</p>
+              <p className="text-xl font-bold text-text-primary">{data?.planName}</p>
               <p className="text-sm text-secondary mt-0.5">{data ? AdminUsageFormatCurrency(data.monthlyPrice, undefined, locale) : '—'} {t('usage.admin_usage_main.text_f7fa5df80f')}</p>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
             <div className="flex items-center gap-2 text-sm text-secondary">
               <Calendar size={18} className="text-warning"  strokeWidth={2}/>
-              <span>{t('usage.admin_usage_main.text_78906379a6')}<span className="font-semibold text-primary">{data?.billingCycleEnd ? formatDate(data.billingCycleEnd, locale) : t('usage.admin_usage_main.auto_bde13e461c')}</span></span>
+              <span>{t('usage.admin_usage_main.text_78906379a6')}<span className="font-semibold text-text-primary">{data?.billingCycleEnd ? formatDate(data.billingCycleEnd, locale) : t('usage.admin_usage_main.auto_bde13e461c')}</span></span>
             </div>
             <button type="button"
               onClick={() => void refresh()}
@@ -75,7 +75,7 @@ export default function AdminBillingUsageAnalyticsMain() {
 
         {/* Usage Metrics Grid */}
         <div>
-          <h2 className="text-sm font-bold text-primary mb-3 uppercase tracking-wider">{t('usage.admin_usage_main.text_eb5ad770f5')}</h2>
+          <h2 className="text-sm font-bold text-text-primary mb-3 uppercase tracking-wider">{t('usage.admin_usage_main.text_eb5ad770f5')}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
             {metrics.map((m) => (
               <AdminUsageMetricCard key={m.label} metric={m} onUpgrade={handleUpgrade} />

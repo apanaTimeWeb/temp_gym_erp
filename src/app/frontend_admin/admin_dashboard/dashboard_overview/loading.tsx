@@ -7,7 +7,7 @@
  */
 export default function DashboardLoading() {
   return (
-    <div className="min-h-full p-6 space-y-6 bg-page" data-testid="admin_dashboard-loading-state">
+    <div className="min-h-full p-4 sm:p-6 space-y-6 bg-page" data-testid="admin_dashboard-loading-state">
       {/* Header skeleton */}
       <div className="h-16 bg-skeleton-base rounded-xl motion-safe:animate-pulse motion-safe:duration-base" />
 

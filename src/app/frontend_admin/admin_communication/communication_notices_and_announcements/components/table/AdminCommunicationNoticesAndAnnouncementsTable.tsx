@@ -106,13 +106,13 @@ export default function AdminCommunicationNoticesAndAnnouncementsTable() {
               placeholder={t('announcements.admin_announcements_table.text_52fbc15299')}
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 bg-input border border-border rounded-xl text-sm text-primary focus-visible:outline-none focus-visible:border-focus focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
+              className="w-full pl-9 pr-4 py-2 bg-input border border-border rounded-xl text-sm text-text-primary focus-visible:outline-none focus-visible:border-focus focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
               aria-label={t('announcements.admin_announcements_table.text_26b646aa94')}
              data-testid="admin_announcements-admin_announcements-table-control"/>
           </div>
           <button type="button"
             onClick={openCreate}
-            className="flex items-center gap-2 px-4 py-2 border border-border bg-card hover:bg-surface-hover text-primary rounded-xl text-sm font-semibold motion-safe:transition-colors shrink-0 motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95"
+            className="flex items-center gap-2 px-4 py-2 border border-border bg-card hover:bg-surface-hover text-text-primary rounded-xl text-sm font-semibold motion-safe:transition-colors shrink-0 motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95"
            data-testid="admin_announcements-admin_announcements-table-click">
             <Plus size={18}  strokeWidth={2}/> {t('announcements.admin_announcements_table.text_30642945b5')}</button>
         </div>
@@ -120,7 +120,7 @@ export default function AdminCommunicationNoticesAndAnnouncementsTable() {
           <select
             value={statusFilter}
             onChange={e => setStatusFilter(e.target.value)}
-            className="bg-input border border-border rounded-xl px-3 py-2 text-sm text-primary focus-visible:outline-none focus-visible:border-focus motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+            className="bg-input border border-border rounded-xl px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:border-focus motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
             aria-label={t('announcements.admin_announcements_table.text_f43653d7fa')}
            data-testid="admin_announcements-admin_announcements-table-control-2">
             {ANNOUNCEMENT_STATUS_OPTIONS.map((o, __testIdIndex98) => <option key={o.value} value={o.value} data-testid={`admin_announcements-admin_announcements-table-control-3-map98-${__testIdIndex98}-1`}>{t(o.labelKey)}</option>)}
@@ -128,7 +128,7 @@ export default function AdminCommunicationNoticesAndAnnouncementsTable() {
           <select
             value={priorityFilter}
             onChange={e => setPriorityFilter(e.target.value)}
-            className="bg-input border border-border rounded-xl px-3 py-2 text-sm text-primary focus-visible:outline-none focus-visible:border-focus motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+            className="bg-input border border-border rounded-xl px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:border-focus motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
             aria-label={t('announcements.admin_announcements_table.text_870c2d046e')}
            data-testid="admin_announcements-admin_announcements-table-control-4">
             <option value="all" data-testid="admin_announcements-admin_announcements-table-control-5">{t('announcements.admin_announcements_table.text_8b807ad7ec')}</option>
@@ -137,7 +137,7 @@ export default function AdminCommunicationNoticesAndAnnouncementsTable() {
           <select
             value={gymFilter}
             onChange={e => setGymFilter(e.target.value)}
-            className="bg-input border border-border rounded-xl px-3 py-2 text-sm text-primary focus-visible:outline-none focus-visible:border-focus motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+            className="bg-input border border-border rounded-xl px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:border-focus motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
             aria-label={t('announcements.admin_announcements_table.text_aee7f4f0e8')}
            data-testid="admin_announcements-admin_announcements-table-control-7">
             {ANNOUNCEMENT_GYM_OPTIONS.map((o, __testIdIndex115) => <option key={o.value} value={o.value} data-testid={`admin_announcements-admin_announcements-table-control-8-map115-${__testIdIndex115}-1`}>{t(o.labelKey)}</option>)}
@@ -158,18 +158,18 @@ export default function AdminCommunicationNoticesAndAnnouncementsTable() {
       <div className="bg-card border border-border rounded-2xl shadow-card overflow-hidden">
         <div className="overflow-x-auto max-h-[640px] overflow-auto">
           <table data-admin-responsive-table className="w-full text-left border-collapse min-w-[920px] md:min-w-0">
-            <thead className="sticky top-0 z-20 bg-surface-highlight">
+            <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038]">
               <tr className="border-b border-border">
                 {ANNOUNCEMENT_HEADER_KEYS.map((key, idx) => {
                   const field = sortableFields[key];
                   const ariaSort = field !== sortKey ? 'none' : sortDirection === 'asc' ? 'ascending' : 'descending';
-                  return <th key={key} scope="col" aria-sort={field ? ariaSort : undefined} className={`p-4 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border w-10' : ''}`}>
+                  return <th key={key} scope="col" aria-sort={field ? ariaSort : undefined} className={`p-4 text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${idx === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border w-10' : ''}`}>
                     {key === 'empty' ? '' : field ? <button type="button" onClick={() => activateSort(field)} className="inline-flex items-center gap-1.5 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label={t(`announcements.admin_announcements_table.header.${key}`)} data-testid="announcements-management-announcements-management-table-header-key">{t(`announcements.admin_announcements_table.header.${key}`)}<ArrowUpDown size={14} aria-hidden="true" /></button> : t(`announcements.admin_announcements_table.header.${key}`)}
                   </th>;
                 })}
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border dark:divide-white/[0.07]">
               {paginated.length === 0 ? (
                 <tr>
                   <td colSpan={TABLE_COLUMN_COUNT}><AdminAnnouncementsEmptyState hasFilters={hasFilters} onResetFilters={resetFilters} /></td>
@@ -177,13 +177,13 @@ export default function AdminCommunicationNoticesAndAnnouncementsTable() {
               ) : sortedAnnouncements.map((a , __testIdIndex145) => (
                 <tr key={a.id} className="hover:bg-surface-hover transition-colors group">
                   {/* Pin indicator */}
-                  <td className="p-4 w-10 sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-e border-border transition-colors">
+                  <td className="p-4 w-10 sticky start-0 z-10 bg-card dark:bg-[#0F172A] group-hover:bg-orange-50 dark:group-hover:bg-[#18243E] border-e border-border transition-colors">
                     {a.isPinned && <Pin size={18} className="text-warning"  strokeWidth={2}/>}
                   </td>
                   {/* Title + preview */}
                   <td className="p-4 max-w-xs">
                     <div className="flex items-center gap-1.5 flex-wrap">
-                      <p className="text-sm font-semibold text-primary truncate">{a.title}</p>
+                      <p className="text-sm font-semibold text-text-primary truncate">{a.title}</p>
                       <CopyButton text={a.title} label={a.title} />
                       {(a.createdBy === 'SUPERADMIN' || a.isPlatformNotice) && (
                         <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-primary-subtle text-primary border border-border uppercase tracking-wider">

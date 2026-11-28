@@ -15,4 +15,18 @@ export const TrainerMembersTrainerNotesApi = {
     if (!response.success) throw new Error(response.message);
     return { data: response.data, message: response.message };
   },
+  async update(memberId: string, noteId: string, text: string) {
+    const response = TrainerMembersTrainerNotesResponseSchema.parse(await apiFetch<ApiResponse<unknown>>(`${TRAINER_NOTES_API.notes(memberId)}/${encodeURIComponent(noteId)}`, {
+      method: 'PATCH', body: JSON.stringify({ text }),
+    }));
+    if (!response.success) throw new Error(response.message);
+    return { data: response.data, message: response.message };
+  },
+  async remove(memberId: string, noteId: string) {
+    const response = TrainerMembersTrainerNotesResponseSchema.parse(await apiFetch<ApiResponse<unknown>>(`${TRAINER_NOTES_API.notes(memberId)}/${encodeURIComponent(noteId)}`, {
+      method: 'DELETE',
+    }));
+    if (!response.success) throw new Error(response.message);
+    return { data: response.data, message: response.message };
+  },
 };

@@ -24,7 +24,7 @@ export default function AdminMembersDirectoryEmptyState({ hasFilters }: AdminMem
         <Users size={18} className="text-secondary"  strokeWidth={2}/>
       </div>
       <div>
-        <p className="text-base font-semibold text-primary">
+        <p className="text-base font-semibold text-text-primary">
           {hasFilters ? t('members.admin_members_empty_state.auto_3b3dc4e403') : t('members.admin_members_empty_state.auto_cfa1045651')}
         </p>
         <p className="text-sm text-secondary mt-1">

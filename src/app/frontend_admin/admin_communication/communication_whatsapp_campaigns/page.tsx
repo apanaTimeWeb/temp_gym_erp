@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
  */
 export default function AdminCampaignsPage() {
   return (
-    <div className="w-full p-6 space-y-6">
+    <div className="w-full p-4 sm:p-6 space-y-6">
       <AdminCampaignsMain />
     </div>
   );

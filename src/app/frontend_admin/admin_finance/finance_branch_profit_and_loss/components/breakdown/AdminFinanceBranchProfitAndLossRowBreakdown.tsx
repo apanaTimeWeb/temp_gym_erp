@@ -47,7 +47,7 @@ export default function AdminFinanceBranchProfitAndLossRowBreakdown({ branch, co
                 <div key={item.label}>
                   <div className="flex justify-between text-xs mb-1">
                     <span className="text-secondary">{item.label}</span>
-                    <span className="text-primary font-medium">{AdminFinanceFormatCurrency(item.value, undefined, locale)}</span>
+                    <span className="text-text-primary font-medium">{AdminFinanceFormatCurrency(item.value, undefined, locale)}</span>
                   </div>
                   <AdminFinancePnlBreakdownBar value={item.value} max={revenue} colorClass="success" />
                 </div>
@@ -63,7 +63,7 @@ export default function AdminFinanceBranchProfitAndLossRowBreakdown({ branch, co
                 <div key={item.label}>
                   <div className="flex justify-between text-xs mb-1">
                     <span className="text-secondary">{item.label}</span>
-                    <span className="text-primary font-medium">{AdminFinanceFormatCurrency(item.value, undefined, locale)}</span>
+                    <span className="text-text-primary font-medium">{AdminFinanceFormatCurrency(item.value, undefined, locale)}</span>
                   </div>
                   <AdminFinancePnlBreakdownBar value={item.value} max={expenses} colorClass="danger" />
                 </div>
@@ -84,7 +84,7 @@ export default function AdminFinanceBranchProfitAndLossRowBreakdown({ branch, co
                 <span className="text-sm font-semibold text-danger">{AdminFinanceFormatCurrency(expenses, undefined, locale)}</span>
               </div>
               <div className="border-t border-border pt-3 flex justify-between items-center">
-                <span className="text-xs font-bold text-primary">{t('finance.AdminFinancePnlRowBreakdown.text_8bebc63cc9')}</span>
+                <span className="text-xs font-bold text-text-primary">{t('finance.AdminFinancePnlRowBreakdown.text_8bebc63cc9')}</span>
                 <span className={`text-sm font-bold ${netProfit >= 0 ? 'text-success' : 'text-danger'}`}>
                   {AdminFinanceFormatCurrency(netProfit, undefined, locale)}
                 </span>

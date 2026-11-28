@@ -99,7 +99,7 @@ export default function AdminAttendanceStaffManagerModal({
               <UserCheck size={18} />
             </div>
             <div>
-              <h2 id="manual-attendance-modal-title" className="text-base font-bold text-primary">
+              <h2 id="manual-attendance-modal-title" className="text-base font-bold text-text-primary">
                 {editingRecord ? 'Adjust Staff / Manager Attendance' : 'Mark Manual Attendance (Admin Override)'}
               </h2>
               <p className="text-xs text-secondary mt-0.5">Record or adjust daily check-in/out timestamps and presence</p>
@@ -118,22 +118,22 @@ export default function AdminAttendanceStaffManagerModal({
           )}
 
           <div>
-            <label htmlFor="staff-preset-select" className="block text-xs font-bold text-primary mb-1">Staff Member / Manager *</label>
+            <label htmlFor="staff-preset-select" className="block text-xs font-bold text-text-primary mb-1">Staff Member / Manager *</label>
             {!editingRecord ? (
-              <select id="staff-preset-select" value={selectedPreset} onChange={(e) => handlePresetChange(e.target.value)} className="w-full min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+              <select id="staff-preset-select" value={selectedPreset} onChange={(e) => handlePresetChange(e.target.value)} className="w-full min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
                 {PREDEFINED_STAFF_MEMBERS.map(s => (
                   <option key={s.name} value={s.name}>{s.name} — {s.role} ({s.branch})</option>
                 ))}
               </select>
             ) : (
-              <input type="text" id="staff-preset-select" value={name} onChange={(e) => setName(e.target.value)} className="w-full min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" />
+              <input type="text" id="staff-preset-select" value={name} onChange={(e) => setName(e.target.value)} className="w-full min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" />
             )}
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label htmlFor="attendance-role-select" className="block text-xs font-bold text-primary mb-1">Role *</label>
-              <select id="attendance-role-select" value={role} onChange={(e) => setRole(e.target.value as any)} className="w-full min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+              <label htmlFor="attendance-role-select" className="block text-xs font-bold text-text-primary mb-1">Role *</label>
+              <select id="attendance-role-select" value={role} onChange={(e) => setRole(e.target.value as any)} className="w-full min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
                 <option value="Manager">Manager</option>
                 <option value="Senior Trainer">Senior Trainer</option>
                 <option value="Trainer">Trainer</option>
@@ -142,8 +142,8 @@ export default function AdminAttendanceStaffManagerModal({
               </select>
             </div>
             <div>
-              <label htmlFor="attendance-branch-select" className="block text-xs font-bold text-primary mb-1">Gym Branch *</label>
-              <select id="attendance-branch-select" value={branch} onChange={(e) => setBranch(e.target.value)} className="w-full min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+              <label htmlFor="attendance-branch-select" className="block text-xs font-bold text-text-primary mb-1">Gym Branch *</label>
+              <select id="attendance-branch-select" value={branch} onChange={(e) => setBranch(e.target.value)} className="w-full min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
                 <option value="Andheri East">Andheri East</option>
                 <option value="Bandra West">Bandra West</option>
                 <option value="Powai">Powai</option>
@@ -154,12 +154,12 @@ export default function AdminAttendanceStaffManagerModal({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label htmlFor="attendance-date-input" className="block text-xs font-bold text-primary mb-1">Date *</label>
-              <input type="date" id="attendance-date-input" value={date} onChange={(e) => setDate(e.target.value)} className="w-full min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" />
+              <label htmlFor="attendance-date-input" className="block text-xs font-bold text-text-primary mb-1">Date *</label>
+              <input type="date" id="attendance-date-input" value={date} onChange={(e) => setDate(e.target.value)} className="w-full min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" />
             </div>
             <div>
-              <label htmlFor="attendance-shift-select" className="block text-xs font-bold text-primary mb-1">Assigned Shift *</label>
-              <select id="attendance-shift-select" value={shift} onChange={(e) => setShift(e.target.value as any)} className="w-full min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+              <label htmlFor="attendance-shift-select" className="block text-xs font-bold text-text-primary mb-1">Assigned Shift *</label>
+              <select id="attendance-shift-select" value={shift} onChange={(e) => setShift(e.target.value as any)} className="w-full min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
                 <option value="Morning (06:00 - 15:00)">Morning (06:00 - 15:00)</option>
                 <option value="Evening (14:00 - 23:00)">Evening (14:00 - 23:00)</option>
                 <option value="General (09:00 - 18:00)">General (09:00 - 18:00)</option>
@@ -168,30 +168,30 @@ export default function AdminAttendanceStaffManagerModal({
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-primary mb-1">Attendance Status *</label>
+            <label className="block text-xs font-bold text-text-primary mb-1">Attendance Status *</label>
             <div className="grid grid-cols-3 gap-2">
               <button type="button" onClick={() => setStatus('present')} className={`py-2 px-3 rounded-xl text-xs font-bold border motion-safe:transition-colors ${status === 'present' ? 'bg-success-bg border-success text-success-text shadow-xs' : 'bg-card border-border text-secondary hover:text-primary'}`}>Present</button>
               <button type="button" onClick={() => setStatus('late')} className={`py-2 px-3 rounded-xl text-xs font-bold border motion-safe:transition-colors ${status === 'late' ? 'bg-warning-bg border-warning text-warning shadow-xs' : 'bg-card border-border text-secondary hover:text-primary'}`}>Late Arrival</button>
-              <button type="button" onClick={() => setStatus('on-leave')} className={`py-2 px-3 rounded-xl text-xs font-bold border motion-safe:transition-colors ${status === 'on-leave' ? 'bg-surface-highlight border-primary text-primary shadow-xs' : 'bg-card border-border text-secondary hover:text-primary'}`}>On Leave</button>
+              <button type="button" onClick={() => setStatus('on-leave')} className={`py-2 px-3 rounded-xl text-xs font-bold border motion-safe:transition-colors ${status === 'on-leave' ? 'bg-surface-highlight border-primary text-text-primary shadow-xs' : 'bg-card border-border text-secondary hover:text-primary'}`}>On Leave</button>
             </div>
           </div>
 
           {status !== 'on-leave' && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label htmlFor="attendance-checkin-input" className="block text-xs font-bold text-primary mb-1">Check-In Time *</label>
-                <input type="text" id="attendance-checkin-input" value={checkInTime} onChange={(e) => setCheckInTime(e.target.value)} placeholder="e.g. 06:00 AM" className="w-full min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" />
+                <label htmlFor="attendance-checkin-input" className="block text-xs font-bold text-text-primary mb-1">Check-In Time *</label>
+                <input type="text" id="attendance-checkin-input" value={checkInTime} onChange={(e) => setCheckInTime(e.target.value)} placeholder="e.g. 06:00 AM" className="w-full min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" />
               </div>
               <div>
-                <label htmlFor="attendance-checkout-input" className="block text-xs font-bold text-primary mb-1">Check-Out Time (Optional)</label>
-                <input type="text" id="attendance-checkout-input" value={checkOutTime} onChange={(e) => setCheckOutTime(e.target.value)} placeholder="e.g. 03:00 PM" className="w-full min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" />
+                <label htmlFor="attendance-checkout-input" className="block text-xs font-bold text-text-primary mb-1">Check-Out Time (Optional)</label>
+                <input type="text" id="attendance-checkout-input" value={checkOutTime} onChange={(e) => setCheckOutTime(e.target.value)} placeholder="e.g. 03:00 PM" className="w-full min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" />
               </div>
             </div>
           )}
 
           <div>
-            <label htmlFor="attendance-notes-input" className="block text-xs font-bold text-primary mb-1">Reason / Audit Justification</label>
-            <input type="text" id="attendance-notes-input" value={adminNotes} onChange={(e) => setAdminNotes(e.target.value)} placeholder="e.g. Biometric scanner offline, on-duty approval" className="w-full min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" />
+            <label htmlFor="attendance-notes-input" className="block text-xs font-bold text-text-primary mb-1">Reason / Audit Justification</label>
+            <input type="text" id="attendance-notes-input" value={adminNotes} onChange={(e) => setAdminNotes(e.target.value)} placeholder="e.g. Biometric scanner offline, on-duty approval" className="w-full min-h-11 rounded-xl border border-border bg-input px-3 text-xs text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" />
           </div>
 
           <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-border">

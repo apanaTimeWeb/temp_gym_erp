@@ -17,13 +17,13 @@ export default function AdminProfileOverviewSummaryCard({ profile, displayInitia
   return (
     <>
       <header>
-        <h1 className="text-page-title font-bold text-primary">{t('profile.admin_profile_main.text_9ba8d391c5')}</h1>
+        <h1 className="text-page-title font-bold text-text-primary">{t('profile.admin_profile_main.text_9ba8d391c5')}</h1>
         <p className="mt-1 text-sm text-secondary">{t('profile.admin_profile_main.text_28dfd9f67e')}</p>
       </header>
       <section className="flex items-center gap-5 rounded-xl border border-border bg-primary-subtle p-6 shadow-card" aria-label={t('profile.admin_profile_main.text_9ba8d391c5')}>
         <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-primary text-2xl font-bold text-on-primary">{displayInitial}</div>
         <div className="min-w-0">
-          <p className="truncate text-lg font-bold text-primary">{displayValue(profile?.name)}</p>
+          <p className="truncate text-lg font-bold text-text-primary">{displayValue(profile?.name)}</p>
           <p className="truncate text-sm text-secondary">{displayValue(profile?.email)}</p>
         </div>
       </section>

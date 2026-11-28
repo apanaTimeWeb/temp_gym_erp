@@ -25,7 +25,7 @@ export default function AdminProfileOverviewMain() {
 
   if (profileQuery.isPending) {
     return (
-      <div className="p-6 space-y-6 w-full max-w-4xl" aria-busy="true" aria-label={t('profile.admin_profile_main.text_9ba8d391c5')} data-testid="admin_profile-loading-state">
+      <div className="p-4 sm:p-6 space-y-6 w-full max-w-4xl" aria-busy="true" aria-label={t('profile.admin_profile_main.text_9ba8d391c5')} data-testid="admin_profile-loading-state">
         <div className="h-8 w-48 rounded-lg bg-skeleton-base motion-safe:animate-pulse motion-safe:duration-base" />
         <div className="h-24 rounded-xl bg-skeleton-base motion-safe:animate-pulse motion-safe:duration-base" />
         <div className="h-64 rounded-xl bg-skeleton-base motion-safe:animate-pulse motion-safe:duration-base" />
@@ -43,7 +43,7 @@ export default function AdminProfileOverviewMain() {
   }
 
   return (
-    <div className="p-6 space-y-6 w-full max-w-4xl" data-testid="admin_profile-main">
+    <div className="p-4 sm:p-6 space-y-6 w-full max-w-4xl" data-testid="admin_profile-main">
       <AdminProfileSummaryCard profile={profile} displayInitial={displayInitial} />
       <AdminProfileTabsNavigation activeTab={activeTab} onTabChange={setActiveTab} />
       {activeTab === 'personal' ? (

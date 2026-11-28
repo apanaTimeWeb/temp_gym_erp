@@ -40,7 +40,7 @@ export function AdminSettingsManagementNotifications({ initialData }: AdminSetti
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="bg-card rounded-xl shadow-card border border-border mt-6" data-testid="admin_settings-admin_settings-notifications-control">
       <div className="px-6 py-4 border-b border-border flex items-center justify-between flex-wrap gap-3">
-        <h2 className="font-bold text-primary text-lg">{t('settings.admin_settings_notifications.text_753a22b2eb')}</h2>
+        <h2 className="font-bold text-text-primary text-lg">{t('settings.admin_settings_notifications.text_753a22b2eb')}</h2>
         <div className="flex gap-2">
           <button
             type="button"
@@ -59,15 +59,15 @@ export function AdminSettingsManagementNotifications({ initialData }: AdminSetti
         </div>
       </div>
 
-      <div className="p-6 space-y-6">
+      <div className="p-4 sm:p-6 space-y-6">
         <div className="max-h-[640px] overflow-auto rounded-xl border border-border">
           <table data-admin-responsive-table className="w-full text-left border-collapse text-sm">
             <thead>
-              <tr className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
-                <th scope="col" aria-sort={eventSort === 'asc' ? 'ascending' : 'descending'} className="px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider sticky start-0 z-30 bg-surface-highlight border-e border-border whitespace-nowrap" data-testid="admin_settings-admin_settings-notifications-control-4">
+              <tr className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border">
+                <th scope="col" aria-sort={eventSort === 'asc' ? 'ascending' : 'descending'} className="px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border whitespace-nowrap" data-testid="admin_settings-admin_settings-notifications-control-4">
                   <button type="button" onClick={() => setEventSort((current) => current === 'asc' ? 'desc' : 'asc')} className="flex min-h-11 items-center gap-1.5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="settings-management-settings-management-notifications-set-event-sort">
                     {t('settings.admin_settings_notifications.text_ad8919ace0')}
-                    {eventSort === 'asc' ? <ChevronUp size={18} className="text-primary" aria-hidden="true" strokeWidth={2}/> : <ChevronDown size={18} className="text-primary" aria-hidden="true" strokeWidth={2}/>}
+                    {eventSort === 'asc' ? <ChevronUp size={18} className="text-text-primary" aria-hidden="true" strokeWidth={2}/> : <ChevronDown size={18} className="text-text-primary" aria-hidden="true" strokeWidth={2}/>}
                   </button>
                 </th>
                 {channels.map(c => (
@@ -75,10 +75,10 @@ export function AdminSettingsManagementNotifications({ initialData }: AdminSetti
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border dark:divide-white/[0.07]">
               {sortedEvents.length === 0 ? <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminSettingsEmptyState /></td></tr> : sortedEvents.map((ev, __testIdIndex66) => (
                 <tr key={ev.key} className="hover:bg-surface-hover transition-colors group">
-                  <td className="px-4 py-3 text-sm text-primary font-medium sticky start-0 z-10 bg-card border-e border-border whitespace-nowrap">{ev.label}</td>
+                  <td className="px-4 py-3 text-sm text-text-primary font-medium sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border whitespace-nowrap">{ev.label}</td>
                   {channels.map((c, __testIdIndex69) => {
                     const fieldName = `${c.key}${ev.key}` as keyof NotificationsSettingsType;
                     const isChecked = (formValues[fieldName] ?? initialData[fieldName]) as boolean;
@@ -113,7 +113,7 @@ export function AdminSettingsManagementNotifications({ initialData }: AdminSetti
               max="30"
               step="1"
               {...form.register('expiryReminderDays', { valueAsNumber: true })}
-              className="w-full px-3 py-2.5 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+              className="w-full px-3 py-2.5 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-text-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
              data-testid="admin_settings-admin_settings-notifications-control-6"/>
             {form.formState.errors.expiryReminderDays && <p id="admin-settings-notifications-expiryReminderDays-error" role="alert" className="text-xs text-danger mt-1">{getValidationMessage(form.formState.errors.expiryReminderDays.message)}</p>}
           </div>
@@ -127,7 +127,7 @@ export function AdminSettingsManagementNotifications({ initialData }: AdminSetti
               max="30"
               step="1"
               {...form.register('absenceThresholdDays', { valueAsNumber: true })}
-              className="w-full px-3 py-2.5 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+              className="w-full px-3 py-2.5 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-text-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
              data-testid="admin_settings-admin_settings-notifications-control-7"/>
             {form.formState.errors.absenceThresholdDays && <p id="admin-settings-notifications-absenceThresholdDays-error" role="alert" className="text-xs text-danger mt-1">{getValidationMessage(form.formState.errors.absenceThresholdDays.message)}</p>}
           </div>

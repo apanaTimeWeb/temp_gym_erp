@@ -16,7 +16,7 @@ import AdminGymHealthAlertsTable from '@/app/frontend_admin/admin_gyms/gyms_heal
 export default function AdminGymsHealthAlertsMonitoringMain() {
   return (
     <div className="min-h-full pb-10">
-      <div className="p-6 space-y-5">
+      <div className="p-4 sm:p-6 space-y-5">
         <AdminGymHealthAlertsKPIs />
         <AdminGymHealthAlertsFilters />
         <AdminGymHealthAlertsTable />

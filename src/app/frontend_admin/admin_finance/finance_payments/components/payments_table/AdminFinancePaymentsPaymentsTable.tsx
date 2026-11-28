@@ -42,7 +42,7 @@ export default function AdminFinanceOverviewPaymentsTable() {
       <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
         <div className="overflow-x-auto max-h-[640px] overflow-auto" aria-busy="true" aria-label={t('finance.admin_finance_payments_table.text_bc48c55226')}>
           <table className="w-full border-collapse">
-            <thead className="sticky top-0 z-20 bg-surface-highlight text-secondary">
+            <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] text-secondary">
               <tr className="border-b border-border">
                 {PAYMENTS_TABLE_HEADERS.map((header, index) => {
                   const keys: AdminFinancePaymentSortKey[] = ['invoiceNo', 'member', 'amount', 'method', 'status', 'paidAt'];
@@ -54,7 +54,7 @@ export default function AdminFinanceOverviewPaymentsTable() {
                       scope="col"
                       aria-sort={key ? (sortKey === key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none') : undefined}
                       className={`text-left text-xs font-semibold uppercase tracking-wider px-4 py-3 whitespace-nowrap ${
-                        index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                        index === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                       }`}
                     >
                       {label}
@@ -68,7 +68,7 @@ export default function AdminFinanceOverviewPaymentsTable() {
                           data-testid={`admin_finance-admin_finance-payments-table-click-map40-${index}-1`}
                         >
                           {sortKey === key ? (
-                            sortDir === 'asc' ? <ChevronUp size={18} className="text-primary" strokeWidth={2} /> : <ChevronDown size={18} className="text-primary" strokeWidth={2} />
+                            sortDir === 'asc' ? <ChevronUp size={18} className="text-text-primary" strokeWidth={2} /> : <ChevronDown size={18} className="text-text-primary" strokeWidth={2} />
                           ) : (
                             <ChevronsUpDown size={18} className="text-disabled" strokeWidth={2} />
                           )}
@@ -79,11 +79,11 @@ export default function AdminFinanceOverviewPaymentsTable() {
                 })}
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border dark:divide-white/[0.07]">
               {Array.from({ length: 5 }, (_, index) => (
                 <tr key={`payment-skeleton-${index}`} className="animate-pulse">
                   {PAYMENTS_TABLE_HEADERS.map((header, cIdx) => (
-                    <td key={header} className={`px-4 py-4 ${cIdx === 0 ? 'sticky start-0 z-10 bg-card border-e border-border' : ''}`}>
+                    <td key={header} className={`px-4 py-4 ${cIdx === 0 ? 'sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border' : ''}`}>
                       <div className="h-4 rounded bg-skeleton-base" />
                     </td>
                   ))}
@@ -97,14 +97,14 @@ export default function AdminFinanceOverviewPaymentsTable() {
   }
 
   if (paymentsStatus === 'error') {
-    return <div role="alert" className="rounded-2xl border border-border bg-card px-6 py-12 text-center shadow-card"><p className="font-medium text-danger">{t('finance.admin_finance_payments_table.text_18d540a249')}</p><p className="mt-1 text-sm text-secondary">{t('finance.admin_finance_payments_table.text_11ee134422')}</p><button type="button" onClick={() => void loadAll()} className="mt-3 min-h-11 rounded-lg border border-border px-4 font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="finance-overview-finance-overview-payments-table-admin-finance-tabs-retry">{t('finance.admin_finance_tabs.retry')}</button></div>;
+    return <div role="alert" className="rounded-2xl border border-border bg-card px-6 py-12 text-center shadow-card"><p className="font-medium text-danger">{t('finance.admin_finance_payments_table.text_18d540a249')}</p><p className="mt-1 text-sm text-secondary">{t('finance.admin_finance_payments_table.text_11ee134422')}</p><button type="button" onClick={() => void loadAll()} className="mt-3 min-h-11 rounded-lg border border-border px-4 font-semibold text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="finance-overview-finance-overview-payments-table-admin-finance-tabs-retry">{t('finance.admin_finance_tabs.retry')}</button></div>;
   }
 
   return (
     <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
       <div className="overflow-x-auto max-h-[640px] overflow-auto">
         <table data-admin-responsive-table className="w-full border-collapse">
-          <thead className="sticky top-0 z-20 bg-surface-highlight text-secondary">
+          <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] text-secondary">
             <tr className="border-b border-border">
               {PAYMENTS_TABLE_HEADERS.map((header, index) => {
                 const keys: AdminFinancePaymentSortKey[] = ['invoiceNo', 'member', 'amount', 'method', 'status', 'paidAt'];
@@ -116,7 +116,7 @@ export default function AdminFinanceOverviewPaymentsTable() {
                     scope="col"
                     aria-sort={key ? (sortKey === key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none') : undefined}
                     className={`px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider whitespace-nowrap ${
-                      index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                      index === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border' : ''
                     }`}
                   >
                     {label}
@@ -130,7 +130,7 @@ export default function AdminFinanceOverviewPaymentsTable() {
                         data-testid={`admin_finance-admin_finance-payments-table-click-2-map63-${index}-1`}
                       >
                         {sortKey === key ? (
-                          sortDir === 'asc' ? <ChevronUp size={18} className="text-primary" strokeWidth={2} /> : <ChevronDown size={18} className="text-primary" strokeWidth={2} />
+                          sortDir === 'asc' ? <ChevronUp size={18} className="text-text-primary" strokeWidth={2} /> : <ChevronDown size={18} className="text-text-primary" strokeWidth={2} />
                         ) : (
                           <ChevronsUpDown size={18} className="text-disabled" strokeWidth={2} />
                         )}
@@ -141,7 +141,7 @@ export default function AdminFinanceOverviewPaymentsTable() {
               })}
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody className="divide-y divide-border dark:divide-white/[0.07]">
             {payments.length === 0 ? (
               <tr><td colSpan={TABLE_COLUMN_COUNT}><AdminFinanceEmptyState title={t('finance.admin_finance_payments_table.text_c1f531f996')} description={t('finance.admin_finance_payments_table.auto_ee688868e5')} /></td></tr>
             ) : sortedPayments.map((payment) => {
@@ -149,13 +149,13 @@ export default function AdminFinanceOverviewPaymentsTable() {
               const statusStyle = FINANCE_STATUS_STYLES[payment.status] ?? { bg: 'bg-input', text: 'text-secondary' };
               return (
                 <tr key={payment.id} className="hover:bg-surface-hover transition-colors group">
-                  <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 text-sm font-mono text-secondary">
+                  <td className="sticky start-0 z-10 bg-card dark:bg-[#0F172A] border-e border-border px-4 py-3 text-sm font-mono text-secondary">
                     <div className="flex items-center gap-1.5">
                       <span>{payment.invoiceNo}</span>
                       <CopyButton text={payment.invoiceNo} label={payment.invoiceNo} />
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-sm font-medium text-primary">
+                  <td className="px-4 py-3 text-sm font-medium text-text-primary">
                     {payment.member?.name ? (
                       <Link
                         href={`/frontend_admin/admin_members/members_directory?search=${encodeURIComponent(payment.member.name)}`}

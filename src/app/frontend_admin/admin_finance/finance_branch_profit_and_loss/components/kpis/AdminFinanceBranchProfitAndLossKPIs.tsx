@@ -65,7 +65,7 @@ export default function AdminFinanceBranchProfitAndLossKPIs({
       label: t('finance.AdminAuditRepair.profitableBranches'),
       value: `${aggregates.profitableBranches}`,
       icon: Building2,
-      iconColor: 'text-primary',
+      iconColor: 'text-text-primary',
       iconBg: 'bg-primary-subtle',
       activeBorder: 'border-focus',
       filter: FINANCE_PNL_STATUS_FILTERS.PROFITABLE,
@@ -104,7 +104,7 @@ export default function AdminFinanceBranchProfitAndLossKPIs({
               <k.icon size={18} strokeWidth={2} className={k.iconColor} />
             </div>
             <p className="text-xs font-medium text-secondary uppercase tracking-wider truncate">{k.label}</p>
-            <p className={`text-xl font-bold mt-0.5 ${isActive ? k.iconColor : 'text-primary'}`}>{k.value}</p>
+            <p className={`text-xl font-bold mt-0.5 ${isActive ? k.iconColor : 'text-text-primary'}`}>{k.value}</p>
             <p className="text-xs text-disabled mt-0.5 truncate">{k.subtext}</p>
           </>
         );

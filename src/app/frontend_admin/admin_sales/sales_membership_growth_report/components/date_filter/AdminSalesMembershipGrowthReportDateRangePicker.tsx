@@ -139,14 +139,14 @@ export default function AdminSalesMembershipGrowthReportDateRangePicker({ startD
 
   return (
     <div className="relative w-full" data-testid="admin-sales-membership-growth-date-range-picker">
-      <button ref={triggerRef} type="button" className="flex min-h-11 w-full items-center justify-between gap-3 rounded-lg border border-border bg-input px-3 py-2.5 text-left text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label={t('reports.admin_reports_main.chooseDateRange')} aria-haspopup="dialog" aria-expanded={open} onClick={toggleOpen} data-testid="admin-sales-membership-growth-date-range-trigger">
+      <button ref={triggerRef} type="button" className="flex min-h-11 w-full items-center justify-between gap-3 rounded-lg border border-border bg-input px-3 py-2.5 text-left text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label={t('reports.admin_reports_main.chooseDateRange')} aria-haspopup="dialog" aria-expanded={open} onClick={toggleOpen} data-testid="admin-sales-membership-growth-date-range-trigger">
         <span>{triggerText}</span><CalendarDays size={18} aria-hidden="true" className="shrink-0 text-secondary" />
       </button>
       {open && <div ref={dialogRef} role="dialog" aria-label={t('reports.admin_reports_main.calendarDialogLabel')} className="absolute left-0 top-full z-30 mt-2 w-[min(22rem,calc(100vw-2rem))] rounded-xl border border-border bg-popover p-3 shadow-dialog" data-testid="admin-sales-membership-growth-date-range-calendar">
         <div className="mb-3 flex items-center justify-between gap-2">
-          <button type="button" className="flex min-h-11 min-w-11 items-center justify-center rounded-md border border-border text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label={t('reports.admin_reports_main.previousMonth')} onClick={() => navigateMonth(-1)}><ChevronLeft size={18} aria-hidden="true" /></button>
-          <h3 className="text-sm font-semibold text-primary" aria-live="polite">{monthLabel}</h3>
-          <button type="button" className="flex min-h-11 min-w-11 items-center justify-center rounded-md border border-border text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label={t('reports.admin_reports_main.nextMonth')} onClick={() => navigateMonth(1)}><ChevronRight size={18} aria-hidden="true" /></button>
+          <button type="button" className="flex min-h-11 min-w-11 items-center justify-center rounded-md border border-border text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label={t('reports.admin_reports_main.previousMonth')} onClick={() => navigateMonth(-1)}><ChevronLeft size={18} aria-hidden="true" /></button>
+          <h3 className="text-sm font-semibold text-text-primary" aria-live="polite">{monthLabel}</h3>
+          <button type="button" className="flex min-h-11 min-w-11 items-center justify-center rounded-md border border-border text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label={t('reports.admin_reports_main.nextMonth')} onClick={() => navigateMonth(1)}><ChevronRight size={18} aria-hidden="true" /></button>
         </div>
         <div role="grid" aria-label={monthLabel} className="space-y-1">
           <div role="row" className="grid grid-cols-7 gap-1">

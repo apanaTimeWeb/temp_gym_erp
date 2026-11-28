@@ -43,7 +43,7 @@ export function AdminCommunicationNotificationsCenterHeader() {
       {showNotifications && (
         <div id="admin-notifications-popover" role="region" aria-label={t('notifications.admin_notifications_header.text_753a22b2eb')} className="absolute right-0 mt-2 w-80 bg-popover rounded-xl shadow-popover border border-border overflow-hidden z-30">
           <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-            <h3 className="font-semibold text-primary text-sm">{t('notifications.admin_notifications_header.text_753a22b2eb')}</h3>
+            <h3 className="font-semibold text-text-primary text-sm">{t('notifications.admin_notifications_header.text_753a22b2eb')}</h3>
             <button type="button" onClick={() => { setShowNotifications(false); triggerRef.current?.focus(); }} className="min-h-11 min-w-11 motion-safe:transition-all motion-safe:duration-base ease-in-out text-secondary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:active:scale-95" aria-label={t('notifications.admin_notifications_header.text_f0252bf7d6')} data-testid="admin_notifications-admin_notifications-header-control-2"><X size={18}  strokeWidth={2}/></button>
           </div>
           <div className="max-h-72 overflow-y-auto" aria-live="polite" data-testid="notifications-center-notifications-center-header-live-region-2">
@@ -51,7 +51,7 @@ export function AdminCommunicationNotificationsCenterHeader() {
               <div className="p-4 text-center text-sm text-secondary">{t('notifications.admin_notifications_header.text_6631dc85a2')}</div>
             ) : notifications.map((n , __testIdIndex55) => (
               <button type="button" key={n.id} onClick={() => n.unread && markAsRead(n.id)} className={`motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page w-full text-left px-4 py-3 border-b border-border hover:bg-input motion-safe:transition-colors cursor-pointer relative group ${n.unread ? 'bg-primary-subtle' : ''}`} data-testid={`admin_notifications-admin_notifications-header-control-3-map55-${__testIdIndex55}-1`}>
-                <p className={`text-sm pr-6 ${n.unread ? 'text-primary font-medium' : 'text-secondary'}`}>{n.text}</p><span className="sr-only">{n.unread ? t('notifications.AdminRepair.unread') : t('notifications.AdminRepair.read')}</span>
+                <p className={`text-sm pr-6 ${n.unread ? 'text-text-primary font-medium' : 'text-secondary'}`}>{n.text}</p><span className="sr-only">{n.unread ? t('notifications.AdminRepair.unread') : t('notifications.AdminRepair.read')}</span>
                 <span className="text-xs text-secondary mt-1 block">{n.time}</span>
               </button>
             ))}

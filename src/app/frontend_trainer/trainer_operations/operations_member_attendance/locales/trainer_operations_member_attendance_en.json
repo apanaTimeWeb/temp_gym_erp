@@ -93,7 +93,8 @@
     "TEXT_LOADING_MEMBERS": "Loading members…",
     "TEXT_NO_MEMBERS_AVAILABLE": "No members are available to record attendance.",
     "TEXT_UNABLE_TO_LOAD_MEMBERS": "Unable to load members. Retry to continue.",
-    "TEXT_RETRY_MEMBER_LOOKUP": "Retry member lookup"
+    "TEXT_RETRY_MEMBER_LOOKUP": "Retry member lookup",
+    "TEXT_ACTIONS": "Actions"
   },
   "TEXT_TAB_MEMBERS": "Members",
   "TEXT_TAB_MY_ATTENDANCE": "My Attendance",

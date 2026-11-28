@@ -65,11 +65,11 @@ export function AdminDashboardOverviewDateFilterDropdown() {
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           <div className="space-y-1">
             <label htmlFor="admin-dashboard-custom-start-date" className="text-sm text-secondary">{t('dashboard.admin_dashboard_date_filter.startDate')}</label>
-            <input id="admin-dashboard-custom-start-date" type="date" value={startDate} max={endDate || undefined} onChange={(event) => updateCustomDate('startDate', event.target.value)} className="min-h-11 rounded-lg border border-border bg-input px-3 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"  data-testid="dashboard-overview-dashboard-overview-date-filter-dropdown-admin-dashboard-custom-start-date"/>
+            <input id="admin-dashboard-custom-start-date" type="date" value={startDate} max={endDate || undefined} onChange={(event) => updateCustomDate('startDate', event.target.value)} className="min-h-11 rounded-lg border border-border bg-input px-3 text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"  data-testid="dashboard-overview-dashboard-overview-date-filter-dropdown-admin-dashboard-custom-start-date"/>
           </div>
           <div className="space-y-1">
             <label htmlFor="admin-dashboard-custom-end-date" className="text-sm text-secondary">{t('dashboard.admin_dashboard_date_filter.endDate')}</label>
-            <input id="admin-dashboard-custom-end-date" type="date" value={endDate} min={startDate || undefined} onChange={(event) => updateCustomDate('endDate', event.target.value)} className="min-h-11 rounded-lg border border-border bg-input px-3 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"  data-testid="dashboard-overview-dashboard-overview-date-filter-dropdown-admin-dashboard-custom-end-date"/>
+            <input id="admin-dashboard-custom-end-date" type="date" value={endDate} min={startDate || undefined} onChange={(event) => updateCustomDate('endDate', event.target.value)} className="min-h-11 rounded-lg border border-border bg-input px-3 text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"  data-testid="dashboard-overview-dashboard-overview-date-filter-dropdown-admin-dashboard-custom-end-date"/>
           </div>
           {!customValid && <p role="alert" className="text-sm text-danger sm:col-span-2">{t('dashboard.admin_dashboard_date_filter.invalidRange')}</p>}
         </div>

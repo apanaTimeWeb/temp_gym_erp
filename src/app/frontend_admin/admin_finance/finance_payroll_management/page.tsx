@@ -13,7 +13,7 @@ export default function AdminFinancePayrollManagementPayrollPage() {
 
 function AdminFinancePayrollManagementPageContent() {
   const t = useTranslations();
-  return <main className="min-h-full bg-page p-6 text-primary space-y-5">
+  return <main className="min-h-full bg-page p-4 sm:p-6 text-text-primary space-y-5">
     <header><h1 className="text-2xl font-bold">{t('hr.admin_hr_tabs.tab_payroll')}</h1></header>
       <AdminFinancePayrollManagementKPIs />
       <AdminFinancePayrollManagementPayrollTable />

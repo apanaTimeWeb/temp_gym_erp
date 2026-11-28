@@ -32,7 +32,7 @@ export function AdminSettingsManagementGeneral({ initialData }: AdminSettingsGen
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="bg-card rounded-xl shadow-card border border-border mt-6" data-testid="admin_settings-admin_settings-general-submit">
       <div className="px-6 py-4 border-b border-border flex items-center justify-between flex-wrap gap-3">
-        <h2 className="font-bold text-primary text-lg">{t('settings.admin_settings_general.text_71dd223f6b')}</h2>
+        <h2 className="font-bold text-text-primary text-lg">{t('settings.admin_settings_general.text_71dd223f6b')}</h2>
         <div className="flex gap-2">
           <button
             type="button"
@@ -51,7 +51,7 @@ export function AdminSettingsManagementGeneral({ initialData }: AdminSettingsGen
         </div>
       </div>
 
-      <div className="p-6 space-y-6">
+      <div className="p-4 sm:p-6 space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {ADMIN_SETTINGS_GENERAL_SELECT_FIELDS.map((f, __testIdIndex49) => (
             <div key={f.key}>
@@ -61,7 +61,7 @@ export function AdminSettingsManagementGeneral({ initialData }: AdminSettingsGen
                 aria-invalid={Boolean(form.formState.errors[f.key])}
                 aria-describedby={form.formState.errors[f.key] ? `admin-settings-${f.key}-error` : undefined}
                 {...form.register(f.key)}
-                className="w-full px-3 py-2.5 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+                className="w-full px-3 py-2.5 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-text-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
                data-testid={`admin_settings-admin_settings-general-control-map49-${__testIdIndex49}-1`}>
                 {f.options.map((o, __testIdIndex56) => <option key={o.value} value={o.value} data-testid={`admin_settings-admin_settings-general-control-2-map49-${__testIdIndex49}-2`}>{t(o.labelKey)}</option>)}
               </select>
@@ -75,7 +75,7 @@ export function AdminSettingsManagementGeneral({ initialData }: AdminSettingsGen
               aria-invalid={Boolean(form.formState.errors.dateFormat)}
               aria-describedby={form.formState.errors.dateFormat ? "admin-settings-date-format-error" : undefined}
               {...form.register('dateFormat')}
-              className="w-full px-3 py-2.5 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+              className="w-full px-3 py-2.5 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-text-primary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
              data-testid="admin_settings-admin_settings-general-control-3">
               {ADMIN_SETTINGS_DATE_FORMAT_OPTIONS.map((option, index) => (
                 <option key={option.value} value={option.value} data-testid={`admin_settings-admin_settings-general-control-${index + 4}`}>{t(option.labelKey)}</option>
@@ -92,7 +92,7 @@ export function AdminSettingsManagementGeneral({ initialData }: AdminSettingsGen
               max="480"
               step="1"
               {...form.register('sessionTimeoutMinutes', { valueAsNumber: true })}
-              className="w-full px-3 py-2.5 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
+              className="w-full px-3 py-2.5 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-text-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
              data-testid="admin_settings-admin_settings-general-control-7"/>
             {form.formState.errors.sessionTimeoutMinutes && <p id="admin-settings-general-sessionTimeoutMinutes-error" role="alert" className="text-xs text-danger mt-1">{getValidationMessage(form.formState.errors.sessionTimeoutMinutes.message)}</p>}
           </div>
@@ -105,14 +105,14 @@ export function AdminSettingsManagementGeneral({ initialData }: AdminSettingsGen
               max="120"
               step="1"
               {...form.register('dataRetentionMonths', { valueAsNumber: true })}
-              className="w-full px-3 py-2.5 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
+              className="w-full px-3 py-2.5 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-input text-text-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
              data-testid="admin_settings-admin_settings-general-control-8"/>
             {form.formState.errors.dataRetentionMonths && <p id="admin-settings-general-dataRetentionMonths-error" role="alert" className="text-xs text-danger mt-1">{getValidationMessage(form.formState.errors.dataRetentionMonths.message)}</p>}
           </div>
         </div>
 
         <div className="space-y-3 pt-2 border-t border-border">
-          <p className="text-sm font-semibold text-primary">{t('settings.admin_settings_general.text_2a98511fed')}</p>
+          <p className="text-sm font-semibold text-text-primary">{t('settings.admin_settings_general.text_2a98511fed')}</p>
           {ADMIN_SETTINGS_GENERAL_TOGGLE_FIELDS.map((f, __testIdIndex99) => (
             <div key={f.key} className="flex items-center justify-between p-3 bg-input rounded-xl border border-border">
               <AdminSettingsToggleSwitch

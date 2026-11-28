@@ -20,7 +20,7 @@ export default function AdminSubscriptionsError({ error, reset }: AdminSubscript
   return (
     <div className="flex flex-col items-center justify-center min-h-screen gap-4">
       <CreditCard size={18} className="text-danger opacity-60"  strokeWidth={2}/>
-      <p className="text-primary font-semibold">{t('subscriptions.AdminSubscriptionsError.text_6d251ad405')}</p>
+      <p className="text-text-primary font-semibold">{t('subscriptions.AdminSubscriptionsError.text_6d251ad405')}</p>
       <button type="button" onClick={reset} className="px-5 py-2 bg-primary text-on-primary rounded-xl text-sm font-semibold hover:bg-primary-hover motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11 min-w-11 motion-safe:active:scale-95" data-testid="admin_subscriptions-error-state">
         {t('subscriptions.AdminSubscriptionsError.text_cef2fe093b')}</button>
     </div>

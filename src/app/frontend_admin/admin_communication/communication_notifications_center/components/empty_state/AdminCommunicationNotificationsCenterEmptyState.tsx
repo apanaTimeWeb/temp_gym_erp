@@ -18,7 +18,7 @@ export default function AdminCommunicationNotificationsCenterEmptyState() {
       <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-input">
         <Bell size={18} className="text-secondary" aria-hidden="true"  strokeWidth={2}/>
       </div>
-      <h3 className="text-lg font-medium text-primary">{t('notifications.admin_notifications_empty_state.remaining_caughtUp')}</h3>
+      <h3 className="text-lg font-medium text-text-primary">{t('notifications.admin_notifications_empty_state.remaining_caughtUp')}</h3>
       <p className="mt-1 text-sm text-secondary">{t('notifications.admin_notifications_empty_state.text_none')}</p>
     </div>
   );

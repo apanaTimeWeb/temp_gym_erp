@@ -42,7 +42,7 @@ export default function AdminFinancePlanRevenueAnalytics() {
     return (
       <div role="alert" className="p-6 text-center text-danger">
         <p>{t('plans.admin_plans_revenue.text_71436fe853')}</p>
-        <button type="button" onClick={() => void retry()} className="mt-3 min-h-11 rounded-lg border border-border px-4 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="plans-revenue-analytics-plans-revenue-analytics-retry">{t('plans.admin_plans_revenue.retry')}</button>
+        <button type="button" onClick={() => void retry()} className="mt-3 min-h-11 rounded-lg border border-border px-4 text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" data-testid="plans-revenue-analytics-plans-revenue-analytics-retry">{t('plans.admin_plans_revenue.retry')}</button>
       </div>
     );
   }
@@ -52,7 +52,7 @@ export default function AdminFinancePlanRevenueAnalytics() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-black text-primary tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl font-black text-text-primary tracking-tight flex items-center gap-2">
             <IndianRupee className="text-primary" size={18} strokeWidth={2} />
             {t('plans.admin_plans_revenue.text_fbb4303165')}</h1>
           <p className="text-sm text-secondary mt-1">
@@ -84,7 +84,7 @@ export default function AdminFinancePlanRevenueAnalytics() {
           {/* Table Controls & Table */}
           <div className="space-y-4">
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-              <h2 className="text-lg font-bold text-primary w-full sm:w-auto">{t('plans.admin_plans_revenue.text_1210e4e75d')}</h2>
+              <h2 className="text-lg font-bold text-text-primary w-full sm:w-auto">{t('plans.admin_plans_revenue.text_1210e4e75d')}</h2>
               <div className="relative w-full sm:w-72">
                 <span className="absolute inset-y-0 left-3 flex items-center"><Search size={18} className="text-disabled"  strokeWidth={2}/></span>
                 <input

@@ -2,7 +2,10 @@
 import { displayValue } from '@/lib/display_value';
 // RESPONSIBILITY: Renders the read-only member progress comparison as a semantic desktop table and mobile card stack.
 // DATA FLOW: Progress comparison query → snapshot rows → trend/metric presentation.
-import { AlertCircle, Minus, TrendingDown, TrendingUp } from 'lucide-react';
+import { useState } from 'react';
+import { AlertCircle, Eye, Minus, TrendingDown, TrendingUp } from 'lucide-react';
+import TrainerCoachingProgressComparisonQuickViewModal from '@/app/frontend_trainer/trainer_coaching/coaching_progress_comparison/components/TrainerCoachingProgressComparisonQuickViewModal';
+import type { TrainerProgressTrackingComparisonMemberSnapshot } from '@/app/frontend_trainer/trainer_coaching/coaching_progress_comparison/types/TrainerCoachingProgressComparisonProgressTrackingTypes';
 
 import { useLocale, useTranslations } from 'next-intl';
 
@@ -49,9 +52,8 @@ const TREND_CONFIG = {
 export default function TrainerProgressTrackingComparisonTable({ snapshots }: TrainerProgressTrackingComparisonTableProps) {
   const locale = useLocale();
   const t = useTranslations('TRAINER_PROGRESS_TRACKING');
+  const [quickViewSnapshot, setQuickViewSnapshot] = useState<TrainerProgressTrackingComparisonMemberSnapshot | null>(null);
   if (snapshots.length === 0) return <TrainerProgressTrackingComparisonEmptyState />;
-
-  const TABLE_COLUMN_COUNT = 9;
 
   return (
     <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
@@ -59,18 +61,16 @@ export default function TrainerProgressTrackingComparisonTable({ snapshots }: Tr
         <h3 className="text-sm font-semibold text-text-primary">{t('TEXT_MEMBER_COMPARISON_LATEST_SNAPSHOT')}</h3>
         <p className="text-xs text-secondary mt-0.5">{t('TEXT_CHANGE_FROM_FIRST_TO_LATEST_ENTRY')}</p>
       </div>
-      <div className="hidden md:block overflow-x-auto">
-        <div className="max-h-[640px] overflow-auto">
-          <table className="w-full text-sm">
+      <div className="hidden md:block">
+        <div className="max-h-[640px] overflow-y-auto overflow-x-hidden">
+          <table className="w-full text-sm border-collapse">
             <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
               <tr data-testid="trainer_progress_tracking-TrainerProgressTrackingComparisonTable-row-1">
-                {['TEXT_MEMBER', 'TEXT_TREND', 'TEXT_WEIGHT_KG', 'TEXT_BMI', 'TEXT_BODY_FAT_PERCENT', 'TEXT_MUSCLE_MASS_KG', 'TEXT_DELTA_WEIGHT', 'TEXT_DELTA_MUSCLE', 'TEXT_ENTRIES'].map((key, index) => (
+                {['TEXT_MEMBER', 'TEXT_TREND', 'TEXT_WEIGHT_KG', 'TEXT_DELTA_WEIGHT', 'TEXT_DELTA_MUSCLE', 'TEXT_ACTIONS'].map((key) => (
                   <th
                     key={key}
                     scope="col"
-                    className={`px-4 py-3 text-start text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap ${
-                      index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
-                    }`}
+                    className="px-3 py-3 text-start text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap"
                   >
                     {t(key)}
                   </th>
@@ -87,28 +87,36 @@ export default function TrainerProgressTrackingComparisonTable({ snapshots }: Tr
                     className="hover:bg-surface-hover transition-colors group"
                     data-testid="trainer_progress_tracking-TrainerProgressTrackingComparisonTable-row-2"
                   >
-                    <td className="sticky start-0 z-10 bg-card border-e border-border px-4 py-3 font-medium text-text-primary whitespace-nowrap group-hover:bg-surface-hover transition-colors">
-                      <div className="flex items-center gap-2">
+                    <td className="px-3 py-3 font-medium text-text-primary">
+                      <div className="flex items-center gap-2 min-w-0">
                         <div className="w-7 h-7 rounded-full bg-primary-subtle flex items-center justify-center text-primary text-xs font-bold shrink-0" aria-hidden="true">
                           {snapshot.memberName.charAt(0)}
                         </div>
-                        <span className="font-bold text-text-primary text-sm">{snapshot.memberName}</span>
+                        <span className="font-bold text-text-primary text-sm truncate">{snapshot.memberName}</span>
                         <CopyButton value={snapshot.memberName} />
                       </div>
                       <p className="text-xs text-secondary font-mono flex items-center gap-1.5 mt-0.5 ms-9">#{snapshot.memberId.slice(-6)}</p>
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-3 py-3 whitespace-nowrap">
                       <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border ${trend.cls}`}>
-                        <TrendIcon size={18} strokeWidth={2} aria-hidden="true" />{t(trend.labelKey)}
+                        <TrendIcon size={16} strokeWidth={2} aria-hidden="true" />{t(trend.labelKey)}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-text-primary">{snapshot.latestWeightKg == null ? displayValue(snapshot.latestWeightKg) : TrainerProgressTrackingFormatNumber(snapshot.latestWeightKg, locale)}</td>
-                    <td className="px-4 py-3 text-text-primary">{snapshot.latestBmi == null ? displayValue(snapshot.latestBmi) : TrainerProgressTrackingFormatNumber(snapshot.latestBmi, locale)}</td>
-                    <td className="px-4 py-3 text-text-primary">{snapshot.latestBodyFatPercent == null ? '—' : `${TrainerProgressTrackingFormatNumber(snapshot.latestBodyFatPercent, locale)}%`}</td>
-                    <td className="px-4 py-3 text-text-primary">{snapshot.latestMuscleMassKg == null ? displayValue(snapshot.latestMuscleMassKg) : TrainerProgressTrackingFormatNumber(snapshot.latestMuscleMassKg, locale)}</td>
-                    <td className="px-4 py-3"><TrainerProgressTrackingComparisonDelta value={snapshot.weightChangeKg} lowerIsBetter={true} /></td>
-                    <td className="px-4 py-3"><TrainerProgressTrackingComparisonDelta value={snapshot.muscleMassChange} lowerIsBetter={false} /></td>
-                    <td className="px-4 py-3 text-secondary">{TrainerProgressTrackingFormatNumber(snapshot.totalEntries, locale)}</td>
+                    <td className="px-3 py-3 text-text-primary whitespace-nowrap">{snapshot.latestWeightKg == null ? displayValue(snapshot.latestWeightKg) : `${TrainerProgressTrackingFormatNumber(snapshot.latestWeightKg, locale)} kg`}</td>
+                    <td className="px-3 py-3 whitespace-nowrap"><TrainerProgressTrackingComparisonDelta value={snapshot.weightChangeKg} lowerIsBetter={true} /></td>
+                    <td className="px-3 py-3 whitespace-nowrap"><TrainerProgressTrackingComparisonDelta value={snapshot.muscleMassChange} lowerIsBetter={false} /></td>
+                    <td className="px-3 py-3 whitespace-nowrap">
+                      <button
+                        type="button"
+                        onClick={() => setQuickViewSnapshot(snapshot)}
+                        className="min-w-9 min-h-9 inline-flex items-center justify-center p-1.5 rounded-xl border border-sky-500/35 bg-sky-500/15 text-sky-600 dark:text-sky-300 hover:bg-sky-500 hover:text-white motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
+                        aria-label={`View full comparison details for ${snapshot.memberName}`}
+                        title="View full comparison metrics"
+                        data-testid={`trainer_comparison-view-${snapshot.memberId}`}
+                      >
+                        <Eye size={16} strokeWidth={2.2} aria-hidden="true" />
+                      </button>
+                    </td>
                   </tr>
                 );
               })}
@@ -127,6 +135,10 @@ export default function TrainerProgressTrackingComparisonTable({ snapshots }: Tr
           Showing <span className="font-semibold text-text-primary">{snapshots.length}</span> member comparison records
         </p>
       </div>
+      <TrainerCoachingProgressComparisonQuickViewModal
+        snapshot={quickViewSnapshot}
+        onClose={() => setQuickViewSnapshot(null)}
+      />
     </div>
   );
 }
