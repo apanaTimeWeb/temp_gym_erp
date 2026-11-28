@@ -132,12 +132,12 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
         aria-modal={isMobileOpen || undefined}
         className={`trainer-sidebar trainer-sidebar-safe-area motion-safe:transition-all motion-safe:duration-base ${isCollapsed ? 'trainer-sidebar-collapsed' : ''} ${isMobileOpen ? 'trainer-sidebar-open' : ''}`}
       >
-        <div className="h-16 flex items-center gap-2.5 px-3 border-b border-border bg-gradient-to-r from-orange-500/15 via-amber-500/5 to-transparent shrink-0">
+        <div className="h-16 flex items-center gap-2.5 px-3 border-b border-orange-500/20 bg-gradient-to-r from-[#FF5A1F]/18 via-purple-500/10 to-transparent shrink-0">
           <button
             type="button"
             onClick={isMobileOpen ? () => setIsMobileOpen(false) : () => setIsCollapsed(!isCollapsed)}
             aria-label={isMobileOpen ? t('TEXT_CLOSE_NAVIGATION_SIDEBAR') : t('TEXT_TOGGLE_NAVIGATION_SIDEBAR')}
-            className="min-w-9 min-h-9 w-9 h-9 inline-flex items-center justify-center rounded-xl text-secondary hover:text-primary hover:bg-orange-500/15 border border-transparent hover:border-orange-500/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shrink-0 motion-safe:transition-all"
+            className="min-w-9 min-h-9 w-9 h-9 inline-flex items-center justify-center rounded-xl text-slate-300 hover:text-white hover:bg-orange-500/20 border border-white/10 hover:border-orange-500/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shrink-0 motion-safe:transition-all"
             data-testid="trainer_navigation-sidebar-toggle"
           >
             {isMobileOpen ? <X size={18} strokeWidth={2} aria-hidden="true" /> : <Menu size={18} strokeWidth={2} aria-hidden="true" />}
@@ -149,16 +149,16 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
               className="flex items-center gap-2.5 min-w-0 flex-1 group no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring rounded-lg"
             >
               <span
-                className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FF5A1F] via-[#F97316] to-[#F59E0B] border border-white/25 text-white flex items-center justify-center shrink-0 shadow-[0_4px_16px_rgba(255,90,31,0.45)] motion-safe:transition-transform motion-safe:duration-base group-hover:scale-105"
+                className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FF5A1F] via-[#EC4899] to-[#8B5CF6] border border-white/25 text-white flex items-center justify-center shrink-0 shadow-[0_4px_16px_rgba(255,90,31,0.5)] motion-safe:transition-transform motion-safe:duration-base group-hover:scale-105"
                 aria-hidden="true"
               >
                 <TrainerNavigationBrandIcon className="w-[19px] h-[19px]" />
               </span>
               <div className="whitespace-nowrap flex flex-col min-w-0 justify-center">
-                <span className="text-primary font-extrabold text-[15px] leading-none tracking-tight truncate">
+                <span className="bg-gradient-to-r from-white via-orange-200 to-amber-300 bg-clip-text text-transparent font-black text-[15px] leading-none tracking-tight truncate">
                   {t('TEXT_GYMSMART')}
                 </span>
-                <span className="self-start text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-300 bg-amber-500/15 border border-amber-500/30 rounded px-1.5 py-0.5 leading-none mt-1 truncate">
+                <span className="self-start text-[10px] font-bold uppercase tracking-wider text-amber-300 bg-amber-500/15 border border-amber-400/35 rounded px-1.5 py-0.5 leading-none mt-1 truncate">
                   {t('TEXT_TRAINER_APP')}
                 </span>
               </div>
@@ -166,17 +166,17 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
           )}
         </div>
         {(!isCollapsed || isMobileOpen) && (
-          <div className="px-3 py-3 border-b border-border shrink-0">
+          <div className="px-3 py-3 border-b border-white/10 shrink-0">
             <label htmlFor="trainer-sidebar-search" className="sr-only">{t('TEXT_SEARCH_MENU')}</label>
             <div className="relative">
-              <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-orange-500 pointer-events-none" aria-hidden="true" strokeWidth={2.2}/>
+              <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-[#FF5A1F] pointer-events-none" aria-hidden="true" strokeWidth={2.2}/>
               <input
                 id="trainer-sidebar-search"
                 type="search"
                 placeholder={t('TEXT_SEARCH_MENU')}
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
-                className="block w-full min-h-10 ps-9 pe-8 py-2 border border-border hover:border-orange-500/35 rounded-xl bg-input text-sm text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:border-focus motion-safe:transition-colors motion-safe:duration-base"
+                className="block w-full min-h-10 ps-9 pe-8 py-2 border border-white/15 hover:border-orange-500/45 rounded-xl bg-white/[0.06] text-sm text-white placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:border-focus motion-safe:transition-colors motion-safe:duration-base"
                 data-testid="trainer_navigation-sidebar-search"
               />
               {searchQuery && (
@@ -184,7 +184,7 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
                   type="button"
                   onClick={() => setSearchQuery('')}
                   aria-label="Clear menu search"
-                  className="absolute end-2 top-1/2 -translate-y-1/2 p-1 rounded-md text-secondary hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring"
+                  className="absolute end-2 top-1/2 -translate-y-1/2 p-1 rounded-md text-slate-400 hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring"
                 >
                   <X size={14} aria-hidden="true" />
                 </button>
@@ -193,15 +193,15 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
           </div>
         )}
         {isCollapsed && !isMobileOpen && (
-          <div className="flex items-center justify-center px-2 py-3 border-b border-border shrink-0">
-            <button type="button" onClick={() => setIsCollapsed(false)} aria-label={t('TEXT_SEARCH_MENU')} title={t('TEXT_SEARCH_MENU')} className="min-w-11 min-h-11 p-2 rounded-xl text-secondary hover:text-primary hover:bg-surface-hover motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-base motion-safe:active:scale-95" data-testid="trainer_navigation-sidebar-expand_search">
+          <div className="flex items-center justify-center px-2 py-3 border-b border-white/10 shrink-0">
+            <button type="button" onClick={() => setIsCollapsed(false)} aria-label={t('TEXT_SEARCH_MENU')} title={t('TEXT_SEARCH_MENU')} className="min-w-11 min-h-11 p-2 rounded-xl text-orange-400 bg-orange-500/10 border border-orange-500/25 hover:bg-orange-500/20 motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-base motion-safe:active:scale-95" data-testid="trainer_navigation-sidebar-expand_search">
               <Search size={18} aria-hidden="true" strokeWidth={2}/>
             </button>
           </div>
         )}
         <nav className={`flex-1 overflow-y-auto py-3 ${!isCollapsed || isMobileOpen ? 'px-2.5 space-y-3' : 'px-1.5 space-y-2'} trainer-shell-scrollbar`} aria-label={t('TEXT_TRAINER_NAVIGATION')}>
           {filteredNavGroups.length === 0 ? (
-            <p className="text-center py-4 text-sm text-secondary">{t('TEXT_NO_MATCHES_FOUND')}</p>
+            <p className="text-center py-4 text-sm text-slate-400">{t('TEXT_NO_MATCHES_FOUND')}</p>
           ) : filteredNavGroups.map((group, groupIndex) => {
             const activeGroup = group.items.some((item) => pathname === item.href || pathname.startsWith(`${item.href}/`));
             const searching = searchQuery.trim().length > 0;
@@ -210,7 +210,7 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
             const sectionId = `trainer-domain-${group.groupKey.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
             const groupColor = TRAINER_NAV_GROUP_COLORS[group.groupKey] ?? DEFAULT_TRAINER_NAV_COLOR;
             return (
-              <div key={group.groupKey} className={!showLabel && groupIndex > 0 ? 'pt-2 border-t border-border' : ''}>
+              <div key={group.groupKey} className={!showLabel && groupIndex > 0 ? 'pt-2 border-t border-white/10' : ''}>
                 {showLabel && (
                   <button
                     type="button"
@@ -219,7 +219,7 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
                     onClick={() => {
                       setExpandedGroups((previous) => ({ ...previous, [group.groupKey]: !showChildren }));
                     }}
-                    className={`flex w-full min-h-9 items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 text-start text-[11px] font-bold uppercase tracking-wider focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-colors ${activeGroup ? 'text-primary bg-surface-highlight' : 'text-secondary hover:bg-surface-hover hover:text-primary'}`}
+                    className={`flex w-full min-h-9 items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 text-start text-[11px] font-bold uppercase tracking-wider focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-colors ${activeGroup ? 'bg-white/[0.08]' : 'hover:bg-white/[0.05]'}`}
                   >
                     <span className="flex items-center gap-2 min-w-0">
                       <span
@@ -227,9 +227,9 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
                         style={{ backgroundColor: groupColor.iconColor, boxShadow: `0 0 8px ${groupColor.iconColor}` }}
                         aria-hidden="true"
                       />
-                      <span className="truncate" style={{ color: activeGroup ? groupColor.iconColor : undefined }}>{t(group.groupKey)}</span>
+                      <span className="truncate" style={{ color: groupColor.iconColor }}>{t(group.groupKey)}</span>
                     </span>
-                    <ChevronDown size={14} strokeWidth={2.2} aria-hidden="true" className={`shrink-0 motion-safe:transition-transform ${showChildren ? 'rotate-180' : ''}`} />
+                    <ChevronDown size={14} strokeWidth={2.2} aria-hidden="true" className={`shrink-0 text-slate-400 motion-safe:transition-transform ${showChildren ? 'rotate-180' : ''}`} />
                   </button>
                 )}
                 <div id={sectionId} hidden={!showChildren} className={`${showLabel ? 'mt-1 space-y-1' : 'space-y-1.5 flex flex-col items-center'}`}>
@@ -247,16 +247,16 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
                         onClick={() => { if (window.innerWidth < 768) setIsMobileOpen(false); }}
                         className={`group flex min-h-10 items-center rounded-xl text-[13px] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all ${
                           showLabel
-                            ? 'w-full gap-2.5 px-2.5 py-1.5 border-s-2'
+                            ? 'w-full gap-2.5 px-2.5 py-1.5 border-s-[3px]'
                             : 'w-11 h-11 justify-center px-0'
                         } ${
                           active
                             ? showLabel
-                              ? 'border-orange-500 bg-gradient-to-r from-orange-500/20 via-orange-500/10 to-transparent text-primary font-semibold shadow-sm'
-                              : 'bg-orange-500/20 text-primary ring-1 ring-orange-500/60 shadow-[0_0_12px_rgba(255,90,31,0.3)]'
+                              ? 'border-[#FF5A1F] bg-gradient-to-r from-[#FF5A1F]/25 via-[#F97316]/12 to-transparent text-white font-semibold shadow-[0_4px_16px_rgba(255,90,31,0.18)]'
+                              : 'bg-gradient-to-br from-[#FF5A1F]/30 to-[#EC4899]/20 text-white ring-1 ring-orange-500/70 shadow-[0_0_14px_rgba(255,90,31,0.38)]'
                             : showLabel
-                              ? 'border-transparent text-secondary hover:bg-surface-hover hover:text-primary'
-                              : 'text-secondary hover:bg-surface-hover hover:text-primary'
+                              ? 'border-transparent text-slate-300 hover:bg-white/[0.07] hover:text-white'
+                              : 'text-slate-300 hover:bg-white/[0.08] hover:text-white'
                         }`}
                         data-testid={`trainer_navigation-sidebar-nav${item.href.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '')}`}
                       >
@@ -280,13 +280,13 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
             );
           })}
         </nav>
-        <div className="mt-auto border-t border-border bg-gradient-to-r from-orange-500/10 via-transparent to-sky-500/5 px-2.5 py-3">
-          <div className={`flex items-center rounded-xl border border-border bg-card/80 p-2 ${!isCollapsed || isMobileOpen ? 'gap-3' : 'justify-center'}`}>
-            <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#FF5A1F] to-[#EC4899] flex items-center justify-center text-white text-sm font-bold shrink-0 shadow-[0_3px_12px_rgba(255,90,31,0.35)]" aria-hidden="true">
+        <div className="mt-auto border-t border-white/10 bg-gradient-to-r from-orange-500/12 via-purple-500/5 to-sky-500/10 px-2.5 py-3">
+          <div className={`flex items-center rounded-xl border border-white/15 bg-white/[0.05] p-2 ${!isCollapsed || isMobileOpen ? 'gap-3' : 'justify-center'}`}>
+            <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#FF5A1F] via-[#EC4899] to-[#8B5CF6] flex items-center justify-center text-white text-sm font-bold shrink-0 shadow-[0_3px_14px_rgba(255,90,31,0.45)]" aria-hidden="true">
               {displayName.charAt(0).toUpperCase()}
-              <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-sidebar" />
+              <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-[#090D16] shadow-[0_0_6px_#34d399]" />
             </div>
-            {(!isCollapsed || isMobileOpen) && <div className="min-w-0"><p className="text-sm font-semibold text-primary truncate">{displayName}</p><p className="text-[11px] font-medium text-emerald-500 dark:text-emerald-400 truncate">{displayRole}</p></div>}
+            {(!isCollapsed || isMobileOpen) && <div className="min-w-0"><p className="text-sm font-semibold text-white truncate">{displayName}</p><p className="text-[11px] font-medium text-emerald-400 truncate">{displayRole}</p></div>}
           </div>
         </div>
       </aside>

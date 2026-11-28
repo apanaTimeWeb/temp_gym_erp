@@ -9,8 +9,10 @@
   flex-direction: column;
   height: 100dvh;
   width: var(--layout-sidebar-width);
-  background: linear-gradient(180deg, var(--bg-sidebar) 0%, var(--bg-header) 100%);
-  border-right: 1px solid var(--border);
+  background: linear-gradient(180deg, #090D16 0%, #0E1526 52%, #090D16 100%);
+  border-right: 1px solid rgba(255, 90, 31, 0.22);
+  box-shadow: 4px 0 28px rgba(0, 0, 0, 0.45);
+  color: #f8fafc;
   overflow: hidden;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);

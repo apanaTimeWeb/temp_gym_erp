@@ -51,9 +51,9 @@ export function ThemeToggle() {
       type="button"
       onClick={toggleTheme}
       aria-label="Toggle theme"
-      className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-500 transition-all hover:bg-amber-500/20 hover:border-amber-400/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-amber-400/35 bg-amber-500/15 text-amber-300 transition-all hover:bg-amber-500/25 hover:border-amber-300/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shadow-[0_2px_10px_rgba(251,191,36,0.18)]"
     >
-      {isDark ? <Sun className="h-4 w-4 text-amber-400" /> : <Moon className="h-4 w-4 text-orange-500" />}
+      {isDark ? <Sun className="h-4 w-4 text-amber-300" /> : <Moon className="h-4 w-4 text-amber-300" />}
     </button>
   );
 }

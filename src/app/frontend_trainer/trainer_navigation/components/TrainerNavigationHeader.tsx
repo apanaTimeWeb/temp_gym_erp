@@ -113,7 +113,7 @@ export default function TrainerNavigationHeader({ title, subtitle, isSidebarColl
   };
 
   return (
-    <header className={`trainer-header ${isSidebarCollapsed ? 'trainer-header-collapsed' : 'trainer-header-expanded'} bg-header-translucent dark:bg-gradient-to-r dark:from-[#0E1420]/95 dark:via-[#121A2B]/90 dark:to-[#181426]/95 backdrop-blur-xl border-b border-border px-3 sm:px-6 flex items-center justify-between gap-2 sm:gap-4 motion-safe:transition-all motion-safe:duration-base`}>
+    <header className={`trainer-header ${isSidebarCollapsed ? 'trainer-header-collapsed' : 'trainer-header-expanded'} bg-gradient-to-r from-[#0B0F19]/95 via-[#11182A]/95 to-[#19132B]/95 border-b border-orange-500/25 backdrop-blur-xl px-3 sm:px-6 flex items-center justify-between gap-2 sm:gap-4 text-white shadow-[0_4px_24px_rgba(0,0,0,0.35)] motion-safe:transition-all motion-safe:duration-base`}>
       <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
         <button
           type="button"
@@ -122,17 +122,20 @@ export default function TrainerNavigationHeader({ title, subtitle, isSidebarColl
           aria-controls="trainer-sidebar"
           aria-expanded={isMobileViewport ? isMobileSidebarOpen : !isSidebarCollapsed}
           title={t("TEXT_TOGGLE_NAVIGATION_SIDEBAR")}
-          className="md:hidden min-w-10 min-h-10 shrink-0 inline-flex items-center justify-center text-orange-500 bg-orange-500/10 hover:bg-orange-500/20 rounded-xl border border-orange-500/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:active:scale-95"
+          className="md:hidden min-w-10 min-h-10 shrink-0 inline-flex items-center justify-center text-orange-400 bg-orange-500/15 hover:bg-orange-500/25 rounded-xl border border-orange-500/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:active:scale-95"
           onClick={onToggleSidebar}
          data-testid="trainer_navigation-infrastructure-header_toggle">
           <Menu size={18} strokeWidth={2} aria-hidden="true" />
         </button>
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 min-w-0">
-            <span className="hidden sm:inline-block w-1.5 h-5 rounded-full bg-gradient-to-b from-[#FF5A1F] to-[#F59E0B] shrink-0" aria-hidden="true" />
-            <TrainerNavigationTooltip content={title}><h1 className="text-base sm:text-page-title font-bold text-primary truncate">{title}</h1></TrainerNavigationTooltip>
+            <span className="hidden sm:inline-block w-1.5 h-5 rounded-full bg-gradient-to-b from-[#FF5A1F] via-[#EC4899] to-[#38BDF8] shrink-0 shadow-[0_0_10px_rgba(255,90,31,0.5)]" aria-hidden="true" />
+            <TrainerNavigationTooltip content={title}><h1 className="text-base sm:text-page-title font-bold text-white truncate">{title}</h1></TrainerNavigationTooltip>
+            <span className="hidden md:inline-flex items-center gap-1 rounded-md border border-cyan-400/30 bg-cyan-500/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-cyan-300 shrink-0">
+              Live Sync
+            </span>
           </div>
-          {subtitle && <TrainerNavigationTooltip content={subtitle}><p className="hidden sm:block text-xs text-secondary mt-0.5 ps-3.5 truncate">{subtitle}</p></TrainerNavigationTooltip>}
+          {subtitle && <TrainerNavigationTooltip content={subtitle}><p className="hidden sm:block text-xs text-slate-300/80 mt-0.5 ps-3.5 truncate">{subtitle}</p></TrainerNavigationTooltip>}
         </div>
       </div>
 
@@ -141,10 +144,10 @@ export default function TrainerNavigationHeader({ title, subtitle, isSidebarColl
         <Link
           href={TRAINER_NOTIFICATIONS_PAGE_LIST}
           aria-label={t("TEXT_OPEN_NOTIFICATIONS")}
-          className="relative min-w-10 min-h-10 inline-flex items-center justify-center rounded-xl border border-sky-500/30 bg-sky-500/10 text-sky-500 hover:bg-sky-500/20 hover:border-sky-400/50 motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+          className="relative min-w-10 min-h-10 inline-flex items-center justify-center rounded-xl border border-sky-400/35 bg-sky-500/15 text-sky-300 hover:bg-sky-500/25 hover:border-sky-400/60 hover:text-white motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shadow-[0_2px_10px_rgba(56,189,248,0.18)]"
          data-testid="trainer_navigation-infrastructure-header_open_notifications">
           <Bell size={18} strokeWidth={2} aria-hidden="true" />
-          <span className="absolute top-2 end-2 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-header shadow-[0_0_8px_rgba(244,63,94,0.8)]" aria-hidden="true" />
+          <span className="absolute top-2 end-2 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-[#0E1525] shadow-[0_0_8px_rgba(244,63,94,0.9)]" aria-hidden="true" />
         </Link>
 
         <div className="relative" ref={profileRef}>
@@ -156,16 +159,16 @@ export default function TrainerNavigationHeader({ title, subtitle, isSidebarColl
             aria-haspopup="menu"
             aria-controls={profileMenuId}
             onClick={() => setShowProfile((value) => !value)}
-            className="flex items-center gap-2.5 px-2 sm:px-2.5 py-1.5 rounded-xl border border-orange-500/30 bg-orange-500/5 hover:bg-orange-500/15 hover:border-orange-500/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base"
+            className="flex items-center gap-2.5 px-2 sm:px-2.5 py-1.5 rounded-xl border border-orange-500/35 bg-white/[0.06] hover:bg-orange-500/15 hover:border-orange-400/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base"
            data-testid="trainer_navigation-infrastructure-header_menu">
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#FF5A1F] to-[#EC4899] text-white flex items-center justify-center text-xs font-bold shrink-0 shadow-[0_3px_10px_rgba(255,90,31,0.4)]" aria-hidden="true">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#FF5A1F] via-[#EC4899] to-[#8B5CF6] text-white flex items-center justify-center text-xs font-bold shrink-0 shadow-[0_3px_12px_rgba(255,90,31,0.45)]" aria-hidden="true">
               {mounted ? (user?.name?.charAt(0)?.toUpperCase() || <User size={16} strokeWidth={2.2} />) : t("TEXT_A")}
             </span>
             <span className="hidden sm:flex flex-col items-start min-w-0 text-start">
-              <span className="text-[11px] leading-none text-amber-600 dark:text-amber-300 font-medium">{greeting}</span>
-              <strong className="text-[13px] leading-tight font-semibold text-primary truncate max-w-28">{displayUserName}</strong>
+              <span className="text-[11px] leading-none text-amber-300 font-medium">{greeting}</span>
+              <strong className="text-[13px] leading-tight font-semibold text-white truncate max-w-28">{displayUserName}</strong>
             </span>
-            <ChevronDown size={13} className={`hidden sm:block text-secondary motion-safe:transition-transform ${showProfile ? 'rotate-180' : ''}`} aria-hidden="true" />
+            <ChevronDown size={13} className={`hidden sm:block text-slate-300 motion-safe:transition-transform ${showProfile ? 'rotate-180' : ''}`} aria-hidden="true" />
           </button>
 
           <div
@@ -175,25 +178,25 @@ export default function TrainerNavigationHeader({ title, subtitle, isSidebarColl
             role="menu"
             aria-label={t("TEXT_PROFILE_MENU")}
             onKeyDown={handleProfileMenuKeyDown}
-            className="absolute end-0 mt-2 w-64 max-w-[calc(100vw-1.5rem)] bg-popover backdrop-blur-xl rounded-2xl shadow-popover border border-orange-500/25 overflow-hidden z-30 p-2 space-y-1.5"
+            className="absolute end-0 mt-2 w-64 max-w-[calc(100vw-1.5rem)] bg-[#0E1526]/95 backdrop-blur-2xl rounded-2xl shadow-[0_20px_48px_rgba(0,0,0,0.75)] border border-orange-500/30 overflow-hidden z-30 p-2 space-y-1.5 text-white"
           >
-              <div className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl bg-gradient-to-r from-orange-500/15 to-transparent border border-orange-500/25">
-                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#FF5A1F] to-[#EC4899] text-white flex items-center justify-center text-sm font-bold shrink-0 shadow-[0_3px_10px_rgba(255,90,31,0.4)]" aria-hidden="true">
+              <div className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl bg-gradient-to-r from-[#FF5A1F]/20 via-purple-500/10 to-transparent border border-orange-500/25">
+                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#FF5A1F] via-[#EC4899] to-[#8B5CF6] text-white flex items-center justify-center text-sm font-bold shrink-0 shadow-[0_3px_12px_rgba(255,90,31,0.45)]" aria-hidden="true">
                   {displayUserName.charAt(0).toUpperCase()}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <TrainerNavigationTooltip content={displayUserName}><p className="text-[13px] font-bold text-primary truncate">{displayUserName}</p></TrainerNavigationTooltip>
-                  <TrainerNavigationTooltip content={displayUserEmail}><p className="text-[11px] text-secondary truncate">{displayUserEmail || displayUserRole}</p></TrainerNavigationTooltip>
+                  <TrainerNavigationTooltip content={displayUserName}><p className="text-[13px] font-bold text-white truncate">{displayUserName}</p></TrainerNavigationTooltip>
+                  <TrainerNavigationTooltip content={displayUserEmail}><p className="text-[11px] text-slate-300 truncate">{displayUserEmail || displayUserRole}</p></TrainerNavigationTooltip>
                 </div>
               </div>
-              <div className="px-2 py-1 space-y-1 text-xs border-b border-border pb-2">
+              <div className="px-2 py-1 space-y-1 text-xs border-b border-white/10 pb-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-secondary">Role:</span>
-                  <span className="font-semibold text-amber-600 dark:text-amber-300" data-testid="trainer_navigation-header-warning-state-113-1">{displayUserRole}</span>
+                  <span className="text-slate-400">Role:</span>
+                  <span className="font-semibold text-amber-300" data-testid="trainer_navigation-header-warning-state-113-1">{displayUserRole}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-secondary">Status:</span>
-                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold border border-emerald-500/30 bg-emerald-500/15 text-emerald-500">
+                  <span className="text-slate-400">Status:</span>
+                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold border border-emerald-500/35 bg-emerald-500/15 text-emerald-300">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#34d399]" aria-hidden="true" />
                     Online
                   </span>
@@ -204,17 +207,17 @@ export default function TrainerNavigationHeader({ title, subtitle, isSidebarColl
                   href={TRAINER_PROFILE_PAGE_LIST}
                   role="menuitem"
                   tabIndex={-1}
-                  className="flex items-center gap-2 min-h-10 px-2.5 py-2 rounded-lg text-xs font-medium text-sky-600 dark:text-sky-300 hover:bg-sky-500/15 motion-safe:transition-colors focus-visible:outline-none focus-visible:bg-sky-500/15"
+                  className="flex items-center gap-2 min-h-10 px-2.5 py-2 rounded-lg text-xs font-medium text-sky-300 hover:text-white hover:bg-sky-500/20 motion-safe:transition-colors focus-visible:outline-none focus-visible:bg-sky-500/20"
                   onClick={() => setShowProfile(false)}
                  data-testid="trainer_navigation-infrastructure-header_my_profile">
                   <User size={15} strokeWidth={2} aria-hidden="true" /> {t("TEXT_MY_PROFILE")}</Link>
               </div>
-              <div className="border-t border-border pt-1.5">
+              <div className="border-t border-white/10 pt-1.5">
                 <button
                   type="button"
                   role="menuitem"
                   tabIndex={-1}
-                  className="w-full flex items-center gap-2 min-h-10 px-2.5 py-2 rounded-lg text-xs text-rose-500 border border-rose-500/25 bg-rose-500/10 hover:bg-rose-500/20 font-semibold motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                  className="w-full flex items-center gap-2 min-h-10 px-2.5 py-2 rounded-lg text-xs text-rose-300 border border-rose-500/30 bg-rose-500/15 hover:bg-rose-500/25 hover:text-white font-semibold motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                   onClick={() => { setShowProfile(false); logout(); }}
                  data-testid="trainer_navigation-infrastructure-header_log_out">
                   <LogOut size={15} strokeWidth={2} aria-hidden="true" /> {t("TEXT_LOG_OUT")}</button>
