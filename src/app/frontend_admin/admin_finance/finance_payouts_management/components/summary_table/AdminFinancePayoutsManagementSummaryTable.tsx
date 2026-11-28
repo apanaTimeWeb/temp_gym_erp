@@ -42,7 +42,7 @@ export default function AdminFinancePayoutsManagementSummaryTable() {
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap gap-3">
-        <div className="w-44">
+        <div className="w-full sm:w-44">
           <AdminNavigationLayoutSearchableDropdown
             options={PAYOUT_MONTH_OPTIONS.map((option) => ({ ...option, label: t(option.labelKey) }))}
             value={logic.monthFilter}
@@ -51,7 +51,7 @@ export default function AdminFinancePayoutsManagementSummaryTable() {
             testId="admin_payouts-admin_payouts-summary-table-change"
           />
         </div>
-        <div className="w-40">
+        <div className="w-full sm:w-40">
           <AdminNavigationLayoutSearchableDropdown
             options={PAYOUT_GYM_OPTIONS.map((option) => ({ ...option, label: t(option.labelKey) }))}
             value={logic.gymFilter}
@@ -60,7 +60,7 @@ export default function AdminFinancePayoutsManagementSummaryTable() {
             testId="admin_payouts-admin_payouts-summary-table-change-2"
           />
         </div>
-        <div className="w-40">
+        <div className="w-full sm:w-40">
           <AdminNavigationLayoutSearchableDropdown
             options={PAYOUT_STATUS_OPTIONS.map((option) => ({ ...option, label: t(option.labelKey) }))}
             value={logic.statusFilter}

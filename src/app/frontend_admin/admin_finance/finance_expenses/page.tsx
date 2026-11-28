@@ -17,6 +17,6 @@ export default function AdminFinanceExpensesPage() {
     <AdminFinanceOverviewKPIs />
     <AdminFinanceOverviewRevenueByMethod />
     <div className="flex justify-end"><button type="button" onClick={() => void loadAll()} className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-border px-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label={t('finance.admin_finance_tabs.text_1e5fcf297b')}><RefreshCw size={18} aria-hidden="true"/></button></div>
-    <section aria-label={t('finance.admin_finance_expenses.accessibility.data')} className="rounded-xl border border-border bg-card p-5"><AdminFinanceOverviewExpensesTable /></section>
+    <section aria-label={t('finance.admin_finance_expenses.accessibility.data')}><AdminFinanceOverviewExpensesTable /></section>
   </main>;
 }

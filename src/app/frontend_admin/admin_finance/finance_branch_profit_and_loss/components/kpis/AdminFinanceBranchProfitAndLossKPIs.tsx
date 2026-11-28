@@ -94,21 +94,22 @@ export default function AdminFinanceBranchProfitAndLossKPIs({
   ];
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
       {kpis.map((k , __testIdIndex94) => {
         const isInteractive = k.filter === FINANCE_PNL_STATUS_FILTERS.PROFITABLE || k.filter === FINANCE_PNL_STATUS_FILTERS.LOSS;
         const isActive = isInteractive && statusFilter === k.filter;
         const cardContent = (
           <>
-            <div className={`w-9 h-9 rounded-xl flex items-center justify-center mb-3 ${k.iconBg}`}>
+            <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#FF5A1F] via-[#EC4899] to-transparent opacity-70" />
+            <div className={`w-9 h-9 rounded-xl border border-white/10 flex items-center justify-center mb-3 ${k.iconBg}`}>
               <k.icon size={18} strokeWidth={2} className={k.iconColor} />
             </div>
-            <p className="text-xs font-medium text-secondary uppercase tracking-wider truncate">{k.label}</p>
-            <p className={`text-xl font-bold mt-0.5 ${isActive ? k.iconColor : 'text-text-primary'}`}>{k.value}</p>
-            <p className="text-xs text-disabled mt-0.5 truncate">{k.subtext}</p>
+            <p className="text-xs font-semibold text-secondary uppercase tracking-wider truncate">{k.label}</p>
+            <p className={`text-xl font-extrabold tabular-nums mt-0.5 truncate ${isActive ? k.iconColor : 'text-text-primary'}`}>{k.value}</p>
+            <p className="text-xs text-secondary mt-0.5 truncate">{k.subtext}</p>
           </>
         );
-        const cardClass = `text-left rounded-xl p-4 border-2 bg-card ${isActive ? k.activeBorder : 'border-border'} ${isInteractive ? 'hover:shadow-card motion-safe:hover:-translate-y-0.5' : ''}`;
+        const cardClass = `relative overflow-hidden text-left rounded-2xl p-4 border shadow-card bg-card dark:bg-gradient-to-br dark:from-[#12192B] dark:to-[#0C1220] ${isActive ? 'border-primary ring-2 ring-primary/50' : k.activeBorder} ${isInteractive ? 'hover:border-primary/60 motion-safe:hover:-translate-y-0.5' : ''}`;
         return isInteractive ? (
           <button type="button" key={k.label} onClick={() => onStatusFilterChange(isActive ? 'ALL' : k.filter)} className={`ease-in-out motion-safe:active:scale-95 min-h-11 min-w-11 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ${cardClass}`} aria-pressed={isActive} aria-label={t('finance.AdminFinancePnlKPIs.auto_filterBy', { label: k.label })} data-testid={`admin_finance-admin_finance-pnl-kpis-click-map94-${__testIdIndex94}-1`}>{cardContent}</button>
         ) : <div key={k.label} className={cardClass}>{cardContent}</div>;

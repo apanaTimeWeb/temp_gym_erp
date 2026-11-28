@@ -33,22 +33,23 @@ export default function AdminFinancePayrollManagementKPIs() {
   }
 
   const kpis = [
-    { label: t('hr.AdminAuditRepair.totalSalaryGenerated'), value: AdminFinancePayrollManagementFormatCurrency(summary.totalSalaryThisMonth, undefined, locale), icon: DollarSign, colorClass: 'text-primary', bgClass: 'bg-primary-subtle', href: '/frontend_admin/admin_finance/finance_payroll_report' },
-    { label: t('hr.AdminAuditRepair.totalPaid'), value: AdminFinancePayrollManagementFormatCurrency(summary.totalSalaryPaid, undefined, locale), icon: UserCheck, colorClass: 'text-success', bgClass: 'bg-success-bg', href: '/frontend_admin/admin_finance/finance_staff_ledger_management' },
-    { label: t('hr.AdminAuditRepair.outstandingDue'), value: AdminFinancePayrollManagementFormatCurrency(summary.totalSalaryDue, undefined, locale), icon: FileText, colorClass: 'text-warning', bgClass: 'bg-warning-bg', href: '/frontend_admin/admin_finance/finance_staff_dues_management' },
-    { label: t('hr.AdminAuditRepair.advanceGiven'), value: AdminFinancePayrollManagementFormatCurrency(summary.totalAdvanceGiven, undefined, locale), icon: DollarSign, colorClass: 'text-danger', bgClass: 'bg-danger-bg', href: '/frontend_admin/admin_finance/finance_salary_advance_management' },
+    { label: t('hr.AdminAuditRepair.totalSalaryGenerated'), value: AdminFinancePayrollManagementFormatCurrency(summary.totalSalaryThisMonth, undefined, locale), icon: DollarSign, colorClass: 'text-primary', bgClass: 'bg-primary-subtle', surface: 'bg-card dark:bg-gradient-to-br dark:from-[#2B1513] dark:via-[#141B2D] dark:to-[#0C1220]', border: 'border-orange-500/40', topBar: 'from-[#FF5A1F] via-[#FB923C] to-transparent', href: '/frontend_admin/admin_finance/finance_payroll_report' },
+    { label: t('hr.AdminAuditRepair.totalPaid'), value: AdminFinancePayrollManagementFormatCurrency(summary.totalSalaryPaid, undefined, locale), icon: UserCheck, colorClass: 'text-success', bgClass: 'bg-success-bg', surface: 'bg-card dark:bg-gradient-to-br dark:from-[#0C2722] dark:via-[#121E2D] dark:to-[#0C1220]', border: 'border-emerald-500/40', topBar: 'from-[#10B981] via-[#34D399] to-transparent', href: '/frontend_admin/admin_finance/finance_staff_ledger_management' },
+    { label: t('hr.AdminAuditRepair.outstandingDue'), value: AdminFinancePayrollManagementFormatCurrency(summary.totalSalaryDue, undefined, locale), icon: FileText, colorClass: 'text-warning', bgClass: 'bg-warning-bg', surface: 'bg-card dark:bg-gradient-to-br dark:from-[#281E10] dark:via-[#151B2C] dark:to-[#0C1220]', border: 'border-amber-500/40', topBar: 'from-[#F59E0B] via-[#FACC15] to-transparent', href: '/frontend_admin/admin_finance/finance_staff_dues_management' },
+    { label: t('hr.AdminAuditRepair.advanceGiven'), value: AdminFinancePayrollManagementFormatCurrency(summary.totalAdvanceGiven, undefined, locale), icon: DollarSign, colorClass: 'text-danger', bgClass: 'bg-danger-bg', surface: 'bg-card dark:bg-gradient-to-br dark:from-[#2B121B] dark:via-[#141B2D] dark:to-[#0C1220]', border: 'border-rose-500/40', topBar: 'from-[#F43F5E] via-[#FB7185] to-transparent', href: '/frontend_admin/admin_finance/finance_salary_advance_management' },
   ];
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4" data-testid="admin_hr-adminhrkpis-summary">
+    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4" data-testid="admin_hr-adminhrkpis-summary">
       {kpis.map((k) => (
-        <Link key={k.label} href={k.href} className="rounded-xl p-4 shadow-card border border-border bg-card flex items-center gap-3 hover:border-focus transition-colors no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
-          <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${k.bgClass}`}>
-            <k.icon size={18} className={k.colorClass} />
+        <Link key={k.label} href={k.href} className={`relative overflow-hidden rounded-2xl p-5 shadow-card border ${k.surface} ${k.border} flex items-center justify-between gap-3 hover:border-focus motion-safe:transition-all motion-safe:hover:-translate-y-0.5 no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary`}>
+          <span aria-hidden="true" className={`pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r ${k.topBar}`} />
+          <div className="min-w-0">
+            <p className="text-xs font-semibold uppercase tracking-wider text-secondary truncate">{k.label}</p>
+            <p className="text-kpi font-extrabold text-text-primary tabular-nums mt-1 truncate">{k.value}</p>
           </div>
-          <div>
-            <p className="text-xs font-medium text-secondary">{k.label}</p>
-            <p className="text-xl font-bold text-text-primary">{k.value}</p>
+          <div className={`p-2.5 rounded-xl border border-white/10 shrink-0 flex items-center justify-center ${k.bgClass}`}>
+            <k.icon size={18} className={k.colorClass} />
           </div>
         </Link>
       ))}

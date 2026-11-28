@@ -25,44 +25,57 @@ export default function AdminFinancePlanRevenueAnalyticsKPIs({ aggregates }: Adm
       label: t('plans.AdminAuditRepair.totalRevenue'),
       value: AdminPlansFormatCurrency(aggregates.totalRevenue, undefined, locale),
       icon: IndianRupee,
-      iconColor: 'text-text-primary',
-      iconBg: 'bg-primary-subtle',
+      iconColor: 'text-orange-400',
+      iconBg: 'bg-orange-500/20 border-orange-500/40',
+      surface: 'bg-card dark:bg-gradient-to-br dark:from-[#2B1513] dark:via-[#141B2D] dark:to-[#0C1220]',
+      border: 'border-orange-500/40',
+      topBar: 'from-[#FF5A1F] via-[#FB923C] to-transparent',
     },
     {
       label: t('plans.AdminAuditRepair.totalSubscriptions'),
       value: formatNumber(aggregates.totalSubscriptions, locale),
       icon: Users,
-      iconColor: 'text-success',
-      iconBg: 'bg-success-bg',
+      iconColor: 'text-emerald-400',
+      iconBg: 'bg-emerald-500/20 border-emerald-500/40',
+      surface: 'bg-card dark:bg-gradient-to-br dark:from-[#0C2722] dark:via-[#121E2D] dark:to-[#0C1220]',
+      border: 'border-emerald-500/40',
+      topBar: 'from-[#10B981] via-[#34D399] to-transparent',
     },
     {
       label: t('plans.AdminAuditRepair.avgRenewalRate'),
       value: `${formatPercent1dp(aggregates.avgRenewalRate, locale)}%`,
       icon: TrendingUp,
-      iconColor: 'text-info',
-      iconBg: 'bg-info-bg',
+      iconColor: 'text-sky-400',
+      iconBg: 'bg-sky-500/20 border-sky-500/40',
+      surface: 'bg-card dark:bg-gradient-to-br dark:from-[#0E2438] dark:via-[#131D2E] dark:to-[#0C1220]',
+      border: 'border-sky-500/40',
+      topBar: 'from-[#38BDF8] via-[#22D3EE] to-transparent',
     },
     {
       label: t('plans.AdminAuditRepair.topPerformingPlan'),
       value: aggregates.topPerformingPlanName,
       icon: Award,
-      iconColor: 'text-warning',
-      iconBg: 'bg-warning-bg',
+      iconColor: 'text-amber-400',
+      iconBg: 'bg-amber-500/20 border-amber-500/40',
+      surface: 'bg-card dark:bg-gradient-to-br dark:from-[#281E10] dark:via-[#151B2C] dark:to-[#0C1220]',
+      border: 'border-amber-500/40',
+      topBar: 'from-[#F59E0B] via-[#FACC15] to-transparent',
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" data-testid="admin_plans-adminplansrevenuekpis-summary">
+    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4" data-testid="admin_plans-adminplansrevenuekpis-summary">
       {kpis.map((kpi) => {
         const Icon = kpi.icon;
         return (
-          <div key={kpi.label} className="bg-card border border-border rounded-xl p-5 flex items-center gap-4">
-            <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${kpi.iconBg}`}>
-              <Icon size={18} strokeWidth={2} className={kpi.iconColor} />
+          <div key={kpi.label} className={`relative overflow-hidden rounded-2xl p-5 shadow-card border ${kpi.surface} ${kpi.border} flex items-center justify-between gap-3`}>
+            <span aria-hidden="true" className={`pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r ${kpi.topBar}`} />
+            <div className="min-w-0 overflow-hidden">
+              <p className="text-xs font-semibold text-secondary uppercase tracking-wider mb-1 truncate">{kpi.label}</p>
+              <p className="text-kpi font-extrabold text-text-primary tabular-nums truncate" title={kpi.value.toString()}>{kpi.value}</p>
             </div>
-            <div className="overflow-hidden">
-              <p className="text-xs font-bold text-secondary uppercase tracking-wider mb-1 truncate">{kpi.label}</p>
-              <p className="text-2xl font-black text-text-primary truncate" title={kpi.value.toString()}>{kpi.value}</p>
+            <div className={`p-2.5 rounded-xl border flex items-center justify-center shrink-0 ${kpi.iconBg}`}>
+              <Icon size={18} strokeWidth={2.2} className={kpi.iconColor} />
             </div>
           </div>
         );
