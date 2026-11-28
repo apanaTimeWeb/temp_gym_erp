@@ -52,9 +52,9 @@ export default function TrainerMembersContent() {
           </div>
         )
       ) : (
-        <div className="p-6 space-y-5">
+        <div className="p-4 sm:p-6 space-y-5">
           <TrainerMembersKPIs />
-          <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden">
+          <div className="space-y-4">
             <TrainerMembersToolbar />
             <TrainerMembersTable onOpenMember={viewState.openMember} />
           </div>

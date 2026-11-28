@@ -57,13 +57,7 @@ export default function TrainerInfrastructureSearchableDropdown({
   const resolvedTestId = testId ?? 'trainer-infrastructure-searchable-dropdown-trigger';
 
   const selectedOption = options.find((opt) => opt.value === value);
-
-  useEffect(() => {
-    if (!disabled) return;
-    setIsOpen(false);
-    setSearchTerm('');
-    setActiveOptionIndex(-1);
-  }, [disabled]);
+  const effectiveOpen = isOpen && !disabled;
 
   const filteredOptions = options.filter((opt) =>
     opt.label?.toLowerCase().includes(searchTerm.toLowerCase())
@@ -99,7 +93,7 @@ export default function TrainerInfrastructureSearchableDropdown({
         id={id}
         type="button"
         aria-haspopup="listbox"
-        aria-expanded={isOpen}
+        aria-expanded={effectiveOpen}
         aria-controls={listboxId}
         disabled={disabled}
         aria-label={selectedOption ? (ariaLabel ? `${ariaLabel}: ${selectedOption.label}` : selectedOption.label) : (ariaLabel ?? resolvedPlaceholder)}
@@ -115,7 +109,7 @@ export default function TrainerInfrastructureSearchableDropdown({
       </button>
 
       {isOpen && !disabled && (
-        <div className="absolute z-30 w-full mt-1 bg-popover border border-border rounded-lg shadow-card overflow-hidden motion-safe:transition-opacity motion-safe:duration-fast">
+        <div className="absolute z-40 w-full mt-1.5 bg-popover dark:bg-[#11192B]/98 backdrop-blur-xl border border-border dark:border-orange-500/30 rounded-xl shadow-[0_16px_40px_rgba(0,0,0,0.55)] overflow-hidden motion-safe:transition-opacity motion-safe:duration-fast">
           <div className="p-2 border-b border-border relative ">
             <Search size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-secondary " aria-hidden="true" strokeWidth={2}/>
             <input
@@ -126,7 +120,7 @@ export default function TrainerInfrastructureSearchableDropdown({
               aria-expanded={isOpen}
               aria-controls={listboxId}
               aria-activedescendant={activeOptionIndex >= 0 && activeOptionIndex < filteredOptions.length ? `${listboxId}-option-${activeOptionIndex}` : undefined}
-              className="w-full min-h-11 ps-8 pe-4 py-1.5 text-sm bg-input border border-border rounded-md focus-visible:outline-none focus-visible:border-focus text-primary placeholder:text-secondary motion-safe:transition-colors motion-safe:duration-base"
+              className="w-full min-h-11 ps-8 pe-4 py-1.5 text-sm bg-input border border-border rounded-md focus-visible:outline-none focus-visible:border-focus text-text-primary placeholder:text-secondary motion-safe:transition-colors motion-safe:duration-base"
               aria-label={t("TEXT_SEARCH_OPTIONS")}
               placeholder={t("TEXT_SEARCH")}
               value={searchTerm}
@@ -153,8 +147,8 @@ export default function TrainerInfrastructureSearchableDropdown({
                   aria-selected={option.value === value}
                   key={option.value}
                   tabIndex={-1}
-                  className={`flex min-h-11 w-full items-center justify-between px-3 py-2 text-sm rounded-md cursor-pointer hover:bg-input motion-safe:transition-colors motion-safe:duration-base ${
-                    option.value === value ? 'text-primary font-medium' : 'text-primary'
+                  className={`flex min-h-11 w-full items-center justify-between px-3 py-2 text-sm rounded-lg cursor-pointer hover:bg-surface-hover motion-safe:transition-colors motion-safe:duration-base ${
+                    option.value === value ? 'text-orange-500 dark:text-orange-300 font-semibold' : 'text-text-primary'
                   } ${activeOptionIndex === index ? 'bg-primary-subtle' : ''} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page`}
                   onMouseEnter={() => setActiveOptionIndex(index)}
                   onClick={() => handleSelect(option.value)}

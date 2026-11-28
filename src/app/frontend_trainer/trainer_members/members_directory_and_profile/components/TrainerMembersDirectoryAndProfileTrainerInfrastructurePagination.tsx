@@ -44,7 +44,7 @@ export default function TrainerInfrastructurePagination({ currentPage, totalPage
   };
 
   return (
-    <div className="px-3 sm:px-5 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-border bg-surface-highlight/40">
+    <div className="px-4 sm:px-5 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-border dark:border-white/10 bg-slate-50/70 dark:bg-[#11192B]">
       {startItem !== null && endItem !== null && totalItems !== undefined ? (
         <div className="text-sm text-center sm:text-start text-secondary">
           {t("TEXT_SHOWING")}<span className="font-semibold text-text-primary tabular-nums">{startItem}</span> {t("TEXT_TO")}<span className="font-semibold text-text-primary tabular-nums">{endItem}</span> {t("TEXT_OF")}<span className="font-semibold text-text-primary tabular-nums">{totalItems}</span> {t("TEXT_RESULTS")}</div>

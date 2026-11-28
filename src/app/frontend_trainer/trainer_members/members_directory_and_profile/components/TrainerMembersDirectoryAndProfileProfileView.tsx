@@ -77,18 +77,19 @@ export default function TrainerMembersProfileView({ activeView, onBackToList, on
 
   return (
     <div className="min-h-full">
-            <div className="p-6 space-y-5">
+      <div className="p-4 sm:p-6 space-y-5">
         <button type="button"
           onClick={onBackToList}
-          className="min-h-11 text-sm text-secondary hover:text-primary flex items-center gap-1.5 motion-safe:transition-all motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:ease-in-out motion-safe:active:scale-95"
+          className="min-h-11 px-3 rounded-xl border border-border bg-card hover:border-orange-500/40 text-sm font-medium text-secondary hover:text-text-primary inline-flex items-center gap-1.5 motion-safe:transition-all motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
          data-testid="trainer_members-trainermembersprofile-button_1">
           {t("TEXT_BACK_TO_MEMBERS")}</button>
 
         {/* Profile Card */}
-        <div className="bg-card rounded-xl shadow-card border border-border p-6">
-          <div className="flex flex-wrap items-center justify-between gap-5 mb-6">
-            <div className="flex items-center gap-5">
-              <div className="w-20 h-20 rounded-full flex items-center justify-center text-3xl font-bold text-primary bg-primary-subtle">
+        <div className="relative overflow-hidden bg-card dark:bg-gradient-to-br dark:from-[#162038] dark:via-[#121A2D] dark:to-[#0C1220] rounded-2xl shadow-card border border-border dark:border-emerald-500/30 p-5 sm:p-6">
+          <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#10B981] via-[#38BDF8] to-[#FF5A1F]" />
+          <div className="relative flex flex-wrap items-center justify-between gap-5 mb-6">
+            <div className="flex items-center gap-4 sm:gap-5">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-[#FF5A1F] via-[#EC4899] to-[#8B5CF6] flex items-center justify-center text-2xl sm:text-3xl font-bold text-white shadow-[0_6px_20px_rgba(255,90,31,0.38)] shrink-0">
                 {selectedMember.name.charAt(0)}
               </div>
               <div>
