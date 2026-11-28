@@ -148,7 +148,7 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
                 <span className="bg-gradient-to-r from-white via-orange-200 to-amber-300 bg-clip-text text-transparent font-black text-[15px] leading-none tracking-tight truncate">
                   {t('TEXT_GYMSMART')}
                 </span>
-                <span className="self-start text-[10px] font-bold uppercase tracking-wider text-amber-300 bg-amber-500/15 border border-amber-400/35 rounded px-1.5 py-0.5 leading-none mt-1 truncate">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-300 leading-none mt-1 truncate">
                   {t('TEXT_TRAINER_APP')}
                 </span>
               </div>

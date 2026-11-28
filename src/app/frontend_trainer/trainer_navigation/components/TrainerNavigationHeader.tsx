@@ -129,12 +129,9 @@ export default function TrainerNavigationHeader({ title, subtitle, isSidebarColl
           <Menu size={18} strokeWidth={2} aria-hidden="true" />
         </button>
         <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2 min-w-0">
+          <div className="flex items-center gap-2.5 min-w-0">
             <span className="hidden sm:inline-block w-1.5 h-5 rounded-full bg-gradient-to-b from-[#FF5A1F] via-[#EC4899] to-[#38BDF8] shrink-0 shadow-[0_0_10px_rgba(255,90,31,0.5)]" aria-hidden="true" />
             <TrainerNavigationTooltip content={title}><h1 className="text-base sm:text-page-title font-bold text-white truncate">{title}</h1></TrainerNavigationTooltip>
-            <span className="hidden md:inline-flex items-center gap-1 rounded-md border border-cyan-400/30 bg-cyan-500/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-cyan-300 shrink-0">
-              Live Sync
-            </span>
           </div>
           {subtitle && <TrainerNavigationTooltip content={subtitle}><p className="hidden sm:block text-xs text-slate-300/80 mt-0.5 ps-3.5 truncate">{subtitle}</p></TrainerNavigationTooltip>}
         </div>

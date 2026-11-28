@@ -9,10 +9,6 @@ import { useEffect, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
-import { usePathname } from 'next/navigation';
-
-import { TRAINER_ROUTE_TITLE_MAP } from '@/app/frontend_trainer/trainer_navigation/config/TrainerNavigationConstants';
-
 import { TrainerNavigationConfirmProvider } from '@/app/frontend_trainer/trainer_navigation/components/TrainerNavigationConfirmProvider';
 
 import TrainerNavigationToastHost from '@/app/frontend_trainer/trainer_navigation/components/TrainerNavigationToastHost';
@@ -46,7 +42,6 @@ export default function TrainerNavigationMain({ children }: TrainerNavigationMai
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
-  const pathname = usePathname();
 
   // Effect contract: keep drawer semantics aligned with the sidebar CSS breakpoint, auto-collapse on tablet, and close mobile navigation when returning to desktop.
   useEffect(() => {
@@ -79,8 +74,7 @@ export default function TrainerNavigationMain({ children }: TrainerNavigationMai
     }
     setIsCollapsed((current) => !current);
   };
-  const baseRoute = Object.keys(TRAINER_ROUTE_TITLE_MAP).find((route) => pathname === route || pathname.startsWith(`${route}/`)) ?? '';
-  const headerProps = TRAINER_ROUTE_TITLE_MAP[baseRoute] ?? { titleKey: 'TEXT_GYMSMART_TRAINER', subtitleKey: 'TEXT_DEFAULT_SHELL_SUBTITLE' };
+  const gymTitle = process.env.NEXT_PUBLIC_GYM_NAME || t('TEXT_GYM_NAME');
 
   return (
     <TrainerNavigationConfirmProvider>
@@ -95,8 +89,7 @@ export default function TrainerNavigationMain({ children }: TrainerNavigationMai
         </a>
         <TrainerNavigationCommandPalette />
         <TrainerNavigationHeader
-          title={t(headerProps.titleKey)}
-          subtitle={t(headerProps.subtitleKey)}
+          title={gymTitle}
           isSidebarCollapsed={isCollapsed}
           isMobileSidebarOpen={isMobileOpen}
           isMobileViewport={isMobileViewport}
