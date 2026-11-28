@@ -11,8 +11,6 @@ import Link from 'next/link';
 
 import { usePathname } from 'next/navigation';
 
-import { getUser } from '@/lib/api';
-
 import { TRAINER_NAVIGATION_GROUPS } from '@/app/frontend_trainer/trainer_navigation/config/TrainerNavigationConstants';
 import {
   DEFAULT_TRAINER_NAV_COLOR,
@@ -50,13 +48,8 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
   const pathname = usePathname();
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
-  const [mounted, setMounted] = useState(false);
   const sidebarRef = useRef<HTMLElement>(null);
   const prevPathnameRef = useRef(pathname);
-  const user = getUser();
-
-// Effect contract: initialize browser-only navigation state after hydration and keep shell listeners synchronized with viewport/navigation changes.
-  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     if (prevPathnameRef.current !== pathname) {
@@ -109,9 +102,6 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
       }))
       .filter((group) => group.items.length > 0);
   }, [searchQuery, t]);
-
-  const displayName = mounted ? user?.name || t('TEXT_DEFAULT_TRAINER_NAME') : t('TEXT_DEFAULT_TRAINER_NAME');
-  const displayRole = mounted ? user?.role || t('TEXT_DEFAULT_PERSONAL_TRAINER') : t('TEXT_DEFAULT_PERSONAL_TRAINER');
 
   return (
     <>
@@ -296,15 +286,6 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
             );
           })}
         </nav>
-        <div className="mt-auto border-t border-white/10 bg-gradient-to-r from-orange-500/12 via-purple-500/5 to-sky-500/10 px-2.5 py-3">
-          <div className={`flex items-center rounded-xl border border-white/15 bg-white/[0.05] p-2 ${!isCollapsed || isMobileOpen ? 'gap-3' : 'justify-center'}`}>
-            <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#FF5A1F] via-[#EC4899] to-[#8B5CF6] flex items-center justify-center text-white text-sm font-bold shrink-0 shadow-[0_3px_14px_rgba(255,90,31,0.45)]" aria-hidden="true">
-              {displayName.charAt(0).toUpperCase()}
-              <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-[#090D16] shadow-[0_0_6px_#34d399]" />
-            </div>
-            {(!isCollapsed || isMobileOpen) && <div className="min-w-0"><p className="text-sm font-semibold text-white truncate">{displayName}</p><p className="text-[11px] font-medium text-emerald-400 truncate">{displayRole}</p></div>}
-          </div>
-        </div>
       </aside>
     </>
   );
