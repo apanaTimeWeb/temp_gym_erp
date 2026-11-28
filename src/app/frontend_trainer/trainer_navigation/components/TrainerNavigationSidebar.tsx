@@ -132,12 +132,12 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
         aria-modal={isMobileOpen || undefined}
         className={`trainer-sidebar trainer-sidebar-safe-area motion-safe:transition-all motion-safe:duration-base ${isCollapsed ? 'trainer-sidebar-collapsed' : ''} ${isMobileOpen ? 'trainer-sidebar-open' : ''}`}
       >
-        <div className="h-16 flex items-center gap-2.5 px-3 border-b border-border bg-surface-highlight shrink-0">
+        <div className="h-16 flex items-center gap-2.5 px-3 border-b border-border bg-gradient-to-r from-orange-500/15 via-amber-500/5 to-transparent shrink-0">
           <button
             type="button"
             onClick={isMobileOpen ? () => setIsMobileOpen(false) : () => setIsCollapsed(!isCollapsed)}
             aria-label={isMobileOpen ? t('TEXT_CLOSE_NAVIGATION_SIDEBAR') : t('TEXT_TOGGLE_NAVIGATION_SIDEBAR')}
-            className="min-w-9 min-h-9 w-9 h-9 inline-flex items-center justify-center rounded-lg text-secondary hover:text-primary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shrink-0 motion-safe:transition-colors"
+            className="min-w-9 min-h-9 w-9 h-9 inline-flex items-center justify-center rounded-xl text-secondary hover:text-primary hover:bg-orange-500/15 border border-transparent hover:border-orange-500/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shrink-0 motion-safe:transition-all"
             data-testid="trainer_navigation-sidebar-toggle"
           >
             {isMobileOpen ? <X size={18} strokeWidth={2} aria-hidden="true" /> : <Menu size={18} strokeWidth={2} aria-hidden="true" />}
@@ -149,16 +149,16 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
               className="flex items-center gap-2.5 min-w-0 flex-1 group no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring rounded-lg"
             >
               <span
-                className="w-8 h-8 rounded-xl bg-primary text-on-primary flex items-center justify-center shrink-0 shadow-card motion-safe:transition-transform motion-safe:duration-base group-hover:scale-105"
+                className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FF5A1F] via-[#F97316] to-[#F59E0B] border border-white/25 text-white flex items-center justify-center shrink-0 shadow-[0_4px_16px_rgba(255,90,31,0.45)] motion-safe:transition-transform motion-safe:duration-base group-hover:scale-105"
                 aria-hidden="true"
               >
-                <TrainerNavigationBrandIcon className="w-[18px] h-[18px]" />
+                <TrainerNavigationBrandIcon className="w-[19px] h-[19px]" />
               </span>
               <div className="whitespace-nowrap flex flex-col min-w-0 justify-center">
                 <span className="text-primary font-extrabold text-[15px] leading-none tracking-tight truncate">
                   {t('TEXT_GYMSMART')}
                 </span>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-secondary leading-none mt-1 truncate">
+                <span className="self-start text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-300 bg-amber-500/15 border border-amber-500/30 rounded px-1.5 py-0.5 leading-none mt-1 truncate">
                   {t('TEXT_TRAINER_APP')}
                 </span>
               </div>
@@ -169,14 +169,14 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
           <div className="px-3 py-3 border-b border-border shrink-0">
             <label htmlFor="trainer-sidebar-search" className="sr-only">{t('TEXT_SEARCH_MENU')}</label>
             <div className="relative">
-              <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-primary pointer-events-none" aria-hidden="true" strokeWidth={2}/>
+              <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-orange-500 pointer-events-none" aria-hidden="true" strokeWidth={2.2}/>
               <input
                 id="trainer-sidebar-search"
                 type="search"
                 placeholder={t('TEXT_SEARCH_MENU')}
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
-                className="block w-full min-h-10 ps-9 pe-8 py-2 border border-border rounded-xl bg-input text-sm text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:border-focus motion-safe:transition-colors motion-safe:duration-base"
+                className="block w-full min-h-10 ps-9 pe-8 py-2 border border-border hover:border-orange-500/35 rounded-xl bg-input text-sm text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:border-focus motion-safe:transition-colors motion-safe:duration-base"
                 data-testid="trainer_navigation-sidebar-search"
               />
               {searchQuery && (
@@ -224,10 +224,10 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
                     <span className="flex items-center gap-2 min-w-0">
                       <span
                         className="w-2 h-2 rounded-full shrink-0"
-                        style={{ backgroundColor: groupColor.iconColor }}
+                        style={{ backgroundColor: groupColor.iconColor, boxShadow: `0 0 8px ${groupColor.iconColor}` }}
                         aria-hidden="true"
                       />
-                      <span className="truncate">{t(group.groupKey)}</span>
+                      <span className="truncate" style={{ color: activeGroup ? groupColor.iconColor : undefined }}>{t(group.groupKey)}</span>
                     </span>
                     <ChevronDown size={14} strokeWidth={2.2} aria-hidden="true" className={`shrink-0 motion-safe:transition-transform ${showChildren ? 'rotate-180' : ''}`} />
                   </button>
@@ -252,8 +252,8 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
                         } ${
                           active
                             ? showLabel
-                              ? 'border-focus bg-primary-subtle text-primary font-semibold shadow-card'
-                              : 'bg-primary-subtle text-primary ring-1 ring-primary'
+                              ? 'border-orange-500 bg-gradient-to-r from-orange-500/20 via-orange-500/10 to-transparent text-primary font-semibold shadow-sm'
+                              : 'bg-orange-500/20 text-primary ring-1 ring-orange-500/60 shadow-[0_0_12px_rgba(255,90,31,0.3)]'
                             : showLabel
                               ? 'border-transparent text-secondary hover:bg-surface-hover hover:text-primary'
                               : 'text-secondary hover:bg-surface-hover hover:text-primary'
@@ -261,7 +261,7 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
                         data-testid={`trainer_navigation-sidebar-nav${item.href.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '')}`}
                       >
                         <span
-                          className="w-7 h-7 rounded-lg inline-flex items-center justify-center shrink-0 motion-safe:transition-transform motion-safe:duration-fast group-hover:scale-110"
+                          className="w-7 h-7 rounded-lg inline-flex items-center justify-center shrink-0 motion-safe:transition-all motion-safe:duration-fast group-hover:scale-110 group-hover:brightness-125"
                           style={{
                             color: itemColor.iconColor,
                             backgroundColor: active ? itemColor.activeBg : itemColor.bg,
@@ -280,10 +280,13 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
             );
           })}
         </nav>
-        <div className="mt-auto border-t border-border bg-surface-highlight px-2.5 py-3">
-          <div className={`flex items-center rounded-xl p-1.5 ${!isCollapsed || isMobileOpen ? 'gap-3' : 'justify-center'}`}>
-            <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-on-primary text-sm font-bold shrink-0 shadow-card" aria-hidden="true">{displayName.charAt(0).toUpperCase()}</div>
-            {(!isCollapsed || isMobileOpen) && <div className="min-w-0"><p className="text-sm font-semibold text-primary truncate">{displayName}</p><p className="text-xs text-secondary truncate">{displayRole}</p></div>}
+        <div className="mt-auto border-t border-border bg-gradient-to-r from-orange-500/10 via-transparent to-sky-500/5 px-2.5 py-3">
+          <div className={`flex items-center rounded-xl border border-border bg-card/80 p-2 ${!isCollapsed || isMobileOpen ? 'gap-3' : 'justify-center'}`}>
+            <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#FF5A1F] to-[#EC4899] flex items-center justify-center text-white text-sm font-bold shrink-0 shadow-[0_3px_12px_rgba(255,90,31,0.35)]" aria-hidden="true">
+              {displayName.charAt(0).toUpperCase()}
+              <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-sidebar" />
+            </div>
+            {(!isCollapsed || isMobileOpen) && <div className="min-w-0"><p className="text-sm font-semibold text-primary truncate">{displayName}</p><p className="text-[11px] font-medium text-emerald-500 dark:text-emerald-400 truncate">{displayRole}</p></div>}
           </div>
         </div>
       </aside>

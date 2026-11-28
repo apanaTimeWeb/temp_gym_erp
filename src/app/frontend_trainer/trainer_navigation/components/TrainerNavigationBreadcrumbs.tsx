@@ -24,19 +24,19 @@ export default function TrainerNavigationBreadcrumbs() {
       data-testid="trainer_navigation-breadcrumbs"
       className="px-4 sm:px-6 pt-3 pb-1 text-sm"
     >
-      <ol className="flex min-w-0 flex-wrap items-center gap-1 text-secondary">
+      <ol className="flex min-w-0 flex-wrap items-center gap-1.5 text-secondary">
         {!isDashboard && (
           <li className="inline-flex min-w-0 items-center gap-1">
             <Link
               href={TRAINER_DASHBOARD_PAGE_LIST}
-              className="inline-flex min-h-11 items-center rounded-md px-2 -ms-2 hover:bg-surface-hover hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+              className="inline-flex min-h-9 items-center rounded-lg px-2.5 py-1 text-orange-500 bg-orange-500/10 border border-orange-500/25 hover:bg-orange-500/20 font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page"
             >
               {t('TEXT_NAV_DASHBOARD')}
             </Link>
-            <ChevronRight size={16} strokeWidth={2} aria-hidden="true" className="shrink-0 rtl:rotate-180" />
+            <ChevronRight size={15} strokeWidth={2.2} aria-hidden="true" className="shrink-0 text-orange-400/70 rtl:rotate-180" />
           </li>
         )}
-        <li aria-current="page" className="inline-flex min-h-11 min-w-0 items-center px-2 font-medium text-primary">
+        <li aria-current="page" className="inline-flex min-h-9 min-w-0 items-center rounded-lg px-2.5 py-1 bg-card border border-border font-semibold text-primary shadow-sm">
           <span className="truncate">{t(currentTitleKey)}</span>
         </li>
       </ol>

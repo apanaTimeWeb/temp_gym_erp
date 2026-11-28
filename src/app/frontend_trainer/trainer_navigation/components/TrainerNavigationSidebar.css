@@ -9,7 +9,7 @@
   flex-direction: column;
   height: 100dvh;
   width: var(--layout-sidebar-width);
-  background: var(--bg-sidebar);
+  background: linear-gradient(180deg, var(--bg-sidebar) 0%, var(--bg-header) 100%);
   border-right: 1px solid var(--border);
   overflow: hidden;
   backdrop-filter: blur(20px);
