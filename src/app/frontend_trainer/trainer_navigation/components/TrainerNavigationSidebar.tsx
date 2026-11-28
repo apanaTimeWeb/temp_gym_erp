@@ -103,6 +103,9 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
       .filter((group) => group.items.length > 0);
   }, [searchQuery, t]);
 
+  const gymBrandText = t('TEXT_GYMSMART');
+  const hasGymSmartSplit = gymBrandText === 'GymSmart';
+
   return (
     <>
       {isMobileOpen && (
@@ -122,7 +125,7 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
         aria-modal={isMobileOpen || undefined}
         className={`trainer-sidebar trainer-sidebar-safe-area motion-safe:transition-all motion-safe:duration-base ${isCollapsed ? 'trainer-sidebar-collapsed' : ''} ${isMobileOpen ? 'trainer-sidebar-open' : ''}`}
       >
-        <div className="h-16 flex items-center gap-2.5 px-3 border-b border-orange-500/20 bg-gradient-to-r from-[#FF5A1F]/18 via-purple-500/10 to-transparent shrink-0">
+        <div className="h-16 flex items-center gap-2.5 px-3 border-b border-white/10 bg-white/[0.02] shrink-0">
           <button
             type="button"
             onClick={isMobileOpen ? () => setIsMobileOpen(false) : () => setIsCollapsed(!isCollapsed)}
@@ -139,17 +142,24 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
               className="flex items-center gap-2.5 min-w-0 flex-1 group no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring rounded-lg"
             >
               <span
-                className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FF5A1F] via-[#EC4899] to-[#8B5CF6] border border-white/25 text-white flex items-center justify-center shrink-0 shadow-[0_4px_16px_rgba(255,90,31,0.5)] motion-safe:transition-transform motion-safe:duration-base group-hover:scale-105"
+                className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FF5A1F] via-[#EC4899] to-[#8B5CF6] border border-white/25 text-white flex items-center justify-center shrink-0 shadow-[0_4px_16px_rgba(255,90,31,0.45)] motion-safe:transition-transform motion-safe:duration-base group-hover:scale-105"
                 aria-hidden="true"
               >
                 <TrainerNavigationBrandIcon className="w-[19px] h-[19px]" />
               </span>
               <div className="whitespace-nowrap flex flex-col min-w-0 justify-center">
-                <span className="bg-gradient-to-r from-white via-orange-200 to-amber-300 bg-clip-text text-transparent font-black text-[15px] leading-none tracking-tight truncate">
-                  {t('TEXT_GYMSMART')}
+                <span className="flex items-center text-[17px] leading-none tracking-tight truncate">
+                  {hasGymSmartSplit ? (
+                    <>
+                      <span className="text-white font-extrabold">Gym</span>
+                      <span className="bg-gradient-to-r from-[#FF5A1F] via-[#EC4899] to-[#A78BFA] bg-clip-text text-transparent font-black">Smart</span>
+                    </>
+                  ) : (
+                    <span className="text-white font-extrabold">{gymBrandText}</span>
+                  )}
                 </span>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-300 leading-none mt-1 truncate">
-                  {t('TEXT_TRAINER_APP')}
+                <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-orange-400 leading-none mt-1.5 truncate">
+                  {t('TEXT_TRAINER')}
                 </span>
               </div>
             </Link>
