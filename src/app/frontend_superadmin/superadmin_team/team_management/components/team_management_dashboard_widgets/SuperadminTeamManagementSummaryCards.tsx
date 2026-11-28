@@ -31,7 +31,7 @@ export default function SuperadminTeamManagementSummaryCards({ data }: Superadmi
 
   const t = useTranslations('superadmin_team');
     const active = data.users.filter(u => u.status === SUPERADMIN_TEAM_STATUS_CODES.ACTIVE).length;
-    return (<div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+    return (<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
   <MetricCard label={t('ui.team_members_8196446d')} value={formatNumber(data.users.length, formatterLocale)} helper={t('ui.platform_operators_97a8ff63')} data-testid="superadmin-team-superadmin-team-summary-cards-metric-card-1"/>
   <MetricCard label={t('ui.active_access_7e4b57f7')} value={formatNumber(active, formatterLocale)} helper={t('ui.enabled_accounts_9c0f5fda')} tone="success" data-testid="superadmin-team-superadmin-team-summary-cards-metric-card-2"/>
   <MetricCard label={t('ui.role_groups_02a76b89')} value={formatNumber(data.roles.length, formatterLocale)} helper={t('ui.defined_scopes_a2627074')} tone="info" data-testid="superadmin-team-superadmin-team-summary-cards-metric-card-3"/>

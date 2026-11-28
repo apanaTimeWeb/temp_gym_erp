@@ -169,7 +169,7 @@ export default function AdminAttendanceStaffManagerModal({
 
           <div>
             <label className="block text-xs font-bold text-text-primary mb-1">Attendance Status *</label>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               <button type="button" onClick={() => setStatus('present')} className={`py-2 px-3 rounded-xl text-xs font-bold border motion-safe:transition-colors ${status === 'present' ? 'bg-success-bg border-success text-success-text shadow-xs' : 'bg-card border-border text-secondary hover:text-primary'}`}>Present</button>
               <button type="button" onClick={() => setStatus('late')} className={`py-2 px-3 rounded-xl text-xs font-bold border motion-safe:transition-colors ${status === 'late' ? 'bg-warning-bg border-warning text-warning shadow-xs' : 'bg-card border-border text-secondary hover:text-primary'}`}>Late Arrival</button>
               <button type="button" onClick={() => setStatus('on-leave')} className={`py-2 px-3 rounded-xl text-xs font-bold border motion-safe:transition-colors ${status === 'on-leave' ? 'bg-surface-highlight border-primary text-text-primary shadow-xs' : 'bg-card border-border text-secondary hover:text-primary'}`}>On Leave</button>

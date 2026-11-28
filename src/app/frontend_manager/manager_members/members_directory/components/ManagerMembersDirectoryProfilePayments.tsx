@@ -28,25 +28,25 @@ export default function ManagerMembersDirectoryProfilePayments() {
 
   return (
   <div>
-  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-5">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-5">
   <div data-testid="manager_members-member-profile-payments-status-total-paid" className="bg-success-bg rounded-xl p-4 border border-success">
   <p className="text-xs text-success-text">{t("COPY_TOTAL_PAID_3")}</p>
-  <p className="text-xl font-bold text-success-text">{ManagerMembersDirectoryFormatCurrency(totalPaid, ManagerEnvConfig.currencyCode, locale)}</p>
+  <p className="text-xl font-extrabold tabular-nums text-success-text">{ManagerMembersDirectoryFormatCurrency(totalPaid, ManagerEnvConfig.currencyCode, locale)}</p>
   </div>
   <div data-testid="manager_members-member-profile-payments-status-total-due" className="bg-danger-bg rounded-xl p-4 border border-border">
   <p className="text-xs text-danger-text">{t("COPY_TOTAL_DUE")}</p>
-  <p className="text-xl font-bold text-danger-text">{ManagerMembersDirectoryFormatCurrency(totalDue, ManagerEnvConfig.currencyCode, locale)}</p>
+  <p className="text-xl font-extrabold tabular-nums text-danger-text">{ManagerMembersDirectoryFormatCurrency(totalDue, ManagerEnvConfig.currencyCode, locale)}</p>
   </div>
   <div className="bg-primary-subtle rounded-xl p-4 border border-border">
   <p className="text-xs text-text-primary">{t("COPY_ADVANCE")}</p>
-  <p className="text-xl font-bold text-text-primary">{ManagerMembersDirectoryFormatCurrency(selectedMember?.advanceAmount || 0, ManagerEnvConfig.currencyCode, locale)}</p>
+  <p className="text-xl font-extrabold tabular-nums text-text-primary">{ManagerMembersDirectoryFormatCurrency(selectedMember?.advanceAmount || 0, ManagerEnvConfig.currencyCode, locale)}</p>
   </div>
   <div data-testid="manager_members-member-profile-payments-status-count" className="bg-info-bg rounded-xl p-4 border border-info">
   <p className="text-xs text-info-text">{t("COPY_TRANSACTIONS")}</p>
-  <p className="text-xl font-bold text-info-text">{safePayments.length}</p>
+  <p className="text-xl font-extrabold tabular-nums text-info-text">{safePayments.length}</p>
   </div>
   </div>
-  <div className="flex justify-end mb-4 gap-3">
+  <div className="flex flex-wrap justify-end mb-4 gap-3">
     <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "px-4 py-2 border border-primary text-primary rounded-lg text-sm font-semibold hover:bg-primary-subtle motion-safe:transition-all shadow-card motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_members-member-profile-payments-button-add-payment" onClick={() => setShowPaymentModal(true)}  type="button">{t("COPY_RECORD_PAYMENT_3")}</button>
     <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "px-4 py-2 bg-primary text-on-primary rounded-lg text-sm font-semibold hover:bg-primary-hover motion-safe:transition-all shadow-card motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_members-member-profile-payments-button-renew" onClick={() => setShowRenewModal(true)}  type="button">{t("COPY_RENEW_MEMBERSHIP")}</button>
   </div>

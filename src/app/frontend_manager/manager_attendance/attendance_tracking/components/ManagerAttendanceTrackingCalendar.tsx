@@ -73,10 +73,10 @@ export default function ManagerAttendanceTrackingCalendar() {
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop p-4 overflow-y-auto motion-safe:animate-in motion-safe:fade-in motion-safe:duration-200">
-      <div role="dialog" aria-modal="true" aria-labelledby="manager-attendance-calendar-dialog-title" className="my-auto w-full max-w-md bg-card shadow-card flex flex-col max-h-dialog-desktop rounded-2xl border-2 border-primary overflow-hidden">
-        
+      <div role="dialog" aria-modal="true" aria-labelledby="manager-attendance-calendar-dialog-title" className="relative my-auto w-full max-w-md bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] shadow-card flex flex-col max-h-dialog-desktop rounded-2xl border border-indigo-500/40 overflow-hidden">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 opacity-90" />
         {/* Header */}
-        <div className="shrink-0 flex items-center justify-between p-4 border-b border-border">
+        <div className="shrink-0 flex flex-wrap items-center justify-between gap-2 p-4 sm:p-5 border-b border-border dark:border-white/10">
           <div>
             <h2 id="manager-attendance-calendar-dialog-title" className="text-lg font-semibold text-text-primary">{t("COPY_ATTENDANCE_HISTORY")}</h2>
             <p className="text-sm text-text-secondary">
@@ -176,7 +176,7 @@ export default function ManagerAttendanceTrackingCalendar() {
             </div>
             
             {/* Stats */}
-            <div className={`shrink-0 px-4 pb-2 grid ${calendarUser.type === 'STAFF' ? 'grid-cols-3' : 'grid-cols-2 gap-4 max-w-3/4'} text-xs font-bold text-text-secondary`}>
+            <div className={`shrink-0 px-4 sm:px-5 pb-2 flex flex-wrap items-center gap-4 text-xs font-bold text-text-secondary`}>
               <div className="flex items-center gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-success text-on-success" data-testid="manager_attendance-managerattendancecalendar-status-badge-1"></div>{t("COPY_PRESENT_1")}{totalP}</div>
               <div className="flex items-center gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-danger text-on-danger" data-testid="manager_attendance-managerattendancecalendar-status-badge-2"></div>{t("COPY_ABSENT_1")}{totalA}</div>
               {calendarUser.type === 'STAFF' && (

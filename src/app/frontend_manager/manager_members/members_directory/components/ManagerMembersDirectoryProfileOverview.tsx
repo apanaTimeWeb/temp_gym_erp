@@ -51,7 +51,7 @@ export default function ManagerMembersDirectoryProfileOverview() {
       <div className="flex flex-col gap-6">
         <div>
           <h3 className="text-sm font-semibold text-text-primary mb-4 uppercase tracking-wider opacity-80">{t("COPY_MEMBER_SUMMARY")}</h3>
-          <div className="grid grid-cols-2 gap-3 mb-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
             <div className="flex flex-col p-4 bg-page rounded-xl border border-border shadow-card">
               <span className="text-xs text-text-secondary font-medium mb-1">{t("COPY_TOTAL_PLAN_AMOUNT_1")}</span>
               <span className="text-lg font-bold text-text-primary">{ManagerMembersDirectoryFormatCurrency(totalAmount, ManagerEnvConfig.currencyCode, locale)}</span>

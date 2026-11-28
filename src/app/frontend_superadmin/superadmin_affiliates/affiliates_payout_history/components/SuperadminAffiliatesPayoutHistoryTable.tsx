@@ -61,22 +61,23 @@ export default function SuperadminAffiliatesPayoutHistoryTable({ payouts, isPend
   };
 
   return (
-    <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-sm flex flex-col min-h-96">
+    <div className="relative bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-amber-500/30 rounded-2xl overflow-hidden shadow-card flex flex-col min-h-96">
+      <div className="h-[2px] w-full bg-gradient-to-r from-amber-500/80 via-primary/60 to-transparent shrink-0" />
       <div className="overflow-x-auto flex-1">
         <table className={`w-full min-w-max border-collapse text-start ${MOBILE_CARD_TABLE_CLASSES}`}>
-          <thead className="sticky top-0 z-20 bg-primary-subtle border-b border-border shadow-xs">
-            <tr className="border-b border-border bg-primary-subtle text-secondary" data-testid="superadmin_affiliates-superadmin-affiliates-payout-history-payout-history-action-1">
-              <th className="sticky start-0 z-20 bg-primary-subtle border-b border-e border-border p-4 text-xs font-semibold uppercase tracking-wider text-start">
+          <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10 shadow-[0_2px_10px_rgba(0,0,0,0.12)]">
+            <tr className="border-b border-border dark:border-white/10 bg-slate-100 dark:bg-[#152038] text-secondary dark:text-slate-300" data-testid="superadmin_affiliates-superadmin-affiliates-payout-history-payout-history-action-1">
+              <th className="sticky start-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-e border-border dark:border-white/10 p-4 text-[11px] font-bold uppercase tracking-wider text-start">
                 {t('ui.date_ba31778')}
               </th>
-              <th className="p-4 text-xs font-semibold uppercase tracking-wider text-start">{t('ui.affiliate_774d70b')}</th>
-              <th className="p-4 text-xs font-semibold uppercase tracking-wider text-start">{t('ui.amount_f1d432d')}</th>
-              <th className="p-4 text-xs font-semibold uppercase tracking-wider text-start">{t('ui.method_dfe267c')}</th>
-              <th className="p-4 text-xs font-semibold uppercase tracking-wider text-start">{t('ui.ref_id_c0feb73')}</th>
-              <th className="p-4 text-xs font-semibold uppercase tracking-wider text-start">{t('ui.status_1b84b5c')}</th>
+              <th className="p-4 text-[11px] font-bold uppercase tracking-wider text-start">{t('ui.affiliate_774d70b')}</th>
+              <th className="p-4 text-[11px] font-bold uppercase tracking-wider text-start">{t('ui.amount_f1d432d')}</th>
+              <th className="p-4 text-[11px] font-bold uppercase tracking-wider text-start">{t('ui.method_dfe267c')}</th>
+              <th className="p-4 text-[11px] font-bold uppercase tracking-wider text-start">{t('ui.ref_id_c0feb73')}</th>
+              <th className="p-4 text-[11px] font-bold uppercase tracking-wider text-start">{t('ui.status_1b84b5c')}</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody className="divide-y divide-border dark:divide-white/5">
             {isPending && (
               <tr>
                 <td colSpan={TABLE_COLUMN_COUNT} className="p-8 text-center">
@@ -120,7 +121,7 @@ export default function SuperadminAffiliatesPayoutHistoryTable({ payouts, isPend
                 className="group motion-safe:transition-colors hover:bg-surface-hover focus-visible:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
                 data-testid={`superadmin_affiliates-affiliates-payout-history-item-payout-id-2-${String(payout.id)}`}
               >
-                <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-e border-border p-4 text-sm text-secondary transition-colors" data-mobile-label={t('ui.mobile_date')}>
+                <td className="sticky start-0 z-10 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-e border-border dark:border-white/10 p-4 text-sm text-secondary transition-colors" data-mobile-label={t('ui.mobile_date')}>
                   {formatDate(payout.paidAt, locale)}
                 </td>
                 <td className="border-b border-border p-4" data-mobile-label={t('ui.mobile_affiliate')}>

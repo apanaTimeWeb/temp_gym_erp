@@ -92,45 +92,47 @@ export default function AdminAttendanceDashboardMain() {
 
         <AdminAttendanceTrendChart />
 
-        <div className="bg-card rounded-xl border border-border p-5 space-y-4 shadow-card">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border pb-4">
-            <div>
-              <p className="text-base font-bold text-text-primary">
-                {attendanceView === 'members' ? (t('attendance.admin_attendance_main.text_28a8490d8e') || 'Member Attendance Records') : 'Staff & Manager Attendance Logs'}
-              </p>
-              <p className="text-xs text-secondary mt-0.5">
-                {attendanceView === 'members' ? 'Live member check-ins, plan verification, and session durations' : 'Track daily manager and trainer shifts, check-in timestamps, and presence'}
-              </p>
+        <div className="space-y-4">
+          <div className="bg-card rounded-2xl border border-border p-4 sm:p-5 space-y-4 shadow-card">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border pb-4">
+              <div>
+                <p className="text-base font-bold text-text-primary">
+                  {attendanceView === 'members' ? (t('attendance.admin_attendance_main.text_28a8490d8e') || 'Member Attendance Records') : 'Staff & Manager Attendance Logs'}
+                </p>
+                <p className="text-xs text-secondary mt-0.5">
+                  {attendanceView === 'members' ? 'Live member check-ins, plan verification, and session durations' : 'Track daily manager and trainer shifts, check-in timestamps, and presence'}
+                </p>
+              </div>
+              <div className="flex items-center gap-1 border border-border rounded-xl p-1 bg-surface-highlight overflow-x-auto max-w-full trainer-shell-scrollbar">
+                <button
+                  type="button"
+                  onClick={() => setAttendanceView('members')}
+                  className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap motion-safe:transition-colors ${
+                    attendanceView === 'members' ? 'bg-card text-text-primary shadow-sm border border-orange-500/35' : 'text-secondary hover:text-primary'
+                  }`}
+                >
+                  Member Attendance
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setAttendanceView('staff')}
+                  className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap motion-safe:transition-colors ${
+                    attendanceView === 'staff' ? 'bg-card text-text-primary shadow-sm border border-orange-500/35' : 'text-secondary hover:text-primary'
+                  }`}
+                >
+                  Staff & Manager Attendance
+                </button>
+              </div>
             </div>
-            <div className="flex items-center gap-1 border border-border rounded-xl p-1 bg-surface-highlight">
-              <button
-                type="button"
-                onClick={() => setAttendanceView('members')}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold motion-safe:transition-colors ${
-                  attendanceView === 'members' ? 'bg-card text-text-primary shadow-sm' : 'text-secondary hover:text-primary'
-                }`}
-              >
-                Member Attendance
-              </button>
-              <button
-                type="button"
-                onClick={() => setAttendanceView('staff')}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold motion-safe:transition-colors ${
-                  attendanceView === 'staff' ? 'bg-card text-text-primary shadow-sm' : 'text-secondary hover:text-primary'
-                }`}
-              >
-                Staff & Manager Attendance
-              </button>
-            </div>
+            {attendanceView === 'members' && <AdminAttendanceToolbar />}
           </div>
 
           {attendanceView === 'members' ? (
-            <>
-              <AdminAttendanceToolbar />
-              <AdminAttendanceTable />
-            </>
+            <AdminAttendanceTable />
           ) : (
-            <AdminAttendanceStaffManagerTable />
+            <div className="bg-card rounded-2xl border border-border p-4 sm:p-5 shadow-card">
+              <AdminAttendanceStaffManagerTable />
+            </div>
           )}
         </div>
       </div>

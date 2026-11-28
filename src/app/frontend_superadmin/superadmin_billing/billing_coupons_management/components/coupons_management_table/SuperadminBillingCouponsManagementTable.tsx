@@ -134,9 +134,10 @@ export default function SuperadminBillingCouponsManagementTable({
   }, [currentPage, totalPages, changePage]);
 
   return (
-    <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-sm flex flex-col min-h-96">
+    <div className="relative bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-amber-500/30 rounded-2xl overflow-hidden shadow-card flex flex-col min-h-96">
+      <div className="h-[2px] w-full bg-gradient-to-r from-amber-500/80 via-primary/60 to-transparent shrink-0" />
       {selectedIds.size > 0 && (
-        <div className="p-3 bg-primary-subtle border-b border-border flex flex-wrap items-center justify-between gap-3 motion-safe:animate-fadeIn">
+        <div className="p-3 bg-amber-500/10 border-b border-border dark:border-white/10 flex flex-wrap items-center justify-between gap-3 motion-safe:animate-fadeIn">
           <div className="flex items-center gap-2">
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary text-on-primary">
               {selectedIds.size} {t('ui.selected') ?? 'Selected'}
@@ -153,9 +154,9 @@ export default function SuperadminBillingCouponsManagementTable({
       )}
       <div className="overflow-x-auto flex-1">
         <table className="w-full text-start border-collapse">
-          <thead className="sticky top-0 z-20 bg-primary-subtle border-b border-border shadow-xs">
-            <tr className="bg-primary-subtle border-b border-border">
-              <th className="sticky start-0 z-20 bg-primary-subtle border-b border-border w-12 px-4 py-3 text-center">
+          <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10 shadow-[0_2px_10px_rgba(0,0,0,0.12)]">
+            <tr className="bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10">
+              <th className="sticky start-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10 w-12 px-4 py-3 text-center">
                 <input
                   type="checkbox"
                   aria-label={t('ui.select_all_coupons') ?? 'Select all coupons'}
@@ -166,17 +167,17 @@ export default function SuperadminBillingCouponsManagementTable({
                   data-testid="superadmin_coupons-table-select-all"
                 />
               </th>
-              <th className="sticky start-12 z-20 bg-primary-subtle border-b border-e border-border px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-start">
+              <th className="sticky start-12 z-20 bg-slate-100 dark:bg-[#152038] border-b border-e border-border dark:border-white/10 px-6 py-4 text-[11px] font-bold text-secondary dark:text-slate-300 uppercase tracking-wider text-start">
                 {t('ui.code_ca0dbad9')}
               </th>
-              <th className="px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-start">{t('ui.discount_104d9898')}</th>
-              <th className="px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-start">{t('ui.usage_c6451870')}</th>
-              <th className="px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-start">{t('ui.status_ec53a8c4')}</th>
-              <th className="px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-start">{t('ui.expiry_date_5abc7a3a')}</th>
-              <th className="px-6 py-4 text-xs font-semibold text-secondary uppercase tracking-wider text-end">{t('ui.actions_06df3300')}</th>
+              <th className="px-6 py-4 text-[11px] font-bold text-secondary dark:text-slate-300 uppercase tracking-wider text-start">{t('ui.discount_104d9898')}</th>
+              <th className="px-6 py-4 text-[11px] font-bold text-secondary dark:text-slate-300 uppercase tracking-wider text-start">{t('ui.usage_c6451870')}</th>
+              <th className="px-6 py-4 text-[11px] font-bold text-secondary dark:text-slate-300 uppercase tracking-wider text-start">{t('ui.status_ec53a8c4')}</th>
+              <th className="px-6 py-4 text-[11px] font-bold text-secondary dark:text-slate-300 uppercase tracking-wider text-start">{t('ui.expiry_date_5abc7a3a')}</th>
+              <th className="px-6 py-4 text-[11px] font-bold text-secondary dark:text-slate-300 uppercase tracking-wider text-end">{t('ui.actions_06df3300')}</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody className="divide-y divide-border dark:divide-white/5">
             {paginatedCoupons.length === 0 ? (
               <tr>
                 <td colSpan={TABLE_COLUMN_COUNT}>

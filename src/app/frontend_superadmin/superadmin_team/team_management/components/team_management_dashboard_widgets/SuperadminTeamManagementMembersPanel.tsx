@@ -37,28 +37,28 @@ export default function SuperadminTeamManagementMembersPanel({ data }: Superadmi
 
   return (
     <Panel title={t('ui.team_members_8196446d')} description={t('ui.named_access_is_auditable_and_safer_than_sha_4f4a9116')}>
-      <div className="overflow-x-auto rounded-xl border border-border bg-card">
+      <div className="overflow-x-auto rounded-xl border border-border dark:border-white/10 bg-card dark:bg-[#0E1525]">
         <table className="w-full text-sm border-collapse">
           <thead>
-            <tr className="border-b border-border bg-primary-subtle text-start text-xs uppercase text-secondary">
-              <th className="sticky start-0 z-20 bg-primary-subtle border-e border-border px-4 py-3 text-start font-bold">
+            <tr className="border-b border-border dark:border-white/10 bg-slate-100 dark:bg-[#152038] text-start text-[11px] uppercase tracking-wider text-secondary dark:text-slate-300">
+              <th className="sticky start-0 z-20 bg-slate-100 dark:bg-[#152038] border-e border-border dark:border-white/10 px-4 py-3 text-start font-bold">
                 {t('ui.name_49ee3087')}
               </th>
-              <th className="border-b border-border px-4 py-3 text-start font-bold">
+              <th className="border-b border-border dark:border-white/10 px-4 py-3 text-start font-bold">
                 {t('ui.role_bbbabdbe')}
               </th>
-              <th className="border-b border-border px-4 py-3 text-start font-bold">
+              <th className="border-b border-border dark:border-white/10 px-4 py-3 text-start font-bold">
                 {t('ui.extra_sign_in_e1918e9e')}
               </th>
-              <th className="border-b border-border px-4 py-3 text-start font-bold">
+              <th className="border-b border-border dark:border-white/10 px-4 py-3 text-start font-bold">
                 {t('ui.last_sign_in_0d85ffff')}
               </th>
-              <th className="border-b border-border px-4 py-3 text-start font-bold">
+              <th className="border-b border-border dark:border-white/10 px-4 py-3 text-start font-bold">
                 {t('ui.status_ec53a8c4')}
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody className="divide-y divide-border dark:divide-white/5">
             {data.users.length === 0 ? (
               <tr>
                 <td colSpan={TABLE_COLUMN_COUNT} className="p-4">
@@ -68,7 +68,7 @@ export default function SuperadminTeamManagementMembersPanel({ data }: Superadmi
             ) : (
               data.users.map((user) => (
                 <tr key={user.id} className="hover:bg-surface-hover motion-safe:transition-colors group">
-                  <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-e border-border px-4 py-3 transition-colors">
+                  <td className="sticky start-0 z-10 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-e border-border dark:border-white/10 px-4 py-3 transition-colors">
                     <Tooltip content={user.name}>
                       <div className="max-w-56 truncate font-medium text-primary">
                         {user.name}

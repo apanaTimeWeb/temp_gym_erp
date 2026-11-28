@@ -25,20 +25,20 @@ export default function ManagerMembersDirectoryProfileAttendance() {
 
   return (
     <div>
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6">
         {[
           { label: t("COPY_PRESENT"), value: presentDays, color: 'text-success-text', bg: 'bg-success-bg' },
           { label: t("COPY_ABSENT"), value: absentDays, color: 'text-danger-text', bg: 'bg-danger-bg' },
           { label: t("COPY_ATTENDANCE"), value: `${attPct}%`, color: attPct >= 75 ? 'text-success-text' : 'text-danger-text', bg: 'bg-input' },
         ].map((s) => (
-          <div key={s.label} className={`${s.bg} rounded-xl p-4 border border-border`}>
+          <div key={s.label} className={`${s.bg} rounded-xl p-4 border border-border/80 dark:border-white/10`}>
             <p className="text-xs text-text-secondary mb-1">{s.label}</p>
-            <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
+            <p className={`text-2xl font-extrabold tabular-nums ${s.color}`}>{s.value}</p>
           </div>
         ))}
       </div>
       
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
         <p className="text-sm font-medium text-text-secondary">{t("COPY_CURRENT_MONTH_ATTENDANCE")}</p>
         <span className="text-sm font-bold text-primary bg-primary-subtle px-3 py-1 rounded-full">
           {currentMonthLabel}
