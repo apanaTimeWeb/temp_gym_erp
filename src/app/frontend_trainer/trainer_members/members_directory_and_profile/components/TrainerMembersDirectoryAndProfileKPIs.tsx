@@ -55,10 +55,42 @@ export default function TrainerMembersKPIs() {
     );
   }
 
+  const memberAccents: Record<string, { border: string; surface: string; glow: string; stroke: string; badge: string }> = {
+    total: {
+      border: 'border-orange-500/30',
+      surface: 'bg-card dark:bg-gradient-to-br dark:from-[#261914] dark:via-[#202020] dark:to-[#181818]',
+      glow: 'bg-orange-500',
+      stroke: '#FF5A1F',
+      badge: 'border-orange-500/30',
+    },
+    active: {
+      border: 'border-emerald-500/30',
+      surface: 'bg-card dark:bg-gradient-to-br dark:from-[#122620] dark:via-[#202020] dark:to-[#181818]',
+      glow: 'bg-emerald-500',
+      stroke: '#34D399',
+      badge: 'border-emerald-500/30',
+    },
+    pending: {
+      border: 'border-amber-500/30',
+      surface: 'bg-card dark:bg-gradient-to-br dark:from-[#262012] dark:via-[#202020] dark:to-[#181818]',
+      glow: 'bg-amber-500',
+      stroke: '#FBBF24',
+      badge: 'border-amber-500/30',
+    },
+    expired: {
+      border: 'border-rose-500/30',
+      surface: 'bg-card dark:bg-gradient-to-br dark:from-[#28141a] dark:via-[#202020] dark:to-[#181818]',
+      glow: 'bg-rose-500',
+      stroke: '#FB7185',
+      badge: 'border-rose-500/30',
+    },
+  };
+
   return (
     <div className="grid grid-cols-1 gap-4 mb-6 sm:grid-cols-2 lg:grid-cols-4" role="group" aria-label={t('TEXT_MEMBER_STATUS_FILTERS')}>
       {cards.map(({ key, filterValue, labelKey, value, icon: Icon, color, bg }) => {
         const isActive = statusFilter === filterValue;
+        const accent = memberAccents[key] ?? memberAccents.total;
         return (
           <button
             key={key}
@@ -67,15 +99,19 @@ export default function TrainerMembersKPIs() {
             aria-label={t('TEXT_FILTER_MEMBERS_BY_STATUS', { status: t(labelKey as never) })}
             onClick={() => setStatusFilter(filterValue)}
             data-testid={`trainer_members-kpi-${key}-filter`}
-            className={`min-w-0 text-start bg-card rounded-2xl p-5 border shadow-card motion-safe:transition-all motion-safe:duration-base motion-safe:hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring ${isActive ? 'border-primary ring-2 ring-primary' : 'border-border'}`}
+            className={`relative overflow-hidden min-w-0 text-start ${accent.surface} rounded-2xl p-5 border shadow-card motion-safe:transition-all motion-safe:duration-base motion-safe:hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring ${isActive ? 'border-primary ring-2 ring-primary' : accent.border}`}
           >
-            <div className="flex items-start justify-between gap-2">
+            <span aria-hidden="true" className={`pointer-events-none absolute -right-6 -bottom-6 h-24 w-24 rounded-full blur-2xl opacity-15 ${accent.glow}`} />
+            <svg aria-hidden="true" viewBox="0 0 150 45" className="pointer-events-none absolute bottom-0 right-0 h-14 w-32 opacity-20">
+              <path d="M0 36 Q28 30 56 24 T106 16 T150 8" fill="none" stroke={accent.stroke} strokeWidth="2.5" strokeLinecap="round" />
+            </svg>
+            <div className="relative flex items-start justify-between gap-2">
               <p className="text-xs font-semibold text-secondary uppercase tracking-wider line-clamp-2">{t(labelKey as never)}</p>
-              <div className={`p-2.5 rounded-xl border border-border shrink-0 flex items-center justify-center ${bg} ${color}`}>
+              <div className={`p-2.5 rounded-xl border ${accent.badge} shrink-0 flex items-center justify-center ${bg} ${color}`}>
                 <Icon size={18} strokeWidth={2.2} aria-hidden="true" />
               </div>
             </div>
-            <p className="text-kpi font-bold text-primary tabular-nums mt-2">{value}</p>
+            <p className="relative text-kpi font-bold text-primary tabular-nums mt-2">{value}</p>
           </button>
         );
       })}

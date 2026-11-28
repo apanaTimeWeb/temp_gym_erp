@@ -30,7 +30,7 @@ export function TrainerCoachingIndividualProgressProgressTrackingFilterBar({
       <div className="flex flex-wrap items-center gap-2.5 flex-1 min-w-0 w-full sm:w-auto">
         {/* Quick Search */}
         <div className="relative w-full sm:min-w-[160px] sm:max-w-xs flex-1">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" />
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-sky-500 pointer-events-none" />
           <input
             type="text"
             value={searchQuery}
@@ -95,7 +95,7 @@ export function TrainerCoachingIndividualProgressProgressTrackingFilterBar({
               setBmiCategoryFilter('all');
               setSearchQuery('');
             }}
-            className="min-h-9 inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-secondary hover:text-danger rounded-lg border border-border hover:bg-input motion-safe:transition-colors"
+            className="min-h-9 inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold text-rose-500 rounded-xl border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 motion-safe:transition-colors"
           >
             <X size={12} />
             <span>Clear</span>

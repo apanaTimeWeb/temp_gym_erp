@@ -216,7 +216,7 @@ export function TrainerOperationsLeaveRequestsLeaveTable({ leaveRequests, openLe
                             setExpandedId((curr) => (curr === leave.id ? null : leave.id));
                           }}
                           aria-label={expanded ? t('TEXT_COLLAPSE') : t('TEXT_EXPAND')}
-                          className="p-1.5 rounded-lg hover:bg-input text-secondary hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                          className="p-1.5 rounded-lg border border-sky-500/30 bg-sky-500/10 text-sky-500 hover:bg-sky-500/20 motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                         >
                           {expanded ? <ChevronUp size={16} strokeWidth={2.5} /> : <ChevronDown size={16} strokeWidth={2.5} />}
                         </button>

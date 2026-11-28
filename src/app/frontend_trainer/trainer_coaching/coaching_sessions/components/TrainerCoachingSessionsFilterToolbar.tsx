@@ -55,7 +55,7 @@ export function TrainerCoachingSessionsFilterToolbar({
         <div className="flex flex-wrap items-center gap-2.5 flex-1 min-w-0 w-full lg:w-auto">
           {/* Search box */}
           <div className="relative w-full sm:min-w-[180px] sm:max-w-xs flex-1">
-            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" />
+            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-sky-500 pointer-events-none" />
             <input
               type="text"
               value={searchQuery}
@@ -136,7 +136,7 @@ export function TrainerCoachingSessionsFilterToolbar({
 
           {/* Date Picker */}
           <div className="flex items-center gap-1.5 bg-input border border-border rounded-xl px-2.5 py-1">
-            <CalendarIcon size={14} className="text-secondary pointer-events-none" aria-hidden="true" />
+            <CalendarIcon size={14} className="text-amber-500 pointer-events-none" aria-hidden="true" />
             <label htmlFor="trainer-sessions-date-input" className="sr-only">{t('TEXT_SESSION_DATE')}</label>
             <input
               id="trainer-sessions-date-input"
@@ -152,7 +152,7 @@ export function TrainerCoachingSessionsFilterToolbar({
             <button
               type="button"
               onClick={onClearFilters}
-              className="min-h-10 inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-secondary hover:text-danger rounded-lg border border-border hover:bg-input motion-safe:transition-colors"
+              className="min-h-10 inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold text-rose-500 rounded-xl border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 motion-safe:transition-colors"
             >
               <X size={12} />
               <span>Clear</span>
@@ -165,7 +165,7 @@ export function TrainerCoachingSessionsFilterToolbar({
           <a
             href="/__mocks__/trainer/sessions_export.csv"
             download="trainer_sessions_schedule.csv"
-            className="min-h-10 inline-flex items-center gap-1.5 px-3 py-2 border border-border rounded-xl text-xs font-semibold hover:bg-input text-primary motion-safe:transition-colors"
+            className="min-h-10 inline-flex items-center gap-1.5 px-3 py-2 border border-teal-500/30 bg-teal-500/10 hover:bg-teal-500/20 rounded-xl text-xs font-semibold text-teal-600 dark:text-teal-300 motion-safe:transition-colors"
             data-testid="trainer_sessions-export-csv"
           >
             <Download size={14} />
@@ -174,7 +174,7 @@ export function TrainerCoachingSessionsFilterToolbar({
           <button
             type="button"
             onClick={onScheduleClick}
-            className="min-h-10 flex items-center gap-1.5 px-4 py-2 bg-primary text-on-primary rounded-xl text-xs font-bold hover:bg-primary-hover shadow-sm motion-safe:transition-all motion-safe:active:scale-95"
+            className="min-h-10 flex items-center gap-1.5 px-4 py-2 bg-primary text-on-primary rounded-xl text-xs font-bold hover:bg-primary-hover shadow-sm shadow-orange-500/20 motion-safe:transition-all motion-safe:active:scale-95"
             data-testid="trainer_sessions-main-schedule"
           >
             <Plus size={16} strokeWidth={2.5} />
@@ -185,10 +185,10 @@ export function TrainerCoachingSessionsFilterToolbar({
 
       {/* Quick Status Filter Tabs row */}
       <div className="flex flex-wrap items-center gap-2 border-t border-border/60 pt-2.5">
-        <span className="text-[11px] font-bold uppercase tracking-wider text-secondary mr-1 flex items-center gap-1">
+        <span className="text-[11px] font-bold uppercase tracking-wider text-purple-400 mr-1 flex items-center gap-1">
           <Filter size={12} /> Filter:
         </span>
-        <div className="flex flex-wrap bg-input rounded-xl p-1 gap-1">
+        <div className="flex flex-wrap bg-input rounded-xl p-1 gap-1 border border-border">
           {TRAINER_SESSIONS_SESSION_FILTER_OPTIONS.map((option) => (
             <button
               key={option.value}
@@ -202,7 +202,7 @@ export function TrainerCoachingSessionsFilterToolbar({
               aria-pressed={filter === option.value}
               className={`px-3 py-1 text-xs font-semibold rounded-lg motion-safe:transition-all ${
                 filter === option.value
-                  ? 'bg-card text-primary shadow-sm'
+                  ? 'bg-primary text-on-primary shadow-sm'
                   : 'text-secondary hover:text-primary'
               }`}
               data-testid={`trainer_sessions-sessions-filter-${option.value.toLowerCase()}`}

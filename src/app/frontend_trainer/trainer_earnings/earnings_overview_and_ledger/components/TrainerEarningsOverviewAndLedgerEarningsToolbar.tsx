@@ -42,7 +42,7 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
       <h2 className="text-section-title font-semibold text-primary">{t("TEXT_EARNINGS_LEDGER")}</h2>
       <div className="flex flex-col sm:flex-row gap-2.5 w-full xl:w-auto xl:items-center flex-wrap">
         <div className="relative w-full sm:w-64 sm:min-w-[200px]">
-          <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none w-4 h-4" aria-hidden="true" strokeWidth={2} />
+          <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-sky-500 pointer-events-none w-4 h-4" aria-hidden="true" strokeWidth={2} />
           <label htmlFor="trainer-earnings-search" className="sr-only">{t("TEXT_SEARCH_EARNINGS_DESCRIPTIONS")}</label>
           <input
             id="trainer-earnings-search"
@@ -118,7 +118,7 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
             <button
               type="button"
               onClick={handleClearAll}
-              className="text-xs text-secondary hover:text-danger font-semibold px-2.5 py-1.5 rounded-lg border border-border hover:bg-input transition-colors"
+              className="text-xs text-rose-500 font-semibold px-3 py-1.5 rounded-xl border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 transition-colors"
             >
               Clear All
             </button>
@@ -127,7 +127,7 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
           <a
             href="/__mocks__/trainer/earnings_export.csv"
             download="trainer_earnings_statement.csv"
-            className="min-h-10 inline-flex items-center gap-1.5 px-3 py-1.5 bg-input hover:bg-surface-hover text-primary border border-border rounded-xl text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all"
+            className="min-h-10 inline-flex items-center gap-1.5 px-3 py-1.5 border border-teal-500/30 bg-teal-500/10 hover:bg-teal-500/20 text-teal-600 dark:text-teal-300 rounded-xl text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all"
             data-testid="trainer_earnings-export-csv-button"
           >
             <Download size={14} />
@@ -136,7 +136,7 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
           <a
             href="/__mocks__/trainer/earnings_statement.pdf"
             download="trainer_earnings_statement.pdf"
-            className="min-h-10 inline-flex items-center gap-1.5 px-3 py-1.5 bg-input hover:bg-surface-hover text-primary border border-border rounded-xl text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all"
+            className="min-h-10 inline-flex items-center gap-1.5 px-3 py-1.5 border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 rounded-xl text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all"
             data-testid="trainer_earnings-export-pdf-button"
           >
             <FileText size={14} />

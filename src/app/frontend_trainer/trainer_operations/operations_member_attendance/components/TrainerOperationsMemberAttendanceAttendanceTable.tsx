@@ -164,7 +164,7 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
                     </td>
                     <td className="px-4 py-3"><span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? 'bg-info-bg text-info' : 'bg-success-bg text-success'}`} data-testid={`trainer_attendance-table-type${record.id}`}>{record.type === TRAINER_ATTENDANCE_RECORD_TYPE.MEMBER ? t('TEXT_MEMBER') : t('TEXT_STAFF')}</span></td>
                     <td className="px-4 py-3 text-sm text-secondary whitespace-nowrap">{TrainerAttendanceFormatDate(record.date, locale)}</td>
-                    <td className="px-4 py-3 text-sm text-secondary whitespace-nowrap"><span className="flex items-center gap-1"><Clock size={18} strokeWidth={2} className="text-secondary" aria-hidden="true" />{TrainerAttendanceFormatTime(record.checkIn, locale)}</span></td>
+                    <td className="px-4 py-3 text-sm text-secondary whitespace-nowrap"><span className="flex items-center gap-1.5"><Clock size={16} strokeWidth={2} className="text-sky-500" aria-hidden="true" />{TrainerAttendanceFormatTime(record.checkIn, locale)}</span></td>
                     <td className="px-4 py-3 text-sm text-secondary whitespace-nowrap">
                       {record.checkOut ? (
                         TrainerAttendanceFormatTime(record.checkOut, locale)
@@ -175,7 +175,7 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
                             e.stopPropagation();
                             void onCheckOut(record.id);
                           }}
-                          className="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100 motion-safe:transition-opacity inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-lg bg-warning-bg text-warning-text hover:brightness-105 border border-warning focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:active:scale-95"
+                          className="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100 motion-safe:transition-opacity inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-lg bg-amber-500/15 text-amber-600 dark:text-amber-300 hover:bg-amber-500/25 border border-amber-500/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:active:scale-95"
                           title={t('TEXT_CHECK_OUT')}
                         >
                           <LogOut size={13} strokeWidth={2} aria-hidden="true" />
@@ -217,7 +217,7 @@ export default function TrainerAttendanceTable({ records, totalRecords, isPendin
                     <button
                       type="button"
                       onClick={() => void onCheckOut(record.id)}
-                      className="mt-1 inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg bg-warning-bg text-warning-text hover:brightness-105 border border-warning"
+                      className="mt-1 inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg bg-amber-500/15 text-amber-600 dark:text-amber-300 hover:bg-amber-500/25 border border-amber-500/30"
                     >
                       <LogOut size={13} strokeWidth={2} aria-hidden="true" />
                       <span>{t('TEXT_CHECK_OUT')}</span>

@@ -35,7 +35,7 @@ export default function TrainerLibraryTabs({ search, setSearch, filterGoal, setF
       <h2 className="px-5 py-3.5 text-section-title font-bold text-primary whitespace-nowrap ">{t("TEXT_DIET_PLANS")}</h2>
       <div className="px-4 flex flex-wrap gap-3 items-center ">
         <div className="relative ">
-          <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary "  strokeWidth={2}/>
+          <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-sky-500 "  strokeWidth={2}/>
           <input
             value={search}
             onChange={(event) => setSearch(event.target.value)}
@@ -58,7 +58,7 @@ export default function TrainerLibraryTabs({ search, setSearch, filterGoal, setF
           onClick={() => void onRefresh()}
           aria-label={t("TEXT_REFRESH_DIET_PLANS")}
           title={t("TEXT_REFRESH_DIET_PLANS")}
-          className="min-w-11 min-h-11 flex items-center gap-2 px-3 py-2 text-sm border border-border rounded-lg hover:bg-primary-subtle text-secondary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+          className="min-w-11 min-h-11 flex items-center gap-2 px-3 py-2 text-sm border border-sky-500/30 bg-sky-500/10 hover:bg-sky-500/20 rounded-xl text-sky-600 dark:text-sky-300 font-semibold motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
          data-testid="trainer_library-trainerlibrarytabs-button_3">
           <RefreshCw size={18}  strokeWidth={2}/>
         </button>
@@ -66,7 +66,7 @@ export default function TrainerLibraryTabs({ search, setSearch, filterGoal, setF
           <button
             type="button"
             onClick={onCreate}
-            className="min-h-11 flex items-center gap-2 px-4 py-2 text-sm bg-primary text-on-primary rounded-lg font-semibold hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+            className="min-h-11 flex items-center gap-2 px-4 py-2 text-sm bg-primary text-on-primary rounded-xl font-semibold hover:bg-primary-hover shadow-sm shadow-orange-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
             data-testid="trainer_library-trainerlibrarytabs-button-create"
           >
             <Plus size={16} strokeWidth={2.5} />

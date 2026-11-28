@@ -24,12 +24,12 @@ export default function TrainerCoachingWorkoutPlansToolbar() {
   return (
     <div className="flex flex-wrap items-center gap-3 border-b border-border bg-card px-4 py-3">
       <button type="button" onClick={handleAdd}
-        className="inline-flex min-h-11 items-center rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+        className="inline-flex min-h-11 items-center rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-on-primary hover:bg-primary-hover shadow-sm shadow-orange-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
         data-testid="trainer-coaching_workout_plans-add">
         {t('TEXT_ADD')} {t('TEXT_PLAN')}
       </button>
       <div className="relative min-w-0 flex-1 sm:max-w-xs">
-        <Search size={18} aria-hidden="true" strokeWidth={2} className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-secondary" />
+        <Search size={18} aria-hidden="true" strokeWidth={2} className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-sky-500" />
         <label htmlFor="trainer-coaching_workout_plans-search" className="sr-only">{t('TEXT_SEARCH')}</label>
         <input id="trainer-coaching_workout_plans-search" type="search" value={draft}
           onChange={(event) => setDraft(event.target.value)} placeholder={t('TEXT_SEARCH')}

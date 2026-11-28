@@ -179,7 +179,7 @@ export default function TrainerProgressTrackingTable({
                             <button
                               type="button"
                               onClick={(e) => { e.stopPropagation(); onEdit(entry); }}
-                              className="min-w-10 min-h-10 inline-flex items-center justify-center p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-input motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                              className="min-w-10 min-h-10 inline-flex items-center justify-center p-1.5 rounded-lg border border-amber-500/25 bg-amber-500/10 text-amber-500 hover:bg-amber-500/20 motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                               aria-label={t('TEXT_EDIT_ENTRY_65440F')}
                               title={t('TEXT_EDIT_ENTRY_65440F')}
                               data-testid={`trainer_progress_tracking-progress-table-edit-${entry.id}`}
@@ -189,7 +189,7 @@ export default function TrainerProgressTrackingTable({
                             <button
                               type="button"
                               onClick={(e) => { e.stopPropagation(); void handleDelete(entry); }}
-                              className="min-w-10 min-h-10 inline-flex items-center justify-center p-1.5 rounded-lg text-secondary hover:text-danger hover:bg-danger-bg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                              className="min-w-10 min-h-10 inline-flex items-center justify-center p-1.5 rounded-lg border border-rose-500/25 bg-rose-500/10 text-rose-500 hover:bg-rose-500/20 motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                               aria-label={t('TEXT_DELETE_ENTRY')}
                               title={t('TEXT_DELETE_ENTRY')}
                               data-testid={`trainer_progress_tracking-progress-table-delete-${entry.id}`}
@@ -238,10 +238,10 @@ export default function TrainerProgressTrackingTable({
               <p className="col-span-2"><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_NOTES')}</span><span className="text-primary">{displayValue(entry.notes)}</span></p>
             </div>
             <div className="mt-4 pt-3 border-t border-border flex gap-2">
-              <button type="button" onClick={() => onEdit(entry)} className="min-h-11 flex-1 inline-flex items-center justify-center gap-2 rounded-lg border border-border text-primary hover:bg-input focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all" aria-label={t('TEXT_EDIT_ENTRY_65440F')} data-testid="trainer_progress_tracking-trainerprogresstrackingtable-button_5">
+              <button type="button" onClick={() => onEdit(entry)} className="min-h-11 flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-300 font-semibold hover:bg-amber-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all" aria-label={t('TEXT_EDIT_ENTRY_65440F')} data-testid="trainer_progress_tracking-trainerprogresstrackingtable-button_5">
                 <Pencil size={16} strokeWidth={2} aria-hidden="true" />{t('TEXT_EDIT')}
               </button>
-              <button type="button" onClick={() => void handleDelete(entry)} className="min-h-11 flex-1 inline-flex items-center justify-center gap-2 rounded-lg bg-danger text-on-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all" aria-label={t('TEXT_DELETE_ENTRY')} data-testid="trainer_progress_tracking-trainerprogresstrackingtable-button_6">
+              <button type="button" onClick={() => void handleDelete(entry)} className="min-h-11 flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-500 font-semibold hover:bg-rose-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all" aria-label={t('TEXT_DELETE_ENTRY')} data-testid="trainer_progress_tracking-trainerprogresstrackingtable-button_6">
                 <Trash2 size={16} strokeWidth={2} aria-hidden="true" />{t('TEXT_DELETE')}
               </button>
             </div>

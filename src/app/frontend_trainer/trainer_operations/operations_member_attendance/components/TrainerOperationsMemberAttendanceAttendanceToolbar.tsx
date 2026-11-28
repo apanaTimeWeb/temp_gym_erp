@@ -55,7 +55,7 @@ export default function TrainerAttendanceToolbar({
             aria-pressed={tab === tabOption}
             className={`px-5 py-3.5 text-sm font-medium motion-safe:transition-colors border-b-2 ${
               tab === tabOption
-                ? 'text-primary bg-primary-subtle border-focus'
+                ? 'text-primary bg-primary-subtle border-primary'
                 : 'border-transparent text-secondary hover:text-primary'
             } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid={`trainer_attendance-attendance-toolbar-tab-${tabOption.toLowerCase()}`}>
             {t(tabOption === 'MEMBERS' ? 'TEXT_MEMBERS_TAB' : 'TEXT_MY_ATTENDANCE_TAB')}
@@ -71,13 +71,13 @@ export default function TrainerAttendanceToolbar({
             <button type="button"
               onClick={() => setViewMode('calendar')}
               className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md motion-safe:transition-all ${
-                viewMode === 'calendar' ? 'bg-card text-primary shadow-card' : 'text-secondary hover:text-primary'
+                viewMode === 'calendar' ? 'bg-primary text-on-primary shadow-card' : 'text-secondary hover:text-primary'
               } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_attendance-trainerattendancetoolbar-button_2">
               <CalendarIcon size={18} strokeWidth={2} /> {t("TEXT_CALENDAR")}</button>
             <button type="button"
               onClick={() => setViewMode('table')}
               className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md motion-safe:transition-all ${
-                viewMode === 'table' ? 'bg-card text-primary shadow-card' : 'text-secondary hover:text-primary'
+                viewMode === 'table' ? 'bg-primary text-on-primary shadow-card' : 'text-secondary hover:text-primary'
               } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_attendance-trainerattendancetoolbar-button_3">
               <List size={18}  strokeWidth={2}/> {t("TEXT_LIST")}</button>
           </div>
@@ -85,7 +85,7 @@ export default function TrainerAttendanceToolbar({
 
         {/* Search */}
         <div className="relative w-full sm:min-w-[200px] sm:w-64">
-          <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none"  strokeWidth={2}/>
+          <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-sky-500 pointer-events-none"  strokeWidth={2}/>
           <label htmlFor="trainer-attendance-search" className="sr-only ">{t('TEXT_SEARCH_PLACEHOLDER')}</label>
           <input
             id="trainer-attendance-search"
@@ -123,7 +123,7 @@ export default function TrainerAttendanceToolbar({
               setSearch('');
               setFilterDate('ALL_TIME');
             }}
-            className="min-h-9 inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-secondary hover:text-danger rounded-lg border border-border hover:bg-input motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            className="min-h-9 inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-rose-500 rounded-xl border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
           >
             <X size={12} /> Clear All
           </button>
@@ -132,7 +132,7 @@ export default function TrainerAttendanceToolbar({
         {/* Refresh */}
         <button type="button"
           onClick={onRefresh}
-          className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page min-w-11 min-h-11 flex items-center justify-center gap-2 px-3 py-2 text-sm border border-border rounded-lg hover:bg-primary-subtle text-secondary motion-safe:transition-colors motion-safe:duration-base motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95"
+          className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page min-w-11 min-h-11 flex items-center justify-center gap-2 px-3 py-2 text-sm border border-sky-500/30 bg-sky-500/10 hover:bg-sky-500/20 rounded-xl text-sky-600 dark:text-sky-300 motion-safe:transition-colors motion-safe:duration-base motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95"
           aria-label={t("TEXT_REFRESH_ATTENDANCE_RECORDS")} data-testid="trainer_attendance-attendance-toolbar_refresh">
           {isRefreshing ? <Loader2 size={18} className="motion-safe:animate-spin"  strokeWidth={2}/> : <RefreshCw size={18} strokeWidth={2} />}
         </button>
@@ -141,7 +141,7 @@ export default function TrainerAttendanceToolbar({
         <a
           href="/__mocks__/trainer/attendance_export.csv"
           download="trainer_attendance_report.csv"
-          className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 inline-flex items-center justify-center gap-1.5 px-3 py-2 text-sm border border-border rounded-lg hover:bg-input text-primary font-medium motion-safe:transition-colors"
+          className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 inline-flex items-center justify-center gap-1.5 px-3 py-2 text-sm border border-teal-500/30 bg-teal-500/10 hover:bg-teal-500/20 rounded-xl text-teal-600 dark:text-teal-300 font-semibold motion-safe:transition-colors"
           data-testid="trainer_attendance-toolbar-export-csv"
         >
           <Download size={15} />
@@ -154,13 +154,13 @@ export default function TrainerAttendanceToolbar({
             <button type="button"
               onClick={onSelfCheckIn}
               disabled={selfCheckInPending}
-              className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page min-w-28 min-h-11 flex items-center justify-center gap-2 px-3 py-2 text-sm bg-success text-on-success rounded-lg hover:bg-success disabled:opacity-70 motion-safe:transition-colors motion-safe:duration-base motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_attendance-trainerattendancetoolbar-button_7">
+              className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page min-w-28 min-h-11 flex items-center justify-center gap-2 px-3 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl disabled:opacity-70 shadow-sm motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_attendance-trainerattendancetoolbar-button_7">
               {selfCheckInPending ? <Loader2 size={18} className="motion-safe:animate-spin"  strokeWidth={2}/> : <LogIn size={18} strokeWidth={2}/>}
               {t("TEXT_CHECK_IN")}</button>
             <button type="button"
               onClick={onSelfCheckOut}
               disabled={selfCheckOutPending}
-              className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page min-w-28 min-h-11 flex items-center justify-center gap-2 px-3 py-2 text-sm bg-warning-bg text-warning rounded-lg hover:bg-warning-bg disabled:opacity-70 motion-safe:transition-colors motion-safe:duration-base motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_attendance-trainerattendancetoolbar-button_8">
+              className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page min-w-28 min-h-11 flex items-center justify-center gap-2 px-3 py-2 text-sm border border-amber-500/30 bg-amber-500/15 hover:bg-amber-500/25 text-amber-600 dark:text-amber-300 font-semibold rounded-xl disabled:opacity-70 motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_attendance-trainerattendancetoolbar-button_8">
               {selfCheckOutPending ? <Loader2 size={18} className="motion-safe:animate-spin"  strokeWidth={2}/> : <LogOut size={18} strokeWidth={2}/>}
               {t("TEXT_CHECK_OUT")}</button>
           </>
@@ -170,7 +170,7 @@ export default function TrainerAttendanceToolbar({
         {tab === 'MEMBERS' && (
           <button type="button"
             onClick={onAddRecord}
-            className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page min-w-28 min-h-11 flex items-center justify-center gap-2 px-3 py-2 text-sm bg-primary-subtle text-primary rounded-lg hover:bg-primary-subtle motion-safe:transition-colors motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_attendance-attendance-toolbar_add">
+            className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page min-w-28 min-h-11 flex items-center justify-center gap-2 px-3.5 py-2 text-sm bg-primary text-on-primary font-semibold rounded-xl hover:bg-primary-hover shadow-sm shadow-orange-500/20 motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_attendance-attendance-toolbar_add">
             <Plus size={18} strokeWidth={2}/> {t("TEXT_ADD_RECORD")}</button>
         )}
       </div>

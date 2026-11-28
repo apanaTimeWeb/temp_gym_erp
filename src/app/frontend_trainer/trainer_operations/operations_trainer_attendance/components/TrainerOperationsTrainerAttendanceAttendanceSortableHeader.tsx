@@ -45,7 +45,7 @@ export default function TrainerAttendanceSortableHeader({
         data-testid={`trainer_attendance-sortable-header-${field}`}
       >
         <span>{label}</span>
-        <Icon size={18} strokeWidth={2} aria-hidden="true" className={active ? 'text-primary' : 'text-secondary'} />
+        <Icon size={16} strokeWidth={2.2} aria-hidden="true" className={active ? 'text-orange-500' : 'text-secondary/60'} />
       </button>
     </th>
   );

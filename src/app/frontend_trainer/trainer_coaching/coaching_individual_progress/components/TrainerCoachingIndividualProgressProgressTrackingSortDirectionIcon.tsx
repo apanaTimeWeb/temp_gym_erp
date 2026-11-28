@@ -22,5 +22,5 @@ export default function TrainerProgressTrackingSortDirectionIcon({
   direction,
 }: TrainerProgressTrackingSortDirectionIconProps) {
   const Icon = active ? (direction === 'asc' ? ArrowUp : ArrowDown) : ArrowUpDown;
-  return <Icon size={18} strokeWidth={2} className={active ? 'text-primary' : 'text-secondary'} aria-hidden="true" />;
+  return <Icon size={16} strokeWidth={2.2} className={active ? 'text-orange-500' : 'text-secondary/60'} aria-hidden="true" />;
 }

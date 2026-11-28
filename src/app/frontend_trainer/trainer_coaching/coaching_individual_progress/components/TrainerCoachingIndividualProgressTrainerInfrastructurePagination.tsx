@@ -44,26 +44,26 @@ export default function TrainerInfrastructurePagination({ currentPage, totalPage
   };
 
   return (
-    <div className="px-3 sm:px-5 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-border">
+    <div className="px-3 sm:px-5 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-border bg-surface-highlight/40">
       {startItem !== null && endItem !== null && totalItems !== undefined ? (
         <div className="text-sm text-center sm:text-start text-secondary">
-          {t("TEXT_SHOWING")}<span className="font-medium text-primary">{startItem}</span> {t("TEXT_TO")}<span className="font-medium text-primary">{endItem}</span> {t("TEXT_OF")}<span className="font-medium text-primary">{totalItems}</span> {t("TEXT_RESULTS")}</div>
+          {t("TEXT_SHOWING")}<span className="font-semibold text-primary tabular-nums">{startItem}</span> {t("TEXT_TO")}<span className="font-semibold text-primary tabular-nums">{endItem}</span> {t("TEXT_OF")}<span className="font-semibold text-primary tabular-nums">{totalItems}</span> {t("TEXT_RESULTS")}</div>
       ) : (
-        <div className="text-sm text-secondary">{t("TEXT_PAGE")} <span className="font-medium text-primary">{totalPages <= 0 ? 0 : page}</span> {t("TEXT_OF")} <span className="font-medium text-primary">{Math.max(0, totalPages)}</span></div>
+        <div className="text-sm text-secondary">{t("TEXT_PAGE")} <span className="font-semibold text-primary tabular-nums">{totalPages <= 0 ? 0 : page}</span> {t("TEXT_OF")} <span className="font-semibold text-primary tabular-nums">{Math.max(0, totalPages)}</span></div>
       )}
 
-      <div className="flex flex-wrap items-center justify-center gap-1 max-w-full">
+      <div className="flex flex-wrap items-center justify-center gap-1.5 max-w-full">
         <button
           type="button"
           onClick={() => goToPage(page - 1)}
           disabled={totalPages <= 0 || page === 1}
           aria-label={t("TEXT_PREVIOUS_PAGE")}
-          className="min-w-11 min-h-11 p-2 rounded-lg text-secondary hover:text-primary hover:bg-input disabled:opacity-50 disabled:cursor-not-allowed motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+          className="min-w-10 min-h-10 p-2 rounded-xl border border-border bg-input text-secondary hover:text-primary hover:border-orange-500/40 hover:bg-surface-hover disabled:opacity-40 disabled:cursor-not-allowed motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
          data-testid="trainer_infrastructure-trainerinfrastructurepagination-button_1">
           <ChevronLeft size={18} strokeWidth={2} />
         </button>
 
-        <div className="flex flex-wrap items-center justify-center gap-1 mx-1 max-w-full">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 mx-1 max-w-full">
           {getVisiblePages().map((itemPage, index) =>
             itemPage === 'ellipsis' ? (
               <span key={`dots-${index}`} className="px-2 text-secondary" aria-hidden="true">…</span>
@@ -74,7 +74,7 @@ export default function TrainerInfrastructurePagination({ currentPage, totalPage
                 onClick={() => goToPage(itemPage)}
                 aria-current={page === itemPage ? 'page' : undefined}
                 aria-label={t("TEXT_GO_TO_PAGE", { page: itemPage })}
-                className={`min-w-11 min-h-11 flex items-center justify-center rounded-lg text-sm font-medium motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring ${page === itemPage ? 'bg-primary text-on-primary' : 'text-secondary hover:text-primary hover:bg-input'} motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`}
+                className={`min-w-10 min-h-10 flex items-center justify-center rounded-xl text-sm font-semibold border motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring ${page === itemPage ? 'bg-primary text-on-primary border-primary shadow-sm shadow-orange-500/25' : 'bg-input border-border text-secondary hover:text-primary hover:border-orange-500/40 hover:bg-surface-hover'} motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`}
                data-testid={`trainer_infrastructure-pagination-page-${itemPage}`}>
                 {itemPage}
               </button>
@@ -87,7 +87,7 @@ export default function TrainerInfrastructurePagination({ currentPage, totalPage
           onClick={() => goToPage(page + 1)}
           disabled={totalPages <= 0 || page === maxPage}
           aria-label={t("TEXT_NEXT_PAGE")}
-          className="min-w-11 min-h-11 p-2 rounded-lg text-secondary hover:text-primary hover:bg-input disabled:opacity-50 disabled:cursor-not-allowed motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+          className="min-w-10 min-h-10 p-2 rounded-xl border border-border bg-input text-secondary hover:text-primary hover:border-orange-500/40 hover:bg-surface-hover disabled:opacity-40 disabled:cursor-not-allowed motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
          data-testid="trainer_infrastructure-trainerinfrastructurepagination-button_3">
           <ChevronRight size={18} strokeWidth={2} />
         </button>

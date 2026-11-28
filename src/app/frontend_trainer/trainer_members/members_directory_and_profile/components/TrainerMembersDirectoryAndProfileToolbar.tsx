@@ -40,7 +40,7 @@ export default function TrainerMembersToolbar() {
   return (
     <div className="bg-card rounded-xl shadow-card border border-border p-4 flex flex-wrap gap-3 items-stretch sm:items-center justify-between ">
       <div className="relative w-full sm:min-w-[240px] sm:w-72">
-        <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" strokeWidth={2}/>
+        <Search size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-sky-500 pointer-events-none" strokeWidth={2}/>
         <label htmlFor="trainer-members-search" className="sr-only ">{t("TEXT_SEARCH_BY_NAME_OR_PHONE")}</label>
         <input id="trainer-members-search" 
           value={localSearch} 
@@ -82,7 +82,7 @@ export default function TrainerMembersToolbar() {
               setStatusFilter('All');
               setProgressStatusFilter('All');
             }}
-            className="min-h-11 inline-flex items-center gap-1.5 px-3 py-2.5 text-xs font-semibold text-secondary hover:text-danger rounded-xl border border-border hover:bg-input motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            className="min-h-11 inline-flex items-center gap-1.5 px-3 py-2.5 text-xs font-semibold text-rose-500 rounded-xl border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
             data-testid="trainer-members-clear-all"
           >
             <X size={14} /> Clear All
@@ -92,7 +92,7 @@ export default function TrainerMembersToolbar() {
         <button
           type="button"
           onClick={() => setShowBroadcastModal(true)}
-          className="min-h-11 inline-flex items-center gap-2 px-3 py-2.5 text-sm bg-primary text-on-primary rounded-xl font-semibold hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all"
+          className="min-h-11 inline-flex items-center gap-2 px-3.5 py-2.5 text-sm bg-primary text-on-primary rounded-xl font-semibold hover:bg-primary-hover shadow-sm shadow-orange-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all"
           data-testid="trainer_members-broadcast-button"
         >
           <Megaphone size={16} />
@@ -102,7 +102,7 @@ export default function TrainerMembersToolbar() {
         <a
           href="/__mocks__/trainer/member_progress_export.csv"
           download="trainees_roster.csv"
-          className="min-h-11 inline-flex items-center gap-1.5 px-3 py-2.5 text-sm border border-border rounded-xl motion-safe:transition-colors hover:bg-input text-primary font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+          className="min-h-11 inline-flex items-center gap-1.5 px-3 py-2.5 text-sm border border-teal-500/30 bg-teal-500/10 hover:bg-teal-500/20 rounded-xl motion-safe:transition-colors text-teal-600 dark:text-teal-300 font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
           data-testid="trainer_members-export-csv-button"
         >
           <Download size={15} />
@@ -111,7 +111,7 @@ export default function TrainerMembersToolbar() {
 
         <button type="button" 
           onClick={handleRefresh} 
-          className="min-h-11 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page flex items-center gap-2 px-3 py-2.5 text-sm border border-border rounded-xl motion-safe:transition-colors hover:bg-input text-primary motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_members-trainermemberstoolbar-button_4">
+          className="min-h-11 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page flex items-center gap-2 px-3 py-2.5 text-sm border border-sky-500/30 bg-sky-500/10 hover:bg-sky-500/20 rounded-xl text-sky-600 dark:text-sky-300 font-semibold motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_members-trainermemberstoolbar-button_4">
           <RefreshCw size={18}  strokeWidth={2}/> {t("TEXT_REFRESH")}</button>
       </div>
 

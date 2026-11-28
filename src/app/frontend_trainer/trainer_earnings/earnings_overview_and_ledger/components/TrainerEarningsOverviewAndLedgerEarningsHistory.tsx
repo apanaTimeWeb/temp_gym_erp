@@ -163,7 +163,7 @@ export default function TrainerEarningsHistory() {
       <div className="flex-1 overflow-x-auto custom-scrollbar">
         {filteredHistory.length === 0 ? <TrainerEarningsEmptyState /> : (
           <>
-          <div className="md:hidden divide-y divide-border">{filteredHistory.map((row) => { const style = TRAINER_EARNINGS_PAYOUT_STATUS_STYLES[row.status]; return <article key={row.id} className="p-4 bg-card" data-testid={`trainer_earnings-history-card${row.id}`}><div className="flex items-start justify-between gap-3"><div className="min-w-0"><TrainerInfrastructureTooltip content={row.description}><p className="font-medium text-primary truncate">{row.description}</p></TrainerInfrastructureTooltip><p className="text-xs text-secondary mt-1">{TrainerEarningsFormatDate(row.date, locale)} · {t(`TEXT_TYPE_${row.type.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`)}</p></div><span className={`shrink-0 inline-flex px-2 py-0.5 rounded-full text-xs font-semibold ${style?.bg ?? 'bg-input'} ${style?.text ?? 'text-secondary'}`} data-testid={`trainer_earnings-earnings-history-mobile-status-${row.id}`}>{style ? t(`TEXT_STATUS_${row.status.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`) : t('TEXT_STATUS_UNKNOWN')}</span></div><div className="mt-3 flex items-center justify-between gap-3"><span className="text-xs text-secondary">{t('TEXT_NET_PAYOUT')}</span><span className="text-sm font-semibold text-primary">{row.netPayout == null ? displayValue(row.netPayout) : TrainerEarningsFormatCurrency(row.netPayout, row.currency, locale)}</span></div><div className="mt-2.5 pt-2 border-t border-border flex justify-end"><button type="button" onClick={() => setSelectedPayslipRow(row)} className="min-h-8 inline-flex items-center gap-1.5 px-3 py-1 bg-input hover:bg-surface-hover text-primary border border-border rounded-lg text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" data-testid={`trainer_earnings-mobile-view-payslip-${row.id}`}><Receipt size={13} />View Payslip</button></div></article>})}</div>
+          <div className="md:hidden divide-y divide-border">{filteredHistory.map((row) => { const style = TRAINER_EARNINGS_PAYOUT_STATUS_STYLES[row.status]; return <article key={row.id} className="p-4 bg-card" data-testid={`trainer_earnings-history-card${row.id}`}><div className="flex items-start justify-between gap-3"><div className="min-w-0"><TrainerInfrastructureTooltip content={row.description}><p className="font-medium text-primary truncate">{row.description}</p></TrainerInfrastructureTooltip><p className="text-xs text-secondary mt-1">{TrainerEarningsFormatDate(row.date, locale)} · {t(`TEXT_TYPE_${row.type.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`)}</p></div><span className={`shrink-0 inline-flex px-2 py-0.5 rounded-full text-xs font-semibold ${style?.bg ?? 'bg-input'} ${style?.text ?? 'text-secondary'}`} data-testid={`trainer_earnings-earnings-history-mobile-status-${row.id}`}>{style ? t(`TEXT_STATUS_${row.status.toUpperCase().replace(/[^A-Z0-9]+/g, '_')}`) : t('TEXT_STATUS_UNKNOWN')}</span></div><div className="mt-3 flex items-center justify-between gap-3"><span className="text-xs text-secondary">{t('TEXT_NET_PAYOUT')}</span><span className="text-sm font-semibold text-primary">{row.netPayout == null ? displayValue(row.netPayout) : TrainerEarningsFormatCurrency(row.netPayout, row.currency, locale)}</span></div><div className="mt-2.5 pt-2 border-t border-border flex justify-end"><button type="button" onClick={() => setSelectedPayslipRow(row)} className="min-h-8 inline-flex items-center gap-1.5 px-3 py-1 bg-sky-500/15 hover:bg-sky-500/25 text-sky-600 dark:text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" data-testid={`trainer_earnings-mobile-view-payslip-${row.id}`}><Receipt size={13} />View Payslip</button></div></article>})}</div>
           <div className="hidden md:block max-h-[640px] overflow-auto custom-scrollbar">
             <table className="w-full min-w-full text-start border-collapse">
               <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
@@ -187,7 +187,7 @@ export default function TrainerEarningsHistory() {
                           data-testid={`trainer_earnings-earnings-history-sort-${column.value}`}
                         >
                           {t(`TEXT_SORT_${column.value.toUpperCase()}`)}
-                          <SortIcon size={18} strokeWidth={2} aria-hidden="true" className={active ? 'text-primary' : 'text-secondary'} />
+                          <SortIcon size={16} strokeWidth={2.2} aria-hidden="true" className={active ? 'text-orange-500' : 'text-secondary/60'} />
                         </button>
                       </th>
                     );
@@ -271,7 +271,7 @@ export default function TrainerEarningsHistory() {
             type="button"
             onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
             disabled={currentPage === 1}
-            className="min-h-10 min-w-24 px-3 rounded-lg border border-border bg-card text-primary disabled:opacity-50 hover:bg-primary-subtle hover:border-focus motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95 text-xs font-semibold"
+            className="min-h-10 min-w-24 px-3.5 rounded-xl border border-border bg-input text-primary disabled:opacity-40 hover:border-orange-500/40 hover:bg-surface-hover motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95 text-xs font-semibold"
             data-testid="trainer_earnings-trainerearningshistory-button_7"
           >
             {t("TEXT_PREVIOUS")}
@@ -280,7 +280,7 @@ export default function TrainerEarningsHistory() {
             type="button"
             onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
             disabled={currentPage >= totalPages}
-            className="min-h-10 min-w-24 px-3 rounded-lg border border-border bg-card text-primary disabled:opacity-50 hover:bg-primary-subtle hover:border-focus motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95 text-xs font-semibold"
+            className="min-h-10 min-w-24 px-3.5 rounded-xl border border-orange-500/30 bg-primary text-on-primary disabled:opacity-40 hover:bg-primary-hover shadow-sm shadow-orange-500/20 motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95 text-xs font-semibold"
             data-testid="trainer_earnings-trainerearningshistory-button_8"
           >
             {t("TEXT_NEXT")}

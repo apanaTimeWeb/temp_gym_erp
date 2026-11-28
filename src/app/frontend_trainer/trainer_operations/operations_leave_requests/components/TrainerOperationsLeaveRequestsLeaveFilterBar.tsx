@@ -101,7 +101,7 @@ export function TrainerOperationsLeaveRequestsLeaveFilterBar({
         </select>
 
         <div className="relative w-full sm:w-auto sm:min-w-[180px]">
-          <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" />
+          <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-sky-500 pointer-events-none" />
           <input
             type="text"
             value={searchQuery}
@@ -125,7 +125,7 @@ export function TrainerOperationsLeaveRequestsLeaveFilterBar({
           <button
             type="button"
             onClick={onClearFilters}
-            className="text-xs text-secondary hover:text-danger font-semibold px-2 py-1 rounded border border-border hover:bg-input"
+            className="text-xs text-rose-500 font-semibold px-2.5 py-1 rounded-lg border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 motion-safe:transition-colors"
           >
             {t('TEXT_CLEAR_FILTERS')}
           </button>
