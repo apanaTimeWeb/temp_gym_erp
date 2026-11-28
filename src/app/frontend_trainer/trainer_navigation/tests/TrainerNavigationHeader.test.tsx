@@ -68,4 +68,20 @@ describe('TrainerNavigationHeader', () => {
     expect(hostApi.logout).toHaveBeenCalledTimes(1);
     expect(trigger).toHaveAttribute('aria-expanded', 'false');
   });
+
+  it('opens notifications dropdown on hover and click and marks items read', () => {
+    render(<TrainerNavigationHeader title="Central Gym" branchName="Main Branch" isSidebarCollapsed={false} isMobileSidebarOpen={false} isMobileViewport={false} onToggleSidebar={vi.fn()} />);
+
+    const bell = screen.getByTestId('trainer_navigation-infrastructure-header_open_notifications');
+    fireEvent.mouseEnter(bell);
+    expect(screen.getByTestId('trainer-notifications-dropdown')).toBeInTheDocument();
+    expect(screen.getByTestId('trainer-notifications-view-all')).toHaveAttribute('href', TRAINER_NOTIFICATIONS_PAGE_LIST);
+
+    fireEvent.click(screen.getByRole('button', { name: /Mark all read/i }));
+    expect(screen.getByText('All caught up')).toBeInTheDocument();
+
+    const profileMenuBtn = screen.getByTestId('trainer_navigation-infrastructure-header_menu');
+    fireEvent.mouseEnter(profileMenuBtn);
+    expect(profileMenuBtn).toHaveAttribute('aria-expanded', 'true');
+  });
 });

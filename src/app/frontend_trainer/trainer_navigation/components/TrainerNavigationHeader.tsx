@@ -4,7 +4,7 @@ import { useEffect, useId, useRef, useState } from 'react';
 
 import type { KeyboardEvent as ReactKeyboardEvent } from 'react';
 
-import { Bell, Building2, ChevronDown, LogOut, Menu, User } from 'lucide-react';
+import { Bell, Building2, ChevronDown, ChevronRight, LogOut, Menu, User } from 'lucide-react';
 
 import { useTranslations } from 'next-intl';
 
@@ -36,16 +36,82 @@ import type { TrainerNavigationHeaderProps } from '@/app/frontend_trainer/traine
  * @dependencies Consumes owning feature URL contracts and approved zero-business tooltip/theme primitives.
  * @edge-case Preserves documented loading, empty, error, accessibility, responsive, and recovery behavior without inventing business fallbacks.
  */
+interface TrainerHeaderNotificationItem {
+  id: string;
+  title: string;
+  description: string;
+  time: string;
+  category: string;
+  priority: 'high' | 'medium' | 'info';
+  read: boolean;
+  branch: string;
+}
+
+const DEFAULT_TRAINER_HEADER_NOTIFICATIONS: TrainerHeaderNotificationItem[] = [
+  {
+    id: 'trn-notif-1',
+    title: 'Upcoming PT Session',
+    description: 'Strength & Hypertrophy session with Aarav Mehta starts in 15 mins.',
+    time: '10m ago',
+    category: 'Sessions',
+    priority: 'high',
+    read: false,
+    branch: 'Main Branch',
+  },
+  {
+    id: 'trn-notif-2',
+    title: 'Workout Plan Review Due',
+    description: 'Priya Nair completed Week 4 progression and requested a phase update.',
+    time: '45m ago',
+    category: 'Coaching',
+    priority: 'medium',
+    read: false,
+    branch: 'Main Branch',
+  },
+  {
+    id: 'trn-notif-3',
+    title: 'Member Attendance Alert',
+    description: 'Biometric check-in synced for 6 morning trainees.',
+    time: '2h ago',
+    category: 'Attendance',
+    priority: 'info',
+    read: false,
+    branch: 'Main Branch',
+  },
+  {
+    id: 'trn-notif-4',
+    title: 'Monthly PT Commission Ready',
+    description: '40% retainer settlement summary is available in Earnings.',
+    time: '1d ago',
+    category: 'Earnings',
+    priority: 'info',
+    read: true,
+    branch: 'Main Branch',
+  },
+];
+
 export default function TrainerNavigationHeader({ title, subtitle, branchName, isSidebarCollapsed, isMobileSidebarOpen, isMobileViewport, onToggleSidebar }: TrainerNavigationHeaderProps) {
   const t = useTranslations('TRAINER_SHELL');
   const [showProfile, setShowProfile] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications, setNotifications] = useState<TrainerHeaderNotificationItem[]>(DEFAULT_TRAINER_HEADER_NOTIFICATIONS);
   const profileRef = useRef<HTMLDivElement>(null);
   const profileMenuRef = useRef<HTMLDivElement>(null);
+  const notificationsRef = useRef<HTMLDivElement>(null);
   const profileMenuId = useId();
   const profileTriggerRef = useRef<HTMLButtonElement>(null);
   const [mounted, setMounted] = useState(false);
   const [hour, setHour] = useState<number>(-1);
   const user = getUser();
+  const unreadCount = notifications.filter((item) => !item.read).length;
+
+  const handleMarkAllAsRead = () => {
+    setNotifications((prev) => prev.map((item) => ({ ...item, read: true })));
+  };
+
+  const handleMarkAsRead = (id: string) => {
+    setNotifications((prev) => prev.map((item) => (item.id === id ? { ...item, read: true } : item)));
+  };
 
 // Effect contract: restore persisted shell presentation and keep outside-click/keyboard listeners aligned with mounted state.
   useEffect(() => {
@@ -73,13 +139,29 @@ export default function TrainerNavigationHeader({ title, subtitle, branchName, i
 // Effect contract: restore persisted shell presentation and keep outside-click/keyboard listeners aligned with mounted state.
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+      const target = event.target as Node;
+      if (profileRef.current && !profileRef.current.contains(target)) {
         setShowProfile(false);
+      }
+      if (notificationsRef.current && !notificationsRef.current.contains(target)) {
+        setShowNotifications(false);
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (!showNotifications) return;
+    const handleNotifKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setShowNotifications(false);
+      }
+    };
+    document.addEventListener('keydown', handleNotifKeyDown);
+    return () => document.removeEventListener('keydown', handleNotifKeyDown);
+  }, [showNotifications]);
 
 // Effect contract: restore persisted shell presentation and keep outside-click/keyboard listeners aligned with mounted state.
   useEffect(() => {
@@ -145,16 +227,130 @@ export default function TrainerNavigationHeader({ title, subtitle, branchName, i
 
       <div className="flex items-center gap-2 sm:gap-3 shrink-0">
         <ThemeToggle />
-        <Link
-          href={TRAINER_NOTIFICATIONS_PAGE_LIST}
-          aria-label={t("TEXT_OPEN_NOTIFICATIONS")}
-          className="relative min-w-10 min-h-10 inline-flex items-center justify-center rounded-xl border border-sky-400/35 bg-sky-500/15 text-sky-300 hover:bg-sky-500/25 hover:border-sky-400/60 hover:text-white motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shadow-[0_2px_10px_rgba(56,189,248,0.18)]"
-         data-testid="trainer_navigation-infrastructure-header_open_notifications">
-          <Bell size={18} strokeWidth={2} aria-hidden="true" />
-          <span className="absolute top-2 end-2 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-[#0E1525] shadow-[0_0_8px_rgba(244,63,94,0.9)]" aria-hidden="true" />
-        </Link>
+        <div
+          ref={notificationsRef}
+          className="relative"
+          onMouseEnter={() => {
+            setShowNotifications(true);
+            setShowProfile(false);
+          }}
+          onMouseLeave={() => setShowNotifications(false)}
+        >
+          <Link
+            href={TRAINER_NOTIFICATIONS_PAGE_LIST}
+            aria-label={t("TEXT_OPEN_NOTIFICATIONS")}
+            aria-expanded={showNotifications}
+            aria-haspopup="true"
+            onClick={(event) => {
+              if (!event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+                event.preventDefault();
+                setShowNotifications((prev) => !prev);
+                setShowProfile(false);
+              }
+            }}
+            className="relative min-w-10 min-h-10 inline-flex items-center justify-center rounded-xl border border-sky-400/35 bg-sky-500/15 text-sky-300 hover:bg-sky-500/25 hover:border-sky-400/60 hover:text-white motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shadow-[0_2px_10px_rgba(56,189,248,0.18)]"
+           data-testid="trainer_navigation-infrastructure-header_open_notifications">
+            <Bell size={18} strokeWidth={2} aria-hidden="true" />
+            {unreadCount > 0 && (
+              <span className="absolute top-2 end-2 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-[#0E1525] shadow-[0_0_8px_rgba(244,63,94,0.9)]" aria-hidden="true" />
+            )}
+          </Link>
 
-        <div className="relative" ref={profileRef}>
+          {showNotifications && (
+            <div className="pt-2 absolute end-0 top-full z-50">
+              <div
+                role="region"
+                aria-label="Notifications Dropdown"
+                data-testid="trainer-notifications-dropdown"
+                className="w-80 sm:w-88 max-w-[calc(100vw-1.5rem)] rounded-2xl border border-sky-500/35 bg-[#0E1526]/98 backdrop-blur-2xl shadow-[0_20px_48px_rgba(0,0,0,0.82)] overflow-hidden text-white"
+              >
+                <div className="flex items-center justify-between px-4 py-3 border-b border-sky-500/20 bg-sky-950/35">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-xs uppercase tracking-wider text-white">Notifications</span>
+                    {unreadCount > 0 ? (
+                      <span className="rounded-full bg-sky-500/20 border border-sky-400/40 px-2 py-0.5 text-[10px] font-semibold text-sky-300">
+                        {unreadCount} New
+                      </span>
+                    ) : (
+                      <span className="rounded-full bg-slate-800 border border-slate-700 px-2 py-0.5 text-[10px] font-medium text-slate-400">
+                        All caught up
+                      </span>
+                    )}
+                  </div>
+                  {unreadCount > 0 && (
+                    <button
+                      type="button"
+                      onClick={handleMarkAllAsRead}
+                      className="text-[11px] font-semibold text-sky-400 hover:text-sky-300 transition-colors cursor-pointer"
+                    >
+                      Mark all read
+                    </button>
+                  )}
+                </div>
+
+                <div className="max-h-72 overflow-y-auto divide-y divide-white/[0.06]">
+                  {notifications.map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => handleMarkAsRead(item.id)}
+                      className={`w-full p-3.5 hover:bg-white/[0.05] transition-colors cursor-pointer flex gap-3 text-left ${!item.read ? 'bg-sky-500/[0.06]' : ''}`}
+                    >
+                      <div className="mt-1 shrink-0">
+                        <span
+                          className={`inline-block h-2 w-2 rounded-full ${
+                            !item.read
+                              ? item.priority === 'high'
+                                ? 'bg-rose-400 shadow-[0_0_8px_rgba(251,113,133,0.75)]'
+                                : 'bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.75)]'
+                              : 'bg-slate-600'
+                          }`}
+                        />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center justify-between gap-2 mb-0.5">
+                          <p className={`text-xs font-semibold truncate ${!item.read ? 'text-white' : 'text-slate-300'}`}>
+                            {item.title}
+                          </p>
+                          <span className="text-[10px] text-slate-400 shrink-0 font-mono">{item.time}</span>
+                        </div>
+                        <p className="text-[11px] text-slate-400 line-clamp-2 leading-relaxed">{item.description}</p>
+                        <div className="mt-1.5 flex items-center gap-2">
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-800/90 text-slate-300 border border-slate-700/70 font-medium">
+                            {item.branch}
+                          </span>
+                          <span className="text-[10px] text-sky-400/90 font-medium">{item.category}</span>
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+
+                <div className="p-2 border-t border-sky-500/20 bg-sky-950/25">
+                  <Link
+                    href={TRAINER_NOTIFICATIONS_PAGE_LIST}
+                    onClick={() => setShowNotifications(false)}
+                    data-testid="trainer-notifications-view-all"
+                    className="flex items-center justify-center gap-1.5 w-full py-2 text-xs font-semibold text-sky-300 hover:text-white hover:bg-sky-500/20 rounded-xl transition-all"
+                  >
+                    <span>View All Notifications</span>
+                    <ChevronRight size={13} aria-hidden="true" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div
+          className="relative"
+          ref={profileRef}
+          onMouseEnter={() => {
+            setShowProfile(true);
+            setShowNotifications(false);
+          }}
+          onMouseLeave={() => setShowProfile(false)}
+        >
           <button
             ref={profileTriggerRef}
             type="button"
@@ -162,7 +358,10 @@ export default function TrainerNavigationHeader({ title, subtitle, branchName, i
             aria-expanded={showProfile}
             aria-haspopup="menu"
             aria-controls={profileMenuId}
-            onClick={() => setShowProfile((value) => !value)}
+            onClick={() => {
+              setShowProfile((value) => !value);
+              setShowNotifications(false);
+            }}
             className="flex items-center gap-2.5 px-2 sm:px-2.5 py-1.5 rounded-xl border border-orange-500/35 bg-white/[0.06] hover:bg-orange-500/15 hover:border-orange-400/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base"
            data-testid="trainer_navigation-infrastructure-header_menu">
             <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#FF5A1F] via-[#EC4899] to-[#8B5CF6] text-white flex items-center justify-center text-xs font-bold shrink-0 shadow-[0_3px_12px_rgba(255,90,31,0.45)]" aria-hidden="true">
@@ -176,14 +375,18 @@ export default function TrainerNavigationHeader({ title, subtitle, branchName, i
           </button>
 
           <div
-            ref={profileMenuRef}
-            id={profileMenuId}
             hidden={!showProfile}
-            role="menu"
-            aria-label={t("TEXT_PROFILE_MENU")}
-            onKeyDown={handleProfileMenuKeyDown}
-            className="absolute end-0 mt-2 w-64 max-w-[calc(100vw-1.5rem)] bg-[#0E1526]/95 backdrop-blur-2xl rounded-2xl shadow-[0_20px_48px_rgba(0,0,0,0.75)] border border-orange-500/30 overflow-hidden z-30 p-2 space-y-1.5 text-white"
+            className="pt-2 absolute end-0 top-full z-50"
           >
+            <div
+              ref={profileMenuRef}
+              id={profileMenuId}
+              hidden={!showProfile}
+              role="menu"
+              aria-label={t("TEXT_PROFILE_MENU")}
+              onKeyDown={handleProfileMenuKeyDown}
+              className="w-64 max-w-[calc(100vw-1.5rem)] bg-[#0E1526]/98 backdrop-blur-2xl rounded-2xl shadow-[0_20px_48px_rgba(0,0,0,0.82)] border border-orange-500/35 overflow-hidden p-2 space-y-1.5 text-white"
+            >
               <div className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl bg-gradient-to-r from-[#FF5A1F]/20 via-purple-500/10 to-transparent border border-orange-500/25">
                 <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#FF5A1F] via-[#EC4899] to-[#8B5CF6] text-white flex items-center justify-center text-sm font-bold shrink-0 shadow-[0_3px_12px_rgba(255,90,31,0.45)]" aria-hidden="true">
                   {displayUserName.charAt(0).toUpperCase()}
@@ -226,6 +429,7 @@ export default function TrainerNavigationHeader({ title, subtitle, branchName, i
                  data-testid="trainer_navigation-infrastructure-header_log_out">
                   <LogOut size={15} strokeWidth={2} aria-hidden="true" /> {t("TEXT_LOG_OUT")}</button>
               </div>
+            </div>
           </div>
         </div>
       </div>
