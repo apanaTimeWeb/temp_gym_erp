@@ -209,6 +209,7 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
             const showChildren = !showLabel ? true : (searching || (expandedGroups[group.groupKey] ?? true));
             const sectionId = `trainer-domain-${group.groupKey.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
             const groupColor = TRAINER_NAV_GROUP_COLORS[group.groupKey] ?? DEFAULT_TRAINER_NAV_COLOR;
+            const GroupIcon = group.icon;
             return (
               <div key={group.groupKey} className={!showLabel && groupIndex > 0 ? 'pt-2 border-t border-white/10' : ''}>
                 {showLabel && (
@@ -223,10 +224,17 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
                   >
                     <span className="flex items-center gap-2 min-w-0">
                       <span
-                        className="w-2 h-2 rounded-full shrink-0"
-                        style={{ backgroundColor: groupColor.iconColor, boxShadow: `0 0 8px ${groupColor.iconColor}` }}
+                        className="w-5 h-5 rounded-md inline-flex items-center justify-center shrink-0"
+                        style={{
+                          color: groupColor.iconColor,
+                          backgroundColor: groupColor.bg,
+                          border: `1px solid ${groupColor.iconColor}40`,
+                          boxShadow: activeGroup ? groupColor.activeShadow : undefined,
+                        }}
                         aria-hidden="true"
-                      />
+                      >
+                        <GroupIcon size={12} strokeWidth={2.4} />
+                      </span>
                       <span className="truncate" style={{ color: groupColor.iconColor }}>{t(group.groupKey)}</span>
                     </span>
                     <ChevronDown size={14} strokeWidth={2.2} aria-hidden="true" className={`shrink-0 text-slate-400 motion-safe:transition-transform ${showChildren ? 'rotate-180' : ''}`} />
@@ -245,18 +253,25 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
                         aria-label={!showLabel ? t(item.labelKey) : undefined}
                         aria-current={active ? 'page' : undefined}
                         onClick={() => { if (window.innerWidth < 768) setIsMobileOpen(false); }}
+                        style={
+                          active
+                            ? {
+                                borderColor: itemColor.iconColor,
+                                background: `linear-gradient(90deg, ${itemColor.activeBg} 0%, ${itemColor.bg} 55%, transparent 100%)`,
+                                boxShadow: itemColor.activeShadow,
+                              }
+                            : undefined
+                        }
                         className={`group flex min-h-10 items-center rounded-xl text-[13px] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all ${
                           showLabel
                             ? 'w-full gap-2.5 px-2.5 py-1.5 border-s-[3px]'
-                            : 'w-11 h-11 justify-center px-0'
+                            : 'w-11 h-11 justify-center px-0 border'
                         } ${
                           active
-                            ? showLabel
-                              ? 'border-[#FF5A1F] bg-gradient-to-r from-[#FF5A1F]/25 via-[#F97316]/12 to-transparent text-white font-semibold shadow-[0_4px_16px_rgba(255,90,31,0.18)]'
-                              : 'bg-gradient-to-br from-[#FF5A1F]/30 to-[#EC4899]/20 text-white ring-1 ring-orange-500/70 shadow-[0_0_14px_rgba(255,90,31,0.38)]'
+                            ? 'text-white font-semibold'
                             : showLabel
                               ? 'border-transparent text-slate-300 hover:bg-white/[0.07] hover:text-white'
-                              : 'text-slate-300 hover:bg-white/[0.08] hover:text-white'
+                              : 'border-transparent text-slate-300 hover:bg-white/[0.08] hover:text-white'
                         }`}
                         data-testid={`trainer_navigation-sidebar-nav${item.href.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '')}`}
                       >
@@ -265,6 +280,7 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
                           style={{
                             color: itemColor.iconColor,
                             backgroundColor: active ? itemColor.activeBg : itemColor.bg,
+                            border: `1px solid ${itemColor.iconColor}${active ? '88' : '38'}`,
                             boxShadow: active ? itemColor.activeShadow : undefined,
                           }}
                           aria-hidden="true"

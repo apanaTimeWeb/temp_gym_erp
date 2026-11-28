@@ -1,21 +1,27 @@
 import {
   LayoutDashboard,
   Users,
-  Utensils,
+  UtensilsCrossed,
   Dumbbell,
-  CalendarCheck,
-  Clock,
-  Bell,
-  User,
+  ClipboardCheck,
+  Timer,
+  BellRing,
+  UserCircle,
   IndianRupee,
-  Calendar,
+  CalendarClock,
   TrendingUp,
-  FileText,
-  ListPlus,
-  BarChart3,
+  NotebookPen,
+  Flame,
+  GitCompareArrows,
   UserCheck,
-  CalendarDays,
-  Shield,
+  CalendarOff,
+  ShieldCheck,
+  Compass,
+  UsersRound,
+  Trophy,
+  SlidersHorizontal,
+  Coins,
+  UserCog,
 } from 'lucide-react';
 
 import { TRAINER_DASHBOARD_PAGE_LIST } from '@/app/frontend_trainer/trainer_dashboard/dashboard_overview/config/trainer_dashboard_overview.url_config';
@@ -41,34 +47,34 @@ import { TRAINER_WORKOUT_PAGE_LIST as TRAINER_EXERCISES_PAGE_LIST } from '@/app/
  * obtains its href directly from that feature module's typed URL contract.
  */
 export const TRAINER_NAVIGATION_GROUPS = [
-  { groupKey: 'TEXT_NAV_OVERVIEW', items: [
+  { groupKey: 'TEXT_NAV_OVERVIEW', icon: Compass, items: [
     { href: TRAINER_DASHBOARD_PAGE_LIST, labelKey: 'TEXT_NAV_DASHBOARD', icon: LayoutDashboard },
   ] },
-  { groupKey: 'TEXT_NAV_MEMBERS', items: [
+  { groupKey: 'TEXT_NAV_MEMBERS', icon: UsersRound, items: [
     { href: TRAINER_MEMBERS_PAGE_LIST, labelKey: 'TEXT_NAV_MY_MEMBERS', icon: Users },
-    { href: TRAINER_NOTES_PAGE_LIST, labelKey: 'NAV_MEMBER_NOTES', icon: FileText },
+    { href: TRAINER_NOTES_PAGE_LIST, labelKey: 'NAV_MEMBER_NOTES', icon: NotebookPen },
   ] },
-  { groupKey: 'TEXT_NAV_COACHING', items: [
+  { groupKey: 'TEXT_NAV_COACHING', icon: Trophy, items: [
     { href: TRAINER_WORKOUT_PAGE_LIST, labelKey: 'TEXT_NAV_WORKOUT_EXERCISES', icon: Dumbbell },
-    { href: TRAINER_EXERCISES_PAGE_LIST, labelKey: 'NAV_COACHING_EXERCISES', icon: ListPlus },
-    { href: TRAINER_LIBRARY_PAGE_LIST, labelKey: 'TEXT_NAV_DIET_LIBRARY', icon: Utensils },
-    { href: TRAINER_SESSIONS_PAGE_LIST, labelKey: 'TEXT_NAV_SESSIONS', icon: Clock },
+    { href: TRAINER_EXERCISES_PAGE_LIST, labelKey: 'NAV_COACHING_EXERCISES', icon: Flame },
+    { href: TRAINER_LIBRARY_PAGE_LIST, labelKey: 'TEXT_NAV_DIET_LIBRARY', icon: UtensilsCrossed },
+    { href: TRAINER_SESSIONS_PAGE_LIST, labelKey: 'TEXT_NAV_SESSIONS', icon: Timer },
     { href: TRAINER_PROGRESS_TRACKING_PAGE_LIST, labelKey: 'TEXT_NAV_PROGRESS_TRACKING', icon: TrendingUp },
-    { href: TRAINER_COMPARISON_PAGE_LIST, labelKey: 'NAV_COACHING_COMPARISON', icon: BarChart3 },
+    { href: TRAINER_COMPARISON_PAGE_LIST, labelKey: 'NAV_COACHING_COMPARISON', icon: GitCompareArrows },
   ] },
-  { groupKey: 'TEXT_NAV_OPERATIONS', items: [
-    { href: TRAINER_ATTENDANCE_PAGE_LIST, labelKey: 'TEXT_NAV_ATTENDANCE', icon: CalendarCheck },
+  { groupKey: 'TEXT_NAV_OPERATIONS', icon: SlidersHorizontal, items: [
+    { href: TRAINER_ATTENDANCE_PAGE_LIST, labelKey: 'TEXT_NAV_ATTENDANCE', icon: ClipboardCheck },
     { href: TRAINER_TRAINER_ATTENDANCE_PAGE_LIST, labelKey: 'NAV_OPERATIONS_SELF_ATTENDANCE', icon: UserCheck },
-    { href: TRAINER_SCHEDULE_PAGE_LIST, labelKey: 'TEXT_NAV_SCHEDULE_LEAVES', icon: Calendar },
-    { href: TRAINER_LEAVES_PAGE_LIST, labelKey: 'NAV_OPERATIONS_LEAVES', icon: CalendarDays },
+    { href: TRAINER_SCHEDULE_PAGE_LIST, labelKey: 'TEXT_NAV_SCHEDULE_LEAVES', icon: CalendarClock },
+    { href: TRAINER_LEAVES_PAGE_LIST, labelKey: 'NAV_OPERATIONS_LEAVES', icon: CalendarOff },
   ] },
-  { groupKey: 'TEXT_NAV_EARNINGS_DOMAIN', items: [
+  { groupKey: 'TEXT_NAV_EARNINGS_DOMAIN', icon: Coins, items: [
     { href: TRAINER_EARNINGS_PAGE_LIST, labelKey: 'TEXT_NAV_EARNINGS', icon: IndianRupee },
   ] },
-  { groupKey: 'TEXT_NAV_ACCOUNT', items: [
-    { href: TRAINER_NOTIFICATIONS_PAGE_LIST, labelKey: 'TEXT_NAV_NOTIFICATIONS', icon: Bell },
-    { href: TRAINER_PROFILE_PAGE_LIST, labelKey: 'TEXT_NAV_MY_PROFILE', icon: User },
-    { href: TRAINER_ACCOUNT_SECURITY_PAGE_LIST, labelKey: 'NAV_ACCOUNT_SECURITY', icon: Shield },
+  { groupKey: 'TEXT_NAV_ACCOUNT', icon: UserCog, items: [
+    { href: TRAINER_NOTIFICATIONS_PAGE_LIST, labelKey: 'TEXT_NAV_NOTIFICATIONS', icon: BellRing },
+    { href: TRAINER_PROFILE_PAGE_LIST, labelKey: 'TEXT_NAV_MY_PROFILE', icon: UserCircle },
+    { href: TRAINER_ACCOUNT_SECURITY_PAGE_LIST, labelKey: 'NAV_ACCOUNT_SECURITY', icon: ShieldCheck },
   ] },
 ] as const;
 

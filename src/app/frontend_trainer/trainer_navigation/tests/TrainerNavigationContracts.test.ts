@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 import { TRAINER_NAVIGATION_GROUPS } from '@/app/frontend_trainer/trainer_navigation/config/TrainerNavigationConstants';
+import { TRAINER_NAV_GROUP_COLORS, TRAINER_NAV_ITEM_COLORS } from '@/app/frontend_trainer/trainer_navigation/config/TrainerNavigationSidebarColors';
 import { TRAINER_NAVIGATION_URL_CONFIG } from '@/app/frontend_trainer/trainer_navigation/config/trainer_navigation.url_config';
 
 describe('Trainer navigation URL contracts', () => {
@@ -31,5 +32,24 @@ describe('Trainer navigation URL contracts', () => {
     expect(hrefs).toHaveLength(17);
     expect(new Set(hrefs).size).toBe(17);
     expect(new Set(contractHrefs)).toEqual(new Set(hrefs));
+  });
+
+  it('assigns a separate icon and unique color to every group and navigation item', () => {
+    const groupIcons = TRAINER_NAVIGATION_GROUPS.map((group) => group.icon);
+    const itemIcons = TRAINER_NAVIGATION_GROUPS.flatMap((group) => group.items.map((item) => item.icon));
+    const allIcons = [...groupIcons, ...itemIcons];
+
+    expect(allIcons).toHaveLength(23);
+    expect(new Set(allIcons).size).toBe(23);
+
+    const groupColors = TRAINER_NAVIGATION_GROUPS.map((group) => TRAINER_NAV_GROUP_COLORS[group.groupKey]?.iconColor);
+    const itemColors = TRAINER_NAVIGATION_GROUPS.flatMap((group) =>
+      group.items.map((item) => TRAINER_NAV_ITEM_COLORS[item.labelKey]?.iconColor)
+    );
+    const allColors = [...groupColors, ...itemColors];
+
+    expect(allColors.every(Boolean)).toBe(true);
+    expect(allColors).toHaveLength(23);
+    expect(new Set(allColors).size).toBe(23);
   });
 });
