@@ -46,7 +46,7 @@
     display: block;
     position: fixed;
     inset: 0;
-    z-index: 30;
+    z-index: 35;
     min-width: var(--touch-target-min);
     min-height: var(--touch-target-min);
     border: 0;

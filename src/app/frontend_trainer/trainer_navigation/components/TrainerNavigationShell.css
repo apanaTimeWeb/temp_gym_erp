@@ -8,7 +8,7 @@
   top: 0;
   right: 0;
   left: var(--layout-sidebar-width);
-  z-index: 20;
+  z-index: 32;
   height: var(--layout-header-height);
 }
 
@@ -49,22 +49,14 @@
 }
 
 .trainer-shell-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
 .trainer-shell-scrollbar::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-.trainer-shell-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.trainer-shell-scrollbar::-webkit-scrollbar-thumb {
-  background-color: var(--border);
-  border-radius: var(--radius-full);
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 

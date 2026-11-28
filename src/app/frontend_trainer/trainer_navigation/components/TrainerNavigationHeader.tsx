@@ -172,7 +172,7 @@ export default function TrainerNavigationHeader({ title, subtitle, isSidebarColl
             role="menu"
             aria-label={t("TEXT_PROFILE_MENU")}
             onKeyDown={handleProfileMenuKeyDown}
-            className="absolute end-0 mt-2 w-64 bg-popover rounded-2xl shadow-popover border border-border overflow-hidden z-30 p-2 space-y-1.5"
+            className="absolute end-0 mt-2 w-64 max-w-[calc(100vw-1.5rem)] bg-popover rounded-2xl shadow-popover border border-border overflow-hidden z-30 p-2 space-y-1.5"
           >
               <div className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl bg-card border border-border">
                 <div className="w-9 h-9 rounded-lg bg-primary text-on-primary flex items-center justify-center text-sm font-bold shrink-0" aria-hidden="true">

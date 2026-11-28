@@ -56,7 +56,7 @@ function resolveAccent(iconColor?: string) {
 export default function TrainerInfrastructureStatCard({ title, value, change, changeType = 'neutral', icon: Icon, iconBg, iconColor, href }: TrainerInfrastructureStatCardProps) {
  const accent = resolveAccent(iconColor);
  const card = (
- <div className={`relative overflow-hidden min-w-0 rounded-2xl p-5 shadow-card border ${accent.surface} ${accent.border} motion-safe:transition-all motion-safe:duration-base motion-safe:hover:scale-[1.01] ${href ? 'cursor-pointer' : ''}`}>
+ <div className={`relative overflow-hidden h-full min-w-0 rounded-2xl p-5 shadow-card border flex flex-col justify-between ${accent.surface} ${accent.border} motion-safe:transition-all motion-safe:duration-base motion-safe:hover:scale-[1.01] ${href ? 'cursor-pointer' : ''}`}>
  <span aria-hidden="true" className={`pointer-events-none absolute -right-6 -bottom-6 h-24 w-24 rounded-full blur-2xl opacity-15 ${accent.glow}`} />
  <svg aria-hidden="true" viewBox="0 0 150 45" className="pointer-events-none absolute bottom-0 right-0 h-14 w-32 opacity-20">
  <path d="M0 38 Q25 32 45 26 T90 18 T130 12 T150 6" fill="none" stroke={accent.stroke} strokeWidth="2.5" strokeLinecap="round" />
@@ -83,7 +83,7 @@ export default function TrainerInfrastructureStatCard({ title, value, change, ch
 
  if (href) {
   return (
-   <Link href={href} className="block no-underline rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring">
+   <Link href={href} className="block h-full min-w-0 no-underline rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring">
     {card}
    </Link>
   );
