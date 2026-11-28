@@ -21,12 +21,14 @@ export function TrainerOperationsTrainerAttendanceQuarterlyRecordsTable({
     <div className="bg-card border border-border rounded-2xl shadow-card overflow-hidden">
       <div className="p-4 border-b border-border bg-surface-highlight flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <h3 className="font-bold text-sm text-primary flex items-center gap-2">
-          <Clock size={16} className="text-primary shrink-0" />
+          <span className="p-1.5 rounded-lg border border-sky-500/30 bg-sky-500/15 text-sky-500 shrink-0">
+            <Clock size={15} />
+          </span>
           <span>
             Complete Attendance Log: Last 3 Months ({startDate} to {endDate})
           </span>
         </h3>
-        <span className="self-start sm:self-auto text-xs font-semibold px-2 py-0.5 rounded-full bg-primary-subtle text-primary border border-border shrink-0">
+        <span className="self-start sm:self-auto text-xs font-semibold px-2.5 py-0.5 rounded-full bg-orange-500/15 text-orange-500 border border-orange-500/30 shrink-0">
           {rangeRecords.length} Logged Entries
         </span>
       </div>
@@ -62,7 +64,7 @@ export function TrainerOperationsTrainerAttendanceQuarterlyRecordsTable({
                     </div>
                   </td>
                   <td className="p-3.5 whitespace-nowrap">
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-success-bg text-success border border-success">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 border border-emerald-500/30">
                       <CheckCircle2 size={12} /> Present
                     </span>
                   </td>
@@ -91,7 +93,7 @@ export function TrainerOperationsTrainerAttendanceQuarterlyRecordsTable({
                   <span className="font-bold text-primary text-sm">{r.date}</span>
                   <CopyButton value={r.date} />
                 </div>
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-success-bg text-success border border-success shrink-0">
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 border border-emerald-500/30 shrink-0">
                   <CheckCircle2 size={12} /> Present
                 </span>
               </div>

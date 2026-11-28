@@ -153,7 +153,7 @@ export default function TrainerScheduleWeeklyAvailability() {
 
       <div className="space-y-4 max-w-3xl ">
         {days.map((day, index) => (
-          <div key={day.day} className={`flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border ${day.isAvailable ? 'border-focus bg-surface-highlight' : 'border-border bg-input'} `}>
+          <div key={day.day} className={`flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border ${day.isAvailable ? 'border-orange-500/30 bg-orange-500/5' : 'border-border bg-input'} `}>
             <div className="flex items-center gap-4 ">
               <label className="relative inline-flex items-center cursor-pointer ">
                 <input
@@ -165,7 +165,7 @@ export default function TrainerScheduleWeeklyAvailability() {
                   onChange={() => handleToggle(index)}
                   className="sr-only peer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
                  data-testid={`trainer_schedule-weekly-availability-toggle-${day.day.toLowerCase()}`}/>
-                <span className="w-11 h-6 bg-input peer-focus-visible:ring-2 peer-focus-visible:ring-focus-ring rounded-full motion-safe:transition-colors motion-safe:duration-base peer-checked:bg-primary-subtle" aria-hidden="true" />
+                <span className="w-11 h-6 bg-input border border-border peer-focus-visible:ring-2 peer-focus-visible:ring-focus-ring rounded-full motion-safe:transition-colors motion-safe:duration-base peer-checked:bg-orange-500/30 peer-checked:border-orange-500/50" aria-hidden="true" />
                 <span className="absolute start-0.5 top-0.5 h-5 w-5 rounded-full border border-border bg-card motion-safe:transition-transform motion-safe:peer-checked:translate-x-5" aria-hidden="true" />
                 <span className="sr-only ">{t("TEXT_TOGGLE")}{weekdayLabel(day.day)} {t("TEXT_AVAILABILITY")}</span>
               </label>

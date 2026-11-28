@@ -256,11 +256,18 @@
   z-index: 100;
 }
 
-/* ── 5. PREMIUM SCROLLBAR ──────────────────────────────────── */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background-color: var(--border); border-radius: var(--radius-full); }
-::-webkit-scrollbar-thumb:hover { background-color: var(--text-disabled); }
+/* ── 5. GLOBALLY HIDE SCROLLBARS (PRESERVING SCROLLABILITY) ── */
+*, *::before, *::after {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
 
 /* ── 5b. GLOBAL SELECT DROPDOWN ARROW & PADDING ────────────── */
 /* Fixes arrow sticking to right border across all dropdowns    */

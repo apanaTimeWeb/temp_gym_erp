@@ -35,7 +35,9 @@ export default function TrainerDashboardRecentProgress() {
     <div className="bg-card border border-border rounded-2xl p-5 shadow-card">
       <div className="flex items-center justify-between mb-5">
         <h3 className="font-bold text-primary text-lg flex items-center gap-2">
-          <Activity className="text-info" size={18} strokeWidth={2} />
+          <span className="p-1.5 rounded-lg border border-sky-500/30 bg-sky-500/15 text-sky-500">
+            <Activity size={16} strokeWidth={2} />
+          </span>
           {t("TEXT_RECENT_PROGRESS")}</h3>
       </div>
 

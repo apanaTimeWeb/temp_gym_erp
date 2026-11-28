@@ -47,7 +47,7 @@ export default function TrainerNotificationsList({
           }`}
         >
           <div className="flex min-w-0 flex-1 items-start gap-4">
-            <div className={`mt-1 w-2 h-2 rounded-full flex-shrink-0 ${n.unread ? 'bg-primary-subtle' : 'bg-transparent'}`} />
+            <div className={`mt-1.5 w-2.5 h-2.5 rounded-full flex-shrink-0 ${n.unread ? 'bg-orange-500' : 'bg-transparent'}`} />
             <div>
               <p className={`text-sm md:text-base ${n.unread ? 'text-primary font-medium' : 'text-secondary'}`}>
                 {n.text}
@@ -62,7 +62,7 @@ export default function TrainerNotificationsList({
               disabled={pendingNotificationId != null}
               aria-label={t("TEXT_MARK_NOTIFICATION_AS_READ")}
               title={t("TEXT_MARK_AS_READ")}
-              className="min-w-11 min-h-11 ms-4 shrink-0 rounded-lg p-2 text-secondary hover:bg-input hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-colors motion-safe:duration-base motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95"
+              className="min-w-10 min-h-10 ms-4 shrink-0 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20 p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
              data-testid={`trainer_notifications-notifications_list-mark_notification_as_read_${n.id}`}>
               {pendingNotificationId === n.id ? <Loader2 size={18} className="motion-safe:animate-spin" strokeWidth={2} aria-hidden="true" /> : <Check size={18} strokeWidth={2} aria-hidden="true" />}
             </button>

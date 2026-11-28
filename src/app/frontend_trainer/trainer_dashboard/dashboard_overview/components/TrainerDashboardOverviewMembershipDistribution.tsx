@@ -30,17 +30,24 @@ export default function TrainerDashboardMembershipDistribution() {
   if (!stats) return null;
   const data = stats.membersByPlan ?? [];
   const total = data.reduce((sum, item) => sum + item.count, 0);
+  const barColors = ['text-orange-500', 'text-sky-500', 'text-emerald-500', 'text-purple-500', 'text-amber-500'];
   return (
-    <div className="rounded-xl border border-border p-5 bg-card min-h-72">
-      <div className="flex items-center gap-2 mb-5"><Users size={18} className="text-primary"  strokeWidth={2}/><h2 className="font-semibold text-primary">{t("TEXT_MEMBERSHIP_DISTRIBUTION")}</h2></div>
+    <div className="rounded-2xl border border-border p-5 bg-card min-h-72 shadow-card">
+      <div className="flex items-center gap-2 mb-5">
+        <span className="p-1.5 rounded-lg border border-purple-500/30 bg-purple-500/15 text-purple-500">
+          <Users size={16} strokeWidth={2} />
+        </span>
+        <h2 className="font-semibold text-primary">{t("TEXT_MEMBERSHIP_DISTRIBUTION")}</h2>
+      </div>
       {data.length === 0 || total === 0 ? <TrainerDashboardEmptyState type="memberships" /> : (
         <div className="space-y-4">
-          {data.map((item) => {
+          {data.map((item, idx) => {
             const percentage = Math.round((item.count / total) * 100);
+            const barClass = barColors[idx % barColors.length]!;
             return (
               <div key={item.plan}>
-                <div className="flex justify-between text-sm mb-1"><span className="text-primary">{item.plan}</span><span className="text-secondary">{percentage}%</span></div>
-                <div className="h-3 rounded-full bg-input overflow-hidden" aria-hidden="true"><svg viewBox="0 0 100 1" preserveAspectRatio="none" className="h-full w-full" aria-hidden="true"><rect width={percentage} height="1" fill="currentColor" className="text-primary" /></svg></div>
+                <div className="flex justify-between text-sm mb-1"><span className="text-primary font-medium">{item.plan}</span><span className="text-secondary font-semibold tabular-nums">{percentage}%</span></div>
+                <div className="h-3 rounded-full bg-input overflow-hidden" aria-hidden="true"><svg viewBox="0 0 100 1" preserveAspectRatio="none" className="h-full w-full" aria-hidden="true"><rect width={percentage} height="1" fill="currentColor" className={barClass} /></svg></div>
               </div>
             );
           })}

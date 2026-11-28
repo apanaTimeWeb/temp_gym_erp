@@ -68,25 +68,25 @@ export default function TrainerLibraryDietGrid({
             key={plan.id}
             onClick={() => onViewDiet(plan)}
             title={plan.name}
-            className="min-h-11 text-start rounded-xl border border-border bg-card p-5 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-shadow flex flex-col motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+            className="min-h-11 text-start rounded-2xl border border-border bg-card p-5 hover:border-emerald-500/40 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring flex flex-col motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
            data-testid={`trainer_library-diet-grid-plan-${plan.id}`}>
             <div className="flex justify-between items-start mb-3">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-success-bg text-success shrink-0" data-testid={`trainer_library-diet-grid_plan_state${plan.id}`}>
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center border border-emerald-500/30 bg-emerald-500/15 text-emerald-500 shrink-0" data-testid={`trainer_library-diet-grid_plan_state${plan.id}`}>
                 <Apple size={18}  strokeWidth={2}/>
               </div>
               <div className="flex items-center gap-1.5">
                 {plan.deletionRequested && (
-                  <span className="px-2 py-0.5 text-2xs font-semibold rounded-full bg-warning-bg text-warning border border-warning">
+                  <span className="px-2 py-0.5 text-2xs font-semibold rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-300 border border-amber-500/30">
                     Pending Deletion
                   </span>
                 )}
-                <span className="p-1.5 rounded text-secondary" title={t("TEXT_VIEW_DIET_PLAN")} aria-hidden="true"><Eye size={18}  strokeWidth={2}/></span>
+                <span className="p-1.5 rounded-lg border border-sky-500/25 bg-sky-500/10 text-sky-500" title={t("TEXT_VIEW_DIET_PLAN")} aria-hidden="true"><Eye size={16}  strokeWidth={2}/></span>
               </div>
             </div>
             <TrainerInfrastructureTooltip content={plan.name}><h4 className="font-bold text-primary truncate mb-1">{plan.name}</h4></TrainerInfrastructureTooltip>
             <TrainerInfrastructureTooltip content={plan.goal}><p className="text-xs text-secondary mb-3 truncate">{plan.goal}</p></TrainerInfrastructureTooltip>
-            <div className="mt-auto pt-3 border-t border-border space-y-1">
-              {plan.calories != null ? <div className="flex items-center gap-2 text-xs text-secondary"><Flame size={18} className="text-warning" strokeWidth={2}/><span>{TrainerLibraryFormatNumber(plan.calories, locale)} {t("TEXT_KCAL_DAY")}</span></div> : null}
+            <div className="mt-auto pt-3 border-t border-border space-y-1.5">
+              {plan.calories != null ? <div className="inline-flex items-center gap-1.5 rounded-lg border border-orange-500/25 bg-orange-500/10 px-2.5 py-1 text-xs font-medium text-orange-600 dark:text-orange-300"><Flame size={15} className="text-orange-500" strokeWidth={2}/><span>{TrainerLibraryFormatNumber(plan.calories, locale)} {t("TEXT_KCAL_DAY")}</span></div> : null}
               {plan.protein != null ? <p className="text-xs text-secondary">{t("TEXT_PROTEIN")}{TrainerLibraryFormatNumber(plan.protein, locale)}{t("TEXT_G_CARBS")}{plan.carbs == null ? '—' : TrainerLibraryFormatNumber(plan.carbs, locale)}{t("TEXT_G_FATS")}{plan.fats == null ? '—' : TrainerLibraryFormatNumber(plan.fats, locale)}{t("TEXT_G")}</p> : null}
             </div>
           </button>

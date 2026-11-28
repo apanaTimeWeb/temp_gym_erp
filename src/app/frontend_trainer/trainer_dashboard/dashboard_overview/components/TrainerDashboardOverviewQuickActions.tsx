@@ -26,7 +26,24 @@ import { TRAINER_DASHBOARD_QUICK_ACTIONS } from '@/app/frontend_trainer/trainer_
 export default function TrainerDashboardQuickActions() {
   const t = useTranslations('TRAINER_DASHBOARD');
   const iconMap = { workout: Dumbbell, attendance: CalendarCheck, members: Users, library: Utensils } as const;
-  const toneClassMap = { primary: 'mb-2 text-primary', success: 'mb-2 text-success', info: 'mb-2 text-info', warning: 'mb-2 text-warning' } as const;
+  const tileThemeMap = {
+    primary: {
+      tile: 'border-orange-500/25 bg-orange-500/5 hover:bg-orange-500/15 hover:border-orange-500/40',
+      badge: 'bg-orange-500/15 border-orange-500/30 text-orange-500',
+    },
+    success: {
+      tile: 'border-emerald-500/25 bg-emerald-500/5 hover:bg-emerald-500/15 hover:border-emerald-500/40',
+      badge: 'bg-emerald-500/15 border-emerald-500/30 text-emerald-500',
+    },
+    info: {
+      tile: 'border-sky-500/25 bg-sky-500/5 hover:bg-sky-500/15 hover:border-sky-500/40',
+      badge: 'bg-sky-500/15 border-sky-500/30 text-sky-500',
+    },
+    warning: {
+      tile: 'border-amber-500/25 bg-amber-500/5 hover:bg-amber-500/15 hover:border-amber-500/40',
+      badge: 'bg-amber-500/15 border-amber-500/30 text-amber-500',
+    },
+  } as const;
 
   return (
     <div className="bg-card border border-border rounded-2xl p-5 shadow-card">
@@ -36,14 +53,17 @@ export default function TrainerDashboardQuickActions() {
       <div className="grid grid-cols-2 gap-3">
         {TRAINER_DASHBOARD_QUICK_ACTIONS.map(({ href, labelKey, iconKey, tone }) => {
           const Icon = iconMap[iconKey];
+          const theme = tileThemeMap[tone] ?? tileThemeMap.primary;
           return (
             <Link
               key={href}
               href={href}
-              className="flex flex-col items-center justify-center p-4 rounded-xl border border-border bg-page motion-safe:transition-colors hover:bg-primary-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              className={`flex flex-col items-center justify-center p-4 rounded-xl border ${theme.tile} motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring`}
               data-testid={`trainer_dashboard-dashboard-quick-action-${href.split('/').pop() ?? 'root'}`}
             >
-              <Icon size={18} strokeWidth={2} className={toneClassMap[tone]} />
+              <span className={`mb-2.5 p-2.5 rounded-xl border ${theme.badge}`}>
+                <Icon size={18} strokeWidth={2} />
+              </span>
               <span className="text-xs font-semibold text-center text-primary">{t(labelKey)}</span>
             </Link>
           );

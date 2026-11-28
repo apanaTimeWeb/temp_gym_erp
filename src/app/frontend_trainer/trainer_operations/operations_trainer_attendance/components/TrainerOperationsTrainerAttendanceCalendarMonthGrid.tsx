@@ -44,16 +44,16 @@ export function TrainerOperationsTrainerAttendanceCalendarMonthGrid({
 
           if (isPastOrToday) {
             if (status === TRAINER_ATTENDANCE_CALENDAR_STATUS.PRESENT) {
-              statusStyle = 'bg-success-bg text-success border-border hover:border-border';
-              badgeStyle = 'bg-success text-on-success';
+              statusStyle = 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border-emerald-500/25 hover:border-emerald-500/50';
+              badgeStyle = 'bg-emerald-500 text-white';
               label = t('TEXT_PRESENT_ON_DUTY');
             } else if (status === TRAINER_ATTENDANCE_CALENDAR_STATUS.ABSENT) {
-              statusStyle = 'bg-danger-bg text-danger border-border hover:border-border';
-              badgeStyle = 'bg-danger text-on-danger';
+              statusStyle = 'bg-rose-500/10 text-rose-600 dark:text-rose-300 border-rose-500/25 hover:border-rose-500/50';
+              badgeStyle = 'bg-rose-500 text-white';
               label = t('TEXT_ABSENT');
             } else if (status === TRAINER_ATTENDANCE_CALENDAR_STATUS.LEAVE) {
-              statusStyle = 'bg-warning-bg text-warning border-border hover:border-border';
-              badgeStyle = 'bg-warning-bg text-warning';
+              statusStyle = 'bg-amber-500/10 text-amber-600 dark:text-amber-300 border-amber-500/25 hover:border-amber-500/50';
+              badgeStyle = 'bg-amber-500 text-white';
               label = t('TEXT_WEEKLY_OFF_REST');
             }
           }

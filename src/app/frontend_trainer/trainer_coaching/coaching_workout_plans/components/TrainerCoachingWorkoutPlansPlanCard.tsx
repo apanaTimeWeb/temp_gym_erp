@@ -49,29 +49,29 @@ export default function TrainerWorkoutPlanCard({
       : [];
 
   return (
-    <article className="border border-border rounded-xl p-4 hover:border-focus hover:shadow-card motion-safe:transition-all bg-card">
+    <article className="border border-border rounded-2xl p-4 hover:border-sky-500/40 hover:shadow-card motion-safe:transition-all bg-card">
       <div className="flex items-start justify-between mb-3 gap-3">
-        <div className="min-w-10 min-h-10 bg-info-bg rounded-xl flex items-center justify-center shrink-0" data-testid={"trainer_workout-plan-card-info-state-33-1"}>
-          <Dumbbell size={18} strokeWidth={2} className="text-info" aria-hidden="true" />
+        <div className="min-w-10 min-h-10 border border-sky-500/30 bg-sky-500/15 rounded-xl flex items-center justify-center shrink-0" data-testid={"trainer_workout-plan-card-info-state-33-1"}>
+          <Dumbbell size={18} strokeWidth={2} className="text-sky-500" aria-hidden="true" />
         </div>
-        <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${TRAINER_WORKOUT_DIFFICULTY_STYLES[plan.level as keyof typeof TRAINER_WORKOUT_DIFFICULTY_STYLES] ?? 'bg-input text-secondary'}`}>
+        <span className={`text-xs px-2.5 py-0.5 rounded-full font-semibold ${TRAINER_WORKOUT_DIFFICULTY_STYLES[plan.level as keyof typeof TRAINER_WORKOUT_DIFFICULTY_STYLES] ?? 'bg-input text-secondary'}`}>
           {displayValue(plan.level)}
         </span>
       </div>
 
       <div className="flex items-start justify-between gap-2 mb-3">
         <TrainerInfrastructureTooltip content={String(displayValue(plan.name))}><h3 className="font-semibold text-primary truncate min-w-0">{displayValue(plan.name)}</h3></TrainerInfrastructureTooltip>
-        <div className="flex gap-1 shrink-0">
+        <div className="flex gap-1.5 shrink-0">
           {onAssign && (
             <button
               type="button"
               onClick={onAssign}
               aria-label={`Assign ${plan.name} to members`}
               title="Assign to members"
-              className="min-w-11 min-h-11 inline-flex items-center justify-center p-1.5 text-secondary hover:text-primary hover:bg-input rounded-md motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+              className="min-w-10 min-h-10 inline-flex items-center justify-center p-1.5 border border-sky-500/25 bg-sky-500/10 text-sky-500 hover:bg-sky-500/20 rounded-xl motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
               data-testid="trainer_workout-trainerworkoutplancard-button_assign"
             >
-              <UserPlus size={18} strokeWidth={2} aria-hidden="true" />
+              <UserPlus size={16} strokeWidth={2} aria-hidden="true" />
             </button>
           )}
           <button
@@ -79,10 +79,10 @@ export default function TrainerWorkoutPlanCard({
             onClick={onEdit}
             aria-label={t('TEXT_EDIT_WORKOUT_PLAN_ARIA', { name: plan.name })}
             title={t('TEXT_EDIT_WORKOUT_PLAN_ARIA', { name: plan.name })}
-            className="min-w-11 min-h-11 inline-flex items-center justify-center p-1.5 text-secondary hover:text-primary hover:bg-input rounded-md motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+            className="min-w-10 min-h-10 inline-flex items-center justify-center p-1.5 border border-amber-500/25 bg-amber-500/10 text-amber-500 hover:bg-amber-500/20 rounded-xl motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
             data-testid="trainer_workout-trainerworkoutplancard-button_1"
           >
-            <Edit2 size={18} strokeWidth={2} aria-hidden="true" />
+            <Edit2 size={16} strokeWidth={2} aria-hidden="true" />
           </button>
           <button
             type="button"
@@ -90,7 +90,7 @@ export default function TrainerWorkoutPlanCard({
             disabled={deleting}
             aria-label={t('TEXT_DELETE_WORKOUT_PLAN_ARIA', { name: plan.name })}
             title={t('TEXT_DELETE_WORKOUT_PLAN_ARIA', { name: plan.name })}
-            className="min-w-11 min-h-11 inline-flex items-center justify-center p-1.5 text-secondary hover:text-danger hover:bg-danger-bg rounded-md motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring disabled:opacity-60 motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+            className="min-w-10 min-h-10 inline-flex items-center justify-center p-1.5 border border-rose-500/25 bg-rose-500/10 text-rose-500 hover:bg-rose-500/20 rounded-xl motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring disabled:opacity-60 motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
             data-testid="trainer_workout-trainerworkoutplancard-button_2"
           >
             {deleting ? (

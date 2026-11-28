@@ -67,32 +67,32 @@ export default function TrainerDashboardMain() {
     <main className="min-h-full pb-10 bg-page text-primary">
       <div className="p-4 sm:p-6 space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <div>
+          <div className="space-y-1.5">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-xs font-semibold text-orange-600 dark:text-orange-300">
+              Trainer Operations & Coaching Hub
+            </span>
             <h1 className="text-page-title font-bold text-primary">{t("TEXT_DASHBOARD")}</h1>
-            <p className="text-sm text-secondary mt-1">{t("TEXT_TRAINER_OPERATIONAL_OVERVIEW")}</p>
+            <p className="text-sm text-secondary">{t("TEXT_TRAINER_OPERATIONAL_OVERVIEW")}</p>
           </div>
           <TrainerDashboardDateFilterDropdown />
         </div>
 
-        <div className="flex flex-wrap items-center gap-3 p-3 bg-card border border-border rounded-xl text-xs" data-testid="trainer_dashboard-quota-bar">
-          <div className="flex items-center gap-1.5 font-medium text-secondary">
-            <MapPin size={14} className="text-primary" />
+        <div className="flex flex-wrap items-center gap-2.5 p-3 bg-card border border-border rounded-xl text-xs shadow-card" data-testid="trainer_dashboard-quota-bar">
+          <div className="inline-flex items-center gap-1.5 rounded-lg border border-orange-500/25 bg-orange-500/10 px-2.5 py-1 font-medium text-secondary">
+            <MapPin size={14} className="text-orange-500" />
             <span>Branch: <strong className="text-primary font-semibold">Andheri East</strong></span>
           </div>
-          <span className="text-border">|</span>
-          <div className="flex items-center gap-1.5 font-medium text-secondary">
-            <Award size={14} className="text-warning" />
+          <div className="inline-flex items-center gap-1.5 rounded-lg border border-amber-500/25 bg-amber-500/10 px-2.5 py-1 font-medium text-secondary">
+            <Award size={14} className="text-amber-500" />
             <span>Tier: <strong className="text-primary font-semibold">Master Trainer (Tier 3)</strong></span>
           </div>
-          <span className="text-border">|</span>
-          <div className="flex items-center gap-1.5 font-medium text-secondary">
-            <Users size={14} className="text-info" />
+          <div className="inline-flex items-center gap-1.5 rounded-lg border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 font-medium text-secondary">
+            <Users size={14} className="text-sky-500" />
             <span>Capacity Quota: <strong className="text-primary font-semibold">10 / 15 Trainees (67%)</strong></span>
           </div>
-          <span className="text-border">|</span>
-          <div className="flex items-center gap-1.5 font-medium text-secondary">
-            <Percent size={14} className="text-success" />
-            <span>PT Commission: <strong className="text-success font-semibold">40% Session Retainer</strong></span>
+          <div className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-1 font-medium text-secondary">
+            <Percent size={14} className="text-emerald-500" />
+            <span>PT Commission: <strong className="text-emerald-600 dark:text-emerald-400 font-semibold">40% Session Retainer</strong></span>
           </div>
         </div>
         <TrainerDashboardKPIs />
