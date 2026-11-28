@@ -101,23 +101,24 @@ export default function ManagerExpenseRegisterAndReportingChart() {
   };
 
   return (
-    <div className="flex flex-col h-full w-full p-4">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="p-4 bg-input rounded-lg border border-border">
-          <p className="text-sm font-bold text-text-secondary uppercase tracking-wider mb-1">{t("COPY_TOTAL_TRACKED_EXPENSES")}</p>
-          <p className="text-2xl font-black text-danger-text">
+    <div className="relative overflow-hidden flex flex-col h-full w-full p-4 sm:p-5 rounded-2xl border border-amber-500/30 bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] shadow-card">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-rose-400 to-orange-500 opacity-85" />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 mb-6">
+        <div className="p-4 bg-page/80 dark:bg-[#0B1220]/90 rounded-xl border border-rose-500/25">
+          <p className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-1">{t("COPY_TOTAL_TRACKED_EXPENSES")}</p>
+          <p className="text-2xl font-black tabular-nums text-danger-text">
             {ManagerExpenseRegisterAndReportingFormatCurrency(totalThisMonth, ManagerEnvConfig.currencyCode, locale)}
           </p>
         </div>
-        <div className="p-4 bg-input rounded-lg border border-border">
-          <p className="text-sm font-bold text-text-secondary uppercase tracking-wider mb-1">{t("COPY_HIGHEST_CATEGORY")}</p>
-          <p className="text-2xl font-black text-warning-text">
+        <div className="p-4 bg-page/80 dark:bg-[#0B1220]/90 rounded-xl border border-amber-500/25">
+          <p className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-1">{t("COPY_HIGHEST_CATEGORY")}</p>
+          <p className="text-xl sm:text-2xl font-black tabular-nums text-warning-text break-words">
             {highestCategory ? `${highestCategory.name} (${ManagerExpenseRegisterAndReportingFormatCurrency(highestCategory.value || 0, ManagerEnvConfig.currencyCode, locale)})` : t('COPY_N')}
           </p>
         </div>
-        <div className="p-4 bg-input rounded-lg border border-border">
-          <p className="text-sm font-bold text-text-secondary uppercase tracking-wider mb-1">{t("COPY_TOTAL_CATEGORIES")}</p>
-          <p className="text-2xl font-black text-text-primary">
+        <div className="p-4 bg-page/80 dark:bg-[#0B1220]/90 rounded-xl border border-border/80 dark:border-white/10">
+          <p className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-1">{t("COPY_TOTAL_CATEGORIES")}</p>
+          <p className="text-2xl font-black tabular-nums text-text-primary">
             {chartData.length}
           </p>
         </div>

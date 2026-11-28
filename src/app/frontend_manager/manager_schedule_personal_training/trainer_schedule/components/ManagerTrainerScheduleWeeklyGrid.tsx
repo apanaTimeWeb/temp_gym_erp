@@ -40,12 +40,13 @@ export default function ManagerTrainerScheduleWeeklyGrid() {
   }
 
   return (
-    <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+    <div className="relative rounded-2xl border border-indigo-500/30 dark:border-indigo-500/35 bg-card dark:bg-[#0D1628] shadow-card overflow-hidden">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-indigo-500 via-sky-400 to-cyan-400 opacity-85" />
       <div className="max-h-[640px] overflow-auto">
         <table className="w-full text-left border-collapse min-w-224">
-          <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+          <thead className="sticky top-0 z-20 bg-surface-highlight dark:bg-[#152038] border-b border-border">
             <tr>
-              <th className="py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider w-44 sticky start-0 bg-surface-highlight border-e border-border z-30">{t("COPY_TRAINER_2")}</th>
+              <th className="py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider w-44 sticky start-0 bg-surface-highlight dark:bg-[#152038] border-e border-border z-30">{t("COPY_TRAINER_2")}</th>
               {days.map(day => (
                 <th key={day} className="py-3 px-3 text-xs font-semibold text-text-secondary uppercase tracking-wider text-center">
                   {day.slice(0, 3)}

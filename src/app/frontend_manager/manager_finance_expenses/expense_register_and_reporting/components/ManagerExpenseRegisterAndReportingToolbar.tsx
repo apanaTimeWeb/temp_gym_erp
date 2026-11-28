@@ -20,9 +20,10 @@ export default function ManagerExpenseRegisterAndReportingToolbar() {
   useEffect(() => { const timer = window.setTimeout(() => setSearch(searchDraft), 300); return () => window.clearTimeout(timer); }, [searchDraft, setSearch]);
 
   return (
-    <div className="flex flex-col xl:flex-row justify-between items-stretch xl:items-center gap-4 bg-card p-4 rounded-xl border border-border shadow-card flex-wrap">
+    <div className="relative overflow-hidden flex flex-col xl:flex-row justify-between items-stretch xl:items-center gap-4 bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] p-4 rounded-2xl border border-amber-500/30 dark:border-amber-500/35 shadow-card flex-wrap">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-orange-400 to-rose-500 opacity-85" />
       <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 flex-1 min-w-0">
-        <h1 className="text-2xl font-bold text-text-primary mr-2 shrink-0">{t("COPY_EXPENSES_2")}</h1>
+        <h1 className="text-page-title font-extrabold tracking-tight text-text-primary mr-2 shrink-0">{t("COPY_EXPENSES_2")}</h1>
         <div className="relative w-full sm:w-64">
           <Search size={18} strokeWidth={2} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary"/>
           <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "w-full pl-9 pr-4 py-2 bg-input border border-border rounded-lg text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring text-text-primary motion-safe:transition-all motion-safe:duration-200 ease-in-out"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_expenses-manager-expenses-toolbar-input-text"

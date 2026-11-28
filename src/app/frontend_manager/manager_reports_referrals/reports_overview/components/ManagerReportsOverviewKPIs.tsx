@@ -30,7 +30,7 @@ export default function ManagerReportsOverviewKPIs() {
   const k = summary?.kpis;
 
   return (
-    <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
       <ManagerReportsOverviewKpiCard label={t('TEXT_KPI_TOTAL_INCOME', { suffix: dateSuffix })} value={k ? formatReportCurrency(k.totalRevenue, locale) : '—'} icon={TrendingUp} iconBg="bg-success-bg" iconColor="text-success-text" sub={k ? t('TEXT_KPI_NET', { amount: formatReportCurrency(k.netProfit, locale) }) : undefined} subColor="text-success-text" href="/frontend_manager/manager_sales_billing/sales_overview" />
       <ManagerReportsOverviewKpiCard label={t('TEXT_KPI_TOTAL_EXPENSES', { suffix: dateSuffix })} value={k ? formatReportCurrency(k.totalExpenses, locale) : '—'} icon={TrendingDown} iconBg="bg-danger-bg" iconColor="text-danger-text" href="/frontend_manager/manager_finance_expenses/expense_register_and_reporting" />
       <ManagerReportsOverviewKpiCard label={t('TEXT_KPI_ACTIVE_MEMBERS', { suffix: dateSuffix })} value={k ? ManagerReportsOverviewFormatNumber(k.activeMembers) : '—'} icon={Users} iconBg="bg-info-bg" iconColor="text-info-text" sub={k ? t('TEXT_KPI_NEW_THIS_MONTH', { count: ManagerReportsOverviewFormatNumber(k.newMembersThisMonth) }) : undefined} subColor="text-success-text" href="/frontend_manager/manager_members/members_directory" />

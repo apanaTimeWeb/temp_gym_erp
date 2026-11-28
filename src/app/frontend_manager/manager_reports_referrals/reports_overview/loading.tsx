@@ -5,7 +5,7 @@ export default function ManagerReportsOverviewLoading() {
     <div className="min-h-full pb-10">
       <div className="bg-card border-b border-border px-6 py-4">
         <div className="h-6 w-52 bg-skeleton-base rounded-lg motion-safe:animate-pulse" />
-        <div className="h-4 w-80 bg-skeleton-base rounded mt-2 motion-safe:animate-pulse" />
+        <div className="h-4 w-80 max-w-full bg-skeleton-base rounded mt-2 motion-safe:animate-pulse" />
       </div>
       <div className="p-6 space-y-6">
         {/* Toolbar skeleton */}

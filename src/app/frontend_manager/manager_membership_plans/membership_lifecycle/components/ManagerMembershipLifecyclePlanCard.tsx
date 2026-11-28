@@ -23,7 +23,8 @@ export default function ManagerMembershipLifecyclePlanCard({ plan }: ManagerMemb
     : (plan.features as unknown as string).split(',').map((feature) => feature.trim()).filter(Boolean);
 
   return (
-    <article className={`flex flex-col gap-4 rounded-xl border bg-card p-5 motion-safe:transition-all motion-safe:duration-200 motion-safe:hover:-translate-y-1 hover:shadow-card ${plan.isActive ? 'border-border' : 'border-border opacity-60'}`}>
+    <article className={`relative overflow-hidden flex flex-col gap-4 rounded-2xl border bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] p-4 sm:p-5 motion-safe:transition-all motion-safe:duration-200 motion-safe:hover:-translate-y-1 hover:shadow-card ${plan.isActive ? 'border-indigo-500/30 dark:border-indigo-500/35' : 'border-border opacity-60'}`}>
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-indigo-500 via-violet-400 to-sky-500 opacity-85" />
       <header className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="mb-1 flex flex-wrap items-center gap-2">

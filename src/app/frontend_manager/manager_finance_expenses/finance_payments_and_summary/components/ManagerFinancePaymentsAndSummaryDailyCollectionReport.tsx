@@ -26,9 +26,10 @@ export default function ManagerFinancePaymentsAndSummaryDailyCollectionReport() 
   const TABLE_HEADERS = ['Invoice #', 'Member', 'Payment Method', 'Amount', 'Status', 'Date & Time'];
 
   return (
-    <div className="bg-card border border-border rounded-xl shadow-card overflow-hidden" data-testid="manager_finance-daily-collection-report">
+    <div className="relative bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] border border-emerald-500/30 dark:border-emerald-500/35 rounded-2xl shadow-card overflow-hidden" data-testid="manager_finance-daily-collection-report">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-emerald-500 via-cyan-400 to-indigo-500 opacity-85" />
       {/* Header */}
-      <div className="px-6 py-5 border-b border-border flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-overlay">
+      <div className="px-4 sm:px-6 py-4 sm:py-5 border-b border-emerald-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-surface-highlight dark:bg-[#0D1628]/90">
         <div>
           <h2 className="text-base font-bold text-text-primary">Daily Collection Register & Cashier Day-End Tally</h2>
           <p className="text-xs text-text-secondary mt-0.5">Real-time daily transaction breakdown by tender mode (Cash drawer, UPI, POS Card, Bank).</p>
@@ -46,49 +47,49 @@ export default function ManagerFinancePaymentsAndSummaryDailyCollectionReport() 
       </div>
 
       {/* KPI Breakdown Cards */}
-      <div className="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 border-b border-border bg-surface">
-        <div className="p-4 rounded-xl bg-card border border-border">
+      <div className="p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 border-b border-border dark:border-white/10 bg-surface/50 dark:bg-transparent">
+        <div className="p-4 rounded-xl bg-page/80 dark:bg-[#0B1220]/90 border border-border/80 dark:border-white/10">
           <div className="flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-wider mb-1">
             <DollarSign size={16} aria-hidden="true" />
             Total Day Collection
           </div>
-          <p className="text-xl font-bold text-text-primary">{formatCurrency(dayTotal)}</p>
+          <p className="text-xl font-extrabold tabular-nums text-text-primary">{formatCurrency(dayTotal)}</p>
           <p className="text-[11px] text-text-muted mt-0.5">{payments.length} transactions total</p>
         </div>
 
-        <div className="p-4 rounded-xl bg-card border border-border">
+        <div className="p-4 rounded-xl bg-page/80 dark:bg-[#0B1220]/90 border border-emerald-500/25">
           <div className="flex items-center gap-2 text-success-text text-xs font-bold uppercase tracking-wider mb-1">
             <Banknote size={16} aria-hidden="true" />
             Cash In Drawer
           </div>
-          <p className="text-xl font-bold text-success-text">{formatCurrency(cashTotal)}</p>
+          <p className="text-xl font-extrabold tabular-nums text-success-text">{formatCurrency(cashTotal)}</p>
           <p className="text-[11px] text-text-muted mt-0.5">Physical cashier tally</p>
         </div>
 
-        <div className="p-4 rounded-xl bg-card border border-border">
+        <div className="p-4 rounded-xl bg-page/80 dark:bg-[#0B1220]/90 border border-sky-500/25">
           <div className="flex items-center gap-2 text-info-text text-xs font-bold uppercase tracking-wider mb-1">
             <Smartphone size={16} aria-hidden="true" />
             UPI / QR Dynamic
           </div>
-          <p className="text-xl font-bold text-info">{formatCurrency(upiTotal)}</p>
+          <p className="text-xl font-extrabold tabular-nums text-info">{formatCurrency(upiTotal)}</p>
           <p className="text-[11px] text-text-muted mt-0.5">Direct bank transfer</p>
         </div>
 
-        <div className="p-4 rounded-xl bg-card border border-border">
+        <div className="p-4 rounded-xl bg-page/80 dark:bg-[#0B1220]/90 border border-amber-500/25">
           <div className="flex items-center gap-2 text-warning-text text-xs font-bold uppercase tracking-wider mb-1">
             <CreditCard size={16} aria-hidden="true" />
             Card / POS Terminal
           </div>
-          <p className="text-xl font-bold text-warning-text">{formatCurrency(cardTotal)}</p>
+          <p className="text-xl font-extrabold tabular-nums text-warning-text">{formatCurrency(cardTotal)}</p>
           <p className="text-[11px] text-text-muted mt-0.5">EDC machine swipe</p>
         </div>
 
-        <div className="p-4 rounded-xl bg-card border border-border">
+        <div className="p-4 rounded-xl bg-page/80 dark:bg-[#0B1220]/90 border border-border/80 dark:border-white/10">
           <div className="flex items-center gap-2 text-text-secondary text-xs font-bold uppercase tracking-wider mb-1">
             <FileSpreadsheet size={16} aria-hidden="true" />
             NetBanking / Cheque
           </div>
-          <p className="text-xl font-bold text-text-primary">{formatCurrency(netbankingTotal)}</p>
+          <p className="text-xl font-extrabold tabular-nums text-text-primary">{formatCurrency(netbankingTotal)}</p>
           <p className="text-[11px] text-text-muted mt-0.5">NEFT / RTGS settlement</p>
         </div>
       </div>

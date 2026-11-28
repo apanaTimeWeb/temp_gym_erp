@@ -25,17 +25,18 @@ export default function ManagerPtAssignmentsTrainerWorkload({ workload }: Manage
   const t = useTranslations('MANAGER_PT_ASSIGNMENTS');
 
   return (
-    <div className="bg-card border border-border rounded-2xl flex flex-col h-full overflow-hidden shadow-card">
-      <div className="px-5 py-4 border-b border-border bg-overlay">
-        <h2 className="text-base font-semibold text-text-primary">{t("COPY_TRAINER_WORKLOAD")}</h2>
+    <div className="relative bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] border border-indigo-500/30 dark:border-indigo-500/35 rounded-2xl flex flex-col h-full overflow-hidden shadow-card">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 opacity-85" />
+      <div className="px-4 sm:px-5 py-4 border-b border-border dark:border-white/10 bg-overlay dark:bg-[#0D1628]/90">
+        <h2 className="text-base font-bold text-text-primary">{t("COPY_TRAINER_WORKLOAD")}</h2>
       </div>
       
       <div className="max-h-[640px] overflow-auto">
         <ManagerInfrastructureResponsiveTable mobilePattern="horizontal-scroll" labels={[t('COPY_TRAINER_4'), t('COPY_CLIENTS'), t('COPY_RATING'), t('COPY_STATUS')]}>
           <table className="w-full text-left border-collapse">
-            <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+            <thead className="sticky top-0 z-20 bg-surface-highlight dark:bg-[#152038] border-b border-border">
               <tr>
-                <th className="sticky start-0 z-30 bg-surface-highlight border-e border-border py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider">{t("COPY_TRAINER_4")}</th>
+                <th className="sticky start-0 z-30 bg-surface-highlight dark:bg-[#152038] border-e border-border py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider">{t("COPY_TRAINER_4")}</th>
                 <th className="py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider">{t("COPY_CLIENTS")}</th>
                 <th className="py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider">{t("COPY_RATING")}</th>
                 <th className="py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wider text-right">{t("COPY_STATUS")}</th>

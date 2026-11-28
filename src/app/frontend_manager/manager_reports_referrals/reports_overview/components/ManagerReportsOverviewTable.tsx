@@ -22,9 +22,10 @@ export default function ManagerReportsOverviewTable() {
   }
 
   return (
-    <div className="bg-card border border-border rounded-xl overflow-hidden shadow-card">
-      <div className="px-5 py-3.5 border-b border-border">
-        <p className="text-sm font-semibold text-text-primary">{tab}{t("COPY_DATA")}</p>
+    <div className="relative bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] border border-indigo-500/30 dark:border-indigo-500/35 rounded-2xl overflow-hidden shadow-card">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 opacity-85" />
+      <div className="px-4 sm:px-5 py-3.5 border-b border-border dark:border-white/10 bg-surface-highlight dark:bg-[#0D1628]/90">
+        <p className="text-sm font-bold text-text-primary">{tab}{t("COPY_DATA")}</p>
       </div>
       <div className="overflow-x-auto">
         {tab === 'Revenue'    && <ManagerReportsOverviewRevenueTable    />}

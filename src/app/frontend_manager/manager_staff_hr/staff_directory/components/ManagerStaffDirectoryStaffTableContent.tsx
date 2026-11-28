@@ -38,17 +38,18 @@ export default function ManagerStaffDirectoryStaffTableContent({ staff, totalSta
   return (
     <>
       <div className="hidden lg:block flex-1">
-        <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+        <div className="relative rounded-2xl border border-indigo-500/30 dark:border-indigo-500/35 bg-card dark:bg-[#0D1628] shadow-card overflow-hidden">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 opacity-85" />
           <div className="max-h-[640px] overflow-auto">
             <ManagerInfrastructureResponsiveTable labels={[...translatedHeaders, t('COPY_ACTIONS_3')]}>
               <table className="w-full">
-                <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+                <thead className="sticky top-0 z-20 bg-surface-highlight dark:bg-[#152038] border-b border-border">
                   <tr>
                     {translatedHeaders.map((header, index) => (
                       <th
                         key={STAFF_TABLE_HEADERS[index]}
                         className={`text-xs font-semibold uppercase tracking-wider px-3 py-3 whitespace-nowrap ${
-                          index === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                          index === 0 ? 'sticky start-0 z-30 bg-surface-highlight dark:bg-[#152038] border-e border-border' : ''
                         } ${index === 4 || index === 5 ? 'text-right' : 'text-left'}`}
                       >
                         {header}

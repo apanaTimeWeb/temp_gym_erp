@@ -27,17 +27,18 @@ export default function ManagerSupportTicketsToolbar({
   return (
     <div className="space-y-4" data-testid="manager_support-toolbar">
       {/* Top Banner with Direct Admin Hotline */}
-      <div className="p-4 rounded-xl bg-primary-subtle border border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-primary text-on-primary">
+      <div className="relative overflow-hidden p-4 sm:p-5 rounded-2xl bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] border border-sky-500/30 shadow-card flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-sky-500 via-cyan-400 to-indigo-500 opacity-85" />
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="p-2.5 rounded-xl bg-primary text-on-primary shrink-0">
             <LifeBuoy size={20} strokeWidth={2} aria-hidden="true" />
           </div>
-          <div>
+          <div className="min-w-0">
             <h2 className="text-sm font-bold text-text-primary">Admin & Operations Support Desk</h2>
             <p className="text-xs text-text-secondary">Have an urgent facility emergency or policy inquiry? Contact Admin directly or raise a ticket below.</p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 shrink-0">
           <a
             href="tel:+919876500000"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-primary bg-card text-xs font-semibold text-primary hover:bg-primary hover:text-on-primary transition-all"

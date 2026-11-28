@@ -5,7 +5,7 @@ export default function ManagerNotificationsInboxLoading() {
     <div className="min-h-full pb-10 motion-safe:animate-pulse">
       <div className="bg-card border-b border-border px-6 py-4">
         <div className="h-6 w-48 bg-skeleton-base rounded-lg" />
-        <div className="h-4 w-72 bg-skeleton-base rounded mt-2" />
+        <div className="h-4 w-72 max-w-full bg-skeleton-base rounded mt-2" />
       </div>
       <div className="p-6 space-y-6">
         {/* KPI skeletons */}
@@ -23,7 +23,7 @@ export default function ManagerNotificationsInboxLoading() {
         {/* List skeleton */}
         <div className="bg-card border border-border rounded-xl overflow-hidden">
           <div className="p-4 border-b border-border flex gap-3">
-            <div className="h-9 w-72 bg-skeleton-base rounded-lg" />
+            <div className="h-9 w-72 max-w-full bg-skeleton-base rounded-lg" />
             <div className="h-9 w-28 bg-skeleton-base rounded-lg" />
             <div className="h-9 w-28 bg-skeleton-base rounded-lg" />
           </div>

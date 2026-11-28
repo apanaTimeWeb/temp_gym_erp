@@ -21,20 +21,21 @@ export default function ManagerPtAssignmentsPackagesGrid({ packages, translate, 
   }
 
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
       {packages.map((pkg) => (
-        <article key={pkg.id} className="rounded-xl border border-border bg-card p-6 motion-safe:transition-all motion-safe:duration-200 motion-safe:hover:-translate-y-1">
+        <article key={pkg.id} className="relative overflow-hidden rounded-2xl border border-indigo-500/30 dark:border-indigo-500/35 bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] p-5 sm:p-6 shadow-card motion-safe:transition-all motion-safe:duration-200 motion-safe:hover:-translate-y-1">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 opacity-85" />
           <div className="mb-4 flex items-center justify-between gap-3">
-            <span className="rounded-full border border-border bg-primary-subtle px-3 py-1 text-xs font-bold text-primary">
+            <span className="rounded-full border border-indigo-500/30 bg-primary-subtle px-3 py-1 text-xs font-bold text-primary">
               {pkg.sessionCount}{translate('COPY_SESSIONS')}
             </span>
-            <span className="text-xl font-bold text-text-primary">
+            <span className="text-xl font-extrabold tabular-nums text-text-primary">
               {ManagerPtAssignmentsFormatCurrency(pkg.price, currencyCode, locale)}
             </span>
           </div>
           <h3 className="mb-2 text-lg font-bold text-text-primary">{pkg.name}</h3>
           <p className="mb-6 min-h-10 text-sm text-text-secondary">{pkg.description}</p>
-          <div className="flex items-center justify-between border-t border-border pt-4 text-xs font-medium text-text-secondary">
+          <div className="flex items-center justify-between border-t border-border dark:border-white/10 pt-4 text-xs font-medium text-text-secondary">
             <span>{translate('COPY_DURATION')}{pkg.durationDays}{translate('COPY_DAYS')}</span>
           </div>
         </article>

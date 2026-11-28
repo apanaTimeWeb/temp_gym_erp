@@ -16,13 +16,14 @@ export default function ManagerSupportTicketsKPIs({ kpis }: { kpis: SupportTicke
       {cards.map((c) => {
         const Icon = c.icon;
         return (
-          <div key={c.label} className="p-4 rounded-xl bg-card border border-border shadow-xs flex items-center gap-3">
-            <div className={`w-10 h-10 rounded-lg ${c.bg} ${c.color} flex items-center justify-center shrink-0`}>
+          <div key={c.label} className="relative overflow-hidden p-4 rounded-2xl bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] border border-indigo-500/30 shadow-card flex items-center gap-3">
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-indigo-500 via-sky-400 to-cyan-400 opacity-80" />
+            <div className={`w-10 h-10 rounded-xl border border-white/10 ${c.bg} ${c.color} flex items-center justify-center shrink-0`}>
               <Icon size={20} strokeWidth={2} aria-hidden="true" />
             </div>
-            <div>
-              <p className="text-xs text-text-secondary font-medium">{c.label}</p>
-              <p className="text-xl font-bold text-text-primary">{c.value}</p>
+            <div className="min-w-0">
+              <p className="text-xs text-text-secondary font-medium truncate">{c.label}</p>
+              <p className="text-xl font-extrabold tabular-nums text-text-primary">{c.value}</p>
             </div>
           </div>
         );

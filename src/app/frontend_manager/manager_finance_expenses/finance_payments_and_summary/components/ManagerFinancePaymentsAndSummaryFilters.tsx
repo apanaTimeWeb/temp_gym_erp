@@ -47,7 +47,7 @@ export default function ManagerFinancePaymentsAndSummaryFilters() {
         </div>
       </div>
       <div className="flex flex-wrap gap-2 w-full xl:w-auto justify-start xl:justify-end">
-        <div className="w-40">
+        <div className="w-full sm:w-40">
           <ManagerSearchableDropdown dataTestId="manager_finance-managerfinancefilters-managersearchabledropdown-1"
             value={statusFilter}
             onChange={(val) => setStatusFilter(val.toString())}
@@ -58,7 +58,7 @@ export default function ManagerFinancePaymentsAndSummaryFilters() {
             className="bg-input"
            data-testid="manager_finance-managerfinancefilters-searchable-dropdown-1"/>
         </div>
-        <div className="w-44">
+        <div className="w-full sm:w-44">
           <ManagerSearchableDropdown dataTestId="manager_finance-managerfinancefilters-managersearchabledropdown-2"
             value={methodFilter}
             onChange={(val) => setMethodFilter(val.toString())}
@@ -70,13 +70,13 @@ export default function ManagerFinancePaymentsAndSummaryFilters() {
            data-testid="manager_finance-managerfinancefilters-searchable-dropdown-2"/>
         </div>
         <button data-testid="manager_finance-manager-finance-main-export-csv" onClick={exportCSV}
-          className="flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg bg-primary text-on-primary motion-safe:transition-all hover:bg-primary-hover motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110" type="button">
+          className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium rounded-xl bg-primary text-on-primary motion-safe:transition-all hover:bg-primary-hover motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110" type="button">
           <Download size={18} strokeWidth={2}/>{t("COPY_CSV")}</button>
         <button data-testid="manager_finance-manager-finance-main-export-pdf" onClick={exportPDF}
-          className="flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg bg-info text-on-info motion-safe:transition-all hover:brightness-110 motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110" type="button">
+          className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium rounded-xl bg-info text-on-info motion-safe:transition-all hover:brightness-110 motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110" type="button">
           <FileText size={18} strokeWidth={2}/>{t("COPY_PDF")}</button>
         <button data-testid="manager_finance-manager-finance-main-reload" onClick={reload}
-          className="min-w-32 flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-input border border-border text-text-secondary hover:text-primary motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110" type="button">
+          className="flex-1 sm:flex-none sm:min-w-28 flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-page/80 dark:bg-[#0B1220]/90 border border-border/80 dark:border-white/10 text-text-secondary hover:text-primary motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110" type="button">
           <RefreshCw size={18} strokeWidth={2}/>{t("COPY_REFRESH")}</button>
       </div>
     </div>

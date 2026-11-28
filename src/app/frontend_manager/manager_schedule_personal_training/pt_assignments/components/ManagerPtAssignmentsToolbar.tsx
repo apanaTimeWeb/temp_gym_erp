@@ -13,10 +13,10 @@ export default function ManagerPtAssignmentsToolbar({ title, subtitle, actionLab
   return (
     <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
       <div>
-        <h1 className="text-2xl font-bold text-text-primary">{title}</h1>
+        <h1 className="text-page-title font-extrabold tracking-tight text-text-primary">{title}</h1>
         <p className="mt-1 text-sm text-text-secondary">{subtitle}</p>
       </div>
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
         {onScheduleSession && (
           <button
             data-testid="manager_pt-button-schedule-session"

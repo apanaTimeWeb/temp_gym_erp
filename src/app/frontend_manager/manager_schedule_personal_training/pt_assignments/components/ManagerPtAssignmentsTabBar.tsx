@@ -14,7 +14,7 @@ export default function ManagerPtAssignmentsTabBar({ tabs, activeTab, onChange }
   const t = useTranslations('MANAGER_PT_ASSIGNMENTS');
 
   return (
-    <div role="tablist" aria-label={t('TEXT_ARIA_SECTIONS')} className="flex w-fit flex-wrap gap-1 rounded-xl border border-border bg-input p-1" data-testid="manager_pt-managerpttabbar-interactive">
+    <div role="tablist" aria-label={t('TEXT_ARIA_SECTIONS')} className="flex w-full sm:w-fit overflow-x-auto scrollbar-none gap-1 rounded-2xl border border-indigo-500/30 bg-input dark:bg-[#0D1628] p-1.5" data-testid="manager_pt-managerpttabbar-interactive">
       {tabs.map((id) => (
         <button
           key={id}
@@ -23,7 +23,7 @@ export default function ManagerPtAssignmentsTabBar({ tabs, activeTab, onChange }
           role="tab"
           aria-selected={activeTab === id}
           onClick={() => onChange(id)}
-          className={`min-h-11 rounded-lg px-4 py-2 text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-200 ${activeTab === id ? 'bg-card text-primary shadow-card' : 'text-text-secondary hover:bg-card hover:text-primary'}`}
+          className={`shrink-0 whitespace-nowrap min-h-11 rounded-xl px-4 py-2 text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-200 ${activeTab === id ? 'bg-card dark:bg-[#16223B] text-primary shadow-card border border-indigo-500/30' : 'text-text-secondary hover:bg-card hover:text-primary'}`}
         >
           {t(MANAGER_PT_ASSIGNMENTS_TAB_LABEL_KEYS[id])}
         </button>

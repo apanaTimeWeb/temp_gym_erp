@@ -29,43 +29,47 @@ export function ManagerReportsOverviewTrainersChart() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-4 rounded-xl bg-card border border-border flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-primary-subtle text-primary flex items-center justify-center shrink-0">
+        <div className="relative overflow-hidden p-4 rounded-2xl bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] border border-indigo-500/30 flex items-center gap-3 shadow-card">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-indigo-500 to-sky-400 opacity-85" />
+          <div className="w-10 h-10 rounded-xl bg-primary-subtle text-primary border border-indigo-500/25 flex items-center justify-center shrink-0">
             <Users size={20} strokeWidth={2} aria-hidden="true" />
           </div>
-          <div>
+          <div className="min-w-0">
             <p className="text-xs text-text-secondary font-medium">Active PT Clients</p>
-            <p className="text-xl font-bold text-text-primary">{totalClients}</p>
+            <p className="text-xl font-extrabold tabular-nums text-text-primary">{totalClients}</p>
           </div>
         </div>
 
-        <div className="p-4 rounded-xl bg-card border border-border flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-info-bg text-info flex items-center justify-center shrink-0">
+        <div className="relative overflow-hidden p-4 rounded-2xl bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] border border-sky-500/30 flex items-center gap-3 shadow-card">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-sky-500 to-cyan-400 opacity-85" />
+          <div className="w-10 h-10 rounded-xl bg-info-bg text-info border border-sky-500/25 flex items-center justify-center shrink-0">
             <CalendarCheck size={20} strokeWidth={2} aria-hidden="true" />
           </div>
-          <div>
+          <div className="min-w-0">
             <p className="text-xs text-text-secondary font-medium">Sessions Conducted</p>
-            <p className="text-xl font-bold text-text-primary">{totalSessions}</p>
+            <p className="text-xl font-extrabold tabular-nums text-text-primary">{totalSessions}</p>
           </div>
         </div>
 
-        <div className="p-4 rounded-xl bg-card border border-border flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-success-bg text-success-text flex items-center justify-center shrink-0">
+        <div className="relative overflow-hidden p-4 rounded-2xl bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] border border-emerald-500/30 flex items-center gap-3 shadow-card">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-emerald-500 to-teal-400 opacity-85" />
+          <div className="w-10 h-10 rounded-xl bg-success-bg text-success-text border border-emerald-500/25 flex items-center justify-center shrink-0">
             <Award size={20} strokeWidth={2} aria-hidden="true" />
           </div>
-          <div>
+          <div className="min-w-0">
             <p className="text-xs text-text-secondary font-medium">Avg Completion Rate</p>
-            <p className="text-xl font-bold text-text-primary">{avgCompletion}%</p>
+            <p className="text-xl font-extrabold tabular-nums text-text-primary">{avgCompletion}%</p>
           </div>
         </div>
 
-        <div className="p-4 rounded-xl bg-card border border-border flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-warning-bg text-warning-text flex items-center justify-center shrink-0">
+        <div className="relative overflow-hidden p-4 rounded-2xl bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] border border-amber-500/30 flex items-center gap-3 shadow-card">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 to-orange-400 opacity-85" />
+          <div className="w-10 h-10 rounded-xl bg-warning-bg text-warning-text border border-amber-500/25 flex items-center justify-center shrink-0">
             <DollarSign size={20} strokeWidth={2} aria-hidden="true" />
           </div>
-          <div>
+          <div className="min-w-0">
             <p className="text-xs text-text-secondary font-medium">PT Revenue Generated</p>
-            <p className="text-xl font-bold text-success-text">{formatReportCurrency(totalRevenue)}</p>
+            <p className="text-xl font-extrabold tabular-nums text-success-text">{formatReportCurrency(totalRevenue)}</p>
           </div>
         </div>
       </div>

@@ -17,10 +17,11 @@ export default function ManagerMembershipLifecycleToolbar() {
     .map((value) => ({ value, labelKey: null as string | null }));
 
   return (
-    <div className="mb-6 flex flex-wrap items-center gap-3">
-      <div className="relative flex-1 max-w-xs">
+    <div className="relative overflow-hidden mb-6 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 rounded-2xl border border-indigo-500/30 bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] p-4 shadow-card">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-indigo-500 via-sky-400 to-cyan-400 opacity-80" />
+      <div className="relative flex-1 w-full sm:max-w-xs">
         <Search size={18} strokeWidth={2} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary"/>
-        <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "w-full pl-9 pr-4 py-2 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:border-primary"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_plans-manager-plans-main-input-text"
+        <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "w-full min-h-11 pl-9 pr-4 py-2 text-sm bg-page/80 dark:bg-[#0B1220]/90 border border-border/80 dark:border-white/10 rounded-xl text-text-primary focus-visible:outline-none focus-visible:border-primary"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_plans-manager-plans-main-input-text"
           type="text"
           placeholder={t("COPY_SEARCH_PLANS")}
           value={search}
@@ -28,7 +29,7 @@ export default function ManagerMembershipLifecycleToolbar() {
           
          aria-label={t("COPY_SEARCH_PLANS")}/>
       </div>
-      <select className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "px-3 min-h-11 py-2 bg-input border border-border rounded-lg text-sm text-text-primary focus-visible:outline-none focus-visible:border-primary"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_plans-manager-plans-main-select-option-1"
+      <select className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "w-full sm:w-auto px-3 min-h-11 py-2 bg-page/80 dark:bg-[#0B1220]/90 border border-border/80 dark:border-white/10 rounded-xl text-sm text-text-primary focus-visible:outline-none focus-visible:border-primary"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_plans-manager-plans-main-select-option-1"
         value={tierFilter}
         onChange={e => setTierFilter(e.target.value)}
         
@@ -36,7 +37,7 @@ export default function ManagerMembershipLifecycleToolbar() {
         {MANAGER_MEMBERSHIP_LIFECYCLE_TIER_FILTER_OPTIONS.map((option) => <option key={option.value} value={option.value} data-testid="manager_plans-managerplanstoolbar-section-filters">{t(option.labelKey)}</option>)}
         {dynamicTierOptions.map((option) => <option key={option.value} value={option.value}>{option.value}</option>)}
       </select>
-      <select className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "px-3 min-h-11 py-2 bg-input border border-border rounded-lg text-sm text-text-primary focus-visible:outline-none focus-visible:border-primary"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_plans-manager-plans-main-select-option-2"
+      <select className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "w-full sm:w-auto px-3 min-h-11 py-2 bg-page/80 dark:bg-[#0B1220]/90 border border-border/80 dark:border-white/10 rounded-xl text-sm text-text-primary focus-visible:outline-none focus-visible:border-primary"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_plans-manager-plans-main-select-option-2"
         value={statusFilter}
         onChange={e => setStatusFilter(e.target.value)}
         
@@ -48,7 +49,7 @@ export default function ManagerMembershipLifecycleToolbar() {
         onClick={openCreatePlan}
         disabled={saving}
         data-testid="manager_plans-managerplanstoolbar-button-create-plan"
-        className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page disabled:cursor-not-allowed disabled:opacity-60"
+        className="w-full sm:w-auto sm:ms-auto inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-on-primary shadow-card hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page disabled:cursor-not-allowed disabled:opacity-60"
       >
         <Plus size={18} strokeWidth={2} aria-hidden="true" />
         {t('CRUD_ADD_PLAN_TITLE')}

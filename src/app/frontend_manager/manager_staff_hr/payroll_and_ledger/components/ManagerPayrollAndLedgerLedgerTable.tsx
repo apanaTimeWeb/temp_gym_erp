@@ -40,7 +40,7 @@ export default function ManagerPayrollAndLedgerLedgerTable() {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-col sm:flex-row justify-between gap-4 items-end">
+      <div className="flex flex-col sm:flex-row justify-between gap-4 items-start sm:items-end">
         <div>
           <h2 className="text-lg font-bold text-text-primary">{t("COPY_STAFF_LEDGER")}</h2>
           <p className="text-sm text-text-secondary">{t("COPY_VIEW_DETAILED_TRANSACTION_HISTORY_STAFF_MEMBERS")}</p>
@@ -58,28 +58,31 @@ export default function ManagerPayrollAndLedgerLedgerTable() {
 
       {selectedStaff && (
         <div className="grid grid-cols-1 gap-4 mb-4 sm:grid-cols-3">
-          <div className="bg-card p-4 rounded-xl border border-border motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+          <div className="relative overflow-hidden bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] p-4 rounded-2xl border border-indigo-500/30 shadow-card motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-indigo-500 to-sky-400 opacity-85" />
             <p className="text-xs text-text-secondary uppercase">{t("COPY_BASE_SALARY_2")}</p>
-            <p className="text-xl font-bold text-text-primary">{ManagerStaffPayrollAndAttendanceFormatCurrency(selectedStaff.salary || 0, ManagerEnvConfig.currencyCode, locale)}{t("COPY_MO")}</p>
+            <p className="text-xl font-extrabold tabular-nums text-text-primary">{ManagerStaffPayrollAndAttendanceFormatCurrency(selectedStaff.salary || 0, ManagerEnvConfig.currencyCode, locale)}{t("COPY_MO")}</p>
           </div>
-          <div className="bg-card p-4 rounded-xl border border-border motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+          <div className="relative overflow-hidden bg-card dark:bg-gradient-to-br dark:from-[#22121A] dark:via-[#141B2D] dark:to-[#0C1220] p-4 rounded-2xl border border-rose-500/30 shadow-card motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-rose-500 to-orange-400 opacity-85" />
             <p className="text-xs text-text-secondary uppercase">{t("COPY_ADVANCE_BALANCE_2")}</p>
-            <p className="text-xl font-bold text-danger-text">{ManagerStaffPayrollAndAttendanceFormatCurrency(selectedStaff.advanceSalary || 0, ManagerEnvConfig.currencyCode, locale)}</p>
+            <p className="text-xl font-extrabold tabular-nums text-danger-text">{ManagerStaffPayrollAndAttendanceFormatCurrency(selectedStaff.advanceSalary || 0, ManagerEnvConfig.currencyCode, locale)}</p>
           </div>
-          <div className="bg-card p-4 rounded-xl border border-border motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+          <div className="relative overflow-hidden bg-card dark:bg-gradient-to-br dark:from-[#211A10] dark:via-[#141B2D] dark:to-[#0C1220] p-4 rounded-2xl border border-amber-500/30 shadow-card motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 to-yellow-400 opacity-85" />
             <p className="text-xs text-text-secondary uppercase">{t("COPY_DUE_AMOUNT")}</p>
-            <p className="text-xl font-bold text-warning-text">{ManagerStaffPayrollAndAttendanceFormatCurrency(selectedStaff.currentDue || 0, ManagerEnvConfig.currencyCode, locale)}</p>
+            <p className="text-xl font-extrabold tabular-nums text-warning-text">{ManagerStaffPayrollAndAttendanceFormatCurrency(selectedStaff.currentDue || 0, ManagerEnvConfig.currencyCode, locale)}</p>
           </div>
         </div>
       )}
 
-      <div className="rounded-2xl border border-border overflow-hidden bg-card shadow-card">
+      <div className="rounded-2xl border border-border dark:border-white/10 overflow-hidden bg-card dark:bg-[#0D1628] shadow-card">
         <div className="max-h-[640px] overflow-auto">
           <ManagerInfrastructureResponsiveTable labels={[t('COPY_DATE_1'), t('COPY_TRANSACTION_TYPE'), t('COPY_NOTES_1'), t('COPY_CREDIT'), t('COPY_DEBIT'), t('COPY_BALANCE')]}>
             <table className="w-full text-left border-collapse">
-              <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border text-sm">
+              <thead className="sticky top-0 z-20 bg-surface-highlight dark:bg-[#152038] border-b border-border text-sm">
                 <tr>
-                  <th className="sticky start-0 z-30 bg-surface-highlight border-e border-border p-4 font-medium text-text-secondary whitespace-nowrap">{t("COPY_DATE_1")}</th>
+                  <th className="sticky start-0 z-30 bg-surface-highlight dark:bg-[#152038] border-e border-border p-4 font-medium text-text-secondary whitespace-nowrap">{t("COPY_DATE_1")}</th>
                   <th className="p-4 font-medium text-text-secondary whitespace-nowrap">{t("COPY_TRANSACTION_TYPE")}</th>
                   <th className="p-4 font-medium text-text-secondary">{t("COPY_NOTES_1")}</th>
                   <th className="p-4 font-medium text-text-secondary text-right">{t("COPY_CREDIT")}</th>

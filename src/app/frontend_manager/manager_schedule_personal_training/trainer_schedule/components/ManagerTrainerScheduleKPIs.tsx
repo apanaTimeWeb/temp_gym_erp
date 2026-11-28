@@ -18,16 +18,16 @@ export default function ManagerTrainerScheduleKPIs() {
 
   if (status === MANAGER_TRAINER_SCHEDULE_STATUS_VALUES.PENDING || !kpis) {
     return (
-      <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {[1, 2, 3, 4].map(i => (
-          <div key={`skeleton-${i}`} className="h-28 bg-skeleton-base bg-skeleton-highlight rounded-xl border border-border motion-safe:animate-pulse" />
+          <div key={`skeleton-${i}`} className="h-28 bg-skeleton-base bg-skeleton-highlight rounded-2xl border border-border motion-safe:animate-pulse" />
         ))}
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
       <ManagerStatCard
         title={t("TEXT_KPI_TOTAL_TRAINERS") + dateSuffix}
         value={kpis.totalTrainers}

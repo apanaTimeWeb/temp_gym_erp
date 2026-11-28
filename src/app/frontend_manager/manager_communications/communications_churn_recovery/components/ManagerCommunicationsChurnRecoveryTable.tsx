@@ -40,11 +40,12 @@ export default function ManagerCommunicationsCampaignsChurnRecoveryTable({
   const endEntry   = Math.min(currentPage * CANCELLATIONS_ITEMS_PER_PAGE, allFilteredCount);
 
   return (
-    <div className="bg-card border border-border rounded-2xl shadow-card overflow-hidden">
+    <div className="relative bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] border border-indigo-500/30 dark:border-indigo-500/35 rounded-2xl shadow-card overflow-hidden">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-rose-500 via-amber-400 to-indigo-500 opacity-85" />
       {/* Controls */}
-      <div className="p-4 border-b border-border bg-surface-highlight flex flex-wrap items-center justify-between gap-3">
+      <div className="p-4 border-b border-border dark:border-white/10 bg-surface-highlight dark:bg-[#0D1628]/90 flex flex-wrap items-center justify-between gap-3">
         {/* Search */}
-        <div className="relative min-w-[240px] sm:w-72">
+        <div className="relative w-full sm:w-72">
           <Search size={18} strokeWidth={2} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary pointer-events-none"/>
           <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "w-full pl-9 pr-3 py-2 text-sm bg-input border border-border rounded-xl text-text-primary placeholder:text-text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring min-h-10 motion-safe:transition-all motion-safe:duration-200 ease-in-out"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_communications-manager-churn-recovery-input-text"
             type="text"

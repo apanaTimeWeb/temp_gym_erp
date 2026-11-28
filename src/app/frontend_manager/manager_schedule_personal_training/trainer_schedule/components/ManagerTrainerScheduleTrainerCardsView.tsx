@@ -18,26 +18,27 @@ export default function ManagerTrainerScheduleTrainerCardsView({ trainer }: Mana
   const { openAddShift } = useManagerTrainerScheduleLogic();
 
   return (
-    <div className="bg-card border border-border rounded-xl p-5 space-y-4 hover:border-primary motion-safe:transition-all motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+    <div className="relative overflow-hidden bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] border border-indigo-500/30 dark:border-indigo-500/35 rounded-2xl p-4 sm:p-5 space-y-4 shadow-card hover:border-primary motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 opacity-85" />
       {/* Header */}
       <div className="flex items-start justify-between gap-2">
-        <div>
-          <p className="text-sm font-semibold text-text-primary">{trainer.trainerName}</p>
-          <p className="text-xs text-text-secondary">{ManagerTrainerScheduleDisplayValue(trainer.trainerRole)}</p>
+        <div className="min-w-0">
+          <p className="text-sm font-bold text-text-primary truncate">{trainer.trainerName}</p>
+          <p className="text-xs text-text-secondary truncate">{ManagerTrainerScheduleDisplayValue(trainer.trainerRole)}</p>
         </div>
-        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${trainer.isActive ? 'bg-success-bg text-success-text' : 'bg-input text-text-secondary'}`} data-testid="manager_schedule-managerscheduletrainercard-status-badge-1">
+        <span className={`shrink-0 text-xs font-semibold px-2 py-0.5 rounded-full ${trainer.isActive ? 'bg-success-bg text-success-text' : 'bg-input text-text-secondary'}`} data-testid="manager_schedule-managerscheduletrainercard-status-badge-1">
           {trainer.isActive ? t('COPY_ACTIVE') : t('COPY_INACTIVE')}
         </span>
       </div>
 
       {/* Stats */}
-      <div className="flex gap-4 text-xs text-text-secondary">
+      <div className="flex flex-wrap gap-4 text-xs text-text-secondary">
         <span className="flex items-center gap-1"><CalendarDays size={18} strokeWidth={2} data-testid="manager_schedule-managerscheduletrainercard-interactive"/>{trainer.totalShiftsPerWeek}{t("COPY_SHIFTS_WK")}</span>
         <span className="flex items-center gap-1"><Clock size={18} strokeWidth={2}/>{trainer.totalHoursPerWeek}{t("COPY_H_WK")}</span>
       </div>
 
       {/* Day dots */}
-      <div className="flex gap-1.5">
+      <div className="flex flex-wrap gap-1.5">
         {SHIFT_DAYS.map(day => {
           const shift = trainer.shifts.find(s => s.day === day);
           const styles = shift ? SHIFT_STATUS_STYLES[shift.status] : null;

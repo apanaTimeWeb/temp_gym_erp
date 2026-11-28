@@ -12,7 +12,8 @@ interface ManagerFinancePaymentsAndSummaryPaymentsViewProps { isPending: boolean
 export default function ManagerFinancePaymentsAndSummaryPaymentsView({ isPending, isError, hasPayments, onRetry }: ManagerFinancePaymentsAndSummaryPaymentsViewProps) {
   const t = useTranslations('MANAGER_FINANCE_PAYMENTS_AND_SUMMARY');
   return (
-    <div className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
+    <div className="relative overflow-hidden rounded-2xl border border-emerald-500/30 dark:border-emerald-500/35 bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] shadow-card">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-emerald-500 via-teal-400 to-sky-500 opacity-85" />
       <ManagerFinancePaymentsAndSummaryFilters />
       {isPending ? <ManagerTableSkeleton rows={6} /> : isError ? (
         <div className="space-y-3 py-16 text-center">

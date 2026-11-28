@@ -18,9 +18,9 @@ export default function ManagerReferralsRewardsKPIs() {
   if (isKpisError) return <div role="alert" className="rounded-lg border border-danger p-4 text-sm text-danger-text">{t('TEXT_GENERIC_ERROR')} <button type="button" className="min-h-11 underline" onClick={() => void reloadKpis()}>{t('COPY_TRY_AGAIN_2')}</button></div>;
   if (isKpisLoading) {
     return (
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 motion-safe:animate-pulse">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 motion-safe:animate-pulse">
         {[1, 2, 3, 4].map((i) => (
-          <div key={`skeleton-${i}`} className="bg-card h-28 rounded-xl border border-border"></div>
+          <div key={`skeleton-${i}`} className="bg-card h-28 rounded-2xl border border-border"></div>
         ))}
       </div>
     );
@@ -29,7 +29,7 @@ export default function ManagerReferralsRewardsKPIs() {
   if (!kpis) return <div role="alert" className="rounded-lg border border-danger p-4 text-sm text-danger-text">{t('TEXT_GENERIC_ERROR')} <button type="button" className="min-h-11 underline" onClick={() => void reloadKpis()}>{t('COPY_TRY_AGAIN_2')}</button></div>;
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <ManagerStatCard 
         title={t("TEXT_KPI_TOTAL_REFERRALS") + dateSuffix} 
         value={kpis.totalReferrals.toString()} 
