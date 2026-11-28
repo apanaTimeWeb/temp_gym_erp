@@ -1,6 +1,7 @@
 "use client";
 // RESPONSIBILITY: Renders the fixed Trainer shell header: sidebar toggle, page title, theme toggle, notification navigation, and accessible profile menu. It owns no feature/business data.
 import { useEffect, useId, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import type { KeyboardEvent as ReactKeyboardEvent } from 'react';
 
@@ -94,6 +95,7 @@ export default function TrainerNavigationHeader({ title, subtitle, branchName, i
   const t = useTranslations('TRAINER_SHELL');
   const [showProfile, setShowProfile] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [notifications, setNotifications] = useState<TrainerHeaderNotificationItem[]>(DEFAULT_TRAINER_HEADER_NOTIFICATIONS);
   const profileRef = useRef<HTMLDivElement>(null);
   const profileMenuRef = useRef<HTMLDivElement>(null);
@@ -152,16 +154,17 @@ export default function TrainerNavigationHeader({ title, subtitle, branchName, i
   }, []);
 
   useEffect(() => {
-    if (!showNotifications) return;
-    const handleNotifKeyDown = (event: KeyboardEvent) => {
+    if (!showNotifications && !showLogoutModal) return;
+    const handleModalOrNotifKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         event.preventDefault();
         setShowNotifications(false);
+        setShowLogoutModal(false);
       }
     };
-    document.addEventListener('keydown', handleNotifKeyDown);
-    return () => document.removeEventListener('keydown', handleNotifKeyDown);
-  }, [showNotifications]);
+    document.addEventListener('keydown', handleModalOrNotifKeyDown);
+    return () => document.removeEventListener('keydown', handleModalOrNotifKeyDown);
+  }, [showNotifications, showLogoutModal]);
 
 // Effect contract: restore persisted shell presentation and keep outside-click/keyboard listeners aligned with mounted state.
   useEffect(() => {
@@ -425,7 +428,7 @@ export default function TrainerNavigationHeader({ title, subtitle, branchName, i
                   role="menuitem"
                   tabIndex={-1}
                   className="w-full flex items-center gap-2 min-h-10 px-2.5 py-2 rounded-lg text-xs text-rose-300 border border-rose-500/30 bg-rose-500/15 hover:bg-rose-500/25 hover:text-white font-semibold motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
-                  onClick={() => { setShowProfile(false); logout(); }}
+                  onClick={() => { setShowProfile(false); setShowLogoutModal(true); }}
                  data-testid="trainer_navigation-infrastructure-header_log_out">
                   <LogOut size={15} strokeWidth={2} aria-hidden="true" /> {t("TEXT_LOG_OUT")}</button>
               </div>
@@ -433,6 +436,76 @@ export default function TrainerNavigationHeader({ title, subtitle, branchName, i
           </div>
         </div>
       </div>
+
+      {showLogoutModal && typeof document !== 'undefined' && createPortal(
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="trainer-logout-title"
+          aria-describedby="trainer-logout-desc"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-4"
+          data-testid="trainer-logout-overlay"
+        >
+          <div
+            className="fixed inset-0 bg-black/70 backdrop-blur-md transition-opacity"
+            onClick={() => setShowLogoutModal(false)}
+            aria-hidden="true"
+          />
+          <div
+            className="relative z-10 w-full max-w-sm rounded-2xl border border-rose-500/35 bg-[#0E1526]/98 p-6 text-white shadow-[0_24px_64px_rgba(0,0,0,0.85)] focus:outline-none"
+            data-testid="trainer-logout-modal"
+          >
+            <div className="flex flex-col items-center text-center">
+              <div className="w-12 h-12 rounded-xl bg-rose-500/15 border border-rose-500/35 text-rose-400 flex items-center justify-center mb-3 shadow-[0_4px_16px_rgba(244,63,94,0.25)]">
+                <LogOut size={22} strokeWidth={2.2} aria-hidden="true" />
+              </div>
+              <h2 id="trainer-logout-title" className="text-white text-lg font-bold text-center">
+                {t("TEXT_LOG_OUT")}
+              </h2>
+              <p id="trainer-logout-desc" className="text-slate-400 text-sm mt-1 text-center">
+                Are you sure you want to end your current trainer session?
+              </p>
+            </div>
+
+            <div className="my-4 rounded-xl bg-white/[0.04] border border-white/10 p-3 flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#FF5A1F] via-[#EC4899] to-[#8B5CF6] text-white flex items-center justify-center text-sm font-bold shrink-0" aria-hidden="true">
+                {displayUserName.charAt(0).toUpperCase()}
+              </div>
+              <div className="text-left flex-1 min-w-0">
+                <p className="text-xs font-semibold text-white truncate">{displayUserName}</p>
+                <p className="text-[11px] text-slate-400 truncate">{displayUserEmail || displayUserRole}</p>
+              </div>
+              <span className="text-[10px] font-bold uppercase text-amber-300 bg-amber-500/15 border border-amber-400/30 rounded px-1.5 py-0.5 shrink-0">
+                {displayUserRole}
+              </span>
+            </div>
+
+            <div className="mt-4 flex items-center justify-end gap-2.5">
+              <button
+                type="button"
+                data-testid="trainer-logout-cancel"
+                onClick={() => setShowLogoutModal(false)}
+                className="min-h-10 border border-white/15 rounded-xl px-4 py-2 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-white transition-colors cursor-pointer"
+              >
+                {t("TEXT_CANCEL")}
+              </button>
+              <button
+                type="button"
+                data-testid="trainer-logout-confirm"
+                onClick={() => {
+                  setShowLogoutModal(false);
+                  logout();
+                }}
+                className="min-h-10 bg-rose-600 text-white rounded-xl px-4 py-2 text-sm font-semibold hover:bg-rose-500 transition-colors cursor-pointer flex items-center gap-1.5 shadow-[0_4px_14px_rgba(225,29,72,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
+              >
+                <LogOut size={14} strokeWidth={2} aria-hidden="true" />
+                <span>{t("TEXT_LOG_OUT")}</span>
+              </button>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
     </header>
   );
 }

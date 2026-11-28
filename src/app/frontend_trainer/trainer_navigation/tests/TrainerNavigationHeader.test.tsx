@@ -56,7 +56,7 @@ describe('TrainerNavigationHeader', () => {
     expect(trigger).toHaveFocus();
   });
 
-  it('closes the profile menu when Tab is pressed and invokes host logout from the menu action', () => {
+  it('closes the profile menu when Tab is pressed and opens centered logout confirmation modal before invoking logout', () => {
     render(<TrainerNavigationHeader title="Dashboard" isSidebarCollapsed={false} isMobileSidebarOpen={false} isMobileViewport={false} onToggleSidebar={vi.fn()} />);
     const trigger = screen.getByRole('button', { name: 'TEXT_OPEN_PROFILE_MENU' });
     fireEvent.click(trigger);
@@ -65,8 +65,21 @@ describe('TrainerNavigationHeader', () => {
 
     fireEvent.click(trigger);
     fireEvent.click(screen.getByRole('menuitem', { name: 'TEXT_LOG_OUT' }));
-    expect(hostApi.logout).toHaveBeenCalledTimes(1);
     expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    expect(hostApi.logout).not.toHaveBeenCalled();
+
+    const modal = screen.getByTestId('trainer-logout-modal');
+    expect(modal).toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId('trainer-logout-cancel'));
+    expect(screen.queryByTestId('trainer-logout-modal')).not.toBeInTheDocument();
+    expect(hostApi.logout).not.toHaveBeenCalled();
+
+    fireEvent.click(trigger);
+    fireEvent.click(screen.getByRole('menuitem', { name: 'TEXT_LOG_OUT' }));
+    fireEvent.click(screen.getByTestId('trainer-logout-confirm'));
+    expect(hostApi.logout).toHaveBeenCalledTimes(1);
+    expect(screen.queryByTestId('trainer-logout-modal')).not.toBeInTheDocument();
   });
 
   it('opens notifications dropdown on hover and click and marks items read', () => {
