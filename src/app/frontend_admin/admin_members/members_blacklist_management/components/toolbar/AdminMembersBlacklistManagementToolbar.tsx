@@ -28,7 +28,7 @@ export default function AdminMembersBlacklistManagementToolbar() {
   return (
     <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
       <div className="flex flex-wrap gap-3 items-center w-full sm:w-auto">
-        <div className="relative">
+        <div className="relative w-full sm:w-auto">
           <span className="absolute inset-y-0 left-3 flex items-center"><Search size={18} className="text-secondary"  strokeWidth={2}/></span>
           <input
             type="text"
@@ -36,11 +36,11 @@ export default function AdminMembersBlacklistManagementToolbar() {
             placeholder={t('blacklist.admin_blacklist_toolbar.text_212b62a779')}
             value={localSearch}
             onChange={(e) => { setLocalSearch(e.target.value); setSearch(e.target.value); }}
-            className="pl-9 pr-4 py-2 bg-input border border-border rounded-lg text-sm text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary w-64 focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
+            className="pl-9 pr-4 py-2 bg-input border border-border rounded-lg text-sm text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary w-full sm:w-64 focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:duration-base ease-in-out min-h-11"
            data-testid="admin_blacklist-admin_blacklist-toolbar-control"/>
         </div>
-        <div className="w-40"><AdminNavigationLayoutSearchableDropdown options={BLACKLIST_SCOPE_OPTIONS.map((option) => ({ ...option, label: t(option.labelKey) }))} value={scopeFilter} onChange={(v) => setScopeFilter(v as string)} placeholder={t('blacklist.admin_blacklist_toolbar.text_b64efd493e')}  testId="admin_blacklist-admin_blacklist-toolbar-change"/></div>
-        <div className="w-40"><AdminNavigationLayoutSearchableDropdown options={BLACKLIST_GYM_OPTIONS.map((option) => ({ ...option, label: t(option.labelKey) }))} value={gymFilter} onChange={(v) => setGymFilter(v as string)} placeholder={t('blacklist.admin_blacklist_toolbar.text_1ea6687cfe')}  testId="admin_blacklist-admin_blacklist-toolbar-change-2"/></div>
+        <div className="w-full sm:w-40"><AdminNavigationLayoutSearchableDropdown options={BLACKLIST_SCOPE_OPTIONS.map((option) => ({ ...option, label: t(option.labelKey) }))} value={scopeFilter} onChange={(v) => setScopeFilter(v as string)} placeholder={t('blacklist.admin_blacklist_toolbar.text_b64efd493e')}  testId="admin_blacklist-admin_blacklist-toolbar-change"/></div>
+        <div className="w-full sm:w-40"><AdminNavigationLayoutSearchableDropdown options={BLACKLIST_GYM_OPTIONS.map((option) => ({ ...option, label: t(option.labelKey) }))} value={gymFilter} onChange={(v) => setGymFilter(v as string)} placeholder={t('blacklist.admin_blacklist_toolbar.text_1ea6687cfe')}  testId="admin_blacklist-admin_blacklist-toolbar-change-2"/></div>
       </div>
       <button type="button"
         onClick={openAdd}

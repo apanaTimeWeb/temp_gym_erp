@@ -35,7 +35,7 @@ export default function AdminAttendanceDashboardToolbar() {
 
   return (
     <div className="flex flex-col sm:flex-row gap-3 flex-wrap">
-      <div className="relative flex-1 min-w-48">
+      <div className="relative flex-1 min-w-full sm:w-48">
         <span className="absolute inset-y-0 left-3 flex items-center"><Search size={18} className="text-secondary pointer-events-none"  strokeWidth={2}/></span>
         <input
           type="text"

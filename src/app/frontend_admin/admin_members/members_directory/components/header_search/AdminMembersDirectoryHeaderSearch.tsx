@@ -46,7 +46,7 @@ export function AdminMembersDirectoryHeaderSearch() {
       <input
         type="text"
         placeholder={t('members.admin_members_header_search.text_c698311c9b')}
-        className="w-56 pl-9 pr-4 py-2 bg-input border border-border rounded-xl text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary text-text-primary placeholder:text-secondary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+        className="w-full sm:w-56 pl-9 pr-4 py-2 bg-input border border-border rounded-xl text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary text-text-primary placeholder:text-secondary motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
         value={searchQuery}
         onChange={(e) => { setSearchQuery(e.target.value); setShowSearch(true); setActiveOptionIndex(-1); }}
         onFocus={() => setShowSearch(true)}

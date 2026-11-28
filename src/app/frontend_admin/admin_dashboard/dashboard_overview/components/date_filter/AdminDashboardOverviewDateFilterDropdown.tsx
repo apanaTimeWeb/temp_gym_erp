@@ -58,7 +58,7 @@ export function AdminDashboardOverviewDateFilterDropdown() {
 
   return (
     <div className="space-y-3">
-      <div className="w-48 rounded-lg border border-border bg-input shadow-card">
+      <div className="w-full sm:w-48 rounded-lg border border-border bg-input shadow-card">
         <AdminNavigationLayoutSearchableDropdown options={options} value={value} onChange={(next) => handlePresetChange(String(next))} placeholder={t('dashboard.AdminDashboardDateFilterDropdown.text_12e1289bac')} testId="admin_dashboard-admin_dashboard-date-filter-dropdown-filter" />
       </div>
       {value === 'custom' && (

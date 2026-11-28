@@ -41,18 +41,18 @@ export default function AdminBillingCouponsManagementToolbar() {
   return (
     <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
       <div className="flex flex-wrap gap-3 items-center w-full sm:w-auto">
-        <div className="relative">
+        <div className="relative w-full sm:w-auto">
           <span className="absolute inset-y-0 left-3 flex items-center"><Search size={18} className="text-secondary"  strokeWidth={2}/></span>
           <input
             type="text"
             placeholder={t('coupons.admin_coupons_toolbar.text_9932ce7a96')}
             value={localSearch}
             onChange={handleSearchChange}
-            className="pl-9 pr-4 py-2 bg-input border border-border rounded-lg text-sm text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary w-64 motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
+            className="pl-9 pr-4 py-2 bg-input border border-border rounded-lg text-sm text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary w-full sm:w-64 motion-safe:transition-all motion-safe:duration-base ease-in-out focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11"
             aria-label={t('coupons.admin_coupons_toolbar.text_eabec7e58d')}
            data-testid="admin_coupons-admin_coupons-toolbar-control"/>
         </div>
-        <div className="w-40">
+        <div className="w-full sm:w-40">
           <AdminNavigationLayoutSearchableDropdown
             options={COUPON_STATUS_OPTIONS.map((o) => ({ value: o.value, label: t(o.labelKey) }))}
             value={statusFilter}
@@ -60,7 +60,7 @@ export default function AdminBillingCouponsManagementToolbar() {
             placeholder={t('coupons.admin_coupons_toolbar.text_6b308de777')}
            testId="admin_coupons-admin_coupons-toolbar-change"/>
         </div>
-        <div className="w-40 bg-input rounded-lg border-none">
+        <div className="w-full sm:w-40 bg-input rounded-lg border-none">
           <AdminNavigationLayoutSearchableDropdown
             options={COUPON_DATE_RANGE_OPTIONS.map((option) => ({ value: option.value, label: t(option.labelKey) }))}
             value={dateRange}

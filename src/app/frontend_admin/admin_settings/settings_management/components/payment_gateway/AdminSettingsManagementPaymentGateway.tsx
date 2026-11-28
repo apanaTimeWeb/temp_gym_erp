@@ -58,14 +58,14 @@ export function AdminSettingsManagementPaymentGateway({ initialData }: AdminSett
 
       <div className="p-4 sm:p-6 space-y-6">
         <div className="bg-input rounded-xl border border-border p-4 space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-primary-subtle flex items-center justify-center">
                 <CreditCard size={18} className="text-primary"  strokeWidth={2}/>
               </div>
               <p className="text-sm font-semibold text-text-primary">{t('settings.admin_settings_payment_gateway.text_a3ccb33027')}</p>
             </div>
-            <div className="w-48">
+            <div className="w-full sm:w-48">
               <AdminSettingsToggleSwitch
                 checked={formValues.razorpayEnabled ?? initialData.razorpayEnabled}
                 onChange={(v: boolean) => form.setValue('razorpayEnabled', v, { shouldDirty: true })}
@@ -112,14 +112,14 @@ export function AdminSettingsManagementPaymentGateway({ initialData }: AdminSett
         </div>
 
         <div className="bg-input rounded-xl border border-border p-4 space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-success-bg flex items-center justify-center">
                 <Receipt size={18} className="text-success"  strokeWidth={2}/>
               </div>
               <p className="text-sm font-semibold text-text-primary">{t('settings.admin_settings_payment_gateway.text_40c662cbb8')}</p>
             </div>
-            <div className="w-48">
+            <div className="w-full sm:w-48">
               <AdminSettingsToggleSwitch
                 checked={formValues.upiEnabled ?? initialData.upiEnabled}
                 onChange={(v: boolean) => form.setValue('upiEnabled', v, { shouldDirty: true })}

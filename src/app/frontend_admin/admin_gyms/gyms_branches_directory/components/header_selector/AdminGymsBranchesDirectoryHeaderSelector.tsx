@@ -24,7 +24,7 @@ export default function AdminGymsBranchesDirectoryHeaderSelector() {
         options={branchOptions}
         value={selectedBranchId}
         onChange={handleChange}
-        className="w-52"
+        className="w-full sm:w-52"
         placeholder={t('branches.admin_branches_header_selector.text_fcf716ea9b')}
         testId="admin_branches-admin_branches-header-selector-select"
       />}

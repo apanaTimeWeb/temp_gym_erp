@@ -58,13 +58,13 @@ export default function AdminBillingPlansCatalogGrid({ logic }: AdminPlansGridPr
 
   return (
     <div className="flex flex-col h-full min-h-96">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 flex-1">
         {currentData.map((p, i) => (
           <div
             key={p.id}
-            className="bg-card border-2 border-border rounded-2xl p-6 relative motion-safe:transition-all motion-safe:hover:scale-105 motion-safe:hover:-translate-y-1"
+            className="bg-card border border-border hover:border-orange-500/45 rounded-2xl p-5 shadow-card relative motion-safe:transition-all motion-safe:duration-base motion-safe:hover:-translate-y-0.5"
           >
-            <div className="p-6">
+            <div>
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <h3 className="text-xl font-bold text-text-primary">{p.name}</h3>

@@ -72,7 +72,7 @@ export function AdminSalesAnalyticsDateFilterDropdown() {
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="w-48 bg-input border border-border rounded-lg shadow-card">
+      <div className="w-full sm:w-48 bg-input border border-border rounded-lg shadow-card">
         <AdminNavigationLayoutSearchableDropdown
           options={options}
           value={value}
