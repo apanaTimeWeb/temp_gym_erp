@@ -13,8 +13,6 @@ import { TrainerNavigationConfirmProvider } from '@/app/frontend_trainer/trainer
 
 import TrainerNavigationToastHost from '@/app/frontend_trainer/trainer_navigation/components/TrainerNavigationToastHost';
 
-import TrainerNavigationBreadcrumbs from '@/app/frontend_trainer/trainer_navigation/components/TrainerNavigationBreadcrumbs';
-
 import TrainerNavigationCommandPalette from '@/app/frontend_trainer/trainer_navigation/components/TrainerNavigationCommandPalette';
 
 import TrainerNavigationHeader from '@/app/frontend_trainer/trainer_navigation/components/TrainerNavigationHeader';
@@ -104,7 +102,6 @@ export default function TrainerNavigationMain({ children }: TrainerNavigationMai
           setIsMobileOpen={setIsMobileOpen}
         />
         <div id="trainer-main-content" tabIndex={-1} className={`min-h-screen min-w-0 overflow-x-hidden pt-16 trainer-shell-scrollbar overflow-y-auto motion-safe:transition-all motion-safe:duration-base motion-reduce:transition-none ${isCollapsed ? "trainer-shell-content-offset-collapsed" : "trainer-shell-content-offset"}`}>
-          <TrainerNavigationBreadcrumbs />
           {children}
         </div>
         <TrainerNavigationToastHost />
