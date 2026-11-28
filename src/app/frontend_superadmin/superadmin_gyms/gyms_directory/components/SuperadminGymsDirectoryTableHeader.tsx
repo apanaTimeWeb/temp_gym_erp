@@ -23,8 +23,7 @@ export function SuperadminGymsDirectoryTableHeader({
 }: SuperadminGymsDirectoryTableHeaderProps) {
   return (
     <thead
-      className="sticky top-0 z-20 bg-primary-subtle border-b border-border shadow-xs text-xs font-semibold uppercase tracking-wider"
-      style={{ backgroundColor: 'var(--table-header-bg)', color: 'var(--table-header-text)' }}
+      className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10 shadow-[0_2px_10px_rgba(0,0,0,0.12)] text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300"
     >
       <tr>
         <th

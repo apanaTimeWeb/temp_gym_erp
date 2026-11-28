@@ -20,24 +20,27 @@ export default function ManagerDashboardOverviewMembershipDistribution() {
  const total = (s.membersByPlan || []).reduce((a, b) => a + b.count, 0);
 
  return (
- <div className="rounded-xl shadow-card border p-5 bg-card border-border">
- <h2 className="font-semibold mb-4 text-text-primary">{t("COPY_MEMBERSHIP_DISTRIBUTION")}</h2>
- <div className="flex flex-wrap gap-3">
+ <div className="relative overflow-hidden rounded-2xl shadow-card border border-violet-500/30 dark:border-violet-500/35 p-4 sm:p-5 bg-card dark:bg-gradient-to-br dark:from-[#16152B] dark:via-[#141B2D] dark:to-[#0C1220]">
+ <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-violet-500 via-indigo-400 to-fuchsia-500 opacity-85" />
+ <div className="pb-3 mb-4 border-b border-violet-500/20">
+ <h2 className="font-bold text-base text-text-primary">{t("COPY_MEMBERSHIP_DISTRIBUTION")}</h2>
+ </div>
+ <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
  {(s.membersByPlan || []).map((p, __testIdIndex0) => {
  const scaledCount = p.count;
  const pct = total > 0 ? Math.round((scaledCount / total) * 100) : 0;
  const bgStyle = DASHBOARD_PLAN_BG_COLORS[p.plan] || 'bg-input';
  return (
- <div key={p.plan} className="flex-1 min-w-40 rounded-lg p-4 bg-input">
+ <div key={p.plan} className="min-w-0 rounded-xl p-4 bg-page/80 dark:bg-[#0B1220]/90 border border-border/80 dark:border-white/10">
  <div className="flex items-center gap-2 mb-2">
- <div className={`w-3 h-3 rounded-full ${bgStyle}`} />
- <span className="text-sm font-medium text-text-primary">{p.plan}</span>
+ <div className={`w-3 h-3 rounded-full shrink-0 ${bgStyle}`} />
+ <span className="text-sm font-semibold text-text-primary truncate">{p.plan}</span>
  </div>
- <div className="text-2xl font-bold text-text-primary">{scaledCount}</div>
+ <div className="text-2xl font-extrabold tabular-nums text-text-primary">{scaledCount}</div>
  <div className="mt-2 h-1.5 rounded-full overflow-hidden bg-border">
  <progress data-testid={`manager_dashboard-manager-dashboard-membership-distribution-button-close-${__testIdIndex0}`} value={pct} max={100} aria-label={t("COPY_PROGRESS")} className={`h-full w-full overflow-hidden rounded-full ${bgStyle}`} />
  </div>
- <div className="text-xs mt-1 text-text-secondary">{pct}{t("COPY_TOTAL")}</div>
+ <div className="text-xs font-medium mt-1.5 text-text-secondary">{pct}{t("COPY_TOTAL")}</div>
  </div>
  );
  })}

@@ -31,15 +31,18 @@ import type { TrainerSessionsCreateSessionDto } from '@/app/frontend_trainer/tra
  * @dependencies Uses only documented sessions module dependencies and approved global infrastructure/UI primitives.
  * @edge-case Preserves documented loading, empty, error, retry, URL-state, and cleanup behavior on repeated interaction.
  */
-export const useTrainerSessionsScheduleForm = (onSubmit: (dto: TrainerSessionsCreateSessionDto) => Promise<boolean>) => {
+export const useTrainerSessionsScheduleForm = (
+  onSubmit: (dto: TrainerSessionsCreateSessionDto) => Promise<boolean>,
+  initialValues?: Partial<TrainerSessionsScheduleFormValues>,
+) => {
   const form = useForm<TrainerSessionsScheduleFormValues>({
     resolver: zodResolver(TrainerSessionsScheduleFormSchema) as any,
     defaultValues: {
-      type: TRAINER_SESSIONS_SESSION_TYPE.PT,
-      memberId: '',
-      date: '',
-      time: '',
-      duration: '60m',
+      type: initialValues?.type ?? TRAINER_SESSIONS_SESSION_TYPE.PT,
+      memberId: initialValues?.memberId ?? '',
+      date: initialValues?.date ?? '',
+      time: initialValues?.time ?? '',
+      duration: initialValues?.duration ?? '60m',
     },
     mode: 'onTouched',
   });

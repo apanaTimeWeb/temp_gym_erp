@@ -44,6 +44,21 @@ import type { TrainerSessionsSessionType } from '@/app/frontend_trainer/trainer_
  * @dependencies Uses only documented sessions module dependencies and approved global infrastructure/UI primitives.
  * @edge-case Preserves entered values after validation/API failure and blocks duplicate submission while pending.
  */
+function parsePrefillTimeTo24h(value?: string): string {
+  if (!value) return '';
+  const startPart = value.split('-')[0]?.trim() ?? '';
+  const match12 = /^(\d{1,2}):(\d{2})\s?(AM|PM)$/i.exec(startPart);
+  if (match12) {
+    let h = Number(match12[1]);
+    const m = match12[2];
+    const period = match12[3].toUpperCase();
+    if (period === 'PM' && h !== 12) h += 12;
+    if (period === 'AM' && h === 12) h = 0;
+    return `${String(h).padStart(2, '0')}:${m}`;
+  }
+  return /^\d{2}:\d{2}$/.test(startPart) ? startPart : '';
+}
+
 export default function TrainerSessionsScheduleModal({
   onClose,
   onSubmit,
@@ -53,11 +68,27 @@ export default function TrainerSessionsScheduleModal({
   memberOptionsIsFetching,
   onRetryMemberOptions,
   isSubmitting,
+  defaultDate,
+  prefillClientName,
+  prefillTime,
+  prefillType,
   testId,
 }: TrainerSessionsScheduleModalProps) {
   const t = useTranslations('TRAINER_SESSIONS');
   const dialogRef = useRef<HTMLDivElement>(null);
-  const { form, handleSubmit } = useTrainerSessionsScheduleForm(onSubmit);
+  const matchedMember = prefillClientName
+    ? memberOptions.find((opt) => opt.label.toLowerCase() === prefillClientName.toLowerCase())
+    : undefined;
+  const resolvedType: TrainerSessionsSessionType = prefillType?.toLowerCase().includes('group')
+    ? TRAINER_SESSIONS_SESSION_TYPE.GROUP
+    : TRAINER_SESSIONS_SESSION_TYPE.PT;
+  const { form, handleSubmit } = useTrainerSessionsScheduleForm(onSubmit, {
+    type: resolvedType,
+    memberId: matchedMember?.value ?? '',
+    date: defaultDate ?? '',
+    time: parsePrefillTimeTo24h(prefillTime),
+    duration: '60m',
+  });
   const { register, watch, setValue, formState: { errors, isDirty } } = form;
 
   const durationOptions = TRAINER_SESSIONS_DURATION_OPTIONS.map(d => ({ value: d.value, label: t(d.labelKey) }));
@@ -69,18 +100,18 @@ export default function TrainerSessionsScheduleModal({
   useTrainerInfrastructureDialogFocusTrap({ isOpen: true, dialogRef, onEscape: () => void guardNavigation(onClose) });
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-4 overflow-y-auto " role="presentation" data-testid={testId ?? "trainer_sessions-schedule-modal"}>
-      <div ref={dialogRef} className="my-auto bg-overlay w-full max-w-md max-h-dialog-desktop flex flex-col rounded-2xl shadow-dialog border border-border overflow-hidden motion-safe:transition-opacity motion-safe:duration-base" role="dialog" aria-modal="true" aria-labelledby="trainer-session-schedule-title">
-        <div className="flex items-center justify-between p-5 border-b border-border shrink-0 bg-overlay ">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-3 sm:p-4 overflow-y-auto" role="presentation" data-testid={testId ?? "trainer_sessions-schedule-modal"}>
+      <div ref={dialogRef} className="my-auto bg-white dark:bg-[#0F172A] w-full max-w-md max-h-[90vh] flex flex-col rounded-2xl shadow-dialog border border-border overflow-visible motion-safe:transition-opacity motion-safe:duration-base" role="dialog" aria-modal="true" aria-labelledby="trainer-session-schedule-title">
+        <div className="flex items-center justify-between p-5 border-b border-border shrink-0 bg-white dark:bg-[#0F172A] rounded-t-2xl">
           <h3 id="trainer-session-schedule-title" className="text-lg font-bold text-text-primary ">{t("TEXT_SCHEDULE_PT_SESSION")}</h3>
           <button type="button"
             onClick={() => void guardNavigation(onClose)}
-            className="min-w-11 min-h-11 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page text-secondary hover:text-primary hover:bg-input p-1 rounded-lg motion-safe:transition-colors motion-safe:duration-base motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95"
+            className="min-w-11 min-h-11 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page text-secondary hover:text-primary hover:bg-input p-1 rounded-lg motion-safe:transition-colors motion-safe:duration-base motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95 cursor-pointer"
             aria-label={t("TEXT_CLOSE_MODAL")} data-testid="trainer_sessions-trainersessionsschedulemodal-button_1">
             <X size={18}  strokeWidth={2}/>
           </button>
         </div>
-        <form onSubmit={handleSubmit} className="p-5 space-y-4 overflow-y-auto custom-scrollbar flex-1 min-h-0 " data-testid="trainer_sessions-trainersessionsschedulemodal-form_2">
+        <form onSubmit={handleSubmit} className="p-5 space-y-4 overflow-y-auto custom-scrollbar flex-1 min-h-0" data-testid="trainer_sessions-trainersessionsschedulemodal-form_2">
           <div>
             <label className="block text-sm font-semibold text-secondary mb-1 ">{t("TEXT_SESSION_TYPE")}</label>
             <TrainerInfrastructureSearchableDropdown
@@ -109,7 +140,7 @@ export default function TrainerSessionsScheduleModal({
             {!memberOptionsIsPending && !memberOptionsIsError && memberOptions.length === 0 && <p className="text-xs text-secondary mt-1">{t('TEXT_NO_MEMBERS_FOUND')}</p>}
             {errors.memberId && <p id="trainer-session-member-error" role="alert" className="text-xs text-danger mt-1 " data-testid={"trainer_sessions-schedule_modal-error_state_71_2"}>{t(errors.memberId?.message || '')}</p>}
           </div>
-          <div className="grid grid-cols-2 gap-4 ">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label htmlFor="trainer-sessions-schedule-date" className="block text-sm font-semibold text-secondary mb-1 ">{t("TEXT_DATE")}</label>
               <input
@@ -118,7 +149,7 @@ export default function TrainerSessionsScheduleModal({
                 {...register('date')}
                 aria-invalid={Boolean(errors.date)}
                 aria-describedby={errors.date ? "trainer-session-date-error" : undefined}
-                className="w-full px-3 py-2 border border-border rounded-lg bg-input text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_sessions-trainersessionsschedulemodal-input_5"/>
+                className="w-full px-3 py-2 border border-border rounded-lg bg-input text-text-primary dark:[color-scheme:dark] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base" data-testid="trainer_sessions-trainersessionsschedulemodal-input_5"/>
               {errors.date && <p id="trainer-session-date-error" role="alert" className="text-xs text-danger mt-1 " data-testid={"trainer_sessions-schedule_modal-error_state_81_3"}>{t(errors.date?.message || '')}</p>}
             </div>
             <div>
@@ -129,7 +160,7 @@ export default function TrainerSessionsScheduleModal({
                 {...register('time')}
                 aria-invalid={Boolean(errors.time)}
                 aria-describedby={errors.time ? "trainer-session-time-error" : undefined}
-                className="w-full px-3 py-2 border border-border rounded-lg bg-input text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_sessions-trainersessionsschedulemodal-input_6"/>
+                className="w-full px-3 py-2 border border-border rounded-lg bg-input text-text-primary dark:[color-scheme:dark] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base" data-testid="trainer_sessions-trainersessionsschedulemodal-input_6"/>
               {errors.time && <p id="trainer-session-time-error" role="alert" className="text-xs text-danger mt-1 " data-testid={"trainer_sessions-schedule_modal-error_state_90_4"}>{t(errors.time?.message || '')}</p>}
             </div>
           </div>
@@ -146,16 +177,16 @@ export default function TrainerSessionsScheduleModal({
              testId="trainer-sessions-schedule-modal-duration"/>
             {errors.duration && <p id="trainer-session-duration-error" role="alert" className="text-xs text-danger mt-1 " data-testid={"trainer_sessions-schedule_modal-error_state_102_5"}>{t(errors.duration?.message || '')}</p>}
           </div>
-          <div className="sticky bottom-0 bg-overlay border-t border-border pt-3 flex justify-end gap-2 shrink-0 z-10 mt-4 ">
+          <div className="sticky bottom-0 bg-white dark:bg-[#0F172A] border-t border-border pt-3 flex flex-col-reverse sm:flex-row justify-end gap-2 shrink-0 z-10 mt-4">
             <button
               type="button"
               onClick={() => void guardNavigation(onClose)}
-              className="min-h-11 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page px-4 py-2 text-sm font-semibold text-secondary hover:text-primary hover:bg-input rounded-lg motion-safe:transition-colors motion-safe:duration-base motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_sessions-trainersessionsschedulemodal-button_8">
+              className="min-h-11 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page px-4 py-2 text-sm font-semibold text-secondary hover:text-primary hover:bg-input rounded-lg motion-safe:transition-colors cursor-pointer" data-testid="trainer_sessions-trainersessionsschedulemodal-button_8">
               {t("TEXT_CANCEL")}</button>
             <button
               type="submit"
               disabled={isSubmitting || (selectedType === TRAINER_SESSIONS_SESSION_TYPE.PT && (memberOptionsIsPending || memberOptionsIsError))}
-              className="min-h-11 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page flex items-center gap-2 px-4 py-2 text-sm font-semibold text-on-primary bg-primary rounded-lg hover:bg-primary-hover motion-safe:transition-colors disabled:opacity-70 motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_sessions-schedule-modal_submit">
+              className="min-h-11 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-on-primary bg-primary rounded-lg hover:bg-primary-hover motion-safe:transition-colors disabled:opacity-70 cursor-pointer" data-testid="trainer_sessions-schedule-modal_submit">
               {isSubmitting && <Loader2 size={18} className="motion-safe:animate-spin"  strokeWidth={2}/>}
               {t("TEXT_CONFIRM_ASSIGNMENT")}</button>
           </div>

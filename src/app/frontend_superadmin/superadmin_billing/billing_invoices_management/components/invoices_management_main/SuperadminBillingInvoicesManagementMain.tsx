@@ -48,16 +48,16 @@ export default function SuperadminBillingInvoicesManagementMain() {
         </div>
       </div>
       {activeTab === 'AGING' ? <SuperadminBillingInvoicesAgingReport invoices={invoices}/> : <>
-        <div className="p-4 border-b border-border bg-card flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5 flex-wrap flex-1">
-            <div className="relative min-w-[240px] sm:w-72">
+        <div className="p-4 border-b border-border dark:border-white/10 bg-card dark:bg-white/[0.02] flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5 flex-wrap flex-1 min-w-0">
+            <div className="relative w-full sm:w-72 min-w-0">
               <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" aria-hidden="true"/>
               <label htmlFor="superadmin-invoices-search" className="sr-only">{t('ui.search_by_invoice_id_or_gym_name_26bd2806')}</label>
               <input
                 id="superadmin-invoices-search"
                 type="search"
                 placeholder={t('ui.search_by_invoice_id_or_gym_name_50f3a18b')}
-                className="w-full pl-9 pr-8 py-2 bg-input border border-border rounded-xl text-xs sm:text-sm text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary min-h-10"
+                className="w-full pl-9 pr-8 py-2 bg-input dark:bg-[#0F172A]/80 border border-border dark:border-white/10 rounded-xl text-xs sm:text-sm text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary min-h-10"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 data-testid="superadmin_billing_invoices-superadmin-invoices-main-main-superadmin-invoices-search"
@@ -73,7 +73,7 @@ export default function SuperadminBillingInvoicesManagementMain() {
                 </button>
               )}
             </div>
-            <div className="w-40 rounded-xl bg-input">
+            <div className="w-full sm:w-44 rounded-xl bg-input dark:bg-[#0F172A]">
               <SearchableDropdown
                 data-testid="superadmin_billing_invoices-superadmin-invoices-main-status-filter"
                 options={SUPERADMIN_INVOICE_STATUS_OPTIONS.map((option) => ({ label: t(option.labelKey), value: option.value }))}

@@ -74,16 +74,16 @@ export default function TrainerSessionsAttendanceModal({ session, onClose, onSub
   };
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop p-4 overflow-y-auto" data-testid={testId ?? "trainer_sessions-attendance-modal"}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-3 sm:p-4 overflow-y-auto" data-testid={testId ?? "trainer_sessions-attendance-modal"}>
       <div
         ref={dialogRef}
         role="dialog"
         aria-modal={true}
         aria-labelledby="trainer-session-attendance-title"
         tabIndex={-1}
-        className="bg-overlay w-full max-w-lg rounded-2xl shadow-dialog border border-border flex flex-col max-h-dialog-desktop overflow-hidden motion-safe:transition-opacity motion-safe:duration-base my-auto"
+        className="bg-white dark:bg-[#0F172A] w-full max-w-lg rounded-2xl shadow-dialog border border-border flex flex-col max-h-[90vh] overflow-hidden motion-safe:transition-opacity motion-safe:duration-base my-auto"
       >
-        <div className="flex items-center justify-between gap-4 p-5 border-b border-border bg-header shrink-0">
+        <div className="flex items-center justify-between gap-4 p-5 border-b border-border bg-white dark:bg-[#0F172A] shrink-0">
           <div className="min-w-0">
             <h3 id="trainer-session-attendance-title" className="text-lg font-bold text-text-primary truncate">{t("TEXT_MARK_ATTENDANCE")}</h3>
             <p className="text-sm text-secondary mt-0.5 truncate">{session.title} — {session.time}</p>
@@ -162,7 +162,7 @@ export default function TrainerSessionsAttendanceModal({ session, onClose, onSub
           )}
         </div>
 
-        <div className="p-5 border-t border-border bg-header flex flex-col-reverse sm:flex-row justify-end gap-3">
+        <div className="p-5 border-t border-border bg-white dark:bg-[#0F172A] flex flex-col-reverse sm:flex-row justify-end gap-3">
           <button
             type="button"
             onClick={onClose}

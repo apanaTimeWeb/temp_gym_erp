@@ -38,10 +38,10 @@ export function SuperadminGymsDirectoryTableToolbar({
   handleExportCsv,
 }: SuperadminGymsDirectoryTableToolbarProps) {
   return (
-    <div className="p-3.5 border-b border-border flex items-center justify-between gap-3 flex-wrap shrink-0 bg-card">
-      <div className="flex items-center gap-2.5 flex-1 min-w-[280px] max-w-2xl flex-wrap">
+    <div className="p-3.5 border-b border-border dark:border-white/10 flex items-center justify-between gap-3 flex-wrap shrink-0 bg-card dark:bg-white/[0.02]">
+      <div className="flex items-center gap-2.5 flex-1 w-full sm:w-auto min-w-0 max-w-2xl flex-wrap">
         {/* Search with debounce */}
-        <div className="relative flex-1 min-w-[200px]">
+        <div className="relative w-full sm:flex-1 sm:min-w-[200px]">
           <Search
             size={16}
             className="absolute start-3 top-1/2 -translate-y-1/2 text-disabled"
@@ -53,7 +53,7 @@ export function SuperadminGymsDirectoryTableToolbar({
             onChange={(e) => handleSearchChange(e.target.value)}
             placeholder="Search gyms by name, owner, code, email, phone..."
             aria-label="Search gyms"
-            className="h-9.5 min-h-9.5 w-full bg-input border border-border text-primary rounded-lg ps-9 pe-3.5 py-1.5 text-xs sm:text-sm placeholder:text-disabled focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+            className="h-9.5 min-h-9.5 w-full bg-input dark:bg-[#0F172A]/80 border border-border dark:border-white/10 text-primary rounded-lg ps-9 pe-3.5 py-1.5 text-xs sm:text-sm placeholder:text-disabled focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page"
           />
         </div>
 
@@ -62,7 +62,7 @@ export function SuperadminGymsDirectoryTableToolbar({
           aria-label="Filter by Status"
           value={statusParam}
           onChange={(e) => handleStatusChange(e.target.value)}
-          className="h-9.5 min-h-9.5 ps-3.5 pe-8.5 py-1.5 border border-border rounded-lg text-xs sm:text-sm bg-input text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
+          className="h-9.5 min-h-9.5 w-full sm:w-auto ps-3.5 pe-8.5 py-1.5 border border-border dark:border-white/10 rounded-lg text-xs sm:text-sm bg-input dark:bg-[#0F172A] dark:[color-scheme:dark] text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
         >
           <option value="All">All Statuses</option>
           <option value="ACTIVE">Active</option>
@@ -77,7 +77,7 @@ export function SuperadminGymsDirectoryTableToolbar({
           aria-label="Filter by Plan"
           value={planParam}
           onChange={(e) => handlePlanChange(e.target.value)}
-          className="h-9.5 min-h-9.5 ps-3.5 pe-8.5 py-1.5 border border-border rounded-lg text-xs sm:text-sm bg-input text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
+          className="h-9.5 min-h-9.5 w-full sm:w-auto ps-3.5 pe-8.5 py-1.5 border border-border dark:border-white/10 rounded-lg text-xs sm:text-sm bg-input dark:bg-[#0F172A] dark:[color-scheme:dark] text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
         >
           <option value="All">All Plans</option>
           {plansMaster.map((p) => (

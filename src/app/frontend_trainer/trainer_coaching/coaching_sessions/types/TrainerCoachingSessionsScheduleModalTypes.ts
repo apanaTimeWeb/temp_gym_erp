@@ -15,5 +15,9 @@ export interface TrainerSessionsScheduleModalProps {
   memberOptionsIsFetching: boolean;
   onRetryMemberOptions: () => void;
   isSubmitting: boolean;
+  defaultDate?: string;
+  prefillClientName?: string;
+  prefillTime?: string;
+  prefillType?: string;
   testId?: string;
 }

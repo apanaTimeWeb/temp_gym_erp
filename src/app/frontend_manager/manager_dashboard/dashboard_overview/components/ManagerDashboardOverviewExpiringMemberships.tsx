@@ -30,9 +30,10 @@ export default function ManagerDashboardOverviewExpiringMemberships() {
   );
 
   return (
-    <div className="rounded-xl shadow-card border p-5 bg-card border-border">
-      <div className="flex items-center justify-between gap-3 mb-3">
-        <h2 className="font-semibold text-text-primary">{t("COPY_EXPIRING_MEMBERSHIPS")}</h2>
+    <div className="relative overflow-hidden rounded-2xl shadow-card border border-amber-500/30 dark:border-amber-500/35 p-4 sm:p-5 bg-card dark:bg-gradient-to-br dark:from-[#211A10] dark:via-[#141B2D] dark:to-[#0C1220]">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-orange-400 to-rose-500 opacity-85" />
+      <div className="flex items-center justify-between gap-3 pb-3 mb-3 border-b border-amber-500/20">
+        <h2 className="font-bold text-base text-text-primary">{t("COPY_EXPIRING_MEMBERSHIPS")}</h2>
       </div>
 
       <div className="relative mb-4">
@@ -68,7 +69,7 @@ export default function ManagerDashboardOverviewExpiringMemberships() {
               <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", (`p-1.5 rounded-lg motion-safe:transition-all ${
                   remindedId === m.id 
                     ? 'text-on-success bg-success' 
-                    : 'text-text-secondary hover:text-warning-text hover:bg-warning-bg opacity-100 lg:opacity-0 lg:group-hover:opacity-100 focus:opacity-100 motion-safe:transition-all'
+                    : 'text-text-secondary hover:text-warning-text hover:bg-warning-bg bg-surface-highlight/70 dark:bg-white/5 opacity-100 motion-safe:transition-all'
                 } motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110`)].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_dashboard-dashboard-managerdashboardexpiringmemberships-button-send-reminder-${mapIndex}`}
                 onClick={() => setRemindedId(m.id)}
                 

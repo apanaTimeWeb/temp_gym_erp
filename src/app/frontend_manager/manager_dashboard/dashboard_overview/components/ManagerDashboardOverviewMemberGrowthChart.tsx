@@ -52,8 +52,11 @@ export default function ManagerDashboardOverviewMemberGrowthChart() {
     dataLabels: { enabled: false } };
 
   return (
-    <div className="min-w-0 bg-card rounded-xl shadow-card border border-border p-5 flex flex-col h-full min-h-72">
-      <h3 className="text-base font-bold text-text-primary mb-4">{t("COPY_MEMBER_GROWTH")}</h3>
+    <div className="relative overflow-hidden min-w-0 bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] rounded-2xl shadow-card border border-emerald-500/30 dark:border-emerald-500/35 p-4 sm:p-5 flex flex-col h-full min-h-72">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 opacity-85" />
+      <div className="flex items-center justify-between gap-2 pb-3 mb-4 border-b border-emerald-500/20">
+        <h3 className="text-base font-bold text-text-primary">{t("COPY_MEMBER_GROWTH")}</h3>
+      </div>
       <p className="sr-only">{t('COPY_MEMBER_GROWTH')}: {stats.memberGrowth.map((item) => `${item.month}: ${item.count}`).join(', ')}</p>
       <div className="min-w-0 flex-1 w-full h-56" role="img" aria-label={t('COPY_MEMBER_GROWTH')}>
         <Chart

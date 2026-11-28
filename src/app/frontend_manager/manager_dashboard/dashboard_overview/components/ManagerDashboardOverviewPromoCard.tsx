@@ -9,10 +9,11 @@ export default function ManagerDashboardOverviewPromoCard() {
   const t = useTranslations('MANAGER_DASHBOARD');
 
  return (
- <div className="rounded-xl p-5 text-on-primary bg-primary shadow-card">
- <h3 className="font-semibold mb-1">{GYM_DETAILS.name}</h3>
- <p className="text-sm mb-3 text-on-primary">{t("COPY_COMPLETE_GYM_MANAGEMENT_SYSTEM")}</p>
- <div className="text-sm font-bold">{GYM_DETAILS.phone}</div>
+ <div className="relative overflow-hidden rounded-2xl p-4 sm:p-5 text-on-primary bg-primary dark:bg-gradient-to-br dark:from-[#12263A] dark:via-[#141B2D] dark:to-[#0C1220] dark:border dark:border-sky-500/35 dark:text-slate-100 shadow-card">
+ <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-sky-400 via-cyan-300 to-indigo-400 opacity-90" />
+ <h3 className="font-bold text-base mb-1">{GYM_DETAILS.name}</h3>
+ <p className="text-sm mb-3 text-on-primary/90 dark:text-slate-300">{t("COPY_COMPLETE_GYM_MANAGEMENT_SYSTEM")}</p>
+ <div className="text-sm font-bold tabular-nums">{GYM_DETAILS.phone}</div>
  </div>
  );
 }

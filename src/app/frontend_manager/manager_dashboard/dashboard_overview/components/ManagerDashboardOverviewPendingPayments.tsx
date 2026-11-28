@@ -31,17 +31,18 @@ export default function ManagerDashboardOverviewPendingPayments() {
   );
 
   return (
-    <div className="rounded-xl shadow-card border p-5 bg-card border-border">
-      <div className="flex min-w-0 flex-wrap items-center justify-between gap-3 mb-3">
-        <h2 className="font-semibold text-text-primary">{t("COPY_PENDING_DUES_2")}</h2>
-        <span data-testid="manager_dashboard-manager-dashboard-pending-payments-status" className="bg-danger-bg text-danger-text px-2.5 py-1 rounded-full text-xs font-bold whitespace-nowrap">
+    <div className="relative overflow-hidden rounded-2xl shadow-card border border-rose-500/30 dark:border-rose-500/35 p-4 sm:p-5 bg-card dark:bg-gradient-to-br dark:from-[#22121A] dark:via-[#141B2D] dark:to-[#0C1220]">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-rose-500 via-amber-400 to-orange-500 opacity-85" />
+      <div className="flex min-w-0 flex-wrap items-center justify-between gap-3 pb-3 mb-3 border-b border-rose-500/20">
+        <h2 className="font-bold text-base text-text-primary">{t("COPY_PENDING_DUES_2")}</h2>
+        <span data-testid="manager_dashboard-manager-dashboard-pending-payments-status" className="bg-danger-bg text-danger-text border border-rose-500/30 px-2.5 py-1 rounded-full text-xs font-bold tabular-nums whitespace-nowrap">
           {filtered.length}
         </span>
       </div>
 
       <div className="relative mb-4">
         <Search size={18} strokeWidth={2} className="absolute start-2.5 top-1/2 -translate-y-1/2 text-text-secondary" />
-        <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "w-full ps-8 pe-3 py-1.5 text-sm border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page bg-input text-text-primary"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_dashboard-manager-dashboard-pending-payments-input-value"
+        <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "w-full ps-8 pe-3 py-2 text-sm border border-border/80 dark:border-white/10 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page bg-page/80 dark:bg-[#0B1220]/90 text-text-primary"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_dashboard-manager-dashboard-pending-payments-input-value"
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder={t("COPY_SEARCH_NAME_2")}

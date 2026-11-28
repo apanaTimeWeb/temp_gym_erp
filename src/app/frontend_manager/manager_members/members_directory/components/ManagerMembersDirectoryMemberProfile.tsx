@@ -32,17 +32,18 @@ export default function ManagerMembersDirectoryMemberProfile() {
   return (
     <div className="min-h-full">
       
-      <div className="p-6 space-y-5">
+      <div className="p-4 sm:p-6 space-y-5">
         <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "text-sm text-text-secondary hover:text-primary flex items-center gap-1.5 motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_members-member-profile-button-close"
           onClick={closeMemberProfile}
           
          type="button">{t("COPY_BACK_MEMBERS")}</button>
 
         {/* Profile Card */}
-        <div className="bg-card rounded-xl shadow-card border border-border p-6">
-          <div className="flex flex-wrap items-center justify-between gap-5 mb-6">
-            <div className="flex items-center gap-5">
-              <div className="w-20 h-20 rounded-full flex items-center justify-center text-3xl font-bold text-primary bg-primary-subtle shrink-0">
+        <div className="relative overflow-hidden bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] rounded-2xl shadow-card border border-indigo-500/30 dark:border-indigo-500/35 p-4 sm:p-6">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 opacity-85" />
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+            <div className="flex items-center gap-4 min-w-0">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl font-bold text-primary bg-primary-subtle border border-indigo-500/30 shrink-0">
                 {(selectedMember.name || '?').charAt(0).toUpperCase()}
               </div>
               <div>
@@ -84,7 +85,7 @@ export default function ManagerMembersDirectoryMemberProfile() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {[
               { label: t("COPY_MEMBER_ID"), value: selectedMember.id },
               { label: t("COPY_BRANCH"), value: selectedMember.branch },
@@ -105,8 +106,8 @@ export default function ManagerMembersDirectoryMemberProfile() {
         </div>
 
         {/* Sub Tabs */}
-        <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden">
-          <div className="flex border-b border-border" role="tablist" aria-label={t("COPY_PROFILE_SECTIONS")}>
+        <div className="relative bg-card dark:bg-[#0D1628] rounded-2xl shadow-card border border-border dark:border-white/10 overflow-hidden">
+          <div className="flex overflow-x-auto scrollbar-none border-b border-border dark:border-white/10" role="tablist" aria-label={t("COPY_PROFILE_SECTIONS")}>
             {PROFILE_TABS.map(({ id: t, label }, mapIndex) => (
               <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", (`px-5 py-3.5 text-sm font-medium motion-safe:transition-all motion-safe:duration-200 border-b-2 ${profileTab === t
                     ? 'text-primary bg-primary-subtle border-primary'

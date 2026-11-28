@@ -59,8 +59,11 @@ export default function ManagerDashboardOverviewRevenueChart() {
     dataLabels: { enabled: false } };
 
   return (
-    <div className="min-w-0 bg-card rounded-xl shadow-card border border-border p-5 flex flex-col h-full min-h-72">
-      <h3 className="text-base font-bold text-text-primary mb-4">{t("COPY_REVENUE_TRENDS")}</h3>
+    <div className="relative overflow-hidden min-w-0 bg-card dark:bg-gradient-to-br dark:from-[#0E1629] dark:via-[#141B2D] dark:to-[#0C1220] rounded-2xl shadow-card border border-sky-500/30 dark:border-sky-500/35 p-4 sm:p-5 flex flex-col h-full min-h-72">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-sky-500 via-cyan-400 to-indigo-500 opacity-85" />
+      <div className="flex items-center justify-between gap-2 pb-3 mb-4 border-b border-sky-500/20">
+        <h3 className="text-base font-bold text-text-primary">{t("COPY_REVENUE_TRENDS")}</h3>
+      </div>
       <div className="min-w-0 flex-1 w-full h-56">
         <Chart
           type="area"
