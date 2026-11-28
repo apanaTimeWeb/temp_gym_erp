@@ -12,4 +12,6 @@ export interface TrainerProgressTrackingTableProps {
   onSort: (field: TrainerProgressTrackingProgressSortField) => void;
   onEdit: (entry: TrainerProgressTrackingProgressEntry) => void;
   onDelete: (entryId: string) => void;
+  onRefresh?: () => void;
+  isRefreshing?: boolean;
 }

@@ -6,5 +6,5 @@ import TrainerProgressTrackingComparisonView from './TrainerCoachingProgressComp
 export default function TrainerCoachingProgressComparisonMain() {
  const t = useTranslations('TRAINER_PROGRESS_TRACKING');
  const model = useTrainerCoachingProgressComparisonComparisonScreen();
- return <main className="min-h-full space-y-5 p-4 sm:p-6"><h1 className="text-section-title font-bold text-text-primary">{t('TEXT_COMPARE_MEMBERS')}</h1><TrainerProgressTrackingComparisonView model={model} /></main>;
+ return <main className="min-h-full space-y-5 bg-page p-4 text-text-primary sm:p-6 max-w-full min-w-0"><h1 className="text-section-title font-bold text-text-primary">{t('TEXT_COMPARE_MEMBERS')}</h1><TrainerProgressTrackingComparisonView model={model} /></main>;
 }

@@ -99,6 +99,8 @@ export default function TrainerScheduleLeaveRequests() {
         openLeaveModal={openLeaveModal}
         onWithdrawLeave={handleWithdrawLeave}
         withdrawing={withdrawLeavePending}
+        onRefresh={() => void refetch()}
+        isRefreshing={isFetching}
       />
     </div>
   );

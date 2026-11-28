@@ -55,7 +55,7 @@ export default function TrainerProgressTrackingIndividualView({ model }: { model
       ) : (
         <>
           {model.chartQuery.isError ? <div className="p-4 rounded-xl border border-border bg-warning-bg text-warning" data-testid="trainer-progress-tracking-trainer-progress-tracking-main-warning-state-68-2">{t('TEXT_PROGRESS_CHART_COULD_NOT_BE_LOADED_THE_T_B99F5572')}</div> : <TrainerProgressTrackingChart entries={model.chartQuery.data?.entries ?? []} activeMetric={model.activeMetric} onMetricChange={model.setActiveMetric} />}
-          <TrainerProgressTrackingTable entries={model.progressQuery.data?.entries ?? []} totalEntries={model.progressQuery.data?.total ?? 0} currentPage={model.currentPage} itemsPerPage={10} sortBy={model.sortBy} sortDirection={model.sortDirection} onPageChange={model.setCurrentPage} onSort={model.setSort} onEdit={model.openEditModal} onDelete={model.handleDelete} />
+          <TrainerProgressTrackingTable entries={model.progressQuery.data?.entries ?? []} totalEntries={model.progressQuery.data?.total ?? 0} currentPage={model.currentPage} itemsPerPage={10} sortBy={model.sortBy} sortDirection={model.sortDirection} onPageChange={model.setCurrentPage} onSort={model.setSort} onEdit={model.openEditModal} onDelete={model.handleDelete} onRefresh={() => void model.progressQuery.refetch()} isRefreshing={model.progressQuery.isFetching} />
         </>
       )}
     </>

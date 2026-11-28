@@ -15,6 +15,8 @@ export const useTrainerWorkoutStore = create<TrainerWorkoutState>((set) => ({
   setShowWkModal: (show) => set({ showWkModal: show }),
   editWorkoutId: null,
   setEditWorkoutId: (workoutId) => set({ editWorkoutId: workoutId }),
+  cloneSourceWorkout: null,
+  setCloneSourceWorkout: (plan) => set({ cloneSourceWorkout: plan }),
   showExModal: false,
   setShowExModal: (show) => set({ showExModal: show }),
   editExerciseId: null,

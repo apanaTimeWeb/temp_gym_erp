@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, X } from 'lucide-react';
+import { Download, RefreshCw, Search, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 export interface TrainerOperationsLeaveRequestsLeaveFilterBarProps {
@@ -16,6 +16,9 @@ export interface TrainerOperationsLeaveRequestsLeaveFilterBarProps {
   rejectedCount: number;
   hasActiveFilters: boolean;
   onClearFilters: () => void;
+  onExportCsv?: () => void;
+  onRefresh?: () => void;
+  isRefreshing?: boolean;
 }
 
 export function TrainerOperationsLeaveRequestsLeaveFilterBar({
@@ -31,6 +34,9 @@ export function TrainerOperationsLeaveRequestsLeaveFilterBar({
   rejectedCount,
   hasActiveFilters,
   onClearFilters,
+  onExportCsv,
+  onRefresh,
+  isRefreshing = false,
 }: TrainerOperationsLeaveRequestsLeaveFilterBarProps) {
   const t = useTranslations('TRAINER_SCHEDULE');
 
@@ -89,7 +95,7 @@ export function TrainerOperationsLeaveRequestsLeaveFilterBar({
         <select
           value={typeFilter}
           onChange={(e) => setTypeFilter(e.target.value)}
-          className="min-h-9 w-full sm:w-auto rounded-xl border border-border bg-input px-3 text-xs text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+          className="min-h-9 w-full sm:w-auto rounded-xl border border-border bg-white dark:bg-[#0F172A] dark:[color-scheme:dark] px-3 text-xs text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
           aria-label="Filter by leave type"
         >
           <option value="ALL">All Leave Types</option>
@@ -128,6 +134,32 @@ export function TrainerOperationsLeaveRequestsLeaveFilterBar({
             className="text-xs text-rose-500 font-semibold px-2.5 py-1 rounded-lg border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 motion-safe:transition-colors"
           >
             {t('TEXT_CLEAR_FILTERS')}
+          </button>
+        )}
+
+        {onRefresh && (
+          <button
+            type="button"
+            onClick={onRefresh}
+            disabled={isRefreshing}
+            aria-label="Refresh leave requests"
+            title="Refresh leave requests"
+            data-testid="trainer_leave-refresh"
+            className="min-h-9 min-w-9 inline-flex items-center justify-center rounded-xl border border-sky-500/35 bg-sky-500/15 px-2.5 text-xs font-semibold text-sky-600 dark:text-sky-300 hover:bg-sky-500/25 disabled:opacity-60 cursor-pointer"
+          >
+            <RefreshCw size={14} className={isRefreshing ? 'motion-safe:animate-spin' : ''} aria-hidden="true" />
+          </button>
+        )}
+
+        {onExportCsv && (
+          <button
+            type="button"
+            onClick={onExportCsv}
+            data-testid="trainer_leave-export-csv"
+            className="min-h-9 inline-flex items-center gap-1.5 rounded-xl border border-teal-500/35 bg-teal-500/15 px-3 py-1 text-xs font-semibold text-teal-600 dark:text-teal-300 hover:bg-teal-500/25 cursor-pointer"
+          >
+            <Download size={14} aria-hidden="true" />
+            <span>CSV</span>
           </button>
         )}
       </div>

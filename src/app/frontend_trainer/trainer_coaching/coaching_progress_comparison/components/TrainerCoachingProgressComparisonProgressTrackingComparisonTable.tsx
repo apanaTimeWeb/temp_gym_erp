@@ -2,8 +2,8 @@
 import { displayValue } from '@/lib/display_value';
 // RESPONSIBILITY: Renders the read-only member progress comparison as a semantic desktop table and mobile card stack.
 // DATA FLOW: Progress comparison query → snapshot rows → trend/metric presentation.
-import { useState } from 'react';
-import { AlertCircle, Eye, Minus, TrendingDown, TrendingUp } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { AlertCircle, ArrowDown, ArrowUp, ArrowUpDown, Download, Eye, Minus, TrendingDown, TrendingUp } from 'lucide-react';
 import TrainerCoachingProgressComparisonQuickViewModal from '@/app/frontend_trainer/trainer_coaching/coaching_progress_comparison/components/TrainerCoachingProgressComparisonQuickViewModal';
 import type { TrainerProgressTrackingComparisonMemberSnapshot } from '@/app/frontend_trainer/trainer_coaching/coaching_progress_comparison/types/TrainerCoachingProgressComparisonProgressTrackingTypes';
 
@@ -53,32 +53,118 @@ export default function TrainerProgressTrackingComparisonTable({ snapshots }: Tr
   const locale = useLocale();
   const t = useTranslations('TRAINER_PROGRESS_TRACKING');
   const [quickViewSnapshot, setQuickViewSnapshot] = useState<TrainerProgressTrackingComparisonMemberSnapshot | null>(null);
+  const [sortField, setSortField] = useState<'memberName' | 'latestWeightKg' | 'weightChangeKg' | 'muscleMassChange'>('memberName');
+  const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
+
+  const sortedSnapshots = useMemo(() => {
+    const dir = sortDir === 'asc' ? 1 : -1;
+    return [...snapshots].sort((a, b) => {
+      if (sortField === 'memberName') return a.memberName.localeCompare(b.memberName) * dir;
+      const va = a[sortField] ?? Number.NEGATIVE_INFINITY;
+      const vb = b[sortField] ?? Number.NEGATIVE_INFINITY;
+      return (va - vb) * dir;
+    });
+  }, [snapshots, sortField, sortDir]);
+
   if (snapshots.length === 0) return <TrainerProgressTrackingComparisonEmptyState />;
+
+  const toggleSort = (field: typeof sortField) => {
+    if (sortField === field) {
+      setSortDir((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortField(field);
+      setSortDir('asc');
+    }
+  };
+
+  const handleExportCsv = () => {
+    const header = ['Member ID', 'Member Name', 'Trend', 'Latest Weight (kg)', 'Weight Delta (kg)', 'Muscle Delta (kg)', 'Latest BMI', 'Body Fat (%)', 'Entries'];
+    const csvRows = [
+      header.join(','),
+      ...sortedSnapshots.map((s) =>
+        [
+          s.memberId,
+          `"${String(s.memberName ?? '').replace(/"/g, '""')}"`,
+          s.trend,
+          s.latestWeightKg ?? '',
+          s.weightChangeKg ?? '',
+          s.muscleMassChange ?? '',
+          s.latestBmi ?? '',
+          s.latestBodyFatPercent ?? '',
+          s.totalEntries,
+        ].join(',')
+      ),
+    ];
+    const blob = new Blob([csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'member_progress_comparison.csv';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  };
+
+  const sortColumns: Array<{ key: string; field: typeof sortField | null }> = [
+    { key: 'TEXT_MEMBER', field: 'memberName' },
+    { key: 'TEXT_TREND', field: null },
+    { key: 'TEXT_WEIGHT_KG', field: 'latestWeightKg' },
+    { key: 'TEXT_DELTA_WEIGHT', field: 'weightChangeKg' },
+    { key: 'TEXT_DELTA_MUSCLE', field: 'muscleMassChange' },
+    { key: 'TEXT_ACTIONS', field: null },
+  ];
 
   return (
     <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
-      <div className="px-5 py-3.5 border-b border-border bg-header">
-        <h3 className="text-sm font-semibold text-text-primary">{t('TEXT_MEMBER_COMPARISON_LATEST_SNAPSHOT')}</h3>
-        <p className="text-xs text-secondary mt-0.5">{t('TEXT_CHANGE_FROM_FIRST_TO_LATEST_ENTRY')}</p>
+      <div className="px-5 py-3.5 border-b border-border bg-header flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h3 className="text-sm font-semibold text-text-primary">{t('TEXT_MEMBER_COMPARISON_LATEST_SNAPSHOT')}</h3>
+          <p className="text-xs text-secondary mt-0.5">{t('TEXT_CHANGE_FROM_FIRST_TO_LATEST_ENTRY')}</p>
+        </div>
+        <button
+          type="button"
+          onClick={handleExportCsv}
+          data-testid="trainer_comparison-export-csv"
+          className="min-h-9 inline-flex items-center gap-1.5 rounded-xl border border-teal-500/35 bg-teal-500/15 px-3 py-1.5 text-xs font-semibold text-teal-600 dark:text-teal-300 hover:bg-teal-500/25 cursor-pointer"
+        >
+          <Download size={14} aria-hidden="true" />
+          <span>Export CSV</span>
+        </button>
       </div>
       <div className="hidden md:block">
         <div className="max-h-[640px] overflow-y-auto overflow-x-hidden">
           <table className="w-full text-sm border-collapse">
             <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
               <tr data-testid="trainer_progress_tracking-TrainerProgressTrackingComparisonTable-row-1">
-                {['TEXT_MEMBER', 'TEXT_TREND', 'TEXT_WEIGHT_KG', 'TEXT_DELTA_WEIGHT', 'TEXT_DELTA_MUSCLE', 'TEXT_ACTIONS'].map((key) => (
+                {sortColumns.map(({ key, field }) => (
                   <th
                     key={key}
                     scope="col"
                     className="px-3 py-3 text-start text-xs font-semibold text-secondary uppercase tracking-wider whitespace-nowrap"
                   >
-                    {t(key)}
+                    {field ? (
+                      <button
+                        type="button"
+                        onClick={() => toggleSort(field)}
+                        className="inline-flex items-center gap-1 hover:text-text-primary cursor-pointer"
+                      >
+                        <span>{t(key)}</span>
+                        {sortField === field ? (
+                          sortDir === 'asc' ? <ArrowUp size={13} className="text-orange-500" /> : <ArrowDown size={13} className="text-orange-500" />
+                        ) : (
+                          <ArrowUpDown size={13} className="opacity-50" />
+                        )}
+                      </button>
+                    ) : (
+                      t(key)
+                    )}
                   </th>
                 ))}
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
-              {snapshots.map((snapshot) => {
+              {sortedSnapshots.map((snapshot) => {
                 const trend = TREND_CONFIG[snapshot.trend];
                 const TrendIcon = trend.icon;
                 return (
@@ -125,9 +211,18 @@ export default function TrainerProgressTrackingComparisonTable({ snapshots }: Tr
         </div>
       </div>
       <div className="md:hidden space-y-3 p-3">
-        {snapshots.map((snapshot) => { const trend = TREND_CONFIG[snapshot.trend]; const TrendIcon = trend.icon; return <article key={snapshot.memberId} className="bg-card rounded-xl border border-border p-4 shadow-card" data-testid={`trainer-progress-tracking-comparison-table-card-${snapshot.memberId}`}>
+        {sortedSnapshots.map((snapshot) => { const trend = TREND_CONFIG[snapshot.trend]; const TrendIcon = trend.icon; return <article key={snapshot.memberId} className="bg-card rounded-xl border border-border p-4 shadow-card" data-testid={`trainer-progress-tracking-comparison-table-card-${snapshot.memberId}`}>
           <div className="flex items-start justify-between gap-3"><div className="flex items-center gap-2 min-w-0"><div className="w-8 h-8 rounded-full bg-primary-subtle flex items-center justify-center text-primary text-xs font-bold shrink-0" aria-hidden="true">{snapshot.memberName.charAt(0)}</div><TrainerInfrastructureTooltip content={snapshot.memberName}><h4 className="font-semibold text-primary truncate">{snapshot.memberName}</h4></TrainerInfrastructureTooltip></div><span className={`shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold border ${trend.cls}`}><TrendIcon size={18} strokeWidth={2} aria-hidden="true" />{t(trend.labelKey)}</span></div>
           <div className="mt-4 grid grid-cols-2 gap-3 text-sm"><p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_WEIGHT_KG')}</span><span className="text-text-primary">{snapshot.latestWeightKg == null ? displayValue(snapshot.latestWeightKg) : TrainerProgressTrackingFormatNumber(snapshot.latestWeightKg, locale)}</span></p><p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_BMI')}</span><span className="text-text-primary">{snapshot.latestBmi == null ? displayValue(snapshot.latestBmi) : TrainerProgressTrackingFormatNumber(snapshot.latestBmi, locale)}</span></p><p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_BODY_FAT_PERCENT')}</span><span className="text-text-primary">{snapshot.latestBodyFatPercent == null ? '—' : `${TrainerProgressTrackingFormatNumber(snapshot.latestBodyFatPercent, locale)}%`}</span></p><p><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_MUSCLE_MASS_KG')}</span><span className="text-text-primary">{snapshot.latestMuscleMassKg == null ? displayValue(snapshot.latestMuscleMassKg) : TrainerProgressTrackingFormatNumber(snapshot.latestMuscleMassKg, locale)}</span></p><div><span className="block text-xs font-semibold text-secondary uppercase mb-1">{t('TEXT_DELTA_WEIGHT')}</span><TrainerProgressTrackingComparisonDelta value={snapshot.weightChangeKg} lowerIsBetter={true} /></div><div><span className="block text-xs font-semibold text-secondary uppercase mb-1">{t('TEXT_DELTA_MUSCLE')}</span><TrainerProgressTrackingComparisonDelta value={snapshot.muscleMassChange} lowerIsBetter={false} /></div><p className="col-span-2"><span className="block text-xs font-semibold text-secondary uppercase">{t('TEXT_ENTRIES')}</span><span className="text-text-primary">{TrainerProgressTrackingFormatNumber(snapshot.totalEntries, locale)}</span></p></div>
+          <div className="mt-4 pt-3 border-t border-border">
+            <button
+              type="button"
+              onClick={() => setQuickViewSnapshot(snapshot)}
+              className="w-full min-h-10 inline-flex items-center justify-center gap-1.5 rounded-xl border border-sky-500/35 bg-sky-500/15 text-sky-600 dark:text-sky-300 text-xs font-semibold hover:bg-sky-500 hover:text-white motion-safe:transition-colors cursor-pointer"
+            >
+              <Eye size={15} /> View Full Comparison
+            </button>
+          </div>
         </article>; })}
       </div>
       <div className="border-t border-border px-4 py-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between bg-card text-xs text-secondary">

@@ -73,7 +73,7 @@ export default function TrainerWorkoutPlansGrid() {
   const t = useTranslations('TRAINER_WORKOUT');
   const { search, category, page, setPage, sortBy, sortDirection } = useTrainerWorkoutFilters();
   const { data, status, isFetching, refetch, error } = useTrainerWorkoutsQuery(search, category, page, sortBy, sortDirection);
-  const { setEditWorkoutId, setShowWkModal } = useTrainerWorkoutStore();
+  const { setEditWorkoutId, setCloneSourceWorkout, setShowWkModal } = useTrainerWorkoutStore();
   const { deleteWorkout } = useTrainerWorkoutMutations();
   const { confirm } = useTrainerInfrastructureConfirm();
   const { showSuccess, showError } = useTrainerInfrastructureFeedback();
@@ -168,7 +168,13 @@ export default function TrainerWorkoutPlansGrid() {
         plan={quickViewPlan}
         onClose={() => setQuickViewPlan(null)}
         onAssign={(p) => setAssigningPlan(p)}
+        onClone={(p) => {
+          setEditWorkoutId(null);
+          setCloneSourceWorkout(p);
+          setShowWkModal(true);
+        }}
         onEdit={(id) => {
+          setCloneSourceWorkout(null);
           setEditWorkoutId(id);
           setShowWkModal(true);
         }}

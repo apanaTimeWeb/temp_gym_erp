@@ -54,7 +54,7 @@ import type { TrainerWorkoutCreateWorkoutFormValues } from '@/app/frontend_train
 export default function TrainerWorkoutModal() {
   const t = useTranslations('TRAINER_WORKOUT');
   const dialogRef = useRef<HTMLDivElement>(null);
-  const { showWkModal, setShowWkModal, editWorkoutId, setEditWorkoutId } = useTrainerWorkoutStore();
+  const { showWkModal, setShowWkModal, editWorkoutId, setEditWorkoutId, cloneSourceWorkout, setCloneSourceWorkout } = useTrainerWorkoutStore();
   const { search, category, page, sortBy, sortDirection } = useTrainerWorkoutFilters();
   const { data: workoutData } = useTrainerWorkoutsQuery(search, category, page, sortBy, sortDirection, showWkModal && Boolean(editWorkoutId));
   const editWorkout = workoutData?.workouts.find((workout) => workout.id === editWorkoutId) ?? null;
@@ -93,21 +93,38 @@ export default function TrainerWorkoutModal() {
           assignedMemberId: editWorkout.assignedMemberId ?? '',
           workoutExercises: editWorkout.workoutExercises
         });
+      } else if (cloneSourceWorkout) {
+        reset({
+          name: `${cloneSourceWorkout.name} (Copy)`,
+          level: cloneSourceWorkout.level,
+          days: cloneSourceWorkout.days,
+          exercises: cloneSourceWorkout.workoutExercises === undefined ? cloneSourceWorkout.exercises : cloneSourceWorkout.workoutExercises.length,
+          focus: cloneSourceWorkout.focus,
+          duration: cloneSourceWorkout.duration,
+          tags: cloneSourceWorkout.tags.join(', '),
+          goal: cloneSourceWorkout.goal ?? '',
+          startDate: '',
+          endDate: '',
+          instructions: cloneSourceWorkout.instructions ?? '',
+          assignedMemberId: '',
+          workoutExercises: cloneSourceWorkout.workoutExercises
+        });
       } else {
         reset(TrainerWorkoutEMPTY_WORKOUT_FORM);
       }
     }
-  }, [showWkModal, editWorkout, reset, isDirty, createWorkoutPending, updateWorkoutPending]);
+  }, [showWkModal, editWorkout, cloneSourceWorkout, reset, isDirty, createWorkoutPending, updateWorkoutPending]);
 
   const isSaving = createWorkoutPending || updateWorkoutPending;
 
   const guardNavigation = useTrainerInfrastructureUnsavedChangesGuard(isDirty && !isSaving);
-  useTrainerInfrastructureDialogFocusTrap({ isOpen: showWkModal, dialogRef, onEscape: () => void guardNavigation(() => { setEditWorkoutId(null); setShowWkModal(false); }) });
+  useTrainerInfrastructureDialogFocusTrap({ isOpen: showWkModal, dialogRef, onEscape: () => void guardNavigation(() => { setEditWorkoutId(null); setCloneSourceWorkout(null); setShowWkModal(false); }) });
 
   const handleWorkoutFormSubmit = async (data: TrainerWorkoutCreateWorkoutFormValues) => {
-    const exerciseCount = editWorkout && editWorkout.workoutExercises === undefined
+    const templateExercises = editWorkout?.workoutExercises === undefined && editWorkout ? editWorkout.exercises : undefined;
+    const exerciseCount = editWorkout && templateExercises !== undefined
       ? data.exercises
-      : (data.workoutExercises?.length ?? 0);
+      : (data.workoutExercises?.length ?? data.exercises ?? 0);
     const dto = TrainerWorkoutCreateWorkoutPlanSchema.parse({ ...data, exercises: exerciseCount });
     const actionId = editWorkout ? `update-workout-${editWorkout.id}` : 'create-workout';
     const key = actionKeys.begin(actionId);
@@ -119,6 +136,7 @@ export default function TrainerWorkoutModal() {
       reset(dto);
       actionKeys.clear(actionId);
       setEditWorkoutId(null);
+      setCloneSourceWorkout(null);
       setShowWkModal(false);
     } catch (error) {
       showError(error, actionId);
@@ -132,11 +150,11 @@ export default function TrainerWorkoutModal() {
       <div className="my-auto flex max-h-[92vh] w-full max-w-2xl flex-col rounded-2xl border border-border bg-white dark:bg-[#0F172A] shadow-dialog overflow-hidden" ref={dialogRef} role="dialog" aria-modal={true} aria-labelledby="trainer-workout-modal-title">
         <div className="flex justify-between items-center p-4 sm:p-5 border-b border-border shrink-0 bg-white dark:bg-[#0F172A]">
           <h3 id="trainer-workout-modal-title" className="font-bold text-lg text-text-primary">
-            {editWorkout ? t("TEXT_EDIT_WORKOUT_PLAN") : t("TEXT_ADD_WORKOUT_PLAN")}
+            {editWorkout ? t("TEXT_EDIT_WORKOUT_PLAN") : cloneSourceWorkout ? 'Clone Workout Plan' : t("TEXT_ADD_WORKOUT_PLAN")}
           </h3>
           <button
             type="button"
-            onClick={() => void guardNavigation(() => { setEditWorkoutId(null); setShowWkModal(false); })}
+            onClick={() => void guardNavigation(() => { setEditWorkoutId(null); setCloneSourceWorkout(null); setShowWkModal(false); })}
             className="min-w-10 min-h-10 inline-flex items-center justify-center text-secondary hover:text-primary hover:bg-primary-subtle p-1.5 rounded-xl motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer" aria-label={t("TEXT_CANCEL")} data-testid="trainer_workout-trainerworkoutmodal-button_1">
             <X size={18} strokeWidth={2} />
           </button>

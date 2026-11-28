@@ -3,7 +3,7 @@ import type { TrainerProfilePersonalViewProps } from '../types/TrainerAccountAcc
 // RESPONSIBILITY: Personal details form view for the Trainer Profile feature.
 import { useTranslations } from 'next-intl';
 import { Controller, type UseFormReturn } from 'react-hook-form';
-import { Loader2, Save, Landmark } from 'lucide-react';
+import { Loader2, RotateCcw, Save, Landmark } from 'lucide-react';
 
 import { TRAINER_PROFILE_SPECIALIZATIONS } from '@/app/frontend_trainer/trainer_account/account_personal_profile/utils/TrainerAccountPersonalProfileProfileConstants';
 import type { TrainerProfileData, TrainerProfileFormValues } from '@/app/frontend_trainer/trainer_account/account_personal_profile/types/TrainerAccountPersonalProfileProfileTypes';
@@ -144,7 +144,17 @@ export default function TrainerProfilePersonalView({ profileForm, user, saveProf
           </div>
         </div>
       </div>
-      <div className="flex justify-end">
+      <div className="flex flex-wrap justify-end gap-3">
+        <button
+          type="button"
+          onClick={() => profileForm.reset()}
+          disabled={!profileForm.formState.isDirty || saveProfilePending}
+          data-testid="trainer_profile-reset-button"
+          className="min-h-11 inline-flex items-center justify-center gap-2 px-4 py-2.5 border border-border bg-input text-secondary hover:text-text-primary font-semibold rounded-lg disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
+        >
+          <RotateCcw size={16} strokeWidth={2} aria-hidden="true" />
+          <span>Reset</span>
+        </button>
         <button type="submit" disabled={saveProfilePending} className="min-h-11 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page min-w-32 flex items-center justify-center gap-2 px-5 py-2.5 bg-primary text-on-primary font-semibold rounded-lg disabled:opacity-60" data-testid="trainer_profile-trainerprofilemain-button_8">
           {saveProfilePending ? <><Loader2 size={18} className="motion-safe:animate-spin" strokeWidth={2} />{t('TEXT_SAVING')}</> : <><Save size={18} strokeWidth={2} />{t('TEXT_SAVE_CHANGES')}</>}
         </button>

@@ -1,7 +1,7 @@
 "use client";
 // RESPONSIBILITY: Owns the notifications page interaction surface: mark-read, mark-all-read, pagination, and error presentation.
 import { useState } from 'react';
-import { Loader2 } from 'lucide-react';
+import { Loader2, RefreshCw, Search, X } from 'lucide-react';
 
 import { useTranslations } from 'next-intl';
 
@@ -27,6 +27,7 @@ import { useTrainerNotificationsLogic } from '@/app/frontend_trainer/trainer_acc
 export default function TrainerNotificationsContent() {
   const t = useTranslations('TRAINER_NOTIFICATIONS');
   const [readFilter, setReadFilter] = useState<'all' | 'unread'>('all');
+  const [searchQuery, setSearchQuery] = useState('');
   const {
     notifications,
     unreadCount,
@@ -45,9 +46,14 @@ export default function TrainerNotificationsContent() {
     markAllAsReadPending,
   } = useTrainerNotificationsLogic();
 
-  const displayedNotifications = readFilter === 'unread'
-    ? notifications.filter((n) => n.unread)
-    : notifications;
+  const displayedNotifications = notifications.filter((n) => {
+    if (readFilter === 'unread' && !n.unread) return false;
+    if (searchQuery.trim()) {
+      const q = searchQuery.trim().toLowerCase();
+      return n.text.toLowerCase().includes(q) || (n.type?.toLowerCase().includes(q) ?? false);
+    }
+    return true;
+  });
 
   return (
     <div className="min-h-full pb-10">
@@ -65,6 +71,28 @@ export default function TrainerNotificationsContent() {
             </p>
           </div>
           <div className="relative flex flex-wrap items-center gap-2">
+            <div className="relative">
+              <Search size={14} className="pointer-events-none absolute start-2.5 top-1/2 -translate-y-1/2 text-sky-500" aria-hidden="true" />
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search notifications..."
+                aria-label="Search notifications"
+                data-testid="trainer_notifications-search-input"
+                className="min-h-10 w-48 sm:w-56 rounded-xl border border-border bg-input ps-8 pe-7 py-1.5 text-xs text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  aria-label="Clear notification search"
+                  className="absolute end-2 top-1/2 -translate-y-1/2 text-secondary hover:text-text-primary p-0.5 cursor-pointer"
+                >
+                  <X size={12} />
+                </button>
+              )}
+            </div>
             <div className="flex rounded-xl border border-border bg-input p-1">
               <button
                 type="button"
@@ -83,6 +111,17 @@ export default function TrainerNotificationsContent() {
                 Unread ({unreadCount})
               </button>
             </div>
+            <button
+              type="button"
+              onClick={retry}
+              disabled={retryPending}
+              aria-label="Refresh notifications"
+              title="Refresh notifications"
+              data-testid="trainer_notifications-refresh-button"
+              className="min-h-11 min-w-11 inline-flex items-center justify-center rounded-xl border border-sky-500/35 bg-sky-500/15 hover:bg-sky-500/25 text-sky-600 dark:text-sky-300 cursor-pointer disabled:opacity-60"
+            >
+              <RefreshCw size={16} className={retryPending ? 'motion-safe:animate-spin' : ''} aria-hidden="true" />
+            </button>
           {notifications.length > 0 && (
             <button
               type="button"

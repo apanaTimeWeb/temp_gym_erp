@@ -72,8 +72,10 @@ export default function TrainerLibraryMain() {
     closeDietModal,
     showFormModal,
     formDietPlan,
+    templateDietPlan,
     openCreateDiet,
     openEditPlan,
+    openDuplicatePlan,
     closeFormModal,
     showDeleteRequestModal,
     deleteRequestPlan,
@@ -132,6 +134,12 @@ export default function TrainerLibraryMain() {
             openEditPlan(editDietData);
           }
         }}
+        onDuplicate={() => {
+          if (editDietData && openDuplicatePlan) {
+            closeDietModal();
+            openDuplicatePlan(editDietData);
+          }
+        }}
         onRequestDelete={() => {
           if (editDietData) {
             openDeleteRequest(editDietData);
@@ -141,6 +149,7 @@ export default function TrainerLibraryMain() {
       <TrainerLibraryDietFormModal
         isOpen={showFormModal}
         plan={formDietPlan}
+        templatePlan={templateDietPlan}
         isSaving={isSavingPlan}
         errorMessage={saveErrorMessage}
         onClose={closeFormModal}

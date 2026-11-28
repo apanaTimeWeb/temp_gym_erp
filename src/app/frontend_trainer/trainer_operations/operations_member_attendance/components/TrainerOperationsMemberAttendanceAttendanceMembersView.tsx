@@ -6,7 +6,13 @@ import { useTranslations } from 'next-intl';
 import TrainerAttendanceTable from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/components/TrainerOperationsMemberAttendanceAttendanceTable';
 import type { useTrainerAttendanceMain } from '@/app/frontend_trainer/trainer_operations/operations_member_attendance/hooks/useTrainerOperationsMemberAttendanceAttendanceMain';
 
-export default function TrainerAttendanceMembersView({ model }: { model: ReturnType<typeof useTrainerAttendanceMain> }) {
+export default function TrainerAttendanceMembersView({
+  model,
+  statusFilter = 'ALL',
+}: {
+  model: ReturnType<typeof useTrainerAttendanceMain>;
+  statusFilter?: 'ALL' | 'IN_GYM' | 'CHECKED_OUT';
+}) {
   const t = useTranslations('TRAINER_ATTENDANCE');
   if (model.recordsQuery.isError) {
     return (
@@ -19,7 +25,12 @@ export default function TrainerAttendanceMembersView({ model }: { model: ReturnT
       </div>
     );
   }
+  const filteredRecords = statusFilter === 'IN_GYM'
+    ? model.records.filter((r) => !r.checkOut)
+    : statusFilter === 'CHECKED_OUT'
+      ? model.records.filter((r) => Boolean(r.checkOut))
+      : model.records;
   return (
-    <TrainerAttendanceTable records={model.records} totalRecords={model.totalRecords} isPending={model.recordsQuery.isPending || model.recordsQuery.isFetching} search={model.search} filterDate={model.filterDate} currentPage={model.currentPage} sortBy={model.sortBy} sortDirection={model.sortDirection} onPageChange={model.filters.setCurrentPage} onSort={model.filters.setSort} onCheckOut={model.handleCheckOutRecord} />
+    <TrainerAttendanceTable records={filteredRecords} totalRecords={statusFilter === 'ALL' ? model.totalRecords : filteredRecords.length} isPending={model.recordsQuery.isPending || model.recordsQuery.isFetching} search={model.search} filterDate={model.filterDate} currentPage={model.currentPage} sortBy={model.sortBy} sortDirection={model.sortDirection} onPageChange={model.filters.setCurrentPage} onSort={model.filters.setSort} onCheckOut={model.handleCheckOutRecord} />
   );
 }

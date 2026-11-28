@@ -1,6 +1,6 @@
 "use client";
-import { useEffect } from 'react';
-import { Calendar, Clock, Dumbbell, Edit2, Layers, Target, UserPlus, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Calendar, Check, Clock, Copy, CopyPlus, Dumbbell, Edit2, Layers, Target, UserPlus, X } from 'lucide-react';
 import { displayValue } from '@/lib/display_value';
 import { TRAINER_WORKOUT_DIFFICULTY_STYLES } from '@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/config/TrainerCoachingWorkoutPlansConstants';
 import type { TrainerWorkoutWorkout } from '@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/types/TrainerCoachingWorkoutPlansTypes';
@@ -10,9 +10,29 @@ interface Props {
   onClose: () => void;
   onEdit: (id: string) => void;
   onAssign: (plan: TrainerWorkoutWorkout) => void;
+  onClone?: (plan: TrainerWorkoutWorkout) => void;
 }
 
-export default function TrainerCoachingWorkoutPlansQuickViewModal({ plan, onClose, onEdit, onAssign }: Props) {
+function buildWorkoutSummaryText(plan: TrainerWorkoutWorkout): string {
+  const lines = [
+    `Workout Plan: ${plan.name}`,
+    `Level: ${plan.level} | Days/Week: ${plan.days} | Duration: ${plan.duration} | Focus: ${plan.focus}`,
+  ];
+  if (plan.goal) lines.push(`Goal: ${plan.goal}`);
+  if (plan.instructions) lines.push(`Instructions: ${plan.instructions}`);
+  const exercises = plan.workoutExercises ?? [];
+  if (exercises.length > 0) {
+    lines.push('', 'Exercises:');
+    exercises.forEach((ex, i) => {
+      lines.push(`${i + 1}. [${ex.day || 'Day 1'}] ${ex.name} — ${ex.sets} sets x ${ex.reps} reps${ex.restTime ? ` (${ex.restTime} rest)` : ''}`);
+    });
+  }
+  return lines.join('\n');
+}
+
+export default function TrainerCoachingWorkoutPlansQuickViewModal({ plan, onClose, onEdit, onAssign, onClone }: Props) {
+  const [copied, setCopied] = useState(false);
+
   useEffect(() => {
     if (!plan) return;
     const onKey = (e: KeyboardEvent) => {
@@ -23,6 +43,16 @@ export default function TrainerCoachingWorkoutPlansQuickViewModal({ plan, onClos
   }, [plan, onClose]);
 
   if (!plan) return null;
+
+  const handleCopySummary = async () => {
+    try {
+      await navigator.clipboard.writeText(buildWorkoutSummaryText(plan));
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard blocked in restricted context
+    }
+  };
 
   const tags = Array.isArray(plan.tags)
     ? plan.tags
@@ -177,36 +207,63 @@ export default function TrainerCoachingWorkoutPlansQuickViewModal({ plan, onClos
           </div>
         </div>
 
-        <div className="flex flex-col-reverse sm:flex-row justify-end gap-2.5 border-t border-border px-5 py-4 bg-white dark:bg-[#0F172A]">
-          <button
-            type="button"
-            onClick={onClose}
-            className="min-h-10 rounded-xl border border-border bg-input px-4 text-sm font-semibold text-text-primary hover:bg-surface-hover cursor-pointer"
-          >
-            Close
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              onClose();
-              onAssign(plan);
-            }}
-            className="min-h-10 inline-flex items-center justify-center gap-1.5 rounded-xl border border-sky-500/35 bg-sky-500/15 px-4 text-sm font-semibold text-sky-600 dark:text-sky-300 hover:bg-sky-500/25 cursor-pointer"
-          >
-            <UserPlus size={15} />
-            Assign Plan
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              onClose();
-              onEdit(plan.id);
-            }}
-            className="min-h-10 inline-flex items-center justify-center gap-1.5 rounded-xl bg-primary px-4 text-sm font-semibold text-on-primary hover:bg-primary-hover cursor-pointer"
-          >
-            <Edit2 size={15} />
-            Edit Plan
-          </button>
+        <div className="flex flex-wrap items-center justify-between gap-2.5 border-t border-border px-5 py-4 bg-white dark:bg-[#0F172A]">
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => void handleCopySummary()}
+              className="min-h-10 inline-flex items-center justify-center gap-1.5 rounded-xl border border-border bg-input px-3.5 text-xs sm:text-sm font-semibold text-text-primary hover:bg-surface-hover cursor-pointer"
+              data-testid="trainer_workout-quick-view-copy-summary"
+            >
+              {copied ? <Check size={15} className="text-emerald-500" /> : <Copy size={15} />}
+              {copied ? 'Copied!' : 'Copy Summary'}
+            </button>
+            {onClone && (
+              <button
+                type="button"
+                onClick={() => {
+                  onClose();
+                  onClone(plan);
+                }}
+                className="min-h-10 inline-flex items-center justify-center gap-1.5 rounded-xl border border-purple-500/35 bg-purple-500/10 px-3.5 text-xs sm:text-sm font-semibold text-purple-600 dark:text-purple-300 hover:bg-purple-500/20 cursor-pointer"
+                data-testid="trainer_workout-quick-view-clone"
+              >
+                <CopyPlus size={15} />
+                Clone Plan
+              </button>
+            )}
+          </div>
+          <div className="flex flex-wrap items-center gap-2 ml-auto">
+            <button
+              type="button"
+              onClick={onClose}
+              className="min-h-10 rounded-xl border border-border bg-input px-4 text-sm font-semibold text-text-primary hover:bg-surface-hover cursor-pointer"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                onClose();
+                onAssign(plan);
+              }}
+              className="min-h-10 inline-flex items-center justify-center gap-1.5 rounded-xl border border-sky-500/35 bg-sky-500/15 px-4 text-sm font-semibold text-sky-600 dark:text-sky-300 hover:bg-sky-500/25 cursor-pointer"
+            >
+              <UserPlus size={15} />
+              Assign Plan
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                onClose();
+                onEdit(plan.id);
+              }}
+              className="min-h-10 inline-flex items-center justify-center gap-1.5 rounded-xl bg-primary px-4 text-sm font-semibold text-on-primary hover:bg-primary-hover cursor-pointer"
+            >
+              <Edit2 size={15} />
+              Edit Plan
+            </button>
+          </div>
         </div>
       </div>
     </div>

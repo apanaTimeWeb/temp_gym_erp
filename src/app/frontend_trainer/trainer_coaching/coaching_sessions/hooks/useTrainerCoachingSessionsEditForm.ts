@@ -3,7 +3,7 @@
 // DATA FLOW: Session edit form input → React Hook Form + Zod → Sessions mutation → updated server response → parent UI.
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { useForm } from 'react-hook-form';
+import { useForm, type Resolver } from 'react-hook-form';
 
 import { useTrainerInfrastructureIdempotencyKey } from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/hooks/TrainerCoachingSessionsuseTrainerInfrastructureIdempotencyKey';
 
@@ -62,7 +62,7 @@ export function useTrainerSessionsEditForm(session: TrainerSessionsTrainerSessio
   const { updateSession, updateSessionPending } = useTrainerSessionsMutations();
   const actionKeys = useTrainerInfrastructureIdempotencyKey();
   const form = useForm<TrainerSessionsEditFormValues>({
-    resolver: zodResolver(TrainerSessionsEditFormSchema) as any,
+    resolver: zodResolver(TrainerSessionsEditFormSchema) as unknown as Resolver<TrainerSessionsEditFormValues>,
     defaultValues: {
       time: normalizeTimeForInput(session.time),
       duration: normalizeDurationOption(session.duration) as TrainerSessionsEditFormValues['duration'],

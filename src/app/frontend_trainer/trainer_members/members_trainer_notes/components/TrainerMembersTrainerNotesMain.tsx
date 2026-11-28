@@ -4,7 +4,7 @@ import type { TrainerMembersTrainerNotesFormValues, TrainerMembersTrainerNotesNa
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-import { ArrowUpDown, Check, ChevronLeft, ChevronRight, ExternalLink, Loader2, Pencil, Search, Trash2, Users, X } from 'lucide-react';
+import { ArrowUpDown, Check, ChevronLeft, ChevronRight, Download, ExternalLink, Loader2, Pencil, RefreshCw, Search, Trash2, Users, X } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useForm, useWatch } from 'react-hook-form';
@@ -100,6 +100,32 @@ export default function TrainerMembersTrainerNotesMain() {
   const paginatedNotes = filteredSortedNotes.slice((safeNotesPage - 1) * notesPerPage, safeNotesPage * notesPerPage);
 
   const selectedMemberMeta = membersList.find((m) => m.id === memberId);
+
+  const handleExportNotesCsv = () => {
+    if (!detail.data || filteredSortedNotes.length === 0) return;
+    const header = ['Member ID', 'Member Name', 'Note ID', 'Date', 'Note'];
+    const csvRows = [
+      header.join(','),
+      ...filteredSortedNotes.map((n) =>
+        [
+          detail.data!.id,
+          `"${String(detail.data!.name ?? '').replace(/"/g, '""')}"`,
+          n.id,
+          n.date,
+          `"${String(n.text ?? '').replace(/"/g, '""')}"`,
+        ].join(',')
+      ),
+    ];
+    const blob = new Blob([csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${detail.data.id}_trainer_notes.csv`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  };
 
   useEffect(() => {
     if (!hasUnsavedWork || isAnyMutationPending) return;
@@ -458,39 +484,64 @@ export default function TrainerMembersTrainerNotesMain() {
               </Link>
             </div>
 
-            {(detail.data.trainerNotes ?? []).length > 0 && (
-              <div className="flex flex-wrap items-center gap-2">
-                <div className="relative">
-                  <Search size={14} className="pointer-events-none absolute start-2.5 top-1/2 -translate-y-1/2 text-sky-500" aria-hidden="true" />
-                  <input
-                    type="search"
-                    value={noteSearch}
-                    onChange={(e) => { setNoteSearch(e.target.value); setNotesPage(1); }}
-                    placeholder="Search notes..."
-                    aria-label="Search trainer notes"
-                    className="min-h-9 w-48 rounded-lg border border-border bg-input ps-8 pe-7 py-1 text-xs text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
-                  />
-                  {noteSearch && (
+            <div className="flex flex-wrap items-center gap-2">
+              {(detail.data.trainerNotes ?? []).length > 0 && (
+                <>
+                  <div className="relative">
+                    <Search size={14} className="pointer-events-none absolute start-2.5 top-1/2 -translate-y-1/2 text-sky-500" aria-hidden="true" />
+                    <input
+                      type="search"
+                      value={noteSearch}
+                      onChange={(e) => { setNoteSearch(e.target.value); setNotesPage(1); }}
+                      placeholder="Search notes..."
+                      aria-label="Search trainer notes"
+                      className="min-h-9 w-48 rounded-lg border border-border bg-input ps-8 pe-7 py-1 text-xs text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                    />
+                    {noteSearch && (
+                      <button
+                        type="button"
+                        onClick={() => { setNoteSearch(''); setNotesPage(1); }}
+                        aria-label="Clear note search"
+                        className="absolute end-2 top-1/2 -translate-y-1/2 text-secondary hover:text-text-primary p-0.5 cursor-pointer"
+                      >
+                        <X size={12} />
+                      </button>
+                    )}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => { setNoteSortOrder((prev) => (prev === 'desc' ? 'asc' : 'desc')); setNotesPage(1); }}
+                    className="min-h-9 inline-flex items-center gap-1.5 rounded-lg border border-border bg-input px-3 py-1 text-xs font-semibold text-text-primary hover:bg-surface-hover cursor-pointer"
+                  >
+                    <ArrowUpDown size={13} className="text-orange-500" aria-hidden="true" />
+                    <span>{noteSortOrder === 'desc' ? 'Newest first' : 'Oldest first'}</span>
+                  </button>
+                  {filteredSortedNotes.length > 0 && (
                     <button
                       type="button"
-                      onClick={() => { setNoteSearch(''); setNotesPage(1); }}
-                      aria-label="Clear note search"
-                      className="absolute end-2 top-1/2 -translate-y-1/2 text-secondary hover:text-text-primary p-0.5 cursor-pointer"
+                      onClick={handleExportNotesCsv}
+                      className="min-h-9 inline-flex items-center gap-1.5 rounded-lg border border-teal-500/35 bg-teal-500/15 px-3 py-1 text-xs font-semibold text-teal-600 dark:text-teal-300 hover:bg-teal-500/25 cursor-pointer"
+                      data-testid="trainer_notes-export-csv"
                     >
-                      <X size={12} />
+                      <Download size={13} aria-hidden="true" />
+                      <span>Export</span>
                     </button>
                   )}
-                </div>
-                <button
-                  type="button"
-                  onClick={() => { setNoteSortOrder((prev) => (prev === 'desc' ? 'asc' : 'desc')); setNotesPage(1); }}
-                  className="min-h-9 inline-flex items-center gap-1.5 rounded-lg border border-border bg-input px-3 py-1 text-xs font-semibold text-text-primary hover:bg-surface-hover cursor-pointer"
-                >
-                  <ArrowUpDown size={13} className="text-orange-500" aria-hidden="true" />
-                  <span>{noteSortOrder === 'desc' ? 'Newest first' : 'Oldest first'}</span>
-                </button>
-              </div>
-            )}
+                </>
+              )}
+              <button
+                type="button"
+                onClick={() => void detail.refetch()}
+                disabled={detail.isFetching}
+                aria-label="Refresh notes"
+                title="Refresh notes"
+                className="min-h-9 inline-flex items-center gap-1.5 rounded-lg border border-sky-500/35 bg-sky-500/15 px-3 py-1 text-xs font-semibold text-sky-600 dark:text-sky-300 hover:bg-sky-500/25 disabled:opacity-60 cursor-pointer"
+                data-testid="trainer_notes-refresh"
+              >
+                <RefreshCw size={13} className={detail.isFetching ? 'motion-safe:animate-spin' : ''} aria-hidden="true" />
+                <span>Refresh</span>
+              </button>
+            </div>
           </div>
 
           {updateNote.isError && (

@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, X } from 'lucide-react';
+import { Download, RefreshCw, Search, X } from 'lucide-react';
 
 export interface TrainerCoachingIndividualProgressProgressTrackingFilterBarProps {
   dateRangeFilter: 'all' | '30d' | '3m' | '6m' | 'this_year';
@@ -11,6 +11,9 @@ export interface TrainerCoachingIndividualProgressProgressTrackingFilterBarProps
   setSearchQuery: (val: string) => void;
   filteredCount: number;
   totalEntries: number;
+  onExportCsv?: () => void;
+  onRefresh?: () => void;
+  isRefreshing?: boolean;
 }
 
 export function TrainerCoachingIndividualProgressProgressTrackingFilterBar({
@@ -22,14 +25,17 @@ export function TrainerCoachingIndividualProgressProgressTrackingFilterBar({
   setSearchQuery,
   filteredCount,
   totalEntries,
+  onExportCsv,
+  onRefresh,
+  isRefreshing = false,
 }: TrainerCoachingIndividualProgressProgressTrackingFilterBarProps) {
   const hasActiveFilters = dateRangeFilter !== 'all' || bmiCategoryFilter !== 'all' || searchQuery.trim() !== '';
 
   return (
-    <div className="p-4 border-b border-border bg-surface-highlight flex flex-wrap items-center justify-between gap-3">
-      <div className="flex flex-wrap items-center gap-2.5 flex-1 min-w-0 w-full sm:w-auto">
+    <div className="p-4 border-b border-border bg-surface-highlight flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+      <div className="flex flex-wrap items-center gap-2.5 flex-1 min-w-0 w-full">
         {/* Quick Search */}
-        <div className="relative w-full sm:min-w-[160px] sm:max-w-xs flex-1">
+        <div className="relative w-full sm:min-w-[180px] sm:max-w-xs flex-1">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-sky-500 pointer-events-none" />
           <input
             type="text"
@@ -37,13 +43,13 @@ export function TrainerCoachingIndividualProgressProgressTrackingFilterBar({
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search notes or date..."
             aria-label="Search progress notes"
-            className="w-full pl-8 pr-7 py-1.5 bg-input border border-border rounded-xl text-xs text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            className="w-full min-h-9 pl-8 pr-7 py-1.5 bg-input border border-border rounded-xl text-xs text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
           />
           {searchQuery && (
             <button
               type="button"
               onClick={() => setSearchQuery('')}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-secondary hover:text-primary p-0.5"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-secondary hover:text-primary p-0.5 cursor-pointer"
               aria-label="Clear search"
             >
               <X size={12} />
@@ -52,14 +58,14 @@ export function TrainerCoachingIndividualProgressProgressTrackingFilterBar({
         </div>
 
         {/* Date Range Dropdown */}
-        <div className="flex items-center gap-1.5">
+        <div className="w-full sm:w-auto">
           <label htmlFor="progress-date-range-filter" className="sr-only">Date Range</label>
           <select
             id="progress-date-range-filter"
             value={dateRangeFilter}
             onChange={(e) => setDateRangeFilter(e.target.value as typeof dateRangeFilter)}
             aria-label="Filter by date range"
-            className="min-h-9 rounded-xl border border-border bg-input px-3 py-1 text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            className="w-full sm:w-auto min-h-9 rounded-xl border border-border bg-white dark:bg-[#0F172A] dark:[color-scheme:dark] px-3 py-1 text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
           >
             <option value="all">All Dates</option>
             <option value="30d">Last 30 Days</option>
@@ -70,14 +76,14 @@ export function TrainerCoachingIndividualProgressProgressTrackingFilterBar({
         </div>
 
         {/* Metric / Category Dropdown */}
-        <div className="flex items-center gap-1.5">
+        <div className="w-full sm:w-auto">
           <label htmlFor="progress-metric-filter" className="sr-only">Filter by Metric</label>
           <select
             id="progress-metric-filter"
             value={bmiCategoryFilter}
             onChange={(e) => setBmiCategoryFilter(e.target.value as typeof bmiCategoryFilter)}
             aria-label="Filter by BMI or metric"
-            className="min-h-9 rounded-xl border border-border bg-input px-3 py-1 text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            className="w-full sm:w-auto min-h-9 rounded-xl border border-border bg-white dark:bg-[#0F172A] dark:[color-scheme:dark] px-3 py-1 text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
           >
             <option value="all">All BMI & Metrics</option>
             <option value="normal">Normal BMI (18.5 - 24.9)</option>
@@ -95,7 +101,7 @@ export function TrainerCoachingIndividualProgressProgressTrackingFilterBar({
               setBmiCategoryFilter('all');
               setSearchQuery('');
             }}
-            className="min-h-9 inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold text-rose-500 rounded-xl border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 motion-safe:transition-colors"
+            className="min-h-9 inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold text-rose-500 rounded-xl border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 motion-safe:transition-colors cursor-pointer"
           >
             <X size={12} />
             <span>Clear</span>
@@ -103,8 +109,34 @@ export function TrainerCoachingIndividualProgressProgressTrackingFilterBar({
         )}
       </div>
 
-      <div className="text-xs text-secondary font-medium">
-        Showing <span className="font-bold text-text-primary">{filteredCount}</span> of {totalEntries} entries
+      <div className="flex flex-wrap items-center gap-2 shrink-0">
+        <span className="text-xs text-secondary font-medium">
+          Showing <span className="font-bold text-text-primary">{filteredCount}</span> of {totalEntries} entries
+        </span>
+        {onRefresh && (
+          <button
+            type="button"
+            onClick={onRefresh}
+            disabled={isRefreshing}
+            aria-label="Refresh progress entries"
+            title="Refresh progress entries"
+            data-testid="trainer_progress-refresh"
+            className="min-h-9 min-w-9 inline-flex items-center justify-center rounded-xl border border-sky-500/35 bg-sky-500/15 px-2.5 text-xs font-semibold text-sky-600 dark:text-sky-300 hover:bg-sky-500/25 disabled:opacity-60 cursor-pointer"
+          >
+            <RefreshCw size={14} className={isRefreshing ? 'motion-safe:animate-spin' : ''} aria-hidden="true" />
+          </button>
+        )}
+        {onExportCsv && (
+          <button
+            type="button"
+            onClick={onExportCsv}
+            data-testid="trainer_progress-export-csv"
+            className="min-h-9 inline-flex items-center gap-1.5 rounded-xl border border-teal-500/35 bg-teal-500/15 px-3 py-1 text-xs font-semibold text-teal-600 dark:text-teal-300 hover:bg-teal-500/25 cursor-pointer"
+          >
+            <Download size={14} aria-hidden="true" />
+            <span>CSV</span>
+          </button>
+        )}
       </div>
     </div>
   );

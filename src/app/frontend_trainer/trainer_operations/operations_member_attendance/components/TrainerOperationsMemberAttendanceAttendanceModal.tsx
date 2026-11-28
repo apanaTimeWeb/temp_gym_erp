@@ -1,7 +1,7 @@
 "use client";
 // RESPONSIBILITY: Modal for recording a member attendance entry.
 // DATA FLOW: props (from TrainerAttendanceMain) → react-hook-form + zod → onSubmit mutation
-import { useEffect, useId, useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { X, CheckCircle, Loader2, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -23,7 +23,12 @@ import type { TrainerAttendanceFormValues } from '@/app/frontend_trainer/trainer
  * @dependencies props (from TrainerAttendanceMain) → react-hook-form + zod → onSubmit mutation
  * @edge-case Preserves entered values after validation/API failure and blocks duplicate submission while pending.
  */
-export default function TrainerAttendanceModal({ isOpen, onClose, members, membersLoading, membersError, onRetryMembers, saving, onSubmit, testId = 'trainer-attendance-attendance-modal-root', initialMemberId = '' }: TrainerAttendanceModalProps) {
+export default function TrainerAttendanceModal(props: TrainerAttendanceModalProps) {
+  if (!props.isOpen) return null;
+  return <TrainerAttendanceModalContent key={props.initialMemberId || 'default'} {...props} />;
+}
+
+function TrainerAttendanceModalContent({ isOpen, onClose, members, membersLoading, membersError, onRetryMembers, saving, onSubmit, testId = 'trainer-attendance-attendance-modal-root', initialMemberId = '' }: TrainerAttendanceModalProps) {
   const t = useTranslations('TRAINER_ATTENDANCE');
   const dialogRef = useRef<HTMLDivElement>(null);
   const [mode, setMode] = useState<'single' | 'multi'>('single');
@@ -33,7 +38,6 @@ export default function TrainerAttendanceModal({ isOpen, onClose, members, membe
   const {
     register,
     handleSubmit,
-    reset,
     control,
     setValue,
     formState: { errors, isDirty },
@@ -46,18 +50,6 @@ export default function TrainerAttendanceModal({ isOpen, onClose, members, membe
   const guardNavigation = useTrainerInfrastructureUnsavedChangesGuard(isDirty && !saving);
   const titleId = useId();
   useTrainerInfrastructureDialogFocusTrap({ isOpen, dialogRef, onEscape: () => void guardNavigation(onClose) });
-
-  // Effect contract: reset attendance form state to the selected record when the modal opens or the record changes.
-  useEffect(() => {
-    if (isOpen) {
-      reset(TrainerAttendanceEmptyForm(initialMemberId));
-      setSelectedMemberIds(initialMemberId ? [initialMemberId] : []);
-      setMemberFilterText('');
-      setMode('single');
-    }
-  }, [isOpen, initialMemberId, reset]);
-
-  if (!isOpen) return null;
 
   const handleClose = () => { void guardNavigation(onClose); };
 
@@ -100,9 +92,9 @@ export default function TrainerAttendanceModal({ isOpen, onClose, members, membe
   };
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-4 overflow-y-auto " ref={dialogRef} role="dialog" aria-modal={true} aria-labelledby={titleId} data-testid={testId}>
-      <div className="my-auto bg-overlay rounded-2xl shadow-dialog w-full max-w-md max-h-dialog-desktop flex flex-col overflow-hidden border border-border motion-safe:transition-opacity motion-safe:duration-base">
-        <div className="flex justify-between items-center p-5 border-b border-border shrink-0 bg-overlay ">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-overlay-backdrop backdrop-blur-sm p-3 sm:p-4 overflow-y-auto" ref={dialogRef} role="dialog" aria-modal={true} aria-labelledby={titleId} data-testid={testId}>
+      <div className="my-auto bg-white dark:bg-[#0F172A] rounded-2xl shadow-dialog w-full max-w-md max-h-[90vh] flex flex-col overflow-visible border border-border motion-safe:transition-opacity motion-safe:duration-base">
+        <div className="flex justify-between items-center p-5 border-b border-border shrink-0 bg-white dark:bg-[#0F172A] rounded-t-2xl">
           <div>
             <h3 id={titleId} className="font-bold text-lg text-text-primary ">{t("TEXT_RECORD_ATTENDANCE")}</h3>
             <p className="text-xs text-secondary mt-0.5">Quickly mark check-in for individual or multiple trainees</p>
@@ -191,7 +183,7 @@ export default function TrainerAttendanceModal({ isOpen, onClose, members, membe
           </div>
 
           {/* Date & Time */}
-          <div className="grid grid-cols-2 gap-4 ">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label htmlFor="attendance-date" className="block text-sm font-medium text-secondary mb-1 ">{t("TEXT_DATE")}</label>
               <input
@@ -232,7 +224,7 @@ export default function TrainerAttendanceModal({ isOpen, onClose, members, membe
               <select
                 id="attendance-session-type"
                 {...register('sessionType')}
-                className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-text-primary motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+                className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-white dark:bg-[#0F172A] dark:[color-scheme:dark] text-text-primary cursor-pointer"
                 data-testid="trainer_attendance-session-type-select"
               >
                 <option value="PT">Personal Training (PT)</option>
@@ -252,7 +244,7 @@ export default function TrainerAttendanceModal({ isOpen, onClose, members, membe
             </div>
           </div>
 
-          <div className="sticky bottom-0 bg-overlay border-t border-border pt-3 flex justify-end gap-3 z-10 shrink-0 ">
+          <div className="sticky bottom-0 bg-white dark:bg-[#0F172A] border-t border-border pt-3 flex flex-col-reverse sm:flex-row justify-end gap-3 z-10 shrink-0">
             <button
               type="button"
               onClick={handleClose}

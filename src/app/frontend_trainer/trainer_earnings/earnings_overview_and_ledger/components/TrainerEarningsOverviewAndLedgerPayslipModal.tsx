@@ -41,9 +41,9 @@ export default function TrainerEarningsOverviewAndLedgerPayslipModal({
       ref={modalRef}
       data-testid="trainer_earnings-payslip-modal"
     >
-      <div className="my-auto bg-card border border-border rounded-2xl w-full max-w-xl max-h-dialog-desktop flex flex-col shadow-2xl overflow-hidden print:border-none print:shadow-none print:m-0 print:w-full">
+      <div className="my-auto bg-white dark:bg-[#0F172A] border border-border rounded-2xl w-full max-w-xl max-h-dialog-desktop flex flex-col shadow-2xl overflow-hidden print:border-none print:shadow-none print:m-0 print:w-full">
         {/* Modal Header Actions (hidden in print) */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-header print:hidden shrink-0">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-white dark:bg-[#0F172A] print:hidden shrink-0">
           <div className="flex items-center gap-2">
             <Receipt size={18} className="text-text-primary" />
             <h3 id="payslip-modal-title" className="text-sm font-bold text-text-primary">
@@ -72,7 +72,7 @@ export default function TrainerEarningsOverviewAndLedgerPayslipModal({
         </div>
 
         {/* Payslip Document Body */}
-        <div className="p-6 space-y-6 text-text-primary bg-card overflow-y-auto custom-scrollbar flex-1 min-h-0" id="printable-payslip">
+        <div className="p-6 space-y-6 text-text-primary bg-white dark:bg-[#0F172A] overflow-y-auto custom-scrollbar flex-1 min-h-0" id="printable-payslip">
           {/* Gym & Document Title */}
           <div className="flex flex-wrap items-start justify-between gap-4 border-b border-border pb-5">
             <div className="space-y-1">
@@ -93,7 +93,7 @@ export default function TrainerEarningsOverviewAndLedgerPayslipModal({
           </div>
 
           {/* Trainer & Session Details */}
-          <div className="grid grid-cols-2 gap-4 p-4 rounded-xl bg-input border border-border text-xs">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-xl bg-input border border-border text-xs">
             <div>
               <p className="text-secondary font-medium">Trainer</p>
               <p className="font-bold text-sm text-text-primary mt-0.5">{currentUser?.name || 'Personal Trainer'}</p>

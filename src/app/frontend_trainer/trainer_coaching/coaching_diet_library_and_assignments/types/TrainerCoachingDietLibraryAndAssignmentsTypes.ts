@@ -43,8 +43,10 @@ export interface TrainerLibraryLogicReturn {
   closeDietModal: () => void;
   showFormModal: boolean;
   formDietPlan: TrainerLibraryDietPlan | null;
+  templateDietPlan?: TrainerLibraryDietPlan | null;
   openCreateDiet: () => void;
   openEditPlan: (diet: TrainerLibraryDietPlan) => void;
+  openDuplicatePlan?: (diet: TrainerLibraryDietPlan) => void;
   closeFormModal: () => void;
   showDeleteRequestModal: boolean;
   deleteRequestPlan: TrainerLibraryDietPlan | null;

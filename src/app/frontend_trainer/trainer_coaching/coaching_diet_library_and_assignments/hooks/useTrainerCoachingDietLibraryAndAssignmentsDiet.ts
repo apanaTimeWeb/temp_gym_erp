@@ -24,6 +24,7 @@ export function useTrainerLibraryDiet() {
 
   const [showFormModal, setShowFormModal] = useState(false);
   const [formDietPlan, setFormDietPlan] = useState<TrainerLibraryDietPlan | null>(null);
+  const [templateDietPlan, setTemplateDietPlan] = useState<TrainerLibraryDietPlan | null>(null);
 
   const [showDeleteRequestModal, setShowDeleteRequestModal] = useState(false);
   const [deleteRequestPlan, setDeleteRequestPlan] = useState<TrainerLibraryDietPlan | null>(null);
@@ -40,17 +41,26 @@ export function useTrainerLibraryDiet() {
 
   const openCreateDiet = useCallback(() => {
     setFormDietPlan(null);
+    setTemplateDietPlan(null);
     setShowFormModal(true);
   }, []);
 
   const openEditPlan = useCallback((diet: TrainerLibraryDietPlan) => {
+    setTemplateDietPlan(null);
     setFormDietPlan(diet);
+    setShowFormModal(true);
+  }, []);
+
+  const openDuplicatePlan = useCallback((diet: TrainerLibraryDietPlan) => {
+    setFormDietPlan(null);
+    setTemplateDietPlan(diet);
     setShowFormModal(true);
   }, []);
 
   const closeFormModal = useCallback(() => {
     setShowFormModal(false);
     setFormDietPlan(null);
+    setTemplateDietPlan(null);
   }, []);
 
   const openDeleteRequest = useCallback((diet: TrainerLibraryDietPlan) => {
@@ -72,8 +82,10 @@ export function useTrainerLibraryDiet() {
 
     showFormModal,
     formDietPlan,
+    templateDietPlan,
     openCreateDiet,
     openEditPlan,
+    openDuplicatePlan,
     closeFormModal,
 
     showDeleteRequestModal,

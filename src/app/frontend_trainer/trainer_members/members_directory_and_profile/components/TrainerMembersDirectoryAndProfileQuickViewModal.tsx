@@ -2,6 +2,7 @@
 // RESPONSIBILITY: Centered obsidian quick-view modal showing complete member profile, metrics, plan assignments, and actions.
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import Link from 'next/link';
 import {
   Activity,
   AlertTriangle,
@@ -12,6 +13,9 @@ import {
   Mail,
   MapPin,
   MessageCircle,
+  NotebookPen,
+  Timer,
+  TrendingUp,
   User,
   UtensilsCrossed,
   X,
@@ -32,6 +36,16 @@ import {
   TrainerMembersMaskSensitiveData,
 } from '@/app/frontend_trainer/trainer_members/members_directory_and_profile/utils/TrainerMembersDirectoryAndProfileDisplayFormatters';
 import type { TrainerMembersMember } from '@/app/frontend_trainer/trainer_members/members_directory_and_profile/types/TrainerMembersDirectoryAndProfileTypes';
+
+function getMembershipExpiryAlert(expiryDate?: string): { label: string; isExpired: boolean } | null {
+  if (!expiryDate) return null;
+  const parsed = Date.parse(expiryDate);
+  if (Number.isNaN(parsed)) return null;
+  const diffDays = Math.ceil((parsed - Date.now()) / (1000 * 60 * 60 * 24));
+  if (diffDays <= 0) return { label: 'Membership Expired', isExpired: true };
+  if (diffDays <= 7) return { label: `Expires in ${diffDays}d`, isExpired: false };
+  return null;
+}
 
 export interface TrainerMembersQuickViewModalProps {
   member: TrainerMembersMember | null;
@@ -78,6 +92,7 @@ export default function TrainerMembersDirectoryAndProfileQuickViewModal({
     Boolean(member.medicalRestrictions) &&
     member.medicalRestrictions!.toLowerCase() !== 'none' &&
     !member.medicalRestrictions!.toLowerCase().includes('none reported');
+  const expiryAlert = getMembershipExpiryAlert(member.expiryDate);
 
   return createPortal(
     <div
@@ -93,7 +108,7 @@ export default function TrainerMembersDirectoryAndProfileQuickViewModal({
         aria-hidden="true"
       />
       <div
-        className="relative z-10 w-full max-w-2xl max-h-[88dvh] overflow-y-auto rounded-2xl border border-sky-500/35 bg-card dark:bg-[#0E1526]/98 text-text-primary shadow-[0_24px_64px_rgba(0,0,0,0.85)]"
+        className="relative z-10 w-full max-w-2xl max-h-[88dvh] overflow-y-auto rounded-2xl border border-sky-500/35 bg-white dark:bg-[#0F172A] text-text-primary shadow-[0_24px_64px_rgba(0,0,0,0.85)]"
         data-testid="trainer_members-quick-view-modal"
       >
         <span
@@ -144,6 +159,19 @@ export default function TrainerMembersDirectoryAndProfileQuickViewModal({
                       : 'TEXT_PROGRESS_UNKNOWN'
                   )}
                 </span>
+                {expiryAlert && (
+                  <span
+                    className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold border ${
+                      expiryAlert.isExpired
+                        ? 'border-rose-500/40 bg-rose-500/15 text-rose-600 dark:text-rose-300'
+                        : 'border-amber-500/40 bg-amber-500/15 text-amber-600 dark:text-amber-300'
+                    }`}
+                    data-testid="trainer_members-quick-view-expiry-alert"
+                  >
+                    <AlertTriangle size={12} aria-hidden="true" />
+                    {expiryAlert.label}
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -282,7 +310,37 @@ export default function TrainerMembersDirectoryAndProfileQuickViewModal({
         </div>
 
         {/* Footer Actions */}
-        <div className="p-4 sm:px-6 border-t border-border dark:border-white/10 bg-slate-50/70 dark:bg-[#0B111E] flex flex-wrap items-center justify-between gap-3">
+        <div className="p-4 sm:px-6 border-t border-border dark:border-white/10 bg-slate-50/70 dark:bg-[#0B111E] space-y-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <Link
+              href={`/frontend_trainer/trainer_coaching/coaching_individual_progress?memberId=${encodeURIComponent(member.id)}`}
+              onClick={onClose}
+              className="min-h-9 inline-flex items-center gap-1.5 rounded-xl border border-purple-500/35 bg-purple-500/10 hover:bg-purple-500/20 px-3 text-xs font-semibold text-purple-600 dark:text-purple-300 transition-colors"
+              data-testid="trainer_members-quick-view-log-progress"
+            >
+              <TrendingUp size={14} aria-hidden="true" />
+              <span>Log Progress</span>
+            </Link>
+            <Link
+              href={`/frontend_trainer/trainer_members/members_trainer_notes?memberId=${encodeURIComponent(member.id)}`}
+              onClick={onClose}
+              className="min-h-9 inline-flex items-center gap-1.5 rounded-xl border border-teal-500/35 bg-teal-500/10 hover:bg-teal-500/20 px-3 text-xs font-semibold text-teal-600 dark:text-teal-300 transition-colors"
+              data-testid="trainer_members-quick-view-notes"
+            >
+              <NotebookPen size={14} aria-hidden="true" />
+              <span>Notes</span>
+            </Link>
+            <Link
+              href="/frontend_trainer/trainer_coaching/coaching_sessions"
+              onClick={onClose}
+              className="min-h-9 inline-flex items-center gap-1.5 rounded-xl border border-sky-500/35 bg-sky-500/10 hover:bg-sky-500/20 px-3 text-xs font-semibold text-sky-600 dark:text-sky-300 transition-colors"
+              data-testid="trainer_members-quick-view-sessions"
+            >
+              <Timer size={14} aria-hidden="true" />
+              <span>Schedule Session</span>
+            </Link>
+          </div>
+          <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <button
               type="button"
@@ -321,6 +379,7 @@ export default function TrainerMembersDirectoryAndProfileQuickViewModal({
               <span>Full Profile</span>
               <ExternalLink size={14} aria-hidden="true" />
             </button>
+          </div>
           </div>
         </div>
       </div>

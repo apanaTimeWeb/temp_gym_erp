@@ -7,5 +7,6 @@ export interface TrainerLibraryDietModalProps {
   onClose: () => void;
   onAssign?: () => void;
   onEdit?: () => void;
+  onDuplicate?: () => void;
   onRequestDelete?: () => void;
 }

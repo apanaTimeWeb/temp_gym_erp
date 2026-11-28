@@ -182,7 +182,7 @@ export default function TrainerScheduleWeeklyAvailability() {
                   type="time"
                   disabled={!day.isAvailable}
                   {...register(`days.${index}.startTime`)}
-                  className="w-full sm:w-32 min-h-11 bg-card border border-border rounded-lg px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring disabled:opacity-50  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+                  className="w-full sm:w-32 min-h-11 bg-card border border-border rounded-lg px-3 py-2 text-sm text-text-primary dark:[color-scheme:dark] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring disabled:opacity-50"
                  data-testid={`trainer_schedule-weekly-availability-start-${day.day.toLowerCase()}`}/>
               </div>
               <span className="text-secondary font-medium text-sm text-center ">{t("TEXT_TO")}</span>
@@ -195,7 +195,7 @@ export default function TrainerScheduleWeeklyAvailability() {
                   type="time"
                   disabled={!day.isAvailable}
                   {...register(`days.${index}.endTime`)}
-                  className="w-full sm:w-32 min-h-11 bg-card border border-border rounded-lg px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring disabled:opacity-50  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+                  className="w-full sm:w-32 min-h-11 bg-card border border-border rounded-lg px-3 py-2 text-sm text-text-primary dark:[color-scheme:dark] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring disabled:opacity-50"
                  data-testid={`trainer_schedule-weekly-availability-end-${day.day.toLowerCase()}`}/>
               </div>
             </div>

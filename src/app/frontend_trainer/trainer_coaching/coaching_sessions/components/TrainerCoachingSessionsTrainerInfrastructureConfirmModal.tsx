@@ -32,8 +32,12 @@ import type { TrainerInfrastructureConfirmModalProps } from '@/app/frontend_trai
  * @dependencies Uses only documented infrastructure module dependencies and approved global infrastructure/UI primitives.
  * @edge-case Preserves entered values after validation/API failure and blocks duplicate submission while pending.
  */
-export default function TrainerInfrastructureConfirmModal({
-  isOpen,
+export default function TrainerInfrastructureConfirmModal(props: TrainerInfrastructureConfirmModalProps) {
+  if (!props.isOpen) return null;
+  return <TrainerInfrastructureConfirmDialog {...props} />;
+}
+
+function TrainerInfrastructureConfirmDialog({
   title,
   message,
   onConfirm,
@@ -52,12 +56,8 @@ export default function TrainerInfrastructureConfirmModal({
   const confirmationInputRef = useRef<HTMLInputElement>(null);
   const [typedConfirmation, setTypedConfirmation] = useState('');
 
-// Effect contract: focus the confirmation dialog and keep Escape behavior aligned with the current open state.
+  // Effect contract: focus the confirmation dialog and keep Escape behavior aligned with the current open state.
   useEffect(() => {
-    if (!isOpen) {
-      setTypedConfirmation('');
-      return;
-    }
     const previouslyFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     if (requireTypedConfirmation) confirmationInputRef.current?.focus();
     else cancelButtonRef.current?.focus();
@@ -89,9 +89,7 @@ export default function TrainerInfrastructureConfirmModal({
       document.removeEventListener('keydown', handleKeyDown);
       previouslyFocused?.focus();
     };
-  }, [isOpen, onCancel, requireTypedConfirmation]);
-
-  if (!isOpen) return null;
+  }, [onCancel, requireTypedConfirmation]);
 
   const resolvedConfirmText = confirmText ?? t('TEXT_CONFIRM');
   const resolvedConfirmationPhrase = confirmationPhrase ?? t('TEXT_DELETE_CONFIRMATION_PHRASE');

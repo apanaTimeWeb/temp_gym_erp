@@ -110,10 +110,10 @@ export default function TrainerScheduleRequestLeaveModal() {
 
   return (
     <>
-      <div className="fixed inset-0 bg-overlay-backdrop backdrop-blur-sm z-40 motion-safe:transition-opacity" onClick={() => void handleClose()}  data-testid="trainer_schedule-trainerschedulerequestleavemodal-div_1"/>
-      <div ref={dialogRef} className="fixed end-0 top-0 h-full w-full max-w-drawer bg-overlay border-s border-border shadow-dialog z-40 flex flex-col motion-safe:transition-transform motion-safe:duration-slow" role="dialog" aria-modal="true" aria-labelledby="trainer-request-leave-title">
+      <div className="fixed inset-0 bg-overlay-backdrop backdrop-blur-sm z-50 motion-safe:transition-opacity" onClick={() => void handleClose()}  data-testid="trainer_schedule-trainerschedulerequestleavemodal-div_1"/>
+      <div ref={dialogRef} className="fixed end-0 top-0 h-full w-full max-w-drawer bg-white dark:bg-[#0F172A] border-s border-border shadow-dialog z-50 flex flex-col motion-safe:transition-transform motion-safe:duration-slow" role="dialog" aria-modal="true" aria-labelledby="trainer-request-leave-title">
         
-        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-border bg-header shrink-0">
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-border bg-white dark:bg-[#0F172A] shrink-0">
           <div>
             <h2 id="trainer-request-leave-title" className="text-section-title font-black text-text-primary">{t("TEXT_REQUEST_LEAVE")}</h2>
             <p className="text-xs text-secondary mt-1">{t("TEXT_SUBMIT_TIME_OFF_FOR_MANAGER_APPROVAL")}</p>
@@ -131,7 +131,7 @@ export default function TrainerScheduleRequestLeaveModal() {
               aria-invalid={Boolean(errors.leaveType)}
               aria-describedby={errors.leaveType ? "trainer-leave-type-error" : undefined}
               {...register('leaveType')}
-              className={`w-full bg-input border rounded-xl px-4 py-3 text-sm text-primary focus-visible:outline-none focus-visible:ring-1 motion-safe:transition-all ${errors.leaveType ? 'border-border focus-visible:border-border focus-visible:ring-focus-ring' : 'border-border focus-visible:border-focus focus-visible:ring-focus-ring'}`}
+              className={`w-full bg-white dark:bg-[#0F172A] dark:[color-scheme:dark] border rounded-xl px-4 py-3 text-sm text-primary focus-visible:outline-none focus-visible:ring-1 cursor-pointer ${errors.leaveType ? 'border-border focus-visible:border-border focus-visible:ring-focus-ring' : 'border-border focus-visible:border-focus focus-visible:ring-focus-ring'}`}
              data-testid="trainer_schedule-trainerschedulerequestleavemodal-select_4">
               {TRAINER_SCHEDULE_LEAVE_TYPE_OPTIONS.map(opt => (
                 <option key={opt.value} value={opt.value} data-testid={`trainer_schedule-request-leave_modal_leave_type_option${opt.value}`}>{t(opt.labelKey)}</option>
@@ -196,7 +196,7 @@ export default function TrainerScheduleRequestLeaveModal() {
           </div>
         </form>
 
-        <div className="p-4 sm:p-6 border-t border-border bg-header flex justify-end gap-3 shrink-0">
+        <div className="p-4 sm:p-6 border-t border-border bg-white dark:bg-[#0F172A] flex justify-end gap-3 shrink-0">
           <button 
             type="button"
             onClick={() => void handleClose()}

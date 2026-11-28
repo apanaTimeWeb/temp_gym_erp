@@ -185,6 +185,8 @@ export default function TrainerEarningsHistory() {
         updateUrlParam={updateUrlParam}
         handleDateChange={handleDateChange}
         onExportCsv={handleExportCsv}
+        onRefresh={() => void refetch()}
+        isRefreshing={isFetching}
       />
 
       <div className="flex-1 overflow-x-hidden">

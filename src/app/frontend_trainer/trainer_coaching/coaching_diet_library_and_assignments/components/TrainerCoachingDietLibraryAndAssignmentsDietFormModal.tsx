@@ -22,6 +22,7 @@ function createDietFormIdempotencyKey(): string {
 export interface TrainerLibraryDietFormModalProps {
   isOpen: boolean;
   plan: TrainerLibraryDietPlan | null;
+  templatePlan?: TrainerLibraryDietPlan | null;
   isSaving: boolean;
   errorMessage?: string;
   onClose: () => void;
@@ -31,6 +32,7 @@ export interface TrainerLibraryDietFormModalProps {
 export default function TrainerLibraryDietFormModal({
   isOpen,
   plan,
+  templatePlan,
   isSaving,
   errorMessage,
   onClose,
@@ -72,17 +74,18 @@ export default function TrainerLibraryDietFormModal({
 
   useEffect(() => {
     if (isOpen) {
-      if (plan) {
+      const source = plan ?? templatePlan;
+      if (source) {
         reset({
-          name: plan.name,
-          goal: plan.goal || 'Weight Loss',
-          calories: plan.calories ?? 2000,
-          protein: plan.protein ?? 150,
-          carbs: plan.carbs ?? 200,
-          fats: plan.fats ?? 60,
-          description: plan.description ?? '',
-          meals: plan.meals?.length
-            ? plan.meals.map((m) => typeof m === 'string'
+          name: plan ? source.name : `${source.name} (Copy)`,
+          goal: source.goal || 'Weight Loss',
+          calories: source.calories ?? 2000,
+          protein: source.protein ?? 150,
+          carbs: source.carbs ?? 200,
+          fats: source.fats ?? 60,
+          description: source.description ?? '',
+          meals: source.meals?.length
+            ? source.meals.map((m) => typeof m === 'string'
                 ? { name: m, time: '', items: '', description: '' }
                 : { name: m.name ?? 'Meal', time: m.time ?? '', items: m.items ?? '', description: m.description ?? '' })
             : [{ name: 'Meal 1', time: '08:00 AM', items: '', description: '' }],
@@ -104,7 +107,7 @@ export default function TrainerLibraryDietFormModal({
         });
       }
     }
-  }, [isOpen, plan, reset]);
+  }, [isOpen, plan, templatePlan, reset]);
 
   useTrainerInfrastructureDialogFocusTrap({ isOpen, dialogRef, onEscape: onClose });
 

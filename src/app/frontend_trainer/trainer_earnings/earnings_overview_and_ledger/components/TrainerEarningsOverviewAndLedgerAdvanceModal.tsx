@@ -3,6 +3,10 @@ import React, { useState } from 'react';
 import { X, IndianRupee, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import { apiFetch } from '@/lib/api';
 
+function getDefaultNeedByDate(): string {
+  return new Date(Date.now() + 86400000 * 2).toISOString().split('T')[0];
+}
+
 export interface TrainerEarningsOverviewAndLedgerAdvanceModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -16,9 +20,7 @@ export default function TrainerEarningsOverviewAndLedgerAdvanceModal({
 }: TrainerEarningsOverviewAndLedgerAdvanceModalProps) {
   const [amount, setAmount] = useState<string>('15000');
   const [reason, setReason] = useState<string>('');
-  const [needByDate, setNeedByDate] = useState<string>(
-    new Date(Date.now() + 86400000 * 2).toISOString().split('T')[0]
-  );
+  const [needByDate, setNeedByDate] = useState<string>(getDefaultNeedByDate);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [statusMessage, setStatusMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
@@ -53,9 +55,9 @@ export default function TrainerEarningsOverviewAndLedgerAdvanceModal({
         onSuccess();
         onClose();
       }, 1500);
-    } catch (err: any) {
+    } catch (err: unknown) {
       setIsSubmitting(false);
-      setStatusMessage({ type: 'error', text: err?.message || 'Failed to submit advance request.' });
+      setStatusMessage({ type: 'error', text: err instanceof Error ? err.message : 'Failed to submit advance request.' });
     }
   };
 
@@ -67,9 +69,9 @@ export default function TrainerEarningsOverviewAndLedgerAdvanceModal({
       aria-labelledby="advance-modal-title"
       data-testid="trainer_earnings-advance-modal"
     >
-      <div className="my-auto bg-card border border-border rounded-2xl w-full max-w-md flex flex-col shadow-2xl overflow-hidden">
+      <div className="my-auto bg-white dark:bg-[#0F172A] border border-border rounded-2xl w-full max-w-md flex flex-col shadow-2xl overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-header shrink-0">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-white dark:bg-[#0F172A] shrink-0">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-primary-subtle text-primary flex items-center justify-center">
               <IndianRupee size={16} />
@@ -143,7 +145,7 @@ export default function TrainerEarningsOverviewAndLedgerAdvanceModal({
               value={needByDate}
               onChange={(e) => setNeedByDate(e.target.value)}
               required
-              className="w-full min-h-11 px-3 bg-input border border-border rounded-lg text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              className="w-full min-h-11 px-3 bg-input border border-border rounded-lg text-sm text-text-primary dark:[color-scheme:dark] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
               data-testid="trainer_earnings-advance-date-input"
             />
           </div>

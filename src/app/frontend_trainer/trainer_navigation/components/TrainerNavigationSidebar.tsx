@@ -166,17 +166,17 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
           )}
         </div>
         {(!isCollapsed || isMobileOpen) && (
-          <div className="px-3 py-3 border-b border-white/10 shrink-0">
+          <div className="px-3 py-2.5 border-b border-white/[0.08] shrink-0">
             <label htmlFor="trainer-sidebar-search" className="sr-only">{t('TEXT_SEARCH_MENU')}</label>
             <div className="relative">
-              <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-[#FF5A1F] pointer-events-none" aria-hidden="true" strokeWidth={2.2}/>
+              <Search size={15} className="absolute start-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" aria-hidden="true" strokeWidth={2.2}/>
               <input
                 id="trainer-sidebar-search"
                 type="search"
                 placeholder={t('TEXT_SEARCH_MENU')}
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
-                className="block w-full min-h-10 ps-9 pe-8 py-2 border border-white/15 hover:border-orange-500/45 rounded-xl bg-white/[0.06] text-sm text-white placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:border-focus motion-safe:transition-colors motion-safe:duration-base"
+                className="block w-full min-h-9 ps-9 pe-8 py-1.5 border border-white/10 hover:border-white/20 rounded-xl bg-white/[0.04] focus:bg-white/[0.07] text-[13px] text-white placeholder:text-slate-400/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:border-orange-500/50 motion-safe:transition-colors motion-safe:duration-base"
                 data-testid="trainer_navigation-sidebar-search"
               />
               {searchQuery && (
@@ -184,24 +184,24 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
                   type="button"
                   onClick={() => setSearchQuery('')}
                   aria-label="Clear menu search"
-                  className="absolute end-2 top-1/2 -translate-y-1/2 p-1 rounded-md text-slate-400 hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring"
+                  className="absolute end-2 top-1/2 -translate-y-1/2 p-1 rounded-md text-slate-400 hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring cursor-pointer"
                 >
-                  <X size={14} aria-hidden="true" />
+                  <X size={13} aria-hidden="true" />
                 </button>
               )}
             </div>
           </div>
         )}
         {isCollapsed && !isMobileOpen && (
-          <div className="flex items-center justify-center px-2 py-3 border-b border-white/10 shrink-0">
-            <button type="button" onClick={() => setIsCollapsed(false)} aria-label={t('TEXT_SEARCH_MENU')} title={t('TEXT_SEARCH_MENU')} className="min-w-11 min-h-11 p-2 rounded-xl text-orange-400 bg-orange-500/10 border border-orange-500/25 hover:bg-orange-500/20 motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-base motion-safe:active:scale-95" data-testid="trainer_navigation-sidebar-expand_search">
-              <Search size={18} aria-hidden="true" strokeWidth={2}/>
+          <div className="flex items-center justify-center px-2 py-2.5 border-b border-white/[0.08] shrink-0">
+            <button type="button" onClick={() => setIsCollapsed(false)} aria-label={t('TEXT_SEARCH_MENU')} title={t('TEXT_SEARCH_MENU')} className="min-w-10 min-h-10 w-10 h-10 inline-flex items-center justify-center rounded-xl text-slate-300 hover:text-white bg-white/[0.04] border border-white/10 hover:border-orange-500/45 hover:bg-orange-500/15 motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer" data-testid="trainer_navigation-sidebar-expand_search">
+              <Search size={17} aria-hidden="true" strokeWidth={2}/>
             </button>
           </div>
         )}
-        <nav className={`flex-1 overflow-y-auto py-3.5 ${!isCollapsed || isMobileOpen ? 'px-2.5 space-y-4' : 'px-1.5 space-y-2.5'} trainer-shell-scrollbar`} aria-label={t('TEXT_TRAINER_NAVIGATION')}>
+        <nav className={`flex-1 overflow-y-auto py-3 ${!isCollapsed || isMobileOpen ? 'px-2.5 space-y-3' : 'px-1.5 space-y-2'} trainer-shell-scrollbar`} aria-label={t('TEXT_TRAINER_NAVIGATION')}>
           {filteredNavGroups.length === 0 ? (
-            <p className="text-center py-4 text-sm text-slate-400">{t('TEXT_NO_MATCHES_FOUND')}</p>
+            <p className="text-center py-6 text-xs text-slate-400">{t('TEXT_NO_MATCHES_FOUND')}</p>
           ) : filteredNavGroups.map((group, groupIndex) => {
             const activeGroup = group.items.some((item) => pathname === item.href || pathname.startsWith(`${item.href}/`));
             const searching = searchQuery.trim().length > 0;
@@ -213,7 +213,7 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
             return (
               <div
                 key={group.groupKey}
-                className={groupIndex > 0 ? (showLabel ? 'pt-3 border-t border-white/[0.07]' : 'pt-2 border-t border-white/10') : ''}
+                className={groupIndex > 0 ? (showLabel ? 'pt-2.5 border-t border-white/[0.06]' : 'pt-2 border-t border-white/[0.08]') : ''}
               >
                 {showLabel && (
                   <button
@@ -223,24 +223,22 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
                     onClick={() => {
                       setExpandedGroups((previous) => ({ ...previous, [group.groupKey]: !showChildren }));
                     }}
-                    className={`flex w-full min-h-8 items-center justify-between gap-2 rounded-lg px-2 py-1 text-start text-[11px] font-bold uppercase tracking-wider focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-colors ${activeGroup ? 'bg-white/[0.04]' : 'hover:bg-white/[0.05]'}`}
+                    className={`flex w-full min-h-8 items-center justify-between gap-2 rounded-lg px-2 py-1 text-start text-[10.5px] font-bold uppercase tracking-[0.11em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-colors cursor-pointer ${activeGroup ? 'text-slate-200 bg-white/[0.04]' : 'text-slate-400 hover:text-slate-200 hover:bg-white/[0.04]'}`}
                   >
                     <span className="flex items-center gap-2 min-w-0">
                       <span
-                        className="w-5 h-5 rounded-md inline-flex items-center justify-center shrink-0"
+                        className="w-4 h-4 rounded flex items-center justify-center shrink-0"
                         style={{
                           color: groupColor.iconColor,
-                          backgroundColor: groupColor.bg,
-                          border: `1px solid ${groupColor.iconColor}40`,
-                          boxShadow: activeGroup ? groupColor.activeShadow : undefined,
+                          backgroundColor: activeGroup ? groupColor.activeBg : 'rgba(255,255,255,0.04)',
                         }}
                         aria-hidden="true"
                       >
-                        <GroupIcon size={12} strokeWidth={2.4} />
+                        <GroupIcon size={11} strokeWidth={2.4} />
                       </span>
-                      <span className="truncate" style={{ color: groupColor.iconColor }}>{t(group.groupKey)}</span>
+                      <span className="truncate">{t(group.groupKey)}</span>
                     </span>
-                    <ChevronDown size={14} strokeWidth={2.2} aria-hidden="true" className={`shrink-0 text-slate-400 motion-safe:transition-transform ${showChildren ? 'rotate-180' : ''}`} />
+                    <ChevronDown size={13} strokeWidth={2.2} aria-hidden="true" className={`shrink-0 text-slate-500 motion-safe:transition-transform ${showChildren ? 'rotate-180' : ''}`} />
                   </button>
                 )}
                 <div
@@ -248,7 +246,7 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
                   hidden={!showChildren}
                   className={
                     showLabel
-                      ? 'mt-2.5 space-y-1.5 ps-2 ms-1.5 border-s border-white/[0.08]'
+                      ? 'mt-1.5 space-y-1 ps-2 ms-2 border-s border-white/[0.07]'
                       : 'space-y-1.5 flex flex-col items-center'
                   }
                 >
@@ -267,38 +265,49 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
                         style={
                           active
                             ? {
-                                borderColor: itemColor.iconColor,
-                                background: `linear-gradient(90deg, ${itemColor.activeBg} 0%, ${itemColor.bg} 55%, transparent 100%)`,
-                                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.25)',
+                                background: `linear-gradient(90deg, ${itemColor.activeBg} 0%, ${itemColor.bg} 55%, rgba(255,255,255,0.02) 100%)`,
+                                borderColor: `${itemColor.iconColor}55`,
+                                boxShadow: '0 4px 14px rgba(2, 6, 23, 0.32)',
                               }
                             : undefined
                         }
-                        className={`group flex min-h-10 items-center rounded-xl text-[13px] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all ${
+                        className={`group relative flex items-center rounded-xl text-[13px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all ${
                           showLabel
-                            ? 'w-full gap-2.5 px-2.5 py-1.5 border-s-[3px]'
-                            : 'w-11 h-11 justify-center px-0 border'
+                            ? 'w-full min-h-10 gap-2.5 px-2.5 py-1.5 border'
+                            : 'w-10 h-10 justify-center px-0 border'
                         } ${
                           active
                             ? 'text-white font-semibold'
-                            : showLabel
-                              ? 'border-transparent text-slate-300 hover:bg-white/[0.07] hover:text-white'
-                              : 'border-transparent text-slate-300 hover:bg-white/[0.08] hover:text-white'
+                            : 'border-transparent text-slate-300/90 font-medium hover:bg-white/[0.06] hover:text-white'
                         }`}
                         data-testid={`trainer_navigation-sidebar-nav${item.href.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '')}`}
                       >
+                        {active && showLabel && (
+                          <span
+                            aria-hidden="true"
+                            className="w-1 h-4 rounded-full shrink-0"
+                            style={{ backgroundColor: itemColor.iconColor, boxShadow: itemColor.activeShadow }}
+                          />
+                        )}
                         <span
-                          className="w-7 h-7 rounded-lg inline-flex items-center justify-center shrink-0 motion-safe:transition-all motion-safe:duration-fast group-hover:scale-110 group-hover:brightness-125"
-                          style={{
-                            color: itemColor.iconColor,
-                            backgroundColor: active ? itemColor.activeBg : itemColor.bg,
-                            border: `1px solid ${itemColor.iconColor}${active ? '88' : '38'}`,
-                            boxShadow: active ? itemColor.activeShadow : undefined,
-                          }}
+                          className={`w-7 h-7 rounded-lg inline-flex items-center justify-center shrink-0 motion-safe:transition-all motion-safe:duration-fast ${active ? '' : 'bg-white/[0.04] group-hover:bg-white/[0.08]'}`}
+                          style={
+                            active
+                              ? {
+                                  color: itemColor.iconColor,
+                                  backgroundColor: itemColor.bg,
+                                  border: `1px solid ${itemColor.iconColor}66`,
+                                  boxShadow: itemColor.activeShadow,
+                                }
+                              : {
+                                  color: itemColor.iconColor,
+                                }
+                          }
                           aria-hidden="true"
                         >
-                          <Icon size={15} strokeWidth={2.2} />
+                          <Icon size={15} strokeWidth={active ? 2.4 : 2} />
                         </span>
-                        {showLabel && <span className="truncate">{t(item.labelKey)}</span>}
+                        {showLabel && <span className="truncate flex-1">{t(item.labelKey)}</span>}
                       </Link>
                     );
                   })}
@@ -307,6 +316,18 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
             );
           })}
         </nav>
+        <div className="shrink-0 border-t border-white/[0.08] bg-white/[0.02] px-3 py-2.5 flex items-center justify-between gap-2">
+          {!isCollapsed || isMobileOpen ? (
+            <div className="flex items-center gap-2 min-w-0 text-[11px] text-slate-400">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.75)] shrink-0" aria-hidden="true" />
+              <span className="font-medium text-slate-300 truncate">{t('TEXT_TRAINER')} Workspace</span>
+            </div>
+          ) : (
+            <div className="w-full flex justify-center" title={`${t('TEXT_TRAINER')} Workspace`}>
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.75)]" aria-hidden="true" />
+            </div>
+          )}
+        </div>
       </aside>
     </>
   );

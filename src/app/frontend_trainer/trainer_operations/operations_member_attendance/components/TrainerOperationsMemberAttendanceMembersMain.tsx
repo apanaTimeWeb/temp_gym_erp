@@ -1,6 +1,6 @@
 'use client';
 // RESPONSIBILITY: Canonical Members attendance route with no self-attendance workflow UI.
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import TrainerAttendanceKPIs from './TrainerOperationsMemberAttendanceAttendanceKPIs';
 import TrainerAttendanceMembersView from './TrainerOperationsMemberAttendanceAttendanceMembersView';
@@ -12,6 +12,7 @@ import { useTrainerAttendanceMain } from '../hooks/useTrainerOperationsMemberAtt
 export default function TrainerOperationsMemberAttendanceMembersMain() {
   const t = useTranslations('TRAINER_ATTENDANCE');
   const model = useTrainerAttendanceMain({ forcedTab: 'MEMBERS' });
+  const [statusFilter, setStatusFilter] = useState<'ALL' | 'IN_GYM' | 'CHECKED_OUT'>('ALL');
   const { tab, setTab } = model.filters;
   useEffect(() => { if (tab !== 'MEMBERS') setTab('MEMBERS'); }, [tab, setTab]);
 
@@ -57,8 +58,13 @@ export default function TrainerOperationsMemberAttendanceMembersMain() {
         isPending={model.markAttendancePending}
       />
       <section className="rounded-xl border border-border bg-card shadow-card">
-        <TrainerOperationsMemberAttendanceMembersToolbar model={model} onExportCsv={handleExportCsv} />
-        <TrainerAttendanceMembersView model={model} />
+        <TrainerOperationsMemberAttendanceMembersToolbar
+          model={model}
+          onExportCsv={handleExportCsv}
+          statusFilter={statusFilter}
+          onStatusFilterChange={setStatusFilter}
+        />
+        <TrainerAttendanceMembersView model={model} statusFilter={statusFilter} />
       </section>
       <TrainerAttendanceModal isOpen={model.showModal} onClose={model.closeModal}
         initialMemberId={model.selectedMemberId}

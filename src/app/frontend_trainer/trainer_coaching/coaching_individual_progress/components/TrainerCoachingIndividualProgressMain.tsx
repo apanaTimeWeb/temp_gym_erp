@@ -11,7 +11,7 @@ export default function TrainerCoachingIndividualProgressMain() {
   // This canonical leaf never starts comparison-member network queries.
   const model = useTrainerProgressTrackingMain({ enableComparison: false });
   return (
-    <main data-testid="trainer-canonical-coaching_individual_progress" className="min-h-full space-y-5 bg-page p-4 text-text-primary sm:p-6">
+    <main data-testid="trainer-canonical-coaching_individual_progress" className="min-h-full space-y-5 bg-page p-4 text-text-primary sm:p-6 max-w-full min-w-0">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="text-section-title font-bold text-text-primary">{t('TEXT_INDIVIDUAL')}</h1>

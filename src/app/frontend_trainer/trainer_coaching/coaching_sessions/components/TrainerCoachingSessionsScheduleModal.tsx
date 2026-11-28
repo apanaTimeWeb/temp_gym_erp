@@ -20,7 +20,7 @@ import { useTrainerSessionsScheduleForm } from '@/app/frontend_trainer/trainer_c
 
 import type { TrainerSessionsScheduleModalProps } from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/types/TrainerCoachingSessionsScheduleModalTypes';
 
-import type { TrainerSessionsSessionType } from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/types/TrainerCoachingSessionsTypes';
+import type { TrainerSessionsScheduleFormValues, TrainerSessionsSessionType } from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/types/TrainerCoachingSessionsTypes';
 
 
 
@@ -169,7 +169,7 @@ export default function TrainerSessionsScheduleModal({
             <TrainerInfrastructureSearchableDropdown
               options={durationOptions}
               value={selectedDuration}
-              onChange={(val: string | number) => setValue('duration', val as any, { shouldValidate: true })}
+              onChange={(val: string | number) => setValue('duration', val as TrainerSessionsScheduleFormValues['duration'], { shouldValidate: true })}
               placeholder={t("TEXT_SELECT_DURATION")}
               ariaLabel={t("TEXT_DURATION")}
              ariaInvalid={Boolean(errors.duration)}

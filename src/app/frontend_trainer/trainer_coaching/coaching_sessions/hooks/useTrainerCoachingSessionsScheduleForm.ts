@@ -4,7 +4,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { useForm } from 'react-hook-form';
+import { useForm, type Resolver } from 'react-hook-form';
 
 import { TRAINER_SESSIONS_SESSION_TYPE } from '@/app/frontend_trainer/trainer_coaching/coaching_sessions/config/TrainerCoachingSessionsConstants';
 
@@ -36,7 +36,7 @@ export const useTrainerSessionsScheduleForm = (
   initialValues?: Partial<TrainerSessionsScheduleFormValues>,
 ) => {
   const form = useForm<TrainerSessionsScheduleFormValues>({
-    resolver: zodResolver(TrainerSessionsScheduleFormSchema) as any,
+    resolver: zodResolver(TrainerSessionsScheduleFormSchema) as unknown as Resolver<TrainerSessionsScheduleFormValues>,
     defaultValues: {
       type: initialValues?.type ?? TRAINER_SESSIONS_SESSION_TYPE.PT,
       memberId: initialValues?.memberId ?? '',

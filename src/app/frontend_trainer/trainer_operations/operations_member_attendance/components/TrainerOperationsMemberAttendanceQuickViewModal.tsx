@@ -56,7 +56,7 @@ export default function TrainerOperationsMemberAttendanceQuickViewModal({
     >
       <div className="fixed inset-0 bg-black/70 backdrop-blur-md transition-opacity" onClick={onClose} aria-hidden="true" />
       <div
-        className="relative z-10 w-full max-w-lg max-h-[88dvh] overflow-y-auto rounded-2xl border border-sky-500/35 bg-card dark:bg-[#0E1526]/98 text-text-primary shadow-[0_24px_64px_rgba(0,0,0,0.85)]"
+        className="relative z-10 w-full max-w-lg max-h-[88dvh] overflow-y-auto rounded-2xl border border-sky-500/35 bg-white dark:bg-[#0F172A] text-text-primary shadow-[0_24px_64px_rgba(0,0,0,0.85)]"
         data-testid="trainer_attendance-quick-view-modal"
       >
         <span aria-hidden="true" className="pointer-events-none block h-[2px] w-full bg-gradient-to-r from-[#FF5A1F] via-[#38BDF8] to-[#10B981]" />

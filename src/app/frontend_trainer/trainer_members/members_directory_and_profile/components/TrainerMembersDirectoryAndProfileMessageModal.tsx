@@ -1,7 +1,7 @@
 "use client";
 // RESPONSIBILITY: Renders member-directed WhatsApp or Email delivery for the Members feature.
 // DATA FLOW: Members store → message modal → external delivery URL → member.
-import { useEffect, useId, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
 
 import { X, Send, MessageCircle, Mail, CheckCircle, Phone, AtSign } from 'lucide-react';
 
@@ -52,9 +52,18 @@ const TAB_STYLE: Record<TrainerMembersMemberMessageType, string> = {
  * @dependencies Uses only documented members module dependencies and approved global infrastructure/UI primitives.
  * @edge-case Preserves entered values after validation/API failure and blocks duplicate submission while pending.
  */
-export default function TrainerMembersMessageModal({
-  isOpen,
-  open,
+export default function TrainerMembersMessageModal(props: TrainerMembersMessageModalProps) {
+  const visible = Boolean(props.isOpen || props.open);
+  if (!visible) return null;
+  return (
+    <TrainerMembersMessageDialog
+      key={`${props.recipient.name}-${props.recipient.phone ?? ''}-${props.recipient.email ?? ''}-${props.type}-${props.defaultMessage ?? props.message ?? ''}-${props.subject ?? ''}`}
+      {...props}
+    />
+  );
+}
+
+function TrainerMembersMessageDialog({
   onClose,
   recipient,
   type,
@@ -77,23 +86,27 @@ export default function TrainerMembersMessageModal({
   const messageId = useId();
   const subjectId = useId();
 
-  const visible = Boolean(isOpen || open);
-  const guardNavigation = useTrainerInfrastructureUnsavedChangesGuard(visible && !sending && (message !== initialMessage || subject !== resolvedDefaultSubject));
+  const guardNavigation = useTrainerInfrastructureUnsavedChangesGuard(!sending && (message !== initialMessage || subject !== resolvedDefaultSubject));
 
-// Effect contract: focus the dialog and restore the previous element whenever visibility changes.
+  const handleClose = useCallback(() => {
+    if (sending) return;
+    void guardNavigation(() => {
+      onClose();
+    });
+  }, [guardNavigation, onClose, sending]);
+
+  // Effect contract: focus the dialog and restore the previous element whenever visibility changes.
   useEffect(() => {
-    if (!visible) return;
     const previous = document.activeElement as HTMLElement | null;
     const focusable = dialogRef.current?.querySelector<HTMLElement>(
       'button:not([disabled]), input:not([disabled]), textarea:not([disabled])'
     );
     (focusable ?? dialogRef.current)?.focus();
     return () => previous?.focus();
-  }, [visible]);
+  }, []);
 
-// Effect contract: focus the dialog and restore the previous element whenever visibility changes.
+  // Effect contract: handle Escape and focus trap while dialog is open.
   useEffect(() => {
-    if (!visible) return;
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && !sending) handleClose();
       if (event.key !== 'Tab' || !dialogRef.current) return;
@@ -113,18 +126,7 @@ export default function TrainerMembersMessageModal({
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [visible, sending, onClose, guardNavigation]);
-
-// Effect contract: focus the dialog and restore the previous element whenever visibility changes.
-  useEffect(() => {
-    if (!visible) return;
-    setMessage(defaultMessage || propMessage || '');
-    setSubject(resolvedDefaultSubject);
-    setSent(false);
-    setHandoffError(false);
-  }, [visible, defaultMessage, propMessage, resolvedDefaultSubject]);
-
-  if (!visible) return null;
+  }, [handleClose, sending]);
 
   const Icon = type === 'whatsapp' ? MessageCircle : Mail;
   const label = type === 'whatsapp' ? t('TEXT_WHATSAPP') : t('TEXT_EMAIL');
@@ -168,26 +170,15 @@ export default function TrainerMembersMessageModal({
     }
   };
 
-  const handleClose = () => {
-    if (sending) return;
-    void guardNavigation(() => {
-      setMessage(initialMessage);
-      setSubject(resolvedDefaultSubject);
-      setSent(false);
-      setHandoffError(false);
-      onClose();
-    });
-  };
-
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-overlay-backdrop backdrop-blur-sm overflow-y-auto " role="presentation">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-overlay-backdrop backdrop-blur-sm overflow-y-auto" role="presentation">
       <div
         ref={dialogRef}
         tabIndex={-1}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="my-auto bg-overlay rounded-xl shadow-dialog w-full max-w-lg max-h-dialog-desktop flex flex-col relative overflow-hidden border border-border motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+        className="my-auto bg-white dark:bg-[#0F172A] rounded-xl shadow-dialog w-full max-w-lg max-h-[90vh] flex flex-col relative overflow-hidden border border-border motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
       >
         <div className={`px-6 py-4 flex items-center justify-between shrink-0 ${TAB_STYLE[type]} `}>
           <div className="flex flex-wrap items-center gap-3 ">
@@ -234,7 +225,7 @@ export default function TrainerMembersMessageModal({
           {handoffError && <p className="px-6 pt-2 text-sm text-danger" role="alert" data-testid="trainer_members-message-handoff-error">{t('TEXT_CONTACT_HANDOFF_ERROR')}</p>}
         </div>
 
-        <div className="px-6 py-4 border-t border-border flex gap-3 shrink-0 bg-overlay sticky bottom-0 z-10 ">
+        <div className="px-6 py-4 border-t border-border flex gap-3 shrink-0 bg-white dark:bg-[#0F172A] sticky bottom-0 z-10">
           <button type="button" onClick={handleClose} disabled={sending} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page min-h-11 flex-1 px-4 py-2.5 text-sm border border-border rounded-lg hover:bg-input text-text-primary font-medium motion-safe:transition-colors disabled:opacity-50 " data-testid="trainer_members-trainermembersmessagemodal-button_4">{t("TEXT_CANCEL")}</button>
           <button type="button" onClick={handleSend} disabled={sending || sent || !message.trim() || !(type === 'whatsapp' ? TrainerMembersBuildWhatsAppUrl(contactInfo ?? '', message) : TrainerMembersBuildMailtoUrl(contactInfo ?? '', subject, message))} className={`min-h-11 flex-1 px-4 py-2.5 text-sm font-semibold rounded-lg flex items-center justify-center gap-2 motion-safe:transition-all disabled:opacity-50 ${sent ? 'bg-success text-on-success' : type === 'whatsapp' ? 'bg-social-whatsapp text-on-primary' : 'bg-info text-on-info'} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_members-trainermembersmessagemodal-button_5">
             {sent ? <><CheckCircle size={18}  strokeWidth={2}/> {t("TEXT_HANDOFF_STARTED")}</> : sending ? t("TEXT_SENDING") : <><Send size={18}  strokeWidth={2}/> {t("TEXT_SEND_VIA")}{label}</>}

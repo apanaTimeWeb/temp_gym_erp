@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, Printer, Search, X } from 'lucide-react';
+import { Download, Printer, RefreshCw, Search, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { TrainerEarningsDateField } from '@/app/frontend_trainer/trainer_earnings/earnings_overview_and_ledger/types/TrainerEarningsOverviewAndLedgerEarningsDateRangeTypes';
 
@@ -14,6 +14,8 @@ interface TrainerEarningsToolbarProps {
   updateUrlParam: (key: string, value: string | null) => void;
   handleDateChange: (key: TrainerEarningsDateField, value: string) => void;
   onExportCsv?: () => void;
+  onRefresh?: () => void;
+  isRefreshing?: boolean;
 }
 
 export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
@@ -26,6 +28,8 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
   updateUrlParam,
   handleDateChange,
   onExportCsv,
+  onRefresh,
+  isRefreshing = false,
 }: TrainerEarningsToolbarProps) {
   const t = useTranslations('TRAINER_EARNINGS');
   const hasActiveFilters = Boolean(draftSearch.trim()) || statusFilter !== 'ALL' || typeFilter !== 'ALL' || Boolean(startDate) || Boolean(endDate);
@@ -71,7 +75,7 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
             id="trainer-earnings-status-filter"
             value={statusFilter}
             onChange={(e) => updateUrlParam('status', e.target.value === 'ALL' ? null : e.target.value)}
-            className="min-h-10 px-3 bg-input border border-border rounded-xl text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
+            className="min-h-10 px-3 bg-white dark:bg-[#0F172A] dark:[color-scheme:dark] border border-border rounded-xl text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
             aria-label="Filter by Status"
             data-testid="trainer_earnings-filter-status"
           >
@@ -85,7 +89,7 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
             id="trainer-earnings-type-filter"
             value={typeFilter}
             onChange={(e) => updateUrlParam('type', e.target.value === 'ALL' ? null : e.target.value)}
-            className="min-h-10 px-3 bg-input border border-border rounded-xl text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
+            className="min-h-10 px-3 bg-white dark:bg-[#0F172A] dark:[color-scheme:dark] border border-border rounded-xl text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
             aria-label="Filter by Type"
             data-testid="trainer_earnings-filter-type"
           >
@@ -101,7 +105,7 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
             type="date"
             value={startDate}
             onChange={(event) => handleDateChange('startDate', event.target.value)}
-            className="min-h-10 px-2.5 bg-input border border-border rounded-xl text-xs sm:text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="min-h-10 px-2.5 bg-input border border-border rounded-xl text-xs sm:text-sm text-text-primary dark:[color-scheme:dark] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             data-testid="trainer_earnings-earnings-history_start_date"
           />
           <span className="text-secondary text-xs sm:text-sm" aria-hidden="true">{t("TEXT_TO")}</span>
@@ -111,7 +115,7 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
             type="date"
             value={endDate}
             onChange={(event) => handleDateChange('endDate', event.target.value)}
-            className="min-h-10 px-2.5 bg-input border border-border rounded-xl text-xs sm:text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="min-h-10 px-2.5 bg-input border border-border rounded-xl text-xs sm:text-sm text-text-primary dark:[color-scheme:dark] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             data-testid="trainer_earnings-earnings-history_end_date"
           />
 
@@ -122,6 +126,20 @@ export default function TrainerEarningsOverviewAndLedgerEarningsToolbar({
               className="text-xs text-rose-500 font-semibold px-3 py-1.5 rounded-xl border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 transition-colors"
             >
               Clear All
+            </button>
+          )}
+
+          {onRefresh && (
+            <button
+              type="button"
+              onClick={onRefresh}
+              disabled={isRefreshing}
+              aria-label="Refresh earnings ledger"
+              title="Refresh earnings ledger"
+              data-testid="trainer_earnings-refresh-button"
+              className="min-h-10 min-w-10 inline-flex items-center justify-center px-3 py-1.5 border border-sky-500/30 bg-sky-500/10 hover:bg-sky-500/20 text-sky-600 dark:text-sky-300 rounded-xl text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-all cursor-pointer disabled:opacity-60"
+            >
+              <RefreshCw size={14} className={isRefreshing ? 'motion-safe:animate-spin' : ''} aria-hidden="true" />
             </button>
           )}
 

@@ -1,8 +1,8 @@
 "use client";
 // RESPONSIBILITY: Read-only modal for inspecting a Trainer Diet Library plan and opening assignment.
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
-import { X, Utensils, Zap, Edit2, Trash2, AlertCircle } from 'lucide-react';
+import { X, Utensils, Zap, Edit2, Trash2, AlertCircle, Copy, CopyPlus, Check } from 'lucide-react';
 
 import { useLocale, useTranslations } from 'next-intl';
 
@@ -15,31 +15,44 @@ import { displayValue } from '@/lib/display_value';
 import { TrainerLibraryFormatNumber } from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/utils/TrainerCoachingDietLibraryAndAssignmentsFormatNumber';
 
 import type { TrainerLibraryDietModalProps } from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/types/TrainerCoachingDietLibraryAndAssignmentsDietModalProps';
+import type { TrainerLibraryDietPlan } from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/types/TrainerCoachingDietLibraryAndAssignmentsTypes';
 
+function buildDietSummaryText(plan: TrainerLibraryDietPlan): string {
+  const lines = [
+    `Diet Plan: ${plan.name} (${plan.goal || 'General'})`,
+    `Targets: ${plan.calories ?? 0} kcal | Protein ${plan.protein ?? 0}g | Carbs ${plan.carbs ?? 0}g | Fats ${plan.fats ?? 0}g`,
+  ];
+  if (plan.description) lines.push(`Notes: ${plan.description}`);
+  if (plan.meals?.length) {
+    lines.push('', 'Meal Schedule:');
+    plan.meals.forEach((meal, idx) => {
+      if (typeof meal === 'string') {
+        lines.push(`${idx + 1}. ${meal}`);
+      } else {
+        lines.push(`${idx + 1}. ${meal.name}${meal.time ? ` (${meal.time})` : ''}: ${meal.items || meal.description || ''}`);
+      }
+    });
+  }
+  return lines.join('\n');
+}
 
-
-
-
-
-
-
-
-/**
- * @description Read-only modal for inspecting a Trainer Diet Library plan and opening assignment.
- * @dependencies Consumes owning-module props/state and localized UI configuration.
- * @edge-case Preserves the owning feature’s loading, empty, error, permission, and recovery behavior instead of inventing fallback business data.
- */
-/**
- * @description Renders and coordinates the library feature form/modal surface for LibraryDietModal, including validation, async submission, and safe recovery.
- * @dependencies Uses only documented library module dependencies and approved global infrastructure/UI primitives.
- * @edge-case Preserves entered values after validation/API failure and blocks duplicate submission while pending.
- */
-export default function TrainerLibraryDietModal({ isOpen, plan, onClose, onAssign, onEdit, onRequestDelete }: TrainerLibraryDietModalProps) {
+export default function TrainerLibraryDietModal({ isOpen, plan, onClose, onAssign, onEdit, onDuplicate, onRequestDelete }: TrainerLibraryDietModalProps) {
   const t = useTranslations('TRAINER_LIBRARY');
   const locale = useLocale();
   const dialogRef = useRef<HTMLDivElement>(null);
+  const [copied, setCopied] = useState(false);
   useTrainerInfrastructureDialogFocusTrap({ isOpen: Boolean(isOpen && plan), dialogRef, onEscape: onClose });
   if (!isOpen || !plan) return null;
+
+  const handleCopySummary = async () => {
+    try {
+      await navigator.clipboard.writeText(buildDietSummaryText(plan));
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard blocked in restricted context
+    }
+  };
   return (
     <div className="fixed inset-0 bg-overlay-backdrop z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto" role="presentation">
       <div ref={dialogRef} className="my-auto bg-white dark:bg-[#0F172A] border border-border rounded-2xl shadow-dialog w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden" role="dialog" aria-modal={true} aria-labelledby="trainer-diet-plan-title" tabIndex={-1}>
@@ -74,33 +87,52 @@ export default function TrainerLibraryDietModal({ isOpen, plan, onClose, onAssig
             )}
           </div>
         </div>
-        <div className="sticky bottom-0 bg-white dark:bg-[#0F172A] border-t border-border px-5 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-3 shrink-0 z-10">
-            <div className="flex items-center gap-2">
+        <div className="sticky bottom-0 bg-white dark:bg-[#0F172A] border-t border-border px-5 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-2.5 shrink-0 z-10">
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={() => void handleCopySummary()}
+                className="min-h-10 px-3.5 py-2 border border-border rounded-xl text-xs sm:text-sm font-semibold text-text-primary hover:bg-input flex items-center gap-1.5 cursor-pointer"
+                data-testid="trainer_library-trainerlibrarydietmodal-button-copy"
+              >
+                {copied ? <Check size={15} className="text-emerald-500" /> : <Copy size={15} />}
+                {copied ? 'Copied!' : 'Copy Summary'}
+              </button>
+              {onDuplicate && (
+                <button
+                  type="button"
+                  onClick={onDuplicate}
+                  className="min-h-10 px-3.5 py-2 border border-purple-500/35 bg-purple-500/10 text-purple-600 dark:text-purple-300 hover:bg-purple-500/20 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 cursor-pointer"
+                  data-testid="trainer_library-trainerlibrarydietmodal-button-duplicate"
+                >
+                  <CopyPlus size={15} /> Duplicate
+                </button>
+              )}
               {onEdit && (
                 <button
                   type="button"
                   onClick={onEdit}
-                  className="min-h-11 px-4 py-2 border border-border rounded-xl text-sm font-semibold text-primary hover:bg-primary-subtle flex items-center gap-1.5"
+                  className="min-h-10 px-3.5 py-2 border border-border rounded-xl text-xs sm:text-sm font-semibold text-primary hover:bg-primary-subtle flex items-center gap-1.5 cursor-pointer"
                   data-testid="trainer_library-trainerlibrarydietmodal-button-edit"
                 >
-                  <Edit2 size={16} /> Edit Plan
+                  <Edit2 size={15} /> Edit Plan
                 </button>
               )}
               {onRequestDelete && !plan.deletionRequested && (
                 <button
                   type="button"
                   onClick={onRequestDelete}
-                  className="min-h-11 px-4 py-2 border border-danger text-danger hover:bg-danger-bg rounded-xl text-sm font-semibold flex items-center gap-1.5"
+                  className="min-h-10 px-3.5 py-2 border border-danger text-danger hover:bg-danger-bg rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 cursor-pointer"
                   data-testid="trainer_library-trainerlibrarydietmodal-button-request-delete"
                 >
-                  <Trash2 size={16} /> Request Deletion
+                  <Trash2 size={15} /> Request Deletion
                 </button>
               )}
             </div>
             <button
               type="button"
               onClick={onClose}
-              className="min-h-11 px-5 py-2 border border-border rounded-xl text-sm font-medium text-secondary hover:bg-primary-subtle"
+              className="min-h-10 px-4 py-2 border border-border rounded-xl text-xs sm:text-sm font-medium text-secondary hover:bg-primary-subtle cursor-pointer"
               data-testid="trainer_library-trainerlibrarydietmodal-button_3"
             >
               {t("TEXT_CLOSE")}

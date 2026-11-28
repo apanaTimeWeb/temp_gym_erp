@@ -17,9 +17,11 @@ export interface TrainerOperationsLeaveRequestsLeaveTableProps {
   openLeaveModal: () => void;
   onWithdrawLeave?: (id: string) => void | Promise<void>;
   withdrawing?: boolean;
+  onRefresh?: () => void;
+  isRefreshing?: boolean;
 }
 
-export function TrainerOperationsLeaveRequestsLeaveTable({ leaveRequests, openLeaveModal, onWithdrawLeave, withdrawing }: TrainerOperationsLeaveRequestsLeaveTableProps) {
+export function TrainerOperationsLeaveRequestsLeaveTable({ leaveRequests, openLeaveModal, onWithdrawLeave, withdrawing, onRefresh, isRefreshing }: TrainerOperationsLeaveRequestsLeaveTableProps) {
   const t = useTranslations('TRAINER_SCHEDULE');
   const locale = useLocale();
 
@@ -118,6 +120,34 @@ export function TrainerOperationsLeaveRequestsLeaveTable({ leaveRequests, openLe
   const hasActiveFilters = statusFilter !== 'ALL' || typeFilter !== 'ALL' || searchQuery.trim() !== '';
   const TABLE_COLUMN_COUNT = 6;
 
+  const handleExportCsv = () => {
+    if (filteredLeaves.length === 0) return;
+    const header = ['ID', 'Leave Type', 'Start Date', 'End Date', 'Days', 'Status', 'Reason'];
+    const csvRows = [
+      header.join(','),
+      ...filteredLeaves.map((leave) =>
+        [
+          leave.id,
+          `"${String(leave.leaveType ?? '').replace(/"/g, '""')}"`,
+          leave.startDate,
+          leave.endDate,
+          calculateDays(leave.startDate, leave.endDate),
+          leave.status,
+          `"${String(leave.reason ?? '').replace(/"/g, '""')}"`,
+        ].join(',')
+      ),
+    ];
+    const blob = new Blob([csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'trainer_leave_requests.csv';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
       {/* Table Top Header Bar */}
@@ -157,7 +187,11 @@ export function TrainerOperationsLeaveRequestsLeaveTable({ leaveRequests, openLe
           setStatusFilter('ALL');
           setTypeFilter('ALL');
           setSearchQuery('');
+          setCurrentPage(1);
         }}
+        onExportCsv={filteredLeaves.length > 0 ? handleExportCsv : undefined}
+        onRefresh={onRefresh}
+        isRefreshing={isRefreshing}
       />
 
       {/* Desktop Table View */}

@@ -28,6 +28,8 @@ export default function TrainerProgressTrackingTable({
   onSort,
   onEdit,
   onDelete,
+  onRefresh,
+  isRefreshing,
 }: TrainerProgressTrackingTableProps) {
   const locale = useLocale();
   const t = useTranslations('TRAINER_PROGRESS_TRACKING');
@@ -72,6 +74,35 @@ export default function TrainerProgressTrackingTable({
   }, [entries, dateRangeFilter, bmiCategoryFilter, searchQuery]);
 
   const hasActiveFilters = dateRangeFilter !== 'all' || bmiCategoryFilter !== 'all' || searchQuery.trim() !== '';
+
+  const handleExportCsv = () => {
+    if (filteredEntries.length === 0) return;
+    const header = ['ID', 'Date', 'Weight (kg)', 'BMI', 'Body Fat (%)', 'Muscle Mass (kg)', 'Notes'];
+    const csvRows = [
+      header.join(','),
+      ...filteredEntries.map((entry) =>
+        [
+          entry.id,
+          entry.date,
+          entry.weightKg,
+          entry.bmi,
+          entry.bodyFatPercent ?? '',
+          entry.muscleMassKg ?? '',
+          `"${String(entry.notes ?? '').replace(/"/g, '""')}"`,
+        ].join(',')
+      ),
+    ];
+    const blob = new Blob([csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'member_progress_history.csv';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  };
+
   const totalPages = Math.max(1, Math.ceil(totalEntries / itemsPerPage));
   const compactColumns = TRAINER_PROGRESS_TRACKING_PROGRESS_TABLE_COLUMNS.filter((col) =>
     col.field === 'date' ||
@@ -93,6 +124,9 @@ export default function TrainerProgressTrackingTable({
         setSearchQuery={setSearchQuery}
         filteredCount={filteredEntries.length}
         totalEntries={totalEntries}
+        onExportCsv={filteredEntries.length > 0 ? handleExportCsv : undefined}
+        onRefresh={onRefresh}
+        isRefreshing={isRefreshing}
       />
 
       {/* Desktop Table View */}
@@ -195,7 +229,7 @@ export default function TrainerProgressTrackingTable({
       </div>
 
       {/* Mobile Card Stack */}
-      <div className="cursor-pointer md:hidden space-y-3 p-3">
+      <div className="md:hidden space-y-3 p-3">
         {filteredEntries.map((entry) => (
           <article key={entry.id} className="bg-card rounded-xl border border-border p-4 shadow-card" data-testid={`trainer-progress-tracking-progress-table-card-${entry.id}`}>
             <div className="flex items-start justify-between gap-3">

@@ -51,23 +51,6 @@ function buildMockSuccess<T>(data: T, message = 'Success', meta?: any): ApiRespo
   return envelope as unknown as ApiResponse<T>;
 }
 
-function buildMockError<T = null>(message: string, errorCode = 'REQUEST_FAILED', statusCode = 400): ApiResponse<T> {
-  const requestId = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `req_${Date.now()}`;
-  const envelope = {
-    success: false as const,
-    message,
-    data: null,
-    errorCode,
-    statusCode,
-    requestId,
-    status: statusCode,
-    ok: false,
-    json: async () => envelope,
-    text: async () => JSON.stringify(envelope),
-  };
-  return envelope as unknown as ApiResponse<T>;
-}
-
 function sortRecords<T extends Record<string, any>>(
   items: T[],
   sortBy: string | null,
@@ -300,7 +283,6 @@ export function handleTrainerMockApiRequest(
           carbs: body.carbs || 200,
           fats: body.fats || 65,
           description: body.description || 'Custom tailored nutrition plan',
-          isActive: true,
           meals: body.meals || [
             { name: 'Breakfast', time: '08:00', items: 'Oats, berries, whey protein' },
             { name: 'Lunch', time: '13:00', items: 'Grilled chicken, brown rice, broccoli' },
@@ -316,8 +298,6 @@ export function handleTrainerMockApiRequest(
 
     const search = searchParams.get('search')?.toLowerCase() || '';
     const goal = searchParams.get('goal') || '';
-    const sortBy = searchParams.get('sortBy');
-    const sortDirection = searchParams.get('sortDirection');
     let filtered = currentDietPlans;
     if (search) {
       filtered = filtered.filter((d: any) => d.name.toLowerCase().includes(search) || d.description?.toLowerCase().includes(search));
@@ -326,11 +306,10 @@ export function handleTrainerMockApiRequest(
       filtered = filtered.filter((d: any) => d.goal?.toLowerCase() === goal.toLowerCase());
     }
 
-    const sorted = sortRecords(filtered, sortBy, sortDirection);
     const page = Math.max(1, Number(searchParams.get('page') || '1'));
     const limit = Math.max(1, Number(searchParams.get('limit') || '10'));
-    const total = sorted.length;
-    const paginated = sorted.slice((page - 1) * limit, page * limit);
+    const total = filtered.length;
+    const paginated = filtered.slice((page - 1) * limit, page * limit);
 
     return buildMockSuccess({
       dietPlans: paginated,
@@ -433,7 +412,10 @@ export function handleTrainerMockApiRequest(
             try {
               const body = options.body ? JSON.parse(options.body as string) : {};
               Object.assign(entry, body);
-            } catch {}
+              if (typeof entry.weightKg === 'number' && typeof entry.heightCm === 'number' && entry.heightCm > 0) {
+                entry.bmi = Math.round((entry.weightKg / ((entry.heightCm / 100) * (entry.heightCm / 100))) * 10) / 10;
+              }
+            } catch { }
           }
           return buildMockSuccess(entry || currentProgressEntries[0], 'Progress entry updated');
         }
@@ -602,24 +584,21 @@ export function handleTrainerMockApiRequest(
     const memberId = parts[1];
     const sub = parts[2];
 
-    const member = currentMembers.find((m: any) => m.id === memberId);
-    if (!member) {
-      return buildMockError('Member not found', 'MEMBER_NOT_FOUND', 404);
-    }
+    const member = currentMembers.find((m: any) => m.id === memberId) || currentMembers[0];
 
     if (sub === 'diet' && method === 'PATCH') {
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
-        member.assignedDietId = body.dietPlanId;
-      } catch {}
+        if (member) member.assignedDietId = body.dietPlanId;
+      } catch { }
       return buildMockSuccess({ memberId, ...member }, 'Diet plan assigned');
     }
 
     if (sub === 'workout' && method === 'PATCH') {
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
-        member.assignedWorkoutId = body.workoutPlanId ?? body.workoutId;
-      } catch {}
+        if (member) member.assignedWorkoutId = body.workoutPlanId ?? body.workoutId;
+      } catch { }
       return buildMockSuccess({ memberId, ...member }, 'Workout plan assigned');
     }
 
@@ -629,47 +608,30 @@ export function handleTrainerMockApiRequest(
       if (noteId && method === 'PATCH') {
         try {
           const body = options.body ? JSON.parse(options.body as string) : {};
-          const cleanText = typeof body.text === 'string' ? body.text.trim() : '';
-          if (!cleanText) {
-            return buildMockError('Note text is required', 'VALIDATION_ERROR', 400);
-          }
           const note = member.trainerNotes.find((n: any) => n.id === noteId);
-          if (!note) {
-            return buildMockError('Trainer note not found', 'NOTE_NOT_FOUND', 404);
-          }
-          note.text = cleanText;
-        } catch {
-          return buildMockError('Invalid request payload', 'INVALID_PAYLOAD', 400);
-        }
+          if (note && body.text) note.text = body.text;
+        } catch { }
         return buildMockSuccess(member, 'Trainer note updated');
       }
       if (noteId && method === 'DELETE') {
-        const beforeCount = member.trainerNotes.length;
         member.trainerNotes = member.trainerNotes.filter((n: any) => n.id !== noteId);
-        if (member.trainerNotes.length === beforeCount) {
-          return buildMockError('Trainer note not found', 'NOTE_NOT_FOUND', 404);
-        }
         return buildMockSuccess(member, 'Trainer note deleted');
       }
       if (method === 'POST') {
         try {
           const body = options.body ? JSON.parse(options.body as string) : {};
-          const cleanText = typeof body.text === 'string' ? body.text.trim() : '';
-          if (!cleanText) {
-            return buildMockError('Note text is required', 'VALIDATION_ERROR', 400);
-          }
           const newNote = {
             id: `note_${Date.now()}`,
-            text: cleanText,
+            text: body.text || 'Trainer observation',
             date: new Date().toISOString().split('T')[0],
           };
           member.trainerNotes.unshift(newNote);
-          return buildMockSuccess(member, 'Trainer note saved');
+          return buildMockSuccess(member, 'Trainer note added');
         } catch {
-          return buildMockError('Invalid note payload', 'INVALID_PAYLOAD', 400);
+          return buildMockSuccess(member, 'Trainer note added');
         }
       }
-      return buildMockSuccess(member, 'Trainer notes retrieved');
+      return buildMockSuccess(member.trainerNotes || [], 'Trainer notes retrieved');
     }
 
     if (sub === 'attendance') {
@@ -684,7 +646,7 @@ export function handleTrainerMockApiRequest(
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
         Object.assign(member, body);
-      } catch {}
+      } catch { }
       return buildMockSuccess(member, 'Member profile updated');
     }
 
@@ -696,27 +658,15 @@ export function handleTrainerMockApiRequest(
     if (method === 'POST') {
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
-        const parsedTags = Array.isArray(body.tags)
-          ? body.tags
-          : typeof body.tags === 'string'
-            ? body.tags.split(',').map((t: string) => t.trim()).filter(Boolean)
-            : [];
         const newWorkout = {
           id: `wkt_${Date.now()}`,
           name: body.name || 'New Workout Routine',
           level: body.level || 'Intermediate',
           duration: body.duration || '45 mins',
           focus: body.focus || 'Full Body',
-          days: Number(body.days) || 3,
-          exercises: Number(body.exercises ?? (Array.isArray(body.workoutExercises) ? body.workoutExercises.length : 0)),
-          tags: parsedTags,
-          goal: body.goal || '',
-          startDate: body.startDate || '',
-          endDate: body.endDate || '',
-          assignedMemberId: body.assignedMemberId || '',
+          days: body.days || 3,
           instructions: body.instructions || 'Follow warm-up routine first',
-          workoutExercises: Array.isArray(body.workoutExercises) ? body.workoutExercises : [],
-          isActive: true,
+          workoutExercises: body.workoutExercises || [],
         };
         currentWorkouts.unshift(newWorkout);
         return buildMockSuccess(newWorkout, 'Workout routine created');
@@ -740,10 +690,7 @@ export function handleTrainerMockApiRequest(
       );
     }
 
-    const sorted = sortRecords(filtered, sortBy, sortDirection, {
-      category: (w: any) => w.category ?? w.focus ?? '',
-      difficulty: (w: any) => w.level ?? '',
-    });
+    const sorted = sortRecords(filtered, sortBy, sortDirection);
     const page = Math.max(1, Number(searchParams.get('page') || '1'));
     const limit = Math.max(1, Number(searchParams.get('limit') || '50'));
     const paginated = sorted.slice((page - 1) * limit, page * limit);
@@ -762,14 +709,8 @@ export function handleTrainerMockApiRequest(
     if (method === 'PATCH') {
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
-        if (typeof body.tags === 'string') {
-          body.tags = body.tags.split(',').map((t: string) => t.trim()).filter(Boolean);
-        }
-        if (Array.isArray(body.workoutExercises) && body.exercises === undefined) {
-          body.exercises = body.workoutExercises.length;
-        }
         Object.assign(workout, body);
-      } catch {}
+      } catch { }
       return buildMockSuccess(workout, 'Workout updated');
     }
     if (method === 'DELETE') {
@@ -814,9 +755,7 @@ export function handleTrainerMockApiRequest(
     if (search) filtered = filtered.filter((e: any) => e.name.toLowerCase().includes(search) || e.primaryMuscle?.toLowerCase().includes(search) || (Array.isArray(e.muscleGroup) && e.muscleGroup.some((m: string) => m.toLowerCase().includes(search))));
     if (category && category !== 'ALL' && category !== 'All') filtered = filtered.filter((e: any) => e.category?.toLowerCase() === category.toLowerCase());
 
-    const sorted = sortRecords(filtered, sortBy, sortDirection, {
-      category: (e: any) => (Array.isArray(e.muscleGroup) ? e.muscleGroup.join(', ') : (e.category ?? '')),
-    });
+    const sorted = sortRecords(filtered, sortBy, sortDirection);
     const page = Math.max(1, Number(searchParams.get('page') || '1'));
     const limit = Math.max(1, Number(searchParams.get('limit') || '50'));
     const paginated = sorted.slice((page - 1) * limit, page * limit);
@@ -841,7 +780,7 @@ export function handleTrainerMockApiRequest(
         }
         Object.assign(exercise, body);
         if (exercise.isActive === undefined) exercise.isActive = true;
-      } catch {}
+      } catch { }
       return buildMockSuccess(exercise, 'Exercise updated');
     }
     if (method === 'DELETE') {
@@ -952,7 +891,7 @@ export function handleTrainerMockApiRequest(
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
         if (session) Object.assign(session, body);
-      } catch {}
+      } catch { }
       return buildMockSuccess(session, 'Session updated successfully');
     }
 
@@ -1117,7 +1056,7 @@ export function handleTrainerMockApiRequest(
 
         const now = new Date();
         const dateStr = body.date || now.toISOString().split('T')[0];
-        const checkInTime = body.checkIn 
+        const checkInTime = body.checkIn
           ? (body.checkIn.includes('T') ? body.checkIn : `${dateStr}T${body.checkIn}:00Z`)
           : now.toISOString();
         const checkOutTime = body.checkOut
@@ -1136,20 +1075,20 @@ export function handleTrainerMockApiRequest(
           notes: body.notes || (isStaff ? 'Trainer Self Check-in' : undefined),
           ...(isStaff
             ? {
-                staffId,
-                staff: {
-                  id: staffId,
-                  name: 'Michael Trainer',
-                },
-              }
+              staffId,
+              staff: {
+                id: staffId,
+                name: 'Michael Trainer',
+              },
+            }
             : {
-                memberId: matchedMember.id,
-                member: {
-                  id: String(matchedMember.id),
-                  name: matchedMember.name,
-                  phone: matchedMember.phone || undefined,
-                },
-              }),
+              memberId: matchedMember.id,
+              member: {
+                id: String(matchedMember.id),
+                name: matchedMember.name,
+                phone: matchedMember.phone || undefined,
+              },
+            }),
         };
 
         currentAttendance.unshift(newRecord);
@@ -1307,7 +1246,7 @@ export function handleTrainerMockApiRequest(
       try {
         const body = options.body ? JSON.parse(options.body as string) : [];
         if (Array.isArray(body)) currentAvailability = body;
-      } catch {}
+      } catch { }
       return buildMockSuccess(currentAvailability, 'Availability updated');
     }
     return buildMockSuccess(currentAvailability, 'Availability retrieved');
@@ -1351,7 +1290,7 @@ export function handleTrainerMockApiRequest(
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
         Object.assign(currentTrainerProfile, body);
-      } catch {}
+      } catch { }
       return buildMockSuccess(currentTrainerProfile, 'Profile updated successfully');
     }
     return buildMockSuccess(currentTrainerProfile, 'Profile retrieved');
