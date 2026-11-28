@@ -5,6 +5,7 @@
  * ─────────────────────────────────────────────────────────── */
 
 @import "tailwindcss" source(none);
+@custom-variant dark (&:where(.dark, .dark *));
 
 @source "../**/*.{ts,tsx,js,jsx}";
 
@@ -99,31 +100,31 @@
   --drawer-width: 480px;
 }
 
-/* ── 2. DARK MODE (Ultra-Premium Obsidian + Electric Orange Default) ── */
+/* ── 2. DARK MODE (Ultra-Premium Deep Obsidian + Electric Orange Default) ── */
 .dark {
   --primary: #FF5A1F;
   --primary-hover: #FF6E38;
   --primary-subtle: rgba(255, 90, 31, 0.18);
-  --bg-page: #0B0F17;
-  --bg-card: #131B2B;
-  --bg-sidebar: #090D14;
-  --bg-header: #0E1420;
-  --bg-header-translucent: rgba(11, 15, 23, 0.86);
-  --bg-input: #0F1623;
-  --bg-floating: #1A2438;
-  --bg-overlay: #131B2B;
-  --bg-popover: #162033;
+  --bg-page: #070B14;
+  --bg-card: #101726;
+  --bg-sidebar: #080C15;
+  --bg-header: #0C121F;
+  --bg-header-translucent: rgba(9, 13, 22, 0.88);
+  --bg-input: #0D1422;
+  --bg-floating: #162034;
+  --bg-overlay: #101726;
+  --bg-popover: #141E30;
   --surface-hover: rgba(255, 90, 31, 0.12);
   --surface-highlight: rgba(255, 90, 31, 0.08);
-  --surface-zebra: #101725;
+  --surface-zebra: #0E1523;
   --focus-ring: #FF5A1F;
-  --border: rgba(148, 163, 184, 0.16);
+  --border: rgba(148, 163, 184, 0.18);
   --border-focus: #FF5A1F;
   --text-primary: #F8FAFC;
   --text-secondary: #94A3B8;
   --text-disabled: #64748B;
   --text-on-primary: #FFFFFF;
-  --skeleton-base: #131B2B;
+  --skeleton-base: #101726;
   --skeleton-highlight: #1E293B;
   --success: #10B981;
   --success-text: #34D399;
@@ -149,11 +150,11 @@
   --pay-bank-bg: rgba(56, 189, 248, 0.16);
   --chart-primary: #FF5A1F;
   --chart-grid: rgba(148, 163, 184, 0.14);
-  --chart-tooltip-bg: #131B2B;
-  --shadow-card: 0 8px 28px rgba(0, 0, 0, 0.38);
-  --shadow-popover: 0 12px 32px rgba(0, 0, 0, 0.55);
-  --shadow-dialog: 0 24px 64px rgba(0, 0, 0, 0.65);
-  --shadow-toast: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --chart-tooltip-bg: #101726;
+  --shadow-card: 0 12px 34px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --shadow-popover: 0 14px 36px rgba(0, 0, 0, 0.6);
+  --shadow-dialog: 0 24px 64px rgba(0, 0, 0, 0.7);
+  --shadow-toast: 0 10px 30px rgba(0, 0, 0, 0.55);
 }
 
 /* ── 3. TAILWIND TOKEN MAPPING (@theme inline) ─────────────── */
@@ -245,7 +246,26 @@
   }
 }
 
-/* ── 4b. SEMANTIC DIALOG & ACCESSIBILITY UTILITIES ─────────── */
+/* ── 4b. SEMANTIC DIALOG, TYPOGRAPHY & ACCESSIBILITY UTILITIES ─────────── */
+@utility text-page-title {
+  font-size: clamp(1.375rem, 1.8vw, 1.75rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+@utility text-kpi {
+  font-size: clamp(1.75rem, 2.4vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.dark .trainer-aurora-canvas {
+  background-color: var(--bg-page);
+  background-image:
+    radial-gradient(ellipse 65% 42% at 15% 0%, rgba(255, 90, 31, 0.09), transparent 70%),
+    radial-gradient(ellipse 50% 38% at 88% 8%, rgba(56, 189, 248, 0.07), transparent 70%),
+    radial-gradient(ellipse 55% 40% at 50% 100%, rgba(168, 85, 247, 0.06), transparent 70%);
+}
 @utility max-h-dialog-desktop {
   max-height: min(calc(100dvh - 2rem), 85vh);
 }

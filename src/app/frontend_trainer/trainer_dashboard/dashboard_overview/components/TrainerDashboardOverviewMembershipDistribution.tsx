@@ -39,16 +39,17 @@ export default function TrainerDashboardMembershipDistribution() {
     'border-amber-500/30 bg-amber-500/15 text-amber-600 dark:text-amber-300',
   ];
   return (
-    <div className="relative overflow-hidden h-full rounded-2xl border border-purple-500/30 bg-card dark:bg-gradient-to-br dark:from-[#211535] dark:via-[#151c2c] dark:to-[#0f1624] p-5 min-h-72 shadow-card flex flex-col">
+    <div className="relative overflow-hidden h-full rounded-2xl border border-purple-500/35 bg-card dark:bg-gradient-to-br dark:from-[#221436] dark:via-[#141B2D] dark:to-[#0C1220] p-5 min-h-72 shadow-card flex flex-col">
+      <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#A855F7] via-[#EC4899] to-transparent" />
       <span aria-hidden="true" className="pointer-events-none absolute -right-8 -bottom-8 h-28 w-28 rounded-full bg-purple-500/20 blur-3xl" />
-      <div className="relative flex items-center justify-between gap-2 pb-3 mb-4 border-b border-purple-500/15">
+      <div className="relative flex items-center justify-between gap-2 pb-3 mb-4 border-b border-purple-500/20">
         <div className="flex items-center gap-2.5 min-w-0">
-          <span className="p-2 rounded-xl border border-purple-500/30 bg-purple-500/15 text-purple-500 shrink-0">
+          <span className="p-2 rounded-xl border border-purple-500/35 bg-purple-500/20 text-purple-500 dark:text-purple-400 shrink-0">
             <Users size={16} strokeWidth={2.2} />
           </span>
-          <h2 className="font-bold text-primary truncate">{t("TEXT_MEMBERSHIP_DISTRIBUTION")}</h2>
+          <h2 className="font-bold text-text-primary truncate">{t("TEXT_MEMBERSHIP_DISTRIBUTION")}</h2>
         </div>
-        <span className="text-xs font-bold px-2.5 py-0.5 rounded-full border border-purple-500/30 bg-purple-500/15 text-purple-600 dark:text-purple-300 tabular-nums shrink-0">
+        <span className="text-xs font-bold px-2.5 py-0.5 rounded-full border border-purple-500/35 bg-purple-500/20 text-purple-600 dark:text-purple-300 tabular-nums shrink-0">
           {total}
         </span>
       </div>
@@ -61,10 +62,10 @@ export default function TrainerDashboardMembershipDistribution() {
             return (
               <div key={item.plan}>
                 <div className="flex justify-between items-center gap-2 text-sm mb-1.5">
-                  <span className="text-primary font-semibold truncate">{item.plan}</span>
+                  <span className="text-text-primary font-semibold truncate">{item.plan}</span>
                   <span className={`text-xs font-bold px-2 py-0.5 rounded-full border tabular-nums shrink-0 ${pillClass}`}>{percentage}%</span>
                 </div>
-                <div className="h-3 rounded-full bg-input border border-border/50 overflow-hidden" aria-hidden="true"><svg viewBox="0 0 100 1" preserveAspectRatio="none" className="h-full w-full" aria-hidden="true"><rect width={percentage} height="1" fill="currentColor" className={barClass} /></svg></div>
+                <div className="h-3 rounded-full bg-input border border-border/60 overflow-hidden" aria-hidden="true"><svg viewBox="0 0 100 1" preserveAspectRatio="none" className="h-full w-full" aria-hidden="true"><rect width={percentage} height="1" fill="currentColor" className={barClass} /></svg></div>
               </div>
             );
           })}

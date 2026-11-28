@@ -64,19 +64,20 @@ export default function TrainerDashboardMain() {
   }
 
   return (
-    <main className="min-h-full pb-10 bg-page text-primary">
+    <main className="min-h-full pb-10 bg-page trainer-aurora-canvas text-text-primary">
       <div className="p-4 sm:p-6 space-y-5">
-        {/* Executive Colorful Header Card (matching Library Admin Dashboard) */}
-        <section className="relative overflow-hidden rounded-2xl border border-orange-500/30 bg-card dark:bg-gradient-to-br dark:from-[#261614] dark:via-[#151c2c] dark:to-[#0f1624] p-5 sm:p-6 shadow-card space-y-4">
-          <span aria-hidden="true" className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-orange-500/20 blur-3xl" />
-          <span aria-hidden="true" className="pointer-events-none absolute left-1/3 -bottom-12 h-28 w-40 rounded-full bg-sky-500/10 blur-3xl" />
+        {/* Executive Colorful Header Card */}
+        <section className="relative overflow-hidden rounded-2xl border border-orange-500/35 bg-card dark:bg-gradient-to-br dark:from-[#291514] dark:via-[#12192B] dark:to-[#0C1322] p-5 sm:p-6 shadow-card space-y-4">
+          <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#FF5A1F] via-[#EC4899] to-[#38BDF8]" />
+          <span aria-hidden="true" className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-orange-500/20 blur-3xl" />
+          <span aria-hidden="true" className="pointer-events-none absolute left-1/3 -bottom-12 h-32 w-44 rounded-full bg-sky-500/15 blur-3xl" />
           <div className="relative flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div className="space-y-1.5 min-w-0">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/35 bg-orange-500/15 px-3 py-1 text-xs font-semibold text-orange-600 dark:text-orange-300">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/40 bg-orange-500/15 px-3 py-1 text-xs font-semibold text-orange-600 dark:text-orange-300 shadow-[0_2px_10px_rgba(255,90,31,0.16)]">
                 <span className="h-2 w-2 rounded-full bg-orange-500 motion-safe:animate-pulse" aria-hidden="true" />
                 Trainer Operations &amp; Coaching Hub
               </span>
-              <h1 className="text-page-title font-bold text-primary">{t("TEXT_DASHBOARD")}</h1>
+              <h1 className="text-page-title font-extrabold text-text-primary">{t("TEXT_DASHBOARD")}</h1>
               <p className="text-sm text-secondary">{t("TEXT_TRAINER_OPERATIONAL_OVERVIEW")}</p>
             </div>
             <div className="w-full lg:w-auto shrink-0">
@@ -85,20 +86,20 @@ export default function TrainerDashboardMain() {
           </div>
 
           <div className="relative pt-4 border-t border-orange-500/20 flex flex-wrap items-center gap-2.5 text-xs" data-testid="trainer_dashboard-quota-bar">
-            <div className="inline-flex items-center gap-1.5 rounded-xl border border-orange-500/30 bg-orange-500/15 px-3 py-1.5 font-semibold text-orange-700 dark:text-orange-200">
-              <MapPin size={14} className="text-orange-500 shrink-0" />
-              <span>Branch: <strong className="text-primary font-bold">Andheri East</strong></span>
+            <div className="inline-flex items-center gap-1.5 rounded-xl border border-orange-500/35 bg-orange-500/15 px-3 py-1.5 font-semibold text-orange-700 dark:text-orange-200">
+              <MapPin size={14} className="text-orange-500 dark:text-orange-400 shrink-0" />
+              <span>Branch: <strong className="text-text-primary font-bold">Andheri East</strong></span>
             </div>
-            <div className="inline-flex items-center gap-1.5 rounded-xl border border-amber-500/30 bg-amber-500/15 px-3 py-1.5 font-semibold text-amber-700 dark:text-amber-200">
-              <Award size={14} className="text-amber-500 shrink-0" />
-              <span>Tier: <strong className="text-primary font-bold">Master Trainer (Tier 3)</strong></span>
+            <div className="inline-flex items-center gap-1.5 rounded-xl border border-amber-500/35 bg-amber-500/15 px-3 py-1.5 font-semibold text-amber-700 dark:text-amber-200">
+              <Award size={14} className="text-amber-500 dark:text-amber-400 shrink-0" />
+              <span>Tier: <strong className="text-text-primary font-bold">Master Trainer (Tier 3)</strong></span>
             </div>
-            <div className="inline-flex items-center gap-1.5 rounded-xl border border-sky-500/30 bg-sky-500/15 px-3 py-1.5 font-semibold text-sky-700 dark:text-sky-200">
-              <Users size={14} className="text-sky-500 shrink-0" />
-              <span>Capacity Quota: <strong className="text-primary font-bold">10 / 15 Trainees (67%)</strong></span>
+            <div className="inline-flex items-center gap-1.5 rounded-xl border border-sky-500/35 bg-sky-500/15 px-3 py-1.5 font-semibold text-sky-700 dark:text-sky-200">
+              <Users size={14} className="text-sky-500 dark:text-sky-400 shrink-0" />
+              <span>Capacity Quota: <strong className="text-text-primary font-bold">10 / 15 Trainees (67%)</strong></span>
             </div>
-            <div className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-500/30 bg-emerald-500/15 px-3 py-1.5 font-semibold text-emerald-700 dark:text-emerald-200">
-              <Percent size={14} className="text-emerald-500 shrink-0" />
+            <div className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-500/35 bg-emerald-500/15 px-3 py-1.5 font-semibold text-emerald-700 dark:text-emerald-200">
+              <Percent size={14} className="text-emerald-500 dark:text-emerald-400 shrink-0" />
               <span>PT Commission: <strong className="text-emerald-600 dark:text-emerald-300 font-bold">40% Session Retainer</strong></span>
             </div>
           </div>

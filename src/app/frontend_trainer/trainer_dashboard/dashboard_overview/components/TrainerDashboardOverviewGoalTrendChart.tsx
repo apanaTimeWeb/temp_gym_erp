@@ -72,14 +72,15 @@ export default function TrainerDashboardGoalTrendChart() {
   const values = trend.map((point) => point.rate);
 
   return (
-    <div className="relative h-full min-w-0 rounded-2xl border border-orange-500/30 bg-card dark:bg-gradient-to-br dark:from-[#261614] dark:via-[#151c2c] dark:to-[#0f1624] p-5 shadow-card flex flex-col justify-between overflow-hidden">
+    <div className="relative h-full min-w-0 rounded-2xl border border-orange-500/35 bg-card dark:bg-gradient-to-br dark:from-[#291514] dark:via-[#141B2D] dark:to-[#0C1220] p-5 shadow-card flex flex-col justify-between overflow-hidden">
+      <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#FF5A1F] via-[#EC4899] to-transparent" />
       <span aria-hidden="true" className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-orange-500/20 blur-3xl" />
       <div className="relative flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-orange-500/20">
         <div className="flex items-center gap-2.5 min-w-0">
-          <span className="p-2 rounded-xl border border-orange-500/35 bg-orange-500/20 text-orange-500 shrink-0">
+          <span className="p-2 rounded-xl border border-orange-500/40 bg-orange-500/20 text-orange-500 dark:text-orange-400 shrink-0 shadow-[0_2px_10px_rgba(255,90,31,0.2)]">
             <TrendingUp size={17} strokeWidth={2.2} />
           </span>
-          <h2 className="font-bold text-primary truncate">{t('TEXT_GOAL_COMPLETION')}</h2>
+          <h2 className="font-bold text-text-primary truncate">{t('TEXT_GOAL_COMPLETION')}</h2>
         </div>
         <span className="text-xs font-bold px-2.5 py-1 rounded-full border border-emerald-500/35 bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 shrink-0">
           {values[values.length - 1] ?? 0}% Latest

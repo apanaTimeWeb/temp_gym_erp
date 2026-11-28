@@ -114,6 +114,7 @@ export default function TrainerNavigationHeader({ title, subtitle, isSidebarColl
 
   return (
     <header className={`trainer-header ${isSidebarCollapsed ? 'trainer-header-collapsed' : 'trainer-header-expanded'} bg-gradient-to-r from-[#0B0F19]/95 via-[#11182A]/95 to-[#19132B]/95 border-b border-orange-500/25 backdrop-blur-xl px-3 sm:px-6 flex items-center justify-between gap-2 sm:gap-4 text-white shadow-[0_4px_24px_rgba(0,0,0,0.35)] motion-safe:transition-all motion-safe:duration-base`}>
+      <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#FF5A1F] via-[#EC4899] to-[#38BDF8]" />
       <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
         <button
           type="button"

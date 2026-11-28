@@ -36,7 +36,8 @@ export default function TrainerNavigationBreadcrumbs() {
             <ChevronRight size={15} strokeWidth={2.2} aria-hidden="true" className="shrink-0 text-orange-400/70 rtl:rotate-180" />
           </li>
         )}
-        <li aria-current="page" className="inline-flex min-h-9 min-w-0 items-center rounded-lg px-2.5 py-1 bg-card border border-border font-semibold text-primary shadow-sm">
+        <li aria-current="page" className="inline-flex min-h-9 min-w-0 items-center gap-2 rounded-lg px-3 py-1 bg-card dark:bg-gradient-to-r dark:from-[#162035] dark:to-[#101726] border border-border dark:border-white/15 font-semibold text-text-primary shadow-sm">
+          <span className="h-2 w-2 rounded-full bg-gradient-to-r from-[#FF5A1F] to-[#EC4899] shrink-0 shadow-[0_0_8px_rgba(255,90,31,0.65)]" aria-hidden="true" />
           <span className="truncate">{t(currentTitleKey)}</span>
         </li>
       </ol>

@@ -40,15 +40,16 @@ export default function TrainerDashboardUpcomingSessions() {
   ];
 
   return (
-    <div className="relative overflow-hidden h-full rounded-2xl border border-sky-500/30 bg-card dark:bg-gradient-to-br dark:from-[#102235] dark:via-[#151c2c] dark:to-[#0f1624] p-5 shadow-card flex flex-col">
+    <div className="relative overflow-hidden h-full rounded-2xl border border-sky-500/35 bg-card dark:bg-gradient-to-br dark:from-[#0E2438] dark:via-[#141B2D] dark:to-[#0C1220] p-5 shadow-card flex flex-col">
+      <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#38BDF8] via-[#6366F1] to-transparent" />
       <span aria-hidden="true" className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-sky-500/20 blur-3xl" />
-      <div className="relative flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-sky-500/15">
-        <h3 className="font-bold text-primary text-lg flex items-center gap-2.5 min-w-0">
-          <span className="p-2 rounded-xl border border-sky-500/30 bg-sky-500/15 text-sky-500 shrink-0">
+      <div className="relative flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-sky-500/20">
+        <h3 className="font-bold text-text-primary text-lg flex items-center gap-2.5 min-w-0">
+          <span className="p-2 rounded-xl border border-sky-500/35 bg-sky-500/20 text-sky-500 dark:text-sky-400 shrink-0">
             <Calendar size={16} strokeWidth={2.2} />
           </span>
           <span className="truncate">{t("TEXT_UPCOMING_SESSIONS")}</span></h3>
-        <Link href={TRAINER_DASHBOARD_URLS.ROUTES.SCHEDULE} className="motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page text-xs px-3 py-1.5 rounded-xl border border-orange-500/30 bg-orange-500/15 text-orange-600 dark:text-orange-300 font-bold hover:bg-orange-500/25 shrink-0" data-testid="trainer_dashboard-dashboard-upcoming_sessions_view">{t("TEXT_VIEW_SCHEDULE")}</Link>
+        <Link href={TRAINER_DASHBOARD_URLS.ROUTES.SCHEDULE} className="motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page text-xs px-3 py-1.5 rounded-xl border border-orange-500/35 bg-orange-500/15 text-orange-600 dark:text-orange-300 font-bold hover:bg-orange-500/25 shrink-0" data-testid="trainer_dashboard-dashboard-upcoming_sessions_view">{t("TEXT_VIEW_SCHEDULE")}</Link>
       </div>
 
       <div className="relative space-y-3 flex-1">
@@ -56,20 +57,20 @@ export default function TrainerDashboardUpcomingSessions() {
           <p className="text-secondary text-sm">{t("TEXT_NO_UPCOMING_SESSIONS_TODAY")}</p>
         ) : (
           stats.upcomingSessions.map((session, idx) => (
-            <div key={session.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 p-3 rounded-xl border border-border/80 bg-page/80 hover:border-sky-500/35 motion-safe:transition-colors motion-safe:duration-base">
+            <div key={session.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 p-3 rounded-xl border border-border/80 dark:border-white/10 bg-page/80 dark:bg-[#0B1220]/90 hover:border-sky-500/45 motion-safe:transition-colors motion-safe:duration-base">
               <div className="flex items-center gap-3 min-w-0">
                 <div className={`w-10 h-10 rounded-xl border flex items-center justify-center font-bold shrink-0 ${avatarThemes[idx % avatarThemes.length]}`}>
                   {session.name.charAt(0)}
                 </div>
                 <div className="min-w-0">
-                  <Link href={`${TRAINER_DASHBOARD_URLS.ROUTES.MEMBERS}?search=${encodeURIComponent(session.name)}`} className="font-semibold text-primary text-sm hover:underline truncate block">
+                  <Link href={`${TRAINER_DASHBOARD_URLS.ROUTES.MEMBERS}?search=${encodeURIComponent(session.name)}`} className="font-semibold text-text-primary text-sm hover:text-orange-400 hover:underline truncate block">
                     {session.name}
                   </Link>
                   <p className="text-xs text-secondary truncate">{session.type}</p>
                 </div>
               </div>
-              <div className="self-start sm:self-auto inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-sky-600 dark:text-sky-300 border border-sky-500/30 bg-sky-500/15 px-3 py-1.5 rounded-xl shrink-0 tabular-nums">
-                <Clock size={15} className="text-sky-500" strokeWidth={2} />
+              <div className="self-start sm:self-auto inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-sky-600 dark:text-sky-300 border border-sky-500/35 bg-sky-500/15 px-3 py-1.5 rounded-xl shrink-0 tabular-nums">
+                <Clock size={15} className="text-sky-500 dark:text-sky-400" strokeWidth={2} />
                 {session.time}
               </div>
             </div>

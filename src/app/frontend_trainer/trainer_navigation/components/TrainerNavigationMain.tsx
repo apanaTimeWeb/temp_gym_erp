@@ -85,7 +85,7 @@ export default function TrainerNavigationMain({ children }: TrainerNavigationMai
   return (
     <TrainerNavigationConfirmProvider>
       <TrainerNavigationSocketProvider>
-      <div className="min-h-screen bg-page text-primary">
+      <div className="min-h-screen bg-page text-text-primary trainer-aurora-canvas">
         <a
           href="#trainer-main-content"
           className="sr-only focus:not-sr-only focus:inline-flex focus:fixed focus:start-3 focus:top-3 focus:z-skip-link focus:min-h-11 focus:items-center focus:rounded-md focus:bg-primary focus:px-4 focus:font-semibold focus:text-on-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-page"

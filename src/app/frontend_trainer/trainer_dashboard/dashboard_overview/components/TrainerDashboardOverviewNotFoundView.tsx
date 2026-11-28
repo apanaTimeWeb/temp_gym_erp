@@ -30,7 +30,7 @@ export function TrainerDashboardNotFoundView() {
       <div className="border border-orange-500/30 bg-orange-500/15 p-4 rounded-2xl mb-4">
         <SearchX size={22} className="text-orange-500" strokeWidth={2}/>
       </div>
-      <h2 className="text-section-title font-bold text-primary mb-2">{t("TEXT_PAGE_NOT_FOUND")}</h2>
+      <h2 className="text-xl font-bold text-text-primary mb-2">{t("TEXT_PAGE_NOT_FOUND")}</h2>
       <p className="text-secondary max-w-md mb-6">{t("TEXT_PAGE_NOT_FOUND_DESCRIPTION")}</p>
       <Link 
         href={TRAINER_DASHBOARD_PAGE_LIST}
