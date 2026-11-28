@@ -104,7 +104,7 @@ export default function TrainerNavigationHeader({ title, subtitle, branchName, i
   const [showProfile, setShowProfile] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showBranches, setShowBranches] = useState(false);
-  const [selectedBranch, setSelectedBranch] = useState(branchName ?? '');
+  const [selectedBranchOverride, setSelectedBranchOverride] = useState<string | null>(null);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [notifications, setNotifications] = useState<TrainerHeaderNotificationItem[]>(DEFAULT_TRAINER_HEADER_NOTIFICATIONS);
   const profileRef = useRef<HTMLDivElement>(null);
@@ -116,12 +116,8 @@ export default function TrainerNavigationHeader({ title, subtitle, branchName, i
   const [mounted, setMounted] = useState(false);
   const [hour, setHour] = useState<number>(-1);
   const user = getUser();
-  const activeBranchLabel = selectedBranch || branchName || '';
+  const activeBranchLabel = selectedBranchOverride ?? branchName ?? '';
   const unreadCount = notifications.filter((item) => !item.read).length;
-
-  useEffect(() => {
-    setSelectedBranch(branchName ?? '');
-  }, [branchName]);
 
   const handleMarkAllAsRead = () => {
     setNotifications((prev) => prev.map((item) => ({ ...item, read: true })));
@@ -284,7 +280,7 @@ export default function TrainerNavigationHeader({ title, subtitle, branchName, i
                             role="option"
                             aria-selected={isSelected}
                             onClick={() => {
-                              setSelectedBranch(branch.name);
+                              setSelectedBranchOverride(branch.name);
                               setShowBranches(false);
                             }}
                             className={`w-full flex items-center justify-between gap-2 rounded-xl px-2.5 py-2 text-start text-xs transition-colors cursor-pointer ${isSelected ? 'bg-cyan-500/20 text-white border border-cyan-400/40' : 'text-slate-300 hover:bg-white/[0.06] hover:text-white border border-transparent'}`}
