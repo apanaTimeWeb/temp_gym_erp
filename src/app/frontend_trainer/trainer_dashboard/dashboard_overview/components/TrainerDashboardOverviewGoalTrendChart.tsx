@@ -2,6 +2,7 @@
 // RESPONSIBILITY: Renders the dashboard goal-completion trend from TanStack Query data without owning server state.
 import { useEffect, useState } from 'react';
 
+import { TrendingUp } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import dynamic from 'next/dynamic';
@@ -60,34 +61,48 @@ export default function TrainerDashboardGoalTrendChart() {
   const { data: stats, isPending, isError } = useTrainerDashboardQuery();
 
   if (isPending) {
-    return <TrainerInfrastructureSkeletonBlock className="rounded-xl border border-border p-5 min-h-72" testId="trainer-dashboard-goal-trend-chart-loading" />;
+    return <TrainerInfrastructureSkeletonBlock className="h-full rounded-2xl border border-border p-5 min-h-72" testId="trainer-dashboard-goal-trend-chart-loading" />;
   }
 
   if (isError || !stats?.goalCompletionTrend?.length) {
-    return <div className="bg-card rounded-xl border border-border p-5 min-h-72 flex items-center justify-center"><p className="text-secondary text-sm">{t("TEXT_NO_GOAL_COMPLETION_DATA_AVAILABLE")}</p></div>;
+    return <div className="h-full bg-card rounded-2xl border border-border p-5 min-h-72 flex items-center justify-center shadow-card"><p className="text-secondary text-sm">{t("TEXT_NO_GOAL_COMPLETION_DATA_AVAILABLE")}</p></div>;
   }
 
   const trend = stats.goalCompletionTrend;
   const values = trend.map((point) => point.rate);
 
   return (
-    <div className="bg-card rounded-xl border border-border p-5">
-      <ReactApexChart
-        type="line"
-        height={280}
-        width="100%"
-        series={[{ name: t('TEXT_GOAL_COMPLETION'), data: values }]}
-        options={{
-          chart: { toolbar: { show: false }, background: 'transparent', animations: { enabled: !prefersReducedMotion, speed: 300 } },
-          theme: { mode: isDark ? 'dark' : 'light' },
-          stroke: { curve: 'smooth', width: 3 },
-          colors: ['var(--chart-primary)'],
-          grid: { borderColor: 'var(--chart-grid)' },
-          xaxis: { categories: trend.map((point) => point.month), labels: { style: { colors: ['var(--text-secondary)'] } } },
-          yaxis: { min: 0, max: 100, labels: { style: { colors: ['var(--text-secondary)'] } } },
-          tooltip: { theme: isDark ? 'dark' : 'light', y: { formatter: (value: number) => `${value}%` } },
-        }}
-      />
+    <div className="h-full min-w-0 bg-card rounded-2xl border border-border p-5 shadow-card flex flex-col justify-between overflow-hidden">
+      <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="p-1.5 rounded-lg border border-orange-500/30 bg-orange-500/15 text-orange-500 shrink-0">
+            <TrendingUp size={16} strokeWidth={2} />
+          </span>
+          <h2 className="font-semibold text-primary truncate">{t('TEXT_GOAL_COMPLETION')}</h2>
+        </div>
+        <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 shrink-0">
+          {values[values.length - 1] ?? 0}% Latest
+        </span>
+      </div>
+      <div className="min-w-0 w-full">
+        <ReactApexChart
+          type="line"
+          height={250}
+          width="100%"
+          series={[{ name: t('TEXT_GOAL_COMPLETION'), data: values }]}
+          options={{
+            chart: { toolbar: { show: false }, background: 'transparent', animations: { enabled: !prefersReducedMotion, speed: 300 } },
+            theme: { mode: isDark ? 'dark' : 'light' },
+            stroke: { curve: 'smooth', width: 3 },
+            markers: { size: 4, strokeWidth: 2, hover: { size: 6 } },
+            colors: ['var(--chart-primary)'],
+            grid: { borderColor: 'var(--chart-grid)', strokeDashArray: 4 },
+            xaxis: { categories: trend.map((point) => point.month), labels: { style: { colors: ['var(--text-secondary)'] } } },
+            yaxis: { min: 0, max: 100, labels: { style: { colors: ['var(--text-secondary)'] } } },
+            tooltip: { theme: isDark ? 'dark' : 'light', y: { formatter: (value: number) => `${value}%` } },
+          }}
+        />
+      </div>
     </div>
   );
 }

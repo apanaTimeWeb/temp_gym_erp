@@ -27,8 +27,8 @@ export function TrainerDashboardNotFoundView() {
   const t = useTranslations('TRAINER_DASHBOARD');
   return (
     <div className="flex flex-col items-center justify-center min-h-96 p-8 text-center">
-      <div className="bg-primary-subtle p-4 rounded-full mb-4">
-        <SearchX size={18} className="text-primary"  strokeWidth={2}/>
+      <div className="border border-orange-500/30 bg-orange-500/15 p-4 rounded-2xl mb-4">
+        <SearchX size={22} className="text-orange-500" strokeWidth={2}/>
       </div>
       <h2 className="text-section-title font-bold text-primary mb-2">{t("TEXT_PAGE_NOT_FOUND")}</h2>
       <p className="text-secondary max-w-md mb-6">{t("TEXT_PAGE_NOT_FOUND_DESCRIPTION")}</p>

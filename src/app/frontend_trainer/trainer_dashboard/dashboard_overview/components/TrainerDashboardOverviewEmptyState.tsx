@@ -24,8 +24,8 @@ export default function TrainerDashboardEmptyState({ type = 'members' }: Trainer
   const t = useTranslations('TRAINER_DASHBOARD');
   return (
     <div data-testid="trainer_dashboard-empty-state" className="flex flex-col items-center justify-center py-8 text-center px-4">
-      <div className="w-10 h-10 rounded-full bg-surface-highlight flex items-center justify-center mb-3">
-        <Users className="text-secondary"  strokeWidth={2} size={18}/>
+      <div className="w-11 h-11 rounded-xl border border-sky-500/30 bg-sky-500/15 flex items-center justify-center mb-3">
+        <Users className="text-sky-500" strokeWidth={2} size={18}/>
       </div>
       <p className="text-sm text-secondary font-medium">{t('TEXT_NO_RECENT_RESOURCE', { resource: type === 'members' ? t('TEXT_MEMBERS') : type })}</p>
     </div>

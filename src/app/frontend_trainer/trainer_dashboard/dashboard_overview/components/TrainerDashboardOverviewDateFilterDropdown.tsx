@@ -75,15 +75,15 @@ export default function TrainerDashboardDateFilterDropdown() {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center ">
-      <div className="relative min-w-40 ">
-        <Calendar size={18} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none " aria-hidden="true"  strokeWidth={2}/>
-        <label className="sr-only " htmlFor="trainer-dashboard-range">{t("TEXT_DASHBOARD_DATE_RANGE")}</label>
+    <div className="flex flex-col sm:flex-row flex-wrap gap-2.5 items-stretch sm:items-center w-full sm:w-auto">
+      <div className="relative w-full sm:w-auto sm:min-w-44">
+        <Calendar size={17} className="absolute start-3 top-1/2 -translate-y-1/2 text-orange-500 pointer-events-none" aria-hidden="true" strokeWidth={2} />
+        <label className="sr-only" htmlFor="trainer-dashboard-range">{t("TEXT_DASHBOARD_DATE_RANGE")}</label>
         <select
           id="trainer-dashboard-range"
           value={currentRange}
           onChange={handleRangeChange}
-          className="w-full ps-9 pe-8 py-2 text-sm bg-input border border-border rounded-lg text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring appearance-none cursor-pointer  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+          className="w-full min-h-11 ps-9 pe-8 py-2 text-sm font-medium bg-input border border-orange-500/25 rounded-xl text-primary hover:border-orange-500/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring appearance-none cursor-pointer motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
          data-testid="trainer_dashboard-dashboard-main_date_range">
           {TRAINER_DASHBOARD_DATE_RANGE_OPTIONS.map((option) => (
             <option key={option.value} value={option.value} data-testid={`trainer_dashboard-date-filter_dropdown_option${option.value}`}>{t(option.labelKey)}</option>
@@ -91,13 +91,13 @@ export default function TrainerDashboardDateFilterDropdown() {
         </select>
       </div>
       {currentRange === 'custom' && (
-        <div className="flex items-center gap-2 ">
-          <label className="sr-only " htmlFor="trainer-dashboard-start-date">{t("TEXT_DASHBOARD_START_DATE")}</label>
-          <input id="trainer-dashboard-start-date" type="date" aria-invalid={Boolean(customStartDate && !TrainerDashboardIsValidDateRange(customStartDate, customEndDate))} value={customStartDate} onChange={(event) => handleDateChange('startDate', event.target.value)} className="px-3 py-2 text-sm bg-input border border-border rounded-lg text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"  data-testid="trainer_dashboard-dashboard-main_start_date"/>
-          <span className="text-secondary text-sm font-medium " aria-hidden="true">{t("TEXT_TO")}</span>
-          <label className="sr-only " htmlFor="trainer-dashboard-end-date">{t("TEXT_DASHBOARD_END_DATE")}</label>
-          <input id="trainer-dashboard-end-date" type="date" aria-invalid={Boolean(customEndDate && !TrainerDashboardIsValidDateRange(customStartDate, customEndDate))} value={customEndDate} onChange={(event) => handleDateChange('endDate', event.target.value)} className="px-3 py-2 text-sm bg-input border border-border rounded-lg text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"  data-testid="trainer_dashboard-dashboard-main_end_date"/>
-          {customRangeInvalid && <p role="alert" className="text-danger text-sm">{t("TEXT_INVALID_DATE_RANGE")}</p>}
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+          <label className="sr-only" htmlFor="trainer-dashboard-start-date">{t("TEXT_DASHBOARD_START_DATE")}</label>
+          <input id="trainer-dashboard-start-date" type="date" aria-invalid={Boolean(customStartDate && !TrainerDashboardIsValidDateRange(customStartDate, customEndDate))} value={customStartDate} onChange={(event) => handleDateChange('startDate', event.target.value)} className="min-w-0 flex-1 sm:flex-none min-h-11 px-3 py-2 text-sm bg-input border border-border rounded-xl text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out"  data-testid="trainer_dashboard-dashboard-main_start_date"/>
+          <span className="text-secondary text-sm font-medium" aria-hidden="true">{t("TEXT_TO")}</span>
+          <label className="sr-only" htmlFor="trainer-dashboard-end-date">{t("TEXT_DASHBOARD_END_DATE")}</label>
+          <input id="trainer-dashboard-end-date" type="date" aria-invalid={Boolean(customEndDate && !TrainerDashboardIsValidDateRange(customStartDate, customEndDate))} value={customEndDate} onChange={(event) => handleDateChange('endDate', event.target.value)} className="min-w-0 flex-1 sm:flex-none min-h-11 px-3 py-2 text-sm bg-input border border-border rounded-xl text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out"  data-testid="trainer_dashboard-dashboard-main_end_date"/>
+          {customRangeInvalid && <p role="alert" className="w-full sm:w-auto text-danger text-sm">{t("TEXT_INVALID_DATE_RANGE")}</p>}
         </div>
       )}
     </div>

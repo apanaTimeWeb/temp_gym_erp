@@ -66,15 +66,17 @@ export default function TrainerDashboardMain() {
   return (
     <main className="min-h-full pb-10 bg-page text-primary">
       <div className="p-4 sm:p-6 space-y-5">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <div className="space-y-1.5">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div className="space-y-1.5 min-w-0">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-xs font-semibold text-orange-600 dark:text-orange-300">
-              Trainer Operations & Coaching Hub
+              Trainer Operations &amp; Coaching Hub
             </span>
             <h1 className="text-page-title font-bold text-primary">{t("TEXT_DASHBOARD")}</h1>
             <p className="text-sm text-secondary">{t("TEXT_TRAINER_OPERATIONAL_OVERVIEW")}</p>
           </div>
-          <TrainerDashboardDateFilterDropdown />
+          <div className="w-full lg:w-auto shrink-0">
+            <TrainerDashboardDateFilterDropdown />
+          </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5 p-3 bg-card border border-border rounded-xl text-xs shadow-card" data-testid="trainer_dashboard-quota-bar">
@@ -96,14 +98,14 @@ export default function TrainerDashboardMain() {
           </div>
         </div>
         <TrainerDashboardKPIs />
-        <div className="grid grid-cols-1 xl:grid-cols-4 gap-5">
-          <div className="xl:col-span-2"><TrainerDashboardGoalTrendChart /></div>
-          <TrainerDashboardMembershipDistribution />
-          <TrainerDashboardQuickActions />
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 items-stretch">
+          <div className="md:col-span-2 xl:col-span-2 min-w-0"><TrainerDashboardGoalTrendChart /></div>
+          <div className="min-w-0"><TrainerDashboardMembershipDistribution /></div>
+          <div className="min-w-0"><TrainerDashboardQuickActions /></div>
         </div>
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
-          <TrainerDashboardUpcomingSessions />
-          <TrainerDashboardRecentProgress />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-stretch">
+          <div className="min-w-0"><TrainerDashboardUpcomingSessions /></div>
+          <div className="min-w-0"><TrainerDashboardRecentProgress /></div>
         </div>
       </div>
     </main>

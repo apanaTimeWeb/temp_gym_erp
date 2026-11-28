@@ -46,11 +46,11 @@ export default function TrainerDashboardQuickActions() {
   } as const;
 
   return (
-    <div className="bg-card border border-border rounded-2xl p-5 shadow-card">
-      <div className="flex items-center justify-between mb-5">
+    <div className="h-full bg-card border border-border rounded-2xl p-5 shadow-card flex flex-col">
+      <div className="flex items-center justify-between mb-4">
         <h3 className="font-bold text-primary text-lg">{t('TEXT_QUICK_ACTIONS')}</h3>
       </div>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-3 flex-1">
         {TRAINER_DASHBOARD_QUICK_ACTIONS.map(({ href, labelKey, iconKey, tone }) => {
           const Icon = iconMap[iconKey];
           const theme = tileThemeMap[tone] ?? tileThemeMap.primary;
@@ -58,13 +58,13 @@ export default function TrainerDashboardQuickActions() {
             <Link
               key={href}
               href={href}
-              className={`flex flex-col items-center justify-center p-4 rounded-xl border ${theme.tile} motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring`}
+              className={`min-h-24 flex flex-col items-center justify-center p-3.5 rounded-xl border ${theme.tile} motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring`}
               data-testid={`trainer_dashboard-dashboard-quick-action-${href.split('/').pop() ?? 'root'}`}
             >
-              <span className={`mb-2.5 p-2.5 rounded-xl border ${theme.badge}`}>
+              <span className={`mb-2 p-2.5 rounded-xl border ${theme.badge}`}>
                 <Icon size={18} strokeWidth={2} />
               </span>
-              <span className="text-xs font-semibold text-center text-primary">{t(labelKey)}</span>
+              <span className="text-xs font-semibold text-center text-primary leading-tight">{t(labelKey)}</span>
             </Link>
           );
         })}
