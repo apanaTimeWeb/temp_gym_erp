@@ -46,10 +46,10 @@ export default function ManagerCommunicationsCampaignsHistory() {
   return (
     <div className="space-y-4">
       {/* Toolbar */}
-      <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-        <div className="relative flex-1 max-w-sm">
-          <Search size={18} strokeWidth={2} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary"/>
-          <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "w-full min-h-11 pl-9 pr-4 py-2 bg-input border border-border rounded-lg text-sm text-text-primary placeholder:text-text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_communications-manager-communications-history-input-text"
+      <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between bg-card dark:bg-gradient-to-r dark:from-[#121B2F] dark:via-[#151D30] dark:to-[#101726] p-4 rounded-2xl border border-border dark:border-purple-500/25 shadow-card">
+        <div className="relative flex-1 sm:max-w-sm">
+          <Search size={17} strokeWidth={2.2} className="absolute left-3 top-1/2 -translate-y-1/2 text-purple-400 pointer-events-none"/>
+          <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "w-full min-h-11 pl-9 pr-4 py-2 bg-input dark:bg-[#0B1220] border border-border dark:border-white/15 rounded-xl text-sm text-text-primary placeholder:text-text-secondary"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_communications-manager-communications-history-input-text"
             type="text"
             placeholder={t("COPY_SEARCH_CAMPAIGNS")}
             value={historySearch}
@@ -57,7 +57,7 @@ export default function ManagerCommunicationsCampaignsHistory() {
             
            aria-label={t("COPY_SEARCH_CAMPAIGNS")}/>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           {(['all', 'whatsapp', 'email'] as const).map((ch, mapIndex) => (
             <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", (`min-h-11 min-w-11 px-3 py-2 rounded-lg text-xs font-semibold border motion-safe:transition-all capitalize ${
                 historyChannelFilter === ch
@@ -77,17 +77,18 @@ export default function ManagerCommunicationsCampaignsHistory() {
       {(() => { if (paginatedCampaigns.length === 0) { return (
         <ManagerCommunicationsHistoryEmptyState isFiltered={Boolean(historySearch || historyChannelFilter !== 'all')} />
       ); } return (
-        <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
+        <div className="relative bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] rounded-2xl border border-border dark:border-purple-500/30 shadow-card overflow-hidden">
+          <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#C084FC] via-[#EC4899] to-[#38BDF8] z-30" />
           <div className="max-h-[640px] overflow-auto">
             <ManagerInfrastructureResponsiveTable labels={MANAGER_COMMUNICATION_HISTORY_HEADERS}>
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+                  <tr className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10">
                     {MANAGER_COMMUNICATION_HISTORY_HEADERS.map((h, hIdx) => (
                       <th
                         key={h}
-                        className={`px-4 py-3 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap ${
-                          hIdx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                        className={`px-4 py-3.5 text-left text-xs font-bold text-text-secondary dark:text-slate-300 uppercase tracking-wider whitespace-nowrap ${
+                          hIdx === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border dark:border-white/10' : ''
                         }`}
                       >
                         {h}

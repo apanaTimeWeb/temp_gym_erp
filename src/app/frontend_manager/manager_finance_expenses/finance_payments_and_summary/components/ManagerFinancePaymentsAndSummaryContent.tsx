@@ -25,25 +25,25 @@ export function ManagerFinancePaymentsAndSummaryContent() {
     <div className="min-h-full pb-10">
       
 
-      <div className="p-6 space-y-6">
+      <div className="p-4 sm:p-6 space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-text-primary">{t('COPY_BRANCH_FINANCE')}</h1>
+            <h1 className="text-page-title font-extrabold text-text-primary">{t('COPY_BRANCH_FINANCE')}</h1>
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <ManagerFinancePaymentsAndSummaryDateFilterDropdown />
-            <button type="button" onClick={() => ui.setShowModal(true)} data-testid="manager_finance-managerfinancecontent-button-record-payment" className="inline-flex min-h-11 min-w-11 items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"> <Plus size={18} strokeWidth={2} aria-hidden="true" />{t('TEXT_RECORD_PAYMENT')}</button>
+            <button type="button" onClick={() => ui.setShowModal(true)} data-testid="manager_finance-managerfinancecontent-button-record-payment" className="inline-flex min-h-11 min-w-11 items-center gap-2 rounded-xl bg-gradient-to-r from-[#FF5A1F] to-[#F97316] px-4 py-2 text-sm font-semibold text-white hover:brightness-110 shadow-[0_4px_14px_rgba(255,90,31,0.3)] motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"> <Plus size={18} strokeWidth={2} aria-hidden="true" />{t('TEXT_RECORD_PAYMENT')}</button>
           </div>
         </div>
         {/* KPIs */}
         <ManagerFinancePaymentsAndSummaryKpiCards />
 
         {/* Tabs */}
-        <div className="flex gap-1 bg-input rounded-xl p-1 w-fit">
+        <div className="flex gap-1.5 bg-card dark:bg-[#0E1526] border border-border dark:border-white/15 rounded-2xl p-1.5 w-full sm:w-fit overflow-x-auto shadow-card">
           {FINANCE_TABS.map((tabValue, mapIndex) => (
-            <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", (`px-5 py-2 text-sm font-medium rounded-lg motion-safe:transition-all ${
-                tab === tabValue ? 'bg-card text-primary shadow-card' : 'text-text-secondary hover:text-primary'
-              } motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110`)].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_finance-finance-managerfinancecontent-button-${tabValue}-${mapIndex}`}
+            <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", (`min-h-10 whitespace-nowrap px-5 py-2 text-sm font-semibold rounded-xl motion-safe:transition-all ${
+                tab === tabValue ? 'bg-primary text-on-primary shadow-sm shadow-orange-500/25' : 'text-text-secondary hover:text-text-primary hover:bg-surface-hover'
+              } motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 cursor-pointer`)].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_finance-finance-managerfinancecontent-button-${tabValue}-${mapIndex}`}
               key={tabValue}
               onClick={() => setTab(tabValue)}
               

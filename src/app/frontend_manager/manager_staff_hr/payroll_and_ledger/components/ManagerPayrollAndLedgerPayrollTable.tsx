@@ -114,17 +114,18 @@ export default function ManagerPayrollAndLedgerPayrollTable() {
         <button data-testid="manager_hr-manager-hr-payroll-table-button-close" onClick={() => { void handleGeneratePayroll(); }} className="min-h-11 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium bg-primary text-on-primary rounded-lg motion-safe:transition-all hover:bg-primary-hover motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110" aria-label={t("COPY_GENERATE_PAYROLL_CURRENT_MONTH")} type="button">
           <RefreshCw size={18} strokeWidth={2}/>{t("COPY_GENERATE_PAYROLL_2")}</button>
       </div>
-      <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+      <div className="relative rounded-2xl border border-border dark:border-amber-500/30 bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] shadow-card overflow-hidden">
+        <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#FACC15] via-[#FF5A1F] to-[#10B981] z-30" />
         <div className="max-h-[640px] overflow-auto">
           <ManagerInfrastructureResponsiveTable labels={[...PAYROLL_TABLE_HEADERS, t('COPY_ACTIONS_1')]}>
             <table className="w-full text-left border-collapse">
-              <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border text-text-secondary">
+              <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10 text-text-secondary dark:text-slate-300">
                 <tr>
                   {PAYROLL_TABLE_HEADERS.map((h, idx) => (
                     <th
                       key={h}
-                      className={`text-xs font-semibold uppercase tracking-wider px-3 py-3 whitespace-nowrap ${
-                        idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border text-left' : ['Base Salary', 'Net Payable', 'Paid Amount', 'Pending'].includes(h) ? 'text-right' : 'text-left'
+                      className={`text-xs font-bold uppercase tracking-wider px-3 py-3.5 whitespace-nowrap ${
+                        idx === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border dark:border-white/10 text-left' : ['Base Salary', 'Net Payable', 'Paid Amount', 'Pending'].includes(h) ? 'text-right' : 'text-left'
                       }`}
                     >
                       {h}

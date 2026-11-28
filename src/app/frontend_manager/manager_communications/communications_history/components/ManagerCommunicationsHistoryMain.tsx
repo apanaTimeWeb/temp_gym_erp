@@ -6,6 +6,6 @@ import ManagerCommunicationsCampaignsHistory from '@/app/frontend_manager/manage
 
 export default function CommunicationsHistoryMain() {
   const t = useTranslations('MANAGER_COMMUNICATIONS_CAMPAIGNS');
-  return <section className="min-h-full p-6 space-y-5"><h1 className="text-2xl font-bold text-text-primary">Communication History</h1><p className="text-sm text-text-secondary">Review sent campaigns, delivery status, channels, and history filters.</p>      <ManagerCommunicationsCampaignsKPIs />
+  return <section className="min-h-full p-4 sm:p-6 space-y-5"><h1 className="text-page-title font-extrabold text-text-primary">Communication History</h1><p className="text-sm text-text-secondary">Review sent campaigns, delivery status, channels, and history filters.</p>      <ManagerCommunicationsCampaignsKPIs />
       <ManagerCommunicationsCampaignsHistory /></section>;
 }

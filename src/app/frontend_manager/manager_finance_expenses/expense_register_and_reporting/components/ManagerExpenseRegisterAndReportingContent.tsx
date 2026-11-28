@@ -35,13 +35,13 @@ export function ManagerExpenseRegisterAndReportingContent() {
   return (
     <div className="min-h-full pb-10">
       
-      <div className="w-full space-y-6">
+      <div className="w-full p-4 sm:p-6 space-y-5">
         
-        <div className="flex flex-wrap gap-2 bg-card border border-border p-1 rounded-xl w-fit mb-4">
+        <div className="flex w-full sm:w-fit overflow-x-auto gap-1.5 bg-card dark:bg-[#0E1526] border border-border dark:border-white/15 p-1.5 rounded-2xl shadow-card">
           {expenseViews.map(({ id, label }, mapIndex) => (
-            <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", (`px-4 py-2 text-sm font-semibold rounded-lg motion-safe:transition-all ${
-                activeTab === id ? 'bg-primary text-on-primary shadow-card' : 'text-text-secondary hover:text-primary hover:bg-primary-subtle'
-              } motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110`)].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_expenses-expenses-managerexpensescontent-button-add-expense-${mapIndex}`}
+            <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", (`min-h-10 whitespace-nowrap px-4 py-2 text-sm font-semibold rounded-xl motion-safe:transition-all ${
+                activeTab === id ? 'bg-primary text-on-primary shadow-sm shadow-orange-500/25' : 'text-text-secondary hover:text-text-primary hover:bg-surface-hover'
+              } motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 cursor-pointer`)].filter((value) => Boolean(value)).join(' ') } data-testid={`manager_expenses-expenses-managerexpensescontent-button-add-expense-${mapIndex}`}
               key={id}
               onClick={() => setActiveTab(id)}
               

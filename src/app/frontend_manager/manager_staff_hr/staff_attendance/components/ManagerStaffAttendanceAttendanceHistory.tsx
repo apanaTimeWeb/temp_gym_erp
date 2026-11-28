@@ -106,13 +106,13 @@ export default function ManagerStaffPayrollAndAttendanceAttendanceHistory() {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-col gap-4 rounded-xl border border-border bg-card p-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
+      <div className="flex flex-col gap-4 rounded-2xl border border-border dark:border-indigo-500/25 bg-card dark:bg-gradient-to-r dark:from-[#121B2F] dark:via-[#151D30] dark:to-[#101726] p-4 sm:p-5 shadow-card sm:flex-row sm:items-end sm:justify-between">
+        <div className="min-w-0">
           <h2 className="text-lg font-bold text-text-primary">{t('COPY_TRAINER_ATTENDANCE_HISTORY')}</h2>
           <p className="text-sm text-text-secondary">{t('COPY_READ_ONLY_ATTENDANCE_RECORDS_SUPPLIED_MANAGER_STAFF_PAYROLL_AND_ATTENDANCE_ATTENDANCE_API')}</p>
         </div>
-        <div className="flex flex-wrap items-end gap-3 sm:w-auto">
-          <div className="min-w-56">
+        <div className="flex flex-wrap items-end gap-3 w-full sm:w-auto">
+          <div className="w-full sm:w-56">
             <label className="mb-1 block text-xs text-text-secondary" htmlFor="manager-hr-attendance-staff">{t('COPY_STAFF_MEMBER_3')}</label>
             <ManagerSearchableDropdown
               id="manager-hr-attendance-staff"
@@ -148,13 +148,14 @@ export default function ManagerStaffPayrollAndAttendanceAttendanceHistory() {
         </div>
       </div>
 
-      <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+      <div className="relative rounded-2xl border border-border dark:border-indigo-500/30 bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] shadow-card overflow-hidden">
+        <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#6366F1] via-[#38BDF8] to-[#FF5A1F] z-30" />
         <div className="max-h-[640px] overflow-auto">
           <ManagerInfrastructureResponsiveTable mobilePattern="horizontal-scroll" labels={[t('COPY_DATE_2'), t('COPY_STATUS_2'), t('COPY_CHECK'), t('COPY_CHECK_OUT')]}>
             <table className="w-full text-left border-collapse">
-              <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+              <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10">
                 <tr>
-                  <th className="sticky start-0 z-30 bg-surface-highlight border-e border-border p-4 text-xs font-semibold uppercase tracking-wide text-text-secondary">{t('COPY_DATE_2')}</th>
+                  <th className="sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border dark:border-white/10 p-4 text-xs font-bold uppercase tracking-wide text-text-secondary dark:text-slate-300">{t('COPY_DATE_2')}</th>
                   <th className="p-4 text-xs font-semibold uppercase tracking-wide text-text-secondary">{t('COPY_STATUS_2')}</th>
                   <th className="p-4 text-xs font-semibold uppercase tracking-wide text-text-secondary">{t('COPY_CHECK')}</th>
                   <th className="p-4 text-xs font-semibold uppercase tracking-wide text-text-secondary">{t('COPY_CHECK_OUT')}</th>

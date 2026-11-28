@@ -52,7 +52,7 @@ export default function ManagerWorkoutPlanManagementGrid() {
         {workouts.map((w, mapIndex) => (
           <div 
             key={w.id} 
-            className="border border-border rounded-xl p-4 hover:border-info hover:shadow-card motion-safe:transition-all bg-card motion-safe:duration-200 ease-in-out"
+            className="border border-border dark:border-white/15 rounded-2xl p-5 hover:border-sky-500/45 hover:shadow-card motion-safe:transition-all bg-card dark:bg-gradient-to-br dark:from-[#121B2F] dark:to-[#0C1220] motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-0.5"
           >
             <div className="flex items-start justify-between mb-3">
               <div data-testid={`manager_workout-workout-managerworkoutplansgrid-status-primary-${mapIndex}`} className="w-10 h-10 bg-info-bg rounded-xl flex items-center justify-center">
@@ -98,7 +98,7 @@ export default function ManagerWorkoutPlanManagementGrid() {
             
             <h3 className="font-semibold text-text-primary mb-3">{w.name}</h3>
             
-            <div className="grid grid-cols-3 gap-2 mb-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3">
               {[
                 { l: t('COPY_DAYS'), v: w.days }, 
                 { l: t('COPY_EXERCISES_1'), v: w.exercises }, 

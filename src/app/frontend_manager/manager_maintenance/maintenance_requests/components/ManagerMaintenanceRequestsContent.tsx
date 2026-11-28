@@ -68,7 +68,7 @@ export default function ManagerMaintenanceRequestsContent({ tickets, isPending, 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {tickets.map((ticket: MaintenanceTicket, mapIndex: number) => (
-        <article key={ticket.id} className="bg-card border border-border rounded-xl p-4 sm:p-5 shadow-card flex flex-col h-full motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1">
+        <article key={ticket.id} className="relative overflow-hidden bg-card dark:bg-gradient-to-br dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-white/15 hover:border-orange-500/40 rounded-2xl p-4 sm:p-5 shadow-card flex flex-col h-full motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-0.5">
           <div className="flex flex-wrap justify-between items-start gap-2 mb-3">
             <span className={`px-2.5 py-1 text-xs font-bold uppercase tracking-wider rounded border ${getMaintenancePriorityClass(ticket.priority)}`}>{ticket.priority}{t("COPY_PRIORITY_1")}</span>
             <div className="flex items-center gap-1.5 text-xs font-semibold px-2 py-1 bg-input rounded-md">

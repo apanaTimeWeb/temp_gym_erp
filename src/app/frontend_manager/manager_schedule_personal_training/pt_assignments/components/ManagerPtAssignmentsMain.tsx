@@ -61,11 +61,11 @@ export default function ManagerPtAssignmentsMain() {
   };
 
   return (
-    <div className="w-full space-y-6">
+    <div className="w-full p-4 sm:p-6 space-y-5">
       <ManagerPtAssignmentsAssignmentForm data-testid="manager_pt-managerptmain-managerptassignmentform-1" open={isAssignModalOpen} packages={packages} trainers={workload} members={existingMembers} saving={assignmentSaving} onClose={() => setIsAssignModalOpen(false)} onSubmit={handleCreateAssignment} />
       <ManagerPtAssignmentsScheduleSessionModal open={isScheduleModalOpen} assignments={assignments} saving={false} onClose={() => setIsScheduleModalOpen(false)} onSubmit={handleScheduleSession} />
       <ManagerPtAssignmentsToolbar data-testid="manager_pt-managerptmain-managerpttoolbar-2" title={t('COPY_PERSONAL_TRAINING')} subtitle={t('COPY_MANAGE_PT_PACKAGES_MONITOR_TRAINER_WORKLOAD_TRACK_SESSIONS')} actionLabel={t('COPY_ASSIGN_TRAINER_1')} onAssign={() => setIsAssignModalOpen(true)} onScheduleSession={() => setIsScheduleModalOpen(true)} />
-      <div className="w-full sm:max-w-sm"><label htmlFor="manager-pt-assignments-search" className="mb-1 block text-sm font-medium text-text-secondary">{t('TEXT_TAB_ASSIGNMENTS')}</label><input id="manager-pt-assignments-search" type="search" placeholder="Search..." value={search} onChange={(event) => setSearch(event.target.value)} className="min-h-11 w-full rounded-lg border border-border bg-input px-3 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" /></div>
+      <div className="w-full sm:max-w-sm"><label htmlFor="manager-pt-assignments-search" className="mb-1 block text-sm font-medium text-text-secondary">{t('TEXT_TAB_ASSIGNMENTS')}</label><input id="manager-pt-assignments-search" type="search" placeholder="Search..." value={search} onChange={(event) => setSearch(event.target.value)} className="min-h-11 w-full rounded-xl border border-border dark:border-white/15 bg-input dark:bg-[#0B1220] px-3.5 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" /></div>
       <ManagerPtAssignmentsTabBar data-testid="manager_pt-managerptmain-managerpttabbar-3" tabs={MANAGER_PT_ASSIGNMENTS_TAB_OPTIONS} activeTab={activeTab} onChange={setActiveTab} />
 
       {isPending && <ManagerPtAssignmentsLoadingSkeleton />}

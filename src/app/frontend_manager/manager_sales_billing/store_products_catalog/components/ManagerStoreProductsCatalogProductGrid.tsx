@@ -66,7 +66,7 @@ export default function ManagerStoreProductsCatalogProductGrid() {
         {products.map((p, mapIndex) => (
           <div 
             key={p.id} 
-            className="border border-border rounded-xl p-4 hover:shadow-card motion-safe:transition-all bg-card motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-1"
+            className="border border-border dark:border-white/15 rounded-2xl p-5 hover:border-amber-500/45 hover:shadow-card bg-card dark:bg-gradient-to-br dark:from-[#121B2F] dark:to-[#0C1220] motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:hover:-translate-y-0.5"
           >
             <div className="flex justify-between items-start mb-3">
               <div>

@@ -30,9 +30,9 @@ export default function ManagerSupportTicketsMain() {
   } = useManagerSupportTicketsLogic();
 
   return (
-    <div className="p-6 space-y-6 max-w-7xl mx-auto" data-testid="manager_support-main-container">
+    <div className="p-4 sm:p-6 space-y-5 max-w-7xl mx-auto" data-testid="manager_support-main-container">
       <div>
-        <h1 className="text-2xl font-bold text-text-primary">Help & Operations Support</h1>
+        <h1 className="text-page-title font-extrabold text-text-primary">Help & Operations Support</h1>
         <p className="text-sm text-text-secondary mt-1">Direct communication with Head Admin, management escalations, and technical issue tracking.</p>
       </div>
 

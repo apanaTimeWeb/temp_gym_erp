@@ -18,19 +18,19 @@ export default function ManagerReferralsRewardsMain() {
   return (
     <div className="min-h-full pb-10 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-300">
       {/* Header */}
-      <div className="px-6 pt-6 pb-0 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="px-4 sm:px-6 pt-4 sm:pt-6 pb-0 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-text-primary">{t("COPY_REFERRALS_REWARDS")}</h1>
+          <h1 className="text-page-title font-extrabold text-text-primary">{t("COPY_REFERRALS_REWARDS")}</h1>
           <p className="text-sm text-text-secondary mt-0.5">{t("COPY_TRACK_MEMBER_WORD_MOUTH_ACQUISITIONS_MANAGE_INCENTIVES")}</p>
         </div>
-        <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg text-sm font-bold hover:bg-primary-hover motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-1 focus-visible:ring-offset-page motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_referrals-manager-referrals-main-button-add-referral"
+        <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-[#FF5A1F] to-[#F97316] text-white rounded-xl text-sm font-semibold hover:brightness-110 shadow-[0_4px_14px_rgba(255,90,31,0.3)] motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 cursor-pointer w-full md:w-auto"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_referrals-manager-referrals-main-button-add-referral"
           onClick={() => setIsAddModalOpen(true)}
           
          type="button">
           <Plus size={18} strokeWidth={2}/>{t("COPY_LOG_NEW_REFERRAL_2")}</button>
       </div>
 
-      <div className="p-6 space-y-6">
+      <div className="p-4 sm:p-6 space-y-5">
         <ManagerReferralsRewardsKPIs />
         <ManagerReferralsRewardsTable />
       </div>

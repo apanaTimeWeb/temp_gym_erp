@@ -33,21 +33,21 @@ export default function ManagerSalesOverviewToolbar() {
   useManagerInfrastructureDebouncedValueCommit(localSearch, search, setSearch, 300);
 
   return (
-  <div className="bg-card rounded-xl shadow-card border border-border p-4 flex flex-wrap gap-3 items-center justify-between mb-5">
+  <div className="bg-card dark:bg-gradient-to-r dark:from-[#121B2F] dark:via-[#151D30] dark:to-[#101726] rounded-2xl shadow-card border border-border dark:border-amber-500/25 p-4 flex flex-col sm:flex-row flex-wrap gap-3 items-stretch sm:items-center justify-between mb-5">
   <div className="flex gap-2 flex-wrap items-center">
     <ManagerSalesOverviewDateFilterDropdown  data-testid="manager_sales-managersalestoolbar-sales-date-filter-dropdown-1"/>
   </div>
-  <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-  <div className="relative">
-    <Search size={18} strokeWidth={2} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary"/>
-    <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "pl-9 pr-3 py-1.5 border border-border rounded-lg text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring w-40 sm:w-full sm:w-64  bg-input text-text-primary"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_sales-manager-sales-toolbar-input-value" 
+  <div className="flex flex-col sm:flex-row gap-2.5 w-full sm:w-auto">
+  <div className="relative w-full sm:w-64">
+    <Search size={17} strokeWidth={2.2} className="absolute left-3 top-1/2 -translate-y-1/2 text-amber-400 pointer-events-none"/>
+    <input className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 pl-9 pr-3 py-2 border border-border dark:border-white/15 rounded-xl text-sm w-full bg-input dark:bg-[#0B1220] text-text-primary placeholder:text-secondary"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_sales-manager-sales-toolbar-input-value" 
       value={localSearch} 
       onChange={e => setLocalSearch(e.target.value)} 
       placeholder={t("COPY_SEARCH")} 
       
      aria-label={t("COPY_SEARCH")}/>
   </div>
-  <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "flex items-center gap-1.5 px-3 py-1.5 text-sm border border-border rounded-lg hover:bg-primary-subtle text-text-secondary motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_sales-manager-sales-toolbar-button-export" 
+  <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-sm border border-teal-500/35 bg-teal-500/15 hover:bg-teal-500/25 rounded-xl text-teal-600 dark:text-teal-300 font-semibold motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 cursor-pointer"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_sales-manager-sales-toolbar-button-export" 
     onClick={() => {
       let csv = '';
       let filename = 'sales_report.csv';

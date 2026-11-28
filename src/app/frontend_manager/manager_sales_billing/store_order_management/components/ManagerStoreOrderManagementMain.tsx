@@ -2,4 +2,4 @@
 "use client";
 import { useTranslations } from 'next-intl';
 import ManagerStoreOrderManagementOrdersView from '@/app/frontend_manager/manager_sales_billing/store_order_management/components/ManagerStoreOrderManagementOrdersView';
-export default function StoreOrderManagementMain() { const t=useTranslations('MANAGER_STORE_PRODUCTS'); return <section className="min-h-full p-6 space-y-5"><h1 className="text-2xl font-bold text-text-primary">Store Order Management</h1><ManagerStoreOrderManagementOrdersView /></section>; }
+export default function StoreOrderManagementMain() { const t=useTranslations('MANAGER_STORE_PRODUCTS'); return <section className="min-h-full p-4 sm:p-6 space-y-5"><h1 className="text-page-title font-extrabold text-text-primary">Store Order Management</h1><ManagerStoreOrderManagementOrdersView /></section>; }

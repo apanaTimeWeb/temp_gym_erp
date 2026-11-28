@@ -5,5 +5,5 @@ import ManagerCommunicationsCampaignsAutomations from '@/app/frontend_manager/ma
 
 export default function CommunicationsAutomationsMain() {
   const t = useTranslations('MANAGER_COMMUNICATIONS_CAMPAIGNS');
-  return <section className="min-h-full p-6 space-y-5"><h1 className="text-2xl font-bold text-text-primary">Communication Automations</h1><p className="text-sm text-text-secondary">Inspect and update the manager's communication automation rules.</p>      <ManagerCommunicationsCampaignsAutomations /></section>;
+  return <section className="min-h-full p-4 sm:p-6 space-y-5"><h1 className="text-page-title font-extrabold text-text-primary">Communication Automations</h1><p className="text-sm text-text-secondary">Inspect and update the manager's communication automation rules.</p>      <ManagerCommunicationsCampaignsAutomations /></section>;
 }

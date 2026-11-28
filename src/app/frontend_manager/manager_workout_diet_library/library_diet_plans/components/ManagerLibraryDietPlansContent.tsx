@@ -20,12 +20,13 @@ export function ManagerLibraryDietPlansContent() {
  const { view, toast, hideToast } = useManagerLibraryDietPlansLogic();
 
  return (
- <div className="min-h-full pb-10 bg-page text-text-primary">
+ <div className="min-h-full pb-10 bg-page trainer-aurora-canvas text-text-primary">
  
- <div className="p-6 space-y-5">
+ <div className="p-4 sm:p-6 space-y-5">
  <ManagerLibraryDietPlansTabs  data-testid="manager_library-managerlibrarycontent-library-tabs-1"/>
  
- <div className="overflow-hidden rounded-xl border border-border bg-card p-5 shadow-card">
+ <div className="relative overflow-hidden rounded-2xl border border-border dark:border-lime-500/25 bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] p-4 sm:p-5 shadow-card">
+   <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#84CC16] via-[#10B981] to-[#38BDF8] z-30" />
    {view === 'diet' ? (
      <ManagerLibraryDietPlansDietView />
    ) : view === 'exercises' ? (

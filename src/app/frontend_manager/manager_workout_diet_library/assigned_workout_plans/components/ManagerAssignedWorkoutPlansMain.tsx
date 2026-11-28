@@ -31,15 +31,16 @@ export default function AssignedWorkoutPlansMain() {
   const labels = [t('COPY_MEMBER_NAME'), t('COPY_ASSIGNED_PLAN'), t('COPY_ASSIGNED'), t('COPY_START_DATE')];
 
   return (
-    <section className="p-6 space-y-4">
-      <h1 className="text-2xl font-bold text-text-primary">{t('COPY_ASSIGNED_WORKOUT_PLANS')}</h1>
-      <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+    <section className="p-4 sm:p-6 space-y-5">
+      <h1 className="text-page-title font-extrabold text-text-primary">{t('COPY_ASSIGNED_WORKOUT_PLANS')}</h1>
+      <div className="relative rounded-2xl border border-border dark:border-rose-500/30 bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] shadow-card overflow-hidden">
+        <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#F43F5E] via-[#FB923C] to-[#38BDF8] z-30" />
         <div className="max-h-[640px] overflow-auto">
           <ManagerInfrastructureResponsiveTable mobilePattern="horizontal-scroll" labels={labels}>
             <table className="w-full text-left">
-              <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+              <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10">
                 <tr>
-                  <th className="sticky start-0 z-30 bg-surface-highlight border-e border-border px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-secondary">{t('COPY_MEMBER_NAME')}</th>
+                  <th className="sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border dark:border-white/10 px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-text-secondary dark:text-slate-300">{t('COPY_MEMBER_NAME')}</th>
                   <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-secondary">{t('COPY_ASSIGNED_PLAN')}</th>
                   <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-secondary">{t('COPY_ASSIGNED')}</th>
                   <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-secondary">{t('COPY_START_DATE')}</th>

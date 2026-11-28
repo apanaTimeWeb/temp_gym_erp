@@ -115,17 +115,18 @@ export default function ManagerStoreOrderManagementOrderTable() {
     <div className="flex flex-col h-full min-h-96 print:hidden gap-3">
       <label htmlFor="manager-store-orders-search" className="sr-only">{t('COPY_SEARCH')}</label>
       <input id="manager-store-orders-search" type="search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder={t('COPY_SEARCH')} className="min-h-11 w-full max-w-sm rounded-lg border border-border bg-input px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" />
-      <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
+      <div className="relative rounded-2xl border border-border dark:border-amber-500/30 bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] shadow-card overflow-hidden">
+        <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#F59E0B] via-[#EC4899] to-[#FF5A1F] z-30" />
         <div className="max-h-[640px] overflow-auto">
           <ManagerInfrastructureResponsiveTable labels={[t('COPY_ORDER_ID'), t('COPY_TOTAL_1'), t('COPY_METHOD'), t('COPY_STATUS'), t('COPY_DATE_2'), t('COPY_RECEIPT')]}>
             <table className="w-full text-left border-collapse">
-              <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+              <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10">
                 <tr>
                   {[t('COPY_ORDER_ID'), t('COPY_TOTAL_1'), t('COPY_METHOD'), t('COPY_STATUS'), t('COPY_DATE_2'), t('COPY_RECEIPT')].map((h, idx) => (
                     <th
                       key={h}
-                      className={`text-left text-xs font-semibold text-text-secondary uppercase tracking-wider px-4 py-3 whitespace-nowrap ${
-                        idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                      className={`text-left text-xs font-bold text-text-secondary dark:text-slate-300 uppercase tracking-wider px-4 py-3.5 whitespace-nowrap ${
+                        idx === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border dark:border-white/10' : ''
                       }`}
                     >
                       {h}

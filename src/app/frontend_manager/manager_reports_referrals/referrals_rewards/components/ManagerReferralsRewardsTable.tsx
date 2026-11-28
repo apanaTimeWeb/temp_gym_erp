@@ -39,7 +39,8 @@ export default function ManagerReferralsRewardsTable() {
   } = useManagerReferralsRewardsLogic();
 
   return (
-    <div className="bg-card border border-border rounded-2xl flex flex-col min-h-96 shadow-card overflow-hidden">
+    <div className="relative bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-amber-500/30 rounded-2xl flex flex-col min-h-96 shadow-card overflow-hidden">
+      <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#F59E0B] via-[#2DD4BF] to-[#FF5A1F] z-30" />
       
       {/* Header & Filters */}
       <div className="p-4 border-b border-border flex flex-col sm:flex-row justify-between gap-4 shrink-0 bg-overlay">
@@ -80,9 +81,9 @@ export default function ManagerReferralsRewardsTable() {
         ); } return (
           <ManagerInfrastructureResponsiveTable labels={[t('COPY_REFERRER_MEMBER'), t('COPY_REFEREE_INQUIRY'), t('COPY_DATE'), t('COPY_INQUIRY_STATUS'), t('COPY_REWARD_STATUS'), t('COPY_ACTION')]}>
             <table className="w-full text-left text-sm whitespace-nowrap border-collapse">
-              <thead className="sticky top-0 bg-surface-highlight border-b border-border text-text-secondary font-semibold text-xs uppercase z-20">
+              <thead className="sticky top-0 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10 text-text-secondary dark:text-slate-300 font-bold text-xs uppercase z-20">
                 <tr>
-                  <th className="sticky start-0 z-30 bg-surface-highlight border-e border-border px-6 py-4">{t("COPY_REFERRER_MEMBER")}</th>
+                  <th className="sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border dark:border-white/10 px-6 py-4">{t("COPY_REFERRER_MEMBER")}</th>
                   <th className="px-6 py-4">{t("COPY_REFEREE_INQUIRY")}</th>
                   <th className="px-6 py-4">{t("COPY_DATE")}</th>
                   <th className="px-6 py-4">{t("COPY_INQUIRY_STATUS")}</th>

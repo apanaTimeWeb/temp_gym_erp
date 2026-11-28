@@ -7,5 +7,5 @@ import { ManagerNotificationsInboxContent } from '@/app/frontend_manager/manager
 /** @description Orchestrator for the Notifications module. @dependencies Local dependencies are owned by this feature module (1 documented module/import dependencies).. @edge-case Preserves the documented interaction and boundary states. */
 export default function ManagerNotificationsInboxMain() {
   const t = useTranslations('MANAGER_NOTIFICATIONS_INBOX');
-  return <section className="min-h-full p-6 space-y-5"><h1 className="text-2xl font-bold text-text-primary">{t('COPY_NOTIFICATIONS')}</h1><ManagerNotificationsInboxContent /></section>;
+  return <section className="min-h-full p-4 sm:p-6 space-y-5"><h1 className="text-page-title font-extrabold text-text-primary">{t('COPY_NOTIFICATIONS')}</h1><ManagerNotificationsInboxContent /></section>;
 }

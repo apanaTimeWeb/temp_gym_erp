@@ -16,17 +16,18 @@ const TABLE_COLUMN_COUNT = 7;
 
 export default function ManagerSupportTicketsTable({ tickets, onSelectTicket }: Props) {
   return (
-    <div className="bg-card border border-border rounded-2xl shadow-card overflow-hidden" data-testid="manager_support-table-container">
+    <div className="relative bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-fuchsia-500/30 rounded-2xl shadow-card overflow-hidden" data-testid="manager_support-table-container">
+      <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#D946EF] via-[#38BDF8] to-[#FF5A1F] z-30" />
       <div className="max-h-[640px] overflow-auto">
         <ManagerInfrastructureResponsiveTable mobilePattern="horizontal-scroll" labels={TABLE_HEADERS}>
           <table className="w-full text-left border-collapse">
-            <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+            <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10">
               <tr>
                 {TABLE_HEADERS.map((h, idx) => (
                   <th
                     key={h}
-                    className={`px-5 py-3 text-xs font-semibold text-text-secondary uppercase tracking-wider whitespace-nowrap ${
-                      idx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                    className={`px-5 py-3.5 text-xs font-bold text-text-secondary dark:text-slate-300 uppercase tracking-wider whitespace-nowrap ${
+                      idx === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border dark:border-white/10' : ''
                     }`}
                   >
                     {h}

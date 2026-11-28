@@ -21,20 +21,20 @@ export default function StaffDirectoryMain() {
 
   return (
     <ManagerStaffDirectoryProvider value={directory}>
-      <section className="min-h-full space-y-5 p-6">
+      <section className="min-h-full space-y-5 p-4 sm:p-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <h1 className="text-2xl font-bold text-text-primary">{t('COPY_HR_WORKSPACE')}</h1>
+          <h1 className="text-page-title font-extrabold text-text-primary">{t('COPY_HR_WORKSPACE')}</h1>
           <button
             type="button"
             onClick={directory.openAdd}
-            className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-on-primary hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+            className="inline-flex min-h-11 items-center justify-center rounded-xl bg-gradient-to-r from-[#FF5A1F] to-[#F97316] px-5 py-2.5 text-sm font-semibold text-white hover:brightness-110 shadow-[0_4px_14px_rgba(255,90,31,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page cursor-pointer w-full sm:w-auto"
             data-testid="manager_hr-staff-directory-add-staff"
           >
             {t('TEXT_HR_ADD_STAFF')}
           </button>
         </div>
 
-        <div className="grid gap-3 rounded-xl border border-border bg-card p-4 sm:grid-cols-[minmax(0,1fr)_minmax(12rem,0.45fr)]">
+        <div className="grid gap-3 rounded-2xl border border-border dark:border-indigo-500/25 bg-card dark:bg-gradient-to-r dark:from-[#121B2F] dark:via-[#151D30] dark:to-[#101726] p-4 shadow-card sm:grid-cols-[minmax(0,1fr)_minmax(12rem,0.45fr)]">
           <div>
             <label
               htmlFor="manager-hr-staff-directory-search"

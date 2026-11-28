@@ -25,16 +25,17 @@ export default function ManagerGrievanceResolutionMain() {
     <div className="min-h-full pb-10">
       
       <div className="p-4 sm:p-6 space-y-5">
-        <div className="flex justify-end">
-          <button data-testid="manager_grievance-managergrievancemain-button-log-complaint" type="button" onClick={() => setIsModalOpen(true)} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary motion-safe:transition-all motion-safe:duration-200 motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <h1 className="text-page-title font-extrabold text-text-primary">{t("COPY_GRIEVANCES")}</h1>
+          <button data-testid="manager_grievance-managergrievancemain-button-log-complaint" type="button" onClick={() => setIsModalOpen(true)} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#FF5A1F] to-[#F97316] px-4 py-2 text-sm font-semibold text-white hover:brightness-110 shadow-[0_4px_14px_rgba(255,90,31,0.3)] motion-safe:transition-all motion-safe:duration-200 motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer w-full sm:w-auto">
             <Plus size={18} strokeWidth={2} aria-hidden="true" />{t("COPY_LOG_COMPLAINT")}
           </button>
         </div>
-        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 bg-card p-4 rounded-xl border border-border shadow-card flex-wrap">
-          <div className="relative flex-1 min-w-[240px]">
-            <Search size={18} strokeWidth={2} aria-hidden="true" className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary"/>
+        <div className="relative z-30 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 bg-card dark:bg-gradient-to-r dark:from-[#121B2F] dark:via-[#151D30] dark:to-[#101726] p-4 rounded-2xl border border-border dark:border-rose-500/25 shadow-card flex-wrap">
+          <div className="relative flex-1 min-w-0">
+            <Search size={17} strokeWidth={2.2} aria-hidden="true" className="absolute left-3 top-1/2 -translate-y-1/2 text-rose-400 pointer-events-none"/>
             <label htmlFor="manager-grievance-search" className="sr-only">{t("COPY_SEARCH_COMPLAINTS")}</label>
-            <input className="w-full min-h-11 pl-10 pr-4 py-2 bg-input border border-border rounded-lg text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="manager_grievance-manager-grievance-main-manager-grievance-search" id="manager-grievance-search" type="search" placeholder={t("COPY_SEARCH_MEMBER_NAME_ISSUE")} value={search} onChange={(event) => setSearch(event.target.value)} />
+            <input className="w-full min-h-11 pl-10 pr-4 py-2 bg-input dark:bg-[#0B1220] border border-border dark:border-white/15 rounded-xl text-sm text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="manager_grievance-manager-grievance-main-manager-grievance-search" id="manager-grievance-search" type="search" placeholder={t("COPY_SEARCH_MEMBER_NAME_ISSUE")} value={search} onChange={(event) => setSearch(event.target.value)} />
           </div>
           <div className="w-full sm:w-44">
             <ManagerSearchableDropdown

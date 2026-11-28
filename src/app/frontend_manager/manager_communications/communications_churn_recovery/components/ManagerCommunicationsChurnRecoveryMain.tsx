@@ -7,5 +7,5 @@ export default function CommunicationsChurnRecoveryMain() {
   const t = useTranslations('MANAGER_COMMUNICATIONS_CAMPAIGNS');
   const title = t.has('COPY_CHURN_RECOVERY_TITLE') ? t('COPY_CHURN_RECOVERY_TITLE') : 'Churn Recovery';
   const description = t.has('COPY_CHURN_RECOVERY_DESCRIPTION') ? t('COPY_CHURN_RECOVERY_DESCRIPTION') : 'Identify churn-risk members and manage win-back outreach.';
-  return <section className="min-h-full p-6 space-y-5"><h1 className="text-2xl font-bold text-text-primary">{title}</h1><p className="text-sm text-text-secondary">{description}</p><ManagerCommunicationsCampaignsChurnRecoveryTab /></section>;
+  return <section className="min-h-full p-4 sm:p-6 space-y-5"><h1 className="text-page-title font-extrabold text-text-primary">{title}</h1><p className="text-sm text-text-secondary">{description}</p><ManagerCommunicationsCampaignsChurnRecoveryTab /></section>;
 }

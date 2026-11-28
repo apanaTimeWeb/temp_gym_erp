@@ -33,12 +33,12 @@ export function ManagerReportsOverviewContent() {
 
   return (
     <div className="min-h-full pb-10">
-      <div className="p-6 space-y-6">
+      <div className="p-4 sm:p-6 space-y-5">
         <div>
-          <h1 className="text-2xl font-bold text-text-primary">{t('COPY_REPORTS_ANALYTICS')}</h1>
+          <h1 className="text-page-title font-extrabold text-text-primary">{t('COPY_REPORTS_ANALYTICS')}</h1>
         </div>
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <div className="flex gap-1 bg-input rounded-xl p-1 overflow-x-auto" role="tablist" aria-label={t('COPY_REPORTS_ANALYTICS')}>
+        <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+          <div className="flex gap-1.5 bg-card dark:bg-[#0E1526] border border-border dark:border-white/15 rounded-2xl p-1.5 w-full lg:w-auto max-w-full overflow-x-auto shadow-card" role="tablist" aria-label={t('COPY_REPORTS_ANALYTICS')}>
             {REPORT_TABS.map((reportTab) => {
               const selected = tab === reportTab;
               const tabId = `manager-reports-tab-${reportTab.toLowerCase()}`;
@@ -66,7 +66,7 @@ export function ManagerReportsOverviewContent() {
                     nextElement?.focus();
                     setTab(nextTab);
                   }}
-                  className={`min-h-11 px-4 py-2 text-sm font-medium rounded-lg motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page hover:brightness-110 whitespace-nowrap ${selected ? 'bg-card text-primary shadow-card' : 'text-text-secondary hover:text-primary'}`}
+                  className={`min-h-10 px-4 py-2 text-sm font-semibold rounded-xl motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page whitespace-nowrap cursor-pointer ${selected ? 'bg-primary text-on-primary shadow-sm shadow-orange-500/25' : 'text-text-secondary hover:text-text-primary hover:bg-surface-hover'}`}
                 >
                   {REPORT_TAB_LABELS[reportTab][isHindi ? 'hi' : 'en']}
                 </button>

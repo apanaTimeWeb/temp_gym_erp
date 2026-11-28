@@ -2,4 +2,4 @@
 "use client";
 import { useTranslations } from 'next-intl';
 import ManagerStaffPayrollAndAttendanceAttendanceHistory from '@/app/frontend_manager/manager_staff_hr/staff_attendance/components/ManagerStaffAttendanceAttendanceHistory';
-export default function StaffAttendanceMain() { const t = useTranslations('MANAGER_STAFF_PAYROLL_AND_ATTENDANCE'); return <section className="min-h-full p-6 space-y-5"><h1 className="text-2xl font-bold text-text-primary">Staff Attendance</h1><ManagerStaffPayrollAndAttendanceAttendanceHistory /></section>; }
+export default function StaffAttendanceMain() { const t = useTranslations('MANAGER_STAFF_PAYROLL_AND_ATTENDANCE'); return <section className="min-h-full p-4 sm:p-6 space-y-5"><h1 className="text-page-title font-extrabold text-text-primary">Staff Attendance</h1><ManagerStaffPayrollAndAttendanceAttendanceHistory /></section>; }

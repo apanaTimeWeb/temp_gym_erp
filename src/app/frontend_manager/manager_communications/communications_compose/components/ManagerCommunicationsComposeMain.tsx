@@ -5,5 +5,5 @@ import ManagerCommunicationsCampaignsComposer from '@/app/frontend_manager/manag
 
 export default function CommunicationsComposeMain() {
   const t = useTranslations('MANAGER_COMMUNICATIONS_CAMPAIGNS');
-  return <section className="min-h-full p-6 space-y-5"><h1 className="text-2xl font-bold text-text-primary">Compose Messages</h1><p className="text-sm text-text-secondary">Create and send targeted WhatsApp or email campaigns to a selected member segment.</p>      <ManagerCommunicationsCampaignsComposer /></section>;
+  return <section className="min-h-full p-4 sm:p-6 space-y-5"><h1 className="text-page-title font-extrabold text-text-primary">Compose Messages</h1><p className="text-sm text-text-secondary">Create and send targeted WhatsApp or email campaigns to a selected member segment.</p>      <ManagerCommunicationsCampaignsComposer /></section>;
 }

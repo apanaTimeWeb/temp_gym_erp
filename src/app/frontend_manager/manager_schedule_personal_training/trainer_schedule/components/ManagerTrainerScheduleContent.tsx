@@ -52,26 +52,26 @@ export function ManagerTrainerScheduleContent() {
     <div className="min-h-full pb-10">
       
 
-      <div className="p-6 space-y-5">
-        <h1 className="text-2xl font-bold text-text-primary">{t('COPY_TRAINER_SCHEDULE_1')}</h1>
+      <div className="p-4 sm:p-6 space-y-5">
+        <h1 className="text-page-title font-extrabold text-text-primary">{t('COPY_TRAINER_SCHEDULE_1')}</h1>
         <ManagerTrainerScheduleKPIs />
 
         {/* Toolbar */}
-        <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
+        <div className="flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between bg-card dark:bg-gradient-to-r dark:from-[#121B2F] dark:via-[#151D30] dark:to-[#101726] p-4 rounded-2xl border border-border dark:border-cyan-500/25 shadow-card">
           {/* Search */}
-          <div className="relative w-full sm:w-72">
-            <Search size={18} strokeWidth={2} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
+          <div className="relative w-full lg:w-72 shrink-0">
+            <Search size={17} strokeWidth={2.2} className="absolute left-3 top-1/2 -translate-y-1/2 text-cyan-400 pointer-events-none" />
             <input data-testid="manager_schedule-manager-schedule-content-input-value"
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder={t("COPY_SEARCH_TRAINER")}
-              className="w-full pl-9 pr-3 py-2 text-sm bg-input border border-border rounded-lg text-text-primary placeholder:text-text-secondary focus-visible:outline-none focus-visible:border-primary"
+              className="w-full min-h-11 pl-9 pr-3 py-2 text-sm bg-input dark:bg-[#0B1220] border border-border dark:border-white/15 rounded-xl text-text-primary placeholder:text-text-secondary focus-visible:outline-none focus-visible:border-primary"
              aria-label={t("COPY_SEARCH_TRAINER")}/>
           </div>
 
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-2 flex-wrap min-w-0">
             {/* Day filter */}
-            <div role="group" aria-label={t('COPY_DAY')} className="flex items-center gap-1 bg-input border border-border rounded-lg p-1">
+            <div role="group" aria-label={t('COPY_DAY')} className="flex items-center gap-1 bg-input dark:bg-[#0B1220] border border-border rounded-xl p-1 max-w-full overflow-x-auto">
               <button data-testid="manager_schedule-manager-schedule-content-button-action"
                 aria-label={t("COPY_ALL")}
                 onClick={() => setSelectedDay('All')}

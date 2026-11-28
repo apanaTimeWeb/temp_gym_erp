@@ -9,8 +9,8 @@ import ManagerWorkoutPlanManagementModal from '@/app/frontend_manager/manager_wo
 export default function WorkoutPlanManagementMain() {
   const t = useTranslations('MANAGER_WORKOUT_PLANS');
   return (
-    <section className="min-h-full space-y-5 p-6">
-      <h1 className="text-2xl font-bold text-text-primary">{t('COPY_WORKOUT_MANAGEMENT')}</h1>
+    <section className="min-h-full space-y-5 p-4 sm:p-6">
+      <h1 className="text-page-title font-extrabold text-text-primary">{t('COPY_WORKOUT_MANAGEMENT')}</h1>
       <ManagerWorkoutPlanManagementBanner />
       <ManagerWorkoutPlanManagementToolbar />
       <ManagerWorkoutPlanManagementGrid />
