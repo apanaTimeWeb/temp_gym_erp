@@ -56,7 +56,7 @@ export default function TrainerOperationsMemberAttendanceMembersMain() {
         onOpenModal={model.openModal}
         isPending={model.markAttendancePending}
       />
-      <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
+      <section className="rounded-xl border border-border bg-card shadow-card">
         <TrainerOperationsMemberAttendanceMembersToolbar model={model} onExportCsv={handleExportCsv} />
         <TrainerAttendanceMembersView model={model} />
       </section>

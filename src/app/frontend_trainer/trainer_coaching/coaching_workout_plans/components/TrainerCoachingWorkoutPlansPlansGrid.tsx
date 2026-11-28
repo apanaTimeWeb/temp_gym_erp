@@ -30,6 +30,7 @@ import TrainerWorkoutLoadingSkeleton from '@/app/frontend_trainer/trainer_coachi
 
 import TrainerWorkoutPlanCard from '@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/components/TrainerCoachingWorkoutPlansPlanCard';
 import TrainerWorkoutAssignModal from '@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/components/TrainerCoachingWorkoutPlansAssignModal';
+import TrainerCoachingWorkoutPlansQuickViewModal from '@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/components/TrainerCoachingWorkoutPlansQuickViewModal';
 import type { TrainerWorkoutWorkout } from '@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/types/TrainerCoachingWorkoutPlansTypes';
 import { apiFetch } from '@/lib/api';
 
@@ -79,6 +80,7 @@ export default function TrainerWorkoutPlansGrid() {
   const actionKeys = useTrainerInfrastructureIdempotencyKey();
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [assigningPlan, setAssigningPlan] = useState<TrainerWorkoutWorkout | null>(null);
+  const [quickViewPlan, setQuickViewPlan] = useState<TrainerWorkoutWorkout | null>(null);
   const [isBatchAssigning, setIsBatchAssigning] = useState(false);
   const workouts = data?.workouts ?? [];
   const totalWorkouts = data?.total ?? 0;
@@ -133,6 +135,7 @@ export default function TrainerWorkoutPlansGrid() {
           <TrainerWorkoutPlanCard
             key={workout.id}
             plan={workout}
+            onView={() => setQuickViewPlan(workout)}
             onAssign={() => setAssigningPlan(workout)}
             onEdit={() => { setEditWorkoutId(workout.id); setShowWkModal(true); }}
             onDelete={() => void handleDelete(workout.id, workout.name)}
@@ -160,6 +163,15 @@ export default function TrainerWorkoutPlansGrid() {
         onClose={() => setAssigningPlan(null)}
         onSubmit={handleBatchAssign}
         isSaving={isBatchAssigning}
+      />
+      <TrainerCoachingWorkoutPlansQuickViewModal
+        plan={quickViewPlan}
+        onClose={() => setQuickViewPlan(null)}
+        onAssign={(p) => setAssigningPlan(p)}
+        onEdit={(id) => {
+          setEditWorkoutId(id);
+          setShowWkModal(true);
+        }}
       />
     </div>
   );

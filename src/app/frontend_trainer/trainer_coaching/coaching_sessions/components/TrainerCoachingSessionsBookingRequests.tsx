@@ -26,13 +26,13 @@ export function TrainerCoachingSessionsBookingRequests({
 
   return (
     <div className="bg-orange-500/10 border border-orange-500/25 rounded-2xl p-5 space-y-4">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <span className="p-1.5 rounded-lg border border-orange-500/30 bg-orange-500/15 text-orange-500">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex flex-wrap items-center gap-2.5 min-w-0">
+          <span className="p-1.5 rounded-lg border border-orange-500/30 bg-orange-500/15 text-orange-500 shrink-0">
             <CalendarCheck size={18} />
           </span>
           <h2 className="font-bold text-text-primary text-base">Client Booking Requests</h2>
-          <span className="bg-primary text-on-primary text-xs font-bold px-2.5 py-0.5 rounded-full">
+          <span className="bg-primary text-on-primary text-xs font-bold px-2.5 py-0.5 rounded-full shrink-0">
             {bookingRequests.length} Pending
           </span>
         </div>
@@ -49,19 +49,19 @@ export function TrainerCoachingSessionsBookingRequests({
             data-testid={`booking-request-card-${req.id}`}
           >
             <div>
-              <div className="flex items-start justify-between gap-2">
-                <div className="flex items-center gap-2">
-                  <div className="p-2 rounded-lg border border-sky-500/30 bg-sky-500/15 text-sky-500">
+              <div className="flex flex-wrap items-start justify-between gap-2">
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="p-2 rounded-lg border border-sky-500/30 bg-sky-500/15 text-sky-500 shrink-0">
                     <User size={16} />
                   </div>
-                  <div>
-                    <h3 className="font-bold text-text-primary text-sm">{req.clientName}</h3>
+                  <div className="min-w-0">
+                    <h3 className="font-bold text-text-primary text-sm truncate">{req.clientName}</h3>
                     <p className="text-xs text-secondary flex items-center gap-1.5 mt-0.5">
-                      <Clock size={12} className="text-amber-500" /> {req.preferredDate} • {req.preferredTime}
+                      <Clock size={12} className="text-amber-500 shrink-0" /> <span className="truncate">{req.preferredDate} • {req.preferredTime}</span>
                     </p>
                   </div>
                 </div>
-                <span className="inline-flex items-center gap-1 text-[11px] font-semibold bg-purple-500/10 text-purple-600 dark:text-purple-300 px-2.5 py-0.5 rounded-full border border-purple-500/25">
+                <span className="inline-flex items-center gap-1 text-[11px] font-semibold bg-purple-500/10 text-purple-600 dark:text-purple-300 px-2.5 py-0.5 rounded-full border border-purple-500/25 shrink-0">
                   <Dumbbell size={10} /> {req.sessionType}
                 </span>
               </div>

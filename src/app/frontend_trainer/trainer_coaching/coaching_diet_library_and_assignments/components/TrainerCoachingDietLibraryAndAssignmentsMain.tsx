@@ -2,6 +2,7 @@
 // RESPONSIBILITY: Orchestrates the Trainer Diet Library query state and feature-local presentation components.
 // DATA FLOW: URL filter state → useTrainerLibraryLogic → TanStack Query/API → TrainerLibraryDietGrid/TrainerLibraryTabs.
 import { useState } from 'react';
+import { X } from 'lucide-react';
 
 import type { TrainerLibraryDietPlan } from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/types/TrainerCoachingDietLibraryAndAssignmentsTypes';
 
@@ -43,6 +44,13 @@ export default function TrainerLibraryMain() {
   const assignment = useTrainerLibraryAssignment();
   const [showAssignModal, setShowAssignModal] = useState(false);
   const [assignmentPlan, setAssignmentPlan] = useState<TrainerLibraryDietPlan | null>(null);
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+  const showFeedback = (msg: string) => {
+    setFeedbackMessage(msg);
+    setTimeout(() => {
+      setFeedbackMessage((curr) => (curr === msg ? null : curr));
+    }, 3500);
+  };
   const {
     dietPlans,
     totalDietPlans,
@@ -50,6 +58,9 @@ export default function TrainerLibraryMain() {
     isError,
     search,
     filterGoal,
+    sortBy,
+    sortDirection,
+    setSort,
     currentPage,
     setSearch,
     setFilterGoal,
@@ -82,9 +93,20 @@ export default function TrainerLibraryMain() {
           setSearch={setSearch}
           filterGoal={filterGoal}
           setFilterGoal={setFilterGoal}
+          sortBy={sortBy}
+          sortDirection={sortDirection}
+          onSortChange={setSort}
           onRefresh={loadAll}
           onCreate={openCreateDiet}
         />
+        {feedbackMessage && (
+          <div role="status" className="rounded-xl border border-emerald-500/35 bg-emerald-500/10 px-4 py-2.5 text-sm font-medium text-emerald-600 dark:text-emerald-300 flex items-center justify-between gap-2">
+            <span>{feedbackMessage}</span>
+            <button type="button" onClick={() => setFeedbackMessage(null)} aria-label="Dismiss message" className="p-1 rounded hover:bg-emerald-500/20 cursor-pointer">
+              <X size={14} />
+            </button>
+          </div>
+        )}
         <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden p-4 sm:p-5">
           <TrainerLibraryDietGrid
             dietPlans={dietPlans}
@@ -95,6 +117,7 @@ export default function TrainerLibraryMain() {
             search={search}
             onPageChange={setCurrentPage}
             onViewDiet={openEditDiet}
+            onRetry={() => void loadAll()}
           />
         </div>
       </div>
@@ -123,6 +146,7 @@ export default function TrainerLibraryMain() {
         onClose={closeFormModal}
         onSubmit={async (values, idempotencyKey) => {
           await saveDietPlan(values, idempotencyKey);
+          showFeedback(formDietPlan ? 'Diet plan updated successfully.' : 'Diet plan created successfully.');
         }}
       />
       <TrainerLibraryDeleteRequestModal
@@ -134,6 +158,7 @@ export default function TrainerLibraryMain() {
         onSubmit={async (reason, idempotencyKey) => {
           if (deleteRequestPlan) {
             await requestDietPlanDeletion(deleteRequestPlan.id, reason, idempotencyKey);
+            showFeedback(`Deletion request sent for ${deleteRequestPlan.name}.`);
           }
         }}
       />
@@ -161,6 +186,7 @@ export default function TrainerLibraryMain() {
             );
             setShowAssignModal(false);
             setAssignmentPlan(null);
+            showFeedback(`Assigned ${assignmentPlan.name} to ${memberIds.length} member${memberIds.length > 1 ? 's' : ''}.`);
           } catch {
             // Mutation state owns the visible error; keep the modal and selected member for retry.
           }

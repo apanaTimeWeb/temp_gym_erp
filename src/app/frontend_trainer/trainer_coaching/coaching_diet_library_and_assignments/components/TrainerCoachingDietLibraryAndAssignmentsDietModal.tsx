@@ -41,13 +41,13 @@ export default function TrainerLibraryDietModal({ isOpen, plan, onClose, onAssig
   useTrainerInfrastructureDialogFocusTrap({ isOpen: Boolean(isOpen && plan), dialogRef, onEscape: onClose });
   if (!isOpen || !plan) return null;
   return (
-    <div className="fixed inset-0 bg-overlay-backdrop z-40 flex items-center justify-center p-4 overflow-y-auto" role="presentation">
-      <div ref={dialogRef} className="my-auto bg-overlay border border-border rounded-2xl shadow-dialog w-full max-w-lg max-h-dialog-desktop flex flex-col overflow-hidden" role="dialog" aria-modal={true} aria-labelledby="trainer-diet-plan-title" tabIndex={-1}>
-        <div className="sticky top-0 bg-overlay px-6 py-4 border-b border-border flex items-center justify-between shrink-0 z-10">
-          <div className="min-w-0"><TrainerInfrastructureTooltip content={plan.name}><h3 id="trainer-diet-plan-title" className="text-lg font-bold text-text-primary truncate">{plan.name}</h3></TrainerInfrastructureTooltip><p className="text-xs text-secondary mt-0.5">{displayValue(plan.goal)} · {plan.isActive ? t("TEXT_ACTIVE") : t("TEXT_INACTIVE")}</p></div>
-          <div className="flex items-center gap-2">
-            {onAssign && <button type="button" onClick={onAssign} className="min-h-11 px-4 py-2.5 bg-primary text-on-primary rounded-xl text-sm font-semibold hover:bg-primary-hover motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_library-trainerlibrarydietmodal-button_1">{t("TEXT_ASSIGN_TO_MEMBER")}</button>}
-            <button type="button" onClick={onClose} aria-label={t("TEXT_CLOSE_DIET_PLAN")} className="min-w-11 min-h-11 p-2 rounded-lg hover:bg-primary-subtle text-secondary motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_library-trainerlibrarydietmodal-button_2"><X size={18}  strokeWidth={2}/></button>
+    <div className="fixed inset-0 bg-overlay-backdrop z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto" role="presentation">
+      <div ref={dialogRef} className="my-auto bg-white dark:bg-[#0F172A] border border-border rounded-2xl shadow-dialog w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden" role="dialog" aria-modal={true} aria-labelledby="trainer-diet-plan-title" tabIndex={-1}>
+        <div className="sticky top-0 bg-white dark:bg-[#0F172A] px-5 sm:px-6 py-4 border-b border-border flex flex-wrap items-center justify-between gap-2 shrink-0 z-10">
+          <div className="min-w-0 flex-1"><TrainerInfrastructureTooltip content={plan.name}><h3 id="trainer-diet-plan-title" className="text-lg font-bold text-text-primary truncate">{plan.name}</h3></TrainerInfrastructureTooltip><p className="text-xs text-secondary mt-0.5">{displayValue(plan.goal)} · {plan.isActive ? t("TEXT_ACTIVE") : t("TEXT_INACTIVE")}</p></div>
+          <div className="flex items-center gap-2 shrink-0">
+            {onAssign && <button type="button" onClick={onAssign} className="min-h-10 px-3.5 py-2 bg-primary text-on-primary rounded-xl text-xs sm:text-sm font-semibold hover:bg-primary-hover motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer" data-testid="trainer_library-trainerlibrarydietmodal-button_1">{t("TEXT_ASSIGN_TO_MEMBER")}</button>}
+            <button type="button" onClick={onClose} aria-label={t("TEXT_CLOSE_DIET_PLAN")} className="min-w-10 min-h-10 inline-flex items-center justify-center p-2 rounded-lg hover:bg-primary-subtle text-secondary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer" data-testid="trainer_library-trainerlibrarydietmodal-button_2"><X size={18} strokeWidth={2}/></button>
           </div>
         </div>
         <div className="overflow-y-auto custom-scrollbar flex-1 min-h-0">
@@ -74,7 +74,7 @@ export default function TrainerLibraryDietModal({ isOpen, plan, onClose, onAssig
             )}
           </div>
         </div>
-        <div className="sticky bottom-0 bg-overlay border-t border-border px-6 py-4 flex flex-wrap items-center justify-between gap-3 shrink-0 z-10">
+        <div className="sticky bottom-0 bg-white dark:bg-[#0F172A] border-t border-border px-5 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-3 shrink-0 z-10">
             <div className="flex items-center gap-2">
               {onEdit && (
                 <button

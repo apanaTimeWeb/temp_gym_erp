@@ -3,6 +3,7 @@ import type { TrainerWorkoutWorkout } from '@/app/frontend_trainer/trainer_coach
 /** Props for the Trainer TrainerWorkoutWorkout plan card used inside the plans grid. */
 export interface TrainerWorkoutPlanCardProps {
   plan: TrainerWorkoutWorkout;
+  onView?: () => void;
   onEdit: () => void;
   onDelete: () => void;
   onAssign?: () => void;

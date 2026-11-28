@@ -46,13 +46,13 @@ export default function TrainerLibraryDeleteRequestModal({
     <div className="fixed inset-0 bg-overlay-backdrop z-50 flex items-center justify-center p-4 overflow-y-auto" role="presentation">
       <div
         ref={dialogRef}
-        className="my-auto bg-card border border-border rounded-2xl shadow-dialog w-full max-w-md max-h-dialog-desktop flex flex-col overflow-hidden"
+        className="my-auto bg-white dark:bg-[#0F172A] border border-border rounded-2xl shadow-dialog w-full max-w-md max-h-[90vh] flex flex-col overflow-hidden"
         role="dialog"
         aria-modal="true"
         aria-labelledby="delete-request-title"
         tabIndex={-1}
       >
-        <div className="px-6 py-4 border-b border-border flex items-center justify-between shrink-0 bg-card">
+        <div className="px-6 py-4 border-b border-border flex items-center justify-between shrink-0 bg-white dark:bg-[#0F172A]">
           <div className="flex items-center gap-2 text-warning">
             <AlertTriangle size={20} />
             <h3 id="delete-request-title" className="text-base font-bold text-text-primary">

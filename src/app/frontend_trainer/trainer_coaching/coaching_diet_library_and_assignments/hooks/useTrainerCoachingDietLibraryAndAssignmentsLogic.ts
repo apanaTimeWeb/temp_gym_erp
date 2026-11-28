@@ -20,7 +20,7 @@ import { TrainerLibraryParsePage } from '@/app/frontend_trainer/trainer_coaching
 import { useTrainerLibraryDiet } from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/hooks/useTrainerCoachingDietLibraryAndAssignmentsDiet';
 import { useTrainerLibraryMutations } from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/hooks/useTrainerCoachingDietLibraryAndAssignmentsMutations';
 
-import type { TrainerLibraryFilterGoal, TrainerLibraryLogicReturn } from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/types/TrainerCoachingDietLibraryAndAssignmentsTypes';
+import type { TrainerLibraryFilterGoal, TrainerLibraryLogicReturn, TrainerLibrarySortDirection, TrainerLibrarySortField } from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/types/TrainerCoachingDietLibraryAndAssignmentsTypes';
 
 
 
@@ -55,6 +55,11 @@ export function useTrainerLibraryLogic(): TrainerLibraryLogicReturn {
     ? requestedGoal as TrainerLibraryFilterGoal
     : 'All';
   const currentPage = TrainerLibraryParsePage(searchParams.get('page'));
+  const rawSortBy = searchParams.get('sortBy') ?? 'name';
+  const sortBy: TrainerLibrarySortField = ['name', 'calories', 'protein'].includes(rawSortBy)
+    ? (rawSortBy as TrainerLibrarySortField)
+    : 'name';
+  const sortDirection: TrainerLibrarySortDirection = searchParams.get('sortDirection') === 'desc' ? 'desc' : 'asc';
 
   useEffect(() => {
     const pageParam = searchParams.get('page');
@@ -65,9 +70,9 @@ export function useTrainerLibraryLogic(): TrainerLibraryLogicReturn {
   }, [currentPage, pathname, router, searchParams]);
 
   const query = useQuery({
-    queryKey: TRAINER_LIBRARY_QUERY_KEYS.dietPlans({ search: debouncedSearch, goal: filterGoal === 'All' ? undefined : filterGoal, page: currentPage }),
+    queryKey: TRAINER_LIBRARY_QUERY_KEYS.dietPlans({ search: debouncedSearch, goal: filterGoal === 'All' ? undefined : filterGoal, page: currentPage, sortBy, sortDirection }),
     queryFn: async () => {
-      const params: Record<string,string> = { page: String(currentPage), limit: '10' };
+      const params: Record<string,string> = { page: String(currentPage), limit: '10', sortBy, sortDirection };
       if (debouncedSearch) params.search = debouncedSearch;
       if (filterGoal !== 'All') params.goal = filterGoal;
       const response = await TrainerLibraryApi.fetchDietPlans(params);
@@ -98,6 +103,14 @@ export function useTrainerLibraryLogic(): TrainerLibraryLogicReturn {
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }, [pathname, router, searchParams]);
   const setFilterGoal = useCallback((value: TrainerLibraryFilterGoal | 'All') => setUrlParam('goal', value), [setUrlParam]);
+  const setSort = useCallback((field: TrainerLibrarySortField) => {
+    const params = new URLSearchParams(searchParams.toString());
+    const nextDirection: TrainerLibrarySortDirection = sortBy === field && sortDirection === 'asc' ? 'desc' : 'asc';
+    params.set('sortBy', field);
+    params.set('sortDirection', nextDirection);
+    params.set('page', '1');
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }, [pathname, router, searchParams, sortBy, sortDirection]);
   const setCurrentPage = useCallback((page: number) => setUrlParam('page', String(page)), [setUrlParam]);
   const loadAll = useCallback(async () => { await query.refetch(); }, [query]);
   const dietLogic = useTrainerLibraryDiet();
@@ -135,7 +148,7 @@ export function useTrainerLibraryLogic(): TrainerLibraryLogicReturn {
 
   return {
     dietPlans: query.data?.data?.dietPlans ?? [], totalDietPlans: query.data?.data?.total ?? 0, isPending: query.isPending, isError: query.isError, isSuccess: query.isSuccess,
-    search, debouncedSearch, setSearch, filterGoal, setFilterGoal, currentPage, setCurrentPage,
+    search, debouncedSearch, setSearch, filterGoal, setFilterGoal, sortBy, sortDirection, setSort, currentPage, setCurrentPage,
     loadAll, ...dietLogic,
     saveDietPlan,
     requestDietPlanDeletion,

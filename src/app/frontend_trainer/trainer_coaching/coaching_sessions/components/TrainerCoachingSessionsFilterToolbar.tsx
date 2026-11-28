@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar as CalendarIcon, Download, Filter, Plus, Search, X } from 'lucide-react';
+import { ArrowDown, ArrowUp, Calendar as CalendarIcon, Download, Filter, Plus, RefreshCw, Search, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import {
   TRAINER_SESSIONS_SESSION_FILTER_OPTIONS,
@@ -8,6 +8,9 @@ import {
   TRAINER_SESSIONS_SESSION_TYPE,
 } from '../config/TrainerCoachingSessionsConstants';
 import type { TrainerSessionsSessionFilter } from '../types/TrainerCoachingSessionsTypes';
+
+export type TrainerSessionsSortField = 'time' | 'title' | 'status';
+export type TrainerSessionsSortDirection = 'asc' | 'desc';
 
 interface FilterToolbarProps {
   filter: TrainerSessionsSessionFilter;
@@ -22,11 +25,17 @@ interface FilterToolbarProps {
   setMemberFilter: (val: string) => void;
   searchQuery: string;
   setSearchQuery: (val: string) => void;
+  sortBy?: TrainerSessionsSortField;
+  setSortBy?: (val: TrainerSessionsSortField) => void;
+  sortDirection?: TrainerSessionsSortDirection;
+  onToggleSortDirection?: () => void;
   memberOptions: Array<{ value: string; label: string }>;
   onScheduleClick: () => void;
   onClearFilters: () => void;
   hasActiveFilters: boolean;
   onExportCsv?: () => void;
+  onRefresh?: () => void;
+  isRefreshing?: boolean;
 }
 
 export function TrainerCoachingSessionsFilterToolbar({
@@ -42,21 +51,27 @@ export function TrainerCoachingSessionsFilterToolbar({
   setMemberFilter,
   searchQuery,
   setSearchQuery,
+  sortBy = 'time',
+  setSortBy,
+  sortDirection = 'asc',
+  onToggleSortDirection,
   memberOptions,
   onScheduleClick,
   onClearFilters,
   hasActiveFilters,
   onExportCsv,
+  onRefresh,
+  isRefreshing = false,
 }: FilterToolbarProps) {
   const t = useTranslations('TRAINER_SESSIONS');
 
   return (
-    <div className="bg-card rounded-2xl shadow-card border border-border p-4 space-y-3.5">
-      {/* Top row: Dropdown filters & Search */}
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-2.5 flex-1 min-w-0 w-full lg:w-auto">
+    <div className="bg-card rounded-2xl shadow-card border border-border p-4 space-y-3.5 min-w-0 max-w-full">
+      {/* Top row: Dropdown filters, Sort, Search & Action Buttons */}
+      <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-3 min-w-0">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap items-center gap-2.5 flex-1 min-w-0">
           {/* Search box */}
-          <div className="relative w-full sm:min-w-[180px] sm:max-w-xs flex-1">
+          <div className="relative w-full sm:col-span-2 lg:w-60 min-w-0">
             <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-sky-500 pointer-events-none" />
             <input
               type="text"
@@ -64,13 +79,13 @@ export function TrainerCoachingSessionsFilterToolbar({
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search sessions or clients..."
               aria-label="Search sessions or clients"
-              className="w-full pl-8 pr-7 py-2 bg-input border border-border rounded-xl text-xs text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              className="w-full min-h-10 pl-8 pr-7 py-2 bg-input border border-border rounded-xl text-xs text-text-primary placeholder:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-secondary hover:text-primary p-0.5"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-secondary hover:text-primary p-0.5 cursor-pointer"
                 aria-label="Clear search"
               >
                 <X size={13} />
@@ -79,14 +94,14 @@ export function TrainerCoachingSessionsFilterToolbar({
           </div>
 
           {/* Status Dropdown Filter */}
-          <div className="flex items-center gap-1.5">
+          <div className="w-full sm:w-auto min-w-0">
             <label htmlFor="session-status-filter" className="sr-only">Filter by Status</label>
             <select
               id="session-status-filter"
               value={statusDropdown}
               onChange={(e) => setStatusDropdown(e.target.value)}
               aria-label="Filter by session status"
-              className="min-h-10 rounded-xl border border-border bg-input px-3 py-1.5 text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              className="w-full sm:w-auto min-h-10 rounded-xl border border-border bg-white dark:bg-[#0F172A] dark:[color-scheme:dark] px-3 py-1.5 text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
             >
               <option value="ALL">All Statuses</option>
               <option value={TRAINER_SESSIONS_SESSION_STATUS.UPCOMING}>Upcoming</option>
@@ -96,7 +111,7 @@ export function TrainerCoachingSessionsFilterToolbar({
           </div>
 
           {/* Session Type Dropdown Filter */}
-          <div className="flex items-center gap-1.5">
+          <div className="w-full sm:w-auto min-w-0">
             <label htmlFor="session-type-filter" className="sr-only">Filter by Session Type</label>
             <select
               id="session-type-filter"
@@ -109,7 +124,7 @@ export function TrainerCoachingSessionsFilterToolbar({
                 else setFilter('All');
               }}
               aria-label="Filter by session type"
-              className="min-h-10 rounded-xl border border-border bg-input px-3 py-1.5 text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+              className="w-full sm:w-auto min-h-10 rounded-xl border border-border bg-white dark:bg-[#0F172A] dark:[color-scheme:dark] px-3 py-1.5 text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
             >
               <option value="ALL">All Session Types</option>
               <option value={TRAINER_SESSIONS_SESSION_TYPE.PT}>1-on-1 PT Sessions</option>
@@ -118,14 +133,14 @@ export function TrainerCoachingSessionsFilterToolbar({
           </div>
 
           {/* Client / Member Dropdown Filter */}
-          <div className="flex items-center gap-1.5">
+          <div className="w-full sm:w-auto min-w-0">
             <label htmlFor="session-client-filter" className="sr-only">Filter by Client</label>
             <select
               id="session-client-filter"
               value={memberFilter}
               onChange={(e) => setMemberFilter(e.target.value)}
               aria-label="Filter by client name"
-              className="min-h-10 rounded-xl border border-border bg-input px-3 py-1.5 text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring w-full sm:max-w-[160px] truncate"
+              className="w-full sm:w-auto sm:max-w-[165px] truncate min-h-10 rounded-xl border border-border bg-white dark:bg-[#0F172A] dark:[color-scheme:dark] px-3 py-1.5 text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
             >
               <option value="ALL">All Clients</option>
               {memberOptions.map((opt) => (
@@ -137,24 +152,53 @@ export function TrainerCoachingSessionsFilterToolbar({
           </div>
 
           {/* Date Picker */}
-          <div className="flex items-center gap-1.5 bg-input border border-border rounded-xl px-2.5 py-1">
-            <CalendarIcon size={14} className="text-amber-500 pointer-events-none" aria-hidden="true" />
+          <div className="w-full sm:w-auto min-h-10 flex items-center gap-1.5 bg-input border border-border rounded-xl px-2.5 py-1">
+            <CalendarIcon size={14} className="text-amber-500 pointer-events-none shrink-0" aria-hidden="true" />
             <label htmlFor="trainer-sessions-date-input" className="sr-only">{t('TEXT_SESSION_DATE')}</label>
             <input
               id="trainer-sessions-date-input"
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="bg-transparent text-text-primary text-xs focus-visible:outline-none"
+              className="w-full bg-transparent text-text-primary text-xs dark:[color-scheme:dark] focus-visible:outline-none"
               aria-label="Filter sessions by date"
             />
           </div>
+
+          {/* Sort Controls */}
+          {setSortBy && (
+            <div className="flex items-center gap-1.5 w-full sm:w-auto">
+              <label htmlFor="session-sort-select" className="sr-only">Sort sessions</label>
+              <select
+                id="session-sort-select"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as TrainerSessionsSortField)}
+                aria-label="Sort sessions by"
+                className="flex-1 sm:flex-initial min-h-10 rounded-xl border border-border bg-white dark:bg-[#0F172A] dark:[color-scheme:dark] px-3 py-1.5 text-xs font-medium text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
+              >
+                <option value="time">Sort: Time</option>
+                <option value="title">Sort: Title</option>
+                <option value="status">Sort: Status</option>
+              </select>
+              {onToggleSortDirection && (
+                <button
+                  type="button"
+                  onClick={onToggleSortDirection}
+                  aria-label={`Sort direction ${sortDirection === 'asc' ? 'ascending' : 'descending'}`}
+                  title={sortDirection === 'asc' ? 'Ascending' : 'Descending'}
+                  className="min-h-10 min-w-10 inline-flex items-center justify-center rounded-xl border border-border bg-input text-secondary hover:text-primary hover:bg-card motion-safe:transition-colors cursor-pointer"
+                >
+                  {sortDirection === 'asc' ? <ArrowUp size={14} /> : <ArrowDown size={14} />}
+                </button>
+              )}
+            </div>
+          )}
 
           {hasActiveFilters && (
             <button
               type="button"
               onClick={onClearFilters}
-              className="min-h-10 inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold text-rose-500 rounded-xl border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 motion-safe:transition-colors"
+              className="min-h-10 inline-flex items-center justify-center gap-1 px-3 py-1 text-xs font-semibold text-rose-500 rounded-xl border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 motion-safe:transition-colors cursor-pointer"
             >
               <X size={12} />
               <span>Clear</span>
@@ -162,8 +206,19 @@ export function TrainerCoachingSessionsFilterToolbar({
           )}
         </div>
 
-        {/* Action Buttons: Export & Schedule */}
-        <div className="flex items-center gap-2">
+        {/* Action Buttons: Refresh, Export & Schedule */}
+        <div className="flex flex-wrap items-center justify-end gap-2 shrink-0">
+          {onRefresh && (
+            <button
+              type="button"
+              onClick={onRefresh}
+              disabled={isRefreshing}
+              aria-label="Refresh sessions"
+              className="min-h-10 min-w-10 inline-flex items-center justify-center px-3 py-2 border border-border bg-input hover:bg-card rounded-xl text-xs font-semibold text-secondary hover:text-primary motion-safe:transition-colors cursor-pointer disabled:opacity-50"
+            >
+              <RefreshCw size={14} className={isRefreshing ? 'motion-safe:animate-spin' : ''} />
+            </button>
+          )}
           <button
             type="button"
             onClick={onExportCsv}
@@ -176,7 +231,7 @@ export function TrainerCoachingSessionsFilterToolbar({
           <button
             type="button"
             onClick={onScheduleClick}
-            className="min-h-10 flex items-center gap-1.5 px-4 py-2 bg-primary text-on-primary rounded-xl text-xs font-bold hover:bg-primary-hover shadow-sm shadow-orange-500/20 motion-safe:transition-all motion-safe:active:scale-95"
+            className="min-h-10 flex items-center gap-1.5 px-4 py-2 bg-primary text-on-primary rounded-xl text-xs font-bold hover:bg-primary-hover shadow-sm shadow-orange-500/20 motion-safe:transition-all motion-safe:active:scale-95 cursor-pointer"
             data-testid="trainer_sessions-main-schedule"
           >
             <Plus size={16} strokeWidth={2.5} />
@@ -202,7 +257,7 @@ export function TrainerCoachingSessionsFilterToolbar({
                 else setSessionType('ALL');
               }}
               aria-pressed={filter === option.value}
-              className={`px-3 py-1 text-xs font-semibold rounded-lg motion-safe:transition-all ${
+              className={`px-3 py-1 text-xs font-semibold rounded-lg motion-safe:transition-all cursor-pointer ${
                 filter === option.value
                   ? 'bg-primary text-on-primary shadow-sm'
                   : 'text-secondary hover:text-primary'

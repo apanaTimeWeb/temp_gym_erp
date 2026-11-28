@@ -29,7 +29,10 @@ import type { TrainerSessionsCreateMutationVariables, TrainerSessionsUpdateMutat
  */
 export function useTrainerSessionsMutations() {
   const queryClient = useQueryClient();
-  const invalidateLists = useCallback(() => { void queryClient.invalidateQueries({ queryKey: TRAINER_SESSIONS_QUERY_KEYS.lists() }); }, [queryClient]);
+  const invalidateLists = useCallback(() => {
+    void queryClient.invalidateQueries({ queryKey: TRAINER_SESSIONS_QUERY_KEYS.lists() });
+    void queryClient.invalidateQueries({ queryKey: [TRAINER_SESSIONS_QUERY_KEYS.all[0], 'kpiPeriod'] });
+  }, [queryClient]);
   const createMutation = useMutation({ mutationFn: ({ dto, idempotencyKey }: TrainerSessionsCreateMutationVariables) => createTrainerSessionsTrainerSession(dto, idempotencyKey), onSuccess: invalidateLists });
   const updateMutation = useMutation({ mutationFn: ({ id, dto, idempotencyKey }: TrainerSessionsUpdateMutationVariables) => updateTrainerSessionsTrainerSession(id, dto, idempotencyKey), onSuccess: invalidateLists });
   const cancelMutation = useMutation({ mutationFn: ({ id, idempotencyKey }: TrainerSessionsCancelMutationVariables) => cancelTrainerSessionsTrainerSession(id, idempotencyKey), onSuccess: invalidateLists });

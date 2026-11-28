@@ -2,7 +2,7 @@
 // RESPONSIBILITY: Renders one workout-plan card with isolated edit/delete actions and localized metadata labels.
 // DATA FLOW: Parent query result → supplied plan props → edit/delete callbacks; parent owns server state and mutation lifecycle.
 
-import { Dumbbell, Edit2, Trash2, Loader2, UserPlus } from 'lucide-react';
+import { Dumbbell, Edit2, Eye, Trash2, Loader2, UserPlus } from 'lucide-react';
 
 import { useLocale, useTranslations } from 'next-intl';
 
@@ -34,6 +34,7 @@ import type { TrainerWorkoutPlanCardProps } from '@/app/frontend_trainer/trainer
  */
 export default function TrainerWorkoutPlanCard({
   plan,
+  onView,
   onEdit,
   onDelete,
   onAssign,
@@ -49,7 +50,7 @@ export default function TrainerWorkoutPlanCard({
       : [];
 
   return (
-    <article className="border border-border rounded-2xl p-4 hover:border-sky-500/40 hover:shadow-card motion-safe:transition-all bg-card">
+    <article className="border border-border rounded-2xl p-4 hover:border-sky-500/40 hover:shadow-card motion-safe:transition-all bg-card flex flex-col h-full">
       <div className="flex items-start justify-between mb-3 gap-3">
         <div className="min-w-10 min-h-10 border border-sky-500/30 bg-sky-500/15 rounded-xl flex items-center justify-center shrink-0" data-testid={"trainer_workout-plan-card-info-state-33-1"}>
           <Dumbbell size={18} strokeWidth={2} className="text-sky-500" aria-hidden="true" />
@@ -62,13 +63,25 @@ export default function TrainerWorkoutPlanCard({
       <div className="flex items-start justify-between gap-2 mb-3">
         <TrainerInfrastructureTooltip content={String(displayValue(plan.name))}><h3 className="font-semibold text-text-primary truncate min-w-0">{displayValue(plan.name)}</h3></TrainerInfrastructureTooltip>
         <div className="flex gap-1.5 shrink-0">
+          {onView && (
+            <button
+              type="button"
+              onClick={onView}
+              aria-label={`View workout plan ${plan.name}`}
+              title="View full plan details"
+              className="min-w-9 min-h-9 inline-flex items-center justify-center p-1.5 border border-sky-500/35 bg-sky-500/15 text-sky-600 dark:text-sky-300 hover:bg-sky-500 hover:text-white rounded-xl motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
+              data-testid="trainer_workout-trainerworkoutplancard-button_view"
+            >
+              <Eye size={16} strokeWidth={2} aria-hidden="true" />
+            </button>
+          )}
           {onAssign && (
             <button
               type="button"
               onClick={onAssign}
               aria-label={`Assign ${plan.name} to members`}
               title="Assign to members"
-              className="min-w-10 min-h-10 inline-flex items-center justify-center p-1.5 border border-sky-500/25 bg-sky-500/10 text-sky-500 hover:bg-sky-500/20 rounded-xl motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+              className="min-w-9 min-h-9 inline-flex items-center justify-center p-1.5 border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 hover:bg-emerald-500/20 rounded-xl motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
               data-testid="trainer_workout-trainerworkoutplancard-button_assign"
             >
               <UserPlus size={16} strokeWidth={2} aria-hidden="true" />
@@ -79,7 +92,7 @@ export default function TrainerWorkoutPlanCard({
             onClick={onEdit}
             aria-label={t('TEXT_EDIT_WORKOUT_PLAN_ARIA', { name: plan.name })}
             title={t('TEXT_EDIT_WORKOUT_PLAN_ARIA', { name: plan.name })}
-            className="min-w-10 min-h-10 inline-flex items-center justify-center p-1.5 border border-amber-500/25 bg-amber-500/10 text-amber-500 hover:bg-amber-500/20 rounded-xl motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+            className="min-w-9 min-h-9 inline-flex items-center justify-center p-1.5 border border-amber-500/25 bg-amber-500/10 text-amber-500 hover:bg-amber-500/20 rounded-xl motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
             data-testid="trainer_workout-trainerworkoutplancard-button_1"
           >
             <Edit2 size={16} strokeWidth={2} aria-hidden="true" />
@@ -90,29 +103,29 @@ export default function TrainerWorkoutPlanCard({
             disabled={deleting}
             aria-label={t('TEXT_DELETE_WORKOUT_PLAN_ARIA', { name: plan.name })}
             title={t('TEXT_DELETE_WORKOUT_PLAN_ARIA', { name: plan.name })}
-            className="min-w-10 min-h-10 inline-flex items-center justify-center p-1.5 border border-rose-500/25 bg-rose-500/10 text-rose-500 hover:bg-rose-500/20 rounded-xl motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring disabled:opacity-60 motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95"
+            className="min-w-9 min-h-9 inline-flex items-center justify-center p-1.5 border border-rose-500/25 bg-rose-500/10 text-rose-500 hover:bg-rose-500/20 rounded-xl motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring disabled:opacity-60 cursor-pointer"
             data-testid="trainer_workout-trainerworkoutplancard-button_2"
           >
             {deleting ? (
-              <Loader2 size={18} className="motion-safe:animate-spin" aria-hidden="true" strokeWidth={2} />
+              <Loader2 size={16} className="motion-safe:animate-spin" aria-hidden="true" strokeWidth={2} />
             ) : (
-              <Trash2 size={18} strokeWidth={2} aria-hidden="true" />
+              <Trash2 size={16} strokeWidth={2} aria-hidden="true" />
             )}
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3">
+      <div className="grid grid-cols-3 gap-2 mb-3">
         {[
           [t('TEXT_DAYS'), plan.days],
           [t('TEXT_EXERCISES'), plan.exercises],
           [t('TEXT_DURATION'), plan.duration],
         ].map(([label, value]) => (
           <div key={String(label)} className="bg-input rounded-lg p-2 text-center border border-border">
-            <p className="text-sm font-bold text-text-primary">
+            <p className="text-sm font-bold text-text-primary truncate">
               {typeof value === 'number' ? TrainerWorkoutFormatNumber(value, locale) : displayValue(value as string | null)}
             </p>
-            <p className="text-xs text-secondary">{label}</p>
+            <p className="text-xs text-secondary truncate">{label}</p>
           </div>
         ))}
       </div>
@@ -125,7 +138,7 @@ export default function TrainerWorkoutPlanCard({
         ))}
       </div>
 
-      <p className="text-xs text-secondary">
+      <p className="mt-auto text-xs text-secondary">
         {t('TEXT_FOCUS')} <span className="font-medium text-text-primary">{displayValue(plan.focus)}</span>
       </p>
     </article>

@@ -1,15 +1,14 @@
 "use client";
 // RESPONSIBILITY: Assigns a workout plan to one or multiple members in batch.
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
-import { X, Loader2, Search, CheckSquare, Square, Dumbbell, Users } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { X, Loader2, Search, CheckSquare, Square, Dumbbell } from 'lucide-react';
 
 import { useTrainerInfrastructureIdempotencyKey } from '@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/hooks/TrainerCoachingWorkoutPlansuseTrainerInfrastructureIdempotencyKey';
 import { useTrainerInfrastructureUnsavedChangesGuard } from '@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/hooks/TrainerCoachingWorkoutPlansuseTrainerInfrastructureUnsavedChangesGuard';
 import { useTrainerInfrastructureDialogFocusTrap } from '@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/hooks/TrainerCoachingWorkoutPlansuseTrainerInfrastructureDialogFocusTrap';
 import { TrainerCoachingWorkoutPlansSelectedChips } from '@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/components/TrainerCoachingWorkoutPlansSelectedChips';
 import type { TrainerWorkoutWorkout } from '@/app/frontend_trainer/trainer_coaching/coaching_workout_plans/types/TrainerCoachingWorkoutPlansTypes';
-import { apiFetch, type ApiResponse } from '@/lib/api';
+import { apiFetch } from '@/lib/api';
 
 export interface TrainerWorkoutAssignModalProps {
   isOpen: boolean;
@@ -31,10 +30,25 @@ export default function TrainerWorkoutAssignModal({
   onSubmit,
   isSaving = false,
 }: TrainerWorkoutAssignModalProps) {
-  const t = useTranslations('TRAINER_WORKOUT');
+  if (!isOpen || !plan) return null;
+  return <AssignModalContent key={plan.id} plan={plan} onClose={onClose} onSubmit={onSubmit} isSaving={isSaving} />;
+}
+
+function AssignModalContent({
+  plan,
+  onClose,
+  onSubmit,
+  isSaving,
+}: {
+  plan: TrainerWorkoutWorkout;
+  onClose: () => void;
+  onSubmit: (memberIds: string[], idempotencyKey: string) => Promise<void>;
+  isSaving: boolean;
+}) {
   const [members, setMembers] = useState<AssignedMemberItem[]>([]);
-  const [isLoadingMembers, setIsLoadingMembers] = useState(false);
+  const [isLoadingMembers, setIsLoadingMembers] = useState(true);
   const [membersError, setMembersError] = useState(false);
+  const [retryTick, setRetryTick] = useState(0);
   const [memberSearch, setMemberSearch] = useState('');
   const [selectedMemberIds, setSelectedMemberIds] = useState<string[]>([]);
 
@@ -42,40 +56,27 @@ export default function TrainerWorkoutAssignModal({
   const dialogRef = useRef<HTMLDivElement>(null);
   const { begin, clear } = useTrainerInfrastructureIdempotencyKey();
 
-  const currentActionId = plan && selectedMemberIds.length > 0
+  const currentActionId = selectedMemberIds.length > 0
     ? `assign-workout-${plan.id}-${selectedMemberIds.join('-')}`
     : '';
 
   const guardNavigation = useTrainerInfrastructureUnsavedChangesGuard(selectedMemberIds.length > 0 && !isSaving);
-  useTrainerInfrastructureDialogFocusTrap({ isOpen: Boolean(isOpen && plan), dialogRef, onEscape: () => void guardNavigation(onClose) });
+  useTrainerInfrastructureDialogFocusTrap({ isOpen: true, dialogRef, onEscape: () => void guardNavigation(onClose) });
 
-  // Fetch available members when modal opens
   useEffect(() => {
-    if (!isOpen) {
-      setSelectedMemberIds([]);
-      setMemberSearch('');
-      return;
-    }
-
     let active = true;
-    setIsLoadingMembers(true);
-    setMembersError(false);
-
-    apiFetch<ApiResponse<AssignedMemberItem[]>>('/trainer/trainer_library/assigned-members')
+    apiFetch<AssignedMemberItem[]>('/trainer/trainer_library/assigned-members')
       .then((res) => {
         if (!active) return;
-        const list = Array.isArray(res.data) ? res.data : [];
-        setMembers(list);
+        if (res?.success && Array.isArray(res.data)) {
+          setMembers(res.data);
+          setMembersError(false);
+        } else {
+          setMembersError(true);
+        }
       })
       .catch(() => {
-        if (!active) return;
-        // Fallback default members for resilience
-        setMembers([
-          { id: 'm1', name: 'Rahul Sharma' },
-          { id: 'm2', name: 'Amit Verma' },
-          { id: 'm3', name: 'Priya Singh' },
-          { id: 'm4', name: 'Neha Gupta' },
-        ]);
+        if (active) setMembersError(true);
       })
       .finally(() => {
         if (active) setIsLoadingMembers(false);
@@ -84,7 +85,7 @@ export default function TrainerWorkoutAssignModal({
     return () => {
       active = false;
     };
-  }, [isOpen]);
+  }, [retryTick]);
 
   const filteredMembers = useMemo(() => {
     const q = memberSearch.trim().toLowerCase();
@@ -113,7 +114,11 @@ export default function TrainerWorkoutAssignModal({
     setSelectedMemberIds((prev) => prev.filter((item) => item !== id));
   };
 
-  if (!isOpen || !plan) return null;
+  const actionCleanup = () => {
+    if (currentActionId) clear(currentActionId);
+    setSelectedMemberIds([]);
+    setMemberSearch('');
+  };
 
   const handleSubmit = async () => {
     if (!currentActionId || isSaving || selectedMemberIds.length === 0) return;
@@ -126,20 +131,14 @@ export default function TrainerWorkoutAssignModal({
     }
   };
 
-  const actionCleanup = () => {
-    if (currentActionId) clear(currentActionId);
-    setSelectedMemberIds([]);
-    setMemberSearch('');
-  };
-
   const handleClose = () => {
     actionCleanup();
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 z-40 bg-overlay-backdrop flex items-center justify-center overflow-y-auto p-4" role="presentation" data-testid="trainer_workout-assign-modal">
-      <div ref={dialogRef} tabIndex={-1} className="my-auto w-full max-w-lg bg-overlay border border-border rounded-2xl shadow-dialog p-6 max-h-dialog-desktop flex flex-col overflow-hidden" role="dialog" aria-modal="true" aria-labelledby={titleId}>
+    <div className="fixed inset-0 z-50 bg-overlay-backdrop flex items-center justify-center overflow-y-auto p-4" role="presentation" data-testid="trainer_workout-assign-modal">
+      <div ref={dialogRef} tabIndex={-1} className="my-auto w-full max-w-lg bg-white dark:bg-[#0F172A] border border-border rounded-2xl shadow-dialog p-5 sm:p-6 max-h-[90vh] flex flex-col overflow-hidden" role="dialog" aria-modal="true" aria-labelledby={titleId}>
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-border shrink-0">
           <div>
@@ -153,7 +152,7 @@ export default function TrainerWorkoutAssignModal({
             type="button"
             onClick={() => void guardNavigation(handleClose)}
             aria-label="Close assignment dialog"
-            className="min-w-11 min-h-11 p-2 rounded-lg text-secondary hover:text-primary hover:bg-primary-subtle motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            className="min-w-11 min-h-11 p-2 rounded-lg text-secondary hover:text-primary hover:bg-primary-subtle motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
             data-testid="trainer_workout-assignmodal-button-close"
           >
             <X size={18} strokeWidth={2} />
@@ -179,7 +178,7 @@ export default function TrainerWorkoutAssignModal({
                 <button
                   type="button"
                   onClick={toggleSelectAll}
-                  className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring"
+                  className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus-ring cursor-pointer"
                 >
                   {isAllFilteredSelected ? <CheckSquare size={14} /> : <Square size={14} />}
                   {isAllFilteredSelected ? 'Deselect All' : 'Select All'}
@@ -194,8 +193,18 @@ export default function TrainerWorkoutAssignModal({
                 value={memberSearch}
                 onChange={(e) => setMemberSearch(e.target.value)}
                 placeholder="Search member by name..."
-                className="w-full ps-9 pe-3 py-2 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                className="w-full ps-9 pe-8 py-2 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
               />
+              {memberSearch && (
+                <button
+                  type="button"
+                  onClick={() => setMemberSearch('')}
+                  aria-label="Clear member search"
+                  className="absolute end-2.5 top-1/2 -translate-y-1/2 text-secondary hover:text-text-primary p-0.5 cursor-pointer"
+                >
+                  <X size={13} />
+                </button>
+              )}
             </div>
           </div>
 
@@ -207,8 +216,19 @@ export default function TrainerWorkoutAssignModal({
                 Loading members...
               </div>
             ) : membersError ? (
-              <div className="py-6 text-center">
-                <p className="text-sm text-danger">Unable to load members</p>
+              <div className="py-6 text-center space-y-2">
+                <p className="text-sm text-danger">Unable to load members right now.</p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsLoadingMembers(true);
+                    setMembersError(false);
+                    setRetryTick((c) => c + 1);
+                  }}
+                  className="min-h-9 rounded-lg border border-border bg-input px-3 text-xs font-semibold text-text-primary hover:bg-surface-hover cursor-pointer"
+                >
+                  Retry
+                </button>
               </div>
             ) : filteredMembers.length === 0 ? (
               <div className="py-8 text-center text-xs text-secondary">
@@ -252,7 +272,7 @@ export default function TrainerWorkoutAssignModal({
           <button
             type="button"
             onClick={() => void guardNavigation(handleClose)}
-            className="min-h-11 px-4 py-2 border border-border rounded-lg text-secondary hover:bg-primary-subtle text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            className="min-h-11 px-4 py-2 border border-border rounded-lg text-secondary hover:bg-primary-subtle text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
             data-testid="trainer_workout-assignmodal-button-cancel"
           >
             Cancel
@@ -261,7 +281,7 @@ export default function TrainerWorkoutAssignModal({
             type="button"
             onClick={() => void handleSubmit()}
             disabled={selectedMemberIds.length === 0 || isSaving || isLoadingMembers}
-            className="min-h-11 inline-flex min-w-36 items-center justify-center gap-2 px-5 py-2 bg-primary text-on-primary rounded-lg text-sm font-semibold disabled:opacity-60 hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            className="min-h-11 inline-flex min-w-36 items-center justify-center gap-2 px-5 py-2 bg-primary text-on-primary rounded-lg text-sm font-semibold disabled:opacity-60 hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
             data-testid="trainer_workout-assignmodal-button-submit"
           >
             {isSaving && <Loader2 size={16} className="motion-safe:animate-spin" strokeWidth={2} />}
@@ -278,4 +298,3 @@ export default function TrainerWorkoutAssignModal({
     </div>
   );
 }
-

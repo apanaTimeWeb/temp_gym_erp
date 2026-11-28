@@ -266,7 +266,7 @@ export default function TrainerNavigationHeader({ title, subtitle, branchName, i
                       role="listbox"
                       aria-label="Gym Branches"
                       data-testid="trainer-header-branch-dropdown"
-                      className="w-64 rounded-2xl border border-cyan-500/35 bg-[#0E1526]/98 backdrop-blur-2xl shadow-[0_20px_48px_rgba(0,0,0,0.82)] overflow-hidden p-1.5 space-y-1 text-white"
+                      className="w-64 rounded-2xl border border-cyan-500/35 bg-[#0E1526] shadow-[0_20px_48px_rgba(0,0,0,0.82)] overflow-hidden p-1.5 space-y-1 text-white"
                     >
                       <div className="px-2.5 py-1.5 border-b border-white/10">
                         <p className="text-[10px] font-bold uppercase tracking-wider text-cyan-300">Active Gym Branches</p>
@@ -343,7 +343,7 @@ export default function TrainerNavigationHeader({ title, subtitle, branchName, i
                 role="region"
                 aria-label="Notifications Dropdown"
                 data-testid="trainer-notifications-dropdown"
-                className="w-80 sm:w-88 max-w-[calc(100vw-1.5rem)] rounded-2xl border border-sky-500/35 bg-[#0E1526]/98 backdrop-blur-2xl shadow-[0_20px_48px_rgba(0,0,0,0.82)] overflow-hidden text-white"
+                className="w-80 sm:w-88 max-w-[calc(100vw-1.5rem)] rounded-2xl border border-sky-500/35 bg-[#0E1526] shadow-[0_20px_48px_rgba(0,0,0,0.82)] overflow-hidden text-white"
               >
                 <div className="flex items-center justify-between px-4 py-3 border-b border-sky-500/20 bg-sky-950/35">
                   <div className="flex items-center gap-2">
@@ -466,7 +466,7 @@ export default function TrainerNavigationHeader({ title, subtitle, branchName, i
               role="menu"
               aria-label={t("TEXT_PROFILE_MENU")}
               onKeyDown={handleProfileMenuKeyDown}
-              className="w-64 max-w-[calc(100vw-1.5rem)] bg-[#0E1526]/98 backdrop-blur-2xl rounded-2xl shadow-[0_20px_48px_rgba(0,0,0,0.82)] border border-orange-500/35 overflow-hidden p-2 space-y-1.5 text-white"
+              className="w-64 max-w-[calc(100vw-1.5rem)] bg-[#0E1526] rounded-2xl shadow-[0_20px_48px_rgba(0,0,0,0.82)] border border-orange-500/35 overflow-hidden p-2 space-y-1.5 text-white"
             >
               <div className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl bg-gradient-to-r from-[#FF5A1F]/20 via-purple-500/10 to-transparent border border-orange-500/25">
                 <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#FF5A1F] via-[#EC4899] to-[#8B5CF6] text-white flex items-center justify-center text-sm font-bold shrink-0 shadow-[0_3px_12px_rgba(255,90,31,0.45)]" aria-hidden="true">

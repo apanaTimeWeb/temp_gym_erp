@@ -47,7 +47,7 @@ export default function TrainerAttendanceMain() {
       <div className="p-4 sm:p-6 space-y-5">
         <TrainerAttendanceKPIs stats={model.stats} isPending={model.statsQuery.isPending} isError={model.statsQuery.isError} onRetry={() => void model.statsQuery.refetch()} />
         {model.tab === 'MY_ATTENDANCE' && <TrainerAttendanceMyAttendanceSummaryView model={model} />}
-        <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden">
+        <div className="bg-card rounded-xl shadow-card border border-border">
           <TrainerAttendanceToolbar
             tab={model.filters.tab}
             setTab={model.filters.setTab}

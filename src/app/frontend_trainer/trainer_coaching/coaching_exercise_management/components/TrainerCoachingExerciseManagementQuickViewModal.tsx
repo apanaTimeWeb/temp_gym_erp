@@ -54,7 +54,7 @@ export default function TrainerCoachingExerciseManagementQuickViewModal({
         aria-hidden="true"
       />
       <div
-        className="relative z-10 w-full max-w-xl max-h-[88dvh] overflow-y-auto rounded-2xl border border-sky-500/35 bg-card dark:bg-[#0E1526]/98 text-text-primary shadow-[0_24px_64px_rgba(0,0,0,0.85)]"
+        className="relative z-10 w-full max-w-xl max-h-[88dvh] overflow-y-auto rounded-2xl border border-sky-500/35 bg-white dark:bg-[#0F172A] text-text-primary shadow-[0_24px_64px_rgba(0,0,0,0.85)]"
         data-testid="trainer_workout-exercise-quick-view-modal"
       >
         <span
@@ -135,7 +135,7 @@ export default function TrainerCoachingExerciseManagementQuickViewModal({
           )}
         </div>
 
-        <div className="p-4 sm:px-6 border-t border-border bg-header/60 flex items-center justify-end gap-2.5">
+        <div className="p-4 sm:px-6 border-t border-border bg-white dark:bg-[#0F172A] flex items-center justify-end gap-2.5">
           <button
             type="button"
             onClick={onClose}

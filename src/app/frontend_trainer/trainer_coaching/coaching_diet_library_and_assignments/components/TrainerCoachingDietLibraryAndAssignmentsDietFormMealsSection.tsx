@@ -55,14 +55,14 @@ export function TrainerCoachingDietLibraryAndAssignmentsDietFormMealsSection({
               key={field.id}
               className="p-3.5 bg-input border border-border rounded-xl space-y-2.5"
             >
-              <div className="flex items-center justify-between gap-2">
+              <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="w-5 h-5 rounded-full bg-primary-subtle text-primary text-xs font-bold flex items-center justify-center shrink-0">
                   {index + 1}
                 </span>
                 {isCoreMeal ? (
-                  <div className="flex-1 px-3 py-1.5 bg-card border border-border rounded-lg text-sm font-bold text-text-primary flex items-center justify-between">
-                    <span>{currentName}</span>
-                    <span className="text-2xs text-secondary px-2 py-0.5 rounded-full bg-input border border-border flex items-center gap-1 font-medium">
+                  <div className="flex-1 min-w-[160px] px-3 py-1.5 bg-card border border-border rounded-lg text-sm font-bold text-text-primary flex items-center justify-between gap-2">
+                    <span className="truncate">{currentName}</span>
+                    <span className="text-2xs text-secondary px-2 py-0.5 rounded-full bg-input border border-border flex items-center gap-1 font-medium shrink-0">
                       <Lock size={10} className="text-secondary" /> Core Meal
                     </span>
                     <input type="hidden" {...register(`meals.${index}.name` as const)} value={currentName} />
@@ -71,13 +71,13 @@ export function TrainerCoachingDietLibraryAndAssignmentsDietFormMealsSection({
                   <input
                     {...register(`meals.${index}.name` as const)}
                     placeholder="e.g., Afternoon Snack / Pre-Workout"
-                    className="flex-1 px-2.5 py-1.5 bg-input border border-border rounded-lg text-sm font-semibold text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                    className="flex-1 min-w-[160px] px-2.5 py-1.5 bg-input border border-border rounded-lg text-sm font-semibold text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                   />
                 )}
                 <input
                   {...register(`meals.${index}.time` as const)}
                   placeholder="e.g., 08:30 AM"
-                  className="w-28 px-2.5 py-1.5 bg-input border border-border rounded-lg text-xs text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                  className="w-full sm:w-28 px-2.5 py-1.5 bg-input border border-border rounded-lg text-xs text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 />
                 {!isCoreMeal && fields.length > 1 && (
                   <button

@@ -37,12 +37,28 @@ export default function TrainerLibraryDietGrid({
   search,
   onPageChange,
   onViewDiet,
+  onRetry,
 }: TrainerLibraryDietGridProps) {
   const t = useTranslations('TRAINER_LIBRARY');
   const locale = useLocale();
   const totalPages = Math.max(1, Math.ceil(totalDietPlans / TRAINER_INFRASTRUCTURE_ITEMS_PER_PAGE));
 
-  if (isError) return <div className="rounded-xl border border-border bg-danger-bg p-5 text-danger" data-testid={"trainer_library-trainer_library-diet-grid-danger-state-33-1"}>{t("TEXT_UNABLE_TO_LOAD_DIET_PLANS_PLEASE_RETRY")}</div>;
+  if (isError) {
+    return (
+      <div className="rounded-xl border border-border bg-danger-bg p-5 text-danger space-y-3" data-testid={"trainer_library-trainer_library-diet-grid-danger-state-33-1"}>
+        <p className="text-sm font-medium">{t("TEXT_UNABLE_TO_LOAD_DIET_PLANS_PLEASE_RETRY")}</p>
+        {onRetry && (
+          <button
+            type="button"
+            onClick={onRetry}
+            className="min-h-10 rounded-lg bg-primary px-4 text-sm font-semibold text-on-primary hover:bg-primary-hover cursor-pointer"
+          >
+            Retry
+          </button>
+        )}
+      </div>
+    );
+  }
   if (isPending) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">

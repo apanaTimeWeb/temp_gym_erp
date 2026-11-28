@@ -34,23 +34,28 @@ export default function TrainerWorkoutExerciseFields({ control, register }: Trai
   const { fields, append, remove } = useFieldArray({ control, name: 'workoutExercises' });
   const { confirm } = useTrainerInfrastructureConfirm();
 
-  // Collect existing unique days from the exercise records or default to ['Day 1']
+  // Collect existing unique days from exercise records plus user-added day splits without stale cache
   const initialDays = useMemo(() => {
     const rawFields = fields as Array<{ day?: string }>;
     const collected = Array.from(new Set(rawFields.map((f) => f.day || 'Day 1')));
     return collected.length > 0 ? collected : ['Day 1'];
   }, [fields]);
 
-  const [daysList, setDaysList] = useState<string[]>(initialDays);
-  const [activeDay, setActiveDay] = useState<string>(initialDays[0] || 'Day 1');
+  const [customDays, setCustomDays] = useState<string[]>([]);
+  const [selectedDay, setSelectedDay] = useState<string>('Day 1');
+  const daysList = useMemo(
+    () => Array.from(new Set([...initialDays, ...customDays])),
+    [initialDays, customDays]
+  );
+  const activeDay = daysList.includes(selectedDay) ? selectedDay : (daysList[0] ?? 'Day 1');
 
   const handleAddDay = () => {
     const nextDayNumber = daysList.length + 1;
     const newDayName = `Day ${nextDayNumber}`;
     if (!daysList.includes(newDayName)) {
-      setDaysList([...daysList, newDayName]);
-      setActiveDay(newDayName);
+      setCustomDays((prev) => [...prev, newDayName]);
     }
+    setSelectedDay(newDayName);
   };
 
   const handleAppend = () => {
@@ -89,11 +94,11 @@ export default function TrainerWorkoutExerciseFields({ control, register }: Trai
             Organize exercises into daily routines (Push, Pull, Legs, etc.)
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <button
             type="button"
             onClick={handleAddDay}
-            className="min-h-9 px-3 py-1.5 text-xs font-semibold rounded-lg border border-border text-secondary hover:text-primary hover:bg-input flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            className="min-h-9 px-3 py-1.5 text-xs font-semibold rounded-lg border border-border text-secondary hover:text-primary hover:bg-input flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
             data-testid="trainer_workout-add-day-split"
           >
             <Calendar size={14} />
@@ -102,7 +107,7 @@ export default function TrainerWorkoutExerciseFields({ control, register }: Trai
           <button
             type="button"
             onClick={handleAppend}
-            className="min-h-9 text-xs font-semibold text-on-primary bg-primary px-3 py-1.5 rounded-lg flex items-center gap-1 hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            className="min-h-9 text-xs font-semibold text-on-primary bg-primary px-3 py-1.5 rounded-lg flex items-center gap-1 hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
             data-testid="trainer_workout-trainerworkoutexercisefields-button_1"
           >
             <Plus size={16} strokeWidth={2} />
@@ -120,8 +125,8 @@ export default function TrainerWorkoutExerciseFields({ control, register }: Trai
             <button
               key={day}
               type="button"
-              onClick={() => setActiveDay(day)}
-              className={`px-3 py-1.5 text-xs font-medium rounded-lg border shrink-0 motion-safe:transition-all ${
+              onClick={() => setSelectedDay(day)}
+              className={`px-3 py-1.5 text-xs font-medium rounded-lg border shrink-0 motion-safe:transition-all cursor-pointer ${
                 isActive
                   ? 'bg-primary-subtle border-focus text-primary font-semibold'
                   : 'bg-card border-transparent text-secondary hover:bg-input hover:text-primary'
@@ -141,12 +146,12 @@ export default function TrainerWorkoutExerciseFields({ control, register }: Trai
         {activeDayExercises.map(({ field, index }) => (
           <div
             key={field.id}
-            className="bg-floating border border-border rounded-xl p-3 flex flex-col sm:flex-row gap-3"
+            className="bg-floating border border-border rounded-xl p-3 grid grid-cols-2 sm:grid-cols-12 gap-2.5 items-end"
           >
             {/* Hidden day field */}
             <input type="hidden" {...register(`workoutExercises.${index}.day`)} value={activeDay} />
 
-            <div className="flex-1">
+            <div className="col-span-2 sm:col-span-5">
               <div className="flex items-center justify-between mb-1">
                 <label
                   htmlFor={`trainer-workout-exercise-${index}-name`}
@@ -154,7 +159,7 @@ export default function TrainerWorkoutExerciseFields({ control, register }: Trai
                 >
                   {t("TEXT_EXERCISE_NAME_4622A0")}
                 </label>
-                <span className="text-2xs text-secondary font-medium">Library Integrated</span>
+                <span className="text-[10px] text-secondary font-medium">Library Integrated</span>
               </div>
               <input
                 id={`trainer-workout-exercise-${index}-name`}
@@ -162,11 +167,11 @@ export default function TrainerWorkoutExerciseFields({ control, register }: Trai
                 list="trainer-workout-exercise-library-list"
                 placeholder="e.g. Barbell Bench Press"
                 {...register(`workoutExercises.${index}.name`)}
-                className="w-full px-2 py-1.5 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                className="w-full min-h-9 px-2.5 py-1.5 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 data-testid={`trainer_workout-exercise-fields-name-${field.id}`}
               />
             </div>
-            <div className="w-20">
+            <div className="col-span-1 sm:col-span-1">
               <label
                 htmlFor={`trainer-workout-exercise-${index}-sets`}
                 className="block text-xs uppercase font-bold text-secondary mb-1"
@@ -180,11 +185,11 @@ export default function TrainerWorkoutExerciseFields({ control, register }: Trai
                 max="20"
                 step="1"
                 {...register(`workoutExercises.${index}.sets`, { valueAsNumber: true })}
-                className="w-full px-2 py-1.5 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                className="w-full min-h-9 px-2 py-1.5 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 data-testid={`trainer_workout-exercise-fields-sets-${field.id}`}
               />
             </div>
-            <div className="w-20">
+            <div className="col-span-1 sm:col-span-2">
               <label
                 htmlFor={`trainer-workout-exercise-${index}-reps`}
                 className="block text-xs uppercase font-bold text-secondary mb-1"
@@ -193,16 +198,14 @@ export default function TrainerWorkoutExerciseFields({ control, register }: Trai
               </label>
               <input
                 id={`trainer-workout-exercise-${index}-reps`}
-                type="number"
-                min="1"
-                max="100"
-                step="1"
+                type="text"
+                placeholder="10-12"
                 {...register(`workoutExercises.${index}.reps`)}
-                className="w-full px-2 py-1.5 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                className="w-full min-h-9 px-2 py-1.5 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 data-testid={`trainer_workout-exercise-fields-reps-${field.id}`}
               />
             </div>
-            <div className="flex-1">
+            <div className="col-span-1 sm:col-span-2">
               <label
                 htmlFor={`trainer-workout-exercise-${index}-weight`}
                 className="block text-xs uppercase font-bold text-secondary mb-1"
@@ -214,11 +217,11 @@ export default function TrainerWorkoutExerciseFields({ control, register }: Trai
                 type="text"
                 placeholder="e.g. 50kg"
                 {...register(`workoutExercises.${index}.weight`)}
-                className="w-full px-2 py-1.5 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                className="w-full min-h-9 px-2 py-1.5 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 data-testid={`trainer_workout-exercise-fields-weight-${field.id}`}
               />
             </div>
-            <div className="flex-1">
+            <div className="col-span-1 sm:col-span-1">
               <label
                 htmlFor={`trainer-workout-exercise-${index}-rest`}
                 className="block text-xs uppercase font-bold text-secondary mb-1"
@@ -228,21 +231,21 @@ export default function TrainerWorkoutExerciseFields({ control, register }: Trai
               <input
                 id={`trainer-workout-exercise-${index}-rest`}
                 type="text"
-                placeholder="e.g. 60s"
+                placeholder="60s"
                 {...register(`workoutExercises.${index}.restTime`)}
-                className="w-full px-2 py-1.5 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                className="w-full min-h-9 px-2 py-1.5 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 data-testid={`trainer_workout-exercise-fields-rest-${field.id}`}
               />
             </div>
-            <div className="flex items-end pb-0.5">
+            <div className="col-span-2 sm:col-span-1 flex justify-end items-end">
               <button
                 type="button"
                 aria-label={t("TEXT_REMOVE_EXERCISE")}
                 onClick={() => void handleRemove(index)}
-                className="min-w-11 min-h-11 p-2 text-danger hover:bg-danger-bg rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                className="min-w-9 min-h-9 inline-flex items-center justify-center p-2 text-danger hover:bg-danger-bg rounded-lg motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
                 data-testid={`trainer_workout-exercise-fields-remove-${field.id}`}
               >
-                <Trash2 size={18} strokeWidth={2} />
+                <Trash2 size={16} strokeWidth={2} />
               </button>
             </div>
           </div>
@@ -251,7 +254,7 @@ export default function TrainerWorkoutExerciseFields({ control, register }: Trai
         {activeDayExercises.length === 0 && (
           <div className="text-center py-6 border border-dashed border-border rounded-xl text-secondary text-sm">
             <Dumbbell size={18} className="mx-auto mb-2 opacity-50" strokeWidth={2} />
-            No exercises added for {activeDay} yet. Click "+ Add Exercise" above.
+            No exercises added for {activeDay} yet. Click &ldquo;+ Add Exercise&rdquo; above.
           </div>
         )}
       </div>

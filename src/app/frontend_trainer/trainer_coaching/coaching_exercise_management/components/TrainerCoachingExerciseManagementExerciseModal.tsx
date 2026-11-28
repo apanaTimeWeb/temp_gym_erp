@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { X, Save } from 'lucide-react';
+import { Loader2, X, Save } from 'lucide-react';
 
 import { useTranslations } from 'next-intl';
 
@@ -112,46 +112,46 @@ export default function TrainerWorkoutExerciseModal() {
   if (!showExModal) return null;
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay-backdrop p-4 " role="presentation">
-      <div className="my-auto flex max-h-dialog-desktop w-full max-w-md flex-col overflow-hidden rounded-2xl bg-overlay shadow-dialog " ref={dialogRef} role="dialog" aria-modal={true} aria-labelledby="trainer-workout-exercise-modal-title">
-        <div className="flex justify-between items-center p-5 border-b border-border shrink-0 bg-overlay ">
-          <h3 id="trainer-workout-exercise-modal-title" className="font-bold text-lg text-text-primary ">
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-overlay-backdrop p-3 sm:p-4" role="presentation">
+      <div className="my-auto flex max-h-[90vh] w-full max-w-lg flex-col rounded-2xl border border-border bg-white dark:bg-[#0F172A] shadow-dialog overflow-hidden" ref={dialogRef} role="dialog" aria-modal={true} aria-labelledby="trainer-workout-exercise-modal-title">
+        <div className="flex justify-between items-center p-4 sm:p-5 border-b border-border shrink-0 bg-white dark:bg-[#0F172A]">
+          <h3 id="trainer-workout-exercise-modal-title" className="font-bold text-lg text-text-primary">
             {editExercise ? t("TEXT_EDIT_EXERCISE") : t("TEXT_ADD_EXERCISE")}
           </h3>
-          <button 
+          <button
             type="button"
-            onClick={() => void guardNavigation(() => { setEditExerciseId(null); setShowExModal(false); })} 
-            className="min-h-11 text-secondary hover:text-primary hover:bg-primary-subtle p-1 rounded-md motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95" aria-label={t("TEXT_CANCEL")} data-testid="trainer_workout-trainerworkoutexercisemodal-button_1">
+            onClick={() => void guardNavigation(() => { setEditExerciseId(null); setShowExModal(false); })}
+            className="min-w-10 min-h-10 inline-flex items-center justify-center text-secondary hover:text-primary hover:bg-primary-subtle p-1.5 rounded-xl motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer" aria-label={t("TEXT_CANCEL")} data-testid="trainer_workout-trainerworkoutexercisemodal-button_1">
             <X size={18} strokeWidth={2} />
           </button>
         </div>
-        <form onSubmit={submitForm(handleSubmit)} className="min-h-0 flex-1 space-y-4 overflow-y-auto p-5 custom-scrollbar " data-testid="trainer_workout-trainerworkoutexercisemodal-form_2">
+        <form onSubmit={submitForm(handleSubmit)} className="min-h-0 flex-1 space-y-4 overflow-y-auto p-4 sm:p-5 custom-scrollbar" data-testid="trainer_workout-trainerworkoutexercisemodal-form_2">
           <div>
-            <label htmlFor="trainer-workout-exercise-name" className="block text-sm font-medium text-secondary mb-1 ">{t("TEXT_EXERCISE_NAME")}</label>
+            <label htmlFor="trainer-workout-exercise-name" className="block text-sm font-medium text-secondary mb-1">{t("TEXT_EXERCISE_NAME")}</label>
             <input id="trainer-workout-exercise-name"
-              type="text" 
+              type="text"
               {...register('name')}
               aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? "trainer-workout-exercise-name-error" : undefined}
-              className={`w-full px-3 py-2 border rounded-lg focus-visible:outline-none focus-visible:ring-2 ${
+              className={`w-full min-h-11 px-3 py-2 border rounded-lg focus-visible:outline-none focus-visible:ring-2 ${
                 errors.name ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-focus-ring'
-              } bg-input text-text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_workout-trainerworkoutexercisemodal-input_3"/>
-            {errors.name && <p id="trainer-workout-exercise-name-error" role="alert" className="text-danger text-xs mt-1 " data-testid={"trainer_workout-exercise_modal-error_state_109_1"}>{t(errors.name?.message || '')}</p>}
+              } bg-input text-text-primary`} data-testid="trainer_workout-trainerworkoutexercisemodal-input_3"/>
+            {errors.name && <p id="trainer-workout-exercise-name-error" role="alert" className="text-danger text-xs mt-1" data-testid={"trainer_workout-exercise_modal-error_state_109_1"}>{t(errors.name?.message || '')}</p>}
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="trainer-workout-exercise-muscle" className="block text-sm font-medium text-secondary mb-1 ">{t("TEXT_PRIMARY_MUSCLE")}</label>
+              <label htmlFor="trainer-workout-exercise-muscle" className="block text-sm font-medium text-secondary mb-1">{t("TEXT_PRIMARY_MUSCLE")}</label>
               <input id="trainer-workout-exercise-muscle"
-                type="text" 
-                placeholder={t("TEXT_E_G_CHEST_QUADRICEPS")} 
+                type="text"
+                placeholder={t("TEXT_E_G_CHEST_QUADRICEPS")}
                 {...register('muscle')}
                 aria-invalid={Boolean(errors.muscle)} aria-describedby={errors.muscle ? "trainer-workout-exercise-muscle-error" : undefined}
-                className={`w-full px-3 py-2 border rounded-lg focus-visible:outline-none focus-visible:ring-2 ${
+                className={`w-full min-h-11 px-3 py-2 border rounded-lg focus-visible:outline-none focus-visible:ring-2 ${
                   errors.muscle ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-focus-ring'
-                } bg-input text-text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95`} data-testid="trainer_workout-trainerworkoutexercisemodal-input_4"/>
-              {errors.muscle && <p id="trainer-workout-exercise-muscle-error" role="alert" className="text-danger text-xs mt-1 " data-testid={"trainer_workout-exercise_modal-error_state_121_2"}>{t(errors.muscle?.message || '')}</p>}
+                } bg-input text-text-primary`} data-testid="trainer_workout-trainerworkoutexercisemodal-input_4"/>
+              {errors.muscle && <p id="trainer-workout-exercise-muscle-error" role="alert" className="text-danger text-xs mt-1" data-testid={"trainer_workout-exercise_modal-error_state_121_2"}>{t(errors.muscle?.message || '')}</p>}
             </div>
             <div>
-              <label htmlFor="trainer-workout-exercise-category" className="block text-sm font-medium text-secondary mb-1 ">{t("TEXT_CATEGORY")}</label>
+              <label htmlFor="trainer-workout-exercise-category" className="block text-sm font-medium text-secondary mb-1">{t("TEXT_CATEGORY")}</label>
               <Controller
                 name="category"
                 control={control}
@@ -165,9 +165,9 @@ export default function TrainerWorkoutExerciseModal() {
               />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4 ">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="trainer-workout-exercise-equipment" className="block text-sm font-medium text-secondary mb-1 ">{t("TEXT_EQUIPMENT")}</label>
+              <label htmlFor="trainer-workout-exercise-equipment" className="block text-sm font-medium text-secondary mb-1">{t("TEXT_EQUIPMENT")}</label>
               <Controller
                 name="equipment"
                 control={control}
@@ -176,12 +176,12 @@ export default function TrainerWorkoutExerciseModal() {
                     value={field.value || ''}
                     onChange={field.onChange}
                     options={TRAINER_WORKOUT_EQUIPMENT_OPTIONS.map(eq => ({ label: t(eq.labelKey), value: eq.value }))}
-                   id="trainer-workout-exercise-equipment" ariaLabel={t("TEXT_EQUIPMENT")} testId="trainer-workout-workout-exercise-modal-equipment"/>
+                    id="trainer-workout-exercise-equipment" ariaLabel={t("TEXT_EQUIPMENT")} testId="trainer-workout-workout-exercise-modal-equipment"/>
                 )}
               />
             </div>
             <div>
-              <label htmlFor="trainer-workout-exercise-difficulty" className="block text-sm font-medium text-secondary mb-1 ">{t("TEXT_DIFFICULTY")}</label>
+              <label htmlFor="trainer-workout-exercise-difficulty" className="block text-sm font-medium text-secondary mb-1">{t("TEXT_DIFFICULTY")}</label>
               <Controller
                 name="difficulty"
                 control={control}
@@ -190,42 +190,45 @@ export default function TrainerWorkoutExerciseModal() {
                     value={field.value || ''}
                     onChange={field.onChange}
                     options={TRAINER_WORKOUT_EXERCISE_DIFFICULTY_OPTIONS.map(d => ({ label: t(d.labelKey), value: d.value }))}
-                   id="trainer-workout-exercise-difficulty" ariaLabel={t("TEXT_DIFFICULTY")} testId="trainer-workout-workout-exercise-modal-difficulty"/>
+                    id="trainer-workout-exercise-difficulty" ariaLabel={t("TEXT_DIFFICULTY")} testId="trainer-workout-workout-exercise-modal-difficulty"/>
                 )}
               />
             </div>
           </div>
           <div>
-            <label htmlFor="trainer-workout-exercise-video-url" className="block text-sm font-medium text-secondary mb-1 ">{t("TEXT_VIDEO_IMAGE_URL")}</label>
+            <label htmlFor="trainer-workout-exercise-video-url" className="block text-sm font-medium text-secondary mb-1">{t("TEXT_VIDEO_IMAGE_URL")}</label>
             <input id="trainer-workout-exercise-video-url"
-              type="url" 
-              placeholder={t("TEXT_E_G_HTTPS_YOUTUBE_COM")} 
+              type="url"
+              placeholder={t("TEXT_E_G_HTTPS_YOUTUBE_COM")}
               {...register('videoUrl')}
               aria-invalid={Boolean(errors.videoUrl)} aria-describedby={errors.videoUrl ? "trainer-workout-exercise-video-error" : undefined}
-              className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-text-primary  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_workout-trainerworkoutexercisemodal-input_7"/>
+              className={`w-full min-h-11 px-3 py-2 border rounded-lg focus-visible:outline-none focus-visible:ring-2 ${
+                errors.videoUrl ? 'border-danger focus-visible:ring-danger' : 'border-border focus-visible:ring-focus-ring'
+              } bg-input text-text-primary`} data-testid="trainer_workout-trainerworkoutexercisemodal-input_7"/>
             {errors.videoUrl && <p id="trainer-workout-exercise-video-error" role="alert" className="mt-1 text-xs text-danger">{t("ERR_INVALID_MEDIA_URL")}</p>}
           </div>
           <div>
-            <label htmlFor="trainer-workout-exercise-instructions" className="block text-sm font-medium text-secondary mb-1 ">{t("TEXT_INSTRUCTIONS_SETS_REPS")}</label>
+            <label htmlFor="trainer-workout-exercise-instructions" className="block text-sm font-medium text-secondary mb-1">{t("TEXT_INSTRUCTIONS_SETS_REPS")}</label>
             <textarea id="trainer-workout-exercise-instructions"
               rows={2}
-              placeholder={t("TEXT_E_G_3_SETS_OF_10_12_REPS_KEEP_BACK_STRAIGHT")} 
+              placeholder={t("TEXT_E_G_3_SETS_OF_10_12_REPS_KEEP_BACK_STRAIGHT")}
               {...register('instructions')}
               aria-invalid={Boolean(errors.instructions)}
-              className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-text-primary custom-scrollbar  motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_workout-trainerworkoutexercisemodal-textarea_8"/>
+              className="w-full px-3 py-2 border border-border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring bg-input text-text-primary custom-scrollbar" data-testid="trainer_workout-trainerworkoutexercisemodal-textarea_8"/>
           </div>
-          
-          <div className="sticky bottom-0 bg-overlay border-t border-border pt-3 flex justify-end gap-3 z-10 shrink-0 ">
-            <button 
-              type="button" 
-              onClick={() => void guardNavigation(() => { setEditExerciseId(null); setShowExModal(false); })} 
-              className="min-h-11 px-4 py-2 border border-border rounded-lg font-medium text-secondary hover:text-primary hover:bg-primary-subtle motion-safe:transition-colors motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page motion-safe:transition-all motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_workout-trainerworkoutexercisemodal-button_9">
-              {t("TEXT_CANCEL")}</button>
-            <button 
-              type="submit" 
+
+          <div className="sticky bottom-0 bg-white dark:bg-[#0F172A] border-t border-border pt-3 pb-1 flex flex-col-reverse sm:flex-row justify-end gap-2.5 z-10 shrink-0">
+            <button
+              type="button"
+              onClick={() => void guardNavigation(() => { setEditExerciseId(null); setShowExModal(false); })}
+              className="min-h-11 px-4 py-2 border border-border rounded-xl font-semibold text-secondary hover:text-text-primary hover:bg-input motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer" data-testid="trainer_workout-trainerworkoutexercisemodal-button_9">
+              {t("TEXT_CANCEL")}
+            </button>
+            <button
+              type="submit"
               disabled={isSaving}
-              className="min-h-11 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page px-4 py-2 rounded-lg font-medium text-on-primary bg-primary flex items-center gap-2 hover:bg-primary-hover motion-safe:transition-colors disabled:opacity-70 motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out motion-safe:active:scale-95" data-testid="trainer_workout-trainerworkoutexercisemodal-button_10">
-              {isSaving ? <div className="w-4 h-4 border-2 border-focus border-t-primary rounded-full motion-safe:animate-spin" /> : <><Save size={18}  strokeWidth={2}/> {t("TEXT_SAVE")}</>}
+              className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-2 rounded-xl font-semibold text-on-primary bg-primary hover:bg-primary-hover motion-safe:transition-colors disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer" data-testid="trainer_workout-trainerworkoutexercisemodal-button_10">
+              {isSaving ? <><Loader2 size={16} className="motion-safe:animate-spin" /><span>Saving...</span></> : <><Save size={17} strokeWidth={2}/><span>{t("TEXT_SAVE")}</span></>}
             </button>
           </div>
         </form>

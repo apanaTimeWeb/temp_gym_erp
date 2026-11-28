@@ -73,7 +73,7 @@ export default function TrainerSessionsKPIs(_props: TrainerSessionsKPIsProps = {
   };
 
   return (
-    <div className="grid grid-cols-1 gap-4 mb-6 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 min-w-0">
       {TRAINER_SESSIONS_KPI_CARD_CONFIG.map(({ key, labelKey, icon: Icon, iconClass, bgClass }) => {
         const accent = kpiAccents[key] ?? kpiAccents.today;
         return (

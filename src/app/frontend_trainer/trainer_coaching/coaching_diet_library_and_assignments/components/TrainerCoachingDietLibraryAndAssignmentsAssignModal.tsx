@@ -118,8 +118,8 @@ export default function TrainerLibraryAssignModal({
   };
 
   return (
-    <div className="fixed inset-0 z-40 bg-overlay-backdrop flex items-center justify-center overflow-y-auto p-4" role="presentation" data-testid={testId ?? "trainer_library-assign-modal"}>
-      <div ref={dialogRef} tabIndex={-1} className="my-auto w-full max-w-lg bg-overlay border border-border rounded-2xl shadow-dialog p-6 max-h-dialog-desktop flex flex-col overflow-hidden" role="dialog" aria-modal="true" aria-labelledby={titleId}>
+    <div className="fixed inset-0 z-50 bg-overlay-backdrop flex items-center justify-center overflow-y-auto p-3 sm:p-4" role="presentation" data-testid={testId ?? "trainer_library-assign-modal"}>
+      <div ref={dialogRef} tabIndex={-1} className="my-auto w-full max-w-lg bg-white dark:bg-[#0F172A] border border-border rounded-2xl shadow-dialog p-5 sm:p-6 max-h-[90vh] flex flex-col overflow-hidden" role="dialog" aria-modal="true" aria-labelledby={titleId}>
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-border shrink-0">
           <div>
@@ -174,8 +174,18 @@ export default function TrainerLibraryAssignModal({
                 value={memberSearch}
                 onChange={(e) => setMemberSearch(e.target.value)}
                 placeholder="Search member by name..."
-                className="w-full ps-9 pe-3 py-2 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                className="w-full ps-9 pe-8 py-2 text-sm bg-input border border-border rounded-lg text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
               />
+              {memberSearch && (
+                <button
+                  type="button"
+                  onClick={() => setMemberSearch('')}
+                  aria-label="Clear member search"
+                  className="absolute end-2.5 top-1/2 -translate-y-1/2 text-secondary hover:text-text-primary p-0.5 cursor-pointer"
+                >
+                  <X size={13} />
+                </button>
+              )}
             </div>
           </div>
 

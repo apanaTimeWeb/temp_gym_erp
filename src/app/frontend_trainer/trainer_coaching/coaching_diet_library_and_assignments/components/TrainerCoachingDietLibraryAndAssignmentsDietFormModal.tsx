@@ -15,6 +15,10 @@ import {
 } from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/schemas/TrainerCoachingDietLibraryAndAssignmentsDietFormSchema';
 import type { TrainerLibraryDietPlan } from '@/app/frontend_trainer/trainer_coaching/coaching_diet_library_and_assignments/types/TrainerCoachingDietLibraryAndAssignmentsTypes';
 
+function createDietFormIdempotencyKey(): string {
+  return `diet-form-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+}
+
 export interface TrainerLibraryDietFormModalProps {
   isOpen: boolean;
   plan: TrainerLibraryDietPlan | null;
@@ -107,22 +111,22 @@ export default function TrainerLibraryDietFormModal({
   if (!isOpen) return null;
 
   const handleFormSubmit = async (values: TrainerLibraryDietPlanFormValues) => {
-    const idempotencyKey = `diet-form-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    const idempotencyKey = createDietFormIdempotencyKey();
     await onSubmit(values, idempotencyKey);
   };
 
   return (
-    <div className="fixed inset-0 bg-overlay-backdrop z-50 flex items-center justify-center p-4 overflow-y-auto" role="presentation">
+    <div className="fixed inset-0 bg-overlay-backdrop z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto" role="presentation">
       <div
         ref={dialogRef}
-        className="my-auto bg-card border border-border rounded-2xl shadow-dialog w-full max-w-2xl max-h-dialog-desktop flex flex-col overflow-hidden"
+        className="my-auto bg-white dark:bg-[#0F172A] border border-border rounded-2xl shadow-dialog w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden"
         role="dialog"
         aria-modal="true"
         aria-labelledby="diet-form-title"
         tabIndex={-1}
       >
         {/* Modal Header */}
-        <div className="shrink-0 bg-card px-6 py-4 border-b border-border flex items-center justify-between rounded-t-2xl">
+        <div className="shrink-0 bg-white dark:bg-[#0F172A] px-5 sm:px-6 py-4 border-b border-border flex items-center justify-between rounded-t-2xl">
           <div>
             <h3 id="diet-form-title" className="text-lg font-bold text-text-primary">
               {isEdit ? t('TEXT_EDIT_DIET_PLAN') ?? 'Edit Diet Plan' : t('TEXT_CREATE_CUSTOM_DIET_PLAN') ?? 'Create Custom Diet Plan'}
@@ -174,7 +178,7 @@ export default function TrainerLibraryDietFormModal({
               <select
                 id="diet-goal"
                 {...register('goal')}
-                className="w-full px-3 py-2 bg-input border border-border rounded-xl text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+                className="w-full min-h-10 px-3 py-2 bg-white dark:bg-[#0F172A] dark:[color-scheme:dark] border border-border rounded-xl text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
               >
                 {TRAINER_LIBRARY_GOALS.map((g) => (
                   <option key={g.value} value={g.value}>
@@ -272,7 +276,7 @@ export default function TrainerLibraryDietFormModal({
           />
 
           {/* Action Buttons */}
-          <div className="pt-4 border-t border-border flex items-center justify-end gap-3 sticky bottom-0 bg-card shrink-0">
+          <div className="pt-4 border-t border-border flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sticky bottom-0 bg-white dark:bg-[#0F172A] shrink-0">
             <button
               type="button"
               onClick={onClose}

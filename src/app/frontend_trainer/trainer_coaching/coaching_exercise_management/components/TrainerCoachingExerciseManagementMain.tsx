@@ -5,5 +5,5 @@ import TrainerWorkoutToolbar from '@/app/frontend_trainer/trainer_coaching/coach
 import TrainerWorkoutExercisesView from '@/app/frontend_trainer/trainer_coaching/coaching_exercise_management/components/TrainerCoachingExerciseManagementExercisesView';
 import TrainerWorkoutExerciseModal from '@/app/frontend_trainer/trainer_coaching/coaching_exercise_management/components/TrainerCoachingExerciseManagementExerciseModal';
 export default function TrainerCoachingExerciseManagementMain() {
-  return <section className="min-h-full space-y-5 bg-page p-4 text-text-primary sm:p-6"><TrainerWorkoutBanner /><div className="overflow-hidden rounded-xl border border-border bg-card shadow-card"><TrainerWorkoutToolbar/><div className="p-5"><TrainerWorkoutExercisesView/></div></div><TrainerWorkoutExerciseModal/></section>;
+  return <section className="min-h-full space-y-5 bg-page p-4 text-text-primary sm:p-6"><TrainerWorkoutBanner /><div className="rounded-xl border border-border bg-card shadow-card"><TrainerWorkoutToolbar/><div className="p-5"><TrainerWorkoutExercisesView/></div></div><TrainerWorkoutExerciseModal/></section>;
 }

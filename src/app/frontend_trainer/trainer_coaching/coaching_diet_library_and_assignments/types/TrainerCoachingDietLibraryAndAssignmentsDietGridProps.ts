@@ -10,4 +10,5 @@ export interface TrainerLibraryDietGridProps {
   search: string;
   onPageChange: (page: number) => void;
   onViewDiet: (plan: TrainerLibraryDietPlan) => void;
+  onRetry?: () => void;
 }

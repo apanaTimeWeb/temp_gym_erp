@@ -78,20 +78,20 @@ export default function AdminBillingPlansCatalogGrid({ logic }: AdminPlansGridPr
                     className="min-h-11 min-w-11 p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-hover motion-safe:transition-all motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page ease-in-out motion-safe:active:scale-95"
                     title={t('plans.admin_plans_grid.text_13a7a7c3a7')}
                     aria-label={t('admin_plans_grid.auto_edit', { name: p.name })}
-                   data-testid={`admin_plans-admin_plans-grid-click-map61-${i}-2`}>
-                    <Edit2 size={18}  strokeWidth={2}/>
+                    data-testid={`admin_plans-admin_plans-grid-click-map61-${i}-2`}>
+                    <Edit2 size={18} strokeWidth={2} />
                   </button>
                   <button type="button"
-                  disabled={deletingPlanId === p.id}
-                  aria-busy={deletingPlanId === p.id}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (!deletingPlanId) void deletePlan(p.id);
-                  }}
+                    disabled={deletingPlanId === p.id}
+                    aria-busy={deletingPlanId === p.id}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (!deletingPlanId) void deletePlan(p.id);
+                    }}
                     className="min-h-11 min-w-11 p-1.5 rounded-lg text-danger hover:bg-danger-bg motion-safe:transition-all motion-safe:duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page ease-in-out motion-safe:active:scale-95"
                     title={t('plans.admin_plans_grid.text_75cd512896')}
                     aria-label={t('admin_plans_grid.auto_delete', { name: p.name })}
-                   data-testid={`admin_plans-admin_plans-grid-click-2-map61-${i}-3`}>
+                    data-testid={`admin_plans-admin_plans-grid-click-2-map61-${i}-3`}>
                     {deletingPlanId === p.id ? <Loader2 size={18} className="motion-safe:animate-spin" strokeWidth={2} /> : <Trash2 size={18} strokeWidth={2} />}
                   </button>
                 </div>
@@ -118,17 +118,17 @@ export default function AdminBillingPlansCatalogGrid({ logic }: AdminPlansGridPr
 
               <div>
                 <p className="text-xs font-bold text-text-primary uppercase tracking-wide mb-3 flex items-center gap-1.5">
-                  <Tag size={18}  strokeWidth={2}/> {t('plans.admin_plans_grid.text_fc338f87a0')}</p>
+                  <Tag size={18} strokeWidth={2} /> {t('plans.admin_plans_grid.text_fc338f87a0')}</p>
                 <ul className="space-y-2.5">
                   {p.features.map((feature) => (
                     <li key={`${p.id}-${feature}`} className="flex items-start gap-2 text-sm text-secondary">
-                      <CheckCircle size={18} className="text-success flex-shrink-0 mt-0.5"  strokeWidth={2}/>
+                      <CheckCircle size={18} className="text-success flex-shrink-0 mt-0.5" strokeWidth={2} />
                       <span>{feature}</span>
                     </li>
                   ))}
                   {p.freezeAllowed && (
                     <li className="flex items-start gap-2 text-sm text-secondary">
-                      <Snowflake size={18} className="text-info flex-shrink-0 mt-0.5"  strokeWidth={2}/>
+                      <Snowflake size={18} className="text-info flex-shrink-0 mt-0.5" strokeWidth={2} />
                       <span>{t('plans.admin_plans_grid.text_7346564378')}</span>
                     </li>
                   )}
