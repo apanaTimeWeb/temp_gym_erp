@@ -189,7 +189,7 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
             </button>
           </div>
         )}
-        <nav className={`flex-1 overflow-y-auto py-3 ${!isCollapsed || isMobileOpen ? 'px-2.5 space-y-3' : 'px-1.5 space-y-2'} trainer-shell-scrollbar`} aria-label={t('TEXT_TRAINER_NAVIGATION')}>
+        <nav className={`flex-1 overflow-y-auto py-3.5 ${!isCollapsed || isMobileOpen ? 'px-2.5 space-y-4' : 'px-1.5 space-y-2.5'} trainer-shell-scrollbar`} aria-label={t('TEXT_TRAINER_NAVIGATION')}>
           {filteredNavGroups.length === 0 ? (
             <p className="text-center py-4 text-sm text-slate-400">{t('TEXT_NO_MATCHES_FOUND')}</p>
           ) : filteredNavGroups.map((group, groupIndex) => {
@@ -201,7 +201,10 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
             const groupColor = TRAINER_NAV_GROUP_COLORS[group.groupKey] ?? DEFAULT_TRAINER_NAV_COLOR;
             const GroupIcon = group.icon;
             return (
-              <div key={group.groupKey} className={!showLabel && groupIndex > 0 ? 'pt-2 border-t border-white/10' : ''}>
+              <div
+                key={group.groupKey}
+                className={groupIndex > 0 ? (showLabel ? 'pt-3 border-t border-white/[0.07]' : 'pt-2 border-t border-white/10') : ''}
+              >
                 {showLabel && (
                   <button
                     type="button"
@@ -210,7 +213,7 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
                     onClick={() => {
                       setExpandedGroups((previous) => ({ ...previous, [group.groupKey]: !showChildren }));
                     }}
-                    className={`flex w-full min-h-9 items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 text-start text-[11px] font-bold uppercase tracking-wider focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-colors ${activeGroup ? 'bg-white/[0.08]' : 'hover:bg-white/[0.05]'}`}
+                    className={`flex w-full min-h-8 items-center justify-between gap-2 rounded-lg px-2 py-1 text-start text-[11px] font-bold uppercase tracking-wider focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:transition-colors ${activeGroup ? 'bg-white/[0.04]' : 'hover:bg-white/[0.05]'}`}
                   >
                     <span className="flex items-center gap-2 min-w-0">
                       <span
@@ -230,7 +233,15 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
                     <ChevronDown size={14} strokeWidth={2.2} aria-hidden="true" className={`shrink-0 text-slate-400 motion-safe:transition-transform ${showChildren ? 'rotate-180' : ''}`} />
                   </button>
                 )}
-                <div id={sectionId} hidden={!showChildren} className={`${showLabel ? 'mt-1 space-y-1' : 'space-y-1.5 flex flex-col items-center'}`}>
+                <div
+                  id={sectionId}
+                  hidden={!showChildren}
+                  className={
+                    showLabel
+                      ? 'mt-2.5 space-y-1.5 ps-2 ms-1.5 border-s border-white/[0.08]'
+                      : 'space-y-1.5 flex flex-col items-center'
+                  }
+                >
                   {group.items.map((item) => {
                     const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
                     const Icon = item.icon;
@@ -248,7 +259,7 @@ export default function TrainerNavigationSidebar({ isCollapsed, setIsCollapsed, 
                             ? {
                                 borderColor: itemColor.iconColor,
                                 background: `linear-gradient(90deg, ${itemColor.activeBg} 0%, ${itemColor.bg} 55%, transparent 100%)`,
-                                boxShadow: itemColor.activeShadow,
+                                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.25)',
                               }
                             : undefined
                         }
