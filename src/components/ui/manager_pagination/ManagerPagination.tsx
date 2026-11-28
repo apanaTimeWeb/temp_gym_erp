@@ -30,31 +30,31 @@ export default function ManagerPagination({
   return (
     <nav
       aria-label="Pagination"
-      className={`flex flex-wrap items-center justify-between gap-3 px-2 py-3 ${className}`}
+      className={`flex flex-col sm:flex-row items-center justify-between gap-3 px-2 py-2.5 text-sm ${className}`}
       data-testid={testId}
     >
       <div className="text-xs text-secondary" aria-live="polite">
         {totalItems !== undefined && startItem !== null && endItem !== null ? (
           <span>
-            Showing <strong className="font-semibold text-primary">{startItem}</strong> to{' '}
-            <strong className="font-semibold text-primary">{endItem}</strong> of{' '}
-            <strong className="font-semibold text-primary">{totalItems}</strong> results
+            Showing <strong className="font-semibold text-text-primary">{startItem}</strong> to{' '}
+            <strong className="font-semibold text-text-primary">{endItem}</strong> of{' '}
+            <strong className="font-semibold text-text-primary">{totalItems}</strong> results
           </span>
         ) : (
           <span>
-            Page <strong className="font-semibold text-primary">{currentPage}</strong> of{' '}
-            <strong className="font-semibold text-primary">{Math.max(1, totalPages)}</strong>
+            Page <strong className="font-semibold text-text-primary">{currentPage}</strong> of{' '}
+            <strong className="font-semibold text-text-primary">{Math.max(1, totalPages)}</strong>
           </span>
         )}
       </div>
 
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-1.5 flex-wrap justify-center">
         <button
           type="button"
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage <= 1}
           aria-label="Previous page"
-          className="inline-flex min-h-9 min-w-9 items-center justify-center rounded-lg border border-border bg-card p-1 text-sm text-primary transition-colors hover:bg-surface-hover disabled:pointer-events-none disabled:opacity-40"
+          className="inline-flex min-h-9 min-w-9 items-center justify-center rounded-xl border border-border bg-input p-1.5 text-sm text-text-primary transition-all hover:border-orange-500/40 hover:bg-surface-hover disabled:pointer-events-none disabled:opacity-40 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
         >
           <ChevronLeft size={16} />
         </button>
@@ -72,10 +72,10 @@ export default function ManagerPagination({
               onClick={() => onPageChange(pageNum)}
               aria-label={`Go to page ${pageNum}`}
               aria-current={isActive ? 'page' : undefined}
-              className={`inline-flex min-h-9 min-w-9 items-center justify-center rounded-lg text-xs font-semibold transition-colors ${
+              className={`inline-flex min-h-9 min-w-9 items-center justify-center rounded-xl text-xs font-semibold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring ${
                 isActive
-                  ? 'bg-primary text-on-primary shadow-sm'
-                  : 'border border-border bg-card text-primary hover:bg-surface-hover'
+                  ? 'border border-orange-500/30 bg-primary text-on-primary shadow-sm shadow-orange-500/25'
+                  : 'border border-border bg-input text-text-primary hover:border-orange-500/40 hover:bg-surface-hover'
               }`}
             >
               {pageNum}
@@ -88,7 +88,7 @@ export default function ManagerPagination({
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage >= totalPages}
           aria-label="Next page"
-          className="inline-flex min-h-9 min-w-9 items-center justify-center rounded-lg border border-border bg-card p-1 text-sm text-primary transition-colors hover:bg-surface-hover disabled:pointer-events-none disabled:opacity-40"
+          className="inline-flex min-h-9 min-w-9 items-center justify-center rounded-xl border border-border bg-input p-1.5 text-sm text-text-primary transition-all hover:border-orange-500/40 hover:bg-surface-hover disabled:pointer-events-none disabled:opacity-40 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
         >
           <ChevronRight size={16} />
         </button>
@@ -96,4 +96,3 @@ export default function ManagerPagination({
     </nav>
   );
 }
-

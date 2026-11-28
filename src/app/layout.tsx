@@ -7,6 +7,14 @@ import { IntlProvider } from "@/providers/IntlProvider";
 export const metadata: Metadata = {
   title: "Smart Gym 360 | ERP",
   description: "Enterprise Gym Management & Operations Platform",
+  icons: {
+    icon: [
+      { url: "/gym-brand-icon.svg?v=2", type: "image/svg+xml" },
+      { url: "/favicon.ico?v=2", sizes: "32x32" },
+    ],
+    shortcut: "/gym-brand-icon.svg?v=2",
+    apple: "/gym-brand-icon.svg?v=2",
+  },
 };
 
 export default function RootLayout({

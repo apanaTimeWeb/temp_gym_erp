@@ -15,23 +15,23 @@ export default function ManagerTableSkeleton({
     <div
       role="status"
       aria-label="Loading table data"
-      className={`w-full overflow-hidden rounded-xl border border-border bg-card p-4 shadow-card ${className}`}
+      className={`w-full overflow-hidden rounded-2xl border border-border dark:border-white/15 bg-card p-5 shadow-card ${className}`}
     >
       <div className="space-y-3">
         <div className="flex gap-4 border-b border-border pb-3">
           {Array.from({ length: columns }, (_, i) => (
             <div
               key={`header-${i}`}
-              className="h-4 flex-1 animate-pulse rounded bg-surface-highlight"
+              className="h-4 flex-1 animate-pulse rounded-lg bg-surface-highlight"
             />
           ))}
         </div>
         {Array.from({ length: rows }, (_, r) => (
-          <div key={`row-${r}`} className="flex gap-4 py-2">
+          <div key={`row-${r}`} className="flex gap-4 py-2.5">
             {Array.from({ length: columns }, (_, c) => (
               <div
                 key={`cell-${r}-${c}`}
-                className="h-4 flex-1 animate-pulse rounded bg-surface-highlight/70"
+                className="h-4 flex-1 animate-pulse rounded-lg bg-surface-highlight/70"
               />
             ))}
           </div>
@@ -41,4 +41,3 @@ export default function ManagerTableSkeleton({
     </div>
   );
 }
-

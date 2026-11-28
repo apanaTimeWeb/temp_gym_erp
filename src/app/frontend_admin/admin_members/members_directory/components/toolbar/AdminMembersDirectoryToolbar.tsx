@@ -68,7 +68,7 @@ export default function AdminMembersDirectoryToolbar() {
 
   return (
     <div className="flex flex-col sm:flex-row gap-3 flex-wrap">
-      <div className="relative flex-1 min-w-48">
+      <div className="relative flex-1 min-w-0 sm:min-w-48">
         <span className="absolute inset-y-0 left-3 flex items-center"><Search size={18} className="text-secondary pointer-events-none"  strokeWidth={2}/></span>
         <input
           type="text"
@@ -79,7 +79,7 @@ export default function AdminMembersDirectoryToolbar() {
           aria-label={t('members.admin_members_toolbar.text_a1d97aee95')}
          data-testid="admin_members-admin_members-toolbar-control"/>
       </div>
-      <div className="w-full sm:w-auto flex items-center gap-2">
+      <div className="w-full sm:w-auto flex flex-wrap items-center gap-2">
         <button type="button" onClick={() => void exportMembers()} disabled={isExporting} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 py-2 text-sm font-semibold text-text-primary hover:bg-surface-hover disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="admin_members-admin_members-toolbar-export">
           <Download size={18} aria-hidden="true" strokeWidth={2} />{isExporting ? t('members.AdminAuditRepair.exportingCsv') : t('members.AdminAuditRepair.exportCsv')}
         </button>

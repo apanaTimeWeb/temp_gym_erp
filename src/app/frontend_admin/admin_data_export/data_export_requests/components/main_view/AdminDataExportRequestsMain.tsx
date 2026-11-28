@@ -96,7 +96,7 @@ export default function AdminDataExportRequestsMain() {
   };
 
   return (
-    <main data-testid="admin_data_export-admin_data_export-main-state" className="space-y-6">
+    <main data-testid="admin_data_export-admin_data_export-main-state" className="min-h-full p-4 sm:p-6 pb-10 space-y-6">
       <header>
         <h1 className="text-page-title font-bold text-text-primary">{t('text_title')}</h1>
         <p className="mt-1 text-sm text-secondary">{t('text_description')}</p>

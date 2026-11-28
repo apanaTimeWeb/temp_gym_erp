@@ -46,7 +46,7 @@ export default function AdminReportsCrossDomainOverview() {
               <p className="text-xs text-secondary mt-0.5">Comprehensive multi-domain business intelligence, visual graph analytics and performance audits</p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
             <Link
               href="/frontend_admin/admin_gyms/gyms_comparison"
               className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-border bg-card px-3.5 py-2 text-xs font-semibold text-text-primary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shadow-sm"
@@ -66,14 +66,14 @@ export default function AdminReportsCrossDomainOverview() {
       </header>
 
       {/* EXECUTIVE PERFORMANCE SNAPSHOT GRAPHS & METRICS */}
-      <section className="rounded-2xl border border-border bg-card p-6 shadow-card space-y-6" aria-label="Executive Performance Overview">
+      <section className="rounded-2xl border border-border bg-card p-4 sm:p-6 shadow-card space-y-6" aria-label="Executive Performance Overview">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border pb-4">
-          <div className="flex items-center gap-2">
-            <BarChart3 size={18} className="text-primary" />
-            <h2 className="text-base font-bold text-text-primary">Cross-Domain Performance Benchmarks & Trend Graphs</h2>
+          <div className="flex items-center gap-2 min-w-0">
+            <BarChart3 size={18} className="text-primary shrink-0" />
+            <h2 className="text-base font-bold text-text-primary truncate">Cross-Domain Performance Benchmarks & Trend Graphs</h2>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="flex items-center rounded-xl border border-border bg-surface-highlight p-1">
+          <div className="flex flex-wrap items-center gap-2 max-w-full">
+            <div className="flex items-center overflow-x-auto max-w-full rounded-xl border border-border bg-surface-highlight p-1 trainer-shell-scrollbar">
               <button
                 type="button"
                 onClick={() => setActiveChartTab('financial')}

@@ -1,0 +1,63 @@
+/* RESPONSIBILITY: Defines Manager shell geometry and scrollbar visuals exclusively through global design-system tokens. */
+.manager-shell-header-height {
+  height: var(--layout-header-height);
+}
+
+.manager-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: var(--layout-sidebar-width);
+  z-index: 32;
+  height: var(--layout-header-height);
+}
+
+.manager-header-collapsed {
+  left: var(--layout-sidebar-width-collapsed);
+}
+
+.manager-header-expanded {
+  left: var(--layout-sidebar-width);
+}
+
+@media (max-width: 767px) {
+  .manager-header,
+  .manager-header-collapsed,
+  .manager-header-expanded {
+    left: 0;
+  }
+}
+
+.manager-shell-sidebar-width {
+  width: var(--layout-sidebar-width);
+}
+
+.manager-shell-sidebar-width-collapsed {
+  width: var(--layout-sidebar-width-collapsed);
+}
+
+.manager-shell-content-offset {
+  margin-left: var(--layout-sidebar-width);
+}
+
+.manager-shell-content-offset-collapsed {
+  margin-left: var(--layout-sidebar-width-collapsed);
+}
+
+.manager-shell-scrollbar {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.manager-shell-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+@media (max-width: 767px) {
+  .manager-shell-content-offset,
+  .manager-shell-content-offset-collapsed {
+    margin-left: 0;
+  }
+}

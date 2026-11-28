@@ -17,6 +17,7 @@ export interface TrainerAttendanceToolbarProps {
   setFilterDate: (date: string) => void;
   onAddRecord: () => void;
   onRefresh: () => void | Promise<void>;
+  onExportCsv?: () => void;
   onSelfCheckIn: () => void | Promise<void>;
   onSelfCheckOut: () => void | Promise<void>;
   selfCheckInPending: boolean;

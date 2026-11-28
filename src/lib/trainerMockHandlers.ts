@@ -51,13 +51,53 @@ function buildMockSuccess<T>(data: T, message = 'Success', meta?: any): ApiRespo
   return envelope as unknown as ApiResponse<T>;
 }
 
+function sortRecords<T extends Record<string, any>>(
+  items: T[],
+  sortBy: string | null,
+  sortDirection: string | null,
+  fieldMap: Record<string, (item: T) => string | number> = {}
+): T[] {
+  if (!sortBy) return items;
+  const dir = sortDirection === 'desc' ? -1 : 1;
+  const getter = fieldMap[sortBy] ?? ((item: T) => {
+    const val = item[sortBy];
+    if (typeof val === 'number') return val;
+    if (val == null) return '';
+    return String(val);
+  });
+  return [...items].sort((a, b) => {
+    const av = getter(a);
+    const bv = getter(b);
+    if (typeof av === 'number' && typeof bv === 'number') return (av - bv) * dir;
+    return String(av).localeCompare(String(bv), undefined, { numeric: true, sensitivity: 'base' }) * dir;
+  });
+}
+
 // In-memory mutable states
-let currentMembers = JSON.parse(JSON.stringify(TRAINER_MEMBERS_MOCK_MEMBERS));
+const currentMembers = JSON.parse(JSON.stringify(TRAINER_MEMBERS_MOCK_MEMBERS));
 let currentWorkouts = JSON.parse(JSON.stringify(TRAINER_WORKOUT_MOCK_WORKOUTS));
 let currentExercises = JSON.parse(JSON.stringify(TRAINER_WORKOUT_MOCK_EXERCISES));
-let currentDietPlans = JSON.parse(JSON.stringify(TRAINER_LIBRARY_MOCK_LIBRARY_DIET_PLANS));
-let currentAssignedMembers = JSON.parse(JSON.stringify(TRAINER_LIBRARY_MOCK_LIBRARY_ASSIGNED_MEMBERS));
+const currentDietPlans = JSON.parse(JSON.stringify(TRAINER_LIBRARY_MOCK_LIBRARY_DIET_PLANS));
+const currentAssignedMembers = JSON.parse(JSON.stringify(TRAINER_LIBRARY_MOCK_LIBRARY_ASSIGNED_MEMBERS));
 let currentSessions = JSON.parse(JSON.stringify(TRAINER_SESSIONS_MOCK_TRAINER_SESSIONS));
+let currentBookingRequests = [
+  {
+    id: 'req-1',
+    clientName: 'Rahul Verma',
+    preferredDate: 'Tomorrow',
+    preferredTime: '07:00 AM - 08:00 AM',
+    sessionType: '1-on-1 PT (Hypertrophy)',
+    notes: 'Focus on chest & triceps technique',
+  },
+  {
+    id: 'req-2',
+    clientName: 'Sneha Patel',
+    preferredDate: 'Thursday',
+    preferredTime: '06:00 PM - 07:00 PM',
+    sessionType: 'Fat Loss & HIIT PT',
+    notes: 'Knee injury recovery, low impact',
+  },
+];
 function generateTrainerMockAttendance() {
   const base = JSON.parse(JSON.stringify(TRAINER_ATTENDANCE_MOCK_RECORDS));
   const now = new Date();
@@ -112,13 +152,13 @@ function generateTrainerMockAttendance() {
   return base;
 }
 
-let currentAttendance = generateTrainerMockAttendance();
+const currentAttendance = generateTrainerMockAttendance();
 let currentAvailability = JSON.parse(JSON.stringify(TRAINER_SCHEDULE_MOCK_AVAILABILITY));
 let currentLeaves = JSON.parse(JSON.stringify(TRAINER_SCHEDULE_MOCK_LEAVES));
-let currentProgressMembers = JSON.parse(JSON.stringify(TRAINER_PROGRESS_TRACKING_MOCK_PROGRESS_MEMBERS));
+const currentProgressMembers = JSON.parse(JSON.stringify(TRAINER_PROGRESS_TRACKING_MOCK_PROGRESS_MEMBERS));
 let currentProgressEntries = JSON.parse(JSON.stringify(TRAINER_PROGRESS_TRACKING_MOCK_PROGRESS_ENTRIES));
-let currentTrainerProfile = JSON.parse(JSON.stringify(TRAINER_PROFILE_MOCK_TRAINER_PROFILE));
-let currentNotifications = JSON.parse(JSON.stringify(TRAINER_NOTIFICATIONS_MOCK_TRAINER_NOTIFICATIONS));
+const currentTrainerProfile = JSON.parse(JSON.stringify(TRAINER_PROFILE_MOCK_TRAINER_PROFILE));
+const currentNotifications = JSON.parse(JSON.stringify(TRAINER_NOTIFICATIONS_MOCK_TRAINER_NOTIFICATIONS));
 
 export function handleTrainerMockApiRequest(
   urlPath: string,
@@ -262,13 +302,20 @@ export function handleTrainerMockApiRequest(
     if (search) {
       filtered = filtered.filter((d: any) => d.name.toLowerCase().includes(search) || d.description?.toLowerCase().includes(search));
     }
-    if (goal && goal !== 'ALL' && goal !== 'All Goals') {
+    if (goal && goal !== 'ALL' && goal !== 'All' && goal !== 'All Goals') {
       filtered = filtered.filter((d: any) => d.goal?.toLowerCase() === goal.toLowerCase());
     }
 
+    const page = Math.max(1, Number(searchParams.get('page') || '1'));
+    const limit = Math.max(1, Number(searchParams.get('limit') || '10'));
+    const total = filtered.length;
+    const paginated = filtered.slice((page - 1) * limit, page * limit);
+
     return buildMockSuccess({
-      dietPlans: filtered,
-      total: filtered.length,
+      dietPlans: paginated,
+      total,
+      page,
+      limit,
     }, 'Diet plans loaded successfully');
   }
 
@@ -412,12 +459,16 @@ export function handleTrainerMockApiRequest(
         currentProgressEntries.push(...memberEntries);
       }
 
+      const sortBy = searchParams.get('sortBy') || 'date';
+      const sortDirection = searchParams.get('sortDirection') || 'desc';
+      const sortedEntries = sortRecords(memberEntries, sortBy, sortDirection);
+
       // If page param is provided, return paginated object expected by progress tracking views
       if (searchParams.has('page') || searchParams.has('limit')) {
         const page = Math.max(1, Number(searchParams.get('page') || '1'));
         const limit = Math.max(1, Number(searchParams.get('limit') || '10'));
-        const total = memberEntries.length;
-        const paginated = memberEntries.slice((page - 1) * limit, page * limit);
+        const total = sortedEntries.length;
+        const paginated = sortedEntries.slice((page - 1) * limit, page * limit);
         return buildMockSuccess({
           entries: paginated,
           total,
@@ -427,7 +478,7 @@ export function handleTrainerMockApiRequest(
       }
 
       // If no page param, return the raw array expected by member profile modal
-      return buildMockSuccess(memberEntries, 'Progress entries retrieved successfully');
+      return buildMockSuccess(sortedEntries, 'Progress entries retrieved successfully');
     }
 
     if (sub === 'summary') {
@@ -456,10 +507,41 @@ export function handleTrainerMockApiRequest(
   }
 
   // 4. MEMBERS DIRECTORY, PROFILE & NOTES
+  if (trainerPath === 'trainer_members/broadcast' || trainerPath === 'members/broadcast') {
+    const ptCount = currentMembers.filter((m: any) => Boolean(m.isPT)).length;
+    const attentionCount = currentMembers.filter((m: any) => m.progressStatus === 'NEEDS_ATTENTION').length;
+    if (method === 'POST') {
+      try {
+        const body = options.body ? JSON.parse(options.body as string) : {};
+        const audience = body.audience || 'ALL';
+        const recipientCount =
+          audience === 'PT_ONLY' ? ptCount : audience === 'ATTENTION_ONLY' ? attentionCount : currentMembers.length;
+        return buildMockSuccess(
+          {
+            recipientCount,
+            audience,
+            channel: body.channel || 'WHATSAPP',
+            sentAt: new Date().toISOString(),
+          },
+          `Broadcast delivered to ${recipientCount} trainee${recipientCount === 1 ? '' : 's'}`
+        );
+      } catch {
+        return buildMockSuccess({ recipientCount: currentMembers.length }, 'Broadcast sent');
+      }
+    }
+    return buildMockSuccess({
+      totalCount: currentMembers.length,
+      ptCount,
+      attentionCount,
+    }, 'Broadcast audience summary retrieved');
+  }
+
   if (trainerPath === 'members') {
     const search = searchParams.get('search')?.toLowerCase() || '';
     const status = searchParams.get('status') || '';
     const progressStatus = searchParams.get('progressStatus') || '';
+    const sortBy = searchParams.get('sortBy');
+    const sortDirection = searchParams.get('sortDirection');
     let filtered = currentMembers;
 
     if (search) {
@@ -476,10 +558,11 @@ export function handleTrainerMockApiRequest(
       filtered = filtered.filter((m: any) => m.progressStatus?.toUpperCase() === progressStatus.toUpperCase());
     }
 
+    const sorted = sortRecords(filtered, sortBy, sortDirection);
     const page = Math.max(1, Number(searchParams.get('page') || '1'));
     const limit = Math.max(1, Number(searchParams.get('limit') || '50'));
-    const total = filtered.length;
-    const paginated = filtered.slice((page - 1) * limit, page * limit);
+    const total = sorted.length;
+    const paginated = sorted.slice((page - 1) * limit, page * limit);
 
     return buildMockSuccess({
       members: paginated,
@@ -511,12 +594,26 @@ export function handleTrainerMockApiRequest(
     if (sub === 'workout' && method === 'PATCH') {
       try {
         const body = options.body ? JSON.parse(options.body as string) : {};
-        if (member) member.assignedWorkoutId = body.workoutId;
+        if (member) member.assignedWorkoutId = body.workoutPlanId ?? body.workoutId;
       } catch {}
       return buildMockSuccess({ memberId, ...member }, 'Workout plan assigned');
     }
 
     if (sub === 'notes') {
+      const noteId = parts[3];
+      if (!member.trainerNotes) member.trainerNotes = [];
+      if (noteId && method === 'PATCH') {
+        try {
+          const body = options.body ? JSON.parse(options.body as string) : {};
+          const note = member.trainerNotes.find((n: any) => n.id === noteId);
+          if (note && body.text) note.text = body.text;
+        } catch {}
+        return buildMockSuccess(member, 'Trainer note updated');
+      }
+      if (noteId && method === 'DELETE') {
+        member.trainerNotes = member.trainerNotes.filter((n: any) => n.id !== noteId);
+        return buildMockSuccess(member, 'Trainer note deleted');
+      }
       if (method === 'POST') {
         try {
           const body = options.body ? JSON.parse(options.body as string) : {};
@@ -525,7 +622,6 @@ export function handleTrainerMockApiRequest(
             text: body.text || 'Trainer observation',
             date: new Date().toISOString().split('T')[0],
           };
-          if (!member.trainerNotes) member.trainerNotes = [];
           member.trainerNotes.unshift(newNote);
           return buildMockSuccess(member, 'Trainer note added');
         } catch {
@@ -577,17 +673,28 @@ export function handleTrainerMockApiRequest(
     }
 
     const search = searchParams.get('search')?.toLowerCase() || '';
-    const level = searchParams.get('level') || '';
+    const category = searchParams.get('category') || searchParams.get('level') || '';
+    const sortBy = searchParams.get('sortBy');
+    const sortDirection = searchParams.get('sortDirection');
     let filtered = currentWorkouts;
     if (search) filtered = filtered.filter((w: any) => w.name.toLowerCase().includes(search) || w.focus?.toLowerCase().includes(search));
-    if (level && level !== 'ALL') filtered = filtered.filter((w: any) => w.level?.toLowerCase() === level.toLowerCase());
+    if (category && category.toUpperCase() !== 'ALL') {
+      filtered = filtered.filter(
+        (w: any) =>
+          w.category?.toLowerCase() === category.toLowerCase() ||
+          w.level?.toLowerCase() === category.toLowerCase() ||
+          w.focus?.toLowerCase() === category.toLowerCase()
+      );
+    }
 
-    const page = Number(searchParams.get('page') || '1');
-    const limit = Number(searchParams.get('limit') || '50');
+    const sorted = sortRecords(filtered, sortBy, sortDirection);
+    const page = Math.max(1, Number(searchParams.get('page') || '1'));
+    const limit = Math.max(1, Number(searchParams.get('limit') || '50'));
+    const paginated = sorted.slice((page - 1) * limit, page * limit);
 
     return buildMockSuccess({
-      workouts: filtered,
-      total: filtered.length,
+      workouts: paginated,
+      total: sorted.length,
       page,
       limit,
     }, 'Workouts retrieved successfully');
@@ -639,16 +746,20 @@ export function handleTrainerMockApiRequest(
 
     const search = searchParams.get('search')?.toLowerCase() || '';
     const category = searchParams.get('category') || '';
+    const sortBy = searchParams.get('sortBy');
+    const sortDirection = searchParams.get('sortDirection');
     let filtered = currentExercises;
     if (search) filtered = filtered.filter((e: any) => e.name.toLowerCase().includes(search) || e.primaryMuscle?.toLowerCase().includes(search) || (Array.isArray(e.muscleGroup) && e.muscleGroup.some((m: string) => m.toLowerCase().includes(search))));
     if (category && category !== 'ALL' && category !== 'All') filtered = filtered.filter((e: any) => e.category?.toLowerCase() === category.toLowerCase());
 
-    const page = Number(searchParams.get('page') || '1');
-    const limit = Number(searchParams.get('limit') || '50');
+    const sorted = sortRecords(filtered, sortBy, sortDirection);
+    const page = Math.max(1, Number(searchParams.get('page') || '1'));
+    const limit = Math.max(1, Number(searchParams.get('limit') || '50'));
+    const paginated = sorted.slice((page - 1) * limit, page * limit);
 
     return buildMockSuccess({
-      exercises: filtered,
-      total: filtered.length,
+      exercises: paginated,
+      total: sorted.length,
       page,
       limit,
     }, 'Exercises retrieved successfully');
@@ -679,6 +790,25 @@ export function handleTrainerMockApiRequest(
   // 6. COACHING SESSIONS
   if (trainerPath === 'trainer_sessions/members' || trainerPath === 'sessions/members') {
     return buildMockSuccess(TRAINER_SESSIONS_MOCK_TRAINER_SESSION_MEMBERS, 'Session members retrieved');
+  }
+
+  if (trainerPath === 'trainer_sessions/booking-requests' || trainerPath === 'sessions/booking-requests') {
+    return buildMockSuccess(currentBookingRequests, 'Booking requests retrieved');
+  }
+
+  if (
+    (trainerPath.startsWith('trainer_sessions/booking-requests/') || trainerPath.startsWith('sessions/booking-requests/')) &&
+    method === 'POST'
+  ) {
+    const parts = trainerPath.split('/');
+    const reqId = parts[2];
+    const action = parts[3];
+    const request = currentBookingRequests.find((b) => b.id === reqId) ?? null;
+    currentBookingRequests = currentBookingRequests.filter((b) => b.id !== reqId);
+    return buildMockSuccess(
+      { request, action },
+      action === 'accept' ? 'Booking request accepted' : 'Booking request declined'
+    );
   }
 
   if (trainerPath === 'sessions' || trainerPath === 'trainer_sessions') {
@@ -800,6 +930,13 @@ export function handleTrainerMockApiRequest(
     const page = Math.max(1, Number(searchParams.get('page') || searchParams.get('historyPage') || '1'));
     const limit = Math.max(1, Number(searchParams.get('limit') || searchParams.get('historyLimit') || '10'));
     const range = searchParams.get('range');
+    const search = (searchParams.get('search') || '').trim().toLowerCase();
+    const statusFilter = (searchParams.get('status') || '').trim().toLowerCase();
+    const typeFilter = (searchParams.get('type') || '').trim().toLowerCase();
+    const startDate = searchParams.get('startDate') || '';
+    const endDate = searchParams.get('endDate') || '';
+    const sortBy = searchParams.get('sortBy') || 'date';
+    const sortDirection = searchParams.get('sortDirection') || 'desc';
 
     let kpis = { ...TRAINER_EARNINGS_MOCK_EARNINGS_DATA.kpis };
     let history = [...TRAINER_EARNINGS_MOCK_EARNINGS_DATA.history];
@@ -841,11 +978,30 @@ export function handleTrainerMockApiRequest(
         sessionsCompleted: 68,
         taxDeduction: 110000,
       };
-      history = history.slice(0, 2);
+      if (startDate || endDate) {
+        history = history.filter((row) => (!startDate || row.date >= startDate) && (!endDate || row.date <= endDate));
+      }
     }
 
-    const total = history.length;
-    const paginated = history.slice((page - 1) * limit, page * limit);
+    if (search) {
+      history = history.filter(
+        (row) =>
+          row.description.toLowerCase().includes(search) ||
+          row.id.toLowerCase().includes(search) ||
+          (row.invoiceNumber && row.invoiceNumber.toLowerCase().includes(search)) ||
+          row.type.toLowerCase().includes(search)
+      );
+    }
+    if (statusFilter && statusFilter !== 'all') {
+      history = history.filter((row) => row.status.toLowerCase() === statusFilter);
+    }
+    if (typeFilter && typeFilter !== 'all') {
+      history = history.filter((row) => row.type.toLowerCase().includes(typeFilter));
+    }
+
+    const sortedHistory = sortRecords(history, sortBy, sortDirection);
+    const total = sortedHistory.length;
+    const paginated = sortedHistory.slice((page - 1) * limit, page * limit);
 
     return buildMockSuccess({
       ...TRAINER_EARNINGS_MOCK_EARNINGS_DATA,
@@ -941,7 +1097,7 @@ export function handleTrainerMockApiRequest(
         }
 
         return buildMockSuccess(newRecord, isStaff ? 'Trainer check-in recorded successfully' : 'Attendance check-in recorded');
-      } catch (err) {
+      } catch {
         return buildMockSuccess(currentAttendance[0], 'Attendance check-in recorded');
       }
     }
@@ -978,12 +1134,11 @@ export function handleTrainerMockApiRequest(
     } else if (filterDate === 'THIS_YEAR' || range === 'this_year') {
       const yearPrefix = todayStr.substring(0, 4);
       filtered = filtered.filter((r: any) => r.date && r.date.startsWith(yearPrefix));
+    } else if (filterDate === 'LAST_7_DAYS') {
+      const cutoff = new Date(Date.now() - 7 * 86400000).toISOString().split('T')[0];
+      filtered = filtered.filter((r: any) => r.date && r.date >= cutoff);
     } else if (startDate || endDate) {
       filtered = filtered.filter((r: any) => (!startDate || r.date >= startDate) && (!endDate || r.date <= endDate));
-    }
-
-    if (filtered.length === 0 && currentAttendance.length > 0 && !search) {
-      filtered = currentAttendance.filter((r: any) => !type || r.type === type).slice(0, 10);
     }
 
     if (search) {
@@ -995,8 +1150,14 @@ export function handleTrainerMockApiRequest(
       });
     }
 
-    const total = filtered.length;
-    const paginated = filtered.slice((page - 1) * limit, page * limit);
+    const sortBy = searchParams.get('sortBy');
+    const sortDirection = searchParams.get('sortDirection');
+    const sorted = sortRecords(filtered, sortBy, sortDirection, {
+      name: (r: any) => (r.type === 'MEMBER' ? r.member?.name : r.staff?.name) || '',
+    });
+
+    const total = sorted.length;
+    const paginated = sorted.slice((page - 1) * limit, page * limit);
 
     return buildMockSuccess({
       attendance: paginated,
@@ -1111,6 +1272,15 @@ export function handleTrainerMockApiRequest(
     return buildMockSuccess(currentLeaves, 'Leaves retrieved');
   }
 
+  if (trainerPath.startsWith('trainer_schedule/leaves/') || trainerPath.startsWith('schedule/leaves/')) {
+    const segments = trainerPath.split('/');
+    const leaveId = segments[segments.length - 1];
+    if (method === 'DELETE') {
+      currentLeaves = currentLeaves.filter((l: any) => l.id !== leaveId);
+      return buildMockSuccess({ id: leaveId }, 'Leave request withdrawn successfully');
+    }
+  }
+
   // 10. ACCOUNT - PROFILE, SECURITY, NOTIFICATIONS
   if (trainerPath === 'profile' || trainerPath === 'trainer_profile') {
     if (method === 'PATCH') {
@@ -1130,11 +1300,14 @@ export function handleTrainerMockApiRequest(
   if (trainerPath === 'notifications' || trainerPath === 'trainer_notifications') {
     const page = Math.max(1, Number(searchParams.get('page') || '1'));
     const limit = Math.max(1, Number(searchParams.get('limit') || '20'));
-    const total = currentNotifications.length;
-    const paginated = currentNotifications.slice((page - 1) * limit, page * limit);
+    const filter = (searchParams.get('filter') || '').toLowerCase();
+    const list = filter === 'unread' ? currentNotifications.filter((n: any) => !n.isRead) : currentNotifications;
+    const total = list.length;
+    const paginated = list.slice((page - 1) * limit, page * limit);
     return buildMockSuccess({
       notifications: paginated,
       total,
+      unreadCount: currentNotifications.filter((n: any) => !n.isRead).length,
     }, 'Notifications retrieved');
   }
 

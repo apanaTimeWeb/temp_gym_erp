@@ -99,20 +99,20 @@ export default function ManagerAttendanceTrackingToolbar() {
  type="button"
  aria-label={t("COPY_REFRESH_ATTENDANCE")}
  onClick={loadAll} 
- className="min-h-11 min-w-11 flex justify-center items-center gap-2 px-3 py-2 text-sm border border-border rounded-lg hover:bg-primary-subtle text-text-secondary motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 hover:brightness-110"
+ className="min-h-11 min-w-11 flex justify-center items-center gap-2 px-3 py-2 text-sm border border-sky-500/30 bg-sky-500/10 hover:bg-sky-500/20 rounded-xl text-sky-600 dark:text-sky-300 motion-safe:transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 cursor-pointer"
  >
- <RefreshCw size={18} strokeWidth={2} />
+ <RefreshCw size={17} strokeWidth={2.2} />
  </button>
- <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "flex justify-center items-center gap-2 px-3 py-2 text-sm border border-border rounded-lg hover:bg-info-bg text-info-text motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_attendance-attendance-toolbar-button-export" 
+ <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 flex justify-center items-center gap-2 px-3.5 py-2 text-sm border border-teal-500/30 bg-teal-500/10 hover:bg-teal-500/20 rounded-xl text-teal-600 dark:text-teal-300 font-semibold motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 cursor-pointer"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_attendance-attendance-toolbar-button-export" 
  onClick={() => exportAttendance && exportAttendance()} 
  
   type="button">
- <Download size={18} strokeWidth={2}/>{t("COPY_EXPORT")}</button>
- <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "flex justify-center items-center gap-2 px-4 py-2 text-sm font-semibold bg-primary text-on-primary hover:bg-primary-hover rounded-lg motion-safe:transition-all hover:opacity-90 motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none hover:brightness-110"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_attendance-attendance-toolbar-button-add" 
+ <Download size={16} strokeWidth={2}/>{t("COPY_EXPORT")}</button>
+ <button className={ ["focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-page", "min-h-11 flex justify-center items-center gap-2 px-4 py-2 text-sm font-semibold bg-gradient-to-r from-[#FF5A1F] to-[#F97316] text-white hover:brightness-110 shadow-[0_4px_14px_rgba(255,90,31,0.3)] rounded-xl motion-safe:transition-all motion-safe:duration-200 ease-in-out motion-safe:active:scale-95 cursor-pointer"].filter((value) => Boolean(value)).join(' ') } data-testid="manager_attendance-attendance-toolbar-button-add" 
  onClick={() => setShowModal(true)} 
   
   type="button">
- <Plus size={18} strokeWidth={2}/>{t("COPY_MARK_ATTENDANCE")}</button>
+ <Plus size={17} strokeWidth={2}/>{t("COPY_MARK_ATTENDANCE")}</button>
  </div>
  </div>
  </div>

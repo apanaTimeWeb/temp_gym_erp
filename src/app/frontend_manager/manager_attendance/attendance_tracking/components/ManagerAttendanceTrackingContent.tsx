@@ -23,12 +23,12 @@ export function ManagerAttendanceTrackingContent() {
   const { scannerOpen, closeScanner } = useManagerAttendanceTrackingViewState();
 
   return (
-  <div className="min-h-full pb-10 attendance-module bg-page text-text-primary">
+  <div className="min-h-full pb-10 attendance-module bg-page trainer-aurora-canvas text-text-primary">
   
-  <div className="p-6 space-y-5">
+  <div className="p-4 sm:p-6 space-y-5">
   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
     <div>
-      <h1 className="text-2xl font-bold text-text-primary">{t('COPY_ATTENDANCE')}</h1>
+      <h1 className="text-page-title font-extrabold text-text-primary">{t('COPY_ATTENDANCE')}</h1>
       <p className="text-sm text-text-secondary mt-1">{t('COPY_TRACK_DAILY_MEMBER_STAFF_CHECK_INS')}</p>
     </div>
     <ManagerAttendanceTrackingDateFilterDropdown />
@@ -36,7 +36,8 @@ export function ManagerAttendanceTrackingContent() {
 
   <ManagerAttendanceTrackingKPIs />
   
-  <div className="bg-card rounded-xl shadow-card border border-border overflow-hidden">
+  <div className="relative bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] rounded-2xl shadow-card border border-border dark:border-blue-500/30 overflow-hidden">
+  <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#3B82F6] via-[#38BDF8] to-[#FF5A1F] z-30" />
   <ManagerAttendanceTrackingToolbar />
   <ManagerAttendanceTrackingTable />
   </div>

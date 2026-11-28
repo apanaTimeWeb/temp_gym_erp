@@ -114,12 +114,12 @@ export default function ManagerAttendanceTrackingTable() {
             <ManagerInfrastructureResponsiveTable labels={ATTENDANCE_TABLE_HEADERS}>
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="sticky top-0 z-20 bg-surface-highlight border-b border-border">
+                  <tr className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10">
                     {ATTENDANCE_TABLE_HEADERS.map((h, hIdx) => (
                       <th
                         key={h}
-                        className={`text-left text-xs font-semibold text-text-secondary uppercase tracking-wider px-2.5 py-3 whitespace-nowrap ${
-                          hIdx === 0 ? 'sticky start-0 z-30 bg-surface-highlight border-e border-border' : ''
+                        className={`text-left text-xs font-bold text-text-secondary dark:text-slate-300 uppercase tracking-wider px-2.5 py-3.5 whitespace-nowrap ${
+                          hIdx === 0 ? 'sticky start-0 z-30 bg-slate-100 dark:bg-[#152038] border-e border-border dark:border-white/10' : ''
                         }`}
                       >
                         {h}

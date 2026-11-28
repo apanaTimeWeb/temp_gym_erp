@@ -265,7 +265,8 @@
   letter-spacing: -0.025em;
 }
 
-.dark .trainer-aurora-canvas {
+.dark .trainer-aurora-canvas,
+.dark .superadmin-aurora-canvas {
   background-color: var(--bg-page);
   background-image:
     radial-gradient(ellipse 65% 42% at 15% 0%, rgba(255, 90, 31, 0.09), transparent 70%),

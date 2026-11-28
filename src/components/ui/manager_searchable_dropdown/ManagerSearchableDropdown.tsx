@@ -6,7 +6,7 @@ import { ChevronDown, Search, Check } from 'lucide-react';
 export interface ManagerSearchableDropdownOption {
   value: string;
   label: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface ManagerSearchableDropdownProps {
@@ -65,7 +65,7 @@ export default function ManagerSearchableDropdown({
     : (ariaLabel || placeholder);
 
   return (
-    <div ref={containerRef} className={`relative w-full ${className}`} data-testid={effectiveTestId}>
+    <div ref={containerRef} className={`relative w-full min-w-0 ${className}`} data-testid={effectiveTestId}>
       <button
         id={id}
         type="button"
@@ -76,26 +76,26 @@ export default function ManagerSearchableDropdown({
         aria-label={effectiveAriaLabel}
         aria-invalid={ariaInvalid}
         aria-describedby={ariaDescribedBy}
-        className="flex min-h-11 w-full items-center justify-between rounded-xl border border-border bg-input px-3.5 py-2.5 text-left text-sm text-primary transition-all hover:border-border/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-50"
+        className="flex min-h-11 w-full items-center justify-between gap-2 rounded-xl border border-border dark:border-white/15 bg-input dark:bg-[#0B1220] px-3.5 py-2 text-left text-sm text-text-primary transition-all hover:border-orange-500/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring disabled:opacity-50 cursor-pointer"
       >
-        <span className={selectedOption ? 'font-medium text-primary' : 'text-secondary'}>
+        <span className={`truncate ${selectedOption ? 'font-medium text-text-primary' : 'text-secondary'}`}>
           {selectedOption ? selectedOption.label : placeholder}
         </span>
-        <ChevronDown size={16} className={`shrink-0 text-secondary transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown size={16} className={`shrink-0 text-orange-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-full z-50 mt-1 max-h-60 w-full overflow-hidden rounded-xl border border-border bg-card shadow-lg">
+        <div className="absolute left-0 top-full z-50 mt-1.5 max-h-60 w-full min-w-44 overflow-hidden rounded-xl border border-border dark:border-white/15 bg-popover dark:bg-[#0E1526]/98 backdrop-blur-2xl shadow-popover">
           {options.length > 5 && (
-            <div className="border-b border-border p-2">
-              <div className="flex items-center gap-2 rounded-lg bg-input px-2.5 py-1.5 text-xs text-secondary">
-                <Search size={14} />
+            <div className="border-b border-border dark:border-white/10 p-2">
+              <div className="flex items-center gap-2 rounded-lg bg-input dark:bg-[#090E1A] border border-border dark:border-white/10 px-2.5 py-1.5 text-xs text-secondary">
+                <Search size={14} className="text-orange-400 shrink-0" />
                 <input
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search options..."
-                  className="w-full bg-transparent text-primary outline-none placeholder:text-secondary"
+                  className="w-full bg-transparent text-text-primary outline-none placeholder:text-secondary"
                   autoFocus
                 />
               </div>
@@ -117,13 +117,13 @@ export default function ManagerSearchableDropdown({
                       setIsOpen(false);
                       setSearch('');
                     }}
-                    className={`flex cursor-pointer items-center justify-between rounded-lg px-3 py-2 text-xs transition-colors ${
+                    className={`flex cursor-pointer items-center justify-between gap-2 rounded-lg px-3 py-2 text-xs transition-colors ${
                       isSelected
-                        ? 'bg-primary text-on-primary font-medium'
-                        : 'text-primary hover:bg-surface-hover'
+                        ? 'bg-primary text-on-primary font-semibold'
+                        : 'text-text-primary hover:bg-surface-hover'
                     }`}
                   >
-                    <span>{opt.label}</span>
+                    <span className="truncate">{opt.label}</span>
                     {isSelected && <Check size={14} className="shrink-0" />}
                   </li>
                 );
@@ -135,4 +135,3 @@ export default function ManagerSearchableDropdown({
     </div>
   );
 }
-

@@ -7,18 +7,18 @@ export function SuperadminGymsDirectoryTableStyles() {
     <style>{`
       .gym-table-container {
         --table-bg-normal: var(--color-card, var(--bg-card, #ffffff));
-        --table-bg-hover: color-mix(in srgb, var(--color-card, #ffffff), #eab308 12%);
-        --table-header-bg: #27272a;
-        --table-header-text: #fef08a;
-        --table-header-border: #3f3f46;
+        --table-bg-hover: rgba(255, 90, 31, 0.06);
+        --table-header-bg: #f1f5f9;
+        --table-header-text: #475569;
+        --table-header-border: #e4e4e7;
       }
       :root.dark .gym-table-container,
       .dark .gym-table-container {
-        --table-bg-normal: var(--color-card, var(--bg-card, #111111));
-        --table-bg-hover: color-mix(in srgb, var(--color-card, #111111), #facc15 12%);
-        --table-header-bg: color-mix(in srgb, #141414, #facc15 15%);
-        --table-header-text: #fef08a;
-        --table-header-border: rgba(250, 204, 21, 0.25);
+        --table-bg-normal: #0E1525;
+        --table-bg-hover: rgba(255, 255, 255, 0.05);
+        --table-header-bg: #152038;
+        --table-header-text: #cbd5e1;
+        --table-header-border: rgba(255, 255, 255, 0.1);
       }
       .gym-row {
         --current-row-bg: var(--table-bg-normal);

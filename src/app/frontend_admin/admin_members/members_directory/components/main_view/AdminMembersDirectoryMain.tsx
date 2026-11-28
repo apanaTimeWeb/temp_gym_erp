@@ -32,8 +32,10 @@ export default function AdminMembersDirectoryMain() {
     <div className="min-h-full pb-10 bg-page text-text-primary">
       <div className="p-4 sm:p-6 space-y-5">
         <AdminMembersKPIs />
-        <div className="bg-card rounded-xl border border-border p-4 space-y-4">
-          <AdminMembersToolbar />
+        <div className="space-y-4">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card">
+            <AdminMembersToolbar />
+          </div>
           <AdminMembersTable />
         </div>
       </div>

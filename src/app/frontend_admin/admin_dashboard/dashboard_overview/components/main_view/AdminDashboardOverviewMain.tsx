@@ -58,45 +58,68 @@ export default function AdminDashboardOverviewMain() {
   }
 
   return (
-    <div className="min-h-full">
-      <div className="p-4 sm:p-6 space-y-6">
+    <div className="min-h-full pb-10">
+      <div className="p-4 sm:p-6 space-y-5">
 
-        {/* Toolbar: Branch Filter + Time Range Selector */}
-        <div className="flex flex-wrap justify-between items-center gap-4">
-          <div className="w-64">
-            <AdminNavigationLayoutSearchableDropdown
-              options={branchOptions}
-              value={selectedBranchId}
-              onChange={handleBranchChange}
-              placeholder={t('branches.admin_branches_header_selector.text_fcf716ea9b') || 'Filter by branch'}
-              testId="admin-dashboard-branch-filter-dropdown"
-            />
+        {/* Executive Obsidian Hero Header Card (Trainer-matched) */}
+        <section className="relative overflow-hidden rounded-2xl border border-orange-500/35 bg-card dark:bg-gradient-to-br dark:from-[#291514] dark:via-[#12192B] dark:to-[#0C1322] p-5 sm:p-6 shadow-card space-y-4">
+          <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#FF5A1F] via-[#EC4899] to-[#38BDF8]" />
+          <span aria-hidden="true" className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-orange-500/20 blur-3xl" />
+          <span aria-hidden="true" className="pointer-events-none absolute left-1/3 -bottom-12 h-32 w-44 rounded-full bg-sky-500/15 blur-3xl" />
+          <div className="relative flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div className="space-y-1.5 min-w-0">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/40 bg-orange-500/15 px-3 py-1 text-xs font-semibold text-orange-600 dark:text-orange-300 shadow-[0_2px_10px_rgba(255,90,31,0.16)]">
+                <span className="h-2 w-2 rounded-full bg-orange-500 motion-safe:animate-pulse" aria-hidden="true" />
+                Admin Operations &amp; Business Command Hub
+              </span>
+              <h2 className="text-page-title font-extrabold text-text-primary">
+                {t('admin_navigation.AdminRouteHeaders.route_admin_dashboard_title')}
+              </h2>
+              <p className="text-sm text-secondary">
+                {t('admin_navigation.AdminRouteHeaders.route_admin_dashboard_subtitle')}
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full lg:w-auto shrink-0">
+              <div className="w-full sm:w-64">
+                <AdminNavigationLayoutSearchableDropdown
+                  options={branchOptions}
+                  value={selectedBranchId}
+                  onChange={handleBranchChange}
+                  placeholder={t('branches.admin_branches_header_selector.text_fcf716ea9b') || 'Filter by branch'}
+                  testId="admin-dashboard-branch-filter-dropdown"
+                />
+              </div>
+              <div className="w-full sm:w-auto">
+                <AdminDashboardDateFilterDropdown />
+              </div>
+            </div>
           </div>
-          <AdminDashboardDateFilterDropdown />
-        </div>
+        </section>
 
         {/* KPIs */}
         <AdminDashboardKPIs />
 
         {/* Row 2: Leaderboard + Alerts */}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-          <div className="xl:col-span-2">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-5 items-stretch">
+          <div className="xl:col-span-2 min-w-0">
             <AdminDashboardBranchLeaderboard />
           </div>
-          <div className="max-h-96">
+          <div className="min-w-0">
             <AdminDashboardAlerts />
           </div>
         </div>
 
         {/* Row 3: Revenue Trend */}
-        <AdminDashboardRevenueTrend />
+        <div className="min-w-0">
+          <AdminDashboardRevenueTrend />
+        </div>
 
         {/* Row 4: Attendance Trend + Expiring Widget */}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-          <div className="xl:col-span-2">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-5 items-stretch">
+          <div className="xl:col-span-2 min-w-0">
             <AdminDashboardAttendanceTrend />
           </div>
-          <div>
+          <div className="min-w-0">
             <AdminDashboardExpiringWidget />
           </div>
         </div>

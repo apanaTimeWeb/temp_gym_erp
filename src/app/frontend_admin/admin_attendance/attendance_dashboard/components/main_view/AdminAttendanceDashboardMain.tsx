@@ -35,7 +35,7 @@ export default function AdminAttendanceDashboardMain() {
     <div className="min-h-full pb-10 bg-page text-text-primary">
 
       {/* Read-only notice banner */}
-      <div className="mx-6 mt-4 flex items-center gap-2.5 px-4 py-2.5 bg-info-bg border border-border rounded-xl">
+      <div className="mx-4 sm:mx-6 mt-4 flex items-center gap-2.5 px-4 py-2.5 bg-info-bg border border-sky-500/30 rounded-xl">
         <ShieldAlert size={18} strokeWidth={2} className="text-info flex-shrink-0" />
         <p className="text-xs text-info font-medium">
           {t('attendance.admin_attendance_main.text_480de365cc')}</p>
