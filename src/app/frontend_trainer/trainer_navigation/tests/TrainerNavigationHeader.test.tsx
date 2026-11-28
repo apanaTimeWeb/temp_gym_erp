@@ -16,6 +16,7 @@ vi.mock('@/app/frontend_trainer/trainer_navigation/components/TrainerNavigationT
 import TrainerNavigationHeader from '@/app/frontend_trainer/trainer_navigation/components/TrainerNavigationHeader';
 import { TRAINER_NOTIFICATIONS_PAGE_LIST } from '@/app/frontend_trainer/trainer_account/account_notifications/config/trainer_account_notifications.url_config';
 import { TRAINER_PROFILE_PAGE_LIST } from '@/app/frontend_trainer/trainer_account/account_personal_profile/config/trainer_account_personal_profile.url_config';
+import { TRAINER_ACCOUNT_SECURITY_PAGE_LIST } from '@/app/frontend_trainer/trainer_account/account_security/config/trainer_account_security.url_config';
 
 beforeEach(() => vi.clearAllMocks());
 
@@ -48,6 +49,9 @@ describe('TrainerNavigationHeader', () => {
     expect(screen.getByRole('menuitem', { name: 'TEXT_MY_PROFILE' })).toHaveAttribute('href', TRAINER_PROFILE_PAGE_LIST);
 
     await waitFor(() => expect(screen.getByRole('menuitem', { name: 'TEXT_MY_PROFILE' })).toHaveFocus());
+    expect(screen.getByRole('menuitem', { name: 'NAV_ACCOUNT_SECURITY' })).toHaveAttribute('href', TRAINER_ACCOUNT_SECURITY_PAGE_LIST);
+    fireEvent.keyDown(menu, { key: 'ArrowDown' });
+    expect(screen.getByRole('menuitem', { name: 'NAV_ACCOUNT_SECURITY' })).toHaveFocus();
     fireEvent.keyDown(menu, { key: 'ArrowDown' });
     expect(screen.getByRole('menuitem', { name: 'TEXT_LOG_OUT' })).toHaveFocus();
     fireEvent.keyDown(document, { key: 'Escape' });
@@ -96,5 +100,22 @@ describe('TrainerNavigationHeader', () => {
     const profileMenuBtn = screen.getByTestId('trainer_navigation-infrastructure-header_menu');
     fireEvent.mouseEnter(profileMenuBtn);
     expect(profileMenuBtn).toHaveAttribute('aria-expanded', 'true');
+  });
+
+  it('supports branch switcher hover/click and header command palette/shortcuts triggers', () => {
+    const dispatchSpy = vi.spyOn(window, 'dispatchEvent');
+    render(<TrainerNavigationHeader title="Central Gym" branchName="Main Branch" isSidebarCollapsed={false} isMobileSidebarOpen={false} isMobileViewport={false} onToggleSidebar={vi.fn()} />);
+
+    const branchTrigger = screen.getByTestId('trainer-header-branch-trigger');
+    fireEvent.mouseEnter(branchTrigger);
+    expect(screen.getByTestId('trainer-header-branch-dropdown')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('option', { name: /Downtown Flagship/i }));
+    expect(screen.getByTestId('trainer-header-branch-trigger')).toHaveTextContent('Downtown Flagship');
+
+    fireEvent.click(screen.getByTestId('trainer_navigation-header-command_palette_trigger'));
+    fireEvent.click(screen.getByTestId('trainer_navigation-header-shortcuts_trigger'));
+    expect(dispatchSpy).toHaveBeenCalledTimes(2);
+    dispatchSpy.mockRestore();
   });
 });

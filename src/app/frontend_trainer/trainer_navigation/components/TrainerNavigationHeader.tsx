@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 
 import type { KeyboardEvent as ReactKeyboardEvent } from 'react';
 
-import { Bell, Building2, ChevronDown, ChevronRight, LogOut, Menu, User } from 'lucide-react';
+import { Bell, Building2, Check, ChevronDown, ChevronRight, HelpCircle, LogOut, MapPin, Menu, Search, ShieldCheck, User } from 'lucide-react';
 
 import { useTranslations } from 'next-intl';
 
@@ -17,6 +17,7 @@ import TrainerNavigationTooltip from '@/app/frontend_trainer/trainer_navigation/
 
 import { TRAINER_NOTIFICATIONS_PAGE_LIST } from '@/app/frontend_trainer/trainer_account/account_notifications/config/trainer_account_notifications.url_config';
 import { TRAINER_PROFILE_PAGE_LIST } from '@/app/frontend_trainer/trainer_account/account_personal_profile/config/trainer_account_personal_profile.url_config';
+import { TRAINER_ACCOUNT_SECURITY_PAGE_LIST } from '@/app/frontend_trainer/trainer_account/account_security/config/trainer_account_security.url_config';
 
 import { ThemeToggle } from '@/components/ThemeToggle';
 
@@ -91,21 +92,36 @@ const DEFAULT_TRAINER_HEADER_NOTIFICATIONS: TrainerHeaderNotificationItem[] = [
   },
 ];
 
+const DEFAULT_TRAINER_BRANCHES = [
+  { id: 'main', name: 'Main Branch', location: 'Andheri East · Floor 1–3', active: true },
+  { id: 'downtown', name: 'Downtown Flagship', location: 'Lower Parel · Studio A', active: false },
+  { id: 'westside', name: 'Westside Club', location: 'Bandra West · Strength Wing', active: false },
+  { id: 'north', name: 'North Campus', location: 'Powai · Functional Turf', active: false },
+] as const;
+
 export default function TrainerNavigationHeader({ title, subtitle, branchName, isSidebarCollapsed, isMobileSidebarOpen, isMobileViewport, onToggleSidebar }: TrainerNavigationHeaderProps) {
   const t = useTranslations('TRAINER_SHELL');
   const [showProfile, setShowProfile] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showBranches, setShowBranches] = useState(false);
+  const [selectedBranch, setSelectedBranch] = useState(branchName ?? '');
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [notifications, setNotifications] = useState<TrainerHeaderNotificationItem[]>(DEFAULT_TRAINER_HEADER_NOTIFICATIONS);
   const profileRef = useRef<HTMLDivElement>(null);
   const profileMenuRef = useRef<HTMLDivElement>(null);
   const notificationsRef = useRef<HTMLDivElement>(null);
+  const branchRef = useRef<HTMLDivElement>(null);
   const profileMenuId = useId();
   const profileTriggerRef = useRef<HTMLButtonElement>(null);
   const [mounted, setMounted] = useState(false);
   const [hour, setHour] = useState<number>(-1);
   const user = getUser();
+  const activeBranchLabel = selectedBranch || branchName || '';
   const unreadCount = notifications.filter((item) => !item.read).length;
+
+  useEffect(() => {
+    setSelectedBranch(branchName ?? '');
+  }, [branchName]);
 
   const handleMarkAllAsRead = () => {
     setNotifications((prev) => prev.map((item) => ({ ...item, read: true })));
@@ -148,23 +164,27 @@ export default function TrainerNavigationHeader({ title, subtitle, branchName, i
       if (notificationsRef.current && !notificationsRef.current.contains(target)) {
         setShowNotifications(false);
       }
+      if (branchRef.current && !branchRef.current.contains(target)) {
+        setShowBranches(false);
+      }
     }
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   useEffect(() => {
-    if (!showNotifications && !showLogoutModal) return;
+    if (!showNotifications && !showLogoutModal && !showBranches) return;
     const handleModalOrNotifKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         event.preventDefault();
         setShowNotifications(false);
+        setShowBranches(false);
         setShowLogoutModal(false);
       }
     };
     document.addEventListener('keydown', handleModalOrNotifKeyDown);
     return () => document.removeEventListener('keydown', handleModalOrNotifKeyDown);
-  }, [showNotifications, showLogoutModal]);
+  }, [showNotifications, showLogoutModal, showBranches]);
 
 // Effect contract: restore persisted shell presentation and keep outside-click/keyboard listeners aligned with mounted state.
   useEffect(() => {
@@ -218,10 +238,72 @@ export default function TrainerNavigationHeader({ title, subtitle, branchName, i
               <Building2 size={15} strokeWidth={2.2} />
             </span>
             <TrainerNavigationTooltip content={title}><h1 className="text-base sm:text-page-title font-bold text-white truncate">{title}</h1></TrainerNavigationTooltip>
-            {branchName && (
-              <span className="hidden sm:inline-flex items-center rounded-md border border-cyan-400/35 bg-cyan-500/15 px-2 py-0.5 text-[11px] font-semibold text-cyan-300 shrink-0 shadow-[0_2px_8px_rgba(34,211,238,0.16)]">
-                {branchName}
-              </span>
+            {activeBranchLabel && (
+              <div
+                ref={branchRef}
+                className="relative hidden sm:inline-flex shrink-0"
+                onMouseEnter={() => {
+                  setShowBranches(true);
+                  setShowNotifications(false);
+                  setShowProfile(false);
+                }}
+                onMouseLeave={() => setShowBranches(false)}
+              >
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowBranches((prev) => !prev);
+                    setShowNotifications(false);
+                    setShowProfile(false);
+                  }}
+                  aria-expanded={showBranches}
+                  aria-haspopup="listbox"
+                  data-testid="trainer-header-branch-trigger"
+                  className="inline-flex items-center gap-1 rounded-md border border-cyan-400/35 bg-cyan-500/15 hover:bg-cyan-500/25 px-2 py-0.5 text-[11px] font-semibold text-cyan-300 shrink-0 shadow-[0_2px_8px_rgba(34,211,238,0.16)] transition-colors cursor-pointer"
+                >
+                  <span>{activeBranchLabel}</span>
+                  <ChevronDown size={11} className={`transition-transform ${showBranches ? 'rotate-180' : ''}`} aria-hidden="true" />
+                </button>
+                {showBranches && (
+                  <div className="pt-2 absolute start-0 top-full z-50">
+                    <div
+                      role="listbox"
+                      aria-label="Gym Branches"
+                      data-testid="trainer-header-branch-dropdown"
+                      className="w-64 rounded-2xl border border-cyan-500/35 bg-[#0E1526]/98 backdrop-blur-2xl shadow-[0_20px_48px_rgba(0,0,0,0.82)] overflow-hidden p-1.5 space-y-1 text-white"
+                    >
+                      <div className="px-2.5 py-1.5 border-b border-white/10">
+                        <p className="text-[10px] font-bold uppercase tracking-wider text-cyan-300">Active Gym Branches</p>
+                      </div>
+                      {DEFAULT_TRAINER_BRANCHES.map((branch) => {
+                        const isSelected = activeBranchLabel === branch.name;
+                        return (
+                          <button
+                            key={branch.id}
+                            type="button"
+                            role="option"
+                            aria-selected={isSelected}
+                            onClick={() => {
+                              setSelectedBranch(branch.name);
+                              setShowBranches(false);
+                            }}
+                            className={`w-full flex items-center justify-between gap-2 rounded-xl px-2.5 py-2 text-start text-xs transition-colors cursor-pointer ${isSelected ? 'bg-cyan-500/20 text-white border border-cyan-400/40' : 'text-slate-300 hover:bg-white/[0.06] hover:text-white border border-transparent'}`}
+                          >
+                            <span className="flex items-start gap-2 min-w-0">
+                              <MapPin size={13} className={isSelected ? 'text-cyan-300 mt-0.5 shrink-0' : 'text-slate-400 mt-0.5 shrink-0'} aria-hidden="true" />
+                              <span className="min-w-0">
+                                <span className="block font-semibold truncate">{branch.name}</span>
+                                <span className="block text-[10px] text-slate-400 truncate">{branch.location}</span>
+                              </span>
+                            </span>
+                            {isSelected && <Check size={13} className="text-cyan-300 shrink-0" aria-hidden="true" />}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
             )}
           </div>
           {subtitle && <TrainerNavigationTooltip content={subtitle}><p className="hidden sm:block text-xs text-slate-300/80 mt-0.5 ps-9 truncate">{subtitle}</p></TrainerNavigationTooltip>}
@@ -229,6 +311,34 @@ export default function TrainerNavigationHeader({ title, subtitle, branchName, i
       </div>
 
       <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+        <button
+          type="button"
+          aria-label={t('TEXT_SEARCH_OR_JUMP')}
+          title={`${t('TEXT_COMMAND_PALETTE')} (Ctrl+K)`}
+          data-testid="trainer_navigation-header-command_palette_trigger"
+          onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, bubbles: true }))}
+          className="min-w-10 h-10 inline-flex items-center justify-center lg:justify-between gap-2.5 rounded-xl border border-white/15 bg-white/[0.05] hover:bg-orange-500/15 hover:border-orange-400/50 px-2.5 lg:px-3 text-xs font-medium text-slate-300 hover:text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer"
+        >
+          <span className="inline-flex items-center gap-2">
+            <Search size={15} className="text-[#FF5A1F]" strokeWidth={2.2} aria-hidden="true" />
+            <span className="hidden lg:inline">{t('TEXT_SEARCH_MENU')}</span>
+          </span>
+          <kbd className="hidden lg:inline-flex items-center rounded border border-white/15 bg-white/[0.06] px-1.5 py-0.5 text-[10px] font-semibold text-slate-300">
+            Ctrl K
+          </kbd>
+        </button>
+
+        <button
+          type="button"
+          aria-label={t('TEXT_KEYBOARD_SHORTCUTS')}
+          title={`${t('TEXT_KEYBOARD_SHORTCUTS')} (?)`}
+          data-testid="trainer_navigation-header-shortcuts_trigger"
+          onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: '?', shiftKey: true, bubbles: true }))}
+          className="hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-xl border border-purple-400/35 bg-purple-500/15 text-purple-300 hover:bg-purple-500/25 hover:border-purple-400/60 hover:text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shadow-[0_2px_10px_rgba(168,85,247,0.18)] cursor-pointer"
+        >
+          <HelpCircle size={17} strokeWidth={2} aria-hidden="true" />
+        </button>
+
         <ThemeToggle />
         <div
           ref={notificationsRef}
@@ -412,7 +522,7 @@ export default function TrainerNavigationHeader({ title, subtitle, branchName, i
                   </span>
                 </div>
               </div>
-              <div>
+              <div className="space-y-1">
                 <Link
                   href={TRAINER_PROFILE_PAGE_LIST}
                   role="menuitem"
@@ -421,6 +531,14 @@ export default function TrainerNavigationHeader({ title, subtitle, branchName, i
                   onClick={() => setShowProfile(false)}
                  data-testid="trainer_navigation-infrastructure-header_my_profile">
                   <User size={15} strokeWidth={2} aria-hidden="true" /> {t("TEXT_MY_PROFILE")}</Link>
+                <Link
+                  href={TRAINER_ACCOUNT_SECURITY_PAGE_LIST}
+                  role="menuitem"
+                  tabIndex={-1}
+                  className="flex items-center gap-2 min-h-10 px-2.5 py-2 rounded-lg text-xs font-medium text-emerald-300 hover:text-white hover:bg-emerald-500/20 motion-safe:transition-colors focus-visible:outline-none focus-visible:bg-emerald-500/20"
+                  onClick={() => setShowProfile(false)}
+                 data-testid="trainer_navigation-infrastructure-header_security">
+                  <ShieldCheck size={15} strokeWidth={2} aria-hidden="true" /> {t("NAV_ACCOUNT_SECURITY")}</Link>
               </div>
               <div className="border-t border-white/10 pt-1.5">
                 <button
