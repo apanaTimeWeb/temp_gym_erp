@@ -49,7 +49,8 @@ export default function SuperadminGymsDirectoryGymEditModal() {
     if (!isEditModalOpen || !selectedGym)
         return null;
     return (<div ref={dialogRef} tabIndex={-1} className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay-backdrop backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-labelledby="superadmin-gyms-edit-dialog-title" data-testid="superadmin_gyms-gym-edit-modal-dialog">
-      <div className="my-auto flex max-h-dialog-desktop w-full max-w-md flex-col rounded-xl border border-border bg-overlay p-7 shadow-dialog relative">
+      <div className="relative overflow-hidden my-auto flex max-h-dialog-desktop w-full max-w-lg flex-col rounded-2xl border border-border dark:border-primary/35 bg-overlay dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] p-6 sm:p-7 shadow-dialog">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-primary via-[#FF8A00] to-transparent" />
         <button type="button" onClick={closeEditModal} aria-label={t('ui.close_dialog')} className="absolute top-5 end-5 min-h-11 min-w-11 text-secondary hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="superadmin_gyms-superadmin-gyms-gym-edit-modal-gym-edit-modal-button">
           <X size={18}/>
         </button>
@@ -111,7 +112,7 @@ export default function SuperadminGymsDirectoryGymEditModal() {
                 <label htmlFor="superadmin-gyms-edit-address" className="block text-xs font-semibold text-secondary mb-1">Facility Address</label>
                 <input type="text" {...register('address')} id="superadmin-gyms-edit-address" className="w-full bg-input border border-border rounded-lg px-3 py-2 text-sm text-primary focus:border-focus focus:outline-none min-h-10" placeholder="Street Address" />
               </div>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label htmlFor="superadmin-gyms-edit-city" className="block text-xs font-semibold text-secondary mb-1">City</label>
                   <input type="text" {...register('city')} id="superadmin-gyms-edit-city" className="w-full bg-input border border-border rounded-lg px-3 py-2 text-sm text-primary focus:border-focus focus:outline-none min-h-10" placeholder="City" />
@@ -121,7 +122,7 @@ export default function SuperadminGymsDirectoryGymEditModal() {
                   <input type="text" {...register('state')} id="superadmin-gyms-edit-state" className="w-full bg-input border border-border rounded-lg px-3 py-2 text-sm text-primary focus:border-focus focus:outline-none min-h-10" placeholder="State" />
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label htmlFor="superadmin-gyms-edit-postal" className="block text-xs font-semibold text-secondary mb-1">PIN / Postal Code</label>
                   <input type="text" {...register('postalCode')} id="superadmin-gyms-edit-postal" className="w-full bg-input border border-border rounded-lg px-3 py-2 text-sm text-primary focus:border-focus focus:outline-none min-h-10 font-mono" placeholder="400053" />

@@ -47,7 +47,7 @@ export default function SuperadminPlatformConfigurationIntegrationsManagementWeb
               {statusLabel(item.status)}
             </span>
           </div>
-          <div className="mt-2 grid grid-cols-3 gap-2 text-xs text-secondary">
+          <div className="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs text-secondary tabular-nums">
             <span>
               {item.integration}
             </span>

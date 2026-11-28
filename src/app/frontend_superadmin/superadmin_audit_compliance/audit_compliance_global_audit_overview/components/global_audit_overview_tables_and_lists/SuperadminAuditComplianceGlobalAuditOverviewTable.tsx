@@ -41,7 +41,7 @@ export default function SuperadminAuditComplianceGlobalAuditOverviewTable({ logs
         <tbody className="divide-y divide-border">
           {logs.map((log) => (
             <tr key={log.id} tabIndex={0} className="group motion-safe:transition-colors hover:bg-surface-hover focus-visible:bg-surface-hover focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-inset">
-              <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-e border-border whitespace-nowrap px-6 py-4 transition-colors">
+              <td className="sticky start-0 z-10 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-e border-border dark:border-white/10 whitespace-nowrap px-6 py-4 transition-colors">
                 <span className="font-mono text-sm text-secondary">
                   {formatSuperadminAuditComplianceGlobalAuditTimestamp(log.timestamp, locale)}
                 </span>

@@ -43,26 +43,26 @@ export default function SuperadminPlatformConfigurationWhiteLabelingSettingsTabl
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-start">
             <caption className="sr-only">{t('ui.white_labeling_custom_domains_e5d66331')}</caption>
-            <thead className="sticky top-0 z-20 bg-surface-highlight border-b border-border shadow-xs">
-              <tr className="border-b border-border bg-surface-highlight">
-                <th className="sticky start-0 z-20 bg-surface-highlight border-b border-e border-border w-48 p-4 text-xs font-semibold uppercase tracking-wider text-secondary text-start">
+            <thead className="sticky top-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-border dark:border-white/10 shadow-[0_2px_10px_rgba(0,0,0,0.12)]">
+              <tr className="border-b border-border dark:border-white/10 bg-slate-100 dark:bg-[#152038]">
+                <th className="sticky start-0 z-20 bg-slate-100 dark:bg-[#152038] border-b border-e border-border dark:border-white/10 w-48 p-4 text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300 text-start">
                   {t('ui.gym_name_4ad76c40')}
                 </th>
-                <th className="border-b border-border min-w-40 p-4 text-xs font-semibold uppercase tracking-wider text-secondary text-start">
+                <th className="border-b border-border dark:border-white/10 min-w-40 p-4 text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300 text-start">
                   {t('ui.domain_eae639a7')}
                 </th>
-                <th className="border-b border-border w-28 p-4 text-xs font-semibold uppercase tracking-wider text-secondary text-start">
+                <th className="border-b border-border dark:border-white/10 w-28 p-4 text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300 text-start">
                   {t('ui.status_ec53a8c4')}
                 </th>
-                <th className="border-b border-border w-28 p-4 text-xs font-semibold uppercase tracking-wider text-secondary text-start">
+                <th className="border-b border-border dark:border-white/10 w-28 p-4 text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300 text-start">
                   {t('ui.ssl_ea52c362')}
                 </th>
-                <th className="border-b border-border w-32 p-4 text-xs font-semibold uppercase tracking-wider text-secondary text-start">
+                <th className="border-b border-border dark:border-white/10 w-32 p-4 text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300 text-start">
                   {t('ui.added_on_70e4179a')}
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border dark:divide-white/5">
               {domains.length === 0 ? (
                 <tr>
                   <td colSpan={TABLE_COLUMN_COUNT} className="p-8 text-center">
@@ -72,7 +72,7 @@ export default function SuperadminPlatformConfigurationWhiteLabelingSettingsTabl
               ) : (
                 domains.map((domain) => (
                   <tr key={domain.id} className="group motion-safe:transition-colors hover:bg-surface-hover" data-testid={`superadmin_platform_configuration_white_labeling-table-row-${domain.id}`}>
-                    <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-e border-border max-w-48 p-4 transition-colors">
+                    <td className="sticky start-0 z-10 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-e border-border dark:border-white/10 max-w-48 p-4 transition-colors">
                       <Tooltip content={domain.gymName}>
                         <button
                           type="button"
@@ -115,10 +115,10 @@ export default function SuperadminPlatformConfigurationWhiteLabelingSettingsTabl
           <SuperadminPlatformConfigurationWhiteLabelingEmptyState />
         ) : (
           domains.map((domain) => (
-            <button key={domain.id} type="button" onClick={() => openDomain(domain.id)} className="block min-h-11 w-full rounded-xl border border-border bg-card p-4 text-start motion-safe:transition-all motion-safe:duration-base motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="superadmin_platform_configuration_white_labeling-superadmin-white-labeling-table-white-labeling-table-button">
+            <button key={domain.id} type="button" onClick={() => openDomain(domain.id)} className="block min-h-11 w-full rounded-2xl border border-border dark:border-emerald-500/25 bg-card dark:bg-gradient-to-br dark:from-[#121B2F] dark:to-[#0C1220] p-4 text-start shadow-card motion-safe:transition-all motion-safe:duration-base motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="superadmin_platform_configuration_white_labeling-superadmin-white-labeling-table-white-labeling-table-button">
               <div className="flex items-start justify-between gap-3"><span className="min-w-0 truncate font-semibold text-primary">{domain.gymName}</span><SuperadminPlatformConfigurationWhiteLabelingStatusBadge status={domain.status} /></div>
               <p className="mt-2 truncate font-mono text-sm text-secondary">{domain.domain}</p>
-              <div className="mt-3 grid grid-cols-2 gap-3 text-xs text-secondary"><div><span className="block text-disabled">{t('ui.ssl_ea52c362')}</span><SuperadminPlatformConfigurationWhiteLabelingStatusBadge status={domain.sslStatus} /></div><div><span className="block text-disabled">{t('ui.added_f29ddbfb')}</span><span>{formatWhiteLabelingDate(domain.createdAt, locale)}</span></div></div>
+              <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-secondary"><div><span className="block text-disabled">{t('ui.ssl_ea52c362')}</span><SuperadminPlatformConfigurationWhiteLabelingStatusBadge status={domain.sslStatus} /></div><div><span className="block text-disabled">{t('ui.added_f29ddbfb')}</span><span>{formatWhiteLabelingDate(domain.createdAt, locale)}</span></div></div>
             </button>
           ))
         )}

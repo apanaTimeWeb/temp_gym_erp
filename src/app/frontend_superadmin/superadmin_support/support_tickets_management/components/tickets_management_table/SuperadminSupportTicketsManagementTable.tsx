@@ -175,7 +175,7 @@ export default function SuperadminSupportTicketsManagementTable({
                       }
                     }}
                   >
-                    <td className="sticky start-0 z-10 w-12 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-border px-4 py-3 text-center transition-colors">
+                    <td className="sticky start-0 z-10 w-12 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-border dark:border-white/10 px-4 py-3 text-center transition-colors">
                       <input
                         type="checkbox"
                         aria-label={`Select ticket ${ticket.id}`}
@@ -189,7 +189,7 @@ export default function SuperadminSupportTicketsManagementTable({
                         data-testid={`superadmin_support_tickets-select-row-${ticket.id}`}
                       />
                     </td>
-                    <td className="sticky start-12 z-10 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-e border-border px-4 py-3.5 transition-colors font-mono text-sm" data-mobile-label={t('ui.mobile_ticket_id')}>
+                    <td className="sticky start-12 z-10 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-e border-border dark:border-white/10 px-4 py-3.5 transition-colors font-mono text-sm" data-mobile-label={t('ui.mobile_ticket_id')}>
                       <span className="flex items-center gap-1.5 font-mono text-sm font-semibold text-primary">
                         <span>{ticket.id}</span>
                         <CopyButton value={ticket.id} label={`Copy ticket ID ${ticket.id}`} data-testid={`superadmin_support_tickets-tickets-table-copy-id-${ticket.id}`} />

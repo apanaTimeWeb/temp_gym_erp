@@ -67,8 +67,9 @@ export const SuperadminBillingCouponsCouponEditModal: React.FC<SuperadminBilling
         catch (error: unknown) { applySuperadminBillingCouponsManagementFormApiErrors(error, setError, ['code', 'discountType', 'discountValue', 'maxUses', 'expiryDate']); }
     };
     return (<div ref={dialogRef} tabIndex={-1} aria-labelledby="superadmin-coupons-edit-title" className="fixed inset-0 bg-overlay-backdrop z-40 flex items-center justify-center overflow-y-auto p-4 backdrop-blur-sm" role="dialog" aria-modal="true" data-testid="superadmin_coupons-coupon-edit-modal-dialog">
-      <div className="bg-overlay border border-border rounded-xl w-full max-w-md shadow-dialog my-auto max-h-dialog-desktop flex flex-col">
-        <div className="flex shrink-0 items-center justify-between px-7 py-5 border-b border-border">
+      <div className="relative overflow-hidden bg-overlay dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-amber-500/35 rounded-2xl w-full max-w-md shadow-dialog my-auto max-h-dialog-desktop flex flex-col">
+        <div className="h-[2px] w-full bg-gradient-to-r from-amber-500/80 via-primary/60 to-transparent shrink-0" />
+        <div className="flex shrink-0 items-center justify-between px-6 sm:px-7 py-5 border-b border-border dark:border-white/10">
           <h2 id="superadmin-coupons-edit-title" className="text-lg font-bold text-primary">{t('ui.edit_coupon_5a092977')}</h2>
           <button type="button" aria-label={t('ui.close_edit_coupon')} onClick={onClose} disabled={isSubmitting} className="min-h-11 min-w-11 flex items-center justify-center rounded-md text-secondary hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="superadmin_coupons-superadmin-coupons-coupon-edit-modal-coupon-edit-modal-button">
             <X size={18}/>
@@ -84,7 +85,7 @@ export const SuperadminBillingCouponsCouponEditModal: React.FC<SuperadminBilling
               {errors.code && <span id="superadmin-coupon-edit-code-error" role="alert" className="text-xs text-danger">{errors.code.message}</span>}
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex flex-col gap-1.5">
                 <label id="superadmin-coupon-edit-discount-type-label" className="text-sm font-bold text-secondary">{t('ui.discount_type_f908785b')}<span className="text-danger">{t('ui.text_3389dae3')}</span></label>
                 <Controller name="discountType" control={control} render={({ field }) => (<SearchableDropdown value={field.value || ''} onChange={field.onChange} options={SUPERADMIN_COUPON_DISCOUNT_TYPE_OPTIONS.map((option) => ({ label: t(option.labelKey), value: option.value }))} aria-label={t('ui.discount_type_f908785b')} aria-invalid={Boolean(errors.discountType)} aria-describedby={errors.discountType ? 'superadmin-coupon-edit-discount-type-error' : undefined} data-testid="superadmin_coupons-coupon-edit-modal-discount-type"/>)}/>

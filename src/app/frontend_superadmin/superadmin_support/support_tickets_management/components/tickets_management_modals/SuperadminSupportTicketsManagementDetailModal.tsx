@@ -30,8 +30,9 @@ export default function SuperadminSupportTicketsManagementDetailModal({ ticketId
       data-testid="superadmin_support_tickets-ticket-detail-dialog"
       ref={dialogRef}
     >
-      <section className="my-auto flex max-h-dialog-desktop w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-border bg-card shadow-dialog">
-        <header className="shrink-0 flex items-start justify-between gap-4 border-b border-border p-6 bg-card">
+      <section className="relative my-auto flex max-h-dialog-desktop w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-border dark:border-cyan-500/35 bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] shadow-dialog">
+        <div className="h-[2px] w-full bg-gradient-to-r from-[#06B6D4] via-[#38BDF8] to-[#FF5A1F] shrink-0" />
+        <header className="shrink-0 flex items-start justify-between gap-4 border-b border-border dark:border-white/10 p-5 sm:p-6 bg-card dark:bg-white/[0.02]">
           <div>
             <h2 id="superadmin-ticket-detail-title" className="text-lg font-bold text-primary">
               {t('ui.ticket_details')} · {ticketId}
@@ -128,7 +129,7 @@ export default function SuperadminSupportTicketsManagementDetailModal({ ticketId
             </div>
           );
         })()}
-        <footer className="shrink-0 sticky bottom-0 flex justify-end gap-3 border-t border-border p-6 bg-card">
+        <footer className="shrink-0 sticky bottom-0 flex justify-end gap-3 border-t border-border dark:border-white/10 p-5 sm:p-6 bg-card dark:bg-[#0C1220]">
           <button
             type="button"
             onClick={onClose}

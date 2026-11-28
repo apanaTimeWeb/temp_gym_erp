@@ -73,13 +73,15 @@ export function SuperadminAnalyticsReportsCenterCancellationsTab({
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-card border border-border rounded-xl p-6 shadow-card">
+        <div className="relative overflow-hidden bg-card dark:bg-gradient-to-br dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-rose-500/25 rounded-2xl p-5 sm:p-6 shadow-card">
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-rose-500/80 via-primary/60 to-transparent" />
           <h2 className="text-base font-semibold text-primary mb-6">{t('ui.reasons_for_leaving_b3adfab9')}</h2>
           <div className="h-64">
             <Chart options={cancellationsPieOptions} series={cancellationsPieSeries} type="donut" height="100%"/>
           </div>
         </div>
-        <div className="bg-card border border-border rounded-xl p-6 shadow-card space-y-3">
+        <div className="relative overflow-hidden bg-card dark:bg-gradient-to-br dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-rose-500/25 rounded-2xl p-5 sm:p-6 shadow-card space-y-3">
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-rose-500/80 via-primary/60 to-transparent" />
           <h2 className="text-base font-semibold text-primary mb-2">{t('ui.lost_gyms_summary_d80c18f2')}</h2>
           <div className="flex justify-between text-sm">
             <span className="text-secondary">{t('ui.filtered_lost_gyms_20022ebf')}</span>
@@ -109,16 +111,17 @@ export function SuperadminAnalyticsReportsCenterCancellationsTab({
         </div>
       </div>
 
-      <div className="bg-card border border-border rounded-xl shadow-card overflow-hidden">
+      <div className="relative bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-rose-500/25 rounded-2xl shadow-card overflow-hidden">
+        <div className="h-[2px] w-full bg-gradient-to-r from-rose-500/80 via-primary/60 to-transparent" />
         <div className="overflow-x-auto">
           <table className="w-full text-sm border-collapse text-start">
             <thead>
-              <tr className="border-b border-border bg-input">
+              <tr className="border-b border-border dark:border-white/10 bg-slate-100 dark:bg-[#152038]">
                 {headers.map((h, index) => (
                   <th
                     key={h}
-                    className={`px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider text-start ${
-                      index === 0 ? 'sticky start-0 z-20 bg-input border-e border-border' : ''
+                    className={`px-4 py-3 text-[11px] font-bold text-secondary dark:text-slate-300 uppercase tracking-wider text-start ${
+                      index === 0 ? 'sticky start-0 z-20 bg-slate-100 dark:bg-[#152038] border-e border-border dark:border-white/10' : ''
                     }`}
                   >
                     {h}
@@ -126,7 +129,7 @@ export function SuperadminAnalyticsReportsCenterCancellationsTab({
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border dark:divide-white/5">
               {filteredCancellationsData.length === 0 ? (
                 <tr>
                   <td colSpan={TABLE_COLUMN_COUNT} className="px-4 py-8 text-center text-secondary">
@@ -135,8 +138,8 @@ export function SuperadminAnalyticsReportsCenterCancellationsTab({
                 </tr>
               ) : (
                 filteredCancellationsData.map((row) => (
-                  <tr key={row.id} className="hover:bg-input motion-safe:transition-colors group">
-                    <td className="sticky start-0 z-10 bg-card group-hover:bg-input border-e border-border px-4 py-3 transition-colors">
+                  <tr key={row.id} className="hover:bg-surface-hover motion-safe:transition-colors group">
+                    <td className="sticky start-0 z-10 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover border-e border-border dark:border-white/10 px-4 py-3 transition-colors">
                       <p className="font-medium text-primary">{row.gymName}</p>
                       <p className="text-xs text-secondary">{row.ownerName}</p>
                     </td>

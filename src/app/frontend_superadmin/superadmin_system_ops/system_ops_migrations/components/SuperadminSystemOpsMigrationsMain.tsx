@@ -83,7 +83,7 @@ export default function SuperadminSystemOpsMigrationsMain() {
           <tbody className="divide-y divide-border">
             {vm.migrations.map((migration) => (
               <tr key={migration.id} tabIndex={0} className="hover:bg-surface-hover group motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-inset" data-testid={`superadmin_system_ops_migrations-system-ops-migrations-main-item-migration-id-3-${String(migration.id)}`}>
-                <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-e border-border px-6 py-4 transition-colors" data-mobile-label={vm.t('ui.version')}>
+                <td className="sticky start-0 z-10 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-e border-border dark:border-white/10 px-6 py-4 transition-colors" data-mobile-label={vm.t('ui.version')}>
                   <div className="flex items-center gap-1.5">
                     <span className="font-mono font-bold text-primary">{migration.version}</span>
                     <CopyButton value={migration.version} label={`Copy version ${migration.version}`} />

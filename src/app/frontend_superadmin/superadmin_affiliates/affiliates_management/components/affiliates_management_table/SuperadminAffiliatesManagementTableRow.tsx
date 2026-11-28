@@ -28,7 +28,7 @@ export default function SuperadminAffiliatesManagementTableRow({ affiliate: aff,
     const { confirm } = useConfirm();
 
     return (<tr tabIndex={0} aria-label={t('ui.a11y_edit_affiliate', { name: aff.name })} data-testid={`superadmin_affiliates-table-row-${aff.id}-edit`} className={`hover:bg-surface-hover motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ${isSelected ? 'bg-primary-subtle' : ''}`} onClick={() => onEdit(aff)} onKeyDown={(event) => { if (event.target !== event.currentTarget) return; if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onEdit(aff); } }}>
-      <td className="sticky start-0 z-10 w-12 bg-card group-hover:bg-surface-hover border-b border-border px-4 py-3 text-center transition-colors">
+      <td className="sticky start-0 z-10 w-12 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover border-b border-border dark:border-white/10 px-4 py-3 text-center transition-colors">
         <input
           type="checkbox"
           aria-label={`Select affiliate ${aff.name}`}
@@ -42,7 +42,7 @@ export default function SuperadminAffiliatesManagementTableRow({ affiliate: aff,
           data-testid={`superadmin_affiliates-select-row-${aff.id}`}
         />
       </td>
-      <td className="sticky start-12 z-10 bg-card group-hover:bg-surface-hover border-b border-e border-border px-6 py-4 whitespace-nowrap transition-colors" data-mobile-label={t('ui.mobile_field_1')}>
+      <td className="sticky start-12 z-10 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover border-b border-e border-border dark:border-white/10 px-6 py-4 whitespace-nowrap transition-colors" data-mobile-label={t('ui.mobile_field_1')}>
         <div className="flex flex-col">
           <Tooltip content={aff.name}><span className="text-sm font-medium text-primary truncate">{aff.name}</span></Tooltip>
           <Tooltip content={superadminAffiliatesMaskEmail(aff.email)}><span className="text-xs text-secondary truncate">{superadminAffiliatesMaskEmail(aff.email)}</span></Tooltip>

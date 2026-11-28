@@ -44,7 +44,7 @@ export function SuperadminGymsDirectoryTenantSubscriptionTab({
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 pt-3 border-t border-border text-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3 border-t border-border dark:border-white/10 text-sm">
           <div>
             <span className="text-secondary text-xs block">Subscription State</span>
             <div className="mt-1">
@@ -61,14 +61,14 @@ export function SuperadminGymsDirectoryTenantSubscriptionTab({
       </div>
 
       {/* MRR & Financial Summary */}
-      <div className="bg-page border border-border rounded-xl p-5 space-y-4">
+      <div className="bg-page dark:bg-[#0E1525] border border-border dark:border-white/10 rounded-xl p-5 space-y-4">
         <h3 className="text-xs font-bold text-disabled uppercase tracking-wider">
           Revenue & Renewal Metrics
         </h3>
-        <div className="grid grid-cols-2 gap-4 text-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
           <div>
             <span className="text-secondary text-xs block">Recognized MRR</span>
-            <span className="text-xl font-bold text-success">{formatCurrency(mrr)}</span>
+            <span className="text-xl font-bold text-success tabular-nums">{formatCurrency(mrr)}</span>
             <p className="text-[11px] text-disabled mt-0.5">
               {tenant.accessStatus === 'INACTIVE'
                 ? 'Zeroed (Access is Inactive)'
@@ -79,7 +79,7 @@ export function SuperadminGymsDirectoryTenantSubscriptionTab({
           </div>
           <div>
             <span className="text-secondary text-xs block">Member Capacity</span>
-            <span className="text-xl font-bold text-primary">
+            <span className="text-xl font-bold text-primary tabular-nums">
               {tenant.memberCount}
               <span className="text-sm font-normal text-secondary">
                 {' '}
@@ -89,7 +89,7 @@ export function SuperadminGymsDirectoryTenantSubscriptionTab({
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 pt-3 border-t border-border text-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3 border-t border-border dark:border-white/10 text-sm">
           <div>
             <span className="text-secondary text-xs block">Activated On</span>
             <span

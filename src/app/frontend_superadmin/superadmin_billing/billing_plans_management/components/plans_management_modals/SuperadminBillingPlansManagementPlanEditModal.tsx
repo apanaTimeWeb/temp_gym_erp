@@ -126,8 +126,9 @@ export default function SuperadminBillingPlansManagementPlanEditModal() {
       }
     };
     return (<div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-overlay-backdrop backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-labelledby="superadmin-plans-edit-title" tabIndex={-1} ref={dialogRef} data-testid="superadmin_billing_plans-plan-edit-modal-dialog">
-      <div className="bg-overlay border border-border rounded-xl w-full max-w-2xl my-auto max-h-dialog-desktop overflow-hidden flex flex-col shadow-dialog">
-        <div className="flex shrink-0 items-center justify-between p-6 border-b border-border">
+      <div className="relative bg-overlay dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-amber-500/35 rounded-2xl w-full max-w-2xl my-auto max-h-dialog-desktop overflow-hidden flex flex-col shadow-dialog">
+        <div className="h-[2px] w-full bg-gradient-to-r from-amber-500/80 via-primary/60 to-transparent shrink-0" />
+        <div className="flex shrink-0 items-center justify-between p-5 sm:p-6 border-b border-border dark:border-white/10">
           <h2 id="superadmin-plans-edit-title" className="text-xl font-bold text-primary">{t('ui.edit_subscription_plan_396f9001')}</h2>
           <button type="button" onClick={handleClose} disabled={isSubmitting} className="min-h-11 min-w-11 p-2 hover:bg-input rounded-full motion-safe:transition-colors text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" aria-label={t('ui.close_modal_a2071564')} data-testid="superadmin_billing_plans-superadmin-plans-plan-edit-modal-edit-modal-close-modal">
             <X size={18}/>
@@ -142,7 +143,7 @@ export default function SuperadminBillingPlansManagementPlanEditModal() {
             {errors.name && <p id="plan-edit-name-error" role="alert" className="text-danger text-xs">{validationMessage(errors.name.message)}</p>}
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {(['priceMonthly', 'priceAnnual'] as const).map(field => (<div key={field} className="space-y-2">
                 <label htmlFor={`plan-edit-${field}`} className="block text-sm font-medium text-secondary">{field === 'priceMonthly' ? t('ui.monthly_price') : t('ui.annual_price')} <span className="text-danger">{t('ui.text_3389dae3')}</span></label>
                 <input id={`plan-edit-${field}`} aria-invalid={Boolean(errors[field])} aria-describedby={errors[field] ? `plan-edit-${field}-error` : undefined} type="number" min="0" onKeyDown={(e) => { if (e.key === '-' || e.key === 'e' || e.key === '+')
@@ -151,7 +152,7 @@ export default function SuperadminBillingPlansManagementPlanEditModal() {
               </div>))}
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label htmlFor="plan-edit-currency" className="block text-sm font-medium text-secondary">{t('ui.currency')}</label>
               <select id="plan-edit-currency" {...register('currency')} className="w-full bg-input border border-border rounded-xl px-4 py-3 text-primary focus:border-focus outline-none font-mono">
@@ -169,7 +170,7 @@ export default function SuperadminBillingPlansManagementPlanEditModal() {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {(['maxMembers', 'maxStaff', 'maxBranches'] as const).map(field => (<div key={field} className="space-y-2">
                 <label htmlFor={`plan-edit-${field}`} className="block text-sm font-medium text-secondary">{field === 'maxMembers' ? t('ui.max_members_675c60aa') : field === 'maxStaff' ? t('ui.max_staff_d35f8519') : t('ui.max_branches')} <span className="text-danger">{t('ui.text_3389dae3')}</span></label>
                 <input id={`plan-edit-${field}`} aria-invalid={Boolean(errors[field])} aria-describedby={errors[field] ? `plan-edit-${field}-error` : undefined} type="number" min="1" step="1" onKeyDown={(e) => { if (e.key === '-' || e.key === 'e' || e.key === '+')
@@ -178,7 +179,7 @@ export default function SuperadminBillingPlansManagementPlanEditModal() {
               </div>))}
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {(['dbLimitGb', 'binaryLimitGb'] as const).map(field => (<div key={field} className="space-y-2">
                 <label htmlFor={`plan-edit-${field}`} className="block text-sm font-medium text-secondary">{field === 'dbLimitGb' ? t('ui.db_limit_gb_8738c0c7') : t('ui.binary_limit_gb_7822511b')} <span className="text-danger">{t('ui.text_3389dae3')}</span></label>
                 <input id={`plan-edit-${field}`} aria-invalid={Boolean(errors[field])} aria-describedby={errors[field] ? `plan-edit-${field}-error` : undefined} type="number" min="0" step="0.1" onKeyDown={(e) => { if (e.key === '-' || e.key === 'e' || e.key === '+')

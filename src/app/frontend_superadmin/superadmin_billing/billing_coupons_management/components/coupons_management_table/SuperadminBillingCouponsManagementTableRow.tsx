@@ -59,7 +59,7 @@ export default function SuperadminBillingCouponsManagementTableRow({ coupon, onT
     };
     return (<tr tabIndex={0} aria-label={t('ui.edit_coupon_aria', { code: cpn.code })} className={`hover:bg-surface-hover motion-safe:transition-all motion-safe:duration-base motion-safe:ease-in-out group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ${cpn.isDeleted ? 'opacity-50 grayscale' : ''} ${isSelected ? 'bg-primary-subtle' : ''}`} onClick={() => { if (!cpn.isDeleted)
         onEdit(cpn); }} onKeyDown={(event) => { if (event.target !== event.currentTarget) return; if (!cpn.isDeleted && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); onEdit(cpn); } }} data-testid={`superadmin_coupons-table-row-${cpn.id}`}>
-      <td className="sticky start-0 z-10 w-12 bg-card group-hover:bg-surface-hover border-b border-border px-4 py-3 text-center transition-colors">
+      <td className="sticky start-0 z-10 w-12 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover border-b border-border dark:border-white/10 px-4 py-3 text-center transition-colors">
         <input
           type="checkbox"
           aria-label={`Select coupon ${cpn.code}`}
@@ -73,7 +73,7 @@ export default function SuperadminBillingCouponsManagementTableRow({ coupon, onT
           data-testid={`superadmin_coupons-select-row-${cpn.id}`}
         />
       </td>
-      <td className="sticky start-12 z-10 bg-card group-hover:bg-surface-hover border-b border-e border-border px-6 py-4 whitespace-nowrap text-sm font-bold text-primary tracking-wide transition-colors">
+      <td className="sticky start-12 z-10 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover border-b border-e border-border dark:border-white/10 px-6 py-4 whitespace-nowrap text-sm font-bold text-primary tracking-wide transition-colors">
         <div className="flex items-center gap-2">
           <span>{cpn.code}</span>
           <CopyButton value={cpn.code} label={`Copy coupon code ${cpn.code}`} />

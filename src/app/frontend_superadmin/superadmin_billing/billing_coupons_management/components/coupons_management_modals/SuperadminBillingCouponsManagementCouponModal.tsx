@@ -32,8 +32,9 @@ export const SuperadminBillingCouponsCouponModal: React.FC<SuperadminBillingCoup
     if (!isOpen)
         return null;
     return (<div ref={dialogRef} tabIndex={-1} aria-labelledby="superadmin-coupons-create-title" className="fixed inset-0 bg-overlay-backdrop z-40 flex items-center justify-center overflow-y-auto p-4 backdrop-blur-sm" role="dialog" aria-modal="true" data-testid="superadmin_coupons-coupon-modal-dialog">
-      <div className="bg-overlay border border-border rounded-xl w-full max-w-md shadow-dialog my-auto max-h-dialog-desktop flex flex-col">
-        <div className="flex shrink-0 items-center justify-between px-7 py-5 border-b border-border">
+      <div className="relative overflow-hidden bg-overlay dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-amber-500/35 rounded-2xl w-full max-w-md shadow-dialog my-auto max-h-dialog-desktop flex flex-col">
+        <div className="h-[2px] w-full bg-gradient-to-r from-amber-500/80 via-primary/60 to-transparent shrink-0" />
+        <div className="flex shrink-0 items-center justify-between px-6 sm:px-7 py-5 border-b border-border dark:border-white/10">
           <h2 id="superadmin-coupons-create-title" className="text-lg font-bold text-primary">{t('ui.create_global_coupon_53ce473c')}</h2>
           <button type="button" aria-label={t('ui.close_create_coupon')} onClick={onClose} className="min-h-11 min-w-11 flex items-center justify-center rounded-md text-secondary hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="superadmin_coupons-superadmin-coupons-coupon-modal-superadmin-coupon-modal-button">
             <X size={18}/>
@@ -53,7 +54,7 @@ export const SuperadminBillingCouponsCouponModal: React.FC<SuperadminBillingCoup
               {form.formState.errors.code && <span id="superadmin-coupon-create-code-error" className="text-xs text-danger" role="alert">{form.formState.errors.code.message}</span>}
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex flex-col gap-1.5">
                 <label id="superadmin-coupon-create-discount-type-label" className="text-sm font-bold text-secondary">{t('ui.discount_type_f908785b')}<span className="text-danger">{t('ui.text_3389dae3')}</span></label>
                 <Controller name="discountType" control={form.control} render={({ field }) => (<SearchableDropdown value={field.value || ''} onChange={field.onChange} options={SUPERADMIN_COUPON_DISCOUNT_TYPE_OPTIONS.map((option) => ({ label: t(option.labelKey), value: option.value }))} aria-label={t('ui.discount_type_f908785b')} aria-invalid={Boolean(form.formState.errors.discountType)} aria-describedby={form.formState.errors.discountType ? 'superadmin-coupon-create-discount-type-error' : undefined} data-testid="superadmin_coupons-coupon-modal-discount-type"/>)}/>
@@ -73,7 +74,7 @@ export const SuperadminBillingCouponsCouponModal: React.FC<SuperadminBillingCoup
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex flex-col gap-1.5">
                 <label htmlFor="superadmin-coupon-create-max-uses" className="text-sm font-bold text-secondary">{t('ui.max_uses_eed40cb4')}<span className="text-danger">{t('ui.text_3389dae3')}</span></label>
                 <input id="superadmin-coupon-create-max-uses" aria-invalid={Boolean(form.formState.errors.maxUses)} aria-describedby="superadmin-coupon-create-max-uses-error" type="number" onKeyDown={(e) => { if (e.key === '-' || e.key === 'e' || e.key === '+')

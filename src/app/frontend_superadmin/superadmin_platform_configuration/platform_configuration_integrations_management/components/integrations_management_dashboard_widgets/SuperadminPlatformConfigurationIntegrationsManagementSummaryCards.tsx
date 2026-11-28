@@ -22,7 +22,7 @@ export default function SuperadminPlatformConfigurationIntegrationsManagementSum
     const connected = data.integrations.filter((item) => item.status === SUPERADMIN_INTEGRATION_STATUS_CODES.CONNECTED).length;
     const failed = data.webhooks.filter((item) => item.status === SUPERADMIN_INTEGRATION_STATUS_CODES.FAILED).length;
     const averageHealth = data.integrations.length > 0 ? data.integrations.reduce((sum, item) => sum + item.health, 0) / data.integrations.length : 0;
-    return (<div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+    return (<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
   <MetricCard label={t('ui.connected_services_13ce835')} value={`${connected}/${data.integrations.length}`} helper={t('ui.kpi_helper_external_services_v3')} tone="success" data-testid="superadmin-integrations-superadmin-integrations-summary-cards-metric-card-1"/>
   <MetricCard label={t('ui.failed_webhooks_7d2abe7')} value={formatNumber(failed)} helper={t('ui.kpi_helper_need_review_v3')} tone="danger" data-testid="superadmin-integrations-superadmin-integrations-summary-cards-metric-card-2"/>
   <MetricCard label={t('ui.active_developer_keys_f312ec1')} value={formatNumber(data.keys.filter((k) => k.status === SUPERADMIN_INTEGRATION_STATUS_CODES.ACTIVE).length)} helper={t('ui.kpi_helper_tenant_developer_access_v3')} tone="info" data-testid="superadmin-integrations-superadmin-integrations-summary-cards-metric-card-3"/>

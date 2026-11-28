@@ -28,8 +28,9 @@ const MOBILE_CARD_TABLE_CLASSES = [
 export default function SuperadminPlatformConfigurationFeaturesManagementTierMatrix() {
   const t = useTranslations('superadmin_platform_configuration_features');
   return (
-    <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card" aria-labelledby="superadmin-feature-tier-matrix-title">
-      <div className="border-b border-border p-6">
+    <section className="relative overflow-hidden rounded-2xl border border-border dark:border-emerald-500/25 bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] shadow-card" aria-labelledby="superadmin-feature-tier-matrix-title">
+      <div className="h-[2px] w-full bg-gradient-to-r from-emerald-500/80 via-primary/60 to-transparent" />
+      <div className="border-b border-border dark:border-white/10 p-5 sm:p-6">
         <h2 id="superadmin-feature-tier-matrix-title" className="flex items-center gap-2 text-lg font-bold text-primary">
           <Layers size={18} className="text-primary" aria-hidden="true"/> {t('ui.global_feature_tiering_5afd810')}
         </h2>
@@ -40,15 +41,15 @@ export default function SuperadminPlatformConfigurationFeaturesManagementTierMat
         <table className={`w-full border-collapse text-start ${MOBILE_CARD_TABLE_CLASSES}`}>
           <caption className="sr-only">{t('ui.feature_availability_by_saas_subscription_tier_dd0fc6b')}</caption>
           <thead>
-            <tr className="border-b border-border bg-surface-highlight" data-testid="superadmin_platform_configuration_features-superadmin-features-tier-matrix-tier-matrix-action-1">
-              <th scope="col" className="sticky start-0 z-20 bg-surface-highlight border-e border-border p-4 text-start text-sm font-semibold text-primary">{t('ui.feature_9889145')}</th>
-              {SUPERADMIN_FEATURE_TIER_DEFINITIONS.map((tier) => <th key={tier.id} scope="col" className="p-4 text-center text-sm font-semibold text-primary">{t(tier.labelKey)}</th>)}
+            <tr className="border-b border-border dark:border-white/10 bg-slate-100 dark:bg-[#152038]" data-testid="superadmin_platform_configuration_features-superadmin-features-tier-matrix-tier-matrix-action-1">
+              <th scope="col" className="sticky start-0 z-20 bg-slate-100 dark:bg-[#152038] border-e border-border dark:border-white/10 p-4 text-start text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300">{t('ui.feature_9889145')}</th>
+              {SUPERADMIN_FEATURE_TIER_DEFINITIONS.map((tier) => <th key={tier.id} scope="col" className="p-4 text-center text-[11px] font-bold uppercase tracking-wider text-secondary dark:text-slate-300">{t(tier.labelKey)}</th>)}
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody className="divide-y divide-border dark:divide-white/5">
             {SUPERADMIN_FEATURE_DEFINITIONS.map((feature) => (
                 <tr key={feature.id} className="motion-safe:transition-colors hover:bg-surface-hover group" data-testid={`superadmin_platform_configuration_features-features-tier-matrix-item-feature-id-2-${String(feature.id)}`}>
-                  <th scope="row" className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-e border-border p-4 text-start text-sm font-medium text-primary transition-colors">{t(feature.labelKey)}</th>
+                  <th scope="row" className="sticky start-0 z-10 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover border-e border-border dark:border-white/10 p-4 text-start text-sm font-medium text-primary transition-colors">{t(feature.labelKey)}</th>
                   {SUPERADMIN_FEATURE_TIER_DEFINITIONS.map((tier) => {
                     const enabled = SUPERADMIN_FEATURE_TIER_MATRIX[feature.id][tier.id];
                     return (

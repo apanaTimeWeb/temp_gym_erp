@@ -46,7 +46,7 @@ export default function SuperadminSystemOpsJobsJobInspectModal({ job, onClose }:
           {/* Status & Timing */}
           <div>
             <h3 className="text-xs font-semibold text-secondary mb-3 uppercase tracking-wider">{t('ui.status_amp_timing_bb09a35')}</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-card p-4 rounded-lg">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 bg-card dark:bg-[#0E1525] border border-border dark:border-white/10 p-4 rounded-xl">
               <div>
                 <p className="text-xs text-secondary mb-1">{t('ui.status_b5bd428')}</p>
                 <p className={`text-sm font-bold ${SUPERADMIN_JOBS_STATUS_TEXT_COLORS[statusKey]}`}>{t(`ui.status_${job.status.toLowerCase()}`)}</p>

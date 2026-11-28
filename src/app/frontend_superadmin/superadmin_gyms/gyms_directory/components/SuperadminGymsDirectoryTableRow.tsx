@@ -77,9 +77,9 @@ export function SuperadminGymsDirectoryTableRow({
         isKebabActive ? 'relative z-40' : ''
       }`}
     >
-      {/* 1. Gym Name (Sticky Start, width 260px, Center-aligned) */}
+      {/* 1. Gym Name (Sticky Start, responsive width, Center-aligned) */}
       <td
-        className={`sticky-left-cell z-10 p-3.5 text-center border-b border-e border-border w-[260px] min-w-[250px] max-w-[270px] transition-shadow ${
+        className={`sticky-left-cell z-10 p-3 sm:p-3.5 text-center border-b border-e border-border dark:border-white/10 w-44 sm:w-[240px] md:w-[260px] min-w-[168px] sm:min-w-[240px] max-w-[270px] bg-card dark:bg-[#0E1525] transition-shadow ${
           scrolledLeft
             ? 'shadow-[4px_0_12px_-2px_rgba(0,0,0,0.18)] dark:shadow-[4px_0_12px_-2px_rgba(0,0,0,0.5)]'
             : ''

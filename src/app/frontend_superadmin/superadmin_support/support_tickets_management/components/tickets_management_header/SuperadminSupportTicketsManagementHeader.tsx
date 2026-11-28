@@ -21,7 +21,7 @@ export default function SuperadminSupportTicketsManagementHeader({ search, setSe
       </section>
 
       <div className="rounded-2xl border border-border dark:border-white/10 bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] p-4 shadow-card flex gap-3 flex-wrap items-center justify-between">
-        <div className="relative flex-1 min-w-[220px] max-w-md">
+        <div className="relative w-full sm:flex-1 sm:min-w-[220px] max-w-md">
           <label htmlFor="superadmin_support_tickets-search" className="sr-only">{t('ui.search_tickets_or_superadmin_gyms_bf66cf1')}</label>
           <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" />
           <input
@@ -72,7 +72,7 @@ export default function SuperadminSupportTicketsManagementHeader({ search, setSe
                       setStatusFilter(e.target.value as TicketStatus | typeof SUPERADMIN_SUPPORT_TICKETS_ALL_FILTER);
                       onFilterChange();
                     }}
-                    className="min-h-10 w-full px-3 py-2 bg-input border border-border rounded-xl text-sm text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus:border-focus motion-safe:transition-all"
+                    className="min-h-10 w-full px-3 py-2 bg-input dark:bg-[#0F172A] dark:[color-scheme:dark] border border-border rounded-xl text-sm text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus:border-focus motion-safe:transition-all"
                     data-testid="superadmin_support_tickets-superadmin-tickets-header-tickets-header-close-1"
                   >
                     <option value={SUPERADMIN_SUPPORT_TICKETS_ALL_FILTER} data-testid="superadmin_support_tickets-superadmin-tickets-header-superadmin_support_tickets-header-action-1">{t('ui.all_statuses_04b3d7a')}</option>
@@ -92,7 +92,7 @@ export default function SuperadminSupportTicketsManagementHeader({ search, setSe
                       setPriorityFilter(e.target.value as TicketPriority | typeof SUPERADMIN_SUPPORT_TICKETS_ALL_FILTER);
                       onFilterChange();
                     }}
-                    className="min-h-10 w-full px-3 py-2 bg-input border border-border rounded-xl text-sm text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus:border-focus motion-safe:transition-all"
+                    className="min-h-10 w-full px-3 py-2 bg-input dark:bg-[#0F172A] dark:[color-scheme:dark] border border-border rounded-xl text-sm text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus:border-focus motion-safe:transition-all"
                     data-testid="superadmin_support_tickets-superadmin-tickets-header-tickets-header-control-1"
                   >
                     <option value={SUPERADMIN_SUPPORT_TICKETS_ALL_FILTER} data-testid="superadmin_support_tickets-superadmin-tickets-header-superadmin_support_tickets-header-action-7">{t('ui.all_priorities_32b0a03')}</option>

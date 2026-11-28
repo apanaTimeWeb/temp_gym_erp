@@ -7,7 +7,7 @@
 export default function SuperadminAuditComplianceDashboardLoadingSkeleton() {
   return <div className="space-y-6" aria-busy="true" data-testid="superadmin-compliance-loading">
     <div className="h-10 w-72 max-w-full rounded bg-skeleton-base motion-safe:animate-pulse" />
-    <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">{[1, 2, 3, 4].map((item) => <div key={item} className="h-28 rounded-xl border border-border bg-skeleton-base motion-safe:animate-pulse" />)}</div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:grid-cols-4">{[1, 2, 3, 4].map((item) => <div key={item} className="h-28 rounded-xl border border-border bg-skeleton-base motion-safe:animate-pulse" />)}</div>
     <div className="grid grid-cols-1 gap-6 xl:grid-cols-2"><div className="h-80 rounded-xl border border-border bg-skeleton-base motion-safe:animate-pulse"/><div className="h-80 rounded-xl border border-border bg-skeleton-base motion-safe:animate-pulse"/></div>
     <div className="h-72 rounded-xl border border-border bg-skeleton-base motion-safe:animate-pulse" />
   </div>;

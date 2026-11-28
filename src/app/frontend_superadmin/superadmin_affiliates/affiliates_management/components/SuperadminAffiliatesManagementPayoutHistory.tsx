@@ -59,29 +59,31 @@ export default function SuperadminAffiliatesManagementPayoutHistory({ payouts, i
   }
 
   return (
-    <div className="overflow-x-auto rounded-xl border border-border bg-card shadow-card">
-      <table className={`w-full min-w-max border-collapse text-start ${MOBILE_CARD_TABLE_CLASSES}`}>
-        <thead>
-          <tr className="border-b border-border bg-primary-subtle text-secondary" data-testid="superadmin_affiliates-superadmin-affiliates-payout-history-payout-history-action-1">
-            <th className="sticky start-0 z-20 bg-primary-subtle border-e border-border p-4 text-xs font-semibold uppercase tracking-wider text-start">{t('ui.date_ba31778')}</th>
-            <th className="p-4 text-xs font-semibold uppercase tracking-wider text-start">{t('ui.affiliate_774d70b')}</th>
-            <th className="p-4 text-xs font-semibold uppercase tracking-wider text-start">{t('ui.amount_f1d432d')}</th>
-            <th className="p-4 text-xs font-semibold uppercase tracking-wider text-start">{t('ui.method_dfe267c')}</th>
-            <th className="p-4 text-xs font-semibold uppercase tracking-wider text-start">{t('ui.ref_id_c0feb73')}</th>
-            <th className="p-4 text-xs font-semibold uppercase tracking-wider text-start">{t('ui.status_1b84b5c')}</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-border">
-          {payouts.length === 0 ? (
-            <tr>
-              <td colSpan={TABLE_COLUMN_COUNT} className="p-8 text-center text-secondary">
-                {t('ui.no_payout_history_available_b5c8805')}
-              </td>
+    <div className="relative overflow-hidden rounded-2xl border border-border dark:border-amber-500/25 bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] shadow-card">
+      <div className="h-[2px] w-full bg-gradient-to-r from-amber-500/80 via-primary/60 to-transparent" />
+      <div className="overflow-x-auto">
+        <table className={`w-full min-w-max border-collapse text-start ${MOBILE_CARD_TABLE_CLASSES}`}>
+          <thead>
+            <tr className="border-b border-border dark:border-white/10 bg-slate-100 dark:bg-[#152038] text-secondary dark:text-slate-300" data-testid="superadmin_affiliates-superadmin-affiliates-payout-history-payout-history-action-1">
+              <th className="sticky start-0 z-20 bg-slate-100 dark:bg-[#152038] border-e border-border dark:border-white/10 p-4 text-[11px] font-bold uppercase tracking-wider text-start">{t('ui.date_ba31778')}</th>
+              <th className="p-4 text-[11px] font-bold uppercase tracking-wider text-start">{t('ui.affiliate_774d70b')}</th>
+              <th className="p-4 text-[11px] font-bold uppercase tracking-wider text-start">{t('ui.amount_f1d432d')}</th>
+              <th className="p-4 text-[11px] font-bold uppercase tracking-wider text-start">{t('ui.method_dfe267c')}</th>
+              <th className="p-4 text-[11px] font-bold uppercase tracking-wider text-start">{t('ui.ref_id_c0feb73')}</th>
+              <th className="p-4 text-[11px] font-bold uppercase tracking-wider text-start">{t('ui.status_1b84b5c')}</th>
             </tr>
-          ) : (
-            payouts.map((payout: AffiliatePayoutRecord) => (
-              <tr key={payout.id} className="motion-safe:transition-colors hover:bg-surface-hover group" data-testid={`superadmin_affiliates-affiliates-payout-history-item-payout-id-2-${String(payout.id)}`}>
-                <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-e border-border p-4 text-sm text-secondary transition-colors" data-mobile-label={t('ui.mobile_date')}>{formatDate(payout.paidAt, locale)}</td>
+          </thead>
+          <tbody className="divide-y divide-border dark:divide-white/5">
+            {payouts.length === 0 ? (
+              <tr>
+                <td colSpan={TABLE_COLUMN_COUNT} className="p-8 text-center text-secondary">
+                  {t('ui.no_payout_history_available_b5c8805')}
+                </td>
+              </tr>
+            ) : (
+              payouts.map((payout: AffiliatePayoutRecord) => (
+                <tr key={payout.id} className="motion-safe:transition-colors hover:bg-surface-hover group" data-testid={`superadmin_affiliates-affiliates-payout-history-item-payout-id-2-${String(payout.id)}`}>
+                  <td className="sticky start-0 z-10 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover border-e border-border dark:border-white/10 p-4 text-sm text-secondary transition-colors" data-mobile-label={t('ui.mobile_date')}>{formatDate(payout.paidAt, locale)}</td>
                 <td className="p-4" data-mobile-label={t('ui.mobile_affiliate')}>
                   <span className="font-medium text-primary">{payout.affiliateName}</span>
                   <span className="block text-xs text-disabled">{payout.affiliateId}</span>
@@ -103,8 +105,9 @@ export default function SuperadminAffiliatesManagementPayoutHistory({ payouts, i
               </tr>
             ))
           )}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

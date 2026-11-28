@@ -137,7 +137,7 @@ export default function SuperadminSystemOpsBackupsTable({
                   className={`hover:bg-surface-hover motion-safe:transition-colors group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ${isSelected ? 'bg-primary-subtle border-s-4 border-s-primary' : ''}`}
                   data-testid={`superadmin_system_ops_backups-system-ops-backups-table-item-backup-id-2-${String(backup.id)}`}
                 >
-                  <td className="sticky start-0 z-10 w-12 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-border px-4 py-3 text-center transition-colors">
+                  <td className="sticky start-0 z-10 w-12 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-border dark:border-white/10 px-4 py-3 text-center transition-colors">
                     <input
                       type="checkbox"
                       aria-label={`Select backup ${backup.id}`}
@@ -151,7 +151,7 @@ export default function SuperadminSystemOpsBackupsTable({
                       data-testid={`superadmin_system_ops_backups-select-row-${backup.id}`}
                     />
                   </td>
-                  <td className="sticky start-12 z-10 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-e border-border px-4 py-3.5 text-xs font-mono text-secondary transition-colors" data-mobile-label={t('ui.mobile_backup_id')}>
+                  <td className="sticky start-12 z-10 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-e border-border dark:border-white/10 px-4 py-3.5 text-xs font-mono text-secondary transition-colors" data-mobile-label={t('ui.mobile_backup_id')}>
                     <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
                       <span>{backup.id}</span>
                       <CopyButton value={backup.id} label={`Copy backup ID ${backup.id}`} />

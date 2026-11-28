@@ -78,7 +78,7 @@ export default function SuperadminCommunicationBroadcastsCampaignsTable({
                   className="hover:bg-surface-hover motion-safe:transition-colors group"
                   data-testid={`superadmin-broadcast-row-${bc.id}`}
                 >
-                  <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-e border-border px-6 py-4 transition-colors">
+                  <td className="sticky start-0 z-10 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-e border-border dark:border-white/10 px-6 py-4 transition-colors">
                     <div className="flex flex-col">
                       <button
                         type="button"

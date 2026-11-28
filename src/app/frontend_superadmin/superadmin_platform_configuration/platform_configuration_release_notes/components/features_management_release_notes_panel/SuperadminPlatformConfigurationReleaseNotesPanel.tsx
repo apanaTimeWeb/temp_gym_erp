@@ -50,7 +50,7 @@ export default function SuperadminPlatformConfigurationReleaseNotesPanel({ notes
       </div>
 
       <div>
-        <form onSubmit={handleSubmit(onPublishNote)} className="sticky top-24 rounded-xl border border-border bg-card p-6" data-testid="superadmin_platform_configuration_features-superadmin-features-release-notes-panel-release-notes-panel-form">
+        <form onSubmit={handleSubmit(onPublishNote)} className="sticky top-24 rounded-2xl border border-border dark:border-emerald-500/25 bg-card dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] p-6 shadow-card" data-testid="superadmin_platform_configuration_features-superadmin-features-release-notes-panel-release-notes-panel-form">
           <h3 className="mb-4 flex items-center gap-2 font-bold text-primary">
             <Send size={18} strokeWidth={2} aria-hidden="true" className="text-primary" />
             {t('ui.compose_release_note_8c451b9')}

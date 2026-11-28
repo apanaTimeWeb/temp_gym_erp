@@ -35,7 +35,7 @@ export function SuperadminGymsDirectoryTableHeader({
                 : 'descending'
               : 'none'
           }
-          className={`sticky-header-corner-left z-30 p-3.5 text-center w-[260px] min-w-[250px] max-w-[270px] border-b border-e border-border transition-shadow whitespace-nowrap ${
+          className={`sticky-header-corner-left z-30 p-3 sm:p-3.5 text-center w-44 sm:w-[240px] md:w-[260px] min-w-[168px] sm:min-w-[240px] max-w-[270px] border-b border-e border-border dark:border-white/10 bg-slate-100 dark:bg-[#152038] transition-shadow whitespace-nowrap ${
             scrolledLeft
               ? 'shadow-[4px_0_12px_-2px_rgba(0,0,0,0.18)] dark:shadow-[4px_0_12px_-2px_rgba(0,0,0,0.5)]'
               : ''

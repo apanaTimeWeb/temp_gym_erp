@@ -90,8 +90,9 @@ export const SuperadminCommunicationBroadcastsBroadcastModal: React.FC<Superadmi
     if (!isOpen)
         return null;
     return (<div ref={dialogRef} className="fixed inset-0 bg-overlay-backdrop z-40 flex items-center justify-center overflow-y-auto p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="superadmin-broadcast-modal-title" data-testid="superadmin_communication_broadcasts-broadcast-modal-dialog">
-      <div className="bg-overlay border border-border rounded-xl w-full max-w-md shadow-dialog flex flex-col my-auto max-h-dialog-desktop">
-        <div className="flex shrink-0 items-center justify-between px-7 py-5 border-b border-border">
+      <div className="relative overflow-hidden bg-overlay dark:bg-gradient-to-b dark:from-[#121B2F] dark:to-[#0C1220] border border-border dark:border-cyan-500/35 rounded-2xl w-full max-w-md shadow-dialog flex flex-col my-auto max-h-dialog-desktop">
+        <div className="h-[2px] w-full bg-gradient-to-r from-[#06B6D4] via-[#38BDF8] to-[#FF5A1F] shrink-0" />
+        <div className="flex shrink-0 items-center justify-between px-6 sm:px-7 py-5 border-b border-border dark:border-white/10">
           <h2 id="superadmin-broadcast-modal-title" className="text-lg font-bold text-primary">{isEditMode ? t('ui.edit_broadcast_4c7d1a2e') : t('ui.new_broadcast_6b2e9d1c')}</h2>
           <button type="button" onClick={() => { void requestClose(); }} aria-label={t('ui.close_broadcast_modal_aria')} className="min-h-11 min-w-11 inline-flex items-center justify-center text-secondary hover:text-primary motion-safe:transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page" data-testid="superadmin_communication_broadcasts-superadmin-broadcasts-broadcast-modal-superadmin-broadcast-modal-button">
             <X size={18}/>
@@ -103,7 +104,7 @@ export const SuperadminCommunicationBroadcastsBroadcastModal: React.FC<Superadmi
           {errors.root?.server?.message ? <p role="alert" className="rounded-md border border-danger bg-danger-bg p-3 text-sm text-danger">{String(errors.root.server.message)}</p> : null}
           <SuperadminCommunicationBroadcastsMessageFields register={register} errors={errors} />
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <SuperadminCommunicationBroadcastsTargetGymSelector
               gyms={gyms}
               isPending={isPendingGyms}

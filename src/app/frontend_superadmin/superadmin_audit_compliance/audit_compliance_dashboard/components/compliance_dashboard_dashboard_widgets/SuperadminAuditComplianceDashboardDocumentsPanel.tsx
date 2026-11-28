@@ -33,17 +33,17 @@ export default function SuperadminAuditComplianceDashboardDocumentsPanel({ data 
 
   return (
     <Panel title={t('ui.compliance_documents_02396dac')} description={t('ui.tenant_level_registrations_and_expiry_dates_929cfe01')}>
-      <div className="overflow-x-auto rounded-xl border border-border bg-card">
+      <div className="overflow-x-auto rounded-xl border border-border dark:border-white/10 bg-card dark:bg-[#0E1525]">
         <table className="w-full text-sm border-collapse text-start">
           <thead>
-            <tr className="border-b border-border bg-surface-highlight text-start text-xs uppercase text-secondary">
-              <th scope="col" className="sticky start-0 z-20 bg-surface-highlight border-e border-border px-4 py-3 text-start font-semibold uppercase tracking-wider text-secondary">{t('ui.tenant_6252d057')}</th>
-              <th scope="col" className="px-4 py-3 text-start font-semibold uppercase tracking-wider text-secondary">{t('ui.document_09453598')}</th>
-              <th scope="col" className="px-4 py-3 text-start font-semibold uppercase tracking-wider text-secondary">{t('ui.status_ec53a8c4')}</th>
-              <th scope="col" className="px-4 py-3 text-start font-semibold uppercase tracking-wider text-secondary">{t('ui.expiry_ad7a5dcc')}</th>
+            <tr className="border-b border-border dark:border-white/10 bg-slate-100 dark:bg-[#152038] text-start text-[11px] uppercase tracking-wider text-secondary dark:text-slate-300">
+              <th scope="col" className="sticky start-0 z-20 bg-slate-100 dark:bg-[#152038] border-e border-border dark:border-white/10 px-4 py-3 text-start font-bold uppercase tracking-wider text-secondary dark:text-slate-300">{t('ui.tenant_6252d057')}</th>
+              <th scope="col" className="px-4 py-3 text-start font-bold uppercase tracking-wider text-secondary dark:text-slate-300">{t('ui.document_09453598')}</th>
+              <th scope="col" className="px-4 py-3 text-start font-bold uppercase tracking-wider text-secondary dark:text-slate-300">{t('ui.status_ec53a8c4')}</th>
+              <th scope="col" className="px-4 py-3 text-start font-bold uppercase tracking-wider text-secondary dark:text-slate-300">{t('ui.expiry_ad7a5dcc')}</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody className="divide-y divide-border dark:divide-white/5">
             {data.documents.length === 0 ? (
               <tr>
                 <td colSpan={TABLE_COLUMN_COUNT} className="px-4 py-6">
@@ -56,8 +56,8 @@ export default function SuperadminAuditComplianceDashboardDocumentsPanel({ data 
                 const expanded = expandedDocument === key;
                 return (
                   <Fragment key={key}>
-                    <tr className="border-b border-border motion-safe:transition-colors hover:bg-surface-hover group">
-                      <td className="sticky start-0 z-10 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-e border-border px-4 py-3 text-primary transition-colors">
+                    <tr className="border-b border-border dark:border-white/5 motion-safe:transition-colors hover:bg-surface-hover group">
+                      <td className="sticky start-0 z-10 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-e border-border dark:border-white/10 px-4 py-3 text-primary transition-colors">
                         <Tooltip content={document.tenant}>
                           <button
                             type="button"

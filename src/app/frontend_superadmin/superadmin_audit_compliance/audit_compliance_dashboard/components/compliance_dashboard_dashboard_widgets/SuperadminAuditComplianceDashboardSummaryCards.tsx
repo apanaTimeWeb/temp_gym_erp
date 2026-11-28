@@ -13,7 +13,7 @@ import type { SuperadminAuditComplianceSectionProps } from '@/app/frontend_super
 export default function SuperadminAuditComplianceDashboardSummaryCards({ data }: SuperadminAuditComplianceSectionProps) {
   const t = useTranslations('superadmin_audit_compliance');
   const locale = useLocale();
-  return <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+  return <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
     <MetricCard label={t('ui.registered_tenants_90a68246')} value={formatComplianceNumber(data.summary.registeredTenants, locale)} helper={t('ui.registered_tenants_90a68246')} tone="success" href="/frontend_superadmin/superadmin_gyms/gyms_directory" data-testid="superadmin-compliance-registered-tenants"/>
     <MetricCard label={t('ui.missing_tax_details_9a1779f3')} value={formatComplianceNumber(data.summary.missingTaxDetails, locale)} helper={t('ui.need_review_16dc4e12')} tone="warning" href="/frontend_superadmin/superadmin_gyms/gyms_directory" data-testid="superadmin-compliance-missing-tax-details"/>
     <MetricCard label={t('ui.documents_expiring_17fbd246')} value={formatComplianceNumber(data.summary.documentsExpiring, locale)} helper={t('ui.near_term_renewals_7804ac74')} tone="warning" data-testid="superadmin-compliance-documents-expiring"/>

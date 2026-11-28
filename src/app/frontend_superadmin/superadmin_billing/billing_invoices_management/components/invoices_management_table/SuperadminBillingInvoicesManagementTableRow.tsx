@@ -73,7 +73,7 @@ export default function SuperadminBillingInvoicesManagementTableRow({ invoice: i
     >
       {/* 1. Multi-Select Checkbox Column */}
       <td
-        className="w-12 px-4 py-3 text-center sticky start-0 z-10 bg-card group-hover:bg-surface-hover border-b border-border transition-colors"
+        className="w-12 px-4 py-3 text-center sticky start-0 z-10 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover border-b border-border dark:border-white/10 transition-colors"
         onClick={(e) => e.stopPropagation()}
       >
         <input
@@ -90,7 +90,7 @@ export default function SuperadminBillingInvoicesManagementTableRow({ invoice: i
       </td>
 
       {/* 2. Frozen Sticky Invoice ID Column */}
-      <td className="sticky start-12 z-10 bg-card group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-e border-border px-4 py-3.5 transition-colors font-mono text-sm">
+      <td className="sticky start-12 z-10 bg-card dark:bg-[#0E1525] group-hover:bg-surface-hover group-focus-within:bg-surface-hover border-b border-e border-border dark:border-white/10 px-4 py-3.5 transition-colors font-mono text-sm">
         <div className="flex items-center gap-1.5 font-mono text-sm font-semibold text-primary">
           <span>{displaySuperadminInvoiceValue(inv.id)}</span>
           <CopyButton value={inv.id} label={`Copy invoice ID ${inv.id}`} />

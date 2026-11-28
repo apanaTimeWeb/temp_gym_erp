@@ -16,11 +16,11 @@ export function SuperadminGymsDirectoryTenantOverviewTab({
 }: SuperadminGymsDirectoryTenantOverviewTabProps) {
   return (
     <div className="space-y-6 motion-safe:animate-fade-in">
-      <div className="bg-page border border-border rounded-xl p-4 space-y-3">
+      <div className="bg-page dark:bg-[#0E1525] border border-border dark:border-white/10 rounded-xl p-4 space-y-3">
         <h3 className="text-xs font-bold text-disabled uppercase tracking-wider">
           Basic Facility Details
         </h3>
-        <div className="grid grid-cols-2 gap-4 text-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
           <div>
             <span className="text-secondary text-xs block">Gym Name</span>
             <span className="font-semibold text-primary">{tenant.gymName}</span>
@@ -77,11 +77,11 @@ export function SuperadminGymsDirectoryTenantOverviewTab({
         </div>
       </div>
 
-      <div className="bg-page border border-border rounded-xl p-4 space-y-3">
+      <div className="bg-page dark:bg-[#0E1525] border border-border dark:border-white/10 rounded-xl p-4 space-y-3">
         <h3 className="text-xs font-bold text-disabled uppercase tracking-wider">
           Capacity & Timestamps
         </h3>
-        <div className="grid grid-cols-2 gap-4 text-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
           <div>
             <span className="text-secondary text-xs block">Member Enrolled / Limit</span>
             <span className="font-bold text-primary">
