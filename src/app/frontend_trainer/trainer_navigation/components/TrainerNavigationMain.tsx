@@ -75,6 +75,7 @@ export default function TrainerNavigationMain({ children }: TrainerNavigationMai
     setIsCollapsed((current) => !current);
   };
   const gymTitle = process.env.NEXT_PUBLIC_GYM_NAME || t('TEXT_GYM_NAME');
+  const branchName = process.env.NEXT_PUBLIC_BRANCH_NAME || t('TEXT_MAIN_BRANCH');
 
   return (
     <TrainerNavigationConfirmProvider>
@@ -90,6 +91,7 @@ export default function TrainerNavigationMain({ children }: TrainerNavigationMai
         <TrainerNavigationCommandPalette />
         <TrainerNavigationHeader
           title={gymTitle}
+          branchName={branchName}
           isSidebarCollapsed={isCollapsed}
           isMobileSidebarOpen={isMobileOpen}
           isMobileViewport={isMobileViewport}

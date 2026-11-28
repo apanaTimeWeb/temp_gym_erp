@@ -4,7 +4,7 @@ import { useEffect, useId, useRef, useState } from 'react';
 
 import type { KeyboardEvent as ReactKeyboardEvent } from 'react';
 
-import { Bell, ChevronDown, LogOut, Menu, User } from 'lucide-react';
+import { Bell, Building2, ChevronDown, LogOut, Menu, User } from 'lucide-react';
 
 import { useTranslations } from 'next-intl';
 
@@ -36,7 +36,7 @@ import type { TrainerNavigationHeaderProps } from '@/app/frontend_trainer/traine
  * @dependencies Consumes owning feature URL contracts and approved zero-business tooltip/theme primitives.
  * @edge-case Preserves documented loading, empty, error, accessibility, responsive, and recovery behavior without inventing business fallbacks.
  */
-export default function TrainerNavigationHeader({ title, subtitle, isSidebarCollapsed, isMobileSidebarOpen, isMobileViewport, onToggleSidebar }: TrainerNavigationHeaderProps) {
+export default function TrainerNavigationHeader({ title, subtitle, branchName, isSidebarCollapsed, isMobileSidebarOpen, isMobileViewport, onToggleSidebar }: TrainerNavigationHeaderProps) {
   const t = useTranslations('TRAINER_SHELL');
   const [showProfile, setShowProfile] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
@@ -130,10 +130,17 @@ export default function TrainerNavigationHeader({ title, subtitle, isSidebarColl
         </button>
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2.5 min-w-0">
-            <span className="hidden sm:inline-block w-1.5 h-5 rounded-full bg-gradient-to-b from-[#FF5A1F] via-[#EC4899] to-[#38BDF8] shrink-0 shadow-[0_0_10px_rgba(255,90,31,0.5)]" aria-hidden="true" />
+            <span className="hidden sm:inline-flex items-center justify-center w-7 h-7 rounded-lg border border-orange-500/35 bg-orange-500/15 text-[#FF5A1F] shrink-0 shadow-[0_2px_10px_rgba(255,90,31,0.22)]" aria-hidden="true">
+              <Building2 size={15} strokeWidth={2.2} />
+            </span>
             <TrainerNavigationTooltip content={title}><h1 className="text-base sm:text-page-title font-bold text-white truncate">{title}</h1></TrainerNavigationTooltip>
+            {branchName && (
+              <span className="hidden sm:inline-flex items-center rounded-md border border-cyan-400/35 bg-cyan-500/15 px-2 py-0.5 text-[11px] font-semibold text-cyan-300 shrink-0 shadow-[0_2px_8px_rgba(34,211,238,0.16)]">
+                {branchName}
+              </span>
+            )}
           </div>
-          {subtitle && <TrainerNavigationTooltip content={subtitle}><p className="hidden sm:block text-xs text-slate-300/80 mt-0.5 ps-3.5 truncate">{subtitle}</p></TrainerNavigationTooltip>}
+          {subtitle && <TrainerNavigationTooltip content={subtitle}><p className="hidden sm:block text-xs text-slate-300/80 mt-0.5 ps-9 truncate">{subtitle}</p></TrainerNavigationTooltip>}
         </div>
       </div>
 

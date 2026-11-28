@@ -10,6 +10,7 @@ export interface TrainerNavigationMainProps {
 export interface TrainerNavigationHeaderProps {
   title: string;
   subtitle?: string;
+  branchName?: string;
   /** Whether the desktop sidebar is collapsed. */
   isSidebarCollapsed: boolean;
   /** Whether the responsive mobile navigation drawer is open. */
